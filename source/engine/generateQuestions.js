@@ -6,10 +6,10 @@ import Question from 'Components/conversation/Question'
 import Input from 'Components/conversation/Input'
 import formValueTypes from 'Components/conversation/formValueTypes'
 
-import {analyseSituation} from './traverse'
+import {analyseSituation, treatRuleRoot} from './traverse'
 import {formValueSelector} from 'redux-form'
 import { STEP_ACTION, START_CONVERSATION} from '../actions'
-import {rules, findRuleByDottedName, collectMissingVariables, findVariantsAndRecords} from './rules'
+import {rules, findRuleByDottedName, collectMissingVariables, findVariantsAndRecords, findRuleByName} from './rules'
 
 
 export let reduceSteps = (state, action) => {
@@ -109,18 +109,28 @@ export let buildNextSteps = (allRules, analysedSituation) => {
 		D'autres variables pourront être regroupées aussi, car elles partagent un parent, mais sans fusionner leurs questions dans l'interface. Ce sont des **groupes de type _record_ **
 	*/
 
+	let variantsAndRecords = findVariantsAndRecords(allRules,R.keys(missingVariables))
+
+	let nullSelector = (name, state) => null
+	let questions = R.flatten(R.map(R.keys,R.values(variantsAndRecords))),
+		qRules = R.map(R.curry(findRuleByDottedName)(allRules),questions),
+		blocked = R.filter(R.prop("applicable si"), qRules),
+		blockMap = R.map(rule => [rule.dottedName, [findRuleByName(allRules,rule["applicable si"]).dottedName]], blocked),
+		missingMap = R.map(rule => [findRuleByName(allRules,rule["applicable si"]).dottedName, Array(100)], blocked),
+		newRecords = {recordGroups: R.fromPairs(blockMap)}
+
+	let newVariantsAndRecords = R.merge(variantsAndRecords,newRecords),
+		newMissingVariables = R.merge(missingVariables,R.fromPairs(missingMap))
+
 	return R.pipe(
-		R.keys,
-		R.curry(findVariantsAndRecords)(allRules),
-		// on va maintenant construire la liste des composants React qui afficheront les questions à l'utilisateur pour que l'on obtienne les variables manquantes
 		R.evolve({
 			variantGroups: generateGridQuestions(allRules, missingVariables),
-			recordGroups: generateSimpleQuestions(allRules, missingVariables),
+			recordGroups: generateSimpleQuestions(allRules, newMissingVariables),
 		}),
 		R.values,
 		R.unnest,
 		R.sort((a,b) => b.impact - a.impact),
-	)(missingVariables)
+	)(newVariantsAndRecords)
 }
 
 
