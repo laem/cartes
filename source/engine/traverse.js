@@ -292,6 +292,7 @@ let treat = (rules, rule) => rawNode => {
 					'le maximum de':			mecanismMax,
 					'le minimum de':			mecanismMin,
 					'complément':				mecanismComplement,
+					'appel externe':			mecanismAPI,
 					'une possibilité':			R.always({'une possibilité':'oui', collectMissing: node => [rule.dottedName]})
 				},
 				action = R.propOr(mecanismError, k, dispatch)
@@ -459,4 +460,81 @@ export let analyseTopDown = (rules, rootVariable) => situationGate => {
 		root,
 		parsedRules
 	}
+}
+
+let mecanismAPI = (recurse, k, v) => {
+	let parameters = v["paramètres"]
+	if (!R.is(Array,parameters)) throw 'should be array'
+	let explanation = R.map(recurse, parameters)
+
+	let jsx = (nodeValue, explanation) =>
+		<Node
+			classes="mecanism api"
+			name='donnée externe'
+			value={nodeValue}
+		/>
+
+	let evaluate = (situationGate, parsedRules, node) => {
+		let evaluateOne = child => evaluateNode(situationGate, parsedRules, child),
+		    explanation = R.map(evaluateOne, node.explanation),
+			values = R.pluck("nodeValue",explanation),
+			nodeValue = R.any(R.equals(null),values) ?
+							null :
+							openfisca_versement_transport(values)
+
+		let collectMissing = node => node.nodeValue == null ? R.chain(collectNodeMissing,node.explanation) : []
+		return rewriteNode(node,nodeValue,explanation,collectMissing)
+	}
+
+	return {
+		evaluate,
+		jsx,
+		explanation,
+		category: 'mecanism',
+		name: 'donnée externe',
+		type: 'numeric'
+	}
+}
+
+let openfisca_versement_transport = async inputs => {
+	const period = "2017-09"
+	const got = require("got")
+	const url = "https://api-test.openfisca.fr/calculate"
+	const question = {
+	  "menages": {
+	    "m": {
+	      "personne_de_reference": ["i"]
+	    }
+	  },
+	  "foyers_fiscaux": {
+	    "f": {
+	      "declarants": ["i"]
+	    }
+	  },
+	  "familles": {
+	    "f": {
+	      "parents": [
+	        "i"
+	      ]
+	    }
+	  },
+	  "individus": {
+	    "i": {
+	      "taux_versement_transport": {
+	        period: null
+	      },
+	      "depcom_entreprise": {
+	        period: "75111"
+	      },
+	      "effectif_entreprise": {
+	        period: "15"
+	      },
+	      "categorie_salarie": {
+	        period: "prive_cadre"
+	      }
+	    }
+	  }
+	};
+
+	return (await got.post(url, { json: true, body: question })).body.individus.i.taux_versement_transport[period];
 }
