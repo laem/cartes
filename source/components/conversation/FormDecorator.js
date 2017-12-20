@@ -7,6 +7,7 @@ import { capitalise0 } from '../../utils'
 import R from 'ramda'
 import Explicable from 'Components/conversation/Explicable'
 import IgnoreStepButton from './IgnoreStepButton'
+import ReactPiwik from 'Components/Tracker'
 
 /*
 This higher order component wraps "Form" components (e.g. Question.js), that represent user inputs,
@@ -120,6 +121,7 @@ export var FormDecorator = formType => RenderField =>
 						{defaultValue && (
 							<IgnoreStepButton
 								action={() => {
+									ReactPiwik.push(['trackEvent','ignore',fieldName])
 									setFormValue(fieldName, '' + defaultValue)
 									submit()
 								}}

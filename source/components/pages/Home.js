@@ -1,7 +1,6 @@
 import React, { Component } from 'react'
 import './Pages.css'
 import './Home.css'
-import ReactPiwik from 'Components/Tracker' //TODO réintégrer Piwik
 import TargetSelection from '../TargetSelection'
 
 

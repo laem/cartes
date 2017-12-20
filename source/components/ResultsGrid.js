@@ -11,6 +11,8 @@ import { humanFigure } from "./rule/RuleValueVignette"
 import { capitalise0 } from "../utils"
 import { nameLeaf, encodeRuleName } from "Engine/rules"
 
+import ReactPiwik from 'Components/Tracker'
+
 
 // Filtered variables and rules can't be filtered in a uniform way, for now
 let paidBy = R.pathEq(["explanation", "cotisation", "dû par"])
@@ -157,7 +159,11 @@ class Row extends Component {
 		let aggregateRow = (
 			<tr
 				key="aggregateRow"
-				onClick={() => this.setState({ folded: !this.state.folded })}
+				onClick={() =>
+					let action = this.state.folded ? "unfold" : "fold"
+					ReactPiwik.push(['trackEvent',action,name])
+					this.setState({ folded: !this.state.folded })
+				}
 			>
 				<td key="category" className="element category name">
 					{capitalise0(branch)}&nbsp;<span className="unfoldIndication">
