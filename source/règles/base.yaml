@@ -2050,3 +2050,35 @@
       situation:
         assiette cotisations sociales: 8000
       valeur attendue: 695.55
+      
+
+
+
+
+
+
+
+- espace: individu . impôt sur le revenu
+  nom: rémunération imposable
+  question: Quelle est la rémunération imposable à l'impôt sur le revenu ?
+  format: euros
+
+- espace: individu
+  nom: impôt sur le revenu
+  formule:
+    barème:
+      assiette: rémunération imposable
+      tranches:
+      - en-dessous de: 9807
+        taux: 0
+      - de: 9807
+        à:  27086
+        taux: 14%
+      - de: 27086
+        à: 72617
+        taux: 30%
+      - de: 72617
+        à: 153783
+        taux: 41%
+      - au-dessus de: 153783
+        taux: 45%
