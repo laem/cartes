@@ -13,6 +13,7 @@ import { enableBatching } from 'redux-batched-actions'
 import thunk from 'redux-thunk'
 import computeThemeColours from 'Ui/themeColours'
 import { getIframeOption, inIframe } from './utils'
+import RulesProvider from './RulesProvider'
 
 let initialStore = {
 	themeColours: computeThemeColours(getIframeOption('couleur'))
@@ -63,20 +64,23 @@ export default class Layout extends PureComponent {
 		)
 		this.props.onStoreCreated && this.props.onStoreCreated(this.store)
 	}
+
 	render() {
 		return (
 			// If IE < 11 display nothing
 			<Provider store={this.store}>
-				<TrackerProvider value={this.props.tracker}>
-					<SitePathProvider value={this.props.sitePaths}>
-						<SetCSSColour />
-						<I18nextProvider i18n={i18next}>
-							<Router history={this.history}>
-								<>{this.props.children}</>
-							</Router>
-						</I18nextProvider>
-					</SitePathProvider>
-				</TrackerProvider>
+				<RulesProvider>
+					<TrackerProvider value={this.props.tracker}>
+						<SitePathProvider value={this.props.sitePaths}>
+							<SetCSSColour />
+							<I18nextProvider i18n={i18next}>
+								<Router history={this.history}>
+									<>{this.props.children}</>
+								</Router>
+							</I18nextProvider>
+						</SitePathProvider>
+					</TrackerProvider>
+				</RulesProvider>
 			</Provider>
 		)
 	}
