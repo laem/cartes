@@ -22,7 +22,8 @@ module.exports.default = {
 		'mon-entreprise': './source/sites/mon-entreprise.fr/entry.fr.js',
 		infrance: './source/sites/mon-entreprise.fr/entry.en.js',
 		'simulateur-iframe-integration':
-			'./source/sites/mon-entreprise.fr/iframe-integration-script.js'
+			'./source/sites/mon-entreprise.fr/iframe-integration-script.js',
+		publicodes: './source/sites/publicodes/entry.js'
 	},
 	output: {
 		path: path.resolve('./dist/')
@@ -33,6 +34,7 @@ module.exports.default = {
 			FR_SITE: '/mon-entreprise${path}',
 			MASTER: false
 		}),
+		new HTMLPlugin({}),
 
 		new CopyPlugin([
 			'./manifest.webmanifest',
@@ -148,5 +150,16 @@ module.exports.HTMLPlugins = ({ injectTrackingScript = false } = {}) => [
 			'Du statut juridique à la première embauche, en passant par la simulation des cotisations, vous trouverez ici toutes les ressources pour démarrer votre activité.',
 		filename: 'mon-entreprise.html',
 		logo: 'https://mon-entreprise.fr/images/logo-share.png'
+	}),
+	new HTMLPlugin({
+		inject: false,
+
+		template: 'index.html',
+		chunks: ['publi.codes'],
+		title: 'publicodes ✍️',
+		description:
+			'Une base de connaissance ? Du code ? Les deux à la fois. Lancement imminent !',
+		filename: 'publicodes.html',
+		logo: 'https://futur.eco/images/logo.png'
 	})
 ]
