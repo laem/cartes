@@ -67,7 +67,7 @@ module.exports = {
 		}),
 		new HTMLPlugin({
 			template: 'index.html',
-			chunks: ['publi.codes'],
+			chunks: ['publicodes'],
 			title: 'publicodes ✍️',
 			description:
 				'Une base de connaissance ? Du code ? Les deux à la fois. Lancement imminent !',

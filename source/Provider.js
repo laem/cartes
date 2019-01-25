@@ -69,7 +69,7 @@ export default class Layout extends PureComponent {
 		return (
 			// If IE < 11 display nothing
 			<Provider store={this.store}>
-				<RulesProvider>
+				<RulesProvider rulesConfig={this.props.rulesConfig}>
 					<TrackerProvider value={this.props.tracker}>
 						<SitePathProvider value={this.props.sitePaths}>
 							<SetCSSColour />

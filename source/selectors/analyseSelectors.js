@@ -8,8 +8,7 @@ import {
 	findRuleByDottedName,
 	formatInputs,
 	nestedSituationToPathMap,
-	rules as baseRulesEn,
-	rulesFr as baseRulesFr
+	enrichRule
 } from 'Engine/rules'
 import { analyse, analyseMany, parseAll } from 'Engine/traverse'
 import {
@@ -40,8 +39,8 @@ const mapOrApply = (fn, x) => (Array.isArray(x) ? x.map(fn) : fn(x))
 
 export let flatRulesSelector = createSelector(
 	state => state.lang,
-	(state, props) => props && props.rules,
-	(lang, rules) => rules || (lang === 'en' ? baseRulesEn : baseRulesFr)
+	state => state.rules,
+	(lang, rules) => rules.map(enrichRule) //TODO english rules
 )
 
 export let parsedRulesSelector = createSelector(
