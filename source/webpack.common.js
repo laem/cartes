@@ -26,6 +26,7 @@ module.exports = {
 
 		// To not introduce breaking into the iframe integration, we serve simulateur.js from a 'dist' subdirectory
 		'dist/simulateur': ['./source/sites/embauche.gouv.fr/iframe-script.js'],
+		publicodes: ['./source/sites/publicodes/entry.js']
 	},
 	output: {
 		path: path.resolve('./dist/')
@@ -64,7 +65,15 @@ module.exports = {
 				'Du status juridique à premier embauche, vous trouverez ici toutes les ressources nécessaires pour démarrer votre activité.',
 			filename: 'mon-entreprise.html'
 		}),
-		
+		new HTMLPlugin({
+			template: 'index.html',
+			chunks: ['publi.codes'],
+			title: 'publicodes ✍️',
+			description:
+				'Une base de connaissance ? Du code ? Les deux à la fois. Lancement imminent !',
+			filename: 'publicodes.html'
+		}),
+
 		new CopyPlugin([
 			'./manifest.webmanifest',
 			'./source/sites/embauche.gouv.fr/images/logo',
