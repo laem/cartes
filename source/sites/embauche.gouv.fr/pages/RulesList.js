@@ -1,4 +1,4 @@
-import { Component, React, T } from 'Components'
+import { Component, React, T, emoji } from 'Components'
 import SearchBar from 'Components/SearchBar'
 import { connect } from 'react-redux'
 import 'react-select/dist/react-select.css'
@@ -14,7 +14,7 @@ export default connect(state => ({
 			return (
 				<div id="RulesList" className="ui__ container">
 					<h1>
-						<T>Explorez notre base de règles</T>
+							{emoji('🔎 ')}<T>Explorez la documentation</T>
 					</h1>
 					<SearchBar showDefaultList={true} rules={flatRules} />
 				</div>
