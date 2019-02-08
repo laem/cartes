@@ -22,6 +22,7 @@
 		["webpack-alias", { "config": "./source/webpack.dev.js" }]
 		,  ["ramda", {
       "useES": true
-    }]
+    }],
+	  "babel-plugin-styled-components"
 	]
 }
