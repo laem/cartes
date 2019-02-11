@@ -36,7 +36,7 @@ export default compose(
 							style={{ color: this.props.colours.colour }}
 							to={this.props.sitePaths.documentation.index + '/' + dottedName}
 							className="explanation">
-							{emoji('📖')}
+							{emoji('❔')}
 						</Link>
 					</span>
 				</div>
