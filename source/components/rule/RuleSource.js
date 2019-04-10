@@ -1,14 +1,15 @@
-import React, { Component } from 'react'
+import React from 'react'
 import { safeDump } from 'js-yaml'
-import rules from 'Règles/base.yaml'
 import emoji from 'react-easy-emoji'
 import { buildDottedName } from 'Engine/rules'
 import ColoredYaml from './ColoredYaml'
+import { connect } from 'react-redux'
 
-export default class RuleSource extends Component {
-	render() {
-		let { dottedName } = this.props,
-			source = rules.filter(rule => buildDottedName(rule).includes(dottedName))
+export default connect(state => ({ rules: state.rules }))(
+	({ rules, dottedName }) => {
+		let source = rules.filter(rule =>
+			buildDottedName(rule).includes(dottedName)
+		)
 
 		return (
 			<div id="RuleSource" className="ui__ container">
@@ -21,4 +22,4 @@ export default class RuleSource extends Component {
 			</div>
 		)
 	}
-}
+)
