@@ -1,6 +1,7 @@
 const common = require('./webpack.common.js')
 const PrerenderSPAPlugin = require('prerender-spa-plugin')
 const WorkboxPlugin = require('workbox-webpack-plugin')
+const webpack = require('webpack')
 
 const Renderer = PrerenderSPAPlugin.PuppeteerRenderer
 const path = require('path')
@@ -111,6 +112,7 @@ module.exports = {
 			outputDir: path.resolve('dist', 'prerender', 'embauche'),
 			routes: ['/'],
 			indexPath: path.resolve('dist', 'embauche.html')
-		})
+		}),
+		new webpack.EnvironmentPlugin({ NODE_ENV: 'production' })
 	]
 }
