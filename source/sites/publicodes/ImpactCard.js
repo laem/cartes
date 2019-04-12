@@ -5,9 +5,22 @@ import React from 'react'
 import emoji from 'react-easy-emoji'
 import { connect } from 'react-redux'
 import { Link } from 'react-router-dom'
-import sitePaths from '../../sites/mycompanyinfrance.fr/sitePaths'
 import { analysisWithDefaultsSelector } from 'Selectors/analyseSelectors'
-import './SimpleTarget.css'
+import './ImpactCard.css'
+
+let humanValue = v => {
+	let unitSuffix = 'équivalent CO₂'
+	let [raw, unit] =
+		v === 0
+			? [v, '']
+			: v < 1
+			? [v * 1000, 'grammes']
+			: v < 1000
+			? [v, 'kilos']
+			: [v / 1000, 'tonnes']
+
+	return [raw.toFixed(1), unit + ' ' + unitSuffix]
+}
 
 export default compose(
 	connect(state => ({ analysis: analysisWithDefaultsSelector(state) })),
@@ -16,32 +29,27 @@ export default compose(
 )(
 	class Targets extends React.Component {
 		render() {
-			let {
-				title,
-				nodeValue,
-				unité: unit,
-				dottedName
-			} = this.props.analysis.targets[0]
+			let { nodeValue, dottedName } = this.props.analysis.targets[0]
+
+			let [value, unit] = humanValue(nodeValue)
 			return (
 				<div id="targets">
-					<span className="icon">→</span>
-					<span
+					<div
 						className="content"
-						style={{ color: this.props.colours.textColour }}>
-						{/*<span className="title">{title}</span>
-					{' : '} */}
+						css={`
+							color: ${this.props.colours.textColour};
+						`}>
 						<span className="figure">
-							<span className="value">{nodeValue?.toFixed(1)}</span>{' '}
+							<span className="value">{value}</span>{' '}
 							<span className="unit">{unit}</span>
 						</span>
-						<Link
-							title="Quel est calcul ?"
-							style={{ color: this.props.colours.colour }}
-							to={this.props.sitePaths.documentation.index + '/' + dottedName}
-							className="explanation">
-							{emoji('❔')}
-						</Link>
-					</span>
+					</div>
+					<Link
+						to={this.props.sitePaths.documentation.index + '/' + dottedName}
+						className="explanation">
+						{emoji('💭 ')}
+						comprendre le calcul
+					</Link>
 				</div>
 			)
 		}
