@@ -52,7 +52,8 @@ export let enrichRule = rule => {
 			defaultValue = rule['par défaut'],
 			examples = rule['exemples'],
 			icon = rule['icônes'],
-			shortDescription = rule['description courte']
+			shortDescription = rule['description courte'],
+			period = rule['période']
 
 		return {
 			...rule,
@@ -66,7 +67,8 @@ export let enrichRule = rule => {
 			raw: rule,
 			examples,
 			icon,
-			shortDescription
+			shortDescription,
+			period
 		}
 	} catch (e) {
 		console.log(e)
