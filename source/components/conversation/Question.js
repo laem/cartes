@@ -90,7 +90,12 @@ export default compose(
 					radioDottedName.split(name + ' . ')[1]
 
 			return (
-				<ul>
+				<ul
+					css={`
+						display: flex;
+						justify-content: flex-end;
+						flex-wrap: wrap;
+					`}>
 					{choices.canGiveUp && (
 						<li key="aucun" className="variantLeaf aucun">
 							<RadioLabel
@@ -109,7 +114,7 @@ export default compose(
 					{choices.children &&
 						choices.children.map(({ name, title, dottedName, children }) =>
 							children ? (
-								<li key={name} className="variant">
+								<li key={name} className="variant" css="width: 100%">
 									<div>{title}</div>
 									{this.renderChildren({ children })}
 								</li>
