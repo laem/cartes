@@ -53,7 +53,7 @@ export default compose(
 							placeholder={t('votre réponse')}
 							style={{ border: `1px solid ${colours.textColourOnWhite}` }}
 						/>
-						{suffixed && (
+						{(suffixed || rulePeriod) && (
 							<label className="suffix" htmlFor={'step-' + dottedName}>
 								{unit}
 								{rulePeriod && (
