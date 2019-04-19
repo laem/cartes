@@ -54,24 +54,25 @@ export default compose(
 							placeholder={t('votre réponse')}
 							style={{ border: `1px solid ${colours.textColourOnWhite}` }}
 						/>
-						{suffixed && (
-							<label className="suffix" htmlFor={'step-' + dottedName}>
-								{answerSuffix}
-								{rulePeriod && (
-									<span>
-										{' '}
-										<T>par</T>{' '}
-										<T>
-											{
-												{ mois: 'mois', année: 'an' }[
-													rulePeriod === 'flexible' ? period : rulePeriod
-												]
-											}
-										</T>
-									</span>
-								)}
-							</label>
-						)}
+						{suffixed ||
+							(rulePeriod && (
+								<label className="suffix" htmlFor={'step-' + dottedName}>
+									{answerSuffix}
+									{rulePeriod && (
+										<span>
+											{' '}
+											<T>par</T>{' '}
+											<T>
+												{
+													{ mois: 'mois', année: 'an' }[
+														rulePeriod === 'flexible' ? period : rulePeriod
+													]
+												}
+											</T>
+										</span>
+									)}
+								</label>
+							))}
 						<SendButton {...{ disabled: submitDisabled, error, submit }} />
 					</div>
 					<InputSuggestions
