@@ -1,5 +1,5 @@
 import { resetSimulation, setSimulationConfig } from 'Actions/actions'
-import { compose } from 'ramda'
+import { compose, equals } from 'ramda'
 import React from 'react'
 import { connect } from 'react-redux'
 import { withRouter } from 'react-router-dom'
@@ -22,7 +22,7 @@ export default config => SimulationComponent =>
 		class DecoratedSimulation extends React.Component {
 			constructor(props) {
 				super(props)
-				if (config !== props.config) {
+				if (!equals(config, props.config)) {
 					props.setSimulationConfig(config)
 					if (props.config) {
 						props.resetSimulation()
