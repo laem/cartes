@@ -2,7 +2,6 @@
 // In a specific file
 // TODO import them automatically
 // TODO convert the legacy functions to new files
-import barème from 'Engine/mecanisms/barème.js'
 import { Parser } from 'nearley'
 import {
 	add,
@@ -29,6 +28,8 @@ import React from 'react'
 import { evaluateNode, makeJsx, mergeMissing, rewriteNode } from './evaluation'
 import Grammar from './grammar.ne'
 import knownMecanisms from './known-mecanisms.yaml'
+import barème from 'Engine/mecanisms/barème.js'
+import correspondance from 'Engine/mecanisms/correspondance.js'
 import {
 	mecanismAllOf,
 	mecanismComplement,
@@ -44,7 +45,8 @@ import {
 	mecanismReduction,
 	mecanismSum,
 	mecanismSynchronisation,
-	mecanismVariations
+	mecanismVariations,
+	mecanismCorrespondance
 } from './mecanisms'
 import { Node } from './mecanismViews/common'
 import { treat } from './traverse'
@@ -268,7 +270,8 @@ export let treatObject = (rules, rule, treatOptions) => rawNode => {
 			'inversion numérique': mecanismInversion(rule.dottedName),
 			allègement: mecanismReduction,
 			variations: mecanismVariations,
-			synchronisation: mecanismSynchronisation
+			synchronisation: mecanismSynchronisation,
+			correspondance
 		},
 		action = propOr(mecanismError, k, dispatch)
 
