@@ -5,6 +5,7 @@
 import barème from 'Engine/mecanisms/barème'
 import barèmeContinu from 'Engine/mecanisms/barème-continu'
 import barèmeLinéaire from 'Engine/mecanisms/barème-linéaire'
+import correspondance from 'Engine/mecanisms/correspondance.js'
 import variations from 'Engine/mecanisms/variations'
 import operation from 'Engine/mecanisms/operation'
 import { Parser } from 'nearley'
@@ -138,6 +139,7 @@ export let parseObject = (rules, rule, parsedRules) => rawNode => {
 			'barème continu': barèmeContinu,
 			'le maximum de': mecanismMax,
 			'le minimum de': mecanismMin,
+			correspondance,
 			complément: mecanismComplement,
 			'une possibilité': mecanismOnePossibility(rule.dottedName),
 			'inversion numérique': mecanismInversion(rule.dottedName),
