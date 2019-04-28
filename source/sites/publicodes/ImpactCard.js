@@ -82,7 +82,10 @@ export default compose(
 											? 's'
 											: '')}
 								</div>
-								<div>de crédit carbone personnel</div>
+								de&nbsp;
+								<Link css="color: inherit" to="/scénarios">
+									crédit carbone personnel
+								</Link>
 							</>
 						)}
 					</div>
