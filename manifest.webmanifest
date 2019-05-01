@@ -1,25 +1,15 @@
 {
-	"name": "Simulateur d'embauche",
-	"short_name": "Embauche",
-	"description": "Jongler entre les différents salaires lors d'une embauche",
+	"name": "Futureco",
+	"short_name": "Futureco",
+	"description": "Découvrir l'impact de nos gestes quotidiens sur le climat",
 	"display": "standalone",
 	"lang": "fr",
 	"orientation": "portrait-primary",
-	"theme_color": "#2975d1",
+	"theme_color": "#3742fa",
 	"icons": [
 		{
-			"src": "/source/images/logo/logo-simulateur-48.png",
+			"src": "/source/sites/publicodes/logo.png",
 			"sizes": "48x48",
-			"type": "image/png"
-		},
-		{
-			"src": "/source/images/logo/logo-simulateur-144.png",
-			"sizes": "144x144",
-			"type": "image/png"
-		},
-		{
-			"src": "/source/images/logo/logo-simulateur-192.png",
-			"sizes": "192x192",
 			"type": "image/png"
 		}
 	]
