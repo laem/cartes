@@ -29,7 +29,7 @@ module.exports = {
 			template: 'index.html',
 			inject: false,
 			chunks: ['publicodes'],
-			title: 'Futureco ✍️',
+			title: 'Futureco 🔥',
 			description: "L'impact sur le climat de vos gestes quotidiens",
 			filename: 'publicodes.html'
 		})
