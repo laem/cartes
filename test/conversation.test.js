@@ -1,9 +1,12 @@
-import { expect } from 'chai';
-import { enrichRule, rulesFr as rules } from 'Engine/rules';
-import { assocPath, merge } from 'ramda';
-import reducers from 'Reducers/rootReducer';
-import salariéConfig from '../source/components/simulationConfigs/salarié.yaml';
-import { currentQuestionSelector, nextStepsSelector } from '../source/selectors/analyseSelectors';
+import { expect } from 'chai'
+import { enrichRule, rulesFr as rules } from 'Engine/rules'
+import { assocPath, merge } from 'ramda'
+import reducers from 'Reducers/rootReducer'
+import salariéConfig from '../source/components/simulationConfigs/salarié.yaml'
+import {
+	currentQuestionSelector,
+	nextStepsSelector
+} from '../source/selectors/analyseSelectors'
 let baseState = {
 	conversationSteps: { foldedSteps: [] },
 	form: { conversation: { values: {} } }
@@ -21,9 +24,10 @@ describe('conversation', function() {
 			],
 			rules = rawRules.map(enrichRule),
 			state = merge(baseState, {
-				simulation: { config: { objectifs: ['startHere']}}
+				simulation: { config: { objectifs: ['startHere'] } },
+				rules
 			}),
-			currentQuestion = currentQuestionSelector(state, { rules })
+			currentQuestion = currentQuestionSelector(state)
 
 		expect(currentQuestion).to.equal('top . aa')
 	})
@@ -45,7 +49,8 @@ describe('conversation', function() {
 			rules = rawRules.map(enrichRule)
 
 		let step1 = merge(baseState, {
-			simulation: { config: { objectifs: ['startHere']}}
+			simulation: { config: { objectifs: ['startHere'] } },
+			rules
 		})
 		let step2 = reducers(
 			assocPath(
@@ -83,7 +88,7 @@ describe('conversation', function() {
 			step: 'top . bb'
 		})
 
-		expect(currentQuestionSelector(lastStep, { rules })).to.equal('top . bb')
+		expect(currentQuestionSelector(lastStep)).to.equal('top . bb')
 		expect(lastStep.conversationSteps).to.have.property('foldedSteps')
 		expect(lastStep.conversationSteps.foldedSteps).to.have.lengthOf(1)
 		expect(lastStep.conversationSteps.foldedSteps[0]).to.equal('top . aa')
@@ -91,47 +96,44 @@ describe('conversation', function() {
 
 	it('should first ask for questions without defaults, then those with defaults', function() {
 		let rawRules = [
-			{  nom: 'net',
-				formule: 'brut - cotisation'
-			},
-			{
-				nom: 'brut',
-				question: 'Quel est le salaire brut ?',
-				format: 'euro'
-			},
-			{
-				nom: 'cotisation',
-				formule: {
-					multiplication: {
-						assiette: 'brut',
-						variations: [
-							{
-								si: 'cadre',
-								alors: {
-									taux: '77%'
+				{ nom: 'net', formule: 'brut - cotisation' },
+				{
+					nom: 'brut',
+					question: 'Quel est le salaire brut ?',
+					format: 'euro'
+				},
+				{
+					nom: 'cotisation',
+					formule: {
+						multiplication: {
+							assiette: 'brut',
+							variations: [
+								{
+									si: 'cadre',
+									alors: {
+										taux: '77%'
+									}
+								},
+								{
+									sinon: {
+										taux: '80%'
+									}
 								}
-							}, {
-								sinon: {
-									taux: '80%'
-								}
-
-							}
-						]
-
+							]
+						}
 					}
+				},
+				{
+					nom: 'cadre',
+					question: 'Est-ce un cadre ?',
+					'par défaut': 'non'
 				}
-			},
-			{
-				nom: 'cadre',
-				question: 'Est-ce un cadre ?',
-				'par défaut': 'non'
-			}
-		]
-      ,
+			],
 			rules = rawRules.map(enrichRule)
 
 		let step1 = merge(baseState, {
-			simulation: { config: { objectifs: ['net']}}
+			simulation: { config: { objectifs: ['net'] } },
+			rules
 		})
 		expect(currentQuestionSelector(step1, { rules })).to.equal('brut')
 
@@ -153,9 +155,10 @@ describe('conversation', function() {
 describe('real conversation', function() {
 	it('should not have more than X questions', function() {
 		let state = merge(baseState, {
-			simulation: { config: salariéConfig }
+				simulation: { config: salariéConfig },
+				rules
 			}),
-			nextSteps = nextStepsSelector(state, { rules })
+			nextSteps = nextStepsSelector(state)
 
 		expect(nextSteps.length).to.be.below(30) // If this breaks, that's good news
 		expect(nextSteps.length).to.be.above(10)
