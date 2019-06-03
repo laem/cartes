@@ -811,6 +811,13 @@
   resolved "https://registry.yarnpkg.com/@icons/material/-/material-0.2.4.tgz#e90c9f71768b3736e76d7dd6783fc6c2afa88bc8"
   integrity sha512-QPcGmICAPbGLGb6F/yNf/KzKqvFx8z5qx3D1yFqVAjoFmXK35EgyW+cJ57Te3CNsmzblwtzakLGFqHPqrfb4Tw==
 
+"@microlink/react@^4.0.1":
+  version "4.0.1"
+  resolved "https://registry.yarnpkg.com/@microlink/react/-/react-4.0.1.tgz#3d98c30d24abead327c8731f2757667699553711"
+  integrity sha512-6CAAk4M4vFj+Cpbazw9zIlEpGk2drEjULK/eGjeg/Zhf0ZxTcaMUIYJAYyj6wYr183Wde5to6jFXgfa+8ptD1g==
+  dependencies:
+    nanoclamp "~1.2.11"
+
 "@octokit/rest@^15.2.6":
   version "15.18.1"
   resolved "https://registry.yarnpkg.com/@octokit/rest/-/rest-15.18.1.tgz#ec7fb0f8775ef64dc095fae6635411d3fbff9b62"
@@ -6156,6 +6163,11 @@ nan@^2.9.2:
   version "2.13.2"
   resolved "https://registry.yarnpkg.com/nan/-/nan-2.13.2.tgz#f51dc7ae66ba7d5d55e1e6d4d8092e802c9aefe7"
   integrity sha512-TghvYc72wlMGMVMluVo9WRJc0mB8KxxF/gZ4YYFy7V2ZQX9l7rgbPg7vjS9mt6U5HXODVFVI2bOduCzwOMv/lw==
+
+nanoclamp@~1.2.11:
+  version "1.2.11"
+  resolved "https://registry.yarnpkg.com/nanoclamp/-/nanoclamp-1.2.11.tgz#2dc868fad1e31e0e02a0920bc4373c6ff2e74134"
+  integrity sha512-V/g1GXe7mwjR3JiZbs46HJz9gjk2/+uS+HbaxvxuAHwWVGuZx6fkEb+UfIscQ5ZtavYO584W14p+Y0E2RrM9Ag==
 
 nanomatch@^1.2.9:
   version "1.2.13"
