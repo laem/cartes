@@ -154,10 +154,10 @@ export default compose(
 										situationExists={valuesToShow}
 										rule={displayedRule}
 									/>
+									{this.renderReferences(flatRule)}
 									{!isEmpty(namespaceRules) && (
 										<NamespaceRulesList {...{ namespaceRules }} />
 									)}
-									{this.renderReferences(flatRule)}
 								</section>
 								{this.renderToggleSourceButton()}
 							</Animate.fromBottom>
