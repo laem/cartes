@@ -154,10 +154,10 @@ export default compose(
 										situationExists={valuesToShow}
 										rule={displayedRule}
 									/>
+									{this.renderReferences(flatRule)}
 									{!isEmpty(namespaceRules) && (
 										<NamespaceRulesList {...{ namespaceRules }} />
 									)}
-									{this.renderReferences(flatRule)}
 								</section>
 								{this.renderToggleSourceButton()}
 							</Animate.fromBottom>
@@ -202,7 +202,7 @@ let NamespaceRulesList = compose(
 	return (
 		<section>
 			<h2>
-				<Trans>Règles associées</Trans>
+				<Trans>Pages liées</Trans>
 			</h2>
 			<ul>
 				{namespaceRules.map(r => (

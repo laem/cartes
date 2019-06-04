@@ -1,5 +1,6 @@
 import { AssertionError } from 'chai'
 import { rules } from '../source/engine/rules'
+import rawRules from 'Règles/base.yaml'
 import { parseAll } from '../source/engine/traverse'
 import { exampleAnalysisSelector } from 'Selectors/analyseSelectors'
 import { merge } from 'ramda'
@@ -10,6 +11,7 @@ let runExamples = (examples, rule) =>
 	examples.map(ex => {
 		let runExample = exampleAnalysisSelector(
 				{
+					rules: rawRules,
 					currentExample: {
 						situation: ex.situation,
 						dottedName: rule.dottedName
@@ -23,8 +25,8 @@ let runExamples = (examples, rule) =>
 				exampleValue === goal
 					? true
 					: typeof goal === 'number'
-						? Math.abs((exampleValue - goal) / goal) < 0.001
-						: goal === null && exampleValue === 0
+					? Math.abs((exampleValue - goal) / goal) < 0.001
+					: goal === null && exampleValue === 0
 
 		return merge(ex, {
 			ok,

@@ -28,7 +28,7 @@ describe('Mécanismes', () =>
 								'valeur attendue': valeur,
 								'variables manquantes': expectedMissing
 							}) =>
-								it.only(testTexte == null ? '' : testTexte + '', () => {
+								it(testTexte == null ? '' : testTexte + '', () => {
 									let rules = parseAll(
 											suite
 												.map(item =>
