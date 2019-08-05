@@ -2,11 +2,11 @@ import { T } from 'Components'
 import React from 'react'
 import InfoBulle from 'Ui/InfoBulle'
 
-export default function ResultReliability({ progress }) {
+export default function ResultReliability({ progress, noProgressMessage }) {
 	return (
 		<span>
 			<small>
-				{progress === 0 && (
+				{!noProgressMessage && progress === 0 && (
 					<T k="simulateurs.précision.défaut">
 						Affinez la simulation en répondant aux questions suivantes :
 					</T>
