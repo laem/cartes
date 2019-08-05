@@ -20,13 +20,17 @@ export default connect(state => ({
 	firstStepCompleted,
 	explanations,
 	customEndMessages,
-	progress
+	progress,
+	targets,
+	showConversation,
+	noFeedback,
+	noProgressMessage
 }) {
 	return (
 		<>
-			<TargetSelection />
+			{targets || <TargetSelection />}
 			<SearchButton invisibleButton />
-			{firstStepCompleted && (
+			{(showConversation || firstStepCompleted) && (
 				<>
 					<Animate.fromTop>
 						<div
@@ -37,7 +41,7 @@ export default connect(state => ({
 								marginBottom: '0.6rem',
 								alignItems: 'flex-end'
 							}}>
-							<ResultReliability progress={progress} />
+							<ResultReliability noProgressMessage={noProgressMessage} progress={progress} />
 							<SeeAnswersButton />
 						</div>
 						<div className="ui__ full-width choice-group">
@@ -50,14 +54,16 @@ export default connect(state => ({
 							<Progress progress={progress} className="ui__ full-width" />
 						)}
 						<br />
-						<PageFeedback
-							customMessage={
-								<T k="feedback.simulator">
-									Êtes-vous satisfait de ce simulateur ?
-								</T>
-							}
-							customEventName="rate simulator"
-						/>{' '}
+						{!noFeedback && (
+							<PageFeedback
+								customMessage={
+									<T k="feedback.simulator">
+										Êtes-vous satisfait de ce simulateur ?
+									</T>
+								}
+								customEventName="rate simulator"
+							/>
+						)}
 						{explanations}
 					</Animate.fromTop>
 				</>
