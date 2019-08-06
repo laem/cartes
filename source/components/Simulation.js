@@ -23,7 +23,8 @@ export default connect(state => ({
 	progress,
 	targets,
 	showConversation,
-	noFeedback
+	noFeedback,
+	noProgressMessage
 }) {
 	return (
 		<>
@@ -40,7 +41,7 @@ export default connect(state => ({
 								marginBottom: '0.6rem',
 								alignItems: 'flex-end'
 							}}>
-							<ResultReliability progress={progress} />
+							<ResultReliability noProgressMessage={noProgressMessage} progress={progress} />
 							<SeeAnswersButton />
 						</div>
 						<div className="ui__ full-width choice-group">

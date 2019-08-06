@@ -28,6 +28,7 @@ export default connect(state => ({ rules: flatRulesSelector(state) }))(
 					</h1>
 					<Simulation
 						noFeedback
+						noProgressMessage
 						showConversation
 						targets={
 							<>
