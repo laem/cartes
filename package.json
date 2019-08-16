@@ -27,6 +27,7 @@
 		"color-convert": "^1.9.2",
 		"focus-trap-react": "^3.1.2",
 		"fuse.js": "^3.4.5",
+		"great-circle": "^0.2.8",
 		"i18next": "^14.1.1",
 		"iframe-resizer": "^3.6.2",
 		"js-yaml": "^3.13.1",
