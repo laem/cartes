@@ -7,6 +7,7 @@ import Provider from '../../Provider'
 import RulesList from '../mon-entreprise.fr/pages/Documentation/RulesList'
 import About from './About'
 import Contribution from './Contribution'
+import Day from './Day'
 import Landing from './Landing'
 import Scenarios from './Scenarios'
 import Simulateur from './Simulateur'
@@ -36,6 +37,7 @@ class App extends Component {
 							<Route path="/contribuer/:input?" component={Contribution} />
 							<Route path="/scénarios" component={Scenarios} />
 							<Route path="/à-propos" component={About} />
+							<Route path="/journée" component={Day} />
 							<Route
 								path="/studio"
 								component={() => (
