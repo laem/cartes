@@ -50,6 +50,7 @@ export default withFigure => {
 					{icônes && emoji(icônes + ' ')}
 				</div>
 				<span css="width: 100%">{title}</span>
+				{nodeValue}
 				{withFigure && (
 					<>
 						<div css="visibility: hidden">placeholder</div>
