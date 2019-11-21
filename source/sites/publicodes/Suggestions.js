@@ -9,7 +9,6 @@ import { Link } from 'react-router-dom'
 import { flatRulesSelector } from 'Selectors/analyseSelectors'
 import ItemCard from './ItemCard'
 
-let ItemCardWithoutData = ItemCard()
 let buildFuse = rules =>
 	new Fuse(
 		rules.map(pick(['title', 'espace', 'description', 'name', 'dottedName'])),
@@ -79,7 +78,7 @@ export default connect(
 												opacity: 1 !important;
 											}
 										`}>
-										<ItemCardWithoutData {...rule} />
+										<ItemCard dottedName={rule.dottedName} />
 									</Link>
 								</li>
 							)
