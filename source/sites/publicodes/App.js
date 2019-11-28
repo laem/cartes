@@ -26,7 +26,7 @@ class App extends Component {
 				sitePaths={sitePaths()}
 				reduxMiddlewares={[]}>
 				<StoreProvider>
-					<div className="ui__ container">
+					<div className="">
 						<TopBar />
 						<Switch>
 							<Route exact path="/" component={Landing} />
