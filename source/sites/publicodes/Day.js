@@ -1,63 +1,87 @@
 import React, { useEffect, useState } from 'react'
 import emoji from 'react-easy-emoji'
+import { animated, useSpring } from 'react-spring'
+import useMeasure from './useMeasure'
 
 export default () => {
 	return (
 		<section
 			css={`
-			height: 100vh;
-			width: 100vw;
-			display: flex;
-			justify-content: center;
-			flex-wrap: wrap;
-			flex-direction: column;
-			text-align: center;
-		`}>
+				height: 100vh;
+				width: 100vw;
+				display: flex;
+				justify-content: center;
+				flex-wrap: wrap;
+				flex-direction: column;
+				text-align: center;
+			`}>
 			<Content />
 		</section>
 	)
 }
-
-const firstTarget = 500 / 365
 
 const Content = () => {
 	const [scenario, setScenario] = useState({ quota: 500, warming: '1.5' })
 	const [searching, setSearching] = useState(false)
 	const [items, setItems] = useState([])
 
-	const setNextLimit = () => scenario.quota === 500 ? setScenario({ quota: 1000, warming: '2' }) : setScenario({ quota: 2000, warming: '3' })
-
+	const setNextLimit = () =>
+		scenario.quota === 500
+			? setScenario({ quota: 1000, warming: '2' })
+			: setScenario({ quota: 2000, warming: '3' })
 
 	const footprint = items.reduce((memo, [, , weight]) => memo + weight, 0),
 		limitReached = footprint > scenario.quota / 365
 
-	if (searching) return <Search items={items} click={(item) => {
-		setSearching(false)
-		setItems([...items, item])
-	}} />
-	if (limitReached) return <LimitReached setNextLimit={setNextLimit} scenario={scenario} />
-	if (items.length) return <Activités items={items} setSearching={setSearching} quota={scenario.quota} />
+	if (searching)
+		return (
+			<Search
+				items={items}
+				click={item => {
+					setSearching(false)
+					setItems([...items, item])
+				}}
+			/>
+		)
+	if (limitReached)
+		return <LimitReached setNextLimit={setNextLimit} scenario={scenario} />
+	if (items.length)
+		return (
+			<Activités
+				items={items}
+				setSearching={setSearching}
+				quota={scenario.quota}
+			/>
+		)
 	return <Splash action={() => setSearching(true)} />
-
 }
 
 const suggestions = [
-	['J\'ai petit-déjeuné', '🥐☕', 0.5]
-	, ['Je me suis déplacé', '💼🚶🏿‍♀️', 0.8, true],
-	['J\'ai déjeuné à midi', '🍽️', 0.8]
+	["J'ai petit-déjeuné", '🥐☕', 0.5],
+	['Je me suis déplacé', '💼🚶🏿‍♀️', 0.8, true],
+	["J'ai déjeuné à midi", '🍽️', 0.8]
 ]
 const Search = ({ click, items }) => (
 	<>
 		<h1>Qu'as-tu fait de la journée ? </h1>
 		<ul css="li { margin: 1rem 2rem; list-style-type: none;} button { width: 80%}; img {font-size: 150%} ">
-			{suggestions.filter(([t, , , repeats]) => repeats || !items.find(([it]) => t === it)).map(item => {
-				let [text, icons] = item
-				return (
-					<li key={text}>
-						<button className="ui__ card" onClick={() => click(item)}>{emoji(icons)} {text}
-						</button></li>)
-			})}</ul>
-	</>)
+			{suggestions
+				.filter(
+					([t, , , repeats]) => repeats || !items.find(([it]) => t === it)
+				)
+				.map(item => {
+					let [text, icons] = item
+					return (
+						<li key={text}>
+							<button className="ui__ card" onClick={() => click(item)}>
+								{emoji(icons)} {text}
+							</button>
+						</li>
+					)
+				})}
+		</ul>
+	</>
+)
 
 const blackScreenStyle = `
 		background: black;
@@ -71,49 +95,72 @@ const blackScreenStyle = `
 		padding: 2rem;
 `
 
-
 const LimitReached = ({ setNextLimit, scenario: { quota, warming } }) => {
 	useEffect(() => {
 		window.navigator.vibrate(200)
-	}
-		, [])
+	}, [])
 	return (
-		<div css={blackScreenStyle}> {warming === '3' ? <h1>Game over {emoji('😵')}, comme on dit.</h1> : <>
-			<h1> + {warming}° dépassé {emoji('🌡️🥵')}</h1>
-			<p>La taille de votre écran est finie, tout comme les limites de notre planète bleue {emoji('🌍')}.</p>
-			<p>Vous avez dépassé le quota qui permet de limiter le réchauffement à +{warming}°.</p>
+		<div css={blackScreenStyle}>
+			{' '}
+			{warming === '3' ? (
+				<h1>Game over {emoji('😵')}, comme on dit.</h1>
+			) : (
+				<>
+					<h1>
+						{' '}
+						+ {warming}° dépassé {emoji('🌡️🥵')}
+					</h1>
+					<p>
+						La taille de votre écran est finie, tout comme les limites de notre
+						planète bleue {emoji('🌍')}.
+					</p>
+					<p>
+						Vous avez dépassé le quota qui permet de limiter le réchauffement à
+						+{warming}°.
+					</p>
 
-			<button className="ui__ button plain" onClick={setNextLimit}>Continuer ma journée</button>
-		</>}
-
+					<button className="ui__ button plain" onClick={setNextLimit}>
+						Continuer ma journée
+					</button>
+				</>
+			)}
 		</div>
 	)
 }
 
 const Splash = ({ action }) => {
 	const date = new Date(),
-		today = date.toLocaleDateString('fr', { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' })
+		today = date.toLocaleDateString('fr', {
+			weekday: 'long',
+			year: 'numeric',
+			month: 'long',
+			day: 'numeric'
+		})
 	return (
-
 		<div
 			css={`
-			small {font-size: 100%}
-			em {
-				background: #78e08f;
-				font-style: normal;
-				padding: 0 .2rem;
-			}
+				small {
+					font-size: 100%;
+				}
+				em {
+					background: #78e08f;
+					font-style: normal;
+					padding: 0 0.2rem;
+				}
 			`}>
 			<small>{today}</small>
-			<h1>As-tu été <em>écolo</em> aujourd'hui ?</h1>
-			<button className="ui__ button plain" onClick={action}>Commencer</button>
+			<h1>
+				As-tu été <em>écolo</em> aujourd'hui ?
+			</h1>
+			<button className="ui__ button plain" onClick={action}>
+				Commencer
+			</button>
 		</div>
 	)
 }
 
 const halfColors = ['#e8817f', '#c3727c', '#8d5273', '#5a336e', '#311f62'],
 	colors = [...halfColors.reverse(), ...halfColors]
-
 
 const Activités = ({ items, setSearching, quota }) => (
 	<ul
@@ -135,37 +182,64 @@ const Activités = ({ items, setSearching, quota }) => (
 			}
 		`}>
 		{items.map(([text, icon, weight], i) => (
-			<li
-				css={`
-					line-height: initial;
-					background: ${icon ? colors[i] : 'white'};
-					height: ${(weight / (quota / 365)) * 100}vh;
-					display: flex;
-					flex-direction: column;
-					justify-content: center;
-				`}>
-				<div>{emoji(icon)}</div>
-			</li>
+			<Activité key={i} {...{ weight, quota, icon, i }} />
 		))}
-		<button className="ui__ card"
+		<button
+			className="ui__ card"
 			onClick={setSearching}
 			css={`
-		font-size: 300%;
-		position: absolute; 
-		bottom: 1rem;
-		right: 1rem;
-		padding: 0;
-		border-radius: 10rem !important;
-		width: 7rem;
-		height: 7rem;
-		background: var(--colour);
-		color: var(--textColour);
-		display: flex;
-		align-items: center;
-		justify-content: center;
-		`}>+</button>
+				font-size: 300%;
+				position: absolute;
+				bottom: 1rem;
+				right: 1rem;
+				padding: 0;
+				border-radius: 10rem !important;
+				width: 7rem;
+				height: 7rem;
+				background: var(--colour);
+				color: var(--textColour);
+				display: flex;
+				align-items: center;
+				justify-content: center;
+			`}>
+			+
+		</button>
 	</ul>
 )
+
+function Activité({ weight, quota, icon, i }) {
+	const [open, toggle] = useState(false)
+	const [bind, { height }] = useMeasure()
+	const props = useSpring({ height: open ? height : 0 })
+
+	useEffect(() => {
+		toggle(!open)
+	}, [])
+
+	return (
+		<li
+			css={`
+				line-height: initial;
+				height: ${(weight / (quota / 365)) * 100}vh;
+				justify-content: center;
+				position: relative;
+			`}
+			{...bind}>
+			<animated.div
+				style={props}
+				css={`
+					position: absolute;
+					top: 0;
+					left: 0;
+					width: 100%;
+					height: 100%;
+					background: ${icon ? colors[i] : 'white'};
+				`}>
+				{emoji(icon)}
+			</animated.div>
+		</li>
+	)
+}
 
 const PetitDéjeuner = () => (
 	<li>
