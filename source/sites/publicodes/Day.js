@@ -117,12 +117,12 @@ const LimitReached = ({ setNextLimit, scenario: { quota, warming } }) => {
 						+ {warming}° dépassé {emoji('🌡️🥵')}
 					</h1>
 					<p>
-						La taille de votre écran est finie, tout comme les limites de notre
+						La taille de cet écran est finie, tout comme les limites de notre
 						planète bleue {emoji('🌍')}.
 					</p>
 					<p>
-						Vous avez dépassé le quota qui permet de limiter le réchauffement à
-						+{warming}°.
+						Tu as dépassé le quota qui permet de limiter le réchauffement à +
+						{warming}°.
 					</p>
 
 					<button className="ui__ button plain" onClick={setNextLimit}>
