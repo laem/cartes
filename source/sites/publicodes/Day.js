@@ -13,7 +13,8 @@ export default () => {
 				flex-wrap: wrap;
 				flex-direction: column;
 				text-align: center;
-			`}>
+			`}
+		>
 			<Content />
 		</section>
 	)
@@ -69,7 +70,7 @@ const suggestions = [
 ]
 const Search = ({ click, items }) => (
 	<>
-		<h1>Qu'as-tu fait de la journée ? </h1>
+		<h1>Qu'as-tu fait aujourd'hui ? </h1>
 		<ul css="li { margin: 1rem 2rem; list-style-type: none;} button { width: 80%}; img {font-size: 150%} ">
 			{suggestions
 				.filter(
@@ -147,19 +148,25 @@ const Splash = ({ action }) => {
 			css={`
 				small {
 					font-size: 100%;
+					font-style: italic;
 				}
 				em {
 					background: #78e08f;
 					font-style: normal;
 					padding: 0 0.2rem;
 				}
-			`}>
+				h1 {
+					margin-top: 0.6rem;
+					margin-bottom: 3rem;
+				}
+			`}
+		>
 			<small>{today}</small>
 			<h1>
-				As-tu été <em>écolo</em> aujourd'hui ?
+				As-tu été <em>écolo</em> ?
 			</h1>
 			<button className="ui__ button plain" onClick={action}>
-				Commencer
+				Faire le test
 			</button>
 		</div>
 	)
@@ -186,7 +193,8 @@ const Activités = ({ display, items, setSearching, quota }) => (
 			img {
 				font-size: 180%;
 			}
-		`}>
+		`}
+	>
 		{items.map(([text, icon, weight], i) => (
 			<Activité key={text} {...{ weight, quota, icon, i }} />
 		))}
@@ -207,7 +215,8 @@ const Activités = ({ display, items, setSearching, quota }) => (
 				display: flex;
 				align-items: center;
 				justify-content: center;
-			`}>
+			`}
+		>
 			+
 		</button>
 	</ul>
@@ -229,7 +238,8 @@ function Activité({ weight, quota, icon, i }) {
 				height: ${height}vh;
 				justify-content: center;
 				position: relative;
-			`}>
+			`}
+		>
 			<animated.div
 				css={`
 					position: absolute;
@@ -241,7 +251,8 @@ function Activité({ weight, quota, icon, i }) {
 					align-items: center;
 					justify-content: center;
 				`}
-				style={style}>
+				style={style}
+			>
 				{emoji(icon)}
 			</animated.div>
 		</li>
