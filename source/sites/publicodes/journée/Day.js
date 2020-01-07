@@ -1,11 +1,30 @@
-import React, { useState } from 'react'
+import React, { useContext } from 'react'
 import emoji from 'react-easy-emoji'
+import { Route, Switch } from 'react-router-dom'
+import { StoreContext } from '../StoreContext'
 import Activités from './Activités'
 import LimitReached from './Limit'
 import { Search } from './Search'
 import Splash from './Splash'
 
 export default () => {
+	let {
+		state: { items, scenario },
+		dispatch
+	} = useContext(StoreContext)
+	const setNextLimit = () =>
+		scenario.quota === 500
+			? dispatch({
+					type: 'SET_SCENARIO',
+					scenario: { quota: 1000, warming: '2' }
+			  })
+			: dispatch({
+					type: 'SET_SCENARIO',
+					scenario: { quota: 2000, warming: '3' }
+			  })
+
+	const footprint = items.reduce((memo, [, , weight]) => memo + weight, 0),
+		limitReached = footprint > scenario.quota / 365
 	return (
 		<section
 			css={`
@@ -18,51 +37,26 @@ export default () => {
 				text-align: center;
 			`}
 		>
-			<Content />
-		</section>
-	)
-}
-
-const Content = () => {
-	const [scenario, setScenario] = useState({ quota: 500, warming: '1.5' })
-	const [searching, setSearching] = useState(false)
-	const [items, setItems] = useState([])
-
-	const setNextLimit = () =>
-		scenario.quota === 500
-			? setScenario({ quota: 1000, warming: '2' })
-			: setScenario({ quota: 2000, warming: '3' })
-
-	const footprint = items.reduce((memo, [, , weight]) => memo + weight, 0),
-		limitReached = footprint > scenario.quota / 365
-
-	return (
-		<>
-			{searching && (
-				<Search
-					items={items}
-					click={item => {
-						setSearching(false)
-						setItems([...items, item])
-					}}
-				/>
-			)}
-
-			{limitReached && (
+			{limitReached ? (
 				<LimitReached setNextLimit={setNextLimit} scenario={scenario} />
+			) : (
+				<Switch>
+					<Route exact path="/" component={Splash} />
+					<Route path="/thermomètre">
+						<Activités items={items} quota={scenario.quota} />
+					</Route>
+					<Route path="/ajouter">
+						<Search
+							items={items}
+							click={item => {
+								dispatch({ type: 'SET_ITEMS', items: [...items, item] })
+							}}
+						/>
+					</Route>
+					<Route path="/limite" component={LimitReached} />
+				</Switch>
 			)}
-			{items.length > 0 && (
-				<Activités
-					display={!limitReached && !searching}
-					items={items}
-					setSearching={setSearching}
-					quota={scenario.quota}
-				/>
-			)}
-			{!items.length && !searching && !limitReached && (
-				<Splash action={() => setSearching(true)} />
-			)}
-		</>
+		</section>
 	)
 }
 

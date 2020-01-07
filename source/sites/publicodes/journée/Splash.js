@@ -1,6 +1,7 @@
 import React from 'react'
+import { Link } from 'react-router-dom'
 
-export default ({ action }) => {
+export default ({}) => {
 	const date = new Date(),
 		today = date.toLocaleDateString('fr', {
 			weekday: 'long',
@@ -30,9 +31,9 @@ export default ({ action }) => {
 			<h1>
 				As-tu été <em>écolo</em> ?
 			</h1>
-			<button className="ui__ button plain" onClick={action}>
-				Faire le test
-			</button>
+			<Link to="/ajouter">
+				<button className="ui__ button plain">Faire le test</button>
+			</Link>
 		</div>
 	)
 }

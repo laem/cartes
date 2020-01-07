@@ -1,5 +1,6 @@
 let initialState = {
-	scenario: 'B'
+	scenario: { quota: 500, warming: '1.5' },
+	items: []
 }
 
 let reducer = (state = initialState, action) => {
@@ -8,6 +9,11 @@ let reducer = (state = initialState, action) => {
 			return {
 				...state,
 				scenario: action.scenario
+			}
+		case 'SET_ITEMS':
+			return {
+				...state,
+				items: action.items
 			}
 		default:
 			throw new Error('Unexpected action')

@@ -5,13 +5,13 @@ import { animated, useSpring } from 'react-spring'
 const halfColors = ['#e8817f', '#c3727c', '#8d5273', '#5a336e', '#311f62'],
 	colors = [...halfColors.reverse(), ...halfColors]
 
-export default function Activité({ weight, quota, icon, i }) {
+export default function Activité({ weight, quota, icon, i, animate }) {
 	const [open, toggle] = useState(false)
 	const height = (weight / (quota / 365)) * 100
-	const style = useSpring({ height: (open ? 100 : 0) + '%' })
+	const style = useSpring({ height: (!animate ? 100 : open ? 100 : 0) + '%' })
 
 	useEffect(() => {
-		toggle(!open)
+		toggle(true)
 	}, [])
 
 	return (

@@ -1,5 +1,6 @@
 import React, { useEffect } from 'react'
 import emoji from 'react-easy-emoji'
+import { Link } from 'react-router-dom'
 
 const blackScreenStyle = `
 		background: black;
@@ -45,10 +46,14 @@ export default function LimitReached({
 						Tu as dépassé le quota qui permet de limiter le réchauffement à +
 						{warming}°.
 					</p>
-
-					<button className="ui__ button plain" onClick={setNextLimit}>
-						Continuer ma journée
-					</button>
+					<Link to="/thermomètre">
+						<button
+							className="ui__ button plain"
+							onClick={() => setNextLimit()}
+						>
+							Continuer ma journée
+						</button>
+					</Link>
 				</>
 			)}
 		</div>

@@ -1,5 +1,6 @@
 import React from 'react'
 import emoji from 'react-easy-emoji'
+import { Link } from 'react-router-dom'
 
 export const suggestions = [
 	["J'ai petit-déjeuné", '🥐☕', 0.5],
@@ -18,9 +19,11 @@ export const Search = ({ click, items }) => (
 					let [text, icons] = item
 					return (
 						<li key={text}>
-							<button className="ui__ card" onClick={() => click(item)}>
-								{emoji(icons)} {text}
-							</button>
+							<Link to="/thermomètre">
+								<button className="ui__ card" onClick={() => click(item)}>
+									{emoji(icons)} {text}
+								</button>
+							</Link>
 						</li>
 					)
 				})}
