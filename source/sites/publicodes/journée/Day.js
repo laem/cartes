@@ -66,8 +66,6 @@ const Content = () => {
 	)
 }
 
-
-
 // Ancien code, peut-être à réutiliser
 const PetitDéjeuner = () => (
 	<li>

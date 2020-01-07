@@ -24,7 +24,13 @@ export default function LimitReached({
 		<div css={blackScreenStyle}>
 			{' '}
 			{warming === '3' ? (
-				<h1>Game over {emoji('😵')}, comme on dit.</h1>
+				<>
+					<h1>Game over {emoji('😵')}</h1>
+					<p css="width: 20rem; margin: 0 auto">
+						Espérons que les astronomes bossent bien, car il faudra plusieurs
+						autres {emoji('🌍')} pour encaisser ta consommation personnelle.
+					</p>
+				</>
 			) : (
 				<>
 					<h1>
