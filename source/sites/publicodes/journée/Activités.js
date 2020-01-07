@@ -44,7 +44,6 @@ export default function Activités() {
 			))}
 			<Link to="/ajouter">
 				<button
-					className="ui__ card"
 					css={`
 						font-size: 300%;
 						position: absolute;
@@ -54,11 +53,13 @@ export default function Activités() {
 						border-radius: 10rem !important;
 						width: 7rem;
 						height: 7rem;
-						background: var(--colour);
-						color: var(--textColour);
+						background: var(--color);
+						color: var(--textColor);
 						display: flex;
 						align-items: center;
 						justify-content: center;
+						box-shadow: 0 1px 3px rgba(41, 117, 209, 0.12),
+							0 1px 2px rgba(41, 117, 209, 0.24);
 					`}
 				>
 					+
