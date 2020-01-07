@@ -31,7 +31,7 @@ export default ({}) => {
 			<h1>
 				As-tu été <em>écolo</em> ?
 			</h1>
-			<Link to="/ajouter">
+			<Link to="/journée/ajouter">
 				<button className="ui__ button plain">Faire le test</button>
 			</Link>
 		</div>

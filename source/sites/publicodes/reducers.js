@@ -1,5 +1,5 @@
 let initialState = {
-	scenario: { quota: 500, warming: '1.5' },
+	scenario: 'C',
 	items: []
 }
 

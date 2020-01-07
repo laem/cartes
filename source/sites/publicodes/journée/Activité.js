@@ -5,9 +5,11 @@ import { animated, useSpring } from 'react-spring'
 const halfColors = ['#e8817f', '#c3727c', '#8d5273', '#5a336e', '#311f62'],
 	colors = [...halfColors.reverse(), ...halfColors]
 
-export default function Activité({ weight, quota, icon, i, animate }) {
+export default function Activité({ item, quota, i, animate }) {
+	const weight = item.formule,
+		icônes = item.icônes || ''
 	const [open, toggle] = useState(false)
-	const height = (weight / (quota / 365)) * 100
+	const height = (weight / ((quota * 1000) / 365)) * 100
 	const style = useSpring({ height: (!animate ? 100 : open ? 100 : 0) + '%' })
 
 	useEffect(() => {
@@ -29,14 +31,19 @@ export default function Activité({ weight, quota, icon, i, animate }) {
 					top: 0;
 					left: 0;
 					width: 100%;
-					background: ${icon ? colors[i] : 'white'};
+					background: ${icônes ? colors[i] : 'white'};
 					display: flex;
 					align-items: center;
 					justify-content: center;
+					small {
+						margin-left: 0.6rem;
+						color: white;
+					}
 				`}
 				style={style}
 			>
-				{emoji(icon)}
+				{emoji(icônes)}
+				<small>{Math.round(height) + '%'}</small>
 			</animated.div>
 		</li>
 	)

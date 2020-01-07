@@ -76,16 +76,18 @@ export default (withFigure) => {
 								font-size: 80%;
 							`}
 						>
-							<HumanCarbonImpact
-								{...{
-									nodeValue,
-									formule,
-									dottedName,
-									scenario,
-									nextSteps,
-									foldedSteps,
-								}}
-							/>
+							{scenario && (
+								<HumanCarbonImpact
+									{...{
+										nodeValue,
+										formule,
+										dottedName,
+										scenario,
+										nextSteps,
+										foldedSteps,
+									}}
+								/>
+							)}
 						</div>
 					</>
 				)}

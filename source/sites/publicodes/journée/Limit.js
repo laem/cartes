@@ -16,7 +16,7 @@ const blackScreenStyle = `
 
 export default function LimitReached({
 	setNextLimit,
-	scenario: { quota, warming }
+	scenarioData: { réchauffement }
 }) {
 	useEffect(() => {
 		window.navigator.vibrate(200)
@@ -24,7 +24,7 @@ export default function LimitReached({
 	return (
 		<div css={blackScreenStyle}>
 			{' '}
-			{warming === '3' ? (
+			{réchauffement === '3' ? (
 				<>
 					<h1>Game over {emoji('😵')}</h1>
 					<p css="width: 20rem; margin: 0 auto">
@@ -36,7 +36,7 @@ export default function LimitReached({
 				<>
 					<h1>
 						{' '}
-						+ {warming}° dépassé {emoji('🌡️🥵')}
+						+ {réchauffement}° dépassé {emoji('🌡️🥵')}
 					</h1>
 					<p>
 						La taille de cet écran est finie, tout comme les limites de notre
@@ -44,9 +44,9 @@ export default function LimitReached({
 					</p>
 					<p>
 						Tu as dépassé le quota qui permet de limiter le réchauffement à +
-						{warming}°.
+						{réchauffement}°.
 					</p>
-					<Link to="/thermomètre">
+					<Link to="/journée/thermomètre">
 						<button
 							className="ui__ button plain"
 							onClick={() => setNextLimit()}

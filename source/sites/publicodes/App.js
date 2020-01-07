@@ -32,7 +32,7 @@ class App extends Component {
 							{/*
 							<Route exact path="/" component={Landing} />
 							*/}
-							<Route path="/" component={Day} />
+							<Route path="/journée" component={Day} />
 							<Route path="/documentation/:name+" component={RulePage} />
 							<Route path="/documentation" component={RulesList} />
 							<Route path="/simulateur/:name+" component={Simulateur} />

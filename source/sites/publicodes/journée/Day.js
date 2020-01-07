@@ -1,59 +1,54 @@
+import Route404 from 'Components/Route404'
 import React, { useContext } from 'react'
 import emoji from 'react-easy-emoji'
-import { Route, Switch } from 'react-router-dom'
+import { Route, Switch, useRouteMatch } from 'react-router-dom'
+import scenarios from '../scenarios.yaml'
 import { StoreContext } from '../StoreContext'
 import Activités from './Activités'
+import Ajout from './Ajout'
 import LimitReached from './Limit'
-import { Search } from './Search'
 import Splash from './Splash'
-
 export default () => {
-	let {
+	const {
 		state: { items, scenario },
 		dispatch
 	} = useContext(StoreContext)
+	const { path, url } = useRouteMatch(),
+		scenarioData = scenarios[scenario],
+		{ 'crédit carbone par personne': quota } = scenarioData
+
 	const setNextLimit = () =>
-		scenario.quota === 500
+		quota === 0.5
 			? dispatch({
 					type: 'SET_SCENARIO',
-					scenario: { quota: 1000, warming: '2' }
+					scenario: 'B'
 			  })
 			: dispatch({
 					type: 'SET_SCENARIO',
-					scenario: { quota: 2000, warming: '3' }
+					scenario: 'A'
 			  })
 
-	const footprint = items.reduce((memo, [, , weight]) => memo + weight, 0),
-		limitReached = footprint > scenario.quota / 365
+	const footprint = items.reduce((memo, item) => memo + item.formule, 0),
+		limitReached = footprint > (quota * 1000) / 365
 	return (
-		<section
-			css={`
-				height: 100vh;
-				width: 100vw;
-				display: flex;
-				justify-content: center;
-				flex-wrap: wrap;
-				flex-direction: column;
-				text-align: center;
-			`}
-		>
+		<section>
 			{limitReached ? (
-				<LimitReached setNextLimit={setNextLimit} scenario={scenario} />
+				<LimitReached setNextLimit={setNextLimit} scenarioData={scenarioData} />
 			) : (
 				<Switch>
-					<Route exact path="/" component={Splash} />
-					<Route path="/thermomètre">
-						<Activités items={items} quota={scenario.quota} />
+					<Route exact path={path} component={Splash} />
+					<Route path={path + '/thermomètre'}>
+						<Activités items={items} quota={quota} />
 					</Route>
-					<Route path="/ajouter">
-						<Search
+					<Route path={path + '/ajouter'}>
+						<Ajout
 							items={items}
 							click={item => {
 								dispatch({ type: 'SET_ITEMS', items: [...items, item] })
 							}}
 						/>
 					</Route>
-					<Route path="/limite" component={LimitReached} />
+					<Route component={Route404} />
 				</Switch>
 			)}
 		</section>

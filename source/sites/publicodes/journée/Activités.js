@@ -1,21 +1,22 @@
 import React, { useContext } from 'react'
+import emoji from 'react-easy-emoji'
 import { Link } from 'react-router-dom'
+import scenarios from '../scenarios.yaml'
 import { StoreContext } from '../StoreContext'
 import Activité from './Activité'
 
 export default function Activités() {
 	let {
-		state: {
-			items,
-			scenario: { quota }
-		}
-	} = useContext(StoreContext)
+			state: { items, scenario }
+		} = useContext(StoreContext),
+		quota = scenarios[scenario]['crédit carbone par personne']
 	return (
 		<ul
 			css={`
 				flex-direction: column;
 				justify-content: flex-start;
 				height: 100vh;
+				width: 100vw;
 				margin: 0;
 				padding: 0;
 				> li {
@@ -24,25 +25,35 @@ export default function Activités() {
 					width: 100%;
 					list-style-type: none;
 				}
-				img {
+				li img {
 					font-size: 180%;
+				}
+				p {
+					max-width: 25rem;
+					text-align: center;
+					margin: 0 auto;
 				}
 			`}
 		>
-			{items.map(([text, icon, weight], i) => (
+			{!items.length && (
+				<p>
+					Ajoutez des activités pour connaître votre impact personnel sur le
+					climat {emoji('🌍🌳🐨')}{' '}
+				</p>
+			)}
+			{items.map((item, i) => (
 				<Activité
-					key={text}
+					key={item.dottedName}
 					{...{
-						weight,
+						item,
 						quota,
-						icon,
 						i,
 						// animate the last item added only.
 						animate: items.length - 1 === i
 					}}
 				/>
 			))}
-			<Link to="/ajouter">
+			<Link to="/journée/ajouter">
 				<button
 					css={`
 						font-size: 300%;
