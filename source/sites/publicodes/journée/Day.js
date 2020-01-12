@@ -1,13 +1,16 @@
 import Route404 from 'Components/Route404'
 import React, { useContext } from 'react'
 import emoji from 'react-easy-emoji'
+import { useSelector } from 'react-redux'
 import { Route, Switch, useRouteMatch } from 'react-router-dom'
 import scenarios from '../scenarios.yaml'
+import Simulateur from '../Simulateur'
 import { StoreContext } from '../StoreContext'
 import Activités from './Activités'
 import Ajout from './Ajout'
 import LimitReached from './Limit'
 import Splash from './Splash'
+
 export default () => {
 	const {
 		state: { items, scenario },
@@ -15,7 +18,8 @@ export default () => {
 	} = useContext(StoreContext)
 	const { path, url } = useRouteMatch(),
 		scenarioData = scenarios[scenario],
-		{ 'crédit carbone par personne': quota } = scenarioData
+		{ 'crédit carbone par personne': quota } = scenarioData,
+		state = useSelector(state => state)
 
 	const setNextLimit = () =>
 		quota === 0.5
@@ -27,7 +31,7 @@ export default () => {
 					type: 'SET_SCENARIO',
 					scenario: 'A'
 			  })
-
+	console.log(state)
 	const footprint = items.reduce((memo, item) => memo + item.formule, 0),
 		limitReached = footprint > (quota * 1000) / 365
 	return (
@@ -47,6 +51,9 @@ export default () => {
 								dispatch({ type: 'SET_ITEMS', items: [...items, item] })
 							}}
 						/>
+					</Route>
+					<Route path={path + '/simulateur/:name+'}>
+						<Simulateur redirection="/journée/thermomètre" />
 					</Route>
 					<Route component={Route404} />
 				</Switch>

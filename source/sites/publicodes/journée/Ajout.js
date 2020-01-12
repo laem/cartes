@@ -70,11 +70,14 @@ export default ({ click, items }) => {
 								<Link
 									to={
 										typeof formule !== 'number' // TODO this test is not complete, some variables can have formulas but no questions, so no need to simulate
-											? '/simulateur/' + encodeRuleName(dottedName)
+											? '/journée/simulateur/' + encodeRuleName(dottedName)
 											: '/journée/thermomètre'
 									}
 								>
-									<button className="ui__ card" onClick={() => click(item)}>
+									<button
+										className="ui__ card"
+										onClick={() => click(dottedName)}
+									>
 										{emoji(icônes || '')} {title}
 									</button>
 								</Link>

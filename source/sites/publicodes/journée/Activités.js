@@ -1,6 +1,9 @@
-import React, { useContext } from 'react'
+import { setSimulationConfig } from 'Actions/actions'
+import React, { useContext, useEffect } from 'react'
 import emoji from 'react-easy-emoji'
+import { useDispatch, useSelector } from 'react-redux'
 import { Link } from 'react-router-dom'
+import { analysisWithDefaultsSelector } from 'Selectors/analyseSelectors'
 import scenarios from '../scenarios.yaml'
 import { StoreContext } from '../StoreContext'
 import Activité from './Activité'
@@ -9,7 +12,17 @@ export default function Activités() {
 	let {
 			state: { items, scenario }
 		} = useContext(StoreContext),
-		quota = scenarios[scenario]['crédit carbone par personne']
+		quota = scenarios[scenario]['crédit carbone par personne'],
+		dispatch = useDispatch(),
+		analysis = useSelector(analysisWithDefaultsSelector),
+		targets = analysis.targets
+
+	useEffect(() => {
+		dispatch(setSimulationConfig({ objectifs: items }))
+	}, [])
+
+	console.log(analysis)
+
 	return (
 		<ul
 			css={`
@@ -41,7 +54,7 @@ export default function Activités() {
 					climat {emoji('🌍🌳🐨')}{' '}
 				</p>
 			)}
-			{items.map((item, i) => (
+			{targets.map((item, i) => (
 				<Activité
 					key={item.dottedName}
 					{...{

@@ -8,6 +8,7 @@ import { decodeRuleName, findRuleByDottedName } from 'Engine/rules'
 import React, { useEffect } from 'react'
 import { Helmet } from 'react-helmet'
 import { useDispatch, useSelector } from 'react-redux'
+import { Link, useParams } from 'react-router-dom'
 import { flatRulesSelector } from 'Selectors/analyseSelectors'
 import CarbonImpact from './CarbonImpact'
 import ItemCard from './ItemCard'
@@ -18,7 +19,7 @@ let CarbonImpactWithData = withTarget(CarbonImpact)
 let ItemCardWithData = ItemCard(true)
 
 const Simulateur = props => {
-	const objectif = props.match.params.name,
+	const { name: objectif } = useParams(),
 		decoded = decodeRuleName(objectif),
 		rules = useSelector(flatRulesSelector),
 		rule = findRuleByDottedName(rules, decoded),
@@ -44,11 +45,14 @@ const Simulateur = props => {
 				noProgressMessage
 				showConversation
 				customEnd={
-					rule.description ? (
-						<Markdown source={rule.description} />
-					) : (
-						<EndingCongratulations />
-					)
+					<>
+						{rule.description ? (
+							<Markdown source={rule.description} />
+						) : (
+							<EndingCongratulations />
+						)}
+						{props.redirection && <Link to={props.redirection}>Continuer</Link>}
+					</>
 				}
 				targets={
 					<>
@@ -60,7 +64,7 @@ const Simulateur = props => {
 			<CarbonImpactWithData />
 			<ShareButton
 				text="Mesure ton impact sur Futur.eco !"
-				url={'https://' + window.location.hostname + props.match.url}
+				url={window.location.href}
 				title={rule.title}
 			/>
 		</div>
