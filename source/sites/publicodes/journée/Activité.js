@@ -9,7 +9,10 @@ export default function Activité({ item, quota, i, animate }) {
 	const weight = item.formule.nodeValue,
 		icônes = item.icônes || ''
 	const [open, toggle] = useState(false)
-	const height = (weight / ((quota * 1000) / 365)) * 100
+	const rawHeight = (weight / ((quota * 1000) / 365)) * 100,
+		height = item.dottedName.includes('téléphone')
+			? rawHeight / (365 * 2)
+			: rawHeight
 	const style = useSpring({ height: (!animate ? 100 : open ? 100 : 0) + '%' })
 
 	useEffect(() => {

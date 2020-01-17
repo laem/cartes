@@ -1,8 +1,10 @@
+import { setSimulationConfig } from 'Actions/actions'
 import Route404 from 'Components/Route404'
-import React, { useContext } from 'react'
+import React, { useContext, useEffect } from 'react'
 import emoji from 'react-easy-emoji'
-import { useSelector } from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux'
 import { Route, Switch, useRouteMatch } from 'react-router-dom'
+import { analysisWithDefaultsSelector } from 'Selectors/analyseSelectors'
 import scenarios from '../scenarios.yaml'
 import Simulateur from '../Simulateur'
 import { StoreContext } from '../StoreContext'
@@ -10,16 +12,14 @@ import Activités from './Activités'
 import Ajout from './Ajout'
 import LimitReached from './Limit'
 import Splash from './Splash'
-
 export default () => {
 	const {
-		state: { items, scenario },
+		state: { items, scenario, situation: daySituation },
 		dispatch
 	} = useContext(StoreContext)
 	const { path, url } = useRouteMatch(),
 		scenarioData = scenarios[scenario],
-		{ 'crédit carbone par personne': quota } = scenarioData,
-		state = useSelector(state => state)
+		{ 'crédit carbone par personne': quota } = scenarioData
 
 	const setNextLimit = () =>
 		quota === 0.5
@@ -31,9 +31,25 @@ export default () => {
 					type: 'SET_SCENARIO',
 					scenario: 'A'
 			  })
-	console.log(state)
-	const footprint = items.reduce((memo, item) => memo + item.formule, 0),
+
+	const dispatchGlobal = useDispatch(),
+		analysis = useSelector(analysisWithDefaultsSelector),
+		situation = useSelector(state => state.simulation?.situation)
+
+	useEffect(() => {
+		dispatch({ type: 'AMEND_DAY_SITUATION', situation })
+		dispatchGlobal(
+			setSimulationConfig(
+				{ objectifs: items },
+				{ ...daySituation, ...situation }
+			)
+		)
+	}, [items])
+
+	const targets = analysis?.targets
+	const footprint = targets?.reduce((memo, item) => memo + item.nodeValue, 0),
 		limitReached = footprint > (quota * 1000) / 365
+	console.log('ana', analysis)
 	return (
 		<section>
 			{limitReached ? (
@@ -42,7 +58,7 @@ export default () => {
 				<Switch>
 					<Route exact path={path} component={Splash} />
 					<Route path={path + '/thermomètre'}>
-						<Activités items={items} quota={quota} />
+						<Activités items={items} quota={quota} analysis={analysis} />
 					</Route>
 					<Route path={path + '/ajouter'}>
 						<Ajout

@@ -28,7 +28,7 @@ const Simulateur = props => {
 			objectifs: [decoded]
 		},
 		configSet = useSelector(state => state.simulation?.config)
-	useEffect(() => dispatch(setSimulationConfig(config)), [])
+	useEffect(() => dispatch(setSimulationConfig(config, true)), [])
 
 	if (!configSet) return null
 

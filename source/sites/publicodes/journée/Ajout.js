@@ -15,7 +15,8 @@ export default ({ click, items }) => {
 			'nourriture . Viennoiserie brioche - type brioche',
 			'nourriture . Tasse de café',
 			'douche . impact par douche',
-			"transport . impact à l'usage"
+			"transport . impact à l'usage",
+			'électronique . téléphone . impact'
 		]
 	return (
 		<div

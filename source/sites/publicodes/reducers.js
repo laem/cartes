@@ -1,6 +1,7 @@
 let initialState = {
 	scenario: 'C',
-	items: []
+	items: [],
+	situation: {}
 }
 
 let reducer = (state = initialState, action) => {
@@ -14,6 +15,11 @@ let reducer = (state = initialState, action) => {
 			return {
 				...state,
 				items: action.items
+			}
+		case 'AMEND_DAY_SITUATION':
+			return {
+				...state,
+				situation: { ...state.situation, situation: action.situation }
 			}
 		default:
 			throw new Error('Unexpected action')
