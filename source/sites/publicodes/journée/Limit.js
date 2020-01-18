@@ -1,3 +1,4 @@
+import { Markdown } from 'Components/utils/markdown'
 import React, { useEffect } from 'react'
 import emoji from 'react-easy-emoji'
 import { Link } from 'react-router-dom'
@@ -7,45 +8,39 @@ const blackScreenStyle = `
 		width: 100vw;
 		height: 100vh;
 		color: white;
+		h1{margin: 0 0 1.6rem;font-size: 300%}
 		button, h1 {
 			color: white;
 		}
 		display: flex; flex-direction: column; justify-content: center;
 		padding: 2rem;
+		text-align: center;
+		p {
+			line-height: 1.3rem
+		}
+		> a {
+margin-top: 1.4rem;
+		}
 `
 
 export default function LimitReached({
 	setNextLimit,
-	scenarioData: { réchauffement }
+	scenarioData: { réchauffement, message, titre }
 }) {
 	useEffect(() => {
 		window.navigator.vibrate(200)
 	}, [])
+	const gameOver = titre.includes('change rien')
 	return (
 		<div css={blackScreenStyle}>
-			{' '}
-			{réchauffement === '3' ? (
-				<>
-					<h1>Game over {emoji('😵')}</h1>
-					<p css="width: 20rem; margin: 0 auto">
-						Espérons que les astronomes bossent bien, car il faudra plusieurs
-						autres {emoji('🌍')} pour encaisser ta consommation personnelle.
-					</p>
-				</>
-			) : (
-				<>
+			<>
+				{!gameOver && (
 					<h1>
-						{' '}
-						+ {réchauffement}° dépassé {emoji('🌡️🥵')}
+						{emoji('🌡️')} {réchauffement}
 					</h1>
-					<p>
-						La taille de cet écran est finie, tout comme les limites de notre
-						planète bleue {emoji('🌍')}.
-					</p>
-					<p>
-						Tu as dépassé le quota qui permet de limiter le réchauffement à +
-						{réchauffement}°.
-					</p>
+				)}
+				<Markdown source={message} />
+				{!gameOver && (
 					<Link to="/journée/thermomètre">
 						<button
 							className="ui__ button plain"
@@ -54,8 +49,8 @@ export default function LimitReached({
 							Continuer ma journée
 						</button>
 					</Link>
-				</>
-			)}
+				)}
+			</>
 		</div>
 	)
 }
