@@ -1,6 +1,6 @@
 import Route404 from 'Components/Route404'
 import { analyse } from 'Engine/traverse'
-import React, { useContext, useMemo } from 'react'
+import React, { useContext, useEffect, useMemo } from 'react'
 import emoji from 'react-easy-emoji'
 import { useSelector } from 'react-redux'
 import { Route, Switch, useRouteMatch } from 'react-router-dom'
@@ -51,9 +51,17 @@ export default () => {
 			0
 		),
 		limitReached = footprint > (quota * 1000) / 365
+	console.log(JSON.stringify(items))
 
+	// Easily load examples for development
+	useEffect(() => {
+		window.addEventListener('keydown', downHandler(dispatch))
+		return () => {
+			window.removeEventListener('keydown', downHandler(dispatch))
+		}
+	}, [])
 	return (
-		<section>
+		<div>
 			{limitReached ? (
 				<LimitReached setNextLimit={setNextLimit} scenarioData={scenarioData} />
 			) : (
@@ -78,7 +86,7 @@ export default () => {
 					<Route component={Route404} />
 				</Switch>
 			)}
-		</section>
+		</div>
 	)
 }
 
@@ -106,3 +114,40 @@ const PetitDéjeuner = () => (
 		</ul>
 	</li>
 )
+
+const downHandler = dispatch => ({ key }) => {
+	if (key === 'e') {
+		dispatch({
+			type: 'SET_ITEMS',
+			items: [
+				{
+					dottedName: 'nourriture . Tasse de café',
+					situation: {}
+				},
+				{
+					dottedName: "transport . impact à l'usage",
+					situation: {
+						'transport . mode': 'tram',
+						'transport . distance parcourue': 100
+					}
+				},
+				{
+					dottedName: 'nourriture . Viennoiserie brioche - type brioche',
+					situation: {}
+				},
+				{
+					dottedName: 'nourriture . Tasse de café',
+					situation: {}
+				},
+				{
+					dottedName: 'douche . impact par douche',
+					situation: {
+						'chauffage . type': 'électricité',
+						'douche . pomme de douche économe': 'non',
+						'douche . durée de la douche': 10
+					}
+				}
+			]
+		})
+	}
+}

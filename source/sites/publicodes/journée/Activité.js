@@ -2,9 +2,6 @@ import React, { useEffect, useState } from 'react'
 import emoji from 'react-easy-emoji'
 import { animated, useSpring } from 'react-spring'
 
-const halfColors = ['#e8817f', '#c3727c', '#8d5273', '#5a336e', '#311f62'],
-	colors = [...halfColors.reverse(), ...halfColors]
-
 export default function Activité({ item: { targets }, quota, i, animate }) {
 	const item = targets[0]
 	const weight = item.formule.nodeValue,
@@ -27,6 +24,7 @@ export default function Activité({ item: { targets }, quota, i, animate }) {
 				height: ${height}vh;
 				justify-content: center;
 				position: relative;
+				border-bottom: 1px solid #fff4;
 			`}
 		>
 			<animated.div
@@ -35,7 +33,6 @@ export default function Activité({ item: { targets }, quota, i, animate }) {
 					top: 0;
 					left: 0;
 					width: 100%;
-					background: ${icônes ? colors[i] : 'white'};
 					display: flex;
 					align-items: center;
 					justify-content: center;
@@ -43,11 +40,16 @@ export default function Activité({ item: { targets }, quota, i, animate }) {
 						margin-left: 0.6rem;
 						color: white;
 					}
+					img {
+						z-index: 1;
+					}
 				`}
 				style={style}
 			>
-				{emoji(icônes)}
-				<small>{Math.round(height) + '%'}</small>
+				<div css="">
+					{emoji(icônes)}
+					<small>{Math.round(height) + '%'}</small>
+				</div>
 			</animated.div>
 		</li>
 	)
