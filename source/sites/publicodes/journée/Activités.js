@@ -47,8 +47,8 @@ export default function Activités({ analysis }) {
 		>
 			{!items.length && (
 				<p>
-					Ajoutez des activités pour connaître votre impact personnel sur le
-					climat {emoji('🌍🌳🐨')}{' '}
+					Ajoute tes activités du jour pour connaître ton impact sur le climat{' '}
+					{emoji('🌍🌳🐨')}{' '}
 				</p>
 			)}
 
