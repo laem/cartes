@@ -1,10 +1,10 @@
-import { setSimulationConfig } from 'Actions/actions'
 import Route404 from 'Components/Route404'
-import React, { useContext, useEffect } from 'react'
+import { analyse } from 'Engine/traverse'
+import React, { useContext, useMemo } from 'react'
 import emoji from 'react-easy-emoji'
-import { useDispatch, useSelector } from 'react-redux'
+import { useSelector } from 'react-redux'
 import { Route, Switch, useRouteMatch } from 'react-router-dom'
-import { analysisWithDefaultsSelector } from 'Selectors/analyseSelectors'
+import { parsedRulesSelector } from 'Selectors/analyseSelectors'
 import scenarios from '../scenarios.yaml'
 import Simulateur from '../Simulateur'
 import { StoreContext } from '../StoreContext'
@@ -14,7 +14,7 @@ import LimitReached from './Limit'
 import Splash from './Splash'
 export default () => {
 	const {
-		state: { items, scenario, situation: daySituation },
+		state: { items, scenario },
 		dispatch
 	} = useContext(StoreContext)
 	const { path, url } = useRouteMatch(),
@@ -22,38 +22,36 @@ export default () => {
 		{ 'crédit carbone par personne': quota } = scenarioData
 
 	const setNextLimit = () =>
-		quota === 0.5
-			? dispatch({
-					type: 'SET_SCENARIO',
-					scenario: 'B'
-			  })
-			: dispatch({
-					type: 'SET_SCENARIO',
-					scenario: 'A'
-			  })
+			quota === 0.5
+				? dispatch({
+						type: 'SET_SCENARIO',
+						scenario: 'B'
+				  })
+				: dispatch({
+						type: 'SET_SCENARIO',
+						scenario: 'A'
+				  }),
+		parsedRules = useSelector(parsedRulesSelector)
 
-	const dispatchGlobal = useDispatch(),
-		analysis = useSelector(analysisWithDefaultsSelector),
-		simulation = useSelector(state => state.simulation)
+	const analysis = useMemo(
+		() =>
+			items.map(item =>
+				analyse(
+					parsedRules,
+					item.dottedName
+				)(dottedName => item.situation[dottedName])
+			),
+		[items, parsedRules]
+	)
 
-	useEffect(() => {
-		if (!items.length) return undefined
-		const daySimulationConfig = {
-			objectifs: items.map(({ nom }) => nom),
-			branches: items
-		}
-		console.log('will dispatch', daySimulationConfig)
-		dispatchGlobal(setSimulationConfig(daySimulationConfig))
-	}, [items])
+	console.log('ana in Day.js', analysis)
 
-	let analyses = Array.isArray(analysis) ? analysis : []
-
-	const footprint = analyses.reduce(
+	const footprint = analysis.reduce(
 			(memo, item) => memo + item.targets[0].nodeValue,
 			0
 		),
 		limitReached = footprint > (quota * 1000) / 365
-	console.log('ana', analysis)
+
 	return (
 		<section>
 			{limitReached ? (
@@ -62,20 +60,17 @@ export default () => {
 				<Switch>
 					<Route exact path={path} component={Splash} />
 					<Route path={path + '/thermomètre'}>
-						<Activités items={items} quota={quota} analysis={analyses} />
+						<Activités items={items} quota={quota} analysis={analysis} />
 					</Route>
 					<Route path={path + '/ajouter'}>
 						<Ajout items={items} />
 					</Route>
 					<Route path={path + '/simulateur/:name+'}>
 						<Simulateur
-							onEnd={(dottedName, currentSituation) =>
+							onEnd={(dottedName, situation) =>
 								dispatch({
 									type: 'SET_ITEMS',
-									items: [
-										...items,
-										{ nom: dottedName, situation: currentSituation }
-									]
+									items: [...items, { dottedName, situation }]
 								})
 							}
 						/>
