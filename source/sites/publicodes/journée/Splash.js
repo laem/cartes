@@ -12,6 +12,11 @@ export default ({}) => {
 	return (
 		<div
 			css={`
+				display: flex;
+				align-items: center;
+				justify-content: center;
+				flex-direction: column;
+				height: 100vh;
 				small {
 					font-size: 100%;
 					font-style: italic;
