@@ -11,8 +11,6 @@ import Worker from 'worker-loader!./Suggestions.worker.js'
 const worker = new Worker()
 import Search from './Search'
 
-let ItemCardWithoutData = ItemCard()
-
 export default function Suggestions() {
 	const rules = useSelector(flatRulesSelector)
 	let exposedRules = rules.filter((rule) => rule?.exposé === 'oui')
@@ -133,7 +131,7 @@ const RuleList = ({ rules, exposedRules }) => (
 							}
 						`}
 					>
-						<ItemCardWithoutData {...rule} />
+						<ItemCard {...rule} />
 					</Link>
 				</li>
 			)

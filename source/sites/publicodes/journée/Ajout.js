@@ -7,7 +7,7 @@ import { flatRulesSelector } from 'Selectors/analyseSelectors'
 import Search from '../Search'
 import Suggestions from '../Suggestions'
 
-export default ({ click, items }) => {
+export default ({ items }) => {
 	const [input, setInput] = useState('')
 
 	const rules = useSelector(flatRulesSelector),
@@ -68,17 +68,8 @@ export default ({ click, items }) => {
 									}
 								`}
 							>
-								<Link
-									to={
-										typeof formule !== 'number' // TODO this test is not complete, some variables can have formulas but no questions, so no need to simulate
-											? '/journée/simulateur/' + encodeRuleName(dottedName)
-											: '/journée/thermomètre'
-									}
-								>
-									<button
-										className="ui__ card"
-										onClick={() => click(dottedName)}
-									>
+								<Link to={'/journée/simulateur/' + encodeRuleName(dottedName)}>
+									<button className="ui__ card">
 										{emoji(icônes || '')} {title}
 									</button>
 								</Link>

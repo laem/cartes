@@ -112,7 +112,9 @@ let validatedStepsSelector = createSelector(
 )
 export const defaultUnitsSelector = (state: RootState) =>
 	state.simulation?.defaultUnits || []
+
 let branchesSelector = (state: RootState) => configSelector(state).branches
+
 let configSituationSelector = (state: RootState) =>
 	configSelector(state).situation || {}
 

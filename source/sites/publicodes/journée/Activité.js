@@ -5,7 +5,8 @@ import { animated, useSpring } from 'react-spring'
 const halfColors = ['#e8817f', '#c3727c', '#8d5273', '#5a336e', '#311f62'],
 	colors = [...halfColors.reverse(), ...halfColors]
 
-export default function Activité({ item, quota, i, animate }) {
+export default function Activité({ item: { targets }, quota, i, animate }) {
+	const item = targets[0]
 	const weight = item.formule.nodeValue,
 		icônes = item.icônes || ''
 	const [open, toggle] = useState(false)

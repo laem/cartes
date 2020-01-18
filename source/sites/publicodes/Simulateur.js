@@ -9,14 +9,13 @@ import React, { useEffect } from 'react'
 import { Helmet } from 'react-helmet'
 import { useDispatch, useSelector } from 'react-redux'
 import { Link, useParams } from 'react-router-dom'
-import { flatRulesSelector } from 'Selectors/analyseSelectors'
+import {
+	analysisWithDefaultsSelector,
+	flatRulesSelector,
+	nextStepsSelector
+} from 'Selectors/analyseSelectors'
 import CarbonImpact from './CarbonImpact'
 import ItemCard from './ItemCard'
-import withTarget from './withTarget'
-
-let CarbonImpactWithData = withTarget(CarbonImpact)
-
-let ItemCardWithData = ItemCard(true)
 
 const Simulateur = props => {
 	const { name: objectif } = useParams(),
@@ -27,10 +26,40 @@ const Simulateur = props => {
 		config = {
 			objectifs: [decoded]
 		},
-		configSet = useSelector(state => state.simulation?.config)
-	useEffect(() => dispatch(setSimulationConfig(config, true)), [])
+		configSet = useSelector(state => state.simulation?.config),
+		situation = useSelector(state => state.simulation?.situation),
+		{ analysis, nextSteps, foldedSteps } = useSelector(state => ({
+			analysis: analysisWithDefaultsSelector(state),
+			foldedSteps: state.conversationSteps.foldedSteps,
+			nextSteps: nextStepsSelector(state)
+		})),
+		targets = analysis.targets
 
-	if (!configSet) return null
+	useEffect(
+		() =>
+			console.log('dispatchsimulconf') || dispatch(setSimulationConfig(config)),
+		[]
+	)
+	console.log('YAYA', configSet, analysis)
+	if (!targets) return null
+
+	const CarbonImpactComponent = (
+		<CarbonImpact
+			{...targets[0]}
+			showHumanCarbon
+			nextSteps={nextSteps}
+			foldedSteps={foldedSteps}
+		/>
+	)
+
+	const ItemCardWithData = (
+		<ItemCard
+			{...targets[0]}
+			showHumanCarbon
+			nextSteps={nextSteps}
+			foldedSteps={foldedSteps}
+		/>
+	)
 
 	return (
 		<div className="ui__ container" css="margin-bottom: 1em">
@@ -51,17 +80,23 @@ const Simulateur = props => {
 						) : (
 							<EndingCongratulations />
 						)}
-						{props.redirection && <Link to={props.redirection}>Continuer</Link>}
+						{props.onEnd && (
+							<Link to="/journée/thermomètre">
+								<button onClick={() => props.onEnd(rule.dottedName, situation)}>
+									Ajouter
+								</button>
+							</Link>
+						)}
 					</>
 				}
 				targets={
 					<>
-						<ItemCardWithData />
+						{ItemCardWithData}
 						{rule.period === 'flexible' && <PeriodBlock />}
 					</>
 				}
 			/>
-			<CarbonImpactWithData />
+			{CarbonImpactComponent}
 			<ShareButton
 				text="Mesure ton impact sur Futur.eco !"
 				url={window.location.href}

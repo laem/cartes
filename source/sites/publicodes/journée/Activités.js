@@ -42,9 +42,9 @@ export default function Activités({ analysis }) {
 					climat {emoji('🌍🌳🐨')}{' '}
 				</p>
 			)}
-			{analysis.targets.map((item, i) => (
+			{(analysis || []).map((item, i) => (
 				<Activité
-					key={item.dottedName}
+					key={item.targets[0].dottedName}
 					{...{
 						item,
 						quota,

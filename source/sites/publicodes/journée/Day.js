@@ -34,20 +34,24 @@ export default () => {
 
 	const dispatchGlobal = useDispatch(),
 		analysis = useSelector(analysisWithDefaultsSelector),
-		situation = useSelector(state => state.simulation?.situation)
+		simulation = useSelector(state => state.simulation)
 
 	useEffect(() => {
-		dispatch({ type: 'AMEND_DAY_SITUATION', situation })
-		dispatchGlobal(
-			setSimulationConfig(
-				{ objectifs: items },
-				{ ...daySituation, ...situation }
-			)
-		)
+		if (!items.length) return undefined
+		const daySimulationConfig = {
+			objectifs: items.map(({ nom }) => nom),
+			branches: items
+		}
+		console.log('will dispatch', daySimulationConfig)
+		dispatchGlobal(setSimulationConfig(daySimulationConfig))
 	}, [items])
 
-	const targets = analysis?.targets
-	const footprint = targets?.reduce((memo, item) => memo + item.nodeValue, 0),
+	let analyses = Array.isArray(analysis) ? analysis : []
+
+	const footprint = analyses.reduce(
+			(memo, item) => memo + item.targets[0].nodeValue,
+			0
+		),
 		limitReached = footprint > (quota * 1000) / 365
 	console.log('ana', analysis)
 	return (
@@ -58,18 +62,23 @@ export default () => {
 				<Switch>
 					<Route exact path={path} component={Splash} />
 					<Route path={path + '/thermomètre'}>
-						<Activités items={items} quota={quota} analysis={analysis} />
+						<Activités items={items} quota={quota} analysis={analyses} />
 					</Route>
 					<Route path={path + '/ajouter'}>
-						<Ajout
-							items={items}
-							click={item => {
-								dispatch({ type: 'SET_ITEMS', items: [...items, item] })
-							}}
-						/>
+						<Ajout items={items} />
 					</Route>
 					<Route path={path + '/simulateur/:name+'}>
-						<Simulateur redirection="/journée/thermomètre" />
+						<Simulateur
+							onEnd={(dottedName, currentSituation) =>
+								dispatch({
+									type: 'SET_ITEMS',
+									items: [
+										...items,
+										{ nom: dottedName, situation: currentSituation }
+									]
+								})
+							}
+						/>
 					</Route>
 					<Route component={Route404} />
 				</Switch>
