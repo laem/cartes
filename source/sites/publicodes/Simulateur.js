@@ -43,24 +43,6 @@ const Simulateur = props => {
 	console.log('YAYA', configSet, analysis)
 	if (!targets) return null
 
-	const CarbonImpactComponent = (
-		<CarbonImpact
-			{...targets[0]}
-			showHumanCarbon
-			nextSteps={nextSteps}
-			foldedSteps={foldedSteps}
-		/>
-	)
-
-	const ItemCardWithData = (
-		<ItemCard
-			{...targets[0]}
-			showHumanCarbon
-			nextSteps={nextSteps}
-			foldedSteps={foldedSteps}
-		/>
-	)
-
 	return (
 		<div className="ui__ container" css="margin-bottom: 1em">
 			<Helmet>
@@ -74,29 +56,43 @@ const Simulateur = props => {
 				noProgressMessage
 				showConversation
 				customEnd={
-					<>
-						{rule.description ? (
-							<Markdown source={rule.description} />
-						) : (
-							<EndingCongratulations />
-						)}
-						{props.onEnd && (
-							<Link to="/journée/thermomètre">
-								<button onClick={() => props.onEnd(rule.dottedName, situation)}>
-									Ajouter
-								</button>
-							</Link>
-						)}
-					</>
+					props.onEnd ? (
+						<Link to="/journée/thermomètre">
+							<button
+								className="ui__ button"
+								onClick={() => props.onEnd(rule.dottedName, situation)}
+							>
+								Ajouter
+							</button>
+						</Link>
+					) : (
+						<>
+							{rule.description ? (
+								<Markdown source={rule.description} />
+							) : (
+								<EndingCongratulations />
+							)}
+						</>
+					)
 				}
 				targets={
 					<>
-						{ItemCardWithData}
+						<ItemCard
+							{...targets[0]}
+							showHumanCarbon
+							nextSteps={nextSteps}
+							foldedSteps={foldedSteps}
+						/>
 						{rule.period === 'flexible' && <PeriodBlock />}
 					</>
 				}
 			/>
-			{CarbonImpactComponent}
+			<CarbonImpact
+				{...targets[0]}
+				showHumanCarbon
+				nextSteps={nextSteps}
+				foldedSteps={foldedSteps}
+			/>
 			<ShareButton
 				text="Mesure ton impact sur Futur.eco !"
 				url={window.location.href}

@@ -40,13 +40,17 @@ export default function Activité({ item: { targets }, quota, i, animate }) {
 						margin-left: 0.6rem;
 						color: white;
 					}
-					img {
-						z-index: 1;
-					}
 				`}
 				style={style}
 			>
-				<div css="">
+				<div
+					css={`
+						img {
+							vertical-align: middle !important;
+							z-index: 1;
+						}
+					`}
+				>
 					{emoji(icônes)}
 					<small>{Math.round(height) + '%'}</small>
 				</div>

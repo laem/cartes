@@ -28,15 +28,20 @@ export default ({ items }) => {
 				text-align: center;
 				max-width: 30rem;
 				margin: 0 auto;
+
+				small {
+					margin-bottom: 1rem;
+				}
 			`}
 		>
 			<h1>Qu'as-tu fait aujourd'hui ? </h1>
 			<small>Suggestions</small>
 			<ul
 				css={`
+					padding: 0;
 					margin-bottom: 2rem;
 					li {
-						margin: 1rem 2rem;
+						margin: 0 0 1rem;
 						list-style-type: none;
 						width: 100%;
 					}
