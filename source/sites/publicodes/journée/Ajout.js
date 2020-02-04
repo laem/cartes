@@ -34,7 +34,7 @@ export default ({ items }) => {
 				}
 			`}
 		>
-			<h1>Qu'as-tu fait aujourd'hui ? </h1>
+			<h1>Qu'as-tu fait aujourd'hui&nbsp;?</h1>
 			<small>Suggestions</small>
 			<ul
 				css={`
