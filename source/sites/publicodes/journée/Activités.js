@@ -47,7 +47,7 @@ export default function Activités({ analysis }) {
 			`}
 		>
 			{!items.length && (
-				<p css="background: var(--color); color: white;">
+				<p css="padding: .4rem;background: var(--color); color: white; line-height: 1.5rem">
 					Ajoute ce que tu as fait aujourd'hui pour connaître ton impact sur le
 					climat {emoji('🌍🌳🐨')}{' '}
 				</p>
@@ -85,15 +85,15 @@ const AddButton = () => (
 		<button
 			css={`
 				font-size: 300%;
+				position: absolute;
+				bottom: 4rem;
+				right: .4rem;
 				padding: 0;
 				border-radius: 10rem !important;
 				width: 7rem;
 				height: 7rem;
 				background: var(--color);
 				color: var(--textColor);
-				display: flex;
-				align-items: center;
-				justify-content: center;
 				box-shadow: 0 1px 3px rgba(41, 117, 209, 0.12),
 					0 1px 2px rgba(41, 117, 209, 0.24);
 			`}
