@@ -4,7 +4,7 @@ A:
   sous-titre: Notre trajectoire actuelle
   description: |
     Nous fonçons tête baissée vers la catastrophe : famines, guerres, migrations de masse, génocides, pandémies... Les effets d'emballement imprévisibles (fonte de l'arctique et du permafrost, incendies monstres, réaction des océans, exctinction des espèces) font craindre le pire.
-  crédit carbone par personne: 10
+  crédit carbone par personne: 4 # ATTENTION, c'est juste pour tester l'interface pour l'instant
   réchauffement: '+ 3° ou plus'
   message: |
     # Game over 😵
