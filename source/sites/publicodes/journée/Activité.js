@@ -24,7 +24,7 @@ export default function Activité({ item: { targets }, quota, i, animate }) {
 				height: ${height}vh;
 				justify-content: center;
 				position: relative;
-				border-bottom: 1px solid #fff4;
+				border-bottom: 1px solid #fff;
 			`}
 		>
 			<animated.div
