@@ -47,11 +47,21 @@ export default function Activité({ item: { targets }, quota, i, animate }) {
 					css={`
 						img {
 							vertical-align: middle !important;
-							z-index: 1;
+							font-size: 200% !important;
 						}
 					`}
 				>
-					{emoji(icônes)}
+					<span
+						css={`
+							img {
+								padding: 0.2rem;
+								background: white;
+								border-radius: 1rem;
+							}
+						`}
+					>
+						{emoji(icônes)}
+					</span>
 					<small>{Math.round(height) + '%'}</small>
 				</div>
 			</animated.div>
