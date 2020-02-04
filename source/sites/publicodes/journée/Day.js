@@ -59,7 +59,7 @@ export default () => {
 		return () => {
 			window.removeEventListener('keydown', downHandler(dispatch))
 		}
-	}, [])
+	}, [dispatch])
 	return (
 		<div>
 			{limitReached ? (
@@ -146,6 +146,10 @@ const downHandler = dispatch => ({ key }) => {
 						'douche . pomme de douche économe': 'non',
 						'douche . durée de la douche': 10
 					}
+				},
+				{
+					dottedName: 'numérique . téléphone journée',
+					situation: {}
 				}
 			]
 		})

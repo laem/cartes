@@ -16,7 +16,8 @@ export default ({ items }) => {
 			'nourriture . Tasse de café',
 			'douche . impact par douche',
 			"transport . impact à l'usage",
-			'électronique . téléphone . impact'
+			'numérique . téléphone journée',
+			'nourriture . Steak-frites'
 		]
 	return (
 		<div
@@ -51,37 +52,40 @@ export default ({ items }) => {
 					}
 				`}
 			>
-				{suggestions
-					.map(dottedName => findRuleByDottedName(rules, dottedName))
-					.filter(
-						({ journée, dottedName }) =>
-							(journée && journée['se répète']) ||
-							!items.find(item => item.dottedName === dottedName)
-					)
-					.map(item => {
-						let { title, icônes, dottedName, formule } = item
-						return (
-							<li
-								key={title}
-								css={`
-									a,
-									a button {
-										width: 80%;
-									}
-									a button {
-										padding: 0.6rem;
-									}
-								`}
-							>
-								<Link to={'/journée/simulateur/' + encodeRuleName(dottedName)}>
-									<button className="ui__ card">
-										{emoji(icônes || '')} {title}
-									</button>
-								</Link>
-								<button>{emoji('❌')}</button>
-							</li>
+				{console.log(suggestions) ||
+					suggestions
+						.map(dottedName => findRuleByDottedName(rules, dottedName))
+						.filter(
+							({ journée, dottedName }) =>
+								(journée && journée['se répète']) ||
+								!items.find(item => item.dottedName === dottedName)
 						)
-					})}
+						.map(item => {
+							let { title, icônes, dottedName, formule } = item
+							return (
+								<li
+									key={title}
+									css={`
+										a,
+										a button {
+											width: 80%;
+										}
+										a button {
+											padding: 0.6rem;
+										}
+									`}
+								>
+									<Link
+										to={'/journée/simulateur/' + encodeRuleName(dottedName)}
+									>
+										<button className="ui__ card">
+											{emoji(icônes || '')} {title}
+										</button>
+									</Link>
+									<button>{emoji('❌')}</button>
+								</li>
+							)
+						})}
 			</ul>
 			<small>Autre chose</small>
 			<Search {...{ input, setInput }} />
