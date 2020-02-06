@@ -24,6 +24,8 @@ export default function Thermomètre({ analysis }) {
 						line-height: 1.5rem;
 						position: absolute;
 						top: 46%;
+						width: 100%;
+						text-align: center;
 					`}
 				>
 					Ajoute ce que tu as fait aujourd'hui pour connaître ton impact sur le
@@ -35,9 +37,10 @@ export default function Thermomètre({ analysis }) {
 					css={`
 						position: absolute;
 						top: 50%;
-						border-bottom: 1px solid black;
+						color: white;
+						background: black;
 						width: 100%;
-						margin-left: 1rem;
+						text-align: center;
 						padding-left: 0.6rem;
 					`}
 				>
