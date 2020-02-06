@@ -5,6 +5,15 @@ import scenarios from '../scenarios.yaml'
 import { StoreContext } from '../StoreContext'
 import Activité from './Activité'
 
+export const limitReached = (analysis, quota) => {
+	const footprint = analysis.reduce(
+			(memo, item) => memo + item.targets[0].nodeValue,
+			0
+		),
+		result = footprint > (quota * 1000) / 365
+	return result
+}
+
 export default function Thermomètre({ analysis }) {
 	let {
 			state: { items, scenario }
@@ -32,7 +41,7 @@ export default function Thermomètre({ analysis }) {
 					climat {emoji('🌍🌳🐨')}{' '}
 				</p>
 			)}
-			{items.length > 0 && (
+			{true && (
 				<div
 					css={`
 						position: absolute;

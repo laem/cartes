@@ -12,6 +12,7 @@ import Thermomètre from './Thermomètre'
 import Ajout from './Ajout'
 import LimitReached from './Limit'
 import Splash from './Splash'
+import { limitReached } from './Thermomètre'
 export default () => {
 	const {
 		state: { items, scenario },
@@ -46,11 +47,6 @@ export default () => {
 
 	console.log('ana in Day.js', analysis)
 
-	const footprint = analysis.reduce(
-			(memo, item) => memo + item.targets[0].nodeValue,
-			0
-		),
-		limitReached = footprint > (quota * 1000) / 365
 	console.log(JSON.stringify(items))
 
 	// Easily load examples for development
@@ -62,7 +58,7 @@ export default () => {
 	}, [dispatch])
 	return (
 		<div>
-			{limitReached ? (
+			{limitReached(analysis, quota) ? (
 				<LimitReached setNextLimit={setNextLimit} scenarioData={scenarioData} />
 			) : (
 				<Switch>
