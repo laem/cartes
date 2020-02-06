@@ -43,7 +43,7 @@ export default function Thermomètre({ analysis }) {
 						background: var(--color);
 						color: white;
 						line-height: 1.5rem;
-						position: absolute;
+						position: fixed;
 						top: 46%;
 						width: 100%;
 						text-align: center;
