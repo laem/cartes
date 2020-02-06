@@ -36,7 +36,7 @@ export default ({ items }) => {
 			`}
 		>
 			<h1>Qu'as-tu fait aujourd'hui&nbsp;?</h1>
-			<small>Suggestions</small>
+			<small>Quelques idées :</small>
 			<ul
 				css={`
 					padding: 0;
