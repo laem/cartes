@@ -18,7 +18,7 @@ class App extends Component {
 	render() {
 		return (
 			<Provider
-				basename="publicodes"
+				basename="futureco"
 				rulesURL="https://futureco-data.netlify.app/co2.json"
 				sitePaths={sitePaths()}
 				reduxMiddlewares={[]}
