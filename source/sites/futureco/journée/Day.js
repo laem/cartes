@@ -8,7 +8,7 @@ import { parsedRulesSelector } from 'Selectors/analyseSelectors'
 import scenarios from '../scenarios.yaml'
 import Simulateur from '../Simulateur'
 import { StoreContext } from '../StoreContext'
-import Activités from './Activités'
+import Thermomètre from './Thermomètre'
 import Ajout from './Ajout'
 import LimitReached from './Limit'
 import Splash from './Splash'
@@ -68,7 +68,7 @@ export default () => {
 				<Switch>
 					<Route exact path={path} component={Splash} />
 					<Route path={path + '/thermomètre'}>
-						<Activités items={items} quota={quota} analysis={analysis} />
+						<Thermomètre items={items} quota={quota} analysis={analysis} />
 					</Route>
 					<Route path={path + '/ajouter'}>
 						<Ajout items={items} />
