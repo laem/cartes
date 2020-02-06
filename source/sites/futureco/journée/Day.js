@@ -91,8 +91,8 @@ const PetitDéjeuner = () => (
 	</li>
 )
 
-const downHandler = dispatch => ({ key }) => {
-	if (key === 'e') {
+const downHandler = dispatch => ({ ctrlKey, key }) => {
+	if (key === 'e' && ctrlKey) {
 		dispatch({
 			type: 'ADD_ITEMS',
 			items: [
