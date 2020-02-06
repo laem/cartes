@@ -1,6 +1,7 @@
 let initialState = {
 	scenario: 'C',
-	items: []
+	items: [],
+	crossedSuggestions: []
 }
 
 let reducer = (state = initialState, action) => {
@@ -19,6 +20,12 @@ let reducer = (state = initialState, action) => {
 			return {
 				...state,
 				items: [...state.items, ...action.items]
+			}
+
+		case 'CROSS_SUGGESTION':
+			return {
+				...state,
+				crossedSuggestions: [...state.crossedSuggestions, action.suggestion]
 			}
 		default:
 			throw new Error('Unexpected action')
