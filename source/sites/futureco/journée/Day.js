@@ -10,7 +10,6 @@ import Simulateur from '../Simulateur'
 import { StoreContext } from '../StoreContext'
 import Thermomètre from './Thermomètre'
 import Ajout from './Ajout'
-import LimitReached from './Limit'
 import Splash from './Splash'
 import { limitReached } from './Thermomètre'
 export default () => {
@@ -18,21 +17,8 @@ export default () => {
 		state: { items, scenario },
 		dispatch
 	} = useContext(StoreContext)
-	const { path, url } = useRouteMatch(),
-		scenarioData = scenarios[scenario],
-		{ 'crédit carbone par personne': quota } = scenarioData
-
-	const setNextLimit = () =>
-			quota === 0.5
-				? dispatch({
-						type: 'SET_SCENARIO',
-						scenario: 'B'
-				  })
-				: dispatch({
-						type: 'SET_SCENARIO',
-						scenario: 'A'
-				  }),
-		parsedRules = useSelector(parsedRulesSelector)
+	const { path, url } = useRouteMatch()
+	const parsedRules = useSelector(parsedRulesSelector)
 
 	const analysis = useMemo(
 		() =>
@@ -57,32 +43,26 @@ export default () => {
 		}
 	}, [dispatch])
 	return (
-		<div>
-			{limitReached(analysis, quota) ? (
-				<LimitReached setNextLimit={setNextLimit} scenarioData={scenarioData} />
-			) : (
-				<Switch>
-					<Route exact path={path} component={Splash} />
-					<Route path={path + '/thermomètre'}>
-						<Thermomètre items={items} quota={quota} analysis={analysis} />
-					</Route>
-					<Route path={path + '/ajouter'}>
-						<Ajout items={items} />
-					</Route>
-					<Route path={path + '/simulateur/:name+'}>
-						<Simulateur
-							onEnd={(dottedName, situation) =>
-								dispatch({
-									type: 'SET_ITEMS',
-									items: [...items, { dottedName, situation }]
-								})
-							}
-						/>
-					</Route>
-					<Route component={Route404} />
-				</Switch>
-			)}
-		</div>
+		<Switch>
+			<Route exact path={path} component={Splash} />
+			<Route path={path + '/thermomètre'}>
+				<Thermomètre items={items} analysis={analysis} />
+			</Route>
+			<Route path={path + '/ajouter'}>
+				<Ajout items={items} />
+			</Route>
+			<Route path={path + '/simulateur/:name+'}>
+				<Simulateur
+					onEnd={(dottedName, situation) =>
+						dispatch({
+							type: 'SET_ITEMS',
+							items: [...items, { dottedName, situation }]
+						})
+					}
+				/>
+			</Route>
+			<Route component={Route404} />
+		</Switch>
 	)
 }
 
@@ -114,7 +94,7 @@ const PetitDéjeuner = () => (
 const downHandler = dispatch => ({ key }) => {
 	if (key === 'e') {
 		dispatch({
-			type: 'SET_ITEMS',
+			type: 'ADD_ITEMS',
 			items: [
 				{
 					dottedName: 'nourriture . Tasse de café',

@@ -4,6 +4,7 @@ import { Link } from 'react-router-dom'
 import scenarios from '../scenarios.yaml'
 import { StoreContext } from '../StoreContext'
 import Activité from './Activité'
+import LimitReached from './Limit'
 
 export const limitReached = (analysis, quota) => {
 	const footprint = analysis.reduce(
@@ -16,11 +17,26 @@ export const limitReached = (analysis, quota) => {
 
 export default function Thermomètre({ analysis }) {
 	let {
-			state: { items, scenario }
+			state: { items, scenario },
+			dispatch
 		} = useContext(StoreContext),
-		quota = scenarios[scenario]['crédit carbone par personne']
+		scenarioData = scenarios[scenario],
+		{ 'crédit carbone par personne': quota } = scenarioData
 
-	return (
+	const setNextLimit = () =>
+		quota === 0.5
+			? dispatch({
+					type: 'SET_SCENARIO',
+					scenario: 'B'
+			  })
+			: dispatch({
+					type: 'SET_SCENARIO',
+					scenario: 'A'
+			  })
+
+	return limitReached(analysis, quota) ? (
+		<LimitReached setNextLimit={setNextLimit} scenarioData={scenarioData} />
+	) : (
 		<div>
 			<AddButton />
 
@@ -41,21 +57,8 @@ export default function Thermomètre({ analysis }) {
 					climat {emoji('🌍🌳🐨')}{' '}
 				</p>
 			)}
-			{true && (
-				<div
-					css={`
-						position: absolute;
-						top: 50%;
-						color: white;
-						background: black;
-						width: 100%;
-						text-align: center;
-						padding-left: 0.6rem;
-					`}
-				>
-					Limite pour une planète à +1.5°
-				</div>
-			)}
+			<LimitBar {...{ scenario: scenarios['C'], quota, analysis }} />
+			<LimitBar {...{ scenario: scenarios['B'], quota, analysis }} />
 			{items.length > 0 && (
 				<ul
 					css={`
@@ -124,6 +127,7 @@ const AddButton = () => (
 			position: absolute;
 			bottom: 1rem;
 			right: 1rem;
+			z-index: 1;
 
 			button {
 				padding: 0;
@@ -143,3 +147,28 @@ const AddButton = () => (
 		</Link>
 	</div>
 )
+
+const LimitBar = ({
+	scenario: { réchauffement, 'crédit carbone par personne': quota0 },
+	quota,
+	analysis
+}) => {
+	const reached = limitReached(analysis, quota0),
+		height = 100 - 100 * (quota0 / quota)
+
+	return !reached ? null : (
+		<div
+			css={`
+				position: absolute;
+				top: ${height}%;
+				color: white;
+				background: black;
+				width: 100%;
+				text-align: center;
+				padding-left: 0.6rem;
+			`}
+		>
+			Limite pour une planète à {réchauffement}
+		</div>
+	)
+}

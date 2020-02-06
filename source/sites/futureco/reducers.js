@@ -15,6 +15,11 @@ let reducer = (state = initialState, action) => {
 				...state,
 				items: action.items
 			}
+		case 'ADD_ITEMS':
+			return {
+				...state,
+				items: [...state.items, ...action.items]
+			}
 		default:
 			throw new Error('Unexpected action')
 	}
