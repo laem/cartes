@@ -110,13 +110,13 @@ export default function Thermomètre({ analysis }) {
 }
 
 const AddButton = () => (
-	<Link to="/journée/ajouter">
-		<button
-			css={`
-				font-size: 300%;
-				position: absolute;
-				bottom: 4rem;
-				right: 0.4rem;
+	<div
+		css={`
+			position: absolute;
+			bottom: 1rem;
+			right: 1rem;
+
+			button {
 				padding: 0;
 				border-radius: 10rem !important;
 				width: 7rem;
@@ -125,9 +125,12 @@ const AddButton = () => (
 				color: var(--textColor);
 				box-shadow: 0 1px 3px rgba(41, 117, 209, 0.12),
 					0 1px 2px rgba(41, 117, 209, 0.24);
-			`}
-		>
-			+
-		</button>
-	</Link>
+				font-size: 300%;
+			}
+		`}
+	>
+		<Link to="/journée/ajouter">
+			<button>+</button>
+		</Link>
+	</div>
 )
