@@ -6,14 +6,11 @@ import { StoreContext } from '../StoreContext'
 import Activité from './Activité'
 import LimitReached from './Limit'
 
-export const limitReached = (analysis, quota) => {
-	const footprint = analysis.reduce(
-			(memo, item) => memo + item.targets[0].nodeValue,
-			0
-		),
-		result = footprint > (quota * 1000) / 365
-	return result
-}
+const footprint = analysis =>
+	analysis.reduce((memo, item) => memo + item.targets[0].nodeValue, 0)
+
+export const limitReached = (analysis, quota) =>
+	footprint(analysis) > (quota * 1000) / 365
 
 export default function Thermomètre({ analysis }) {
 	let {
@@ -23,21 +20,20 @@ export default function Thermomètre({ analysis }) {
 		scenarioData = scenarios[scenario],
 		{ 'crédit carbone par personne': quota } = scenarioData
 
-	const setNextLimit = () =>
-		quota === 0.5
-			? dispatch({
-					type: 'SET_SCENARIO',
-					scenario: 'B'
-			  })
-			: dispatch({
-					type: 'SET_SCENARIO',
-					scenario: 'A'
-			  })
+	const setNextLimit = () => {
+			const next = { C: 'B', B: 'A', A: '0' }[scenario]
+
+			dispatch({
+				type: 'SET_SCENARIO',
+				scenario: next
+			})
+		},
+		quota0 = scenarios['C']['crédit carbone par personne']
 
 	return limitReached(analysis, quota) ? (
 		<LimitReached setNextLimit={setNextLimit} scenarioData={scenarioData} />
 	) : (
-		<div>
+		<div css="position: relative">
 			<AddButton />
 
 			{!items.length && (
@@ -57,8 +53,8 @@ export default function Thermomètre({ analysis }) {
 					climat {emoji('🌍🌳🐨')}{' '}
 				</p>
 			)}
-			<LimitBar {...{ scenario: scenarios['C'], quota, analysis }} />
-			<LimitBar {...{ scenario: scenarios['B'], quota, analysis }} />
+			<LimitBar {...{ scenario: scenarios['C'], quota0, analysis }} />
+			<LimitBar {...{ scenario: scenarios['B'], quota0, analysis }} />
 			{items.length > 0 && (
 				<ul
 					css={`
@@ -99,6 +95,7 @@ export default function Thermomètre({ analysis }) {
 							key={item.targets[0].dottedName}
 							{...{
 								item,
+								quota0,
 								quota,
 								i,
 								// animate the last item added only.
@@ -124,7 +121,7 @@ export default function Thermomètre({ analysis }) {
 const AddButton = () => (
 	<div
 		css={`
-			position: absolute;
+			position: fixed;
 			bottom: 1rem;
 			right: 1rem;
 			z-index: 1;
@@ -149,23 +146,27 @@ const AddButton = () => (
 )
 
 const LimitBar = ({
-	scenario: { réchauffement, 'crédit carbone par personne': quota0 },
-	quota,
+	scenario: { réchauffement, 'crédit carbone par personne': quota },
+	quota0,
 	analysis
 }) => {
 	const reached = limitReached(analysis, quota0),
-		height = 100 - 100 * (quota0 / quota)
+		bottom = 100 * (quota / quota0)
 
 	return !reached ? null : (
 		<div
 			css={`
 				position: absolute;
-				top: ${height}%;
+				bottom: ${bottom}vh;
 				color: white;
 				background: black;
 				width: 100%;
 				text-align: center;
 				padding-left: 0.6rem;
+				z-index: 1;
+				border: 1px solid white;
+
+				line-height: 1.5rem;
 			`}
 		>
 			Limite pour une planète à {réchauffement}

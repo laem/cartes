@@ -2,13 +2,21 @@ import React, { useEffect, useState } from 'react'
 import emoji from 'react-easy-emoji'
 import { animated, useSpring } from 'react-spring'
 
-export default function Activité({ item: { targets }, quota, i, animate }) {
+export default function Activité({
+	item: { targets },
+	quota,
+	quota0,
+	i,
+	animate
+}) {
+	const [focused, focus] = useState(false)
 	const item = targets[0]
 	const weight = item.formule.nodeValue,
 		icônes = item.icônes || ''
 	const [open, toggle] = useState(false)
-	const height = (weight / ((quota * 1000) / 365)) * 100,
-		style = useSpring({ height: (!animate ? 100 : open ? 100 : 0) + '%' })
+	const height = (weight / ((quota0 * 1000) / 365)) * 100,
+		style = useSpring({ height: (!animate ? 100 : open ? 100 : 0) + '%' }),
+		share = (weight / ((quota * 1000) / 365)) * 100
 
 	useEffect(() => {
 		toggle(true)
@@ -21,7 +29,7 @@ export default function Activité({ item: { targets }, quota, i, animate }) {
 				height: ${height}vh;
 				justify-content: center;
 				position: relative;
-				border-bottom: 1px solid #fff;
+				border-bottom: 1px dotted #ffffff7d;
 			`}
 		>
 			<animated.div
@@ -46,20 +54,25 @@ export default function Activité({ item: { targets }, quota, i, animate }) {
 							vertical-align: middle !important;
 							font-size: 200% !important;
 						}
+						cursor: pointer;
 					`}
+					onClick={() => focus(!focused)}
 				>
-					<span
-						css={`
-							img {
-								padding: 0.2rem;
-								background: white;
-								border-radius: 1rem;
-							}
-						`}
-					>
-						{emoji(icônes)}
-					</span>
-					<small>{Math.round(height) + '%'}</small>
+					{focused ? (
+						<small>{Math.round(share) + '%'} de ta journée</small>
+					) : (
+						<span
+							css={`
+								img {
+									padding: 0.2rem;
+									background: white;
+									border-radius: 1rem;
+								}
+							`}
+						>
+							{emoji(icônes)}
+						</span>
+					)}
 				</div>
 			</animated.div>
 		</li>

@@ -27,6 +27,7 @@ const blackScreenStyle = `
 		> a {
 		  margin-top: 1.4rem;
 		}
+		blockquote{padding: .1rem}
 `
 
 export default function LimitReached({
@@ -46,16 +47,13 @@ export default function LimitReached({
 					</h1>
 				)}
 				<Markdown source={message} />
-				{!gameOver && (
-					<Link to="/journée/thermomètre">
-						<button
-							className="ui__ button plain"
-							onClick={() => setNextLimit()}
-						>
-							Continuer ma journée
-						</button>
-					</Link>
-				)}
+				<Link to="/journée/thermomètre" onClick={() => setNextLimit()}>
+					{!gameOver ? (
+						<button className="ui__ button plain">Continuer ma journée</button>
+					) : (
+						'Voir mes résultats'
+					)}
+				</Link>
 			</>
 		</div>
 	)
