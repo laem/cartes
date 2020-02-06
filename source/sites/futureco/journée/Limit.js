@@ -8,7 +8,10 @@ const blackScreenStyle = `
 		width: 100vw;
 		height: 100vh;
 		color: white;
-		h1{margin: 0 0 1.6rem;font-size: 300%}
+		h1{
+		text-shadow: red 3px 3px 3px;
+		margin: 0 0 1.6rem;font-size: 300%
+		}
 		button, h1 {
 			color: white;
 		}
@@ -16,10 +19,13 @@ const blackScreenStyle = `
 		padding: 2rem;
 		text-align: center;
 		p {
-			line-height: 1.3rem
+			line-height: 1.3rem;
+			max-width: 30rem;
+			margin: 1rem auto;
+
 		}
 		> a {
-margin-top: 1.4rem;
+		  margin-top: 1.4rem;
 		}
 `
 

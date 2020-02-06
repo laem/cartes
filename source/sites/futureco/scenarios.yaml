@@ -9,7 +9,7 @@ A:
   message: |
     # Game over 😵
 
-    Ton style de vie défonce complètement la planète. 
+    Qu'on soit clair : ton style de vie détruit notre planète, et notre futur.
 
     Il y a quand même une bonne nouvelle...
 
@@ -22,10 +22,9 @@ B:
   description: Nous avons une chance de rester sous les 2°. Les conséquences seront terribles, même si beaucoup d'endroits resteront vivables. Nous ne sommes pas à l'abri des effets d'emballement qui pourraient faire tout basculer vers le scénario 4-5°.
   réchauffement: + 2°
   message: |
-    Paris , 2015. Tout le monde s'accordait sur l'énorme danger qu'on risque à 2°.
+    Paris, 2015. Le monde s'accordait sur l'énorme danger qu'on risque à 2° de réchauffement.
 
-    Tu viens de dépasser cette deuxième limite.
-
+    Tu as dépassé cette deuxième limite 😱
 C:
   icône: 😌
   titre: Effort de guerre
@@ -35,6 +34,4 @@ C:
     Chaque dixième de degré compte : grâce à un effort historique, nous limitons le réchauffement à 1.5° ! La sobriété énergétique est devenue un idéal de vie. À quelques conflits près, le monde reste organisé. De nouvelles technologies nous laissent entrevoir un retour à la normale à l'horizon du siècle.
   réchauffement: + 1.5°
   message: |
-    Cet écran n'est pas infini, tout comme notre planète bleue 🌍.
-
-    Tu as dépassé ton quota de gaz à effet de serre pour limiter le réchauffement à 1.5°.
+    Tu dépasse ta part de gaz à effet de serre pour limiter le réchauffement de la planète à 1.5°.
