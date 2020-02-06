@@ -12,6 +12,7 @@
 	"dependencies": {
 		"@babel/polyfill": "^7.6.0",
 		"@babel/runtime": "^7.6.0",
+		"@hot-loader/react-dom": "^16.11.0",
 		"@microlink/react": "^4.0.1",
 		"@pmmmwh/react-refresh-webpack-plugin": "^0.2.0",
 		"classnames": "^2.2.5",
