@@ -16,7 +16,7 @@ const rewrite = basename => ({
 })
 
 app.get('/', function(req, res) {
-	res.send('<a href="/futureco">futureco</a>')
+	res.redirect('/futureco/journée')
 })
 
 app.use(
