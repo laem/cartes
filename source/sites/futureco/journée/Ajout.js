@@ -1,13 +1,10 @@
 import React, { useState } from 'react'
 import { useSelector } from 'react-redux'
 import { flatRulesSelector } from 'Selectors/analyseSelectors'
-import Search from '../Search'
 import SearchSuggestions from '../Suggestions'
 import Suggestions from './Suggestions'
 
-export default ({ items }) => {
-	const [input, setInput] = useState('')
-
+export default ({}) => {
 	const rules = useSelector(flatRulesSelector)
 	return (
 		<div
@@ -28,8 +25,7 @@ export default ({ items }) => {
 			<h1>Qu'as-tu fait aujourd'hui&nbsp;?</h1>
 			<Suggestions rules={rules} />
 			<small>Autre chose</small>
-			<Search {...{ input, setInput }} />
-			{input && <SearchSuggestions {...{ input }} />}
+			<SearchSuggestions />
 		</div>
 	)
 }
