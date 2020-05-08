@@ -7,18 +7,20 @@ import { StoreContext } from '../StoreContext'
 const suggestions = [
 	'nourriture . Viennoiserie brioche - type brioche',
 	'nourriture . Tasse de café',
+	'nourriture . Tasse de thé',
+	'nourriture . Bol de céréales',
 	'douche . impact par douche',
 	"transport . impact à l'usage",
 	'numérique . téléphone journée',
-
+	'numérique . ordinateur journée',
 	'nourriture . Steak-frites',
-	'nourriture . Salade verte - avec sauce'
+	'nourriture . Salade verte - avec sauce',
 ]
 
 export default ({ rules }) => {
 	const {
 		state: { items, crossedSuggestions },
-		dispatch
+		dispatch,
 	} = useContext(StoreContext)
 	return (
 		<div>
@@ -38,14 +40,13 @@ export default ({ rules }) => {
 				`}
 			>
 				{suggestions
-					.filter(s => !crossedSuggestions.includes(s))
-					.map(dottedName => findRuleByDottedName(rules, dottedName))
+					.filter((s) => !crossedSuggestions.includes(s))
+					.map((dottedName) => findRuleByDottedName(rules, dottedName))
 					.filter(
 						({ journée, dottedName }) =>
-							(journée && journée['se répète']) ||
-							!items.find(item => item.dottedName === dottedName)
+							!items.find((item) => item.dottedName === dottedName)
 					)
-					.map(item => {
+					.map((item) => {
 						let { title, icônes, dottedName, formule } = item
 						return (
 							<li
@@ -72,7 +73,7 @@ export default ({ rules }) => {
 									onClick={() =>
 										dispatch({
 											type: 'CROSS_SUGGESTION',
-											suggestion: dottedName
+											suggestion: dottedName,
 										})
 									}
 								>
