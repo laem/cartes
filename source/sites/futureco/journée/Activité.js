@@ -18,7 +18,16 @@ export default function Activité({
 	const [open, toggle] = useState(false)
 	const dayQuota = (quota0 * 1000) / 365
 	const width = 20 * (weight / dayQuota) * 100,
-		style = useSpring({ height: (!animate ? 100 : open ? 100 : 0) + '%' }),
+		style = useSpring({
+			from: {
+				border: !animate || open ? '0px solid #fbcfa1' : '6px solid #fbcfa1',
+				opacity: 0,
+			},
+			to: {
+				border: '0px solid #fbcfa170',
+				opacity: !animate ? 1 : open ? 1 : 0,
+			},
+		}),
 		share = (weight / ((quota * 1000) / 365)) * 100
 
 	const numberOfBlocks = Math.round(width / blockWidth) || 1
@@ -28,7 +37,7 @@ export default function Activité({
 	}, [])
 
 	return [...Array(numberOfBlocks).keys()].map((i) => (
-		<li
+		<animated.li
 			key={i}
 			css={`
 				background: ${color};
@@ -38,8 +47,9 @@ export default function Activité({
 				justify-content: center;
 				position: relative;
 			`}
+			style={style}
 		>
-			<animated.div
+			<div
 				css={`
 					position: absolute;
 					top: 0;
@@ -48,12 +58,12 @@ export default function Activité({
 					display: flex;
 					align-items: center;
 					justify-content: center;
+					height: 100%;
 					small {
 						margin-left: 0.6rem;
 						color: white;
 					}
 				`}
-				style={style}
 			>
 				<div
 					css={`
@@ -84,7 +94,7 @@ export default function Activité({
 						)
 					)}
 				</div>
-			</animated.div>
-		</li>
+			</div>
+		</animated.li>
 	))
 }

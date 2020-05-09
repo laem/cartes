@@ -83,13 +83,6 @@ export default function Thermomètre({ analysis }) {
 						width: 100vw;
 						margin: 0;
 						padding: 0;
-						background: red;
-						background: linear-gradient(
-							0deg,
-							rgba(255, 192, 0, 1) 0%,
-							rgba(255, 0, 0, 1) 50%,
-							rgba(0, 0, 0, 1) 100%
-						);
 						> div > li {
 							padding-left: 1rem;
 							list-style-type: none;
@@ -106,9 +99,10 @@ export default function Thermomètre({ analysis }) {
 						> div {
 							display: flex;
 						}
-						/* This makes it like a snake rather
+						/* This should make it like a snake rather
 						 * than returning to the beggining of the line 
 						 * for each line break
+						 * But of it to work we must add the missing bricks on the line
 						> div:nth-child(even) {
 							display: flex;
 							flex-direction: row-reverse;
