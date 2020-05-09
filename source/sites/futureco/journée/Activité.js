@@ -2,43 +2,36 @@ import React, { useEffect, useState } from 'react'
 import emoji from 'react-easy-emoji'
 import { animated, useSpring } from 'react-spring'
 
-export default function Activité({
-	item: { targets },
-	quota,
-	quota0,
-	i,
+const ActivitéComponent = ({
 	animate,
 	color,
+	i,
+	duplicateItem,
+	share,
+	item,
 	blockWidth,
-}) {
+}) => {
 	const [focused, focus] = useState(false)
-	const item = targets[0]
-	const weight = item.formule.nodeValue,
-		icônes = item.icônes || ''
 	const [open, toggle] = useState(false)
-	const dayQuota = (quota0 * 1000) / 365
-	const width = 20 * (weight / dayQuota) * 100,
-		style = useSpring({
-			from: {
-				border: !animate || open ? '0px solid #fbcfa1' : '6px solid #fbcfa1',
-				opacity: 0,
-			},
-			to: {
-				border: '0px solid #fbcfa170',
-				opacity: !animate ? 1 : open ? 1 : 0,
-			},
-		}),
-		share = (weight / ((quota * 1000) / 365)) * 100
-
-	const numberOfBlocks = Math.round(width / blockWidth) || 1
+	const style = useSpring({
+		from: {
+			border: !animate || open ? '0px solid #fbcfa1' : '6px solid #fbcfa1',
+			opacity: 0,
+		},
+		to: {
+			border: '0px solid #fbcfa170',
+			opacity: !animate ? 1 : open ? 1 : 0,
+		},
+	})
 
 	useEffect(() => {
 		toggle(true)
 	}, [])
 
-	return [...Array(numberOfBlocks).keys()].map((i) => (
+	const icônes = item.icônes || ''
+	return (
 		<animated.li
-			key={i}
+			key={item.dottedName + i}
 			css={`
 				background: ${color};
 				line-height: initial;
@@ -70,16 +63,16 @@ export default function Activité({
 						${i && 'display: none;'}
 						img {
 							vertical-align: middle !important;
-							font-size: 200% !important;
+							font-size: 180% !important;
 						}
 						cursor: pointer;
 					`}
-					onClick={() => focus(!focused)}
+					onClick={() => false && focus(!focused)}
 				>
 					{focused ? (
 						<small>{Math.round(share) + '%'} de ta journée</small>
 					) : (
-						i < icônes.length && (
+						icônes.length && (
 							<span
 								css={`
 									img {
@@ -87,14 +80,47 @@ export default function Activité({
 										background: white;
 										border-radius: 1rem;
 									}
+									button {
+										padding: 0.2rem;
+										font-size: 100%;
+										font-weight: 600;
+										color: white;
+									}
 								`}
 							>
 								{emoji(icônes)[i]}
+								<button onClick={duplicateItem}>+</button>
 							</span>
 						)
 					)}
 				</div>
 			</div>
 		</animated.li>
+	)
+}
+
+export default function Activité({
+	item: { targets },
+	quota,
+	quota0,
+	animate,
+	color,
+	blockWidth,
+	duplicateItem,
+}) {
+	const item = targets[0]
+	const weight = item.formule.nodeValue
+	const dayQuota = (quota0 * 1000) / 365
+
+	const width = 20 * (weight / dayQuota) * 100,
+		share = (weight / ((quota * 1000) / 365)) * 100
+
+	const numberOfBlocks = Math.round(width / blockWidth) || 1
+
+	return [...Array(numberOfBlocks).keys()].map((i) => (
+		<ActivitéComponent
+			key={i}
+			{...{ item, blockWidth, animate, color, i, duplicateItem, share }}
+		/>
 	))
 }

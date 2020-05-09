@@ -29,11 +29,11 @@ const colors = [
 	'#000000',
 ]
 export default function Thermomètre({ analysis }) {
-	let {
-			state: { items, scenario },
-			dispatch,
-		} = useContext(StoreContext),
-		scenarioData = scenarios[scenario],
+	const {
+		state: { items, scenario },
+		dispatch,
+	} = useContext(StoreContext)
+	const scenarioData = scenarios[scenario],
 		{ 'crédit carbone par personne': quota } = scenarioData
 
 	const setNextLimit = () => {
@@ -121,15 +121,24 @@ export default function Thermomètre({ analysis }) {
 									quota0,
 									blockWidth,
 									quota,
-									i,
+									duplicateItem: () =>
+										dispatch({
+											type: 'SET_ITEMS',
+											items: [
+												...items,
+												items.find(
+													(it) => it.dottedName === item.targets[0].dottedName
+												),
+											],
+										}),
 									// animate the last item added only.
 									animate: items.length - 1 === i,
 									color: colors[i],
 								})
 							)
 							.flat()
-					).map((line) => (
-						<div>{line}</div>
+					).map((line, i) => (
+						<div key={i}>{line}</div>
 					))}
 					<li
 						css={`

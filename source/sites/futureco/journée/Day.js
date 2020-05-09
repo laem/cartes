@@ -15,25 +15,21 @@ import { limitReached } from './Thermomètre'
 export default () => {
 	const {
 		state: { items, scenario },
-		dispatch
+		dispatch,
 	} = useContext(StoreContext)
 	const { path, url } = useRouteMatch()
 	const parsedRules = useSelector(parsedRulesSelector)
 
 	const analysis = useMemo(
 		() =>
-			items.map(item =>
+			items.map((item) =>
 				analyse(
 					parsedRules,
 					item.dottedName
-				)(dottedName => item.situation[dottedName])
+				)((dottedName) => item.situation[dottedName])
 			),
 		[items, parsedRules]
 	)
-
-	console.log('ana in Day.js', analysis)
-
-	console.log(JSON.stringify(items))
 
 	// Easily load examples for development
 	useEffect(() => {
@@ -56,7 +52,7 @@ export default () => {
 					onEnd={(dottedName, situation) =>
 						dispatch({
 							type: 'SET_ITEMS',
-							items: [...items, { dottedName, situation }]
+							items: [...items, { dottedName, situation }],
 						})
 					}
 				/>
@@ -77,8 +73,8 @@ const PetitDéjeuner = () => (
 				'tartines beurre ou confiture',
 				'croissant 🥐 ou pain au chocolat',
 				'café',
-				'thé'
-			].map(nom => (
+				'thé',
+			].map((nom) => (
 				<li>
 					{emoji(nom)}
 					<img
@@ -91,43 +87,47 @@ const PetitDéjeuner = () => (
 	</li>
 )
 
-const downHandler = dispatch => ({ ctrlKey, key }) => {
+const downHandler = (dispatch) => ({ ctrlKey, key }) => {
 	if (key === 'e' && ctrlKey) {
 		dispatch({
 			type: 'ADD_ITEMS',
 			items: [
 				{
 					dottedName: 'nourriture . Tasse de café',
-					situation: {}
+					situation: {},
+				},
+				{
+					dottedName: 'nourriture . Tasse de thé',
+					situation: {},
 				},
 				{
 					dottedName: "transport . impact à l'usage",
 					situation: {
 						'transport . mode': 'tram',
-						'transport . distance parcourue': 100
-					}
+						'transport . distance parcourue': 100,
+					},
 				},
 				{
 					dottedName: 'nourriture . Viennoiserie brioche - type brioche',
-					situation: {}
+					situation: {},
 				},
 				{
 					dottedName: 'nourriture . Tasse de café',
-					situation: {}
+					situation: {},
 				},
 				{
 					dottedName: 'douche . impact par douche',
 					situation: {
 						'chauffage . type': 'électricité',
 						'douche . pomme de douche économe': 'non',
-						'douche . durée de la douche': 10
-					}
+						'douche . durée de la douche': 10,
+					},
 				},
 				{
 					dottedName: 'numérique . téléphone journée',
-					situation: {}
-				}
-			]
+					situation: {},
+				},
+			],
 		})
 	}
 }
