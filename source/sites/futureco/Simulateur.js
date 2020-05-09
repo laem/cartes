@@ -12,26 +12,29 @@ import { Link, useParams } from 'react-router-dom'
 import {
 	analysisWithDefaultsSelector,
 	flatRulesSelector,
-	nextStepsSelector
+	nextStepsSelector,
 } from 'Selectors/analyseSelectors'
 import CarbonImpact from './CarbonImpact'
 import ItemCard from './ItemCard'
+import useSound from 'use-sound'
+import sound from 'file-loader!./brick.mp3'
 
-const Simulateur = props => {
+const Simulateur = (props) => {
+	const [play] = useSound(sound, { volume: 0.05 })
 	const { name: objectif } = useParams(),
 		decoded = decodeRuleName(objectif),
 		rules = useSelector(flatRulesSelector),
 		rule = findRuleByDottedName(rules, decoded),
 		dispatch = useDispatch(),
 		config = {
-			objectifs: [decoded]
+			objectifs: [decoded],
 		},
-		configSet = useSelector(state => state.simulation?.config),
-		situation = useSelector(state => state.simulation?.situation),
-		{ analysis, nextSteps, foldedSteps } = useSelector(state => ({
+		configSet = useSelector((state) => state.simulation?.config),
+		situation = useSelector((state) => state.simulation?.situation),
+		{ analysis, nextSteps, foldedSteps } = useSelector((state) => ({
 			analysis: analysisWithDefaultsSelector(state),
 			foldedSteps: state.conversationSteps.foldedSteps,
-			nextSteps: nextStepsSelector(state)
+			nextSteps: nextStepsSelector(state),
 		})),
 		targets = analysis.targets
 
@@ -60,7 +63,10 @@ const Simulateur = props => {
 						<Link to="/journée/thermomètre">
 							<button
 								className="ui__ button"
-								onClick={() => props.onEnd(rule.dottedName, situation)}
+								onClick={() => {
+									play()
+									props.onEnd(rule.dottedName, situation)
+								}}
 							>
 								Ajouter
 							</button>
