@@ -19,7 +19,7 @@ class App extends Component {
 		return (
 			<Provider
 				basename="futureco"
-				rulesURL="https://futureco-data.netlify.app/co2.json"
+				rulesURL="https://journee--futureco-data.netlify.app/co2.json"
 				sitePaths={sitePaths()}
 				reduxMiddlewares={[]}
 			>
