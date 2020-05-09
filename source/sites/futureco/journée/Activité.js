@@ -6,7 +6,7 @@ const ActivitéComponent = ({
 	animate,
 	color,
 	i,
-	duplicateItem,
+	changeItemCount,
 	share,
 	item,
 	blockWidth,
@@ -89,7 +89,10 @@ const ActivitéComponent = ({
 								`}
 							>
 								{emoji(icônes)[i]}
-								<button onClick={duplicateItem}>+</button>
+								{/* Désactivé pour l'instant, l'affichage est très perturbant 
+								<button onClick={changeItemCount(true)}>+</button>
+								<button onClick={changeItemCount(false)}>-</button>
+								*/}
 							</span>
 						)
 					)}
@@ -106,13 +109,14 @@ export default function Activité({
 	animate,
 	color,
 	blockWidth,
-	duplicateItem,
+	changeItemCount,
+	count,
 }) {
 	const item = targets[0]
 	const weight = item.formule.nodeValue
 	const dayQuota = (quota0 * 1000) / 365
 
-	const width = 20 * (weight / dayQuota) * 100,
+	const width = 20 * ((weight * count) / dayQuota) * 100,
 		share = (weight / ((quota * 1000) / 365)) * 100
 
 	const numberOfBlocks = Math.round(width / blockWidth) || 1
@@ -120,7 +124,7 @@ export default function Activité({
 	return [...Array(numberOfBlocks).keys()].map((i) => (
 		<ActivitéComponent
 			key={i}
-			{...{ item, blockWidth, animate, color, i, duplicateItem, share }}
+			{...{ item, blockWidth, animate, color, i, changeItemCount, share }}
 		/>
 	))
 }

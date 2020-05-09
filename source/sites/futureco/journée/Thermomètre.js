@@ -7,13 +7,18 @@ import Activité from './Activité'
 import LimitReached from './Limit'
 import { splitEvery } from 'ramda'
 
-const footprint = (analysis) =>
-	analysis.reduce((memo, item) => memo + item.targets[0].nodeValue, 0)
+const footprint = (analysis, items) =>
+	analysis.reduce((memo, item) => {
+		const itemNode = item.targets[0]
+		const count =
+			items.find((i) => i.dottedName === itemNode.dottedName).count || 1
+		return memo + itemNode.nodeValue * count
+	}, 0)
 
 const blockWidth = 10
 
-export const limitReached = (analysis, quota) =>
-	footprint(analysis) > (quota * 1000) / 365
+export const limitReached = (analysis, items, quota) =>
+	footprint(analysis, items) > (quota * 1000) / 365
 // This tool is awesome to create pallettes
 // https://gka.github.io/palettes/#/10|d|ffa700,ff0000|ff0000,000000|1|1
 const colors = [
@@ -46,7 +51,7 @@ export default function Thermomètre({ analysis }) {
 		},
 		quota0 = scenarios['C']['crédit carbone par personne']
 
-	return limitReached(analysis, quota) ? (
+	return limitReached(analysis, items, quota) ? (
 		<LimitReached setNextLimit={setNextLimit} scenarioData={scenarioData} />
 	) : (
 		<div css="position: relative">
@@ -69,8 +74,8 @@ export default function Thermomètre({ analysis }) {
 					climat {emoji('🌍🌳🐨')}{' '}
 				</p>
 			)}
-			<LimitBar {...{ scenario: scenarios['C'], quota0, analysis }} />
-			<LimitBar {...{ scenario: scenarios['B'], quota0, analysis }} />
+			<LimitBar {...{ items, scenario: scenarios['C'], quota0, analysis }} />
+			<LimitBar {...{ items, scenario: scenarios['B'], quota0, analysis }} />
 			{items.length > 0 && (
 				<ul
 					css={`
@@ -115,27 +120,35 @@ export default function Thermomètre({ analysis }) {
 					{splitEvery(
 						blockWidth,
 						analysis
-							.map((item, i) =>
-								Activité({
+							.map((item, i) => {
+								const dottedName = item.targets[0].dottedName
+								const itemToUpdate = items.find(
+									(i) => i.dottedName === dottedName
+								)
+								const count = itemToUpdate.count || 1
+								return Activité({
 									item,
 									quota0,
 									blockWidth,
 									quota,
-									duplicateItem: () =>
+									count,
+									changeItemCount: (increment = true) => () =>
 										dispatch({
 											type: 'SET_ITEMS',
-											items: [
-												...items,
-												items.find(
-													(it) => it.dottedName === item.targets[0].dottedName
-												),
-											],
+											items: items.map((i) =>
+												i.dottedName === dottedName
+													? {
+															...itemToUpdate,
+															count: increment ? count + 1 : count - 1,
+													  }
+													: i
+											),
 										}),
 									// animate the last item added only.
 									animate: items.length - 1 === i,
 									color: colors[i],
 								})
-							)
+							})
 							.flat()
 					).map((line, i) => (
 						<div key={i}>{line}</div>
@@ -186,8 +199,9 @@ const LimitBar = ({
 	scenario: { réchauffement, 'crédit carbone par personne': quota },
 	quota0,
 	analysis,
+	items,
 }) => {
-	const reached = limitReached(analysis, quota0),
+	const reached = limitReached(analysis, items, quota0),
 		bottom = 100 * (quota / quota0)
 
 	return !reached ? null : (
