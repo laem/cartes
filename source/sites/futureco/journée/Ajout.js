@@ -25,7 +25,6 @@ export default ({}) => {
 			<h1>Qu'as-tu fait aujourd'hui&nbsp;?</h1>
 			<Suggestions rules={rules} />
 			<small>Autre chose</small>
-			<SearchSuggestions />
 		</div>
 	)
 }

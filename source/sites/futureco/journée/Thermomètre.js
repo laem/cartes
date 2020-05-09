@@ -14,24 +14,20 @@ const blockWidth = 10
 
 export const limitReached = (analysis, quota) =>
 	footprint(analysis) > (quota * 1000) / 365
+// This tool is awesome to create pallettes
+// https://gka.github.io/palettes/#/10|d|ffa700,ff0000|ff0000,000000|1|1
 const colors = [
-	'#ffff00',
-	'#ffe700',
-	'#ffcf01',
-	'#ffb60c',
-	'#ff9c17',
-	'#ff7e23',
-	'#ff5b30',
-	'#ff1361',
-	'#d7146e',
-	'#b01b5b',
-	'#8b1d49',
-	'#671b37',
-	'#461727',
-	'#261117',
+	'#ffa700',
+	'#ff9300',
+	'#ff7d00',
+	'#ff6500',
+	'#ff4600',
+	'#c81708',
+	'#931b0b',
+	'#62190c',
+	'#341307',
 	'#000000',
 ]
-
 export default function Thermomètre({ analysis }) {
 	let {
 			state: { items, scenario },
