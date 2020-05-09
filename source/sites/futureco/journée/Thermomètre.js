@@ -74,7 +74,7 @@ export default function Thermomètre({ analysis }) {
 					climat {emoji('🌍🌳🐨')}{' '}
 				</p>
 			)}
-			<LimitBar {...{ items, scenario: scenarios['C'], quota0, analysis }} />
+			<LimitBar {...{ items, scenario: scenarios['C'], quota0: 0, analysis }} />
 			<LimitBar {...{ items, scenario: scenarios['B'], quota0, analysis }} />
 			{items.length > 0 && (
 				<ul
@@ -220,7 +220,7 @@ const LimitBar = ({
 				line-height: 1.5rem;
 			`}
 		>
-			Limite pour une planète à {réchauffement}
+			Limite pour une journée écolo
 		</div>
 	)
 }
