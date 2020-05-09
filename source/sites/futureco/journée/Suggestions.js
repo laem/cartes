@@ -5,6 +5,7 @@ import { encodeRuleName, findRuleByDottedName } from 'Engine/rules'
 import { StoreContext } from '../StoreContext'
 
 const suggestions = [
+	'logement . un jour sous un toit',
 	'nourriture . Viennoiserie brioche - type brioche',
 	'nourriture . Tasse de café',
 	'nourriture . Tasse de thé',
@@ -13,6 +14,7 @@ const suggestions = [
 	"transport . impact à l'usage",
 	'numérique . téléphone journée',
 	'numérique . ordinateur journée',
+	'lire un livre',
 	'nourriture . Steak-frites',
 	'nourriture . Salade verte - avec sauce',
 ]
@@ -54,7 +56,8 @@ export default ({ rules }) => {
 								css={`
 									a,
 									a button {
-										width: 80%;
+										width: 20rem;
+										max-width: 80%;
 									}
 									a button {
 										padding: 0.6rem;
@@ -70,6 +73,7 @@ export default ({ rules }) => {
 									</button>
 								</Link>
 								<button
+									css="font-size: 50%"
 									onClick={() =>
 										dispatch({
 											type: 'CROSS_SUGGESTION',

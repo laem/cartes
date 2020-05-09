@@ -7,29 +7,36 @@ export default function Activité({
 	quota,
 	quota0,
 	i,
-	animate
+	animate,
+	color,
+	blockWidth,
 }) {
 	const [focused, focus] = useState(false)
 	const item = targets[0]
 	const weight = item.formule.nodeValue,
 		icônes = item.icônes || ''
 	const [open, toggle] = useState(false)
-	const height = (weight / ((quota0 * 1000) / 365)) * 100,
+	const dayQuota = (quota0 * 1000) / 365
+	const width = 20 * (weight / dayQuota) * 100,
 		style = useSpring({ height: (!animate ? 100 : open ? 100 : 0) + '%' }),
 		share = (weight / ((quota * 1000) / 365)) * 100
+
+	const numberOfBlocks = Math.round(width / blockWidth) || 1
 
 	useEffect(() => {
 		toggle(true)
 	}, [])
 
-	return (
+	return [...Array(numberOfBlocks).keys()].map((i) => (
 		<li
+			key={i}
 			css={`
+				background: ${color};
 				line-height: initial;
-				height: ${height}vh;
+				height: 5vh;
+				width: ${blockWidth}vw;
 				justify-content: center;
 				position: relative;
-				border-bottom: 1px dotted #ffffff7d;
 			`}
 		>
 			<animated.div
@@ -50,6 +57,7 @@ export default function Activité({
 			>
 				<div
 					css={`
+						${i && 'display: none;'}
 						img {
 							vertical-align: middle !important;
 							font-size: 200% !important;
@@ -61,20 +69,22 @@ export default function Activité({
 					{focused ? (
 						<small>{Math.round(share) + '%'} de ta journée</small>
 					) : (
-						<span
-							css={`
-								img {
-									padding: 0.2rem;
-									background: white;
-									border-radius: 1rem;
-								}
-							`}
-						>
-							{emoji(icônes)}
-						</span>
+						i < icônes.length && (
+							<span
+								css={`
+									img {
+										padding: 0.2rem;
+										background: white;
+										border-radius: 1rem;
+									}
+								`}
+							>
+								{emoji(icônes)[i]}
+							</span>
+						)
 					)}
 				</div>
 			</animated.div>
 		</li>
-	)
+	))
 }

@@ -5,17 +5,37 @@ import scenarios from '../scenarios.yaml'
 import { StoreContext } from '../StoreContext'
 import Activité from './Activité'
 import LimitReached from './Limit'
+import { splitEvery } from 'ramda'
 
-const footprint = analysis =>
+const footprint = (analysis) =>
 	analysis.reduce((memo, item) => memo + item.targets[0].nodeValue, 0)
+
+const blockWidth = 10
 
 export const limitReached = (analysis, quota) =>
 	footprint(analysis) > (quota * 1000) / 365
+const colors = [
+	'#ffff00',
+	'#ffe700',
+	'#ffcf01',
+	'#ffb60c',
+	'#ff9c17',
+	'#ff7e23',
+	'#ff5b30',
+	'#ff1361',
+	'#d7146e',
+	'#b01b5b',
+	'#8b1d49',
+	'#671b37',
+	'#461727',
+	'#261117',
+	'#000000',
+]
 
 export default function Thermomètre({ analysis }) {
 	let {
 			state: { items, scenario },
-			dispatch
+			dispatch,
 		} = useContext(StoreContext),
 		scenarioData = scenarios[scenario],
 		{ 'crédit carbone par personne': quota } = scenarioData
@@ -25,7 +45,7 @@ export default function Thermomètre({ analysis }) {
 
 			dispatch({
 				type: 'SET_SCENARIO',
-				scenario: next
+				scenario: next,
 			})
 		},
 		quota0 = scenarios['C']['crédit carbone par personne']
@@ -59,10 +79,11 @@ export default function Thermomètre({ analysis }) {
 				<ul
 					css={`
 						display: flex;
-						flex-direction: column-reverse;
 						justify-content: flex-start;
-						min-height: 100vh;
-						min-height: -webkit-fill-available;
+						flex-wrap: wrap-reverse;
+						position: fixed;
+						bottom: 0;
+						left: 0;
 						width: 100vw;
 						margin: 0;
 						padding: 0;
@@ -73,10 +94,8 @@ export default function Thermomètre({ analysis }) {
 							rgba(255, 0, 0, 1) 50%,
 							rgba(0, 0, 0, 1) 100%
 						);
-						> li {
-							line-height: 3rem;
+						> div > li {
 							padding-left: 1rem;
-							width: 100%;
 							list-style-type: none;
 						}
 						li img {
@@ -88,20 +107,39 @@ export default function Thermomètre({ analysis }) {
 							margin: 0 auto;
 							color: white;
 						}
+						> div {
+							display: flex;
+						}
+						/* This makes it like a snake rather
+						 * than returning to the beggining of the line 
+						 * for each line break
+						> div:nth-child(even) {
+							display: flex;
+							flex-direction: row-reverse;
+							justify-content: flex-end;
+
+						}
+						*/
 					`}
 				>
-					{analysis.map((item, i) => (
-						<Activité
-							key={item.targets[0].dottedName}
-							{...{
-								item,
-								quota0,
-								quota,
-								i,
-								// animate the last item added only.
-								animate: items.length - 1 === i
-							}}
-						/>
+					{splitEvery(
+						blockWidth,
+						analysis
+							.map((item, i) =>
+								Activité({
+									item,
+									quota0,
+									blockWidth,
+									quota,
+									i,
+									// animate the last item added only.
+									animate: items.length - 1 === i,
+									color: colors[i],
+								})
+							)
+							.flat()
+					).map((line) => (
+						<div>{line}</div>
 					))}
 					<li
 						css={`
@@ -148,7 +186,7 @@ const AddButton = () => (
 const LimitBar = ({
 	scenario: { réchauffement, 'crédit carbone par personne': quota },
 	quota0,
-	analysis
+	analysis,
 }) => {
 	const reached = limitReached(analysis, quota0),
 		bottom = 100 * (quota / quota0)
