@@ -39,6 +39,7 @@ const ActivitéComponent = ({
 				width: ${blockWidth}vw;
 				justify-content: center;
 				position: relative;
+				box-shadow: 0px 0px 8px 0px rgb(0 0 0 / 8%);
 			`}
 			style={style}
 		>

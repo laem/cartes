@@ -56,7 +56,7 @@ export default ({ rules }) => {
 								css={`
 									a,
 									a button {
-										width: 20rem;
+										width: 30rem;
 										max-width: 80%;
 									}
 									a button {
