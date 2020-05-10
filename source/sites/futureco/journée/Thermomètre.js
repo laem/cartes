@@ -52,7 +52,7 @@ export default function Thermomètre({ analysis }) {
 		quota0 = scenarios['C']['crédit carbone par personne']
 
 	return limitReached(analysis, items, quota) ? (
-		<LimitReached setNextLimit={setNextLimit} scenarioData={scenarioData} />
+		<LimitReached {...{ setNextLimit, scenarioData }} />
 	) : (
 		<div css="position: relative">
 			<AddButton />
@@ -179,13 +179,17 @@ const AddButton = () => (
 			button {
 				padding: 0;
 				border-radius: 10rem !important;
-				width: 7rem;
-				height: 7rem;
+				width: 6rem;
+				height: 6rem;
 				background: var(--color);
 				color: var(--textColor);
 				box-shadow: 0 1px 3px rgba(41, 117, 209, 0.12),
 					0 1px 2px rgba(41, 117, 209, 0.24);
 				font-size: 300%;
+				@media (max-width: 600px) {
+					width: 4.5rem;
+					height: 4.5rem;
+				}
 			}
 		`}
 	>
