@@ -1,11 +1,11 @@
 let initialState = {
 	scenario: 'C',
-	items: [],
+	items: [{ dottedName: 'services publics' }],
 	crossedSuggestions: [],
+	done: false,
 }
 
 let reducer = (state = initialState, action) => {
-	console.log(state)
 	switch (action.type) {
 		case 'SET_SCENARIO':
 			return {
