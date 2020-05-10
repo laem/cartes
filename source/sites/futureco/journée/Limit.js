@@ -32,7 +32,7 @@ const blackScreenStyle = `
 
 export default function LimitReached({
 	setNextLimit,
-	scenarioData: { réchauffement, message, titre }
+	scenarioData: { réchauffement, message, titre },
 }) {
 	useEffect(() => {
 		window.navigator.vibrate(200)

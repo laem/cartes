@@ -6,8 +6,17 @@ import { StoreContext } from '../StoreContext'
 import Activité from './Activité'
 import LimitReached from './Limit'
 import { splitEvery } from 'ramda'
+import {
+	Objectif1point5,
+	Objectif1point5Raté,
+	AccordDeParis,
+	Soutenable,
+	PasSoutenable,
+	Objectif2,
+	Objectif2Raté,
+} from '../jugement'
 
-const footprint = (analysis, items) =>
+const computeFootprint = (analysis, items) =>
 	analysis.reduce((memo, item) => {
 		const itemNode = item.targets[0]
 		const count =
@@ -18,7 +27,7 @@ const footprint = (analysis, items) =>
 const blockWidth = 10
 
 export const limitReached = (analysis, items, quota) =>
-	footprint(analysis, items) > (quota * 1000) / 365
+	computeFootprint(analysis, items) > (quota * 1000) / 365
 // This tool is awesome to create pallettes
 // https://gka.github.io/palettes/#/10|d|ffa700,ff0000|ff0000,000000|1|1
 const colors = [
@@ -35,7 +44,7 @@ const colors = [
 ]
 export default function Thermomètre({ analysis }) {
 	const {
-		state: { items, scenario },
+		state: { items, scenario, progression },
 		dispatch,
 	} = useContext(StoreContext)
 	const scenarioData = scenarios[scenario],
@@ -51,9 +60,50 @@ export default function Thermomètre({ analysis }) {
 		},
 		quota0 = scenarios['C']['crédit carbone par personne']
 
-	return limitReached(analysis, items, quota) ? (
-		<LimitReached {...{ setNextLimit, scenarioData }} />
-	) : (
+	const dayFootprint = computeFootprint(analysis, items),
+		footprint = dayFootprint * 365
+
+	const footprintSoutenable = 2000,
+		footprint1point5 = (11000 * (100 - 7)) / 100,
+		footprint2 = (11000 * (100 - 4)) / 100
+
+	const {
+		done,
+		pasSoutenable,
+		accordDeParis,
+		objectif1point5Raté,
+		objectif2Raté,
+	} = progression
+	if (done)
+		return footprintSoutenable ? (
+			<Soutenable />
+		) : footprint < footprint1point5 ? (
+			<Objectif1point5 />
+		) : (
+			<Objectif2 />
+		)
+	const update = (k, v) =>
+		dispatch({
+			type: 'SET_PROGRESSION',
+			progression: { ...progression, [k]: v },
+		})
+
+	if (footprint > footprintSoutenable && !pasSoutenable)
+		return <PasSoutenable next={() => update('pasSoutenable', true)} />
+	if (footprint > footprintSoutenable && pasSoutenable && !accordDeParis)
+		return <AccordDeParis next={() => update('accordDeParis', true)} />
+	if (footprint > footprintSoutenable && accordDeParis) null
+
+	if (footprint > footprint1point5 && !objectif1point5Raté)
+		return (
+			<Objectif1point5Raté next={() => update('objectif1point5Raté', true)} />
+		)
+
+	if (footprint > footprint1point5 && objectif1point5Raté) return null
+	if (footprint > footprint2 && !objectif2Raté)
+		return <Objectif2Raté next={() => update('objectif2Raté', true)} />
+
+	return (
 		<div css="position: relative">
 			<AddButton />
 
@@ -200,7 +250,7 @@ const AddButton = () => (
 )
 
 const LimitBar = ({
-	scenario: { réchauffement, 'crédit carbone par personne': quota },
+	scenario: { 'crédit carbone par personne': quota },
 	quota0,
 	analysis,
 	items,

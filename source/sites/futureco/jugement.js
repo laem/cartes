@@ -1,24 +1,59 @@
 import React from 'react'
 import emoji from 'react-easy-emoji'
 
-export const PasSoutenable = () => (
-	<div>
+const blackScreenStyle = `
+		background: black;
+		width: 100vw;
+		height: 100vh;
+		color: white;
+		h1{
+		text-shadow: red 3px 3px 3px;
+		margin: 0 0 1.6rem;font-size: 300%
+		}
+		button, h1 , h2 , h3{
+			color: white;
+		}
+		button {
+		max-width: 10rem;
+margin: 2rem auto;
+
+		}
+		display: flex; flex-direction: column; justify-content: center;
+
+		padding: 2rem;
+		text-align: center;
+		p {
+			line-height: 1.3rem;
+			max-width: 30rem;
+			margin: 1rem auto;
+
+		}
+		> a {
+		  margin-top: 1.4rem;
+		}
+		blockquote{padding: .1rem}
+`
+
+export const PasSoutenable = ({ next }) => (
+	<div css={blackScreenStyle}>
 		<h1>{emoji('😟')} Journée pas écolo</h1>
 		<p>
-			Ta journée n'est pas soutenable, car elle dépasse la capacité de notre
-			pays à absorber tes émissions de gaz à effet de serre.
+			Ta journée n'est pas soutenable, car elle dépasse la capacité naturelle de
+			notre pays à encaisser nos émissions.
 		</p>
 		<h2>Pas de panique ! </h2>
 		<p>
-			On est presque tout dans ton cas en France, et ce n'est pas la fin du
-			monde, en tout cas pour l'instant...
+			Presque tous les français sont dans cette m****, et ce n'est heureusement
+			pas encore la fin du monde.
 		</p>
-		<button>OK</button>
+		<button className="ui__ button plain" onClick={next}>
+			OK
+		</button>
 	</div>
 )
 
-export const AccordDeParis = () => (
-	<div>
+export const AccordDeParis = ({ next }) => (
+	<div css={blackScreenStyle}>
 		<p>
 			Pas facile d'être sobre dans une société fondée sur la croissance du PIB.
 		</p>
@@ -27,19 +62,18 @@ export const AccordDeParis = () => (
 			qu'on limite la casse climatique à un réchauffement compris entre 1.5° et
 			2°.{' '}
 		</p>
-		<p>
-			Les conséquences d'un réchauffement de 1.5° seront très graves, c'est
-			mieux que 2° : chaque dixième de degré compte.
-		</p>
-		<p>Alors, prêt à relever le défi ?</p>
-		<button>C'est parti ! </button>
+		<p>Chaque dixième de degré compte, donc restons sous les 1.5°.</p>
+		<p>Prêt à relever le défi ?</p>
+		<button className="ui__ button plain" onClick={next}>
+			C'est parti !{' '}
+		</button>
 		<a href="https://www.auto-moto.com/" target="_blank">
 			<button>Non</button>
 		</a>
 	</div>
 )
-export const objectif1point5 = () => (
-	<div>
+export const Objectif1point5 = ({ next }) => (
+	<div css={blackScreenStyle}>
 		<h1>Objectif 1.5° : réussi {emoji('✅')}</h1>
 		<p>
 			Bravo, tu sembles être sur la voie d'un réchauffement pas si
@@ -50,12 +84,14 @@ export const objectif1point5 = () => (
 			CO2e/an. Chaque année, l'objectif sera rendu plus exigeant pour finalement
 			atteindre cet objectif.
 		</p>
-		<button>Voir mes résultats</button>
+		<button className="ui__ plain" onClick={next}>
+			Voir mes résultats
+		</button>
 	</div>
 )
 
-export const objectif1point5raté = () => (
-	<div>
+export const Objectif1point5Raté = ({ next }) => (
+	<div css={blackScreenStyle}>
 		<h1>objectif 1.5° : râté</h1>
 		<p>
 			aujourd'hui, un français a une empreinte climat de 11 tonnes par an en
@@ -69,11 +105,13 @@ export const objectif1point5raté = () => (
 			tu as dépassé cet objectif. on est d'accord, c'est pas facile. mais
 			gardons espoir, il te reste l'objectif des 2°.
 		</p>
-		<button>continuer</button>
+		<button className="ui__ plain" onClick={next}>
+			continuer
+		</button>
 	</div>
 )
-export const objectif2 = () => (
-	<div>
+export const Objectif2 = ({ next }) => (
+	<div css={blackScreenStyle}>
 		<h1>Objectif 2° : réussi {emoji('✅')}</h1>
 		<p>
 			Bravo, tu sembles être sur la voie qui évite la catastrophe climatique
@@ -85,12 +123,14 @@ export const objectif2 = () => (
 			finalement atteindre cet objectif.
 		</p>
 		<p>On se retrouve dans quelques mois {emoji('😊')}?</p>
-		<button>Voir mes résultats</button>
+		<button className="ui__ plain" onClick={next}>
+			Voir mes résultats
+		</button>
 	</div>
 )
 
-export const Objectif2Raté = () => (
-	<div>
+export const Objectif2Raté = ({ next }) => (
+	<div css={blackScreenStyle}>
 		<h1>Objectif 2° : râté</h1>
 		<p>
 			Cette journée te place décidemment bien loin des objectifs de l'accord de
@@ -106,12 +146,14 @@ export const Objectif2Raté = () => (
 			, peu importe le départ, l'essentiel c'est d'accélérer, on compte sur toi,
 			et à bientôt !
 		</p>
-		<button>Voir mes résultats</button>
+		<button className="ui__ plain" onClick={next}>
+			Voir mes résultats
+		</button>
 	</div>
 )
 
-export const Soutenable = () => (
-	<div>
+export const Soutenable = ({ next }) => (
+	<div css={blackScreenStyle}>
 		<h1>{emoji('🥳')} Magnifique ! </h1>
 		<p>
 			On dirait bien que tu a emprunté le chemin d'une vie soutenable,

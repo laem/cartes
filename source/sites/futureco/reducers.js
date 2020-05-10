@@ -1,5 +1,6 @@
 let initialState = {
 	scenario: 'C',
+	progression: {},
 	items: [{ dottedName: 'services publics' }],
 	crossedSuggestions: [],
 	done: false,
@@ -11,6 +12,11 @@ let reducer = (state = initialState, action) => {
 			return {
 				...state,
 				scenario: action.scenario,
+			}
+		case 'SET_PROGRESSION':
+			return {
+				...state,
+				progression: action.progression,
 			}
 		case 'SET_ITEMS':
 			return {
