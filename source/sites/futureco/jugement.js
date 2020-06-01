@@ -21,7 +21,6 @@ margin: 2rem auto;
 		display: flex; flex-direction: column; justify-content: center;
 
 		padding: 2rem;
-		text-align: center;
 		p {
 			line-height: 1.3rem;
 			max-width: 30rem;
@@ -32,6 +31,9 @@ margin: 2rem auto;
 		  margin-top: 1.4rem;
 		}
 		blockquote{padding: .1rem}
+		 strong {
+color: red
+		 }
 `
 
 export const PasSoutenable = ({ next }) => (
@@ -39,12 +41,12 @@ export const PasSoutenable = ({ next }) => (
 		<h1>{emoji('😟')} Journée pas écolo</h1>
 		<p>
 			Ta journée n'est pas soutenable, car elle dépasse la capacité naturelle de
-			notre pays à encaisser nos émissions.
+			notre pays à encaisser nos émissions de gaz à effet de serre.
 		</p>
 		<h2>Pas de panique ! </h2>
 		<p>
-			Presque tous les français sont dans cette m****, et ce n'est heureusement
-			pas encore la fin du monde.
+			Nous somme presque tous dans cette galère, et ce n'est heureusement pas
+			encore la fin du monde.
 		</p>
 		<button className="ui__ button plain" onClick={next}>
 			OK
@@ -55,19 +57,20 @@ export const PasSoutenable = ({ next }) => (
 export const AccordDeParis = ({ next }) => (
 	<div css={blackScreenStyle}>
 		<p>
-			Pas facile d'être sobre dans une société fondée sur la croissance du PIB.
+			Pas facile d'être écolo dans une société axée sur la croissance du PIB.
 		</p>
 		<p>
-			Fin 2015 à Paris, le monde l'a bien compris et s'est mis d'accord pour
-			qu'on limite la casse climatique à un réchauffement compris entre 1.5° et
-			2°.{' '}
+			Fin 2015 à Paris, les pays du monde l'ont bien compris et se sont mis
+			d'accord :{' '}
+			<strong>
+				on doit limiter la casse climatique à un réchauffement de 1.5°.
+			</strong>
 		</p>
-		<p>Chaque dixième de degré compte, donc restons sous les 1.5°.</p>
 		<p>Prêt à relever le défi ?</p>
 		<button className="ui__ button plain" onClick={next}>
 			C'est parti !{' '}
 		</button>
-		<a href="https://www.auto-moto.com/" target="_blank">
+		<a href="https://www.40millionsdautomobilistes.com/" target="_blank">
 			<button>Non</button>
 		</a>
 	</div>

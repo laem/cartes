@@ -63,6 +63,7 @@ export default function Thermomètre({ analysis }) {
 	const dayFootprint = computeFootprint(analysis, items),
 		footprint = dayFootprint * 365
 
+	// For now, we compute limits knowing that we must reduce our footprint by 7% every year for 1.5°, and 4% every year for 2°.
 	const footprintSoutenable = 2000,
 		footprint1point5 = (11000 * (100 - 7)) / 100,
 		footprint2 = (11000 * (100 - 4)) / 100
@@ -74,6 +75,12 @@ export default function Thermomètre({ analysis }) {
 		objectif1point5Raté,
 		objectif2Raté,
 	} = progression
+	const currentLimit = !pasSoutenable
+		? footprintSoutenable
+		: !objectif1point5Raté
+		? footprint1point5
+		: footprint2
+
 	if (done)
 		return footprintSoutenable ? (
 			<Soutenable />
@@ -124,17 +131,42 @@ export default function Thermomètre({ analysis }) {
 					climat {emoji('🌍🌳🐨')}{' '}
 				</p>
 			)}
-			<LimitBar {...{ items, scenario: scenarios['C'], quota0: 0, analysis }} />
-			<LimitBar {...{ items, scenario: scenarios['B'], quota0, analysis }} />
+
+			<LimitBar
+				{...{
+					text: 'Limite pour une journée écolo',
+					style: pasSoutenable
+						? `top: ${
+								((currentLimit - footprintSoutenable) / footprintSoutenable) *
+								100
+						  }vh; opacity: .75;`
+						: 'top: 0vh;',
+				}}
+			/>
+			{footprint > footprintSoutenable && (
+				<LimitBar
+					{...{ text: 'Limite pour un monde à +1.5°', style: ' top: 0vh;' }}
+				/>
+			)}
+			<div
+				css={`
+					/* footprintsoutenable is 100vh : it's what we're supposed to limit our consumptions to.
+				 * 
+				 * */
+
+					height: ${Math.round(
+						(currentLimit / footprintSoutenable) * 100 -
+							(footprint / footprintSoutenable) * 100
+					)}vh;
+					background: purple;
+				`}
+			></div>
 			{items.length > 0 && (
 				<ul
 					css={`
 						display: flex;
 						justify-content: flex-start;
 						flex-wrap: wrap-reverse;
-						position: fixed;
-						bottom: 0;
-						left: 0;
 						width: 100vw;
 						margin: 0;
 						padding: 0;
@@ -206,7 +238,7 @@ export default function Thermomètre({ analysis }) {
 					<li
 						css={`
 							flex-grow: 1;
-							background: white;
+							background: purple;
 							display: flex;
 							justify-content: center;
 							align-items: center;
@@ -249,32 +281,24 @@ const AddButton = () => (
 	</div>
 )
 
-const LimitBar = ({
-	scenario: { 'crédit carbone par personne': quota },
-	quota0,
-	analysis,
-	items,
-}) => {
-	const reached = limitReached(analysis, items, quota0),
-		bottom = 100 * (quota / quota0)
-
-	return !reached ? null : (
+const LimitBar = ({ text, style }) => {
+	return (
 		<div
 			css={`
 				position: absolute;
-				bottom: ${bottom}vh;
 				color: white;
-				background: black;
+				background: #079992;
 				width: 100%;
 				text-align: center;
 				padding-left: 0.6rem;
 				z-index: 1;
-				border: 1px solid white;
-
+				height: 1.5rem;
 				line-height: 1.5rem;
+				font-size: 120%;
+				${style}
 			`}
 		>
-			Limite pour une journée écolo
+			{text}
 		</div>
 	)
 }

@@ -33,9 +33,9 @@ export default () => {
 
 	// Easily load examples for development
 	useEffect(() => {
-		window.addEventListener('keydown', downHandler(dispatch))
+		window.addEventListener('keydown', loadExample(dispatch))
 		return () => {
-			window.removeEventListener('keydown', downHandler(dispatch))
+			window.removeEventListener('keydown', loadExample(dispatch))
 		}
 	}, [dispatch])
 	return (
@@ -87,7 +87,7 @@ const PetitDéjeuner = () => (
 	</li>
 )
 
-const downHandler = (dispatch) => ({ ctrlKey, key }) => {
+const loadExample = (dispatch) => ({ ctrlKey, key }) => {
 	if (key === 'e' && ctrlKey) {
 		dispatch({
 			type: 'ADD_ITEMS',
