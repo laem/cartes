@@ -6,6 +6,7 @@ import { StoreContext } from '../StoreContext'
 import Activité from './Activité'
 import LimitReached from './Limit'
 import { splitEvery } from 'ramda'
+import tinygradient from 'tinygradient'
 import {
 	Objectif1point5,
 	Objectif1point5Raté,
@@ -28,20 +29,17 @@ const blockWidth = 10
 
 export const limitReached = (analysis, items, quota) =>
 	computeFootprint(analysis, items) > (quota * 1000) / 365
-// This tool is awesome to create pallettes
-// https://gka.github.io/palettes/#/10|d|ffa700,ff0000|ff0000,000000|1|1
-const colors = [
-	'#ffa700',
-	'#ff9300',
-	'#ff7d00',
-	'#ff6500',
-	'#ff4600',
-	'#c81708',
-	'#931b0b',
-	'#62190c',
-	'#341307',
-	'#000000',
-]
+
+const gradient = tinygradient([
+		'#78e08f',
+		'#f6b93b',
+		'#b71540',
+		'#e84393',
+		'#8854d0',
+		'#000000',
+	]),
+	colors = gradient.rgb(40)
+
 export default function Thermomètre({ analysis }) {
 	const {
 		state: { items, scenario, progression },
@@ -158,7 +156,7 @@ export default function Thermomètre({ analysis }) {
 						(currentLimit / footprintSoutenable) * 100 -
 							(footprint / footprintSoutenable) * 100
 					)}vh;
-					background: purple;
+					background: white;
 				`}
 			></div>
 			{items.length > 0 && (
@@ -228,7 +226,7 @@ export default function Thermomètre({ analysis }) {
 										}),
 									// animate the last item added only.
 									animate: items.length - 1 === i,
-									color: colors[i],
+									color: colors[i] || '#000000',
 								})
 							})
 							.flat()
@@ -238,7 +236,7 @@ export default function Thermomètre({ analysis }) {
 					<li
 						css={`
 							flex-grow: 1;
-							background: purple;
+							background: white;
 							display: flex;
 							justify-content: center;
 							align-items: center;
