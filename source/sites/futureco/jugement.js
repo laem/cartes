@@ -1,14 +1,16 @@
 import React from 'react'
 import emoji from 'react-easy-emoji'
 
-const blackScreenStyle = `
+export const blackScreenStyle = `
 		background: black;
 		width: 100vw;
 		height: 100vh;
 		color: white;
+		font-size: 120%;
 		h1{
 		text-shadow: red 3px 3px 3px;
-		margin: 0 0 1.6rem;font-size: 300%
+		margin: 0 0 1.6rem;
+		font-size: 300%
 		}
 		button, h1 , h2 , h3{
 			color: white;

@@ -11,6 +11,7 @@ import { StoreContext } from '../StoreContext'
 import Thermomètre from './Thermomètre'
 import Ajout from './Ajout'
 import Splash from './Splash'
+import Finie from './Finie'
 import { limitReached } from './Thermomètre'
 export default () => {
 	const {
@@ -46,6 +47,9 @@ export default () => {
 			</Route>
 			<Route path={path + '/ajouter'}>
 				<Ajout items={items} />
+			</Route>
+			<Route path={path + '/finie'}>
+				<Finie />
 			</Route>
 			<Route path={path + '/simulateur/:name+'}>
 				<Simulateur
