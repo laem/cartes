@@ -24,7 +24,7 @@ label textarea {
 
 let createIssue = (title, body, setURL) =>
 	fetch(
-		'https://publicodes.netlify.com/.netlify/functions/createIssue?' +
+		'https://publicodes.netlify.app/.netlify/functions/createIssue?' +
 			toPairs({ repo: 'laem/futureco-data', title, body })
 				.map(([k, v]) => k + '=' + encodeURIComponent(v))
 				.join('&'),
