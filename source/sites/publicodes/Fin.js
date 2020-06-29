@@ -8,8 +8,10 @@ import { findContrastedTextColor } from 'Components/utils/colors'
 import { motion } from 'framer-motion'
 
 import BallonGES from './images/ballonGES.svg'
+import StartingBlock from './images/starting block.png'
 import SessionBar from 'Components/SessionBar'
 import Chart from './chart'
+import { Link } from 'react-router-dom'
 
 const gradient = tinygradient([
 		'#78e08f',
@@ -155,7 +157,6 @@ const AnimatedDiv = animated(({ score, value, details }) => {
 			<h2 css="margin: 1rem 0 .6rem;font-size: 120%">Que faire ?</h2>
 			<div
 				css={`
-					border: 2px dashed black;
 					border-radius: 0.6rem;
 					padding: 1rem;
 					margin: 0 auto;
@@ -172,9 +173,14 @@ const AnimatedDiv = animated(({ score, value, details }) => {
 					{emoji('👏')} Connaître son empreinte, c'est déjà un début de
 					solution.
 				</p>
-				<p>
-					<strong>Bientôt</strong>, des actions concrètes et chiffrées pour
-					réduire votre empreinte.
+				<img
+					css="height: 16rem; margin: 0 auto; display: block"
+					src={StartingBlock}
+				/>
+				<p css="text-align: center">
+					<Link to="/actions" className="ui__ plain button">
+						Suivez le guide
+					</Link>
 				</p>
 			</div>
 		</div>
