@@ -12,6 +12,7 @@ import Landing from './Landing'
 import Simulateur from './Simulateur'
 import Fin from './Fin'
 import VersionBeta from './VersionBeta'
+import Actions from './Actions'
 import sitePaths from './sitePaths'
 import Logo from './Logo'
 import { StoreProvider } from './StoreContext'
@@ -76,6 +77,7 @@ class App extends Component {
 							{/* Lien de compatibilité, à retirer par exemple mi-juillet 2020*/}
 							<Route path="/fin/:score" component={Fin} />
 							<Route path="/fin" component={Fin} />
+							<Route path="/actions" component={Actions} />
 							<Route path="/contribuer/:input?" component={Contribution} />
 							<Route path="/à-propos" component={About} />
 							<Route path="/vie-privée" component={Privacy} />

@@ -2,6 +2,17 @@ import React from 'react'
 import emoji from 'react-easy-emoji'
 import { useSelector } from 'react-redux'
 
+export const humanWeight = (v) => {
+	const [raw, unit] =
+		v === 0
+			? [v, '']
+			: v < 1
+			? [v * 1000, 'g']
+			: v < 1000
+			? [v, 'kilos']
+			: [v / 1000, 'tonnes']
+	return [raw, unit]
+}
 export default ({ nodeValue: possiblyNegativeValue }) => {
 	const foldedSteps = useSelector(
 			(state) => state.conversationSteps?.foldedSteps
@@ -13,14 +24,7 @@ export default ({ nodeValue: possiblyNegativeValue }) => {
 			</span>
 		),
 		v = Math.abs(possiblyNegativeValue),
-		[raw, unit] =
-			v === 0
-				? [v, '']
-				: v < 1
-				? [v * 1000, 'g']
-				: v < 1000
-				? [v, 'kilos']
-				: [v / 1000, 'tonnes'],
+		[raw, unit] = humanWeight(v),
 		value = raw.toFixed(1) * (possiblyNegativeValue < 0 ? -1 : 1)
 
 	return (
