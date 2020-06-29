@@ -157,7 +157,7 @@ const AnimatedDiv = animated(({ score, value }) => {
 				</div>
 				<button className="ui__ button simple small">En savoir plus</button>
 			</motion.div>
-			<p>Autres gestes</p>
+			<p>Autres gestes climat</p>
 			<div>
 				<div css="> button {margin: .3rem .6rem}">
 					<button className="ui__ small plain button">

@@ -9,7 +9,7 @@ export const humanWeight = (v) => {
 			: v < 1
 			? [v * 1000, 'g']
 			: v < 1000
-			? [v, 'kilos']
+			? [v, 'kg']
 			: [v / 1000, 'tonnes']
 	return [raw, unit]
 }
