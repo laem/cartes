@@ -10,7 +10,7 @@ const MiniCssExtractPlugin = require('mini-css-extract-plugin')
 // Server-side prerendering is not activated here. If you want to work on this, go see this fork's parent, github.com/betagouv/mon-entreprise
 
 // If on master, with a URL_PATH env (used by the yarn build commmand)
-// inject a base path, since the website is used from ecolab.ademe.fr/apps/transport/
+// inject a base path, since the website is used from ecolab.ademe.fr/apps/climat/
 //
 // Only for the master branch, to enable netlify branch reviews to work
 const prodPath = process.env.BRANCH === 'master' && process.env.URL_PATH
