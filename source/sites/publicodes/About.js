@@ -6,6 +6,7 @@ import { Link } from 'react-router-dom'
 export default () => (
 	<section className="ui__ container" id="about">
 		<p>
+			<Markdown source={about} />
 			Le code de ce site{' '}
 			<a href="https://github.com/laem/futureco"> est libre</a>. Plongez-vous
 			dans nos modèles carbone en explorant la{' '}
