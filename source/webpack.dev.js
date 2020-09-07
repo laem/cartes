@@ -7,26 +7,26 @@ const {
 	commonLoaders,
 	styleLoader,
 	HTMLPlugins,
-	default: common
+	default: common,
 } = require('./webpack.common.js')
 
 module.exports = {
 	...common,
 	module: {
-		rules: [...commonLoaders(), styleLoader('style-loader')]
+		rules: [...commonLoaders(), styleLoader('style-loader')],
 	},
 	mode: 'development',
-	entry: map(entry => ['webpack-hot-middleware/client', entry], common.entry),
+	entry: map((entry) => ['webpack-hot-middleware/client', entry], common.entry),
 	plugins: [
 		...(common.plugins || []),
-		...HTMLPlugins(),
+		...HTMLPlugins({ prodPath: 'publicodes' }),
 		new ReactRefreshWebpackPlugin(),
 		new webpack.EnvironmentPlugin({ NODE_ENV: 'development' }),
 		new webpack.HotModuleReplacementPlugin(),
 		new MonacoWebpackPlugin({
 			languages: ['yaml'],
 
-			features: ['!gotoSymbol']
-		})
-	]
+			features: ['!gotoSymbol'],
+		}),
+	],
 }
