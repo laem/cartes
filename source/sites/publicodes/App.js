@@ -33,7 +33,6 @@ class App extends Component {
 		const pullRequestNumber = urlParams.get('PR')
 		return (
 			<Provider
-				basename="publicodes"
 				rulesURL={`https://${
 					branch
 						? `${branch}--`

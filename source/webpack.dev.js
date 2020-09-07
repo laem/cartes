@@ -19,7 +19,7 @@ module.exports = {
 	entry: map((entry) => ['webpack-hot-middleware/client', entry], common.entry),
 	plugins: [
 		...(common.plugins || []),
-		...HTMLPlugins({ prodPath: 'publicodes' }),
+		...HTMLPlugins(), //{ prodPath: '/publicodes/' }),
 		new ReactRefreshWebpackPlugin(),
 		new webpack.EnvironmentPlugin({ NODE_ENV: 'development' }),
 		new webpack.HotModuleReplacementPlugin(),

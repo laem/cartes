@@ -43,7 +43,6 @@ if (
 
 type ProviderProps = {
 	tracker: Tracker
-	basename: string
 	sitePaths: SitePaths
 	language: AvailableLangs
 	initialStore: RootState
@@ -58,9 +57,7 @@ export default class Provider extends PureComponent<ProviderProps> {
 		super(props)
 		this.history = createBrowserHistory({
 			basename:
-				process.env.NODE_ENV === 'production'
-					? process.env.URL_PATH || ''
-					: this.props.basename,
+				process.env.NODE_ENV === 'production' ? process.env.URL_PATH : '',
 		})
 		this.props.tracker?.connectToHistory(this.history)
 		const storeEnhancer = composeEnhancers(
