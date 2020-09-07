@@ -59,6 +59,7 @@
 		"reselect": "^4.0.0",
 		"screenfull": "^3.3.2",
 		"tinygradient": "^1.1.2",
+		"webpack-dev-server": "^3.11.0",
 		"whatwg-fetch": "^3.0.0",
 		"yaml": "^1.10.0"
 	},
@@ -70,7 +71,7 @@
 		"eslint": "LIST=`git diff --cached --name-only --diff-filter=AMR HEAD | grep .*\\.js | grep -v json`; if [ \"$LIST\" ]; then eslint $LIST; fi",
 		"externalize": "node source/externalize.js",
 		"pretest": "LIST=`git diff --name-only --diff-filter=AMR HEAD^..HEAD | grep .*\\.js | grep -v json`; if [ \"$LIST\" ]; then eslint $LIST; fi",
-		"start": "node source/server.js",
+		"start": "webpack-dev-server --hot --mode development --inline --config source/webpack.dev.js",
 		"test-inversions": "yarn test-watch --grep 'inversions'",
 		"test-meca": "yarn test-watch --grep 'Mécanismes'",
 		"test-rules": "yarn test-watch --grep 'notre base de règles'",
@@ -168,8 +169,6 @@
 		"url-loader": "^4.1.0",
 		"webpack": "^4.39.3",
 		"webpack-cli": "^3.1.2",
-		"webpack-dev-middleware": "^3.4.0",
-		"webpack-hot-middleware": "^2.24.2",
 		"worker-loader": "^2.0.0",
 		"yaml-jest": "^1.0.5",
 		"yaml-loader": "^0.6.0"

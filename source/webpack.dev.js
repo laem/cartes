@@ -15,11 +15,13 @@ module.exports = {
 	module: {
 		rules: [...commonLoaders(), styleLoader('style-loader')],
 	},
+	devServer: {
+		historyApiFallback: true,
+	},
 	mode: 'development',
-	entry: map((entry) => ['webpack-hot-middleware/client', entry], common.entry),
 	plugins: [
 		...(common.plugins || []),
-		...HTMLPlugins(), //{ prodPath: '/publicodes/' }),
+		...HTMLPlugins({ prodPath: '/' }),
 		new ReactRefreshWebpackPlugin(),
 		new webpack.EnvironmentPlugin({ NODE_ENV: 'development' }),
 		new webpack.HotModuleReplacementPlugin(),
