@@ -1,26 +1,10 @@
-# Pourquoi ce site ?
+# À propos
 
-## Contexte
+## Qu'est-ce que c'est ? 
 
-Le contexte
+Ce simulateur vous permet d'évaluer votre empreinte carbone individuelle, puis de la situer par rapport aux objectifs climatiques. Il est basé sur le modèle MicMac des associations [Avenir Climatique](https://avenirclimatique.org/les-outils/) et [TaCa](https://www.taca.asso.fr/).
 
-> Example
+## Qui le développe ?
 
-## Le drame 
-
-
-Le drame
-
-- a 
-- b
-- c
-
-## La solution numérique
-La solution
-
-## Sources
-
-[1] Source une
-
-
+Il est principalement développé par l'équipe [Ecolab](https://ecolab.ademe.fr) de l'ADEME, et porté par l'incubateur de la direction du numérique [beta.gouv.fr](https://beta.gouv.fr).
 
