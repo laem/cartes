@@ -19,7 +19,7 @@ const DocumentationButton = (props) => {
 		>
 			{emoji('📄')}
 			<Link {...props} to={sitePaths.documentation.index}>
-				Explorer les calculs
+				Comprendre nos calculs
 			</Link>
 		</div>
 	)

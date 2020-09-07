@@ -38,33 +38,18 @@ export default () => {
 					Faire le test
 				</Link>
 			</div>
-			<p>
-				Ce simulateur vous permet d'évaluer votre empreinte carbone
-				individuelle, puis de la situer par rapport aux objectifs climatiques.
-				Il est basé sur le modèle MicMac des associations{' '}
-				<a href="https://avenirclimatique.org/les-outils/">
-					Avenir Climatique{' '}
-				</a>{' '}
-				et <a href="https://www.taca.asso.fr/">TaCa</a>.
-			</p>
-			<footer
-				css={`
-					margin-top: 1rem;
-					> div {
+			<footer>
+				<div
+					css={`
 						display: flex;
 						align-items: center;
 						justify-content: center;
 						margin-bottom: 1rem;
-					}
-					img {
-						margin-left: 0.4rem;
-					}
-					p {
-						width: 100%;
-					}
-				`}
-			>
-				<div>
+						img {
+							margin-left: 0.4rem;
+						}
+					`}
+				>
 					<a href="https://ademe.fr">
 						<img
 							css="height: 4rem; margin-right: .6rem"
@@ -78,13 +63,27 @@ export default () => {
 						/>
 					</a>
 				</div>
-				<a href="https://github.com/betagouv/ecolab-data#ecolab-climat-">
-					{emoji('🖊️ ')}
-					Comment contribuer
-				</a>
-				<DocumentationButton />
-				{emoji('🙈 ')}
-				<Link to="/vie-privée">Vie privée</Link>
+				<div
+					css={`
+						display: flex;
+						justify-content: center;
+						flex-wrap: wrap;
+						> * {
+							margin: 0 0.6rem;
+						}
+					`}
+				>
+					<Link to="/à-propos">{emoji('❔ ')}À propos</Link>
+					<a href="https://github.com/betagouv/ecolab-data#ecolab-climat-">
+						{emoji('🖊️ ')}
+						Contribuer
+					</a>
+					<DocumentationButton />
+					<Link to="/vie-privée">
+						{emoji('🙈 ')}
+						Vie privée
+					</Link>
+				</div>
 			</footer>
 		</div>
 	)
