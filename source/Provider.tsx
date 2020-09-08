@@ -57,7 +57,9 @@ export default class Provider extends PureComponent<ProviderProps> {
 		super(props)
 		this.history = createBrowserHistory({
 			basename:
-				process.env.NODE_ENV === 'production' ? process.env.URL_PATH : '',
+				process.env.BRANCH === 'master' && process.env.URL_PATH
+					? process.env.URL_PATH
+					: '',
 		})
 		this.props.tracker?.connectToHistory(this.history)
 		const storeEnhancer = composeEnhancers(
