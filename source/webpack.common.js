@@ -124,6 +124,6 @@ module.exports.HTMLPlugins = ({
 		description: 'Connaissez-vous votre empreinte sur le climat ?',
 		filename: 'index.html',
 		injectTrackingScript,
-		...(prodPath ? { base: prodPath } : {}),
+		base: prodPath || '/',
 	}),
 ]

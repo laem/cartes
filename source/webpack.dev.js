@@ -22,7 +22,7 @@ module.exports = {
 	mode: 'development',
 	plugins: [
 		...(common.plugins || []),
-		...HTMLPlugins({ prodPath: '/' }),
+		...HTMLPlugins(),
 		new ReactRefreshWebpackPlugin(),
 		new webpack.EnvironmentPlugin({ NODE_ENV: 'development' }),
 		new webpack.HotModuleReplacementPlugin(),
