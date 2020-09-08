@@ -8,7 +8,6 @@ import { findContrastedTextColor } from 'Components/utils/colors'
 import { motion } from 'framer-motion'
 
 import BallonGES from './images/ballonGES.svg'
-import StartingBlock from './images/starting block.png'
 import SessionBar from 'Components/SessionBar'
 import { Link } from 'react-router-dom'
 import { humanWeight } from './HumanWeight'
