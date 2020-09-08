@@ -46,10 +46,21 @@ export default () => {
 						justify-content: center;
 						margin-bottom: 1rem;
 						img {
-							margin-left: 0.4rem;
+							margin: 0 0.6rem;
 						}
 					`}
 				>
+					<img
+						css={`
+							height: 3rem;
+							margin-right: -0.8rem !important;
+							@media (max-width: 800px) {
+								height: 2rem;
+							}
+						`}
+						alt="Ecolab"
+						src="https://ecolab-transport.netlify.com/images/ecolab.png"
+					/>
 					<a href="https://ademe.fr">
 						<img
 							css="height: 4rem; margin-right: .6rem"
