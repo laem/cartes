@@ -1,7 +1,8 @@
 .tags*
 .tmp
 node_modules/
-dist/
+dist/*
+!dist/_redirects
 .DS_Store
 package-lock.json
 yarn-error.log
