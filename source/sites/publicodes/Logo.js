@@ -1,7 +1,7 @@
 import React from 'react'
 
 export default () => (
-	<span css="font-weight: 400;color: black; position: relative; ">
+	<span css="margin-top: .6rem;font-weight: 400;color: black; position: relative; ">
 		<span css="position: absolute; top: -.95rem; left: 0rem; font-size: 60%;">
 			nos
 		</span>
