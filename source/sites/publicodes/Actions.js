@@ -50,7 +50,7 @@ const AnimatedDiv = animated(({ score, value }) => {
 })
 
 const Action = ({ nom, icônes, color1, color2, titre, empreinte }) => (
-	<Link css="text-decoration: none" to={'/actions/' + nom}>
+	<Link css="text-decoration: none; width: 100%" to={'/actions/' + nom}>
 		<motion.div
 			animate={{ scale: [0.85, 1] }}
 			transition={{ duration: 0.2, ease: 'easeIn' }}
@@ -63,13 +63,15 @@ const Action = ({ nom, icônes, color1, color2, titre, empreinte }) => (
 				display: flex;
 				flex-direction: column;
 				justify-content: space-between;
-				padding: 1rem;
+				padding: 0.6rem;
 
 				text-align: center;
-				font-size: 110%;
+				font-size: 100%;
 				h2 {
 					color: white;
-					font-size: 130%;
+					font-size: 120%;
+					font-weight: normal;
+					margin: 1rem;
 				}
 				> h2 > span > img {
 					margin-right: 0.4rem !important;
