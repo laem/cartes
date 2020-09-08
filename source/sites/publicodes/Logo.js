@@ -1,4 +1,5 @@
 import React from 'react'
+//This component is unfortunately repeated in index.html, where we can't yet use a component :-(
 
 export default () => (
 	<span css="margin-top: .6rem;font-weight: 400;color: black; position: relative; ">
