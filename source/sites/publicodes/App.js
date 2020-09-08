@@ -11,7 +11,9 @@ import Contribution from './Contribution'
 import Landing from './Landing'
 import Simulateur from './Simulateur'
 import Fin from './Fin'
+import VersionBeta from './VersionBeta'
 import sitePaths from './sitePaths'
+import Logo from './Logo'
 import { StoreProvider } from './StoreContext'
 import {
 	persistSimulation,
@@ -50,40 +52,7 @@ class App extends Component {
 				}}
 			>
 				<StoreProvider>
-					<div css="background: yellow; text-align: center; color: black; ">
-						Attention, version{' '}
-						<span
-							css={`
-								display: inline-block;
-								background: rgb(131, 167, 201) none repeat scroll 0% 0%;
-								padding: 0px 0.3rem;
-								text-align: center;
-								font-size: 80%;
-								color: white;
-								border-radius: 0.6rem;
-								font-weight: 900;
-								transform: rotate(15deg);
-								animation-duration: 2s;
-								animation-name: slidein;
-								margin: 0 0.4rem;
-
-								@keyframes slidein {
-									from {
-										font-size: 150%;
-										transform: rotate(0deg);
-									}
-
-									to {
-										font-size: 80%;
-										transform: rotate(15deg);
-									}
-								}
-							`}
-						>
-							beta
-						</span>
-						<Link to="/contribuer">faites-nous vos retours !</Link>
-					</div>
+					<VersionBeta />
 					<div className="ui__ container">
 						<nav css="display: flex; justify-content: center; margin-top: .6rem">
 							<Link
@@ -96,29 +65,7 @@ class App extends Component {
 									margin-bottom: 0.4rem;
 								`}
 							>
-								<img
-									css={`
-										height: 3rem;
-										margin-right: 1rem;
-										@media (max-width: 800px) {
-											height: 2rem;
-										}
-									`}
-									alt="Ecolab"
-									src="https://ecolab-transport.netlify.com/images/ecolab.png"
-								/>
-								<span css="font-weight: 400;color: black; position: relative; ">
-									<span css="position: absolute; top: -.95rem; left: 0rem; font-size: 60%;">
-										nos
-									</span>
-									<span css="color: var(--color); font-weight: bold; text-transform: uppercase; font-size: 75%">
-										ges
-									</span>
-									tes
-									<span css="position: absolute; top: 1.2rem; left: 2.3rem; font-size: 60%; ">
-										climat
-									</span>
-								</span>
+								<Logo />
 							</Link>
 						</nav>
 						<Switch>
