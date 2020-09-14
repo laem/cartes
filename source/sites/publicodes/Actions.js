@@ -29,10 +29,12 @@ export default ({}) => {
 		from: { value: 0 },
 	})
 
-	const config = {
-		objectifs: ["arrêter l'avion"],
-	}
 	const analysis = useSelector(analysisWithDefaultsSelector)
+	const rules = useSelector(flatRulesSelector)
+	const actions = rules.find((r) => r.dottedName === 'actions')
+	const config = {
+		objectifs: actions.formule.somme,
+	}
 	const configSet = useSelector((state) => state.simulation?.config)
 
 	const dispatch = useDispatch()
@@ -47,77 +49,78 @@ const AnimatedDiv = animated(({ analysis, score, value }) => {
 	return (
 		<div css="padding: 0 .3rem 1rem; max-width: 600px; margin: 0 auto;">
 			<h1 css="margin: 0;font-size: 160%">Comment réduire mon empreinte ?</h1>
-			<Action
-				color1={'#e58e26'}
-				color2={'#d0b105'}
-				icônes="🍽🍖"
-				titre="Diviser ma consommation de viande par 4"
-				empreinte={'-1 tonne'}
-				nom={'viande'}
-			/>
-			<Action
-				color1={'#ff0000'}
-				color2={'#ff1166'}
-				icônes="🍽🍖"
-				titre="Arrêter l'avion"
-				empreinte={(analysis.targets[0].nodeValue / 1000).toFixed(1) + ' tonne'}
-				nom={'avion'}
-			/>
-			<Action
-				color1={'#04a4ac'}
-				color2={'#05569d'}
-				icônes={'🏠📺'}
-				titre="Éteindre mes appareils en veille"
-				empreinte={'-33 kg'}
-			/>
+			{analysis.targets.map((target) => (
+				<Action data={target} />
+			))}
 		</div>
 	)
 })
 
-const Action = ({ nom, icônes, color1, color2, titre, empreinte }) => (
-	<Link css="text-decoration: none; width: 100%" to={'/actions/' + nom}>
-		<motion.div
-			animate={{ scale: [0.85, 1] }}
-			transition={{ duration: 0.2, ease: 'easeIn' }}
-			className=""
-			css={`
-				background: linear-gradient(180deg, ${color1} 0%, ${color2} 100%);
-				color: white;
-				margin: 1rem auto;
-				border-radius: 0.6rem;
-				display: flex;
-				flex-direction: column;
-				justify-content: space-between;
-				padding: 0.6rem;
+const Action = ({ data }) => {
+	const { title, icons, nodeValue, name } = data
 
-				text-align: center;
-				font-size: 100%;
-				h2 {
-					color: white;
-					font-size: 120%;
-					font-weight: normal;
-					margin: 1rem;
-				}
-				> h2 > span > img {
-					margin-right: 0.4rem !important;
-				}
-			`}
-		>
-			<h2>
-				<span>{emoji(icônes)}</span>
-				{titre}
-			</h2>
-			<div
+	const empreinte = (nodeValue / 1000).toFixed(1) + ' tonne'
+
+	return (
+		<Link css="text-decoration: none; width: 100%" to={'/actions/' + name}>
+			<motion.div
+				animate={{ scale: [0.85, 1] }}
+				transition={{ duration: 0.2, ease: 'easeIn' }}
+				className="ui__ card"
 				css={`
-					background: white;
-					color: var(--color);
-					border-radius: 1rem;
+					margin: 1rem auto;
+					border-radius: 0.6rem;
 					padding: 0.6rem;
-					margin-bottom: 0.6rem;
+					display: flex;
+					justify-content: start;
+					align-items: center;
+
+					text-align: center;
+					font-size: 100%;
+					h2 {
+						font-size: 130%;
+						font-weight: normal;
+						margin: 1rem;
+					}
+					> h2 > span > img {
+						margin-right: 0.4rem !important;
+					}
 				`}
 			>
-				<span css="font-size: 200%">{empreinte}</span> de CO₂e par an
-			</div>
-		</motion.div>
-	</Link>
-)
+				<div
+					css={`
+						font-size: 250%;
+						width: 4rem;
+						margin-right: 1rem;
+						img {
+							margin-top: 0.8rem !important;
+						}
+					`}
+				>
+					{emoji(icons)}
+				</div>
+				<div
+					css={`
+						display: flex;
+						flex-direction: column;
+						justify-content: space-between;
+						align-items: flex-start;
+					`}
+				>
+					<h2>{title}</h2>
+					<div
+						css={`
+							background: var(--lighterColor);
+							color: var(--color);
+							border-radius: 1rem;
+							padding: 0.6rem;
+							margin-bottom: 0.6rem;
+						`}
+					>
+						<span css="font-size: 200%">- {empreinte}</span> de CO₂e par an
+					</div>
+				</div>
+			</motion.div>
+		</Link>
+	)
+}
