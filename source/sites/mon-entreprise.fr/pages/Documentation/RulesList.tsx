@@ -27,7 +27,10 @@ export default function RulesList() {
 			<p>
 				Le code est non seulement transparent, mais aussi contributif : chancun
 				peut l'explorer, donner son avis, l'améliorer. Tout est expliqué sur{' '}
-				<a href="github.com/betagouv/ecolab-data">Github</a>.
+				<a href="https://github.com/betagouv/ecolab-data#ecolab-climat-">
+					Github
+				</a>
+				.
 			</p>
 			<h2>Explorez notre documentation</h2>
 

@@ -85,10 +85,6 @@ export default () => {
 					`}
 				>
 					<Link to="/à-propos">{emoji('❔ ')}À propos</Link>
-					<a href="https://github.com/betagouv/ecolab-data#ecolab-climat-">
-						{emoji('🖊️ ')}
-						Contribuer
-					</a>
 					<DocumentationButton />
 					<Link to="/vie-privée">
 						{emoji('🙈 ')}
