@@ -1,6 +1,7 @@
 import { toPairs } from 'ramda'
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import emoji from 'react-easy-emoji'
+import { Markdown } from 'Components/utils/markdown'
 
 let formStyle = `
 label {
@@ -36,13 +37,39 @@ let createIssue = (title, body, setURL) =>
 export default ({ match }) => {
 	let input = match.params.input
 	let [sujet, setSujet] = useState(input)
+	let [faqData, setFaqData] = useState(null)
 
 	let [source, setSource] = useState('')
 	let [URL, setURL] = useState(null)
 
+	console.log(faqData)
+
+	useEffect(() => {
+		async function fetchData() {
+			const response = await fetch(
+				'https://api.github.com/repos/betagouv/ecolab-data/issues/170'
+			)
+			const json = await response.json()
+			setFaqData(json.body)
+		}
+
+		fetchData()
+	}, [])
+
 	return (
-		<div className="ui__ container">
+		<div className="ui__ container" css="padding-bottom: 1rem">
 			<h1>Contribuer</h1>
+			<h2 css="font-size: 180%">{emoji('❔')}Question fréquentes</h2>
+			<div>
+				{!faqData ? (
+					'Chargement de la FAQ'
+				) : (
+					<div className="ui__ card" css="padding-bottom: 1rem">
+						<Markdown escapeHtml={false} source={faqData} />
+					</div>
+				)}
+			</div>
+			<h2 css="font-size: 180%">{emoji('🙋‍♀️')}J'ai une autre question</h2>
 			<p>
 				{emoji('➡ ')}Vous connaissez Github ? Dans ce cas, venez contribuer
 				directement sur le projet{' '}
