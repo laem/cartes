@@ -123,7 +123,7 @@ const AnimatedDiv = animated(({ score, value, details }) => {
 							</div>
 							<div>
 								<span>
-									{emoji('😇 ')}
+									{emoji('🎯 ')}
 									objectif{' '}
 								</span>
 								<strong>2 tonnes</strong>
