@@ -1,6 +1,6 @@
 import React, { useEffect } from 'react'
 import { useParams } from 'react-router'
-import { partition } from 'ramda'
+import { partition, sortBy } from 'ramda'
 import emoji from 'react-easy-emoji'
 import tinygradient from 'tinygradient'
 import { animated, useSpring, config } from 'react-spring'
@@ -81,7 +81,7 @@ const AnimatedDiv = animated(({ analysis, score, value }) => {
 			{bilans.length > 0 && <MiniAction positive data={bilans[0]} />}
 			<h1 css="margin: 0;font-size: 160%">Comment réduire mon empreinte ?</h1>
 
-			{actions.map((action) => (
+			{sortBy((a) => -a.nodeValue)(actions).map((action) => (
 				<MiniAction data={action} />
 			))}
 		</div>
@@ -90,10 +90,25 @@ const AnimatedDiv = animated(({ analysis, score, value }) => {
 
 const MiniAction = ({ data, positive = false }) => {
 	const { title, icons, nodeValue, dottedName } = data
+	const disabled = nodeValue === 0 || nodeValue === false
 
 	return (
 		<Link
-			css="text-decoration: none; width: 100%"
+			css={`
+				${disabled
+					? `
+					img {
+					filter: grayscale(1);
+					}
+					color: var(--grayColor);
+					h2 {
+					  color: var(--grayColor);
+					}
+					opacity: 0.8;`
+					: ''}
+				text-decoration: none;
+				width: 100%;
+			`}
 			to={'/actions/' + encodeRuleName(dottedName)}
 		>
 			<motion.div
