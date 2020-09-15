@@ -1,5 +1,6 @@
 import React, { useEffect } from 'react'
 import { useParams } from 'react-router'
+import { partition } from 'ramda'
 import emoji from 'react-easy-emoji'
 import tinygradient from 'tinygradient'
 import { animated, useSpring, config } from 'react-spring'
@@ -37,6 +38,7 @@ export default ({}) => {
 	const actions = rules.find((r) => r.dottedName === 'actions')
 	const simulation = useSelector((state) => state.simulation)
 
+	// Add the actions rules to the simulation, keping the user's situation
 	const config = !simulation
 		? { objectifs: actions.formule.somme }
 		: {
@@ -51,6 +53,8 @@ export default ({}) => {
 	const dispatch = useDispatch()
 	useEffect(() => dispatch(setSimulationConfig(config)), [])
 	if (!configSet) return null
+	// Exception for this action, which we've custom build
+	// keep it as an example until the generic Action component is as good
 	if (action && decodeRuleName(action) === 'réduire viande . par quatre')
 		return <Viande />
 	if (action)
@@ -66,18 +70,25 @@ export default ({}) => {
 }
 
 const AnimatedDiv = animated(({ analysis, score, value }) => {
+	const [bilans, actions] = partition(
+		(t) => t.dottedName === 'bilan',
+		analysis.targets
+	)
+
 	return (
 		<div css="padding: 0 .3rem 1rem; max-width: 600px; margin: 0 auto;">
 			<SessionBar />
+			{bilans.length > 0 && <MiniAction positive data={bilans[0]} />}
 			<h1 css="margin: 0;font-size: 160%">Comment réduire mon empreinte ?</h1>
-			{analysis.targets.map((target) => (
-				<MiniAction data={target} />
+
+			{actions.map((action) => (
+				<MiniAction data={action} />
 			))}
 		</div>
 	)
 })
 
-const MiniAction = ({ data }) => {
+const MiniAction = ({ data, positive = false }) => {
 	const { title, icons, nodeValue, dottedName } = data
 
 	return (
@@ -134,7 +145,7 @@ const MiniAction = ({ data }) => {
 				>
 					<h2>{title}</h2>
 					<div>
-						<HumanWeight nodeValue={-nodeValue} />
+						<HumanWeight nodeValue={positive ? nodeValue : -nodeValue} />
 					</div>
 				</div>
 			</motion.div>
