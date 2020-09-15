@@ -43,14 +43,14 @@ export default function PreviousSimulationBanner() {
 		(state: RootState) => state.previousSimulation
 	)
 
-	console.log('previousSim', previousSimulation)
-	useEffect(() => {
-		if (previousSimulation) dispatch(loadPreviousSimulation())
-	}, [])
 	const foldedSteps = useSelector(
 		(state: RootState) => state.conversationSteps.foldedSteps
 	)
 	const arePreviousAnswers = !!foldedSteps.length
+	useEffect(() => {
+		if (!arePreviousAnswers && previousSimulation)
+			dispatch(loadPreviousSimulation())
+	}, [])
 	const [showAnswerModal, setShowAnswerModal] = useState(false)
 	const analysis = useSelector(analysisWithDefaultsSelector)
 	const history = useHistory()
@@ -72,8 +72,8 @@ export default function PreviousSimulationBanner() {
 					<Button
 						className="simple small"
 						onClick={() => {
-							console.log('dispatch', last(foldedSteps))
-							dispatch(goToQuestion(last(foldedSteps)))
+							// semble inutile aujourd'hui :
+							// dispatch(goToQuestion(last(foldedSteps)))
 							history.push('/simulateur/bilan')
 						}}
 					>

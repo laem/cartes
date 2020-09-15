@@ -44,8 +44,6 @@ export default ({}) => {
 				objectifs: [...simulation.config.objectifs, ...actions.formule.somme],
 		  }
 
-	console.log({ simulation })
-
 	const analysis = useSelector(analysisWithDefaultsSelector)
 
 	const configSet = useSelector((state) => state.simulation?.config)

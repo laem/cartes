@@ -1,4 +1,8 @@
-import { goToQuestion, resetSimulation } from 'Actions/actions'
+import {
+	goToQuestion,
+	resetSimulation,
+	deletePreviousSimulation,
+} from 'Actions/actions'
 import Overlay from 'Components/Overlay'
 import Value from 'Components/Value'
 import { getRuleFromAnalysis, parentName } from 'Engine/rules'
@@ -29,6 +33,7 @@ export default function AnswerList({ onClose }) {
 						className="ui__ simple small button"
 						onClick={() => {
 							dispatch(resetSimulation())
+							dispatch(deletePreviousSimulation())
 							onClose()
 						}}
 					>
