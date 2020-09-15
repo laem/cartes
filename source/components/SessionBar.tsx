@@ -22,13 +22,17 @@ import { extractCategories } from '../sites/publicodes/chart'
 export const buildEndURL = (analysis) => {
 	const total = analysis.targets[0].nodeValue,
 		categories = extractCategories(analysis),
-		detailsString = categories.reduce(
-			(memo, next) =>
-				memo +
-				next.name[0] +
-				(Math.round(next.nodeValue / 10) / 100).toFixed(2),
-			''
-		)
+		detailsString =
+			categories &&
+			categories.reduce(
+				(memo, next) =>
+					memo +
+					next.name[0] +
+					(Math.round(next.nodeValue / 10) / 100).toFixed(2),
+				''
+			)
+
+	if (detailsString == null) return null
 
 	return `/fin?total=${Math.round(total)}&details=${detailsString}`
 }
