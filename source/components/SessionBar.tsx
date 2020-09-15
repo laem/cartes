@@ -3,7 +3,7 @@ import {
 	loadPreviousSimulation,
 	goToQuestion,
 } from 'Actions/actions'
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { T } from 'Components'
 import { Trans } from 'react-i18next'
 import { useDispatch, useSelector } from 'react-redux'
@@ -38,14 +38,17 @@ export const buildEndURL = (analysis) => {
 }
 
 export default function PreviousSimulationBanner() {
+	const dispatch = useDispatch()
 	const previousSimulation = useSelector(
 		(state: RootState) => state.previousSimulation
 	)
-	const newSimulationStarted = !useSelector(noUserInputSelector)
-	const dispatch = useDispatch()
+
+	console.log('previousSim', previousSimulation)
+	useEffect(() => {
+		if (previousSimulation) dispatch(loadPreviousSimulation())
+	}, [])
 	const foldedSteps = useSelector(
-		(state: RootState) =>
-			console.log(state) || state.conversationSteps.foldedSteps
+		(state: RootState) => state.conversationSteps.foldedSteps
 	)
 	const arePreviousAnswers = !!foldedSteps.length
 	const [showAnswerModal, setShowAnswerModal] = useState(false)
@@ -120,24 +123,6 @@ export default function PreviousSimulationBanner() {
 				</>
 			)}
 			{showAnswerModal && <Answers onClose={() => setShowAnswerModal(false)} />}
-			{previousSimulation && !newSimulationStarted && (
-				<>
-					<Button
-						className="simple small"
-						onClick={() => dispatch(loadPreviousSimulation())}
-					>
-						{emoji('💾 ')}
-						<Trans>Ma dernière simulation</Trans>
-					</Button>
-					<Button
-						className="simple small"
-						onClick={() => dispatch(deletePreviousSimulation())}
-					>
-						{emoji('🗑️ ')}
-						<Trans>Effacer</Trans>
-					</Button>
-				</>
-			)}
 		</div>
 	)
 }
