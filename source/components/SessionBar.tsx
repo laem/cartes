@@ -44,7 +44,8 @@ export default function PreviousSimulationBanner() {
 	const newSimulationStarted = !useSelector(noUserInputSelector)
 	const dispatch = useDispatch()
 	const foldedSteps = useSelector(
-		(state: RootState) => state.conversationSteps.foldedSteps
+		(state: RootState) =>
+			console.log(state) || state.conversationSteps.foldedSteps
 	)
 	const arePreviousAnswers = !!foldedSteps.length
 	const [showAnswerModal, setShowAnswerModal] = useState(false)
@@ -52,7 +53,7 @@ export default function PreviousSimulationBanner() {
 	const history = useHistory()
 	const location = useLocation()
 
-	if (location.pathname.includes('/fin'))
+	if (['/fin', '/actions'].includes(location.pathname))
 		return (
 			<div
 				css={`

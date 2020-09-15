@@ -27,19 +27,27 @@ const gradient = tinygradient(['#0000ff', '#ff0000']),
 
 export default ({}) => {
 	const { score, action } = useParams()
-	console.log(action)
 	const { value } = useSpring({
 		config: { mass: 1, tension: 150, friction: 150, precision: 1000 },
 		value: +score,
 		from: { value: 0 },
 	})
 
-	const analysis = useSelector(analysisWithDefaultsSelector)
 	const rules = useSelector(flatRulesSelector)
 	const actions = rules.find((r) => r.dottedName === 'actions')
-	const config = {
-		objectifs: actions.formule.somme,
-	}
+	const simulation = useSelector((state) => state.simulation)
+
+	const config = !simulation
+		? { objectifs: actions.formule.somme }
+		: {
+				...simulation.config,
+				objectifs: [...simulation.config.objectifs, ...actions.formule.somme],
+		  }
+
+	console.log({ simulation })
+
+	const analysis = useSelector(analysisWithDefaultsSelector)
+
 	const configSet = useSelector((state) => state.simulation?.config)
 
 	const dispatch = useDispatch()
@@ -62,6 +70,7 @@ export default ({}) => {
 const AnimatedDiv = animated(({ analysis, score, value }) => {
 	return (
 		<div css="padding: 0 .3rem 1rem; max-width: 600px; margin: 0 auto;">
+			<SessionBar />
 			<h1 css="margin: 0;font-size: 160%">Comment réduire mon empreinte ?</h1>
 			{analysis.targets.map((target) => (
 				<MiniAction data={target} />
@@ -103,18 +112,20 @@ const MiniAction = ({ data }) => {
 					}
 				`}
 			>
-				<div
-					css={`
-						font-size: 250%;
-						width: 4rem;
-						margin-right: 1rem;
-						img {
-							margin-top: 0.8rem !important;
-						}
-					`}
-				>
-					{emoji(icons)}
-				</div>
+				{icons && (
+					<div
+						css={`
+							font-size: 250%;
+							width: 4rem;
+							margin-right: 1rem;
+							img {
+								margin-top: 0.8rem !important;
+							}
+						`}
+					>
+						{emoji(icons)}
+					</div>
+				)}
 				<div
 					css={`
 						display: flex;
