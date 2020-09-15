@@ -17,12 +17,15 @@ import {
 } from 'Selectors/analyseSelectors'
 import { useDispatch, useSelector } from 'react-redux'
 import { setSimulationConfig } from 'Actions/actions'
+import Viande from './Viande'
+import { encodeRuleName, decodeRuleName } from 'Engine/rules'
 
 const gradient = tinygradient(['#0000ff', '#ff0000']),
 	colors = gradient.rgb(20)
 
 export default ({}) => {
-	const { score } = useParams()
+	const { score, action } = useParams()
+	console.log(action)
 	const { value } = useSpring({
 		config: { mass: 1, tension: 150, friction: 150, precision: 1000 },
 		value: +score,
@@ -40,7 +43,8 @@ export default ({}) => {
 	const dispatch = useDispatch()
 	useEffect(() => dispatch(setSimulationConfig(config)), [])
 	if (!configSet) return null
-	console.log(analysis)
+	if (action && decodeRuleName(action) === 'réduire viande . par quatre')
+		return <Viande />
 
 	return <AnimatedDiv value={value} score={score} analysis={analysis} />
 }
@@ -50,19 +54,22 @@ const AnimatedDiv = animated(({ analysis, score, value }) => {
 		<div css="padding: 0 .3rem 1rem; max-width: 600px; margin: 0 auto;">
 			<h1 css="margin: 0;font-size: 160%">Comment réduire mon empreinte ?</h1>
 			{analysis.targets.map((target) => (
-				<Action data={target} />
+				<MiniAction data={target} />
 			))}
 		</div>
 	)
 })
 
-const Action = ({ data }) => {
-	const { title, icons, nodeValue, name } = data
+const MiniAction = ({ data }) => {
+	const { title, icons, nodeValue, dottedName } = data
 
 	const empreinte = (nodeValue / 1000).toFixed(1) + ' tonne'
 
 	return (
-		<Link css="text-decoration: none; width: 100%" to={'/actions/' + name}>
+		<Link
+			css="text-decoration: none; width: 100%"
+			to={'/actions/' + encodeRuleName(dottedName)}
+		>
 			<motion.div
 				animate={{ scale: [0.85, 1] }}
 				transition={{ duration: 0.2, ease: 'easeIn' }}
