@@ -18,6 +18,8 @@ import {
 import { useDispatch, useSelector } from 'react-redux'
 import { setSimulationConfig } from 'Actions/actions'
 import Viande from './Viande'
+import Action from './Action'
+import { HumanWeight } from './HumanWeight'
 import { encodeRuleName, decodeRuleName } from 'Engine/rules'
 
 const gradient = tinygradient(['#0000ff', '#ff0000']),
@@ -45,6 +47,14 @@ export default ({}) => {
 	if (!configSet) return null
 	if (action && decodeRuleName(action) === 'réduire viande . par quatre')
 		return <Viande />
+	if (action)
+		return (
+			<Action
+				data={analysis.targets.find(
+					(a) => a.dottedName === decodeRuleName(action)
+				)}
+			/>
+		)
 
 	return <AnimatedDiv value={value} score={score} analysis={analysis} />
 }
@@ -62,8 +72,6 @@ const AnimatedDiv = animated(({ analysis, score, value }) => {
 
 const MiniAction = ({ data }) => {
 	const { title, icons, nodeValue, dottedName } = data
-
-	const empreinte = (nodeValue / 1000).toFixed(1) + ' tonne'
 
 	return (
 		<Link
@@ -87,7 +95,8 @@ const MiniAction = ({ data }) => {
 					h2 {
 						font-size: 130%;
 						font-weight: normal;
-						margin: 1rem;
+						margin: 1rem 0;
+						text-align: left;
 					}
 					> h2 > span > img {
 						margin-right: 0.4rem !important;
@@ -115,16 +124,8 @@ const MiniAction = ({ data }) => {
 					`}
 				>
 					<h2>{title}</h2>
-					<div
-						css={`
-							background: var(--lighterColor);
-							color: var(--color);
-							border-radius: 1rem;
-							padding: 0.6rem;
-							margin-bottom: 0.6rem;
-						`}
-					>
-						<span css="font-size: 200%">- {empreinte}</span> de CO₂e par an
+					<div>
+						<HumanWeight nodeValue={-nodeValue} />
 					</div>
 				</div>
 			</motion.div>
