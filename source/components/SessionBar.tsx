@@ -118,7 +118,14 @@ export default function PreviousSimulationBanner() {
 						onClick={() => history.push(buildEndURL(analysis))}
 					>
 						{emoji('💤 ')}
-						<T>Fin</T>
+						<T>Terminer</T>
+					</Button>
+					<Button
+						className="simple small"
+						onClick={() => history.push('/actions')}
+					>
+						{emoji('💥 ')}
+						<T>Passer à l'action</T>
 					</Button>
 				</>
 			)}
