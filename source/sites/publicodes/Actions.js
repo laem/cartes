@@ -20,7 +20,7 @@ import { useDispatch, useSelector } from 'react-redux'
 import { setSimulationConfig } from 'Actions/actions'
 import Viande from './Viande'
 import Action from './Action'
-import { HumanWeight } from './HumanWeight'
+import { humanValueAndUnit } from './HumanWeight'
 import { encodeRuleName, decodeRuleName } from 'Engine/rules'
 
 const gradient = tinygradient(['#0000ff', '#ff0000']),
@@ -82,13 +82,16 @@ const AnimatedDiv = animated(({ analysis, score, value }) => {
 			<h1 css="margin: 0;font-size: 160%">Comment réduire mon empreinte ?</h1>
 
 			{sortBy((a) => -a.nodeValue)(actions).map((action) => (
-				<MiniAction data={action} />
+				<MiniAction
+					data={action}
+					total={bilans.length ? bilans[0].nodeValue : null}
+				/>
 			))}
 		</div>
 	)
 })
 
-const MiniAction = ({ data, positive = false }) => {
+const MiniAction = ({ data, positive = false, total }) => {
 	const { title, icons, nodeValue, dottedName } = data
 	const disabled = nodeValue === 0 || nodeValue === false
 
@@ -159,11 +162,50 @@ const MiniAction = ({ data, positive = false }) => {
 					`}
 				>
 					<h2>{title}</h2>
-					<div>
-						<HumanWeight nodeValue={positive ? nodeValue : -nodeValue} />
-					</div>
+					<ActionValue {...{ total, positive, nodeValue }} />
 				</div>
 			</motion.div>
 		</Link>
+	)
+}
+
+const ActionValue = ({ total, positive, nodeValue }) => {
+	const { unit, value } = humanValueAndUnit(nodeValue),
+		displayRelative = !positive && total
+	console.log(total)
+	return (
+		<div
+			css={`
+				> span {
+					border-radius: 0.3rem;
+					padding: 0.1rem 0.3rem;
+				}
+				strong {
+					font-weight: bold;
+				}
+				font-size: 120%;
+				display: flex;
+			`}
+		>
+			<span
+				css={`
+					border: 1px solid var(--color);
+					background: var(--lighterColor);
+
+					margin-right: 0.3rem;
+				`}
+			>
+				{positive ? value : -value} {unit}
+				{displayRelative && (
+					<div>
+						<strong>{Math.round(100 * (nodeValue / total))}%</strong>
+					</div>
+				)}
+			</span>
+			<span css="font-size: 80%">
+				<div>de CO₂e / an</div>
+				{displayRelative && <div>de votre total</div>}
+			</span>
+		</div>
 	)
 }

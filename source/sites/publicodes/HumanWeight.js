@@ -31,16 +31,15 @@ export default ({ nodeValue }) => {
 	)
 }
 
-export const HumanWeight = ({ nodeValue: possiblyNegativeValue }) => {
-	let unitSuffix = (
-			<span>
-				de <strong>CO₂</strong>e par an
-			</span>
-		),
-		v = Math.abs(possiblyNegativeValue),
+export const humanValueAndUnit = (possiblyNegativeValue) => {
+	let v = Math.abs(possiblyNegativeValue),
 		[raw, unit] = humanWeight(v),
 		value = raw.toFixed(1) * (possiblyNegativeValue < 0 ? -1 : 1)
+	return { value, unit }
+}
 
+export const HumanWeight = ({ nodeValue }) => {
+	const { value, unit } = humanValueAndUnit(nodeValue)
 	return (
 		<div>
 			<strong
@@ -51,7 +50,13 @@ export const HumanWeight = ({ nodeValue: possiblyNegativeValue }) => {
 			>
 				{value}&nbsp;{unit}
 			</strong>{' '}
-			{unitSuffix}
+			<UnitSuffix />
 		</div>
 	)
 }
+
+export const UnitSuffix = () => (
+	<span>
+		de <strong>CO₂</strong>e / an
+	</span>
+)
