@@ -25,7 +25,7 @@ export default ({
 }) => {
 	const sitePaths = useContext(SitePathsContext)
 	return (
-		<div css="padding: 0 .3rem 1rem; max-width: 600px; margin: 0 auto;">
+		<div css="padding: 0 .3rem 1rem; max-width: 600px; margin: 1rem auto;">
 			<div className="ui__ card" css={'padding: .1rem'}>
 				<header css="margin-bottom: 1rem; h1 > span {margin-right: 1rem}">
 					<h1>

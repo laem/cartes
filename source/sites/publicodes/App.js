@@ -54,7 +54,7 @@ class App extends Component {
 				<StoreProvider>
 					<VersionBeta />
 					<div className="ui__ container">
-						<nav css="display: flex; justify-content: center; margin-top: .6rem">
+						<nav css="display: flex; justify-content: center; margin: .6rem auto">
 							<Link
 								to="/"
 								css={`

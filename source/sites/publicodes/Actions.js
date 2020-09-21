@@ -76,7 +76,7 @@ const AnimatedDiv = animated(({ analysis, score, value }) => {
 	)
 
 	return (
-		<div css="padding: 0 .3rem 1rem; max-width: 600px; margin: 0 auto;">
+		<div css="padding: 0 .3rem 1rem; max-width: 600px; margin: 1rem auto;">
 			<SessionBar />
 			<h1 css="margin: 0;font-size: 160%">Comment réduire mon empreinte ?</h1>
 
