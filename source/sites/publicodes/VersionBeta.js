@@ -4,7 +4,8 @@ import { Link, useLocation } from 'react-router-dom'
 export default () => {
 	const location = useLocation()
 
-	if ([process.env.URL_PATH, '/'].includes(location.pathname)) return null
+	if ([process.env.URL_PATH, '/', '/actions'].includes(location.pathname))
+		return null
 	return (
 		<div css="background: yellow; text-align: center; color: black; ">
 			Attention, version{' '}
