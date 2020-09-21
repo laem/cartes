@@ -11,7 +11,7 @@ import { motion } from 'framer-motion'
 import BallonGES from './images/ballonGES.svg'
 import SessionBar from 'Components/SessionBar'
 import { Link } from 'react-router-dom'
-import { humanWeight } from './HumanWeight'
+import { HumanWeight, humanWeight } from './HumanWeight'
 import {
 	flatRulesSelector,
 	analysisWithDefaultsSelector,
@@ -78,7 +78,6 @@ const AnimatedDiv = animated(({ analysis, score, value }) => {
 	return (
 		<div css="padding: 0 .3rem 1rem; max-width: 600px; margin: 0 auto;">
 			<SessionBar />
-			{bilans.length > 0 && <MiniAction positive data={bilans[0]} />}
 			<h1 css="margin: 0;font-size: 160%">Comment réduire mon empreinte ?</h1>
 
 			{sortBy((a) => -a.nodeValue)(actions).map((action) => (
@@ -91,7 +90,7 @@ const AnimatedDiv = animated(({ analysis, score, value }) => {
 	)
 })
 
-const MiniAction = ({ data, positive = false, total }) => {
+const MiniAction = ({ data, total }) => {
 	const { title, icons, nodeValue, dottedName } = data
 	const disabled = nodeValue === 0 || nodeValue === false
 
@@ -162,17 +161,16 @@ const MiniAction = ({ data, positive = false, total }) => {
 					`}
 				>
 					<h2>{title}</h2>
-					<ActionValue {...{ total, positive, nodeValue }} />
+					<ActionValue {...{ total, nodeValue }} />
 				</div>
 			</motion.div>
 		</Link>
 	)
 }
 
-const ActionValue = ({ total, positive, nodeValue }) => {
+const ActionValue = ({ total, nodeValue }) => {
 	const { unit, value } = humanValueAndUnit(nodeValue),
-		displayRelative = !positive && total
-	console.log(total)
+		displayRelative = total
 	return (
 		<div
 			css={`
@@ -195,7 +193,7 @@ const ActionValue = ({ total, positive, nodeValue }) => {
 					margin-right: 0.3rem;
 				`}
 			>
-				{positive ? value : -value} {unit}
+				{-value} {unit}
 				{displayRelative && (
 					<div>
 						<strong>{Math.round(100 * (nodeValue / total))}%</strong>
