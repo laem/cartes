@@ -23,7 +23,11 @@ label textarea {
 	height: 6em;
 }`
 
-let createIssue = (title, body, setURL) =>
+let createIssue = (title, body, setURL, disableButton) => {
+	if (title == null || body == null || [title, body].includes('')) {
+		return null
+	}
+
 	fetch(
 		'https://publicodes.netlify.app/.netlify/functions/createIssue?' +
 			toPairs({ repo: 'betagouv/ecolab-data', title, body })
@@ -32,7 +36,11 @@ let createIssue = (title, body, setURL) =>
 		{ mode: 'cors' }
 	)
 		.then((response) => response.json())
-		.then((json) => setURL(json.url))
+		.then((json) => {
+			setURL(json.url)
+			disableButton(false)
+		})
+}
 
 export default ({ match }) => {
 	let input = match.params.input
@@ -41,6 +49,7 @@ export default ({ match }) => {
 
 	let [source, setSource] = useState('')
 	let [URL, setURL] = useState(null)
+	let [buttonDisabled, disableButton] = useState(false)
 
 	console.log(faqData)
 
@@ -120,9 +129,13 @@ export default ({ match }) => {
 					<button
 						className="ui__ button"
 						type="submit"
+						disabled={buttonDisabled}
 						onClick={(e) => {
+							if (buttonDisabled) return null
+
 							e.preventDefault()
-							createIssue(sujet, source, setURL)
+							disableButton(true)
+							createIssue(sujet, source, setURL, disableButton)
 						}}
 					>
 						Valider
