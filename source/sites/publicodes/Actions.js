@@ -1,6 +1,6 @@
 import React, { useEffect } from 'react'
 import { useParams } from 'react-router'
-import { partition, sortBy } from 'ramda'
+import { partition, sortBy, union } from 'ramda'
 import emoji from 'react-easy-emoji'
 import tinygradient from 'tinygradient'
 import { animated, useSpring, config } from 'react-spring'
@@ -43,7 +43,7 @@ export default ({}) => {
 		? { objectifs: actions.formule.somme }
 		: {
 				...simulation.config,
-				objectifs: [...simulation.config.objectifs, ...actions.formule.somme],
+				objectifs: union(simulation.config.objectifs, actions.formule.somme),
 		  }
 
 	const analysis = useSelector(analysisWithDefaultsSelector)
