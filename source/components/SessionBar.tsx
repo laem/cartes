@@ -120,13 +120,18 @@ export default function PreviousSimulationBanner() {
 						{emoji('💤 ')}
 						<T>Terminer</T>
 					</Button>
-					<Button
-						className="simple small"
-						onClick={() => history.push('/actions')}
-					>
-						{emoji('💥 ')}
-						<T>Passer à l'action</T>
-					</Button>
+					{
+						// désactivé pour l'utilisateur en attendant d'avoir plus d'actions à présenter
+						false && (
+							<Button
+								className="simple small"
+								onClick={() => history.push('/actions')}
+							>
+								{emoji('💥 ')}
+								<T>Passer à l'action</T>
+							</Button>
+						)
+					}
 				</>
 			)}
 			{showAnswerModal && <Answers onClose={() => setShowAnswerModal(false)} />}
