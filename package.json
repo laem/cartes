@@ -12,7 +12,7 @@
 	"dependencies": {
 		"@babel/polyfill": "^7.6.0",
 		"@babel/runtime": "^7.6.0",
-		"@microlink/react": "^4.0.1",
+		"@microlink/react": "^5.4.6",
 		"@pmmmwh/react-refresh-webpack-plugin": "^0.4.2",
 		"classnames": "^2.2.5",
 		"color-convert": "^1.9.2",
