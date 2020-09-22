@@ -40,7 +40,7 @@ export default ({}) => {
 
 	// Add the actions rules to the simulation, keping the user's situation
 	const config = !simulation
-		? { objectifs: actions.formule.somme }
+		? { objectifs: ['bilan', ...actions.formule.somme] }
 		: {
 				...simulation.config,
 				objectifs: union(simulation.config.objectifs, actions.formule.somme),
@@ -189,7 +189,7 @@ const ActionValue = ({ total, nodeValue }) => {
 				css={`
 					border: 1px solid var(--color);
 					background: var(--lighterColor);
-
+					min-width: 8rem;
 					margin-right: 0.3rem;
 				`}
 			>
