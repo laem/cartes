@@ -32,17 +32,26 @@ export default ({
 						{icons && <span>{emoji(icons)}</span>}
 						{title}
 					</h1>
-					<HumanWeight nodeValue={nodeValue} />
-					<Link
-						to={
-							sitePaths.documentation.index + '/' + encodeRuleName(dottedName)
-						}
-					>
-						{emoji('🔬 ')} comprendre le calcul
-					</Link>
+					<div css="display: flex; align-items: center">
+						<img src={BallonGES} css="height: 6rem" />
+						<div>
+							<HumanWeight nodeValue={nodeValue} />
+							<Link
+								to={
+									sitePaths.documentation.index +
+									'/' +
+									encodeRuleName(dottedName)
+								}
+							>
+								{emoji('🔬 ')} comprendre le calcul
+							</Link>
+						</div>
+					</div>
 				</header>
-				<Markdown source={description} />
-				<button className="ui__ button simple small">En savoir plus</button>
+				<div css="margin: 1.6rem 0">
+					<Markdown source={description} />
+					<button className="ui__ button simple small">En savoir plus</button>
+				</div>
 			</div>
 			<p>Autres gestes climat (ces boutons ne marchent pas)</p>
 			<div>
