@@ -3,7 +3,7 @@ import {
 	loadPreviousSimulation,
 	goToQuestion,
 } from 'Actions/actions'
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { T } from 'Components'
 import { Trans } from 'react-i18next'
 import { useDispatch, useSelector } from 'react-redux'
@@ -22,33 +22,41 @@ import { extractCategories } from '../sites/publicodes/chart'
 export const buildEndURL = (analysis) => {
 	const total = analysis.targets[0].nodeValue,
 		categories = extractCategories(analysis),
-		detailsString = categories.reduce(
-			(memo, next) =>
-				memo +
-				next.name[0] +
-				(Math.round(next.nodeValue / 10) / 100).toFixed(2),
-			''
-		)
+		detailsString =
+			categories &&
+			categories.reduce(
+				(memo, next) =>
+					memo +
+					next.name[0] +
+					(Math.round(next.nodeValue / 10) / 100).toFixed(2),
+				''
+			)
+
+	if (detailsString == null) return null
 
 	return `/fin?total=${Math.round(total)}&details=${detailsString}`
 }
 
 export default function PreviousSimulationBanner() {
+	const dispatch = useDispatch()
 	const previousSimulation = useSelector(
 		(state: RootState) => state.previousSimulation
 	)
-	const newSimulationStarted = !useSelector(noUserInputSelector)
-	const dispatch = useDispatch()
+
 	const foldedSteps = useSelector(
 		(state: RootState) => state.conversationSteps.foldedSteps
 	)
 	const arePreviousAnswers = !!foldedSteps.length
+	useEffect(() => {
+		if (!arePreviousAnswers && previousSimulation)
+			dispatch(loadPreviousSimulation())
+	}, [])
 	const [showAnswerModal, setShowAnswerModal] = useState(false)
 	const analysis = useSelector(analysisWithDefaultsSelector)
 	const history = useHistory()
 	const location = useLocation()
 
-	if (location.pathname.includes('/fin'))
+	if (['/fin', '/actions'].includes(location.pathname))
 		return (
 			<div
 				css={`
@@ -64,8 +72,8 @@ export default function PreviousSimulationBanner() {
 					<Button
 						className="simple small"
 						onClick={() => {
-							console.log('dispatch', last(foldedSteps))
-							dispatch(goToQuestion(last(foldedSteps)))
+							// semble inutile aujourd'hui :
+							// dispatch(goToQuestion(last(foldedSteps)))
 							history.push('/simulateur/bilan')
 						}}
 					>
@@ -110,29 +118,23 @@ export default function PreviousSimulationBanner() {
 						onClick={() => history.push(buildEndURL(analysis))}
 					>
 						{emoji('💤 ')}
-						<T>Fin</T>
+						<T>Terminer</T>
 					</Button>
+					{
+						// désactivé pour l'utilisateur en attendant d'avoir plus d'actions à présenter
+						false && (
+							<Button
+								className="simple small"
+								onClick={() => history.push('/actions')}
+							>
+								{emoji('💥 ')}
+								<T>Passer à l'action</T>
+							</Button>
+						)
+					}
 				</>
 			)}
 			{showAnswerModal && <Answers onClose={() => setShowAnswerModal(false)} />}
-			{previousSimulation && !newSimulationStarted && (
-				<>
-					<Button
-						className="simple small"
-						onClick={() => dispatch(loadPreviousSimulation())}
-					>
-						{emoji('💾 ')}
-						<Trans>Ma dernière simulation</Trans>
-					</Button>
-					<Button
-						className="simple small"
-						onClick={() => dispatch(deletePreviousSimulation())}
-					>
-						{emoji('🗑️ ')}
-						<Trans>Effacer</Trans>
-					</Button>
-				</>
-			)}
 		</div>
 	)
 }

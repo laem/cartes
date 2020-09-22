@@ -3,7 +3,7 @@ import { encodeRuleName } from 'Engine/rules'
 import React, { useContext } from 'react'
 import emoji from 'react-easy-emoji'
 import { Link } from 'react-router-dom'
-import HumanWeight from './HumanWeight'
+import SimulationHumanWeight from './HumanWeight'
 
 export default ({ nodeValue, formule, dottedName }) => {
 	const sitePaths = useContext(SitePathsContext)
@@ -19,7 +19,7 @@ export default ({ nodeValue, formule, dottedName }) => {
 			`}
 		>
 			<div>
-				<HumanWeight nodeValue={nodeValue} />
+				<SimulationHumanWeight nodeValue={nodeValue} />
 				{interestingFormula && (
 					<div>
 						<span css="font-size: 120%">{emoji('🔬 ')}</span>

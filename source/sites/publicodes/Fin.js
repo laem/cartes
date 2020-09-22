@@ -8,8 +8,10 @@ import { findContrastedTextColor } from 'Components/utils/colors'
 import { motion } from 'framer-motion'
 
 import BallonGES from './images/ballonGES.svg'
+import StartingBlock from './images/starting block.svg'
 import SessionBar from 'Components/SessionBar'
 import Chart from './chart'
+import { Link } from 'react-router-dom'
 
 const gradient = tinygradient([
 		'#78e08f',
@@ -60,7 +62,6 @@ const AnimatedDiv = animated(({ score, value, details }) => {
 	return (
 		<div css="padding: 0 .3rem 1rem; max-width: 600px; margin: 0 auto;">
 			<SessionBar />
-			<h1 css="margin: 0;font-size: 160%">Mon empreinte</h1>
 			<motion.div
 				animate={{ scale: [0.85, 1] }}
 				transition={{ duration: 0.2, ease: 'easeIn' }}
@@ -122,7 +123,7 @@ const AnimatedDiv = animated(({ score, value, details }) => {
 							</div>
 							<div>
 								<span>
-									{emoji('😇 ')}
+									{emoji('🎯 ')}
 									objectif{' '}
 								</span>
 								<strong>2 tonnes</strong>
@@ -152,31 +153,41 @@ const AnimatedDiv = animated(({ score, value, details }) => {
 					/>
 				</div>
 			</motion.div>
-			<h2 css="margin: 1rem 0 .6rem;font-size: 120%">Que faire ?</h2>
-			<div
-				css={`
-					border: 2px dashed black;
-					border-radius: 0.6rem;
-					padding: 1rem;
-					margin: 0 auto;
-					p {
-						line-height: 1.1rem;
-					}
-					strong {
-						font-weight: bold;
-					}
-				`}
-			>
-				{' '}
-				<p>
-					{emoji('👏')} Connaître son empreinte, c'est déjà un début de
-					solution.
-				</p>
-				<p>
-					<strong>Bientôt</strong>, des actions concrètes et chiffrées pour
-					réduire votre empreinte.
-				</p>
-			</div>
+			{
+				// désactivé pour l'utilisateur pour l'instant
+				false && (
+					<Link
+						to="/actions"
+						className="ui__ button plain"
+						css={`
+							margin: 0.6rem 0;
+							width: 100%;
+							img {
+								transform: scaleX(-1);
+								height: 3rem;
+								margin: 0 0.6rem;
+								display: inline-block;
+							}
+							a {
+								color: var(--textColor);
+								text-decoration: none;
+							}
+						`}
+					>
+						<div
+							css={`
+								display: flex;
+								justify-content: center;
+								align-items: center;
+								width: 100%;
+							`}
+						>
+							<img src={StartingBlock} />
+							Passer à l'action
+						</div>
+					</Link>
+				)
+			}
 		</div>
 	)
 })

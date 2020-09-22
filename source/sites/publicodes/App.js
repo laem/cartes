@@ -12,6 +12,7 @@ import Landing from './Landing'
 import Simulateur from './Simulateur'
 import Fin from './Fin'
 import VersionBeta from './VersionBeta'
+import Actions from './Actions'
 import sitePaths from './sitePaths'
 import Logo from './Logo'
 import { StoreProvider } from './StoreContext'
@@ -31,7 +32,6 @@ class App extends Component {
 		const pullRequestNumber = urlParams.get('PR')
 		return (
 			<Provider
-				basename="publicodes"
 				rulesURL={`https://${
 					branch
 						? `${branch}--`
@@ -54,7 +54,7 @@ class App extends Component {
 				<StoreProvider>
 					<VersionBeta />
 					<div className="ui__ container">
-						<nav css="display: flex; justify-content: center; margin-top: .6rem">
+						<nav css="display: flex; justify-content: center; margin: .6rem auto">
 							<Link
 								to="/"
 								css={`
@@ -76,6 +76,8 @@ class App extends Component {
 							{/* Lien de compatibilité, à retirer par exemple mi-juillet 2020*/}
 							<Route path="/fin/:score" component={Fin} />
 							<Route path="/fin" component={Fin} />
+							<Route path="/actions/:action+" component={Actions} />
+							<Route path="/actions" component={Actions} />
 							<Route path="/contribuer/:input?" component={Contribution} />
 							<Route path="/à-propos" component={About} />
 							<Route path="/vie-privée" component={Privacy} />

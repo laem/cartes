@@ -93,7 +93,7 @@ function conversationSteps(
 	},
 	action: Action
 ): ConversationSteps {
-	if (['RESET_SIMULATION', 'SET_SIMULATION'].includes(action.type))
+	if (['RESET_SIMULATION'].includes(action.type))
 		return { foldedSteps: [], unfoldedStep: null }
 
 	if (action.type !== 'STEP_ACTION') return state
@@ -203,8 +203,8 @@ function simulation(
 		return {
 			config,
 			url,
-			hiddenControls: [],
-			situation: {},
+			hiddenControls: state?.hiddenControls,
+			situation: state?.situation,
 			defaultUnits: config['unités par défaut'] || ['€/mois'],
 		}
 	}

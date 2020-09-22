@@ -7,16 +7,19 @@ const {
 	commonLoaders,
 	styleLoader,
 	HTMLPlugins,
-	default: common
+	default: common,
 } = require('./webpack.common.js')
 
 module.exports = {
 	...common,
 	module: {
-		rules: [...commonLoaders(), styleLoader('style-loader')]
+		rules: [...commonLoaders(), styleLoader('style-loader')],
+	},
+	devServer: {
+		historyApiFallback: true,
+		hot: true,
 	},
 	mode: 'development',
-	entry: map(entry => ['webpack-hot-middleware/client', entry], common.entry),
 	plugins: [
 		...(common.plugins || []),
 		...HTMLPlugins(),
@@ -26,7 +29,7 @@ module.exports = {
 		new MonacoWebpackPlugin({
 			languages: ['yaml'],
 
-			features: ['!gotoSymbol']
-		})
-	]
+			features: ['!gotoSymbol'],
+		}),
+	],
 }
