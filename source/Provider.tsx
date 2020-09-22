@@ -55,11 +55,9 @@ export default class Provider extends PureComponent<ProviderProps> {
 	store: Store
 	constructor(props: ProviderProps) {
 		super(props)
+		console.log(process.env.BRANCH, process.env.URL_PATH)
 		this.history = createBrowserHistory({
-			basename:
-				process.env.BRANCH === 'master' && process.env.URL_PATH
-					? process.env.URL_PATH
-					: '',
+			basename: process.env.URL_PATH || '',
 		})
 		this.props.tracker?.connectToHistory(this.history)
 		const storeEnhancer = composeEnhancers(

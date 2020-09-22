@@ -24,11 +24,11 @@ module.exports = {
 	devtool: 'source-map',
 	output: {
 		...common.output,
-		...(prodPath && { publicPath: prodPath }),
+		...(prodPath && { publicPath: prodPath + '/' }),
 	},
 	plugins: [
 		...(common.plugins || []),
-		...HTMLPlugins({ prodPath, injectTrackingScript: true }),
+		...HTMLPlugins({ prodPath: prodPath + '/', injectTrackingScript: true }),
 		new MiniCssExtractPlugin({
 			// Options similar to the same options in webpackOptions.output
 			// both options are optional
