@@ -145,9 +145,9 @@ const AnimatedDiv = animated(({ score, value, details }) => {
 
 				<div css="display: flex; flex-direction: column;">
 					<ShareButton
-						text="Mesure ton impact sur le simulateur Ecolab cliat !"
+						text="Mesure ton empreinte avec Nos Gestes Climat !"
 						url={window.location}
-						title={'Ecolab climat'}
+						title={'Nos Gestes Climat'}
 						color={textColor}
 						label="Partager mes résultats"
 					/>
