@@ -21,8 +21,10 @@ const gradient = tinygradient(['#0000ff', '#ff0000']),
 	colors = gradient.rgb(20)
 
 export default ({
+	relatedActions,
 	data: { dottedName, nodeValue, description, icons, title },
 }) => {
+	console.log(relatedActions)
 	const sitePaths = useContext(SitePathsContext)
 	return (
 		<div css="padding: 0 .3rem 1rem; max-width: 600px; margin: 1rem auto;">
@@ -60,9 +62,14 @@ export default ({
 			</div>
 			<p>Sur le même sujet</p>
 			<div>
-				<div css="> button {margin: .3rem .6rem}">
-					<button className="ui__ small button">Devenir végétarien</button>
-				</div>
+				{relatedActions.map((action) => (
+					<Link
+						to={'/actions/' + encodeRuleName(action.dottedName)}
+						css="> button {margin: .3rem .6rem}"
+					>
+						<button className="ui__ small button">{action.title}</button>
+					</Link>
+				))}
 			</div>
 		</div>
 	)

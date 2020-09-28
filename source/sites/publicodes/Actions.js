@@ -21,7 +21,7 @@ import { setSimulationConfig } from 'Actions/actions'
 import Viande from './Viande'
 import Action from './Action'
 import { humanValueAndUnit } from './HumanWeight'
-import { encodeRuleName, decodeRuleName } from 'Engine/rules'
+import { encodeRuleName, decodeRuleName, splitName } from 'Engine/rules'
 
 const gradient = tinygradient(['#0000ff', '#ff0000']),
 	colors = gradient.rgb(20)
@@ -57,14 +57,21 @@ export default ({}) => {
 	// keep it as an example until the generic Action component is as good
 	if (action && decodeRuleName(action) === 'réduire viande . par quatre')
 		return <Viande />
-	if (action)
+	if (action) {
+		const actionDottedName = decodeRuleName(action)
 		return (
 			<Action
+				relatedActions={analysis.targets.filter(
+					({ dottedName }) =>
+						actionDottedName !== dottedName &&
+						splitName(dottedName)[0] === splitName(actionDottedName)[0]
+				)}
 				data={analysis.targets.find(
-					(a) => a.dottedName === decodeRuleName(action)
+					(a) => a.dottedName === decodeRuleName(actionDottedName)
 				)}
 			/>
 		)
+	}
 
 	return <AnimatedDiv value={value} score={score} analysis={analysis} />
 }
