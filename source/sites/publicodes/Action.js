@@ -26,8 +26,13 @@ export default ({
 	const sitePaths = useContext(SitePathsContext)
 	return (
 		<div css="padding: 0 .3rem 1rem; max-width: 600px; margin: 1rem auto;">
-			<div className="ui__ card" css={'padding: .1rem'}>
-				<header css="margin-bottom: 1rem; h1 > span {margin-right: 1rem}">
+			<Link to="/actions">
+				<button className="ui__ button simple small ">
+					{emoji('◀')} Retour à la liste
+				</button>
+			</Link>
+			<div className="ui__ card" css={'padding: .1rem; margin: .8rem 0'}>
+				<header css="margin-bottom: 1rem; h1 {font-size: 180%;}; h1 > span {margin-right: 1rem}">
 					<h1>
 						{icons && <span>{emoji(icons)}</span>}
 						{title}
@@ -53,16 +58,10 @@ export default ({
 					<button className="ui__ button simple small">En savoir plus</button>
 				</div>
 			</div>
-			<p>Autres gestes climat (ces boutons ne marchent pas)</p>
+			<p>Sur le même sujet</p>
 			<div>
 				<div css="> button {margin: .3rem .6rem}">
-					<button className="ui__ small plain button">
-						Devenir végétarien
-					</button>
-					<button className="ui__ small plain button">Moins gaspiller</button>
-					<button className="ui__ small plain button">
-						Manger local et de saison
-					</button>
+					<button className="ui__ small button">Devenir végétarien</button>
 				</div>
 			</div>
 		</div>

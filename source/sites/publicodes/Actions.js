@@ -142,7 +142,7 @@ const MiniAction = ({ data, total }) => {
 					<div
 						css={`
 							font-size: 250%;
-							width: 4rem;
+							width: 5rem;
 							margin-right: 1rem;
 							img {
 								margin-top: 0.8rem !important;
