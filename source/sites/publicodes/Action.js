@@ -19,6 +19,7 @@ import {
 	analysisWithDefaultsSelector,
 } from 'Selectors/analyseSelectors'
 import { setSimulationConfig } from 'Actions/actions'
+import Simulation from 'Components/Simulation'
 
 export const Footprint = ({ value }) => <div>Lala {value}</div>
 
@@ -43,7 +44,6 @@ export default ({}) => {
 	const { nodeValue, description, icons, title } = analysis.targets[0]
 
 	const flatActions = rules.find((r) => r.dottedName === 'actions')
-	console.log(flatActions)
 	const relatedActions = flatActions.formule.somme
 		.filter(
 			(actionDottedName) =>
@@ -51,6 +51,7 @@ export default ({}) => {
 				splitName(dottedName)[0] === splitName(actionDottedName)[0]
 		)
 		.map((name) => rules.find(({ dottedName }) => dottedName === name))
+
 	return (
 		<div css="padding: 0 .3rem 1rem; max-width: 600px; margin: 1rem auto;">
 			<Link to="/actions">
@@ -85,6 +86,15 @@ export default ({}) => {
 					<button className="ui__ button simple small">En savoir plus</button>
 				</div>
 			</div>
+			<p>Personnalisez cette estimation</p>
+			<Simulation
+				noFeedback
+				noProgressMessage
+				showConversation
+				customEnd={<div />}
+				targets={<div />}
+				explanations={null}
+			/>
 			<p>Sur le même sujet</p>
 			<div>
 				{relatedActions.map((action) => (

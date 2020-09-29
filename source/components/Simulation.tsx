@@ -25,6 +25,7 @@ export default function Simulation({
 	showConversation,
 	noFeedback,
 	noProgressMessage,
+	teaseCategories,
 }: SimulationProps) {
 	const firstStepCompleted = useSelector(firstStepCompletedSelector)
 	const progress = useSelector(simulationProgressSelector)
@@ -37,6 +38,7 @@ export default function Simulation({
 					<Animate.fromTop>
 						<Conversation
 							customEnd={customEnd}
+							teaseCategories={teaseCategories}
 							customEndMessages={customEndMessages}
 						/>
 						{progress < 1 && (

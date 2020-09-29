@@ -55,6 +55,7 @@ const Simulateur = (props) => {
 			<SessionBar />
 			<Simulation
 				noFeedback
+				teaseCategories
 				noProgressMessage
 				showConversation
 				customEnd={
