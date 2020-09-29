@@ -12,7 +12,7 @@ import SessionBar from 'Components/SessionBar'
 import { Link } from 'react-router-dom'
 import { humanWeight, HumanWeight } from './HumanWeight'
 import { Markdown } from 'Components/utils/markdown'
-import { encodeRuleName, decodeRuleName } from 'Engine/rules'
+import { encodeRuleName, decodeRuleName, splitName } from 'Engine/rules'
 import { SitePathsContext } from 'Components/utils/withSitePaths'
 import {
 	flatRulesSelector,
@@ -25,6 +25,8 @@ export const Footprint = ({ value }) => <div>Lala {value}</div>
 export default ({}) => {
 	const { encodedName } = useParams()
 	console.log('ECN', encodedName)
+	const sitePaths = useContext(SitePathsContext)
+	const rules = useSelector(flatRulesSelector)
 	const simulation = useSelector((state) => state.simulation)
 	const dottedName = decodeRuleName(encodedName),
 		config = {
@@ -32,22 +34,23 @@ export default ({}) => {
 		}
 
 	const configSet = useSelector((state) => state.simulation?.config)
+	const analysis = useSelector(analysisWithDefaultsSelector)
 
 	const dispatch = useDispatch()
 	useEffect(() => dispatch(setSimulationConfig(config)), [encodedName])
 	if (!configSet) return null
 
-	const analysis = useSelector(analysisWithDefaultsSelector)
-	console.log('ANA', analysis)
 	const { nodeValue, description, icons, title } = analysis.targets[0]
 
-	const sitePaths = useContext(SitePathsContext)
-	const relatedActions = [] //TODO
-	//relatedActions={analysis.targets.filter(
-	//	({ dottedName }) =>
-	//		actionDottedName !== dottedName &&
-	//		splitName(dottedName)[0] === splitName(actionDottedName)[0]
-	//)}
+	const flatActions = rules.find((r) => r.dottedName === 'actions')
+	console.log(flatActions)
+	const relatedActions = flatActions.formule.somme
+		.filter(
+			(actionDottedName) =>
+				actionDottedName !== dottedName &&
+				splitName(dottedName)[0] === splitName(actionDottedName)[0]
+		)
+		.map((name) => rules.find(({ dottedName }) => dottedName === name))
 	return (
 		<div css="padding: 0 .3rem 1rem; max-width: 600px; margin: 1rem auto;">
 			<Link to="/actions">
