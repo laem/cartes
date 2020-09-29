@@ -33,9 +33,14 @@ export default () => {
 		>
 			<h1>Connaissez-vous votre empreinte sur le climat ?</h1>
 			<img src={Illustration} />
-			<div css="margin: 1rem 0 2rem;">
+			<div css="margin: 1rem 0 .6rem;">
 				<Link to="/simulateur/bilan" className="ui__ plain button">
 					Faire le test
+				</Link>
+			</div>
+			<div css="margin: .6rem 0 2rem;">
+				<Link to="/actions" className="ui__ button">
+					Passer à l'action
 				</Link>
 			</div>
 			<footer>
