@@ -1,7 +1,7 @@
-import React, { useContext } from 'react'
+import React, { useEffect, useContext } from 'react'
+import { useDispatch, useSelector } from 'react-redux'
 import { useParams } from 'react-router'
 import emoji from 'react-easy-emoji'
-import tinygradient from 'tinygradient'
 import { animated, useSpring, config } from 'react-spring'
 import ShareButton from 'Components/ShareButton'
 import { findContrastedTextColor } from 'Components/utils/colors'
@@ -12,20 +12,42 @@ import SessionBar from 'Components/SessionBar'
 import { Link } from 'react-router-dom'
 import { humanWeight, HumanWeight } from './HumanWeight'
 import { Markdown } from 'Components/utils/markdown'
-import { encodeRuleName } from 'Engine/rules'
+import { encodeRuleName, decodeRuleName } from 'Engine/rules'
 import { SitePathsContext } from 'Components/utils/withSitePaths'
+import {
+	flatRulesSelector,
+	analysisWithDefaultsSelector,
+} from 'Selectors/analyseSelectors'
+import { setSimulationConfig } from 'Actions/actions'
 
 export const Footprint = ({ value }) => <div>Lala {value}</div>
 
-const gradient = tinygradient(['#0000ff', '#ff0000']),
-	colors = gradient.rgb(20)
+export default ({}) => {
+	const { encodedName } = useParams()
+	console.log('ECN', encodedName)
+	const simulation = useSelector((state) => state.simulation)
+	const dottedName = decodeRuleName(encodedName),
+		config = {
+			objectifs: [dottedName],
+		}
 
-export default ({
-	relatedActions,
-	data: { dottedName, nodeValue, description, icons, title },
-}) => {
-	console.log(relatedActions)
+	const configSet = useSelector((state) => state.simulation?.config)
+
+	const dispatch = useDispatch()
+	useEffect(() => dispatch(setSimulationConfig(config)), [encodedName])
+	if (!configSet) return null
+
+	const analysis = useSelector(analysisWithDefaultsSelector)
+	console.log('ANA', analysis)
+	const { nodeValue, description, icons, title } = analysis.targets[0]
+
 	const sitePaths = useContext(SitePathsContext)
+	const relatedActions = [] //TODO
+	//relatedActions={analysis.targets.filter(
+	//	({ dottedName }) =>
+	//		actionDottedName !== dottedName &&
+	//		splitName(dottedName)[0] === splitName(actionDottedName)[0]
+	//)}
 	return (
 		<div css="padding: 0 .3rem 1rem; max-width: 600px; margin: 1rem auto;">
 			<Link to="/actions">

@@ -1,5 +1,5 @@
 import React, { useEffect } from 'react'
-import { useParams } from 'react-router'
+import { useParams, useLocation } from 'react-router'
 import { partition, sortBy, union } from 'ramda'
 import emoji from 'react-easy-emoji'
 import tinygradient from 'tinygradient'
@@ -7,6 +7,7 @@ import { animated, useSpring, config } from 'react-spring'
 import ShareButton from 'Components/ShareButton'
 import { findContrastedTextColor } from 'Components/utils/colors'
 import { motion } from 'framer-motion'
+import { Switch, Route } from 'react-router-dom'
 
 import BallonGES from './images/ballonGES.svg'
 import SessionBar from 'Components/SessionBar'
@@ -27,23 +28,39 @@ const gradient = tinygradient(['#0000ff', '#ff0000']),
 	colors = gradient.rgb(20)
 
 export default ({}) => {
-	const { score, action } = useParams()
-	const { value } = useSpring({
-		config: { mass: 1, tension: 150, friction: 150, precision: 1000 },
-		value: +score,
-		from: { value: 0 },
-	})
+	return (
+		<Switch>
+			<Route path="/actions/:encodedName+">
+				<Action />
+			</Route>
+			<Route path="/actions">
+				<AnimatedDiv />
+			</Route>
+		</Switch>
+	)
+	if (action) {
+		const actionDottedName = decodeRuleName(action)
+		return <Action />
+	}
+}
+
+const AnimatedDiv = animated(({}) => {
+	const location = useLocation()
 
 	const rules = useSelector(flatRulesSelector)
-	const actions = rules.find((r) => r.dottedName === 'actions')
+	const flatActions = rules.find((r) => r.dottedName === 'actions')
+
 	const simulation = useSelector((state) => state.simulation)
 
 	// Add the actions rules to the simulation, keping the user's situation
 	const config = !simulation
-		? { objectifs: ['bilan', ...actions.formule.somme] }
+		? { objectifs: ['bilan', ...flatActions.formule.somme] }
 		: {
 				...simulation.config,
-				objectifs: union(simulation.config.objectifs, actions.formule.somme),
+				objectifs: union(
+					simulation.config.objectifs,
+					flatActions.formule.somme
+				),
 		  }
 
 	const analysis = useSelector(analysisWithDefaultsSelector)
@@ -51,32 +68,9 @@ export default ({}) => {
 	const configSet = useSelector((state) => state.simulation?.config)
 
 	const dispatch = useDispatch()
-	useEffect(() => dispatch(setSimulationConfig(config)), [])
+	useEffect(() => dispatch(setSimulationConfig(config)), [location.pathname])
 	if (!configSet) return null
-	// Exception for this action, which we've custom build
-	// keep it as an example until the generic Action component is as good
-	if (action && decodeRuleName(action) === 'réduire viande . par quatre')
-		return <Viande />
-	if (action) {
-		const actionDottedName = decodeRuleName(action)
-		return (
-			<Action
-				relatedActions={analysis.targets.filter(
-					({ dottedName }) =>
-						actionDottedName !== dottedName &&
-						splitName(dottedName)[0] === splitName(actionDottedName)[0]
-				)}
-				data={analysis.targets.find(
-					(a) => a.dottedName === decodeRuleName(actionDottedName)
-				)}
-			/>
-		)
-	}
 
-	return <AnimatedDiv value={value} score={score} analysis={analysis} />
-}
-
-const AnimatedDiv = animated(({ analysis, score, value }) => {
 	const [bilans, actions] = partition(
 		(t) => t.dottedName === 'bilan',
 		analysis.targets
