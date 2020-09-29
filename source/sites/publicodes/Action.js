@@ -17,6 +17,7 @@ import { SitePathsContext } from 'Components/utils/withSitePaths'
 import {
 	flatRulesSelector,
 	analysisWithDefaultsSelector,
+	nextStepsSelector,
 } from 'Selectors/analyseSelectors'
 import { setSimulationConfig } from 'Actions/actions'
 import Simulation from 'Components/Simulation'
@@ -28,6 +29,7 @@ export default ({}) => {
 	console.log('ECN', encodedName)
 	const sitePaths = useContext(SitePathsContext)
 	const rules = useSelector(flatRulesSelector)
+	const nextSteps = useSelector(nextStepsSelector)
 	const simulation = useSelector((state) => state.simulation)
 	const dottedName = decodeRuleName(encodedName),
 		config = {
@@ -86,15 +88,20 @@ export default ({}) => {
 					<button className="ui__ button simple small">En savoir plus</button>
 				</div>
 			</div>
-			<p>Personnalisez cette estimation</p>
-			<Simulation
-				noFeedback
-				noProgressMessage
-				showConversation
-				customEnd={<div />}
-				targets={<div />}
-				explanations={null}
-			/>
+			<SessionBar answerButtonOnly />
+			{nextSteps.length > 0 && (
+				<>
+					<p>Personnalisez cette estimation</p>
+					<Simulation
+						noFeedback
+						noProgressMessage
+						showConversation
+						customEnd={<div />}
+						targets={<div />}
+						explanations={null}
+					/>
+				</>
+			)}
 			<p>Sur le même sujet</p>
 			<div>
 				{relatedActions.map((action) => (

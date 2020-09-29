@@ -37,7 +37,7 @@ export const buildEndURL = (analysis) => {
 	return `/fin?total=${Math.round(total)}&details=${detailsString}`
 }
 
-export default function PreviousSimulationBanner() {
+export default function SessionBar({ answerButtonOnly = false }) {
 	const dispatch = useDispatch()
 	const previousSimulation = useSelector(
 		(state: RootState) => state.previousSimulation
@@ -56,18 +56,38 @@ export default function PreviousSimulationBanner() {
 	const history = useHistory()
 	const location = useLocation()
 
-	if (['/fin', '/actions'].includes(location.pathname))
-		return (
-			<div
-				css={`
+	const css = `
+
 					display: flex;
 					justify-content: center;
 					button {
 						margin: 0 0.2rem;
 					}
 					margin: 0.6rem;
-				`}
-			>
+					`
+	if (answerButtonOnly)
+		return (
+			<div css={css}>
+				{arePreviousAnswers && (
+					<>
+						<Button
+							className="simple small"
+							onClick={() => setShowAnswerModal(true)}
+						>
+							{emoji('📋 ')}
+							<T>Modifier mes réponses</T>
+						</Button>
+					</>
+				)}
+				{showAnswerModal && (
+					<Answers onClose={() => setShowAnswerModal(false)} />
+				)}
+			</div>
+		)
+
+	if (['/fin', '/actions'].includes(location.pathname))
+		return (
+			<div css={css}>
 				{arePreviousAnswers ? (
 					<Button
 						className="simple small"
@@ -94,16 +114,7 @@ export default function PreviousSimulationBanner() {
 		)
 
 	return (
-		<div
-			css={`
-				display: flex;
-				justify-content: center;
-				button {
-					margin: 0 0.2rem;
-				}
-				margin: 0.6rem;
-			`}
-		>
+		<div css={css}>
 			{arePreviousAnswers && (
 				<>
 					<Button
