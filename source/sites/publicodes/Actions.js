@@ -79,7 +79,13 @@ const AnimatedDiv = animated(({}) => {
 	return (
 		<div css="padding: 0 .3rem 1rem; max-width: 600px; margin: 1rem auto;">
 			<SessionBar />
-			<h1 css="margin: 0;font-size: 160%">Comment réduire mon empreinte ?</h1>
+			<p css="line-height: 1.4rem; text-align: center">
+				Les chiffres suivants seront alors personnalisés pour votre situation{' '}
+				{emoji('🧮')}
+			</p>
+			<h1 css="margin: 1rem 0 .6rem;font-size: 160%">
+				Comment réduire mon empreinte ?
+			</h1>
 
 			{sortBy((a) => -a.nodeValue)(actions).map((action) => (
 				<MiniAction
