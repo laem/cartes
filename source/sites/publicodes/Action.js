@@ -85,7 +85,14 @@ export default ({}) => {
 				</header>
 				<div css="margin: 1.6rem 0">
 					<Markdown source={description} />
-					<button className="ui__ button simple small">En savoir plus</button>
+					{
+						// Nous n'avons pas encore intégré cette fonctionnalités, qui affichera le markdown de l'attribut "en savvoir plus"
+						false && (
+							<button className="ui__ button simple small">
+								En savoir plus
+							</button>
+						)
+					}
 				</div>
 			</div>
 			<SessionBar answerButtonOnly />
