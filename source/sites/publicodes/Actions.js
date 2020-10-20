@@ -1,5 +1,5 @@
 import React, { useEffect } from 'react'
-import { useParams } from 'react-router'
+import { useParams, useLocation } from 'react-router'
 import { partition, sortBy, union } from 'ramda'
 import emoji from 'react-easy-emoji'
 import tinygradient from 'tinygradient'
@@ -7,6 +7,7 @@ import { animated, useSpring, config } from 'react-spring'
 import ShareButton from 'Components/ShareButton'
 import { findContrastedTextColor } from 'Components/utils/colors'
 import { motion } from 'framer-motion'
+import { Switch, Route } from 'react-router-dom'
 
 import BallonGES from './images/ballonGES.svg'
 import SessionBar from 'Components/SessionBar'
@@ -21,55 +22,58 @@ import { setSimulationConfig } from 'Actions/actions'
 import Viande from './Viande'
 import Action from './Action'
 import { humanValueAndUnit } from './HumanWeight'
-import { encodeRuleName, decodeRuleName } from 'Engine/rules'
+import { encodeRuleName, decodeRuleName, splitName } from 'Engine/rules'
 
 const gradient = tinygradient(['#0000ff', '#ff0000']),
 	colors = gradient.rgb(20)
 
 export default ({}) => {
-	const { score, action } = useParams()
-	const { value } = useSpring({
-		config: { mass: 1, tension: 150, friction: 150, precision: 1000 },
-		value: +score,
-		from: { value: 0 },
-	})
+	return (
+		<Switch>
+			<Route path="/actions/:encodedName+">
+				<Action />
+			</Route>
+			<Route path="/actions">
+				<AnimatedDiv />
+			</Route>
+		</Switch>
+	)
+	if (action) {
+		const actionDottedName = decodeRuleName(action)
+		return <Action />
+	}
+}
+
+const AnimatedDiv = animated(({}) => {
+	const location = useLocation()
 
 	const rules = useSelector(flatRulesSelector)
-	const actions = rules.find((r) => r.dottedName === 'actions')
+	const flatActions = rules.find((r) => r.dottedName === 'actions')
+
 	const simulation = useSelector((state) => state.simulation)
 
 	// Add the actions rules to the simulation, keping the user's situation
 	const config = !simulation
-		? { objectifs: ['bilan', ...actions.formule.somme] }
+		? { objectifs: ['bilan', ...flatActions.formule.somme] }
 		: {
 				...simulation.config,
-				objectifs: union(simulation.config.objectifs, actions.formule.somme),
+				objectifs: union(
+					simulation.config.objectifs,
+					flatActions.formule.somme
+				),
 		  }
 
 	const analysis = useSelector(analysisWithDefaultsSelector)
 
 	const configSet = useSelector((state) => state.simulation?.config)
+	const foldedSteps = useSelector(
+		(state) => state.conversationSteps.foldedSteps
+	)
 
 	const dispatch = useDispatch()
-	useEffect(() => dispatch(setSimulationConfig(config)), [])
+	useEffect(() => dispatch(setSimulationConfig(config)), [location.pathname])
 	if (!configSet) return null
-	// Exception for this action, which we've custom build
-	// keep it as an example until the generic Action component is as good
-	if (action && decodeRuleName(action) === 'réduire viande . par quatre')
-		return <Viande />
-	if (action)
-		return (
-			<Action
-				data={analysis.targets.find(
-					(a) => a.dottedName === decodeRuleName(action)
-				)}
-			/>
-		)
 
-	return <AnimatedDiv value={value} score={score} analysis={analysis} />
-}
-
-const AnimatedDiv = animated(({ analysis, score, value }) => {
 	const [bilans, actions] = partition(
 		(t) => t.dottedName === 'bilan',
 		analysis.targets
@@ -78,7 +82,15 @@ const AnimatedDiv = animated(({ analysis, score, value }) => {
 	return (
 		<div css="padding: 0 .3rem 1rem; max-width: 600px; margin: 1rem auto;">
 			<SessionBar />
-			<h1 css="margin: 0;font-size: 160%">Comment réduire mon empreinte ?</h1>
+			{foldedSteps.length === 0 && (
+				<p css="line-height: 1.4rem; text-align: center">
+					Les chiffres suivants seront alors personnalisés pour votre situation{' '}
+					{emoji('🧮')}
+				</p>
+			)}
+			<h1 css="margin: 1rem 0 .6rem;font-size: 160%">
+				Comment réduire mon empreinte ?
+			</h1>
 
 			{sortBy((a) => -a.nodeValue)(actions).map((action) => (
 				<MiniAction
@@ -142,7 +154,7 @@ const MiniAction = ({ data, total }) => {
 					<div
 						css={`
 							font-size: 250%;
-							width: 4rem;
+							width: 5rem;
 							margin-right: 1rem;
 							img {
 								margin-top: 0.8rem !important;

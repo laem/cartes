@@ -37,7 +37,7 @@ export const buildEndURL = (analysis) => {
 	return `/fin?total=${Math.round(total)}&details=${detailsString}`
 }
 
-export default function PreviousSimulationBanner() {
+export default function SessionBar({ answerButtonOnly = false }) {
 	const dispatch = useDispatch()
 	const previousSimulation = useSelector(
 		(state: RootState) => state.previousSimulation
@@ -56,24 +56,43 @@ export default function PreviousSimulationBanner() {
 	const history = useHistory()
 	const location = useLocation()
 
-	if (['/fin', '/actions'].includes(location.pathname))
-		return (
-			<div
-				css={`
+	const css = `
+
 					display: flex;
 					justify-content: center;
 					button {
 						margin: 0 0.2rem;
 					}
 					margin: 0.6rem;
-				`}
-			>
+					`
+	if (answerButtonOnly)
+		return (
+			<div css={css}>
+				{arePreviousAnswers && (
+					<>
+						<Button
+							className="simple small"
+							onClick={() => setShowAnswerModal(true)}
+						>
+							{emoji('📋 ')}
+							<T>Modifier mes réponses</T>
+						</Button>
+					</>
+				)}
+				{showAnswerModal && (
+					<Answers onClose={() => setShowAnswerModal(false)} />
+				)}
+			</div>
+		)
+
+	if (['/fin', '/actions'].includes(location.pathname))
+		return (
+			<div css={css}>
 				{arePreviousAnswers ? (
 					<Button
 						className="simple small"
 						onClick={() => {
-							// semble inutile aujourd'hui :
-							// dispatch(goToQuestion(last(foldedSteps)))
+							dispatch(goToQuestion(last(foldedSteps)))
 							history.push('/simulateur/bilan')
 						}}
 					>
@@ -94,16 +113,7 @@ export default function PreviousSimulationBanner() {
 		)
 
 	return (
-		<div
-			css={`
-				display: flex;
-				justify-content: center;
-				button {
-					margin: 0 0.2rem;
-				}
-				margin: 0.6rem;
-			`}
-		>
+		<div css={css}>
 			{arePreviousAnswers && (
 				<>
 					<Button
@@ -120,18 +130,15 @@ export default function PreviousSimulationBanner() {
 						{emoji('💤 ')}
 						<T>Terminer</T>
 					</Button>
-					{
-						// désactivé pour l'utilisateur en attendant d'avoir plus d'actions à présenter
-						false && (
-							<Button
-								className="simple small"
-								onClick={() => history.push('/actions')}
-							>
-								{emoji('💥 ')}
-								<T>Passer à l'action</T>
-							</Button>
-						)
-					}
+					{true && (
+						<Button
+							className="simple small"
+							onClick={() => history.push('/actions')}
+						>
+							{emoji('💥 ')}
+							<T>Passer à l'action</T>
+						</Button>
+					)}
 				</>
 			)}
 			{showAnswerModal && <Answers onClose={() => setShowAnswerModal(false)} />}

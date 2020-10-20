@@ -55,6 +55,7 @@ const orderedCurrentQuestionSelector = createSelector(
 export default function Conversation({
 	customEndMessages,
 	customEnd,
+	teaseCategories,
 }: ConversationProps) {
 	const [dismissedRespirations, dismissRespiration] = useState([])
 	const dispatch = useDispatch()
@@ -89,7 +90,8 @@ export default function Conversation({
 			(a) => a.split(' . ')[0] === questionCategory.dottedName
 		) === undefined
 
-	return firstCategoryQuestion &&
+	return teaseCategories &&
+		firstCategoryQuestion &&
 		!dismissedRespirations.includes(questionCategory.dottedName) ? (
 		<CategoryRespiration
 			questionCategory={questionCategory}
@@ -109,7 +111,7 @@ export default function Conversation({
 						>
 							{currentQuestion && (
 								<React.Fragment key={currentQuestion}>
-									{questionCategory && (
+									{teaseCategories && questionCategory && (
 										<div>
 											<span
 												css={`

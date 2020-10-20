@@ -153,41 +153,38 @@ const AnimatedDiv = animated(({ score, value, details }) => {
 					/>
 				</div>
 			</motion.div>
-			{
-				// désactivé pour l'utilisateur pour l'instant
-				false && (
-					<Link
-						to="/actions"
-						className="ui__ button plain"
+			{true && (
+				<Link
+					to="/actions"
+					className="ui__ button plain"
+					css={`
+						margin: 0.6rem 0;
+						width: 100%;
+						img {
+							transform: scaleX(-1);
+							height: 3rem;
+							margin: 0 0.6rem;
+							display: inline-block;
+						}
+						a {
+							color: var(--textColor);
+							text-decoration: none;
+						}
+					`}
+				>
+					<div
 						css={`
-							margin: 0.6rem 0;
+							display: flex;
+							justify-content: center;
+							align-items: center;
 							width: 100%;
-							img {
-								transform: scaleX(-1);
-								height: 3rem;
-								margin: 0 0.6rem;
-								display: inline-block;
-							}
-							a {
-								color: var(--textColor);
-								text-decoration: none;
-							}
 						`}
 					>
-						<div
-							css={`
-								display: flex;
-								justify-content: center;
-								align-items: center;
-								width: 100%;
-							`}
-						>
-							<img src={StartingBlock} />
-							Passer à l'action
-						</div>
-					</Link>
-				)
-			}
+						<img src={StartingBlock} />
+						Passer à l'action
+					</div>
+				</Link>
+			)}
 		</div>
 	)
 })

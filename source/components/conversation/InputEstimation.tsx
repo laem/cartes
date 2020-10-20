@@ -32,11 +32,11 @@ export default function InputEstimation({ inputEstimation, setFinalValue }) {
 				align-items: center;
 				img {
 					font-size: 230%;
-					margin-right: 0.6rem !important;
+					margin-right: 1rem !important;
 				}
 			`}
 		>
-			<span>{emoji('💡')} </span>
+			<span>{emoji('🧮')} </span>
 			<span>
 				<div>{inputEstimation.question}</div>
 				<div>
