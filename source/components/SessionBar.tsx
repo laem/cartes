@@ -92,8 +92,7 @@ export default function SessionBar({ answerButtonOnly = false }) {
 					<Button
 						className="simple small"
 						onClick={() => {
-							// semble inutile aujourd'hui :
-							// dispatch(goToQuestion(last(foldedSteps)))
+							dispatch(goToQuestion(last(foldedSteps)))
 							history.push('/simulateur/bilan')
 						}}
 					>
