@@ -118,7 +118,7 @@ module.exports.HTMLPlugins = ({
 } = {}) => [
 	new HTMLPlugin({
 		template: 'index.html',
-		logo: 'https://ecolab-transport.netlify.app/images/ecolab.png',
+		logo: 'https://ecolab.ademe.fr/apps/climat/nosgestesclimat.png',
 		chunks: ['publicodes'],
 		title: 'Nos gestes climat - Ecolab',
 		description: 'Connaissez-vous votre empreinte sur le climat ?',
