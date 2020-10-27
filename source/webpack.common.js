@@ -33,6 +33,7 @@ module.exports.default = {
 			'./source/sites/publicodes/sitemap.txt',
 			'./iframeResizer.contentWindow.min.js',
 			'./source/images/nosgestesclimat.png',
+			'./source/images/dessin-nosgestesclimat.png',
 		]),
 	],
 }
@@ -118,7 +119,7 @@ module.exports.HTMLPlugins = ({
 } = {}) => [
 	new HTMLPlugin({
 		template: 'index.html',
-		logo: 'https://ecolab.ademe.fr/apps/climat/images/ecolab-climat-dessin.svg',
+		logo: 'https://ecolab.ademe.fr/apps/climat/dessin-nosgestesclimat.png',
 		chunks: ['publicodes'],
 		title: 'Nos Gestes Climat',
 		description: 'Connaissez-vous votre empreinte sur le climat ?',
