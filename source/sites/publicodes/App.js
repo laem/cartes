@@ -20,8 +20,14 @@ import {
 	persistSimulation,
 	retrievePersistedSimulation,
 } from '../../storage/persistSimulation'
+import Tracker, { devTracker } from '../../Tracker'
 
 let Studio = React.lazy(() => import('./Studio'))
+
+let tracker = devTracker
+if (process.env.NODE_ENV === 'production') {
+	tracker = new Tracker()
+}
 
 class App extends Component {
 	render() {
@@ -41,6 +47,7 @@ class App extends Component {
 				}ecolab-data.netlify.app/co2.json`}
 				dataBranch={branch || pullRequestNumber}
 				sitePaths={sitePaths()}
+				tracker={tracker}
 				reduxMiddlewares={[]}
 				onStoreCreated={(store) => {
 					//persistEverything({ except: ['rules', 'simulation'] })(store)
