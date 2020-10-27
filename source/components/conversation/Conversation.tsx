@@ -3,7 +3,8 @@ import { T } from 'Components'
 import QuickLinks from 'Components/QuickLinks'
 import getInputComponent from 'Engine/getInputComponent'
 import { findRuleByDottedName } from 'Engine/rules'
-import React, { useState } from 'react'
+import React, { useState, useEffect, useContext } from 'react'
+import { TrackerContext } from 'Components/utils/withTracker'
 import emoji from 'react-easy-emoji'
 import { useDispatch, useSelector } from 'react-redux'
 import { RootState } from 'Reducers/rootReducer'
@@ -65,6 +66,14 @@ export default function Conversation({
 		(state: RootState) => state.conversationSteps.foldedSteps
 	)
 	const nextSteps = useSelector(nextStepsSelector)
+
+	const tracker = useContext(TrackerContext)
+
+	useEffect(() => {
+		if (previousAnswers.length === 1) {
+			tracker.push(['trackEvent', '1ère réponse au bilan'])
+		}
+	}, [previousAnswers])
 
 	const setDefault = () =>
 		dispatch(
