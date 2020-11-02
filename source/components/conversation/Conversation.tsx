@@ -71,9 +71,9 @@ export default function Conversation({
 
 	useEffect(() => {
 		if (previousAnswers.length === 1) {
-			tracker.push(['trackEvent', '1ère réponse au bilan'])
+			tracker.push(['trackEvent', 'NGC', '1ère réponse au bilan'])
 		}
-	}, [previousAnswers])
+	}, [previousAnswers, tracker])
 
 	const setDefault = () =>
 		dispatch(
