@@ -1,10 +1,10 @@
 {
-	"name": "futureco",
+	"name": "nosgestesclimat",
 	"license": "MIT",
 	"version": "1.2.3",
 	"repository": {
 		"type": "git",
-		"url": "https://github.com/laem/futureco.git"
+		"url": "https://github.com/betagouv/ecolab-climat.git"
 	},
 	"browserslist": [
 		"> 1% in FR"

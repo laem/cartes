@@ -5,7 +5,8 @@ import ShareButton from 'Components/ShareButton'
 import Simulation from 'Components/Simulation'
 import { Markdown } from 'Components/utils/markdown'
 import { decodeRuleName, findRuleByDottedName } from 'Engine/rules'
-import React, { useEffect } from 'react'
+import React, { useEffect, useContext } from 'react'
+import { TrackerContext } from 'Components/utils/withTracker'
 import { Helmet } from 'react-helmet'
 import { useDispatch, useSelector } from 'react-redux'
 import {
@@ -60,7 +61,7 @@ const Simulateur = (props) => {
 				showConversation
 				customEnd={
 					rule.dottedName === 'bilan' ? (
-						<Redirect to={buildEndURL(analysis)} />
+						<RedirectionToEndPage url={buildEndURL(analysis)} />
 					) : rule.description ? (
 						<Markdown source={rule.description} />
 					) : (
@@ -89,5 +90,15 @@ let PeriodBlock = () => (
 		<PeriodSwitch />
 	</div>
 )
+
+const RedirectionToEndPage = ({ url }) => {
+	const tracker = useContext(TrackerContext)
+
+	useEffect(() => {
+		tracker.push(['trackEvent', 'NGC', 'A terminé la simulation'])
+	}, [tracker])
+
+	return <Redirect to={url} />
+}
 
 export default Simulateur
