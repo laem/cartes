@@ -7,7 +7,12 @@ declare global {
 	}
 }
 
-type PushArgs = ['trackPageView'] | ['trackEvent', ...Array<string | number>]
+type MatomoAction =
+	| 'trackPageView'
+	| 'trackEvent'
+	| 'setReferrerUrl'
+	| 'setCustomUrl'
+type PushArgs = [MatomoAction, ...Array<string | number>]
 type PushType = (args: PushArgs) => void
 
 const ua = window.navigator.userAgent
@@ -19,6 +24,7 @@ const iOSSafari =
 
 export default class Tracker {
 	push: PushType
+	debouncedPush: PushType
 	unlistenFromHistory: (() => void) | undefined
 	previousPath: string | undefined
 
@@ -34,7 +40,8 @@ export default class Tracker {
 		}
 	) {
 		if (typeof window !== 'undefined') window._paq = window._paq || []
-		this.push = debounce(200, pushFunction) as PushType
+		this.push = pushFunction
+		this.debouncedPush = debounce(200, pushFunction)
 	}
 
 	connectToHistory(history: History) {
@@ -60,6 +67,12 @@ export default class Tracker {
 		if (this.previousPath === currentPath) {
 			return
 		}
+		if (this.previousPath) {
+			this.push(['setReferrerUrl', this.previousPath])
+		}
+		this.push(['setCustomUrl', currentPath])
+		// TODO: We should also call 'setDocumentTitle' but at this point the
+		// document.title isn't updated yet.
 		this.push(['trackPageView'])
 		this.previousPath = currentPath
 	}
