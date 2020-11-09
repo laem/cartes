@@ -61,7 +61,7 @@ const Simulateur = (props) => {
 				showConversation
 				customEnd={
 					rule.dottedName === 'bilan' ? (
-						<RedirectionToEndPage url={buildEndURL(analysis)} />
+						<RedirectionToEndPage score={rule.nodeValue} url={buildEndURL(analysis)} />
 					) : rule.description ? (
 						<Markdown source={rule.description} />
 					) : (
@@ -91,11 +91,11 @@ let PeriodBlock = () => (
 	</div>
 )
 
-const RedirectionToEndPage = ({ url }) => {
+const RedirectionToEndPage = ({ url, score }) => {
 	const tracker = useContext(TrackerContext)
 
 	useEffect(() => {
-		tracker.push(['trackEvent', 'NGC', 'A terminé la simulation'])
+		tracker.push(['trackEvent', 'NGC', 'A terminé la simulation', score])
 	}, [tracker])
 
 	return <Redirect to={url} />
