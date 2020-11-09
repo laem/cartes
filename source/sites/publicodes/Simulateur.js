@@ -95,7 +95,7 @@ const RedirectionToEndPage = ({ url, score }) => {
 	const tracker = useContext(TrackerContext)
 
 	useEffect(() => {
-		tracker.push(['trackEvent', 'NGC', 'A terminé la simulation', score])
+		tracker.push(['trackEvent', 'NGC', 'A terminé la simulation', null, score])
 	}, [tracker])
 
 	return <Redirect to={url} />
