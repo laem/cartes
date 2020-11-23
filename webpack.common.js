@@ -18,7 +18,6 @@ module.exports.default = {
 		extensions: ['.js', '.ts', '.tsx'],
 	},
 	entry: {
-<<<<<<< HEAD:source/webpack.common.js
 		publicodes: './source/sites/publicodes/entry.js',
 		iframe: './source/sites/publicodes/iframe.js',
 	},
