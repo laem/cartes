@@ -1,4 +1,4 @@
-module.exports = api => {
+module.exports = (api) => {
 	// This caches the Babel config by environment.
 	api.cache.using(() => process.env.NODE_ENV)
 	return {
@@ -7,12 +7,12 @@ module.exports = api => {
 				'@babel/preset-env',
 				{
 					targets: {
-						node: 'current'
-					}
-				}
+						node: 'current',
+					},
+				},
 			],
 			'@babel/react',
-			'@babel/preset-typescript'
+			'@babel/preset-typescript',
 		],
 		plugins: [
 			'@babel/plugin-proposal-class-properties',
@@ -21,14 +21,14 @@ module.exports = api => {
 			'@babel/plugin-proposal-object-rest-spread',
 			'@babel/plugin-syntax-dynamic-import',
 			!api.env('production') && 'react-refresh/babel',
-			['webpack-alias', { config: './source/webpack.dev.js' }],
+			['webpack-alias', { config: './webpack.dev.js' }],
 			[
 				'ramda',
 				{
-					useES: true
-				}
+					useES: true,
+				},
 			],
-			'babel-plugin-styled-components'
-		].filter(Boolean)
+			'babel-plugin-styled-components',
+		].filter(Boolean),
 	}
 }
