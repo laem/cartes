@@ -16,7 +16,7 @@ var { createDataDir, writeInDataDir } = require('./utils.js')
 const githubAuthToken = process.env.GITHUB_API_SECRET
 const cursorOfV1Release = 'Y3Vyc29yOnYyOpHOARHb8g=='
 const query = `query {
-	repository(owner:"betagouv", name:"mon-entreprise") {
+	repository(owner:"betagouv", name:"ecolab-climat") {
 		releases(after:"${cursorOfV1Release}", last:100) {
 			nodes {
 				name
@@ -35,16 +35,16 @@ const fakeData = [
 		descriptionHTML: `You are seing this fake release because you 
 	didn't configure your GitHub access token and we weren't
 	able to fetch the real releases from GitHub.<br /><br />
-	See the script <pre>fetch-releases.js</pre> for more informations.`
+	See the script <pre>fetch-releases.js</pre> for more informations.`,
 	},
 	{
 		name: 'Release 2',
-		descriptionHTML: 'blah blah blah'
+		descriptionHTML: 'blah blah blah',
 	},
 	{
 		name: 'Release 3',
-		descriptionHTML: 'blah blah blah'
-	}
+		descriptionHTML: 'blah blah blah',
+	},
 ]
 
 async function main() {
@@ -66,14 +66,14 @@ async function fetchReleases() {
 		const response = await fetch('https://api.github.com/graphql', {
 			method: 'post',
 			headers: new Headers({ Authorization: `bearer ${githubAuthToken}` }),
-			body: JSON.stringify({ query })
+			body: JSON.stringify({ query }),
 		})
 		const {
 			data: {
 				repository: {
-					releases: { nodes: releases }
-				}
-			}
+					releases: { nodes: releases },
+				},
+			},
 		} = await response.json()
 		return releases.filter(Boolean).reverse()
 	} catch (e) {
