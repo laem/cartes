@@ -12,6 +12,7 @@ import { applyMiddleware, compose, createStore, Middleware, Store } from 'redux'
 import thunk from 'redux-thunk'
 import Tracker from './Tracker'
 import { inIframe } from './utils'
+import RulesProvider from './RulesProvider'
 
 declare global {
 	interface Window {
@@ -65,9 +66,9 @@ export default function Provider({
 }: ProviderProps) {
 	const history = useMemo(
 		() =>
-			createBrowserHistory({
-				basename: process.env.NODE_ENV === 'production' ? '' : basename
-			}),
+		createBrowserHistory({
+			basename: process.env.URL_PATH || '',
+		}),
 		[]
 	)
 	useEffect(() => {
@@ -114,6 +115,10 @@ export default function Provider({
 	return (
 		// If IE < 11 display nothing
 		<ReduxProvider store={store}>
+		<RulesProvider
+					dataBranch={this.props.dataBranch}
+					rulesURL={this.props.rulesURL}
+				>
 			<ThemeColorsProvider
 				color={iframeCouleur && decodeURIComponent(iframeCouleur)}
 			>
@@ -129,6 +134,7 @@ export default function Provider({
 					</SiteNameContext.Provider>
 				</TrackerProvider>
 			</ThemeColorsProvider>
+			</RulesProvider>
 		</ReduxProvider>
 	)
 }
