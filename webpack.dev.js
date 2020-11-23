@@ -27,10 +27,5 @@ module.exports = {
 		new ReactRefreshWebpackPlugin(),
 		new webpack.EnvironmentPlugin({ NODE_ENV: 'development' }),
 		new webpack.HotModuleReplacementPlugin(),
-		new MonacoWebpackPlugin({
-			languages: ['yaml'],
-
-			features: ['!gotoSymbol'],
-		}),
 	],
 }

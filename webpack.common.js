@@ -33,6 +33,9 @@ module.exports.default = {
 			'./source/images/nosgestesclimat.png',
 			'./source/images/dessin-nosgestesclimat.png',
 		]),
+		new MonacoWebpackPlugin({
+			languages: ['yaml'],
+		}),
 	],
 }
 
