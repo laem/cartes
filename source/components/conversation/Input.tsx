@@ -4,6 +4,8 @@ import { useTranslation } from 'react-i18next'
 import NumberFormat from 'react-number-format'
 import { currencyFormat, debounce } from '../../utils'
 import InputSuggestions from './InputSuggestions'
+import InputEstimation from './InputEstimation'
+
 
 // TODO: fusionner Input.js et CurrencyInput.js
 export default function Input({
@@ -16,6 +18,7 @@ export default function Input({
 	defaultValue,
 	autoFocus,
 	unit
+	, inputEstimation
 }) {
 	const debouncedOnChange = useCallback(debounce(550, onChange), [])
 	const { language } = useTranslation().i18n
@@ -57,6 +60,16 @@ export default function Input({
 						''
 					)}
 				</span>
+			</div>
+			<div css="width: 100%">
+				{inputEstimation && (
+					<InputEstimation
+						inputEstimation={inputEstimation}
+						setFinalValue={(value) => {
+							setFormValue(value)
+						}}
+					/>
+				)}
 			</div>
 		</div>
 	)

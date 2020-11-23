@@ -21,12 +21,14 @@ type SimulationProps = {
 	customEndMessages?: ConversationProps['customEndMessages']
 	showPeriodSwitch?: boolean
 	showLinkToForm?: boolean
+	, teaseCategories: boolean
 }
 
 export default function Simulation({
 	explanations,
 	results,
 	customEndMessages,
+	teaseCategories,
 	showLinkToForm,
 	showPeriodSwitch
 }: SimulationProps) {
@@ -89,7 +91,7 @@ function Questions({
 			<section className="ui__ full-width lighter-bg">
 				<div className="ui__ container">
 					<Notifications />
-					<Conversation customEndMessages={customEndMessages} />
+					<Conversation teaseCategories={teaseCategories} customEndMessages={customEndMessages} />
 				</div>
 			</section>
 			{progress < 1 && (
