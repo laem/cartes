@@ -5,6 +5,7 @@ import { useSelector } from 'react-redux'
 import { flatRulesSelector } from 'Selectors/analyseSelectors'
 import './RulesList.css'
 import emoji from 'react-easy-emoji'
+import {Link} from 'react-router-dom'
 
 export default function RulesList() {
 	const flatRules = useSelector(flatRulesSelector)
@@ -26,11 +27,12 @@ export default function RulesList() {
 			</p>
 			<p>
 				Le code est non seulement transparent, mais aussi contributif : chancun
-				peut l'explorer, donner son avis, l'améliorer. Tout est expliqué sur{' '}
-				<a href="https://github.com/betagouv/ecolab-data#ecolab-climat-">
-					Github
-				</a>
-				.
+				peut l'explorer, donner son avis, l'améliorer. 
+			</p>
+			<p>
+
+				<Link to="/contribuer">Venez contribuer</Link> !
+
 			</p>
 			<h2>Explorez notre documentation</h2>
 
