@@ -1,0 +1,4 @@
+.env
+source/data
+cypress/videos
+cypress/screenshots

@@ -1,0 +1,26 @@
+localisation:
+
+code commune:
+  formule:
+    synchronisation:
+      API: localisation
+      chemin: code
+  exemples:
+    - nom: Base
+      situation:
+        localisation:
+          code: 29200
+      valeur attendue: 29200
+
+région:
+  formule:
+    synchronisation:
+      API: localisation
+      chemin: région . nom
+  exemples:
+    - nom: Base
+      situation:
+        localisation:
+          région:
+            nom: Bretagne
+      valeur attendue: Bretagne

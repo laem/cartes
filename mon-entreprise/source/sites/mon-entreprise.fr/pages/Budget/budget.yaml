@@ -1,0 +1,23 @@
+# Ces données sont optenues avec la commande suivante depuis le repo privé
+# `mon-entreprise/compta` :
+#
+# $ hledger is -p 2020 -Q -B --depth 2
+#
+# La partie « marge du porteur » est amortie par trimestre en prenant 11,75% du
+# total du trimestre.
+
+2020:
+  T1:
+    Développement: 73500
+    Logiciels et hébergement: 170
+    Déplacements: 742
+    Documentation: 286
+    Marge du porteur: 9946
+  T2:
+    Développement: 56100
+    Logiciels et hébergement: 333
+    Marge du porteur: 6592
+  T3:
+    Développement: 22350
+    Logiciels et hébergement: 294
+    Marge du porteur: 2661

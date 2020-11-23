@@ -2,11 +2,8 @@
 	"compilerOptions": {
 		"moduleResolution": "node",
 		"module": "esnext",
-		"target": "es2019",
+		"target": "esnext",
 		"jsx": "react",
-		"baseUrl": "source",
-		"types": ["webpack-env"],
-		"typeRoots": ["source/types"],
 		"allowSyntheticDefaultImports": true,
 		"forceConsistentCasingInFileNames": true,
 		"resolveJsonModule": true,
@@ -23,18 +20,6 @@
 		"strictFunctionTypes": true,
 		"strictNullChecks": true,
 		"strictPropertyInitialization": true,
-		"paths": {
-			"Actions/*": ["actions/*"],
-			"Components": ["components"],
-			"Components/*": ["components/*"],
-			"Ui/*": ["components/ui/*"],
-			"Engine/*": ["engine/*"],
-			"Images/*": ["images/*"],
-			"Reducers/*": ["reducers/*"],
-			"Règles/*": ["règles/*"],
-			"Selectors/*": ["selectors/*"],
-			"Types/*": ["types/*"]
-		}
-	},
-	"include": ["source"]
+		"types": ["webpack-env"]
+	}
 }

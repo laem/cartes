@@ -1,0 +1,28 @@
+objectifs:
+  - contrat salarié . prix du travail
+  - contrat salarié . rémunération . brut de base . équivalent temps plein
+  - contrat salarié . rémunération . brut de base
+  - contrat salarié . rémunération . net
+  - contrat salarié . rémunération . net après impôt
+
+questions:
+  à l'affiche:
+    Chômage partiel: contrat salarié . activité partielle
+    Temps partiel: contrat salarié . temps de travail . temps partiel
+    Emploi franc: contrat salarié . aides employeur . emploi franc . éligible
+    Cadre: contrat salarié . statut cadre
+    Heures supplémentaires: contrat salarié . temps de travail . heures supplémentaires
+    Titres-restaurant: contrat salarié . frais professionnels . titres-restaurant
+    Impôt: impôt . méthode de calcul
+    Commune: établissement . localisation
+  non prioritaires:
+    - contrat salarié . frais professionnels
+    - contrat salarié . rémunération . avantages en nature
+    - entreprise . établissement bancaire
+    - entreprise . association non lucrative
+    - contrat salarié . statut JEI
+    - contrat salarié . complémentaire santé
+    - contrat salarié . régime des impatriés
+unité par défaut: €/mois
+situation:
+  dirigeant: non

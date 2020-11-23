@@ -6,13 +6,11 @@ Pour contribuer aux modèles de calcul climat, direction [ecolab-data](https://g
 
 Une fois que vous y aurez créé une PR (Pull Request), ajoutez simplement `?branch=votre-nouvelle-branche` à l'adresse pour tester le site avec vos modifications des modèles.
 
-Pour contribuer au code du site, RDV dans la section *issues* pour voir les discussions et avancement actuels.
+Pour contribuer au code du site, RDV dans la section _issues_ pour voir les discussions et avancement actuels.
 
 Ci-dessous des informations plus générales sur la contribution.
 
 ### Technologies
-
-L'application est écrite en JavaScript, elle est exécuté uniquement côté client — il n'y a pas de serveur applicatif, nous générons des fichiers `.html` statiques
 
 Nous utilisons :
 
@@ -37,7 +35,7 @@ git clone --depth 100 git@github.com:betagouv/mon-entreprise.git && cd mon-entre
 # Install the Javascript dependencies through Yarn
 yarn install
 
-# Run the server
+# Watch changes in publicodes and run the server for mon-entreprise
 yarn start
 ```
 
@@ -68,3 +66,88 @@ Et ceux spécifiques au projet :
 - :alien: `:alien:` pour ajouter des traductions
 - :wheelchair: `:wheelchair:` pour corriger les problèmes liés à l'accessibilité
 - :fountain_pen: `:fountain_pen:` pour séparer les commits liés à la modification du contenu
+- :mag: `:mag:` pour les modifications liées au référencement naturel
+
+### Tests
+
+Pour executer les tests unitaires :
+
+```sh
+$ yarn run test-common
+```
+
+Pour le snapshot testing :
+
+```sh
+$ yarn run test:regressions
+```
+
+Si vous souhaitez mettre à jour les snapshots vous pouvez utiliser le paramètre `--updateSnapshot`, son raccourci `-u`, ou encore le [mode interactif](https://jestjs.io/docs/en/snapshot-testing#interactive-snapshot-mode).
+
+Enfin pour les tests d'intégration :
+
+```sh
+$ yarn run cypress run
+```
+
+### Traduction 👽
+
+Le site est disponible en français, et en anglais sur https://mycompanyinfrance.com
+
+Les traductions se trouvent dans le répertoire `source/locales`.
+
+La librairie utilisée pour la traduction de l'UI est
+[react-i18next](https://react.i18next.com/).
+
+Lorsque l'on introduit une nouvelle chaîne de caractère dans l'UI il faut
+systématiquement penser à gérer sa traduction, via un composant `<Trans>`, ou
+via la fonction `t`
+
+Le circle-ci fait une analyse statique du code pour repérer les chaînes non
+traduites, dans le moteur et l'UI :
+
+```sh
+$ yarn run i18n:rules:check
+$ yarn run i18n:ui:check
+```
+
+Pour traduire automatiquement les chaînes manquantes via l'api Deepl :
+
+```sh
+$ yarn run i18n:rules:translate
+$ yarn run i18n:ui:translate
+```
+
+N'oubliez pas de vérifier sur le diff que rien n'est choquant.
+
+### CI/CD
+
+- [CircleCI](https://circleci.com/) s'occupe de faire tourner les builds et
+  tests.
+- [Netlify](https://www.netlify.com/), s'occupe de l’hébergement du site sur Internet
+  sur internet avec gestion des DNS.
+
+### Analyse des bundles
+
+La commande `yarn run build:analyse-bundle` gènere une visualisation interactive du
+contenu packagé, cf.
+[webpack-bundle-analyzer](https://github.com/webpack-contrib/webpack-bundle-analyzer)
+
+## Documentation
+
+### Publicodes
+
+Un tutoriel sur publicode est disponible sur https://publi.codes.
+
+Un wiki contenant des informations intéressantes sur publicode et le
+raisonnement ayant abouti à ce langage sont dispos sur le repository
+[betagouv/publicodes](https://github.com/betagouv/publicodes/wiki), qui est par
+ailleurs inutilisé.
+
+Pour se familiariser avec les règles, vous pouvez jeter un œil aux fichiers
+contenant les règles elles-mêmes (dans le dossier `rules`) mais cela peut
+s'avérer assez abrupt.
+
+Essayez plutôt de jeter un oeil [aux tests](./publicodes/test/mécanismes/expressions.yaml)
+dans un premier temps, puis au [mécanismes en
+place](./publicodes/source/mecanisms).

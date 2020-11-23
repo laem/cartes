@@ -1,0 +1,12 @@
+objectifs:
+  - aide déclaration revenu indépendant 2019 . revenu net fiscal
+  - aide déclaration revenu indépendant 2019 . CSG déductible
+  - aide déclaration revenu indépendant 2019 . cotisations sociales déductible
+  - aide déclaration revenu indépendant 2019 . CFP
+  - aide déclaration revenu indépendant 2019 . total charges sociales déductible
+  - aide déclaration revenu indépendant 2019 . assiette sociale
+
+situation:
+  dirigeant: "'indépendant'"
+  aide déclaration revenu indépendant 2019: oui
+unité par défaut: '€/an'
