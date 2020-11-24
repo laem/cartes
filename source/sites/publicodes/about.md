@@ -8,4 +8,8 @@ Il est basé sur le modèle MicMac des associations [Avenir Climatique](https://
 
 ## Qui le développe ?
 
-Il est principalement développé par l’[Association Bilan Carbone](https://www.associationbilancarbone.fr/) et l’[ADEME](https://www.ademe.fr/), avec l’appui technique et méthodologique de l'incubateur de la direction du numérique [beta.gouv.fr](https://beta.gouv.fr/) visant à concevoir des services numériques simples et faciles à utiliser.
+Il est développé par une équipe de [beta.gouv.fr](https://beta.gouv.fr/), financée par l’[Agence de la transition écologique (ADEME)](https://www.ademe.fr/) en partenariat avec l’[Association Bilan Carbone (ABC)](https://www.associationbilancarbone.fr/).
+
+Depuis sa création en 2011, l'ABC est partenaire de l’ADEME. Ce partenariat a vu naître de nombreux projets autour du développement et de la promotion des méthodes et outils innovants pour la mise en œuvre de stratégies climat, en France et à l’international, que ce soit à l’échelle des organisations, territoires ou des citoyens.
+
+L'incubateur [beta.gouv.fr](https://beta.gouv.fr/) de la Direction interministérielle du numérique (DINUM) vise à concevoir des services numériques simples et faciles à utiliser.
