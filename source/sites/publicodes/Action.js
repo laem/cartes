@@ -1,32 +1,31 @@
-import React, { useEffect, useContext } from 'react'
-import { useDispatch, useSelector } from 'react-redux'
-import { useParams } from 'react-router'
+import React, {useEffect, useContext} from 'react'
+import {useDispatch, useSelector} from 'react-redux'
+import {useParams} from 'react-router'
 import emoji from 'react-easy-emoji'
-import { animated, useSpring, config } from 'react-spring'
+import {animated, useSpring, config} from 'react-spring'
 import ShareButton from 'Components/ShareButton'
-import { findContrastedTextColor } from 'Components/utils/colors'
-import { motion } from 'framer-motion'
+import {findContrastedTextColor} from 'Components/utils/colors'
+import {motion} from 'framer-motion'
 
 import BallonGES from './images/ballonGES.svg'
 import SessionBar from 'Components/SessionBar'
-import { Link } from 'react-router-dom'
-import { humanWeight, HumanWeight } from './HumanWeight'
-import { Markdown } from 'Components/utils/markdown'
-import { encodeRuleName, decodeRuleName, splitName } from 'Engine/rules'
-import { SitePathsContext } from 'Components/utils/withSitePaths'
+import {Link} from 'react-router-dom'
+import {humanWeight, HumanWeight} from './HumanWeight'
+import {Markdown} from 'Components/utils/markdown'
+import {encodeRuleName, decodeRuleName, splitName} from 'Engine/rules'
+import {SitePathsContext} from 'Components/utils/withSitePaths'
 import {
 	flatRulesSelector,
 	analysisWithDefaultsSelector,
 	nextStepsSelector,
 } from 'Selectors/analyseSelectors'
-import { setSimulationConfig } from 'Actions/actions'
+import {setSimulationConfig} from 'Actions/actions'
 import Simulation from 'Components/Simulation'
 
-export const Footprint = ({ value }) => <div>Lala {value}</div>
+export const Footprint = ({value}) => <div>Lala {value}</div>
 
 export default ({}) => {
-	const { encodedName } = useParams()
-	console.log('ECN', encodedName)
+	const {encodedName} = useParams()
 	const sitePaths = useContext(SitePathsContext)
 	const rules = useSelector(flatRulesSelector)
 	const nextSteps = useSelector(nextStepsSelector)
@@ -43,7 +42,7 @@ export default ({}) => {
 	useEffect(() => dispatch(setSimulationConfig(config)), [encodedName])
 	if (!configSet) return null
 
-	const { nodeValue, description, icons, title } = analysis.targets[0]
+	const {nodeValue, description, icons, title} = analysis.targets[0]
 
 	const flatActions = rules.find((r) => r.dottedName === 'actions')
 	const relatedActions = flatActions.formule.somme
@@ -52,7 +51,7 @@ export default ({}) => {
 				actionDottedName !== dottedName &&
 				splitName(dottedName)[0] === splitName(actionDottedName)[0]
 		)
-		.map((name) => rules.find(({ dottedName }) => dottedName === name))
+		.map((name) => rules.find(({dottedName}) => dottedName === name))
 
 	return (
 		<div css="padding: 0 .3rem 1rem; max-width: 600px; margin: 1rem auto;">
@@ -93,6 +92,9 @@ export default ({}) => {
 							</button>
 						)
 					}
+					<Link to={`/actions/plus/` + encodedName}><button className="ui__ button plain">
+						En savoir plus
+					</button></Link>
 				</div>
 			</div>
 			<SessionBar answerButtonOnly />
