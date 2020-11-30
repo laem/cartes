@@ -18,7 +18,7 @@ export default () => {
 		<div css="padding: 0 .3rem 1rem; max-width: 600px; margin: 1rem auto;">
 			<div css="margin: 1.6rem 0">
 				<Markdown
-					source={rule.plus || "Cette fiche détaillées n'existe pas encore"}
+					source={rule.plus || "Cette fiche détaillée n'existe pas encore"}
 				/>
 			</div>
 		</div>
