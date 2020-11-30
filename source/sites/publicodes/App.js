@@ -59,7 +59,6 @@ class App extends Component {
 				}}
 			>
 				<StoreProvider>
-					<VersionBeta />
 					<div className="ui__ container">
 						<nav css="display: flex; justify-content: center; margin: .6rem auto">
 							<Link
@@ -98,6 +97,7 @@ class App extends Component {
 							<Route component={Route404} />
 						</Switch>
 					</div>
+					<VersionBeta />
 				</StoreProvider>
 			</Provider>
 		)
