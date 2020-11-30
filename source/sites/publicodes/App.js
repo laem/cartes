@@ -83,7 +83,6 @@ class App extends Component {
 							{/* Lien de compatibilité, à retirer par exemple mi-juillet 2020*/}
 							<Route path="/fin/:score" component={Fin} />
 							<Route path="/fin" component={Fin} />
-							<Route path="/actions/:action+" component={Actions} />
 							<Route path="/actions" component={Actions} />
 							<Route path="/contribuer/:input?" component={Contribution} />
 							<Route path="/à-propos" component={About} />

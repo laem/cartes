@@ -21,6 +21,7 @@ import { useDispatch, useSelector } from 'react-redux'
 import { setSimulationConfig } from 'Actions/actions'
 import Viande from './Viande'
 import Action from './Action'
+import ActionPlus from './ActionPlus'
 import { humanValueAndUnit } from './HumanWeight'
 import { encodeRuleName, decodeRuleName, splitName } from 'Engine/rules'
 
@@ -30,9 +31,13 @@ const gradient = tinygradient(['#0000ff', '#ff0000']),
 export default ({}) => {
 	return (
 		<Switch>
+			<Route path="/actions/plus/:encodedName+">
+				<ActionPlus />
+			</Route>
 			<Route path="/actions/:encodedName+">
 				<Action />
 			</Route>
+
 			<Route path="/actions">
 				<AnimatedDiv />
 			</Route>
