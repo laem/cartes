@@ -13,14 +13,11 @@ export default () => {
 	const dottedName = decodeRuleName(encodedName)
 	const rule = findRuleByDottedName(rules, dottedName)
 
-	console.log(rule)
-	if (!rule) return <div>OUPS</div>
-
 	return (
 		<div css="padding: 0 .3rem 1rem; max-width: 600px; margin: 1rem auto;">
 			<Link to={'/actions/' + encodedName}>
 				<button className="ui__ button simple small ">
-					{emoji('◀')} Retour
+					{emoji('◀')} Retour à la fiche
 				</button>
 			</Link>
 			<div css="margin: 1.6rem 0">
