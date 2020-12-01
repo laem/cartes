@@ -12,6 +12,9 @@ export default () => {
 	return (
 		<div css="padding: 0 .3rem 1rem; max-width: 600px; margin: 1rem auto;">
 			<h1>Nos fiches complètes</h1>
+			<p>
+				<em>En cours de construction</em>
+			</p>
 			<ul
 				css={`
 					list-style-type: none;
