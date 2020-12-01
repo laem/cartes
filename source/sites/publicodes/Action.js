@@ -66,21 +66,23 @@ export default ({}) => {
 						{icons && <span>{emoji(icons)}</span>}
 						{title}
 					</h1>
-					<div css="display: flex; align-items: center">
-						<img src={BallonGES} css="height: 6rem" />
-						<div>
-							<HumanWeight nodeValue={nodeValue} />
-							<Link
-								to={
-									sitePaths.documentation.index +
-									'/' +
-									encodeRuleName(dottedName)
-								}
-							>
-								{emoji('🔬 ')} comprendre le calcul
-							</Link>
+					{nodeValue != null && (
+						<div css="display: flex; align-items: center">
+							<img src={BallonGES} css="height: 6rem" />
+							<div>
+								<HumanWeight nodeValue={nodeValue} />
+								<Link
+									to={
+										sitePaths.documentation.index +
+										'/' +
+										encodeRuleName(dottedName)
+									}
+								>
+									{emoji('🔬 ')} comprendre le calcul
+								</Link>
+							</div>
 						</div>
-					</div>
+					)}
 				</header>
 				<div css="margin: 1.6rem 0">
 					<Markdown source={description} />
@@ -105,17 +107,21 @@ export default ({}) => {
 					/>
 				</>
 			)}
-			<p>Sur le même sujet</p>
-			<div>
-				{relatedActions.map((action) => (
-					<Link
-						to={'/actions/' + encodeRuleName(action.dottedName)}
-						css="> button {margin: .3rem .6rem}"
-					>
-						<button className="ui__ small button">{action.title}</button>
-					</Link>
-				))}
-			</div>
+			{relatedActions && (
+				<>
+					<p>Sur le même sujet</p>
+					<div>
+						{relatedActions.map((action) => (
+							<Link
+								to={'/actions/' + encodeRuleName(action.dottedName)}
+								css="> button {margin: .3rem .6rem}"
+							>
+								<button className="ui__ small button">{action.title}</button>
+							</Link>
+						))}
+					</div>
+				</>
+			)}
 		</div>
 	)
 }
