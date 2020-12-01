@@ -107,17 +107,21 @@ export default ({}) => {
 					/>
 				</>
 			)}
-			<p>Sur le même sujet</p>
-			<div>
-				{relatedActions.map((action) => (
-					<Link
-						to={'/actions/' + encodeRuleName(action.dottedName)}
-						css="> button {margin: .3rem .6rem}"
-					>
-						<button className="ui__ small button">{action.title}</button>
-					</Link>
-				))}
-			</div>
+			{relatedActions && (
+				<>
+					<p>Sur le même sujet</p>
+					<div>
+						{relatedActions.map((action) => (
+							<Link
+								to={'/actions/' + encodeRuleName(action.dottedName)}
+								css="> button {margin: .3rem .6rem}"
+							>
+								<button className="ui__ small button">{action.title}</button>
+							</Link>
+						))}
+					</div>
+				</>
+			)}
 		</div>
 	)
 }
