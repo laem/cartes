@@ -4,10 +4,14 @@ import React, { useContext } from 'react'
 import emoji from 'react-easy-emoji'
 import { Link } from 'react-router-dom'
 import SimulationHumanWeight from './HumanWeight'
+import { useEvaluation } from 'Components/utils/EngineContext'
 
 export default ({ nodeValue, formule, dottedName }) => {
 	const sitePaths = useContext(SitePathsContext)
 	let interestingFormula = formule && formule.explanation.text !== '0'
+	const objectifs = useSelector(objectifsSelector)
+	const { nodeValue, formule, dottedName } = useEvaluation(objectifs)
+
 	return (
 		<div
 			css={`

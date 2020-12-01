@@ -1,11 +1,10 @@
 import Conversation, {
-	ConversationProps
+	ConversationProps,
 } from 'Components/conversation/Conversation'
 import SeeAnswersButton from 'Components/conversation/SeeAnswersButton'
 import PageFeedback from 'Components/Feedback/PageFeedback'
 import Notifications from 'Components/Notifications'
 import SearchButton from 'Components/SearchButton'
-import TargetSelection from 'Components/TargetSelection'
 import * as Animate from 'Components/ui/animate'
 import Progress from 'Components/ui/Progress'
 import { useSimulationProgress } from 'Components/utils/useNextQuestion'
@@ -21,7 +20,7 @@ type SimulationProps = {
 	customEndMessages?: ConversationProps['customEndMessages']
 	showPeriodSwitch?: boolean
 	showLinkToForm?: boolean
-	, teaseCategories: boolean
+	teaseCategories: boolean
 }
 
 export default function Simulation({
@@ -30,17 +29,19 @@ export default function Simulation({
 	customEndMessages,
 	teaseCategories,
 	showLinkToForm,
-	showPeriodSwitch
+	showPeriodSwitch,
 }: SimulationProps) {
 	const firstStepCompleted = useSelector(firstStepCompletedSelector)
 	return (
 		<>
-			<TargetSelection showPeriodSwitch={showPeriodSwitch} />
 			<SearchButton invisibleButton />
 			{firstStepCompleted && (
 				<Animate.fromTop>
 					{results}
-					<Questions customEndMessages={customEndMessages} />
+					<Questions
+						teaseCategories={teaseCategories}
+						customEndMessages={customEndMessages}
+					/>
 					<br />
 					{showLinkToForm && <LinkToForm />}
 					{!showLinkToForm && (
@@ -61,9 +62,11 @@ export default function Simulation({
 }
 
 function Questions({
-	customEndMessages
+	customEndMessages,
+	teaseCategories,
 }: {
 	customEndMessages?: ConversationProps['customEndMessages']
+	teaseCategories: Boolean
 }) {
 	const progress = useSimulationProgress()
 
@@ -74,7 +77,7 @@ function Questions({
 					display: 'flex',
 					justifyContent: 'space-between',
 					marginTop: '1.2rem',
-					marginBottom: '0.6rem'
+					marginBottom: '0.6rem',
 				}}
 			>
 				{progress < 1 ? (
@@ -91,7 +94,10 @@ function Questions({
 			<section className="ui__ full-width lighter-bg">
 				<div className="ui__ container">
 					<Notifications />
-					<Conversation teaseCategories={teaseCategories} customEndMessages={customEndMessages} />
+					<Conversation
+						teaseCategories={teaseCategories}
+						customEndMessages={customEndMessages}
+					/>
 				</div>
 			</section>
 			{progress < 1 && (

@@ -14,14 +14,12 @@ import {
 	analysisWithDefaultsSelector,
 } from 'Selectors/analyseSelectors'
 import CarbonImpact from './CarbonImpact'
-import withTarget from './withTarget'
 import Chart from './chart/index.js'
 import { Redirect } from 'react-router'
 import SessionBar from 'Components/SessionBar'
 import { isEmpty, symmetricDifference, compose } from 'ramda'
 import { buildEndURL } from 'Components/SessionBar'
 
-let CarbonImpactWithData = withTarget(CarbonImpact)
 const eqValues = compose(isEmpty, symmetricDifference)
 
 const Simulateur = (props) => {
@@ -58,10 +56,12 @@ const Simulateur = (props) => {
 				noFeedback
 				teaseCategories
 				noProgressMessage
-				showConversation
 				customEnd={
 					rule.dottedName === 'bilan' ? (
-						<RedirectionToEndPage score={rule.nodeValue} url={buildEndURL(analysis)} />
+						<RedirectionToEndPage
+							score={rule.nodeValue}
+							url={buildEndURL(analysis)}
+						/>
 					) : rule.description ? (
 						<Markdown source={rule.description} />
 					) : (
@@ -71,7 +71,7 @@ const Simulateur = (props) => {
 				targets={<>{rule.period === 'flexible' && <PeriodBlock />}</>}
 				explanations={
 					<>
-						<CarbonImpactWithData />
+						<CarbonImpact />
 						<Chart />
 					</>
 				}

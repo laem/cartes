@@ -1,7 +1,7 @@
 import {
 	goToQuestion,
 	updateSituation,
-	validateStepWithValue
+	validateStepWithValue,
 } from 'Actions/actions'
 import RuleInput from 'Components/conversation/RuleInput'
 import QuickLinks from 'Components/QuickLinks'
@@ -14,7 +14,7 @@ import { Trans } from 'react-i18next'
 import { useDispatch, useSelector } from 'react-redux'
 import {
 	answeredQuestionsSelector,
-	situationSelector
+	situationSelector,
 } from 'Selectors/simulationSelectors'
 import Aide from './Aide'
 import './conversation.css'
@@ -24,6 +24,7 @@ export type ConversationProps = {
 	customEndMessages?: React.ReactNode
 }
 
+//TODO se rappeler ce que fait ce sélecteur et le convertir à publicodes
 const orderedCurrentQuestionSelector = createSelector(
 	[
 		analysisWithDefaultsOnlySelector,
@@ -52,7 +53,6 @@ const orderedCurrentQuestionSelector = createSelector(
 	}
 )
 
-
 export default function Conversation({ customEndMessages }: ConversationProps) {
 	const dispatch = useDispatch()
 	const rules = useContext(EngineContext).getParsedRules()
@@ -80,11 +80,11 @@ export default function Conversation({ customEndMessages }: ConversationProps) {
 			type: 'STEP_ACTION',
 			name: 'fold',
 			step: currentQuestion,
-			source
+			source,
 		})
 	}
 
-	const onChange = value => {
+	const onChange = (value) => {
 		dispatch(updateSituation(currentQuestion, value))
 	}
 
