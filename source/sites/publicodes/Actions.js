@@ -182,7 +182,7 @@ const MiniAction = ({ data, total }) => {
 					`}
 				>
 					<h2>{title}</h2>
-					<ActionValue {...{ total, nodeValue }} />
+					{nodeValue != null && <ActionValue {...{ total, nodeValue }} />}
 				</div>
 			</motion.div>
 		</Link>
