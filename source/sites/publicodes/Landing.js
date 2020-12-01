@@ -4,6 +4,7 @@ import DocumentationButton from './DocumentationButton'
 import Suggestions from './Suggestions'
 import { Link } from 'react-router-dom'
 import Illustration from './images/ecolab-climat-dessin.svg'
+import Marianne from './images/Marianne.png'
 import emoji from 'react-easy-emoji'
 
 export default () => {
@@ -55,9 +56,10 @@ export default () => {
 						}
 					`}
 				>
+					<img css="height: 6rem; margin-right: .6rem" src={Marianne} />
 					<a href="https://ademe.fr">
 						<img
-							css="height: 4rem; margin-right: .6rem"
+							css="height: 5rem; margin-right: .6rem"
 							src="https://www.ademe.fr/sites/all/themes/ademe/logo.png"
 						/>
 					</a>
