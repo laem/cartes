@@ -1,10 +1,10 @@
 import React from 'react'
-import { connect } from 'react-redux'
+import {connect} from 'react-redux'
 
 export default connect(
-	(state) => ({ rulesLoaded: state.rules != null }),
+	(state) => ({rulesLoaded: state.rules != null}),
 	(dispatch) => ({
-		setRules: (rules) => dispatch({ type: 'SET_RULES', rules }),
+		setRules: (rules) => dispatch({type: 'SET_RULES', rules}),
 	})
 )(
 	class extends React.Component {
@@ -54,17 +54,16 @@ export default connect(
 					const ruleSetPlus = Object.fromEntries(
 						Object.entries(jsonRuleSet).map(([k, v]) =>
 							plusDottedNames[k]
-								? [k, { ...v, plus: plusDottedNames[k] }]
+								? [k, {...v, plus: plusDottedNames[k]}]
 								: [k, v]
 						)
 					)
-					return { ...memo, ...ruleSetPlus }
+					return {...memo, ...ruleSetPlus}
 				}, {})
-				console.log('YOYO', rules['transport . éco-conduite'])
 				this.props.setRules(rules)
 				this.removeLoader()
 			} else {
-				fetch(props.rulesURL, { mode: 'cors' })
+				fetch(props.rulesURL, {mode: 'cors'})
 					.then((response) => response.json())
 					.then((json) => {
 						this.props.setRules(json)
