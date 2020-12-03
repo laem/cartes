@@ -1,6 +1,7 @@
 import React from 'react'
 import emoji from 'react-easy-emoji'
 import ReactMarkdown, { ReactMarkdownProps } from 'react-markdown'
+import remarkFootnotes from 'remark-footnotes'
 import { Link } from 'react-router-dom'
 
 function LinkRenderer({ href, children }) {
@@ -29,6 +30,7 @@ export const Markdown = ({
 }: MarkdownProps) => (
 	<ReactMarkdown
 		source={source}
+		plugins={[remarkFootnotes]}
 		className={`markdown ${className}`}
 		renderers={{ ...renderers, link: LinkRenderer, text: TextRenderer }}
 		{...otherProps}
