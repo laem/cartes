@@ -29,7 +29,7 @@ export const Markdown = ({
 	...otherProps
 }: MarkdownProps) => (
 	<ReactMarkdown
-		source={source}
+		children={source}
 		plugins={[remarkFootnotes]}
 		className={`markdown ${className}`}
 		renderers={{ ...renderers, link: LinkRenderer, text: TextRenderer }}

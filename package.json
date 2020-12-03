@@ -40,7 +40,7 @@
 		"react-highlight-words": "^0.11.0",
 		"react-i18next": "^11.0.0",
 		"react-loading-skeleton": "^1.1.2",
-		"react-markdown": "^4.1.0",
+		"react-markdown": "^5.0.3",
 		"react-monaco-editor": "^0.30.2",
 		"react-number-format": "^4.3.1",
 		"react-redux": "^7.0.3",
