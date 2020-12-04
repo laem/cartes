@@ -1,10 +1,5 @@
-import { toPairs } from 'ramda'
-import React, { useState, useContext } from 'react'
-import { useTranslation } from 'react-i18next'
-import { useSelector } from 'react-redux'
-import { defaultUnitsSelector } from 'Selectors/analyseSelectors'
-import { convertUnit, parseUnit, Unit } from '../../engine/units'
 import { ThemeColorsContext } from 'Components/utils/colors'
+import React, { useContext, useState } from 'react'
 import emoji from 'react-easy-emoji'
 
 /* This component helps input a value that is not known by suggesting another input to the user. This new input will be multiplied by 12 (to convert from month to year) and then by the inputEstimation's formule attribute.

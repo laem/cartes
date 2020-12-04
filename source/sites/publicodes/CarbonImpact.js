@@ -5,6 +5,7 @@ import emoji from 'react-easy-emoji'
 import { Link } from 'react-router-dom'
 import SimulationHumanWeight from './HumanWeight'
 import { useEvaluation } from 'Components/utils/EngineContext'
+import { objectifsSelector } from 'Selectors/objectifsSelector'
 
 export default ({ nodeValue, formule, dottedName }) => {
 	const sitePaths = useContext(SitePathsContext)

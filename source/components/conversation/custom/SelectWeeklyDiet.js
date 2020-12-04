@@ -9,7 +9,7 @@ import 'Components/conversation/Question.css'
 import SendButton from 'Components/conversation/SendButton'
 import emoji from 'react-easy-emoji'
 import { useDispatch, useSelector } from 'react-redux'
-import { situationSelector } from 'Selectors/analyseSelectors'
+import { situationSelector } from 'Selectors/simulationSelectors'
 import { updateSituation } from 'Actions/actions'
 
 // This is the number of possible answers in this very custom input component
