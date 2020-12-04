@@ -1,10 +1,8 @@
 import React, { useState } from 'react'
 import { motion } from 'framer-motion'
 import { useSelector } from 'react-redux'
-import {
-	analysisWithDefaultsSelector,
-	parsedRulesSelector,
-} from 'Selectors/analyseSelectors'
+import { useEvaluation } from 'Components/utils/EngineContext'
+import { objectifsSelector } from 'Selectors/objectifsSelector'
 import { getRuleFromAnalysis, encodeRuleName } from 'Engine/rules'
 import Bar from './Bar'
 import { sortBy } from 'ramda'
@@ -34,6 +32,9 @@ export const extractCategories = (analysis) => {
 export default ({ details, color, noText, noAnimation }) => {
 	const analysis = useSelector(analysisWithDefaultsSelector),
 		rules = useSelector(parsedRulesSelector)
+
+	const objectifs = useSelector(objectifsSelector)
+	const analysis = useEvaluation(objectifs)
 
 	const categories = analysis?.targets.length
 		? extractCategories(analysis)

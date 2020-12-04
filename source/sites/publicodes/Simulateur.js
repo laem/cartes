@@ -1,33 +1,29 @@
 import { setSimulationConfig } from 'Actions/actions'
 import { EndingCongratulations } from 'Components/conversation/Conversation'
 import PeriodSwitch from 'Components/PeriodSwitch'
+import SessionBar, { buildEndURL } from 'Components/SessionBar'
 import ShareButton from 'Components/ShareButton'
 import Simulation from 'Components/Simulation'
 import { Markdown } from 'Components/utils/markdown'
-import { decodeRuleName, findRuleByDottedName } from 'Engine/rules'
-import React, { useEffect, useContext } from 'react'
 import { TrackerContext } from 'Components/utils/withTracker'
+import { decodeRuleName } from 'Engine/rules'
+import { compose, isEmpty, symmetricDifference } from 'ramda'
+import React, { useContext, useEffect } from 'react'
 import { Helmet } from 'react-helmet'
 import { useDispatch, useSelector } from 'react-redux'
-import {
-	flatRulesSelector,
-	analysisWithDefaultsSelector,
-} from 'Selectors/analyseSelectors'
+import { Redirect } from 'react-router'
 import CarbonImpact from './CarbonImpact'
 import Chart from './chart/index.js'
-import { Redirect } from 'react-router'
-import SessionBar from 'Components/SessionBar'
-import { isEmpty, symmetricDifference, compose } from 'ramda'
-import { buildEndURL } from 'Components/SessionBar'
 
 const eqValues = compose(isEmpty, symmetricDifference)
 
 const Simulateur = (props) => {
 	const objectif = props.match.params.name,
 		decoded = decodeRuleName(objectif),
-		rules = useSelector(flatRulesSelector),
-		rule = findRuleByDottedName(rules, decoded),
-		analysis = useSelector(analysisWithDefaultsSelector),
+		rules = useSelector((state) => state.rules),
+		rule = rules[decoded],
+		objectifs = useSelector(objectifsSelector),
+		analysis = useEvaluation(objectifs),
 		dispatch = useDispatch(),
 		config = {
 			objectifs: [decoded],
