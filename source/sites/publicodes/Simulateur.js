@@ -1,5 +1,4 @@
 import { setSimulationConfig } from 'Actions/actions'
-import { EndingCongratulations } from 'Components/conversation/Conversation'
 import PeriodSwitch from 'Components/PeriodSwitch'
 import SessionBar, { buildEndURL } from 'Components/SessionBar'
 import ShareButton from 'Components/ShareButton'
@@ -99,3 +98,10 @@ const RedirectionToEndPage = ({ url, score }) => {
 }
 
 export default Simulateur
+
+const EndingCongratulations = () => (
+	<h3>
+		{emoji('🌟')}{' '}
+		<T k="simulation-end.title">Vous avez complété cette simulation</T>{' '}
+	</h3>
+)

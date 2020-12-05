@@ -1,26 +1,24 @@
 import Route404 from 'Components/Route404'
-import React, { Component, Suspense } from 'react'
-import { Link, Route, Redirect, Switch } from 'react-router-dom'
 import 'Components/ui/index.css'
+import React, { Component, Suspense } from 'react'
+import { Link, Route, Switch } from 'react-router-dom'
 import Provider from '../../Provider'
-import RulesList from '../mon-entreprise.fr/pages/Documentation/RulesList'
-import About from './About'
-import Privacy from './Privacy'
-import Contribution from './Contribution'
-import Landing from './Landing'
-import Simulateur from './Simulateur'
-import Fin from './Fin'
-import VersionBeta from './VersionBeta'
-import Actions from './Actions'
-import sitePaths from './sitePaths'
-import Logo from './Logo'
-import { StoreProvider } from './StoreContext'
 import {
 	persistSimulation,
 	retrievePersistedSimulation,
 } from '../../storage/persistSimulation'
 import Tracker, { devTracker } from '../../Tracker'
+import About from './About'
+import Actions from './Actions'
+import Contribution from './Contribution'
+import Fin from './Fin'
+import Landing from './Landing'
+import Logo from './Logo'
 import Documentation from './pages/Documentation'
+import Privacy from './Privacy'
+import Simulateur from './Simulateur'
+import { StoreProvider } from './StoreContext'
+import VersionBeta from './VersionBeta'
 
 let Studio = React.lazy(() => import('./Studio'))
 
@@ -46,7 +44,6 @@ class App extends Component {
 						: ''
 				}ecolab-data.netlify.app/co2.json`}
 				dataBranch={branch || pullRequestNumber}
-				sitePaths={sitePaths()}
 				tracker={tracker}
 				reduxMiddlewares={[]}
 				onStoreCreated={(store) => {

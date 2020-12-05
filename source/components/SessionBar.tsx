@@ -1,23 +1,17 @@
-import {
-	deletePreviousSimulation,
-	loadPreviousSimulation,
-	goToQuestion,
-} from 'Actions/actions'
-import React, { useEffect, useState } from 'react'
-import { T } from 'Components'
-import { Trans } from 'react-i18next'
-import { useDispatch, useSelector } from 'react-redux'
-import { RootState } from 'Reducers/rootReducer'
-import {
-	noUserInputSelector,
-	analysisWithDefaultsSelector,
-} from 'Selectors/analyseSelectors'
-import emoji from 'react-easy-emoji'
+import { goToQuestion, loadPreviousSimulation } from 'Actions/actions'
 import { Button } from 'Components/ui/Button'
-import Answers from './conversation/AnswerList'
-import { useLocation, useHistory } from 'react-router-dom'
+import { useEvaluation } from 'Components/utils/EngineContext'
 import { last } from 'ramda'
+import React, { useEffect, useState } from 'react'
+import emoji from 'react-easy-emoji'
+import { useDispatch, useSelector } from 'react-redux'
+import { useHistory, useLocation } from 'react-router-dom'
+import { RootState } from 'Reducers/rootReducer'
+import { objectifsSelector } from 'Selectors/simulationSelectors'
 import { extractCategories } from '../sites/publicodes/chart'
+import Answers from './conversation/AnswerList'
+
+// TODO should be find the rewritten version of this from mon-entreprise and merge them ?
 
 export const buildEndURL = (analysis) => {
 	const total = analysis.targets[0].nodeValue,
@@ -52,7 +46,9 @@ export default function SessionBar({ answerButtonOnly = false }) {
 			dispatch(loadPreviousSimulation())
 	}, [])
 	const [showAnswerModal, setShowAnswerModal] = useState(false)
-	const analysis = useSelector(analysisWithDefaultsSelector)
+	const objectifs = useSelector(objectifsSelector)
+	const analysis = useEvaluation(objectifs)
+
 	const history = useHistory()
 	const location = useLocation()
 
@@ -75,7 +71,7 @@ export default function SessionBar({ answerButtonOnly = false }) {
 							onClick={() => setShowAnswerModal(true)}
 						>
 							{emoji('📋 ')}
-							<T>Modifier mes réponses</T>
+							Modifier mes réponses
 						</Button>
 					</>
 				)}

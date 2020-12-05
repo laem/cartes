@@ -1,7 +1,6 @@
 import React from 'react'
 import ContributionButton from './ContributionButton'
 import DocumentationButton from './DocumentationButton'
-import Suggestions from './Suggestions'
 import { Link } from 'react-router-dom'
 import Illustration from './images/ecolab-climat-dessin.svg'
 import emoji from 'react-easy-emoji'

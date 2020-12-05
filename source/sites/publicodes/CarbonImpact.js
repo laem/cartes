@@ -1,6 +1,6 @@
-import { utils } from 'publicodes'
 import { useEvaluation } from 'Components/utils/EngineContext'
-import React, { useContext } from 'react'
+import { utils } from 'publicodes'
+import React from 'react'
 import emoji from 'react-easy-emoji'
 import { Link } from 'react-router-dom'
 import { objectifsSelector } from 'Selectors/simulationSelectors'

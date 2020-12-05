@@ -194,10 +194,3 @@ export default function Conversation({
 		</section>
 	)
 }
-
-export let EndingCongratulations = () => (
-	<h3>
-		{emoji('🌟')}{' '}
-		<T k="simulation-end.title">Vous avez complété cette simulation</T>{' '}
-	</h3>
-)

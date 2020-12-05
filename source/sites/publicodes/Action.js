@@ -12,7 +12,8 @@ import SessionBar from 'Components/SessionBar'
 import { Link } from 'react-router-dom'
 import { humanWeight, HumanWeight } from './HumanWeight'
 import { Markdown } from 'Components/utils/markdown'
-import { decodeRuleName, encodeRuleName, splitName } from 'publicodes/utils'
+import { utils } from 'publicodes'
+const { decodeRuleName, encodeRuleName, splitName } = utils
 
 import { setSimulationConfig } from 'Actions/actions'
 import Simulation from 'Components/Simulation'
