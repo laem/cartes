@@ -1,14 +1,13 @@
-import React, { Suspense, useContext } from 'react'
+import React, { Suspense } from 'react'
 import emoji from 'react-easy-emoji'
 import ReactMarkdown, { ReactMarkdownProps } from 'react-markdown'
 import { useLocation } from 'react-router-dom'
 import { HashLink as Link } from 'react-router-hash-link'
-import { SiteNameContext } from '../../Provider'
 
 const internalURLs = {
 	'mon-entreprise.fr': 'mon-entreprise',
 	'mycompanyinfrance.fr': 'infrance',
-	'publi.codes': 'publicodes'
+	'publi.codes': 'publicodes',
 } as const
 
 export function LinkRenderer({
@@ -16,8 +15,6 @@ export function LinkRenderer({
 	children,
 	...otherProps
 }: Omit<React.ComponentProps<'a'>, 'ref'>) {
-	const siteName = useContext(SiteNameContext)
-
 	if (href && !href.startsWith('http')) {
 		return (
 			<Link to={href} {...otherProps}>
@@ -40,7 +37,7 @@ export function LinkRenderer({
 		if (
 			href &&
 			href.startsWith(`https://${domain}`) &&
-			internalURLs[domain] === siteName
+			internalURLs[domain] === 'nosgestesclimat.fr'
 		) {
 			return (
 				<Link to={href.replace(`https://${domain}`, '')} {...otherProps}>
@@ -68,7 +65,7 @@ type MarkdownProps = ReactMarkdownProps & {
 const LazySyntaxHighlighter = React.lazy(() => import('../SyntaxHighlighter'))
 const CodeBlock = ({
 	value,
-	language
+	language,
 }: {
 	value: string
 	language: string
@@ -106,14 +103,14 @@ export const Markdown = ({
 	...otherProps
 }: MarkdownProps) => (
 	<ReactMarkdown
-		transformLinkUri={src => src}
+		transformLinkUri={(src) => src}
 		source={source}
 		className={`markdown ${className}`}
 		renderers={{
 			link: LinkRenderer,
 			text: TextRenderer,
 			code: CodeBlock,
-			...renderers
+			...renderers,
 		}}
 		{...otherProps}
 	/>
@@ -126,7 +123,7 @@ export const MarkdownWithAnchorLinks = ({
 	<Markdown
 		renderers={{
 			heading: HeadingWithAnchorLink,
-			...renderers
+			...renderers,
 		}}
 		{...otherProps}
 	/>
@@ -134,7 +131,7 @@ export const MarkdownWithAnchorLinks = ({
 
 function HeadingWithAnchorLink({
 	level,
-	children
+	children,
 }: {
 	level: number
 	children: React.ReactNode

@@ -26,33 +26,6 @@ export type ConversationProps = {
 }
 
 //TODO se rappeler ce que fait ce sélecteur et le convertir à publicodes
-const orderedCurrentQuestionSelector = createSelector(
-	[
-		analysisWithDefaultsOnlySelector,
-		nextStepsSelector,
-		(state) => state.conversationSteps.unfoldedStep,
-	],
-	(analysis, nextSteps, unfoldedStep) => {
-		const firstTargetFormula = analysis.targets[0].formule.explanation,
-			isSum = firstTargetFormula.name === 'somme',
-			currentQuestion = unfoldedStep || head(nextSteps)
-
-		if (!isSum) return currentQuestion
-		try {
-			const items = firstTargetFormula.explanation
-			const sortedSteps = sortBy(
-				(question) =>
-					-items.find((item) => question.indexOf(item.dottedName) === 0)
-						?.nodeValue,
-				nextSteps
-			)
-			return unfoldedStep || head(sortedSteps)
-		} catch (e) {
-			console.log(e)
-			return currentQuestion
-		}
-	}
-)
 
 export default function Conversation({ customEndMessages }: ConversationProps) {
 	const dispatch = useDispatch()

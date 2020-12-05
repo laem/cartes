@@ -1,51 +1,57 @@
-import React from 'react'
-import { connect } from 'react-redux'
+import { EngineProvider } from 'Components/utils/EngineContext'
+import Engine from 'publicodes'
+import React, { useEffect, useMemo } from 'react'
+import { useDispatch, useSelector } from 'react-redux'
 
-export default connect(
-	(state) => ({ rulesLoaded: state.rules != null }),
-	(dispatch) => ({
-		setRules: (rules) => dispatch({ type: 'SET_RULES', rules }),
-	})
-)(
-	class extends React.Component {
-		removeLoader() {
-			// Remove loader
-			var css = document.createElement('style')
-			css.type = 'text/css'
-			css.innerHTML = `
-#js {
-        animation: appear 0.5s;
-        opacity: 1;
+const removeLoader = () => {
+	// Remove loader
+	var css = document.createElement('style')
+	css.type = 'text/css'
+	css.innerHTML = `
+		#js {
+				animation: appear 0.5s;
+				opacity: 1;
+		}
+		#loading {
+				display: none !important;
+		}
+    `
+	document.body.appendChild(css)
 }
-#loading {
-        display: none !important;
-}`
-			document.body.appendChild(css)
-		}
-		constructor(props) {
-			super(props)
 
-			if (process.env.NODE_ENV === 'development' && !props.dataBranch) {
-				var req = require.context('../../ecolab-data/data/', true, /\.(yaml)$/)
+export default ({ children, rulesURL, dataBranch }) => {
+	const rulesLoaded = useSelector((state) => state.rules != null)
 
-				const rules = req.keys().reduce((memo, key) => {
-					const jsonRuleSet = req(key)
-					return { ...memo, ...jsonRuleSet }
-				}, {})
-				this.props.setRules(rules)
-				this.removeLoader()
-			} else {
-				fetch(props.rulesURL, { mode: 'cors' })
-					.then((response) => response.json())
-					.then((json) => {
-						this.props.setRules(json)
-						this.removeLoader()
-					})
-			}
+	const dispatch = useDispatch()
+
+	const setRules = (rules) => dispatch({ type: 'SET_RULES', rules })
+
+	useEffect(() => {
+		if (process.env.NODE_ENV === 'development' && !dataBranch) {
+			var req = require.context('../../ecolab-data/data/', true, /\.(yaml)$/)
+
+			const rules = req.keys().reduce((memo, key) => {
+				const jsonRuleSet = req(key)
+				return { ...memo, ...jsonRuleSet }
+			}, {})
+			setRules(rules)
+			removeLoader()
+		} else {
+			fetch(rulesURL, { mode: 'cors' })
+				.then((response) => response.json())
+				.then((json) => {
+					setRules(json)
+					removeLoader()
+				})
 		}
-		render() {
-			if (!this.props.rulesLoaded) return null
-			return this.props.children
-		}
-	}
-)
+	}, [])
+
+	if (!rulesLoaded) return null
+	return <EngineWrapper rules={rules}>{children}</EngineWrapper>
+}
+
+const EngineWrapper = ({ rules, children }) => {
+	const engine = useMemo(() => new Engine(rules), [rules])
+
+	return <EngineProvider value={engine}>{children}</EngineProvider>
+}

@@ -12,6 +12,9 @@ import SessionBar from 'Components/SessionBar'
 import { Link } from 'react-router-dom'
 import { humanWeight, HumanWeight } from './HumanWeight'
 import { Markdown } from 'Components/utils/markdown'
+import publicodes from 'publicodes'
+window.p = publicodes
+console.log('attaché')
 import { utils } from 'publicodes'
 const { decodeRuleName, encodeRuleName, splitName } = utils
 
