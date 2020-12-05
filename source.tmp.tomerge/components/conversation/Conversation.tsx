@@ -1,25 +1,25 @@
 import { goToQuestion, validateStepWithValue } from 'Actions/actions'
 import { T } from 'Components'
+import Controls from 'Components/Controls'
 import QuickLinks from 'Components/QuickLinks'
+import { TrackerContext } from 'Components/utils/withTracker'
 import getInputComponent from 'Engine/getInputComponent'
 import { findRuleByDottedName } from 'Engine/rules'
-import React, { useState, useEffect, useContext } from 'react'
-import { TrackerContext } from 'Components/utils/withTracker'
+import { head, sortBy } from 'ramda'
+import React, { useContext, useEffect, useState } from 'react'
 import emoji from 'react-easy-emoji'
 import { useDispatch, useSelector } from 'react-redux'
 import { RootState } from 'Reducers/rootReducer'
+import { createSelector } from 'reselect'
 import {
+	analysisWithDefaultsOnlySelector,
 	flatRulesSelector,
 	nextStepsSelector,
-	analysisWithDefaultsOnlySelector,
 } from 'Selectors/analyseSelectors'
 import * as Animate from 'Ui/animate'
 import Aide from './Aide'
-import './conversation.css'
-import { createSelector } from 'reselect'
-import { head, sortBy } from 'ramda'
-import Controls from 'Components/Controls'
 import CategoryRespiration from './CategoryRespiration'
+import './conversation.css'
 
 export type ConversationProps = {
 	customEndMessages?: React.ReactNode

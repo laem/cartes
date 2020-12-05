@@ -19,6 +19,7 @@ import {
 import Aide from './Aide'
 import './conversation.css'
 import { ExplicableRule } from './Explicable'
+import { createSelector } from 'reselect'
 
 export type ConversationProps = {
 	customEndMessages?: React.ReactNode
