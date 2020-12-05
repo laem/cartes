@@ -19,3 +19,7 @@ L'incubateur [beta.gouv.fr](https://beta.gouv.fr/) de la Direction interministé
 Intégrez le dans un article de blog ou un site simplement en ajoutant la ligne ci-dessous à votre page web. Le module restera automatiquement à jour avec les dernières évolutions.
 
 ```<script id="ecolab-climat" src="https://nosgestesclimat.fr/iframe.js"></script>```
+
+## Nous contacter
+
+contact@nosgestesclimat.fr
