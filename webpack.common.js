@@ -6,6 +6,11 @@ const { EnvironmentPlugin } = require('webpack')
 const MonacoWebpackPlugin = require('monaco-editor-webpack-plugin')
 
 module.exports.default = {
+	watchOptions: {
+		// not setting this option resulted in too many files being watched
+		// TODO we may have a problem with the number of node dependencies here, some not useful now that publicodes is outside this project
+		ignored: /node_modules/,
+	},
 	resolve: {
 		alias: {
 			Actions: path.resolve('source/actions/'),
