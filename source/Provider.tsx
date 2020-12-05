@@ -91,18 +91,6 @@ export default function Provider({
 	}, [])
 	onStoreCreated?.(store)
 
-	// Remove loader
-	const css = document.createElement('style')
-	css.type = 'text/css'
-	css.innerHTML = `
-#js {
-	animation: appear 0.5s;
-	opacity: 1;
-}
-#loading {
-	display: none !important;
-}`
-	document.body.appendChild(css)
 	const iframeCouleur =
 		new URLSearchParams(document?.location.search.substring(1)).get(
 			'couleur'

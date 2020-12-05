@@ -20,7 +20,7 @@ const removeLoader = () => {
 }
 
 export default ({ children, rulesURL, dataBranch }) => {
-	const rulesLoaded = useSelector((state) => state.rules != null)
+	const rules = useSelector((state) => state.rules)
 
 	const dispatch = useDispatch()
 
@@ -46,7 +46,7 @@ export default ({ children, rulesURL, dataBranch }) => {
 		}
 	}, [])
 
-	if (!rulesLoaded) return null
+	if (!rules) return null
 	return <EngineWrapper rules={rules}>{children}</EngineWrapper>
 }
 

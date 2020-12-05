@@ -5,7 +5,6 @@ import { combineReducers, Reducer } from 'redux'
 import { SavedSimulation } from 'Selectors/storageSelectors'
 import { DottedName } from '../rules/index'
 import { objectifsSelector } from '../selectors/simulationSelectors'
-import inFranceAppReducer, { Company } from './inFranceAppReducer'
 import storageRootReducer from './storageReducer'
 
 function explainedVariable(
@@ -74,26 +73,22 @@ export type Simulation = {
 function getCompanySituation(company: Company): Situation {
 	return {
 		...(company?.localisation && {
-			'établissement . localisation': company.localisation
+			'établissement . localisation': company.localisation,
 		}),
 		...(company?.dateDeCréation && {
 			'entreprise . date de création': company.dateDeCréation.replace(
 				/(.*)-(.*)-(.*)/,
 				'$3/$2/$1'
-			)
-		})
+			),
+		}),
 	}
 }
 
 function simulation(
 	state: Simulation | null = null,
-	action: Action,
-	existingCompany: Company
+	action: Action
 ): Simulation | null {
 	if (action.type === 'SET_SIMULATION') {
-		const companySituation = action.useCompanyDetails
-			? getCompanySituation(existingCompany)
-			: {}
 		const { config, url } = action
 		if (state && state.config === config) {
 			return state
@@ -101,12 +96,9 @@ function simulation(
 		return {
 			config,
 			url,
-			hiddenNotifications: [],
-			situation: companySituation,
-			initialSituation: companySituation,
+			hiddenNotifications: state?.hiddenControls || [],
+			situation: state?.situation,
 			targetUnit: config['unité par défaut'] || '€/mois',
-			foldedSteps: Object.keys(companySituation) as Array<DottedName>,
-			unfoldedStep: null
 		}
 	}
 	if (state === null) {
@@ -117,7 +109,7 @@ function simulation(
 		case 'HIDE_NOTIFICATION':
 			return {
 				...state,
-				hiddenNotifications: [...state.hiddenNotifications, action.id]
+				hiddenNotifications: [...state.hiddenNotifications, action.id],
 			}
 		case 'RESET_SIMULATION':
 			return {
@@ -125,13 +117,10 @@ function simulation(
 				hiddenNotifications: [],
 				situation: state.initialSituation,
 				foldedSteps: [],
-				unfoldedStep: null
+				unfoldedStep: null,
 			}
 		case 'UPDATE_SITUATION': {
-			const targets = without(
-				['entreprise . charges'],
-				objectifsSelector({ simulation: state } as RootState)
-			)
+			const targets = objectifsSelector({ simulation: state } as RootState)
 			const situation = state.situation
 			const { fieldName: dottedName, value } = action
 			return {
@@ -143,8 +132,8 @@ function simulation(
 								...(targets.includes(dottedName)
 									? omit(targets, situation)
 									: situation),
-								[dottedName]: value
-						  }
+								[dottedName]: value,
+						  },
 			}
 		}
 		case 'STEP_ACTION': {
@@ -152,14 +141,15 @@ function simulation(
 			if (name === 'fold')
 				return {
 					...state,
-					foldedSteps: [...state.foldedSteps, step],
-					unfoldedStep: null
+					foldedSteps: [...without([step], state.foldedSteps), step],
+
+					unfoldedStep: null,
 				}
 			if (name === 'unfold') {
 				return {
 					...state,
 					foldedSteps: without([step], state.foldedSteps),
-					unfoldedStep: step
+					unfoldedStep: step,
 				}
 			}
 			return state
@@ -167,41 +157,31 @@ function simulation(
 		case 'UPDATE_TARGET_UNIT':
 			return {
 				...state,
-				targetUnit: action.targetUnit
+				targetUnit: action.targetUnit,
 			}
 	}
 	return state
 }
-const existingCompanyReducer = (state, action: Action) => {
-	if (action.type.startsWith('EXISTING_COMPANY::') && state.simulation) {
-		return {
-			...state,
-			simulation: {
-				...state.simulation,
-				situation: {
-					...state.simulation.situation,
-					...getCompanySituation(state.inFranceApp.existingCompany)
-				}
-			}
-		}
-	}
-	return state
+function rules(state = null, { type, rules }) {
+	if (type === 'SET_RULES') {
+		return rules
+	} else return state
 }
+
 const mainReducer = (state, action: Action) =>
 	combineReducers({
 		explainedVariable,
 		// We need to access the `rules` in the simulation reducer
 		simulation: (a: Simulation | null = null, b: Action): Simulation | null =>
-			simulation(a, b, state?.inFranceApp?.existingCompany),
+			simulation(a, b),
 		previousSimulation: defaultTo(null) as Reducer<SavedSimulation | null>,
 		situationBranch,
 		activeTargetInput,
-		inFranceApp: inFranceAppReducer
+		rules,
 	})(state, action)
 
 export default reduceReducers<RootState>(
 	mainReducer as any,
-	existingCompanyReducer as any,
 	storageRootReducer as any
 ) as Reducer<RootState>
 
