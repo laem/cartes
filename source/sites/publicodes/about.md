@@ -13,3 +13,13 @@ Il est développé par une équipe de [beta.gouv.fr](https://beta.gouv.fr/), fin
 Depuis sa création en 2011, l'ABC est partenaire de l’ADEME. Ce partenariat a vu naître de nombreux projets autour du développement et de la promotion des méthodes et outils innovants pour la mise en œuvre de stratégies climat, en France et à l’international, que ce soit à l’échelle des organisations, territoires ou des citoyens.
 
 L'incubateur [beta.gouv.fr](https://beta.gouv.fr/) de la Direction interministérielle du numérique (DINUM) vise à concevoir des services numériques simples et faciles à utiliser.
+
+
+## Comment intégrer ce simulateur directement à un site ?
+Intégrez le dans un article de blog ou un site simplement en ajoutant la ligne ci-dessous à votre page web. Le module restera automatiquement à jour avec les dernières évolutions.
+
+```<script id="ecolab-climat" src="https://nosgestesclimat.fr/iframe.js"></script>```
+
+## Nous contacter
+
+contact@nosgestesclimat.fr
