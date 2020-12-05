@@ -6,7 +6,8 @@ import ShareButton from 'Components/ShareButton'
 import Simulation from 'Components/Simulation'
 import { Markdown } from 'Components/utils/markdown'
 import { TrackerContext } from 'Components/utils/withTracker'
-import { decodeRuleName } from 'Engine/rules'
+import { utils } from 'publicodes'
+
 import { compose, isEmpty, symmetricDifference } from 'ramda'
 import React, { useContext, useEffect } from 'react'
 import { Helmet } from 'react-helmet'
@@ -19,7 +20,7 @@ const eqValues = compose(isEmpty, symmetricDifference)
 
 const Simulateur = (props) => {
 	const objectif = props.match.params.name,
-		decoded = decodeRuleName(objectif),
+		decoded = utils.decodeRuleName(objectif),
 		rules = useSelector((state) => state.rules),
 		rule = rules[decoded],
 		objectifs = useSelector(objectifsSelector),

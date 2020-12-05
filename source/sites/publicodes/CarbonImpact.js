@@ -1,14 +1,12 @@
-import { SitePathsContext } from 'Components/utils/withSitePaths'
-import { encodeRuleName } from 'Engine/rules'
+import { utils } from 'publicodes'
+import { useEvaluation } from 'Components/utils/EngineContext'
 import React, { useContext } from 'react'
 import emoji from 'react-easy-emoji'
 import { Link } from 'react-router-dom'
+import { objectifsSelector } from 'Selectors/simulationSelectors'
 import SimulationHumanWeight from './HumanWeight'
-import { useEvaluation } from 'Components/utils/EngineContext'
-import { objectifsSelector } from 'Selectors/objectifsSelector'
 
-export default ({ nodeValue, formule, dottedName }) => {
-	const sitePaths = useContext(SitePathsContext)
+export default ({}) => {
 	let interestingFormula = formule && formule.explanation.text !== '0'
 	const objectifs = useSelector(objectifsSelector)
 	const { nodeValue, formule, dottedName } = useEvaluation(objectifs)
@@ -28,11 +26,7 @@ export default ({ nodeValue, formule, dottedName }) => {
 				{interestingFormula && (
 					<div>
 						<span css="font-size: 120%">{emoji('🔬 ')}</span>
-						<Link
-							to={
-								sitePaths.documentation.index + '/' + encodeRuleName(dottedName)
-							}
-						>
+						<Link to={'/documentation/' + utils.encodeRuleName(dottedName)}>
 							comprendre le calcul
 						</Link>
 					</div>

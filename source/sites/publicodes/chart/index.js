@@ -1,12 +1,13 @@
-import React, { useState } from 'react'
-import { motion } from 'framer-motion'
-import { useSelector } from 'react-redux'
+import { utils } from 'publicodes'
+
 import { useEvaluation } from 'Components/utils/EngineContext'
-import { objectifsSelector } from 'Selectors/objectifsSelector'
-import { getRuleFromAnalysis, encodeRuleName } from 'Engine/rules'
-import Bar from './Bar'
+import { motion } from 'framer-motion'
 import { sortBy } from 'ramda'
+import React from 'react'
+import { useSelector } from 'react-redux'
 import { Link } from 'react-router-dom'
+import { objectifsSelector } from 'Selectors/simulationSelectors'
+import Bar from './Bar'
 
 const showBudget = false
 const // Rough estimate of the 2050 budget per person to stay under 2° by 2100
@@ -19,9 +20,7 @@ const // Rough estimate of the 2050 budget per person to stay under 2° by 2100
 
 const sortCategories = sortBy(({ nodeValue }) => -nodeValue)
 export const extractCategories = (analysis) => {
-	const getRule = getRuleFromAnalysis(analysis)
-
-	const bilan = getRule('bilan')
+	const bilan = analysis.targets.find((t) => t.dottedName === 'bilan')
 	if (!bilan) return null
 	const categories = bilan.formule.explanation.explanation.map(
 		(category) => category.explanation
@@ -30,9 +29,7 @@ export const extractCategories = (analysis) => {
 	return sortCategories(categories)
 }
 export default ({ details, color, noText, noAnimation }) => {
-	const analysis = useSelector(analysisWithDefaultsSelector),
-		rules = useSelector(parsedRulesSelector)
-
+	const rules = useSelector((state) => state.rules)
 	const objectifs = useSelector(objectifsSelector)
 	const analysis = useEvaluation(objectifs)
 
@@ -118,7 +115,9 @@ export default ({ details, color, noText, noAnimation }) => {
 							`}
 						>
 							<Link
-								to={'/documentation/' + encodeRuleName(category.dottedName)}
+								to={
+									'/documentation/' + utils.encodeRuleName(category.dottedName)
+								}
 							>
 								<Bar {...{ ...category, color, noText, empreinteMaximum }} />
 							</Link>

@@ -12,13 +12,8 @@ import SessionBar from 'Components/SessionBar'
 import { Link } from 'react-router-dom'
 import { humanWeight, HumanWeight } from './HumanWeight'
 import { Markdown } from 'Components/utils/markdown'
-import { encodeRuleName, decodeRuleName, splitName } from 'Engine/rules'
-import { SitePathsContext } from 'Components/utils/withSitePaths'
-import {
-	flatRulesSelector,
-	analysisWithDefaultsSelector,
-	nextStepsSelector,
-} from 'Selectors/analyseSelectors'
+import { decodeRuleName, encodeRuleName, splitName } from 'publicodes/utils'
+
 import { setSimulationConfig } from 'Actions/actions'
 import Simulation from 'Components/Simulation'
 
@@ -27,7 +22,6 @@ export const Footprint = ({ value }) => <div>Lala {value}</div>
 export default ({}) => {
 	const { encodedName } = useParams()
 	console.log('ECN', encodedName)
-	const sitePaths = useContext(SitePathsContext)
 	const rules = useSelector(flatRulesSelector)
 	const nextSteps = useSelector(nextStepsSelector)
 	const simulation = useSelector((state) => state.simulation)
@@ -71,13 +65,7 @@ export default ({}) => {
 						<img src={BallonGES} css="height: 6rem" />
 						<div>
 							<HumanWeight nodeValue={nodeValue} />
-							<Link
-								to={
-									sitePaths.documentation.index +
-									'/' +
-									encodeRuleName(dottedName)
-								}
-							>
+							<Link to={'/documentation/' + encodeRuleName(dottedName)}>
 								{emoji('🔬 ')} comprendre le calcul
 							</Link>
 						</div>

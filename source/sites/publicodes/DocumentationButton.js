@@ -1,11 +1,8 @@
-import { SitePathsContext } from 'Components/utils/withSitePaths'
-import React, { useContext } from 'react'
-import { Link } from 'react-router-dom'
+import React from 'react'
 import emoji from 'react-easy-emoji'
+import { Link } from 'react-router-dom'
 
 const DocumentationButton = (props) => {
-	const sitePaths = useContext(SitePathsContext)
-
 	return (
 		<div
 			css={`
@@ -18,7 +15,7 @@ const DocumentationButton = (props) => {
 			`}
 		>
 			{emoji('📄')}
-			<Link {...props} to={sitePaths.documentation.index}>
+			<Link {...props} to={'/documentation'}>
 				Comprendre nos calculs
 			</Link>
 		</div>

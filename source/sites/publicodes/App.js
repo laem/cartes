@@ -1,8 +1,7 @@
 import Route404 from 'Components/Route404'
-import RulePage from 'Components/RulePage'
 import React, { Component, Suspense } from 'react'
 import { Link, Route, Redirect, Switch } from 'react-router-dom'
-import 'Ui/index.css'
+import 'Components/ui/index.css'
 import Provider from '../../Provider'
 import RulesList from '../mon-entreprise.fr/pages/Documentation/RulesList'
 import About from './About'
@@ -21,6 +20,7 @@ import {
 	retrievePersistedSimulation,
 } from '../../storage/persistSimulation'
 import Tracker, { devTracker } from '../../Tracker'
+import Documentation from './pages/Documentation'
 
 let Studio = React.lazy(() => import('./Studio'))
 
@@ -77,8 +77,7 @@ class App extends Component {
 						</nav>
 						<Switch>
 							<Route exact path="/" component={Landing} />
-							<Route path="/documentation/:name+" component={RulePage} />
-							<Route path="/documentation" component={RulesList} />
+							<Route path="/documentation" component={Documentation} />
 							<Route path="/simulateur/:name+" component={Simulateur} />
 							{/* Lien de compatibilité, à retirer par exemple mi-juillet 2020*/}
 							<Route path="/fin/:score" component={Fin} />

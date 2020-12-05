@@ -1,28 +1,19 @@
-import React, { useEffect } from 'react'
-import { useParams, useLocation } from 'react-router'
-import { partition, sortBy, union } from 'ramda'
-import emoji from 'react-easy-emoji'
-import tinygradient from 'tinygradient'
-import { animated, useSpring, config } from 'react-spring'
-import ShareButton from 'Components/ShareButton'
-import { findContrastedTextColor } from 'Components/utils/colors'
-import { motion } from 'framer-motion'
-import { Switch, Route } from 'react-router-dom'
-
-import BallonGES from './images/ballonGES.svg'
-import SessionBar from 'Components/SessionBar'
-import { Link } from 'react-router-dom'
-import { HumanWeight, humanWeight } from './HumanWeight'
-import {
-	flatRulesSelector,
-	analysisWithDefaultsSelector,
-} from 'Selectors/analyseSelectors'
-import { useDispatch, useSelector } from 'react-redux'
 import { setSimulationConfig } from 'Actions/actions'
-import Viande from './Viande'
+import SessionBar from 'Components/SessionBar'
+import { motion } from 'framer-motion'
+import { utils } from 'publicodes'
+import { partition, sortBy, union } from 'ramda'
+import React, { useEffect } from 'react'
+import emoji from 'react-easy-emoji'
+import { useDispatch, useSelector } from 'react-redux'
+import { useLocation } from 'react-router'
+import { Link, Route, Switch } from 'react-router-dom'
+import { animated } from 'react-spring'
+import tinygradient from 'tinygradient'
 import Action from './Action'
 import { humanValueAndUnit } from './HumanWeight'
-import { encodeRuleName, decodeRuleName, splitName } from 'Engine/rules'
+
+const { encodeRuleName, decodeRuleName, splitName } = utils
 
 const gradient = tinygradient(['#0000ff', '#ff0000']),
 	colors = gradient.rgb(20)
