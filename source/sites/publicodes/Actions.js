@@ -100,7 +100,7 @@ const AnimatedDiv = animated(({}) => {
 				Comment réduire mon empreinte ?
 			</h1>
 
-			{sortBy((a) => -a.nodeValue)(actions).map((action) => (
+			{sortBy((a) => a.nodeValue)(actions).map((action) => (
 				<MiniAction
 					data={action}
 					total={bilans.length ? bilans[0].nodeValue : null}
