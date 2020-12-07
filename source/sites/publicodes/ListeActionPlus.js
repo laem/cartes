@@ -10,7 +10,7 @@ export default () => {
 	const plus = rules.filter((r) => r.plus)
 
 	return (
-		<div css="padding: 0 .3rem 1rem; max-width: 600px; margin: 1rem auto;">
+		<div className="ui__ container">
 			<h1>Nos fiches complètes</h1>
 			<p>
 				<em>En cours de construction</em>
@@ -19,6 +19,7 @@ export default () => {
 				css={`
 					list-style-type: none;
 					display: flex;
+					flex-wrap: wrap;
 					li {
 						margin: 0.6rem;
 						text-align: center;
@@ -35,15 +36,17 @@ export default () => {
 								className="ui__ card"
 								css={`
 									display: flex;
-									align-items: center;
-									justify-content: center;
-									flex-wrap: wrap;
+									flex-direction: column;
+									justify-content: space-evenly;
 									width: 12rem;
 									height: 10rem;
+									img {
+										font-size: 150%;
+									}
 								`}
 							>
-								{emoji(icons || '🎯🎯')}
-								<h2>{title}</h2>
+								<div>{emoji(icons || '🎯')}</div>
+								<div>{title}</div>
 							</div>
 						</Link>
 					</li>
