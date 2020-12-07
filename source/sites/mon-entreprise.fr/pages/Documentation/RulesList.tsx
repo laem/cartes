@@ -12,7 +12,7 @@ export default function RulesList() {
 	return (
 		<div id="RulesList" className="ui__ container">
 			<h1>
-				<T>Comprendre nos calculs et les actions proposées</T>
+				<T>Comprendre nos calculs et conseils</T>
 			</h1>
 			<p>
 				Notre modèle de calcul est entièrement transparent.
