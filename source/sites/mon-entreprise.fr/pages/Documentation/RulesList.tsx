@@ -12,7 +12,7 @@ export default function RulesList() {
 	return (
 		<div id="RulesList" className="ui__ container">
 			<h1>
-				<T>Comprendre nos calculs</T>
+				<T>Comprendre nos calculs et les actions proposées</T>
 			</h1>
 			<p>
 				Notre modèle de calcul est entièrement transparent.
@@ -34,6 +34,16 @@ export default function RulesList() {
 				<Link to="/contribuer">Venez contribuer</Link> !
 
 			</p>
+			<h2>Approfondissez votre connaissance des actions</h2>
+			<p>
+				En plus des actions simplifiées proposées en fin de simulation, vous pouvez approfondir chacun des enjeux en parcourant les fiches complètes qui vous donneront : contexte général et contexte associé à chaque action, chiffres clés, sources pour établir ces actions, etc. 
+			</p>
+			<p>
+
+				<Link to="/actions/plus">Découvrez toutes les actions détaillées </Link> !
+
+			</p>
+			
 			<h2>Explorez notre documentation</h2>
 
 			<SearchBar showDefaultList={true} rules={flatRules} />
