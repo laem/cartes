@@ -6,6 +6,7 @@ import { useSelector } from 'react-redux'
 import { findRuleByDottedName, decodeRuleName } from 'Engine/rules'
 import { Link } from 'react-router-dom'
 import emoji from 'react-easy-emoji'
+import { ScrollToTop } from 'Components/utils/Scroll'
 
 export default () => {
 	const { encodedName } = useParams()
@@ -15,6 +16,7 @@ export default () => {
 
 	return (
 		<div css="padding: 0 .3rem 1rem; max-width: 600px; margin: 1rem auto;">
+			<ScrollToTop />
 			<Link to={'/actions/' + encodedName}>
 				<button className="ui__ button simple small ">
 					{emoji('◀')} Retour à la fiche

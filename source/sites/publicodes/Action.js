@@ -21,6 +21,7 @@ import {
 } from 'Selectors/analyseSelectors'
 import { setSimulationConfig } from 'Actions/actions'
 import Simulation from 'Components/Simulation'
+import { ScrollToTop } from 'Components/utils/Scroll'
 
 export const Footprint = ({ value }) => <div>Lala {value}</div>
 
@@ -55,6 +56,7 @@ export default ({}) => {
 
 	return (
 		<div css="padding: 0 .3rem 1rem; max-width: 600px; margin: 1rem auto;">
+			<ScrollToTop />
 			<Link to="/actions">
 				<button className="ui__ button simple small ">
 					{emoji('◀')} Retour à la liste
