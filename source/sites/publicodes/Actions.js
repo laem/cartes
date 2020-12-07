@@ -87,6 +87,8 @@ const AnimatedDiv = animated(({}) => {
 		analysis.targets
 	)
 
+	const sortedActions = sortBy((a) => a.nodeValue)(actions)
+
 	return (
 		<div css="padding: 0 .3rem 1rem; max-width: 600px; margin: 1rem auto;">
 			<SessionBar />
@@ -100,8 +102,9 @@ const AnimatedDiv = animated(({}) => {
 				Comment réduire mon empreinte ?
 			</h1>
 
-			{sortBy((a) => a.nodeValue)(actions).map((action) => (
+			{sortedActions.map((action) => (
 				<MiniAction
+					key={action.dottedName}
 					data={action}
 					total={bilans.length ? bilans[0].nodeValue : null}
 				/>
