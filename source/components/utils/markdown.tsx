@@ -41,10 +41,26 @@ export const Markdown = ({
 					<a href={window.location.pathname + '#def' + identifier}>{label}</a>
 				</sup>
 			),
-			footnoteDefinition: ({ identifier, label, children }, b) => (
-				<div id={'def' + identifier}>
+			footnoteDefinition: ({ identifier, label, children }) => (
+				<div
+					id={'def' + identifier}
+					css={`
+						${window.location.hash === '#def' + identifier
+							? `{
+								background: var(--color); 
+								color: var(--textColor); 
+								a {color: inherit}; 
+								border-radius: .3rem; 
+								padding: 0.1rem 0.3rem;
+						    }`
+							: ''};
+						> p {
+							display: inline;
+						}
+					`}
+				>
 					<a href={window.location.pathname + '#ref' + identifier}>{label}</a> :{' '}
-					<span>{children}</span>
+					{children}
 				</div>
 			),
 		}}
