@@ -1,4 +1,4 @@
-import { default as React, default as React, Suspense, useEffect } from 'react'
+import React, { Suspense, useEffect } from 'react'
 import emoji from 'react-easy-emoji'
 import ReactMarkdown, { ReactMarkdownProps } from 'react-markdown'
 import { useLocation } from 'react-router-dom'
