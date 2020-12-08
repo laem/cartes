@@ -1,7 +1,7 @@
 import { setSimulationConfig } from 'Actions/actions'
 import SessionBar from 'Components/SessionBar'
-import { motion } from 'framer-motion'
 import { utils } from 'publicodes'
+import { motion } from 'framer-motion'
 import { partition, sortBy, union } from 'ramda'
 import React, { useEffect } from 'react'
 import emoji from 'react-easy-emoji'
@@ -11,9 +11,11 @@ import { Link, Route, Switch } from 'react-router-dom'
 import { animated } from 'react-spring'
 import tinygradient from 'tinygradient'
 import Action from './Action'
+import ActionPlus from './ActionPlus'
 import { humanValueAndUnit } from './HumanWeight'
 
 const { encodeRuleName, decodeRuleName, splitName } = utils
+import ListeActionPlus from './ListeActionPlus'
 
 const gradient = tinygradient(['#0000ff', '#ff0000']),
 	colors = gradient.rgb(20)
@@ -21,9 +23,16 @@ const gradient = tinygradient(['#0000ff', '#ff0000']),
 export default ({}) => {
 	return (
 		<Switch>
+			<Route exact path="/actions/plus">
+				<ListeActionPlus />
+			</Route>
+			<Route path="/actions/plus/:encodedName+">
+				<ActionPlus />
+			</Route>
 			<Route path="/actions/:encodedName+">
 				<Action />
 			</Route>
+
 			<Route path="/actions">
 				<AnimatedDiv />
 			</Route>
@@ -70,6 +79,8 @@ const AnimatedDiv = animated(({}) => {
 		analysis.targets
 	)
 
+	const sortedActions = sortBy((a) => a.nodeValue)(actions)
+
 	return (
 		<div css="padding: 0 .3rem 1rem; max-width: 600px; margin: 1rem auto;">
 			<SessionBar />
@@ -83,12 +94,57 @@ const AnimatedDiv = animated(({}) => {
 				Comment réduire mon empreinte ?
 			</h1>
 
-			{sortBy((a) => -a.nodeValue)(actions).map((action) => (
+			{sortedActions.map((action) => (
 				<MiniAction
+					key={action.dottedName}
 					data={action}
 					total={bilans.length ? bilans[0].nodeValue : null}
 				/>
 			))}
+
+			<Link
+				to="/actions/plus"
+				className="ui__ button plain"
+				css={`
+					margin: 0.6rem 0;
+					width: 100%;
+					text-transform: none !important;
+					img {
+						font-size: 200%;
+					}
+					a {
+						color: var(--textColor);
+						text-decoration: none;
+					}
+				`}
+			>
+				<div
+					css={`
+						display: flex;
+						justify-content: center;
+						align-items: center;
+						width: 100%;
+						> div {
+							margin-left: 1.6rem;
+							text-align: left;
+							small {
+								color: var(--textColor);
+							}
+						}
+					`}
+				>
+					{emoji('📚')}
+					<div>
+						<div>Consultez nos fiches détaillées</div>
+						<p>
+							<small>
+								Parce que ces actions ne sont jamais simples, une explication
+								permet d'aller au-delà d'un simple chiffre.
+							</small>
+						</p>
+					</div>
+				</div>
+			</Link>
 		</div>
 	)
 })
@@ -164,7 +220,7 @@ const MiniAction = ({ data, total }) => {
 					`}
 				>
 					<h2>{title}</h2>
-					<ActionValue {...{ total, nodeValue }} />
+					{nodeValue != null && <ActionValue {...{ total, nodeValue }} />}
 				</div>
 			</motion.div>
 		</Link>

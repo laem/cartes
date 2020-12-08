@@ -1,8 +1,9 @@
 import React, { Suspense, useEffect } from 'react'
 import emoji from 'react-easy-emoji'
 import ReactMarkdown, { ReactMarkdownProps } from 'react-markdown'
-import { useLocation } from 'react-router-dom'
+import remarkFootnotes from 'remark-footnotes'
 import { HashLink as Link } from 'react-router-hash-link'
+import { useLocation} from 'react-router-dom'
 
 const internalURLs = {
 	'mon-entreprise.fr': 'mon-entreprise',
@@ -103,6 +104,7 @@ export const Markdown = ({
 	...otherProps
 }: MarkdownProps) => (
 	<ReactMarkdown
+<<<<<<< HEAD
 		transformLinkUri={(src) => src}
 		source={source}
 		className={`markdown ${className}`}
@@ -111,6 +113,43 @@ export const Markdown = ({
 			text: TextRenderer,
 			code: CodeBlock,
 			...renderers,
+=======
+		children={source}
+		plugins={[remarkFootnotes]}
+		className={`markdown ${className}`}
+		allowDangerousHtml
+		renderers={{
+			...renderers,
+			link: LinkRenderer,
+			text: TextRenderer,
+			footnoteReference: ({ identifier, label }) => (
+				<sup id={'ref' + identifier}>
+					<a href={window.location.pathname + '#def' + identifier}>{label}</a>
+				</sup>
+			),
+			footnoteDefinition: ({ identifier, label, children }) => (
+				<div
+					id={'def' + identifier}
+					css={`
+						${window.location.hash === '#def' + identifier
+							? `{
+								background: var(--color); 
+								color: var(--textColor); 
+								a {color: inherit}; 
+								border-radius: .3rem; 
+								padding: 0.1rem 0.3rem;
+						    }`
+							: ''};
+						> p {
+							display: inline;
+						}
+					`}
+				>
+					<a href={window.location.pathname + '#ref' + identifier}>{label}</a> :{' '}
+					{children}
+				</div>
+			),
+>>>>>>> origin/master
 		}}
 		{...otherProps}
 	/>

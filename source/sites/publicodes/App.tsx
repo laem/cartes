@@ -17,7 +17,7 @@ import Logo from './Logo'
 import Documentation from './pages/Documentation'
 import Privacy from './Privacy'
 import Simulateur from './Simulateur'
-import VersionBeta from './VersionBeta'
+import BandeauContribuer from './VersionBeta'
 import { useTranslation } from 'react-i18next'
 import sitePaths from './sitePaths'
 
@@ -66,7 +66,6 @@ export default function Root({}) {
 
 const Router = ({}) => (
 	<>
-		<VersionBeta />
 		<div className="ui__ container">
 			<nav css="display: flex; justify-content: center; margin: .6rem auto">
 				<Link
@@ -89,7 +88,6 @@ const Router = ({}) => (
 				{/* Lien de compatibilité, à retirer par exemple mi-juillet 2020*/}
 				<Route path="/fin/:score" component={Fin} />
 				<Route path="/fin" component={Fin} />
-				<Route path="/actions/:action+" component={Actions} />
 				<Route path="/actions" component={Actions} />
 				<Route path="/contribuer/:input?" component={Contribution} />
 				<Route path="/à-propos" component={About} />
@@ -105,5 +103,6 @@ const Router = ({}) => (
 				<Route component={Route404} />
 			</Switch>
 		</div>
+		<BandeauContribuer />
 	</>
 )
