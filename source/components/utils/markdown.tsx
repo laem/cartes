@@ -32,6 +32,7 @@ export const Markdown = ({
 		children={source}
 		plugins={[remarkFootnotes]}
 		className={`markdown ${className}`}
+		allowDangerousHtml
 		renderers={{
 			...renderers,
 			link: LinkRenderer,

@@ -1,9 +1,10 @@
+import { ScrollToTop } from 'Components/utils/Scroll'
+import { encodeRuleName } from 'Engine/rules'
 import React from 'react'
-import { flatRulesSelector } from 'Selectors/analyseSelectors'
+import emoji from 'react-easy-emoji'
 import { useSelector } from 'react-redux'
 import { Link } from 'react-router-dom'
-import emoji from 'react-easy-emoji'
-import { encodeRuleName } from 'Engine/rules'
+import { flatRulesSelector } from 'Selectors/analyseSelectors'
 
 export default () => {
 	const rules = useSelector(flatRulesSelector)
@@ -11,9 +12,15 @@ export default () => {
 
 	return (
 		<div className="ui__ container">
-			<h1>Nos fiches complètes</h1>
+			<ScrollToTop />
+			<h1>
+				Nos fiches complètes{' '}
+				<img src="https://img.shields.io/badge/-beta-purple" />
+			</h1>
 			<p>
-				<em>En cours de construction</em>
+				<em>
+					Plongez-vous dans cette documentation qui détaille chaque action.
+				</em>
 			</p>
 			<ul
 				css={`
