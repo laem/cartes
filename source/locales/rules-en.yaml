@@ -1,6 +1,3 @@
-SMIC:
-  titre.en: '[automatic] SMIC'
-  titre.fr: SMIC
 SMIC horaire:
   titre.en: hourly minimum wage (SMIC)
   titre.fr: SMIC horaire
@@ -244,6 +241,17 @@ artiste-auteur . cotisations . assiette:
     catégories.
   titre.en: base
   titre.fr: assiette
+artiste-auteur . cotisations . assiette 2019:
+  description.en: >
+    [automatic] We calculate the covid aid on the basis of a contribution base
+    2019
+
+    equal to the 2020 plate.
+  description.fr: |
+    Nous calculons l'aide covid sur la base d'une assiette des cotisations 2019
+    égale à l'assiette 2020.
+  titre.en: '[automatic] plate 2019'
+  titre.fr: assiette 2019
 artiste-auteur . cotisations . assiette surcotisation:
   titre.en: over-contribution base
   titre.fr: assiette surcotisation
@@ -308,6 +316,39 @@ artiste-auteur . revenus . traitements et salaires:
   résumé.fr: Le montant brut hors TVA de vos droits d'auteur (recettes précomptées)
   titre.en: Income in wages and salaries
   titre.fr: Revenu en traitements et salaires
+artiste-auteur . réduction de cotisations covid 2020:
+  description.en: >
+    [automatic] In order to take into account the impact of the Covid-19 crisis
+    the government has
+
+    set up a system for the payment of social security contributions of the
+
+    artists-authors due by 2020 up to 2 000€.
+
+
+    This aid is calculated on the basis of the social security contribution base of
+
+    2019.
+
+
+    The support is automatic and you don't have to take any steps to
+
+    to be carried out. You will benefit from this aid after the annual declaration of
+
+    2020 revenues, i.e. in the second quarter of 2021.
+  description.fr: |
+    Afin de tenir compte de l'impact de la crise du Covid-19 le gouvernement a
+    mis en place une prise en charge des cotisations sociales des
+    artistes-auteurs dues pour 2020 pouvant aller jusqu'à 2 000€.
+
+    Cette aide est calculée à partir de l'assiette des cotisations sociales de
+    2019.
+
+    La prise en charge est automatique et vous n'avez pas de démarche a
+    effectuer. Vous bénéficierez de cette aide après la déclaration annuelle de
+    revenus 2020, soit au second trimestre 2021.
+  titre.en: '[automatic] covid 2020 contribution reduction'
+  titre.fr: réduction de cotisations covid 2020
 chômage partiel:
   titre.en: '[automatic] short-time working'
   titre.fr: chômage partiel
@@ -357,25 +398,57 @@ contrat salarié . ATMP:
   titre.en: Contribution for work accidents and occupational diseases
   titre.fr: Cotisation Accidents du Travail et Maladies Professionnelles
 contrat salarié . ATMP . taux collectif ATMP:
-  description.en: Companies with fewer than 20 employees are subject to this
-    collective rate. For larger companies, this rate is modulated (up to 150
-    employees), and then individualized (beyond 250). The company's rate can be
-    consulted online on [net-entreprise]
-    (http://www.net-entreprises.fr/html/account-accident-travail.htm).
+  description.en: >
+    [automatic] Companies with fewer than 20 employees are subject to this
+    collective rate. For larger companies,
+
+    this rate is modulated (up to 150 employees) or even individualized (beyond that).
   description.fr: >
     Les entreprises de moins de 20 salariés sont assujetties à ce taux
     collectif. Pour les entreprises plus importantes,
 
-    ce taux est modulé (jusqu'à 150 salariés) voire individualisé (au-delà). L'entreprise peut consulter le taux qui la
-
-    concerne en ligne sur [net-entreprise](http://www.net-entreprises.fr/html/compte-accident-travail.htm).
-  question.en:
-    What rate of workplace accidents and occupational diseases applies
-    to the company?
-  question.fr: Quel taux Accidents du Travail et Maladies Professionnelles
-    s'applique à l'entreprise ?
+    ce taux est modulé (jusqu'à 150 salariés) voire individualisé (au-delà).
+  question.en: '[automatic] What area of activity does your company depend on?'
+  question.fr: De quel domaine d'activité dépend votre entreprise ?
   titre.en: ATMP collective rate
   titre.fr: Taux collectif ATMP
+contrat salarié . ATMP . taux connu:
+  description.en: >
+    [automatic] The rate of the occupational accident and illness contribution
+    varies according to the company's activity, to reflect the level of risk to
+    which their employees are exposed.
+
+
+    Companies with fewer than 20 employees are subject to this collective rate common to their entire branch.
+
+
+    From 150 employees upwards, the rate is individualized according to the company's actual records of occupational accidents and illnesses.
+
+
+    Between the two, the rate is modulated.
+
+
+    This rate has no impact on the net because it is a contribution payable by the employer.
+  description.fr: >
+    Le taux de la cotisation Accident du Travail et Maladie Professionnel varie
+    selon l'activité de l'entreprise, pour refleter le niveau de risque auxquels
+    sont exposé leur salariés.
+
+
+    Les entreprises de moins de 20 salariés sont assujetties à ce taux collectif commun à toute leur branche.
+
+
+    A partir de 150 employé, le taux est individualisé en fonction des relevés réels des accidents et maladies professionnels de l'entreprise.
+
+
+    Entre les deux, le taux est modulé.
+
+
+    Ce taux n'a pas d'influence sur le net car il s'agit d'une cotisation à la charge de l'employeur.
+  question.en: '[automatic] Do you know the AT/MP rate applicable to your company?'
+  question.fr: Connaissez-vous le taux AT/MP applicable à votre entreprise ?
+  titre.en: '[automatic] known rate'
+  titre.fr: taux connu
 contrat salarié . ATMP . taux minimum:
   description.en: '[automatic] The existing minimum rate for the ATMP
     contribution. Used in particular for the calculation of the general
@@ -384,6 +457,17 @@ contrat salarié . ATMP . taux minimum:
     notamment pour le calcul de la réduction générale de cotisations
   titre.en: '[automatic] minimum level'
   titre.fr: taux minimum
+contrat salarié . ATMP . taux personnalisé:
+  description.en: >
+    [automatic] Companies with more than 20 employees have an individualized
+    rate. The company can consult the rate that the
+  description.fr: >
+    Les entreprises de plus de 20 salariés ont un taux individualisé.
+    L'entreprise peut consulter le taux qui la
+  question.en: "[automatic] What is the company's AT/MP rate?"
+  question.fr: Quel est le taux AT/MP de l'entreprise ?
+  titre.en: '[automatic] personalized rate'
+  titre.fr: taux personnalisé
 contrat salarié . ATMP . taux réduit:
   description.en: >
     This rate corresponds to:
@@ -1201,8 +1285,8 @@ contrat salarié . aides employeur . emploi franc . éligible:
   question.en: '[automatic] Are you eligible for Employment-Franc assistance for
     this hiring?'
   question.fr: Êtes-vous éligible à l'aide emploi-franc pour cette embauche ?
-  titre.en: '[automatic] eligible'
-  titre.fr: éligible
+  titre.en: '[automatic] eligibility for open employment assistance'
+  titre.fr: éligibilité à l'aide emploi franc
 contrat salarié . allocations familiales:
   titre.en: Family allowances
   titre.fr: allocations familiales
@@ -2815,16 +2899,27 @@ contrat salarié . rémunération . assiette de vérification du SMIC:
   titre.fr: assiette de vérification du SMIC
 contrat salarié . rémunération . avantages en nature:
   description.en: >
-    Benefits in kind consist of the provision by the employer to its employees
-    of goods or services. The provision may be free of charge or with employee
-    participation below their actual value
+    [automatic] Benefits in kind consist of the provision by the undertaking to
+    its employees of a good or service. The provision may be free of charge or
+    in return for a contribution from the beneficiary which is less than their
+    real value.
+
+
+
+    The benefit in kind must appear on the pay slip. It will be indicated at the gross salary level to be subject to contributions. After determining the net taxable salary, it will be deducted from the net salary to be paid.
   description.fr: >
-    Les avantages en nature sont constitués par la fourniture par l’employeur à
-    ses salariés d’un bien ou service. La mise à disposition peut être gratuite
-    ou moyennant une participation du salarié inférieure à leur valeur réelle
-  question.en: Does the employee receive benefits in kind (housing, vehicle,
-    telephone, discounts, etc.)?
-  question.fr: Le salarié reçoit-il des avantages en nature (repas, véhicule,
+    Les avantages en nature sont constitués par la fourniture par l’entreprise à
+    ses travailleurs d’un bien ou service. La mise à disposition peut être
+    gratuite ou moyennant une participation du bénéficiant inférieure à leur
+    valeur réelle.
+
+
+
+    L’avantage en nature doit figurer sur le bulletin de paie. Il sera indiqué au niveau du salaire brut pour être soumis à cotisations. Après détermination du salaire net imposable, il sera déduit du salaire net à verser.
+  question.en: '[automatic] Does the company provide benefits in kind (meals,
+    vehicle, telephone, discounts, accommodation...)?'
+  question.fr:
+    L'entreprise fournit-elle des avantages en nature (repas, véhicule,
     téléphone, réductions, logement...) ?
   titre.en: Benefits in kind
   titre.fr: Avantages en nature
@@ -2862,9 +2957,9 @@ contrat salarié . rémunération . avantages en nature . nourriture:
     Les titres-restaurant ne sont pas considérés comme un avantage en nature
     mais comme un remboursement de frais.
   question.en: |
-    Does the employer provide free meals?
+    [automatic] Does the company provide free meals?
   question.fr: |
-    L'employeur fournit-il gratuitement les repas ?
+    L'entreprise fournit-elle gratuitement des repas ?
   titre.en: food
   titre.fr: nourriture
 contrat salarié . rémunération . avantages en nature . nourriture . montant:
@@ -2872,9 +2967,9 @@ contrat salarié . rémunération . avantages en nature . nourriture . montant:
   titre.fr: nourriture
 ? contrat salarié . rémunération . avantages en nature . nourriture . repas par mois
 : question.en: |
-    How many meals per month are paid for by the employer?
+    [automatic] How many meals per month are paid for by the company?
   question.fr: |
-    Combien de repas par mois sont payés par l'employeur ?
+    Combien de repas par mois sont payés par l'entreprise ?
   suggestions.1 par jour.en: '[automatic] 1 per day'
   suggestions.1 par jour.fr: 1 par jour
   suggestions.2 par jour.en: '[automatic] 2 per day'
@@ -2883,24 +2978,33 @@ contrat salarié . rémunération . avantages en nature . nourriture . montant:
   titre.fr: repas par mois
 contrat salarié . rémunération . avantages en nature . ntic:
   description.en: >
-    The private use of the NICT tools made available as part of the permanent
-    professional activity constitutes an advantage in kind.
+    [automatic] The private use of NICT tools made available in the context of
+    the professional activity on a permanent basis constitutes a benefit in
+    kind.
 
-    This benefit is included in the basis for calculating Security contributions and unemployment insurance.
 
-    The reality of private use can result either from a written document (contract work, company agreement, internal regulations, correspondence from the management of the company allowing the employee to make private use of the tools), or the existence of detailed invoices to establish a for private use.
+
+    This benefit is included in the basis for calculating Social Security and unemployment insurance contributions.
+
+
+
+    The reality of private use may result either from a written document (employment contract, company agreement, internal rules, letter from the company management authorising the employee to make private use of the tools), or from the existence of detailed invoices making it possible to establish private use.
   description.fr: >
     L’usage privé des outils NTIC mis à disposition dans le cadre de l’activité
     professionnelle à titre permanent est constitutif d’un avantage en nature.
 
+
+
     Cet avantage est inclus dans la base de calcul des cotisations de Sécurité sociale et d’assurance chômage.
+
+
 
     La réalité de l’usage privé peut résulter soit d’un document écrit (contrat de travail, accord d’entreprise, règlement intérieur, courrier de la direction de l’entreprise autorisant le salarié à faire un usage privé des outils), soit de l’existence de factures détaillées permettant d’établir une utilisation privée.
   question.en: >
-    Does the employer provide free tools from NICTs (computer, telephone,
+    [automatic] Does the company provide a free NICT tool (computer, telephone,
     tablet, etc.)?
   question.fr: >
-    L'employeur fournit-il gratuitement un outils issus des NTIC (ordinateur,
+    L'entreprise fournit-elle gratuitement un outil issus des NTIC (ordinateur,
     téléphone, tablette, etc.) ?
   titre.en: nict
   titre.fr: ntic
@@ -3325,18 +3429,35 @@ contrat salarié . statut JEI . exonération de cotisations:
   titre.en: JEI Exemption
   titre.fr: Exonération JEI
 contrat salarié . statut cadre:
-  description.en: >-
-    A "cadre" is an employee or officer of an enterprise belonging to the upper
-    category of employees. This is a status recognized by collective agreements,
-    which determines membership of a specific pension fund, AGIRC, and some
-    specific terms of the employment contract.
+  description.en: >
+    [automatic] A corporate executive is an employee or officer of a company
+
+    belonging to the higher employee group. This is a
+
+    recognized by collective agreements, which determines membership in an
+
+    specific pension fund, the AGIRC, and some specific terms of the
+
+    employment contract.
 
 
-    Initially recognising the technical skills and managerial role of the employee, the status was gradually extended to an increasing number of positions, and eventually covered a wide population, mixing managers, experts and executives.
+
+    Initially recognizing the technical skills and role
+
+    the employee's management, the status has gradually been extended to include an
+
+    of positions, and eventually covered a growing number of positions, and eventually covered a
+
+    large population, mixing managers, experts and executives.
 
 
-    It is an ill-defined concept, meaning different concepts depending on the point of view considered - whether in terms of status, social representation, role in the company or culture.
-  description.fr: >-
+
+    This is an ill-defined concept that refers to different concepts according to
+
+    the point of view envisaged - whether in terms of status, status of the
+
+    social representation, role in the company or culture.
+  description.fr: |
     Un cadre d'entreprise est un employé ou dirigeant d'une entreprise
     appartenant à la catégorie supérieure des salariés. Il s'agit d'un statut
     reconnu par les conventions collectives, qui détermine l'appartenance à une
@@ -3344,10 +3465,15 @@ contrat salarié . statut cadre:
     contrat de travail.
 
 
-    Reconnaissant initialement les compétences techniques et le rôle d'encadrement du salarié, le statut s'est progressivement élargi à un ensemble de postes de plus en plus nombreux, et a fini par recouvrir une large population, mêlant managers, experts et dirigeants.
+    Reconnaissant initialement les compétences techniques et le rôle
+    d'encadrement du salarié, le statut s'est progressivement élargi à un
+    ensemble de postes de plus en plus nombreux, et a fini par recouvrir une
+    large population, mêlant managers, experts et dirigeants.
 
 
-    Il s'agit d'une notion mal définie désignant des concepts différents selon le point de vue envisagé — que ce soit en termes de statut, de représentation sociale, de rôle dans l'entreprise ou de culture.
+    Il s'agit d'une notion mal définie désignant des concepts différents selon
+    le point de vue envisagé — que ce soit en termes de statut, de
+    représentation sociale, de rôle dans l'entreprise ou de culture.
   question.en: Does the employee have "cadre" status?
   question.fr: Le salarié a-t-il le statut cadre ?
   titre.en: cadre status
@@ -4893,6 +5019,23 @@ dirigeant . indépendant . PL . cotisations caisse de retraite:
     profession libérale effectuée.
   titre.en: '[automatic] pension fund contributions'
   titre.fr: cotisations caisse de retraite
+dirigeant . indépendant . PL . maladie:
+  note.en: >
+    [automatic] The regulated professions do not contribute the corresponding
+    share to the
+
+    per diems and are therefore not entitled to these allowances in the event of
+
+    illness.
+  note.fr: >
+    Les professions libérales réglementée ne cotisent pour la part
+    correspondante aux
+
+    indemnités journalières et n'ont donc pas le droit à ces indemnités en cas de
+
+    maladie.
+  titre.en: '[automatic] illness (PLR rate)'
+  titre.fr: maladie (taux PLR)
 dirigeant . indépendant . PL . métier:
   question.en: '[automatic] To which category does your profession belong?'
   question.fr: A quelle catégorie appartient votre profession ?
@@ -5125,22 +5268,6 @@ dirigeant . indépendant . PL . régime général:
     d'option](/documentation/dirigeant/indépendant/PL/option-régime-général)
   titre.en: '[automatic] overall regime'
   titre.fr: régime général
-dirigeant . indépendant . PL . régime général . maladie:
-  note.en: >
-    [automatic] The liberal professions do not contribute the corresponding
-    share to the
-
-    per diems and are therefore not entitled to these allowances in the event of
-
-    illness.
-  note.fr: >
-    Les professions libérales ne cotisent pour la part correspondante aux
-
-    indemnités journalières et n'ont donc pas le droit à ces indemnités en cas de
-
-    maladie.
-  titre.en: '[automatic] disease (PLNR rate)'
-  titre.fr: maladie (taux PLNR)
 ? dirigeant . indépendant . PL . régime général . taux spécifique retraite complémentaire
 : description.en: |
     [automatic] The unregulated professions that started their activity at
@@ -5386,9 +5513,14 @@ dirigeant . indépendant . cotisations et contributions:
     respect of contributions and
 
     mandatory contributions.
+
+
+    This amount includes the "covid" contribution reduction in 2020.
   description.fr: |
     C'est le montant total dû par l'indépendant au titre des cotisations et
     contributions obligatoires.
+
+    Ce montant inclut la réduction de cotisation "covid" en 2020.
   note.en: |
     [automatic] Unlike contributions, contributions are not reintroduced
     for the calculation of the CSG/CRDS. They also do not benefit from the
@@ -5440,6 +5572,30 @@ dirigeant . indépendant . cotisations et contributions . PCV:
     conventionnel.
   titre.en: '[automatic] Supplementary old-age benefits'
   titre.fr: Prestations complémentaires vieillesse
+? dirigeant . indépendant . cotisations et contributions . aide indépendant covid 2020
+: description.en: |
+    [automatic] The amount of the reduction depends on your industry.
+    It is capped at the final social security contributions for 2020,
+    excluding CFP (contribution to vocational training) and CURPS
+    (contribution to regional unions of health professionals).
+  description.fr: |
+    Le montant de la réduction dépend du secteur d'activité dont vous relevez.
+    Il est plafonné aux montant des cotisations sociales définitives de 2020,
+    hors CFP (contribution à la formation professionnelle) et CURPS
+    (contribution aux unions régionales des professionnels de santé).
+  titre.en: '[automatic] independent aid covid 2020'
+  titre.fr: aide indépendant covid 2020
+dirigeant . indépendant . cotisations et contributions . aides covid 2020:
+  description.en: |
+    [automatic] The government and social security agencies have established
+    contribution reduction schemes for self-employed persons affected by the
+    Coronavirus crisis.
+  description.fr: |
+    Le gouvernement et les organismes de sécurité sociale ont mis en place des
+    dispositifs de réduction de cotisation pour les indépendants impactés par la
+    crise du Coronavirus.
+  titre.en: '[automatic] covid 2020 aid'
+  titre.fr: aides covid 2020
 dirigeant . indépendant . cotisations et contributions . allocations familiales:
   titre.en: '[automatic] child benefit'
   titre.fr: allocations familiales
@@ -5603,35 +5759,19 @@ dirigeant . indépendant . cotisations et contributions . maladie:
   titre.en: '[automatic] disease'
   titre.fr: maladie
 dirigeant . indépendant . cotisations et contributions . maladie . taux:
-  note.en: >
-    [automatic] This contribution is basically very simple: the health
-    contribution is 7.2% up to 5 times the social security ceiling, then 6.5%
-    beyond that. However:
-
-    - for its recovery, this contribution is separated into 2: sickness and sickness 2, the latter at the rate of 0.85%. Thus the amount of 7.2% quoted in the decree is reduced to 6.35% in our calculations.
-
-    - Contribution reductions have been introduced: a simple exemption below 110% of the social security ceiling, then a reinforced exemption below 40%. The above scale takes these reductions into account.
-  note.fr: >
-    Cette cotisation est à la base très simple : la cotisation maladie est de
-    7.2% jusqu'à 5 fois le plafond de la sécurité sociale, puis 6.5% au-delà.
-    Cependant :
-
-    - pour son recouvrement, cette cotisation est séparée en 2 : maladie et maladie 2, cette deuxième au taux de 0.85%. Ainsi le montant de 7.2% cité dans le décret est rabaissé à 6.35% dans nos calculs.
-
-    - des réductions de cotisation ont été introduites : une exonération simple en-dessous de 110% du plafond de la sécurité sociale, puis une exonération renforcée en-dessous de 40%. Le barème ci-dessus prend en compte ces réductions.
   titre.en: '[automatic] rate'
   titre.fr: taux
 dirigeant . indépendant . cotisations et contributions . maladie . taux RSA:
-  note.en: >
-    [automatic] For self-employed persons with the RSA, only the simple
-    reduction defined in the decree for calculating the health contribution is
-    taken into account. The reinforced reduction below 40% of the social
-    security ceiling is not, as there is no minimum base.
-  note.fr: >
-    Pour les indépendants au RSA, seule la réduction simple définie dans le
-    décret de calcul de la cotisation maladie est prise en compte. La réduction
-    renforcée en-dessous de 40% du plafond de la sécurité sociale ne l'est pas,
-    car il n'y a pas d'assiette minimale.
+  note.en: |
+    [automatic] For RSA freelancers, only the simple reduction defined in
+    the decree for calculating the health contribution is taken into account.
+    The reinforced reduction below 40% of the security ceiling 
+    social is not, because there is no minimum base.
+  note.fr: |
+    Pour les indépendants au RSA, seule la réduction simple définie dans
+    le décret de calcul de la cotisation maladie est prise en compte.
+    La réduction renforcée en-dessous de 40% du plafond de la sécurité 
+    sociale ne l'est pas, car il n'y a pas d'assiette minimale.
   titre.en: '[automatic] RSA rate'
   titre.fr: taux RSA
 ? dirigeant . indépendant . cotisations et contributions . maladie . taux RSA part variable
@@ -5753,9 +5893,6 @@ dirigeant . rémunération totale:
   résumé.fr: Dépensé par l'entreprise
   titre.en: Director total income
   titre.fr: rémunération totale
-effectif 20 salarié ou plus:
-  titre.en: '[automatic] 20 or more employees'
-  titre.fr: effectif 20 salarié ou plus
 entreprise:
   description.en: The contract binds a company and an employee
   description.fr: |
@@ -6591,9 +6728,6 @@ plafond sécurité sociale temps plein:
     rémunérations à prendre en compte pour le calcul de certaines cotisations.
   titre.en: full-time social security ceiling
   titre.fr: plafond sécurité sociale temps plein
-primes:
-  titre.en: '[automatic] premiums'
-  titre.fr: primes
 protection sociale:
   description.en: >
     Social protection in France is composed of 5 main branches: sickness,
@@ -6765,7 +6899,7 @@ protection sociale . formation:
   résumé.fr: Finance la possibilité de suivre des formations professionnelles.
   titre.en: training
   titre.fr: formation
-protection sociale . invadilité et décès:
+protection sociale . invalidité et décès:
   description.en: >
     [automatic] You may be recognised as disabled if your capacity for work and
     earning is reduced by at least 2/3 as a result of an accident or illness of
@@ -6787,8 +6921,8 @@ protection sociale . invadilité et décès:
   résumé.fr:
     Garantit le versement d'une pension en cas d'invalidité et un capital
     à vos proches en cas de décès.
-  titre.en: '[automatic] invaditity and death'
-  titre.fr: invadilité et décès
+  titre.en: '[automatic] disability and death'
+  titre.fr: invalidité et décès
 protection sociale . retraite:
   description.en: >
     [automatic] All workers in France contribute throughout their working life
@@ -7092,48 +7226,6 @@ revenus net de cotisations:
   résumé.fr: Avant impôt
   titre.en: net contribution income
   titre.fr: revenus net de cotisations
-réduction générale:
-  titre.en: '[automatic] overall decrease'
-  titre.fr: réduction générale
-réduction générale . chômage:
-  titre.en: '[automatic] unemployment'
-  titre.fr: chômage
-réduction générale . chômage . coefficient:
-  titre.en: '[automatic] coefficient'
-  titre.fr: coefficient
-réduction générale . chômage . constante:
-  titre.en: '[automatic] constant'
-  titre.fr: constante
-réduction générale . chômage . réduction sans régularisation:
-  titre.en: '[automatic] unregulated reduction'
-  titre.fr: réduction sans régularisation
-réduction générale . début:
-  titre.en: '[automatic] start'
-  titre.fr: début
-réduction générale . urssaf:
-  titre.en: '[automatic] urssaf'
-  titre.fr: urssaf
-réduction générale . urssaf . coefficient:
-  titre.en: '[automatic] coefficient'
-  titre.fr: coefficient
-réduction générale . urssaf . constante:
-  titre.en: '[automatic] constant'
-  titre.fr: constante
-réduction générale . urssaf . réduction sans régularisation:
-  titre.en: '[automatic] unregulated reduction'
-  titre.fr: réduction sans régularisation
-réduction lodeom:
-  titre.en: '[automatic] lodeom reduction'
-  titre.fr: réduction lodeom
-réduction lodeom . constante:
-  titre.en: '[automatic] constant'
-  titre.fr: constante
-réduction sur AC au 1er janvier:
-  titre.en: '[automatic] reduction on AC on January 1st'
-  titre.fr: réduction sur AC au 1er janvier
-rémunération:
-  titre.en: '[automatic] remuneration'
-  titre.fr: rémunération
 situation personnelle:
   titre.en: personal situation
   titre.fr: situation personnelle
@@ -7204,6 +7296,86 @@ situation personnelle . domiciliation fiscale à l'étranger:
 établissement . localisation . outre-mer . Guadeloupe Réunion Martinique:
   titre.en: '[automatic] Guadeloupe Reunion Martinique'
   titre.fr: Guadeloupe Réunion Martinique
+établissement . secteur d'activité covid:
+  description.en: >
+    [automatic] Eligibility conditions for covid aid depend on the sector
+
+    of the establishment's activity. 
+
+
+    Hotels, restaurants, bars, etc. are in
+
+    the so-called "S1" category and are entitled to aid without further conditions.
+
+
+    Sectors whose activity depends on those of "sector 1" may
+
+    also benefit from the aid on condition that they have had a fall in turnover
+
+    of significant business during lockdown.
+
+
+    Finally, the so-called "S2" sectors are those involving the reception of the public, and
+
+    are eligible for aid on condition that they have been closed down
+
+    administrative.
+
+
+    The terms and conditions are specified on the URSSAF website.
+  description.fr: |
+    Les conditions d'éligibilité aux aides "covid" dépendent du secteur
+    d'activité de l'établissement. 
+
+    Les hôtels, restaurants, bars, etc. sont dans
+    la catégorie dite "S1" et ont le droit aux aides sans autre conditions.
+
+    Les secteurs dont l'activité dépendent de celles du "secteur 1" peuvent
+    aussi bénéficier des aides à condition d'avoir eu une baisse de chiffre
+    d'affaire significative pendant le confinement.
+
+    Enfin les secteurs dits "S2" sont ceux impliquant l'accueil du public, et
+    sont éligibles aux aides à condition d'avoir subit une fermeture
+    administrative.
+
+    Les modalités sont précisées sur le site de l'URSSAF.
+  question.en: >
+    [automatic] covid" reduction device: is your main activity in one of the
+    following sectors?
+  question.fr: >
+    Dispositif de réduction "covid" : votre activité principale relève-t'elle
+    d'un des secteurs suivants ?
+  titre.en: '[automatic] covid business line'
+  titre.fr: secteur d'activité covid
+établissement . secteur d'activité covid . S1:
+  titre.en: '[automatic] Sector "1" - tourism, hotels and restaurants'
+  titre.fr: Secteur "1" - tourisme, hôtellerie, restauration
+établissement . secteur d'activité covid . S1-bis:
+  titre.en: '[automatic] Sector "1a" - whose activity depends on that of sector 1'
+  titre.fr: Secteur "1 bis" - dont l'activité dépend de celle des secteurs 1
+établissement . secteur d'activité covid . S2:
+  titre.en: '[automatic] Sector "2" - activity involving the reception of the
+    public that has been interrupted'
+  titre.fr: Secteur "2" - activité impliquant l'accueil du public qui a été interrompue
+établissement . secteur d'activité covid . activité interrompue:
+  question.en: |
+    [automatic] Was your business interrupted because of the Covid-19 outbreak?
+  question.fr: |
+    Votre activité a-t'elle été interrompue à cause de l’épidémie de Covid-19 ?
+  titre.en: '[automatic] interrupted activity'
+  titre.fr: activité interrompue
+? établissement . secteur d'activité covid . baisse significative de chiffre d'affaire
+: question.en: |
+    [automatic] Has your business suffered a drop in turnover of at least 80%?
+    between 15 March and 15 May 2020 compared to the previous year?
+  question.fr: |
+    Votre activité a-t-elle subit une baisse d'au moins 80% de chiffre d'affaire
+    entre le 15 mars et le 15 mai 2020 par rapport à l'année précédentes ?
+  titre.en: '[automatic] significant drop in turnover'
+  titre.fr: baisse significative de chiffre d'affaire
+établissement . secteur d'activité covid . éligible aide:
+  titre.en: '[automatic] eligible aid'
+  titre.fr: éligible aide
 établissement . taux du versement transport:
   titre.en: Rate of transport tax
   titre.fr: taux du versement transport

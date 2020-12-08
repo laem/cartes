@@ -96,6 +96,7 @@ describe('Simulateurs', function() {
 				})
 				it('should not have negative value', () => {
 					cy.contains('€/mois').click()
+					cy.wait(100)
 					cy.get(inputSelector)
 						.first()
 						.type('{selectall}5000')

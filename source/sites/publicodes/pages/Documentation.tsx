@@ -1,15 +1,15 @@
-import {goBackToSimulation} from 'Actions/actions'
+import { goBackToSimulation } from 'Actions/actions'
 import SearchButton from 'Components/SearchButton'
 import * as Animate from 'Components/ui/animate'
-import {EngineContext} from 'Components/utils/EngineContext'
-import {ScrollToTop} from 'Components/utils/Scroll'
-import {SitePathsContext} from 'Components/utils/SitePathsContext'
-import {Documentation, getDocumentationSiteMap} from 'publicodes'
-import {useCallback, useContext, useMemo} from 'react'
-import {Trans, useTranslation} from 'react-i18next'
-import {useDispatch, useSelector} from 'react-redux'
-import {Redirect, useLocation} from 'react-router-dom'
-import {RootState} from 'Reducers/rootReducer'
+import { EngineContext } from 'Components/utils/EngineContext'
+import { ScrollToTop } from 'Components/utils/Scroll'
+import { SitePathsContext } from 'Components/utils/SitePathsContext'
+import { Documentation, getDocumentationSiteMap } from 'publicodes'
+import { useCallback, useContext, useMemo } from 'react'
+import { Trans, useTranslation } from 'react-i18next'
+import { useDispatch, useSelector } from 'react-redux'
+import { Redirect, useLocation } from 'react-router-dom'
+import { RootState } from 'Reducers/rootReducer'
 import SearchBar from 'Components/SearchBar'
 
 export default function RulePage() {
@@ -18,12 +18,12 @@ export default function RulePage() {
 	)
 	const engine = useContext(EngineContext)
 	const documentationPath = useContext(SitePathsContext).documentation.index
-	const {pathname} = useLocation()
+	const { pathname } = useLocation()
 	const documentationSitePaths = useMemo(
-		() => getDocumentationSiteMap({engine, documentationPath}),
+		() => getDocumentationSiteMap({ engine, documentationPath }),
 		[engine, documentationPath]
 	)
-	const {i18n} = useTranslation()
+	const { i18n } = useTranslation()
 
 	if (pathname === '/documentation') {
 		return <DocumentationLanding />

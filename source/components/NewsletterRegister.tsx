@@ -1,6 +1,6 @@
 import { usePersistingState } from 'Components/utils/persistState'
 import { TrackerContext } from 'Components/utils/withTracker'
-import React, { useContext, useRef, useState } from 'react'
+import { useContext, useRef, useState } from 'react'
 import { Trans, useTranslation } from 'react-i18next'
 import emoji from 'react-easy-emoji'
 import * as animate from 'Components/ui/animate'
@@ -14,7 +14,7 @@ const formInfos = {
 }
 
 export default function NewsletterRegister() {
-	const [userIsRegistered, setUserIsRegistered] = usePersistingState(
+	const [userIsRegistered, setUserIsRegistered] = usePersistingState<boolean>(
 		'app::newsletter::registered',
 		false
 	)
