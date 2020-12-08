@@ -15,6 +15,7 @@ import { Redirect } from 'react-router'
 import CarbonImpact from './CarbonImpact'
 import Chart from './chart/index.js'
 import { objectifsSelector } from 'Selectors/simulationSelectors'
+import { useEvaluation } from 'Components/utils/EngineContext'
 
 const eqValues = compose(isEmpty, symmetricDifference)
 

@@ -1,6 +1,3 @@
-/* eslint-env node */
-
-const { map } = require('ramda')
 const webpack = require('webpack')
 const ReactRefreshWebpackPlugin = require('@pmmmwh/react-refresh-webpack-plugin')
 const path = require('path')
@@ -20,7 +17,6 @@ module.exports = {
 	devServer: {
 		historyApiFallback: true,
 		contentBase: path.join(__dirname, 'dist'),
-
 		hot: true,
 	},
 	mode: 'development',
