@@ -11,10 +11,16 @@ module.exports = (api) => {
 					},
 				},
 			],
-			'@babel/react',
+			[
+				'@babel/preset-react',
+				{
+					runtime: 'automatic',
+				},
+			],
 			'@babel/preset-typescript',
 		],
 		plugins: [
+			'babel-plugin-styled-components',
 			'@babel/plugin-proposal-class-properties',
 			'@babel/plugin-proposal-optional-chaining',
 			'@babel/plugin-proposal-nullish-coalescing-operator',
@@ -28,7 +34,6 @@ module.exports = (api) => {
 					useES: true,
 				},
 			],
-			'babel-plugin-styled-components',
 		].filter(Boolean),
 	}
 }
