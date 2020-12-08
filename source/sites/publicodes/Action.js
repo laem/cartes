@@ -1,31 +1,24 @@
-import React, { useEffect, useContext } from 'react'
+import { setSimulationConfig } from 'Actions/actions'
+import SessionBar from 'Components/SessionBar'
+import Simulation from 'Components/Simulation'
+import { Markdown } from 'Components/utils/markdown'
+import { ScrollToTop } from 'Components/utils/Scroll'
+import { utils } from 'publicodes'
+import React, { useEffect } from 'react'
+import emoji from 'react-easy-emoji'
 import { useDispatch, useSelector } from 'react-redux'
 import { useParams } from 'react-router'
-import emoji from 'react-easy-emoji'
-import { animated, useSpring, config } from 'react-spring'
-import ShareButton from 'Components/ShareButton'
-import { findContrastedTextColor } from 'Components/utils/colors'
-import { motion } from 'framer-motion'
-
-import BallonGES from './images/ballonGES.svg'
-import SessionBar from 'Components/SessionBar'
 import { Link } from 'react-router-dom'
-import { humanWeight, HumanWeight } from './HumanWeight'
-import { Markdown } from 'Components/utils/markdown'
-import publicodes from 'publicodes'
-import { utils } from 'publicodes'
-const { decodeRuleName, encodeRuleName, splitName } = utils
+import { HumanWeight } from './HumanWeight'
+import BallonGES from './images/ballonGES.svg'
 
-import { setSimulationConfig } from 'Actions/actions'
-import Simulation from 'Components/Simulation'
-import { ScrollToTop } from 'Components/utils/Scroll'
+const { decodeRuleName, encodeRuleName, splitName } = utils
 
 export const Footprint = ({ value }) => <div>Lala {value}</div>
 
 export default ({}) => {
 	const { encodedName } = useParams()
-	const sitePaths = useContext(SitePathsContext)
-	const rules = useSelector(flatRulesSelector)
+	const rules = useSelector((state) => state.rules)
 	const nextSteps = useSelector(nextStepsSelector)
 	const simulation = useSelector((state) => state.simulation)
 	const dottedName = decodeRuleName(encodedName),

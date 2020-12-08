@@ -1,12 +1,15 @@
+import { EngineContext } from 'Components/utils/EngineContext'
 import { ScrollToTop } from 'Components/utils/Scroll'
 import { utils } from 'publicodes'
+import { useContext } from 'react'
 import emoji from 'react-easy-emoji'
-import { useSelector } from 'react-redux'
 import { Link } from 'react-router-dom'
 
 export default () => {
-	const rules = useSelector((state) => state.rules)
-	const plus = rules.filter((r) => r.plus)
+	const rules = useContext(EngineContext).getParsedRules()
+	const plusListe = Object.entries(rules)
+		.map(([dottedName, rule]) => ({ ...rule, dottedName }))
+		.filter((r) => r.plus)
 
 	return (
 		<div className="ui__ container">
@@ -34,7 +37,7 @@ export default () => {
 					}
 				`}
 			>
-				{plus.map(({ dottedName, icons, title }) => (
+				{plusListe.map(({ dottedName, icons, title }) => (
 					<li key={dottedName}>
 						<Link to={'/actions/plus/' + utils.encodeRuleName(dottedName)}>
 							<div
