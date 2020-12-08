@@ -1,7 +1,6 @@
 {
-	"name": "Futureco",
-	"short_name": "Futureco",
-	"description": "L'impact climat de tes gestes quotidiens",
+	"name": "Nos gestes climat",
+	"description": "Calcule ton empreinte sur le climat",
 	"display": "standalone",
 	"lang": "fr",
 	"orientation": "portrait-primary",

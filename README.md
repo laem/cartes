@@ -1,5 +1,3 @@
-<<<<<<< HEAD
-
 ## Ecolab-climat
 
 ## C'est quoi ?
