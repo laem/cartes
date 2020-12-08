@@ -36,7 +36,17 @@ export const Markdown = ({
 			...renderers,
 			link: LinkRenderer,
 			text: TextRenderer,
-			footnoteDefinition: () => <div>footnotedefinition</div>,
+			footnoteReference: ({ identifier, label }) => (
+				<sup id={'ref' + identifier}>
+					<a href={window.location.pathname + '#def' + identifier}>{label}</a>
+				</sup>
+			),
+			footnoteDefinition: ({ identifier, label, children }, b) => (
+				<div id={'def' + identifier}>
+					<a href={window.location.pathname + '#ref' + identifier}>{label}</a> :{' '}
+					<span>{children}</span>
+				</div>
+			),
 		}}
 		{...otherProps}
 	/>
