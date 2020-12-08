@@ -3,7 +3,7 @@ import emoji from 'react-easy-emoji'
 import ReactMarkdown, { ReactMarkdownProps } from 'react-markdown'
 import remarkFootnotes from 'remark-footnotes'
 import { HashLink as Link } from 'react-router-hash-link'
-import { useLocation} from 'react-router-dom'
+import { useLocation } from 'react-router-dom'
 
 const internalURLs = {
 	'mon-entreprise.fr': 'mon-entreprise',
@@ -104,16 +104,7 @@ export const Markdown = ({
 	...otherProps
 }: MarkdownProps) => (
 	<ReactMarkdown
-<<<<<<< HEAD
 		transformLinkUri={(src) => src}
-		source={source}
-		className={`markdown ${className}`}
-		renderers={{
-			link: LinkRenderer,
-			text: TextRenderer,
-			code: CodeBlock,
-			...renderers,
-=======
 		children={source}
 		plugins={[remarkFootnotes]}
 		className={`markdown ${className}`}
@@ -122,6 +113,7 @@ export const Markdown = ({
 			...renderers,
 			link: LinkRenderer,
 			text: TextRenderer,
+			code: CodeBlock,
 			footnoteReference: ({ identifier, label }) => (
 				<sup id={'ref' + identifier}>
 					<a href={window.location.pathname + '#def' + identifier}>{label}</a>
@@ -149,7 +141,6 @@ export const Markdown = ({
 					{children}
 				</div>
 			),
->>>>>>> origin/master
 		}}
 		{...otherProps}
 	/>
