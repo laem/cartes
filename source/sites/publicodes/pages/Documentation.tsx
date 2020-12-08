@@ -11,6 +11,7 @@ import { useDispatch, useSelector } from 'react-redux'
 import { Redirect, useLocation } from 'react-router-dom'
 import { RootState } from 'Reducers/rootReducer'
 import SearchBar from 'Components/SearchBar'
+import Méthode from './Méthode'
 
 export default function RulePage() {
 	const currentSimulation = useSelector(
@@ -71,10 +72,8 @@ function BackToSimulation() {
 function DocumentationLanding() {
 	return (
 		<>
-			<h1>
-				<Trans i18nKey="page.documentation.title">Documentation</Trans>
-			</h1>
-			<p>Explorez toutes les règles de la documentation</p>
+			<Méthode />
+			<h2>Explorer notre documentation</h2>
 			<SearchBar showListByDefault={true} />
 		</>
 	)

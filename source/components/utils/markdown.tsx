@@ -55,7 +55,7 @@ export function LinkRenderer({
 	)
 }
 const TextRenderer = ({ children }: { children: string }) => (
-	<>{emoji(children)}</>
+	<>{emoji(children, { props: { className: 'emoji' } })}</>
 )
 
 type MarkdownProps = ReactMarkdownProps & {
