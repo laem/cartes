@@ -3,7 +3,6 @@ const HTMLPlugin = require('html-webpack-plugin')
 const CopyPlugin = require('copy-webpack-plugin')
 const path = require('path')
 const { EnvironmentPlugin } = require('webpack')
-const MonacoWebpackPlugin = require('monaco-editor-webpack-plugin')
 
 module.exports.default = {
 	watchOptions: {
@@ -38,9 +37,6 @@ module.exports.default = {
 			'./source/images/nosgestesclimat.png',
 			'./source/images/dessin-nosgestesclimat.png',
 		]),
-		new MonacoWebpackPlugin({
-			languages: ['yaml'],
-		}),
 	],
 }
 

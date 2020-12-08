@@ -21,8 +21,6 @@ import BandeauContribuer from './VersionBeta'
 import { useTranslation } from 'react-i18next'
 import sitePaths from './sitePaths'
 
-let Studio = React.lazy(() => import('./Studio'))
-
 let tracker = devTracker
 if (process.env.NODE_ENV === 'production') {
 	tracker = new Tracker()
@@ -92,14 +90,6 @@ const Router = ({}) => (
 				<Route path="/contribuer/:input?" component={Contribution} />
 				<Route path="/à-propos" component={About} />
 				<Route path="/vie-privée" component={Privacy} />
-				<Route
-					path="/studio"
-					component={() => (
-						<Suspense fallback={<div>Chargement de l'éditeur ...</div>}>
-							<Studio />
-						</Suspense>
-					)}
-				/>
 				<Route component={Route404} />
 			</Switch>
 		</div>
