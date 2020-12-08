@@ -13,9 +13,14 @@ export default () => {
 	return (
 		<div className="ui__ container">
 			<ScrollToTop />
-			<h1>Nos fiches complètes</h1>
+			<h1>
+				Nos fiches complètes
+				<img src="https://img.shields.io/badge/-beta-blue" />
+			</h1>
 			<p>
-				<em>En cours de construction</em>
+				<em>
+					Plongez-vous dans cette documentation qui détaille chaque action.
+				</em>
 			</p>
 			<ul
 				css={`

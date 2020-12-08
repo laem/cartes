@@ -109,7 +109,11 @@ const AnimatedDiv = animated(({}) => {
 					total={bilans.length ? bilans[0].nodeValue : null}
 				/>
 			))}
-			<Link to="/actions/plus">Consulter les fiches complètes</Link>
+			<Link to="/actions/plus">
+				<div className="ui__ card plain">
+					Consulter les fiches complètes
+				</div>
+			</Link>
 		</div>
 	)
 })
