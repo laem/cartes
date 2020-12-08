@@ -2,6 +2,7 @@
 .tmp
 dist/*
 !dist/_redirects
+!/dist/images/
 .DS_Store
 yarn-error.log
 cypress/videos
@@ -10,7 +11,6 @@ cypress/screenshots
 package-lock.json
 node_modules/
 .env
-dist/
 
 # Local Netlify folder
 .netlify
