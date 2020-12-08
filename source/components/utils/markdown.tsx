@@ -32,7 +32,12 @@ export const Markdown = ({
 		children={source}
 		plugins={[remarkFootnotes]}
 		className={`markdown ${className}`}
-		renderers={{ ...renderers, link: LinkRenderer, text: TextRenderer }}
+		renderers={{
+			...renderers,
+			link: LinkRenderer,
+			text: TextRenderer,
+			footnoteDefinition: () => <div>footnotedefinition</div>,
+		}}
 		{...otherProps}
 	/>
 )
