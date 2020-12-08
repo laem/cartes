@@ -14,6 +14,7 @@ import { useDispatch, useSelector } from 'react-redux'
 import { Redirect } from 'react-router'
 import CarbonImpact from './CarbonImpact'
 import Chart from './chart/index.js'
+import { objectifsSelector } from 'Selectors/simulationSelectors'
 
 const eqValues = compose(isEmpty, symmetricDifference)
 

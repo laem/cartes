@@ -1,7 +1,8 @@
 import { setSimulationConfig } from 'Actions/actions'
 import SessionBar from 'Components/SessionBar'
-import { utils } from 'publicodes'
+import { useEvaluation } from 'Components/utils/EngineContext'
 import { motion } from 'framer-motion'
+import { utils } from 'publicodes'
 import { partition, sortBy, union } from 'ramda'
 import React, { useEffect } from 'react'
 import emoji from 'react-easy-emoji'
@@ -9,13 +10,14 @@ import { useDispatch, useSelector } from 'react-redux'
 import { useLocation } from 'react-router'
 import { Link, Route, Switch } from 'react-router-dom'
 import { animated } from 'react-spring'
+import { objectifsSelector } from 'Selectors/simulationSelectors'
 import tinygradient from 'tinygradient'
 import Action from './Action'
 import ActionPlus from './ActionPlus'
 import { humanValueAndUnit } from './HumanWeight'
+import ListeActionPlus from './ListeActionPlus'
 
 const { encodeRuleName, decodeRuleName, splitName } = utils
-import ListeActionPlus from './ListeActionPlus'
 
 const gradient = tinygradient(['#0000ff', '#ff0000']),
 	colors = gradient.rgb(20)
@@ -47,8 +49,8 @@ export default ({}) => {
 const AnimatedDiv = animated(({}) => {
 	const location = useLocation()
 
-	const rules = useSelector(flatRulesSelector)
-	const flatActions = rules.find((r) => r.dottedName === 'actions')
+	const rules = useSelector((state) => state.rules)
+	const flatActions = rules['actions']
 
 	const simulation = useSelector((state) => state.simulation)
 
@@ -63,11 +65,12 @@ const AnimatedDiv = animated(({}) => {
 				),
 		  }
 
-	const analysis = useSelector(analysisWithDefaultsSelector)
+	const objectifs = useSelector(objectifsSelector)
+	const analysis = useEvaluation(objectifs)
 
 	const configSet = useSelector((state) => state.simulation?.config)
 	const foldedSteps = useSelector(
-		(state) => state.conversationSteps.foldedSteps
+		(state) => state.simulation?.foldedSteps || []
 	)
 
 	const dispatch = useDispatch()

@@ -1,13 +1,11 @@
 import { ScrollToTop } from 'Components/utils/Scroll'
-import { encodeRuleName } from 'Engine/rules'
-import React from 'react'
+import { utils } from 'publicodes'
 import emoji from 'react-easy-emoji'
 import { useSelector } from 'react-redux'
 import { Link } from 'react-router-dom'
-import { flatRulesSelector } from 'Selectors/analyseSelectors'
 
 export default () => {
-	const rules = useSelector(flatRulesSelector)
+	const rules = useSelector((state) => state.rules)
 	const plus = rules.filter((r) => r.plus)
 
 	return (
@@ -38,7 +36,7 @@ export default () => {
 			>
 				{plus.map(({ dottedName, icons, title }) => (
 					<li key={dottedName}>
-						<Link to={'/actions/plus/' + encodeRuleName(dottedName)}>
+						<Link to={'/actions/plus/' + utils.encodeRuleName(dottedName)}>
 							<div
 								className="ui__ card"
 								css={`
