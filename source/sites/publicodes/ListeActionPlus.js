@@ -14,8 +14,8 @@ export default () => {
 		<div className="ui__ container">
 			<ScrollToTop />
 			<h1>
-				Nos fiches complètes
-				<img src="https://img.shields.io/badge/-beta-blue" />
+				Nos fiches complètes{' '}
+				<img src="https://img.shields.io/badge/-beta-purple" />
 			</h1>
 			<p>
 				<em>
