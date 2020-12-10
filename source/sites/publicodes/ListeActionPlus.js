@@ -14,12 +14,12 @@ export default () => {
 		<div className="ui__ container">
 			<ScrollToTop />
 			<h1>
-				Nos fiches complètes{' '}
+				Nos explications complètes{' '}
 				<img src="https://img.shields.io/badge/-beta-purple" />
 			</h1>
 			<p>
 				<em>
-					Plongez-vous dans cette documentation qui détaille chaque action.
+					Découvrez les enjeux qui se cachent derrière chaque action.
 				</em>
 			</p>
 			<ul
