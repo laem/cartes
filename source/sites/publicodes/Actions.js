@@ -137,11 +137,10 @@ const AnimatedDiv = animated(({}) => {
 				>
 					{emoji('📚')}
 					<div>
-						<div>Consultez nos fiches détaillées</div>
+						<div>Comprendre les actions</div>
 						<p>
 							<small>
-								Parce que ces actions ne sont jamais simples, une explication
-								permet d'aller au-delà d'un simple chiffre.
+								Au-delà d'un simple chiffre, découvrez les enjeux qui se cachent derrière chaque action.
 							</small>
 						</p>
 					</div>
