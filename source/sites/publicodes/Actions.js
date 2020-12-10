@@ -140,7 +140,7 @@ const AnimatedDiv = animated(({}) => {
 						<div>Comprendre les actions</div>
 						<p>
 							<small>
-								Au-delà d’un simple chiffre, se cache de nombreux enjeux, découvrez lesquels.
+								Au-delà d'un simple chiffre, découvrez les enjeux qui se cachent derrière chaque action.
 							</small>
 						</p>
 					</div>
