@@ -1,5 +1,3 @@
-# F.A.Q. de l’outil Nos GEStes Climat
-
 Bonjour, et bienvenue sur la Foire Aux Questions de Nos GEStes Climat, le calculateur d’empreinte carbone individuelle et votre coach de transition bas carbone !
 
 Vous trouverez sur ce document la réponse aux questions les plus fréquentes. S’il vous reste des interrogations ou si vous souhaitez nous proposer des améliorations, rendez-vous plus bas dans la section dédiée aux interrogations et aux contributions.
