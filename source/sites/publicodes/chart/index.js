@@ -22,7 +22,8 @@ const sortCategories = sortBy(({ nodeValue }) => -nodeValue)
 export const extractCategories = (analysis) => {
 	const bilan = analysis.find((t) => t.dottedName === 'bilan')
 	if (!bilan) return null
-	const categories = bilan.formule.explanation.explanation.map(
+	//TODO ouch, there should be a better way to navigate the evaluation tree
+	const categories = bilan.explanation.explanation.valeur.explanation.valeur.explanation.map(
 		(category) => category.explanation
 	)
 
