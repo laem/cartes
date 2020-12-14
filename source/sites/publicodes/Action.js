@@ -85,7 +85,6 @@ export default ({}) => {
 					<p>Personnalisez cette estimation</p>
 					<Simulation
 						noFeedback
-						noProgressMessage
 						showConversation
 						customEnd={<div />}
 						targets={<div />}

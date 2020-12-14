@@ -54,7 +54,6 @@ const Simulateur = (props) => {
 			<Simulation
 				noFeedback
 				teaseCategories
-				noProgressMessage
 				customEnd={
 					rule.dottedName === 'bilan' ? (
 						<RedirectionToEndPage

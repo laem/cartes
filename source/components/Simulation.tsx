@@ -28,6 +28,7 @@ export default function Simulation({
 	teaseCategories,
 	showLinkToForm,
 	showPeriodSwitch,
+	noFeedback,
 }: SimulationProps) {
 	return (
 		<>
@@ -39,16 +40,20 @@ export default function Simulation({
 					customEndMessages={customEndMessages}
 				/>
 				<br />
-				{showLinkToForm && <LinkToForm />}
-				{!showLinkToForm && (
-					<PageFeedback
-						customMessage={
-							<Trans i18nKey="feedback.simulator">
-								Êtes-vous satisfait de ce simulateur ?
-							</Trans>
-						}
-						customEventName="rate simulator"
-					/>
+				{!noFeedback && (
+					<>
+						{showLinkToForm && <LinkToForm />}
+						{!showLinkToForm && (
+							<PageFeedback
+								customMessage={
+									<Trans i18nKey="feedback.simulator">
+										Êtes-vous satisfait de ce simulateur ?
+									</Trans>
+								}
+								customEventName="rate simulator"
+							/>
+						)}
+					</>
 				)}{' '}
 				{explanations}
 			</Animate.fromTop>
@@ -74,18 +79,7 @@ function Questions({
 					marginTop: '1.2rem',
 					marginBottom: '0.6rem',
 				}}
-			>
-				{progress < 1 ? (
-					<small css="padding: 0.4rem 0">
-						<Trans i18nKey="simulateurs.précision.défaut">
-							Affinez la simulation en répondant aux questions :
-						</Trans>
-					</small>
-				) : (
-					<span />
-				)}
-				<SeeAnswersButton />
-			</div>
+			></div>
 			<section className="ui__ full-width lighter-bg">
 				<div className="ui__ container">
 					<Notifications />
