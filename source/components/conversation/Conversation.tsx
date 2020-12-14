@@ -8,6 +8,7 @@ import QuickLinks from 'Components/QuickLinks'
 import * as Animate from 'Components/ui/animate'
 import { EngineContext } from 'Components/utils/EngineContext'
 import { useNextQuestions } from 'Components/utils/useNextQuestion'
+import { TrackerContext } from 'Components/utils/withTracker'
 import React, { useContext, useEffect } from 'react'
 import emoji from 'react-easy-emoji'
 import { Trans } from 'react-i18next'
@@ -19,7 +20,6 @@ import {
 import Aide from './Aide'
 import './conversation.css'
 import { ExplicableRule } from './Explicable'
-import { createSelector } from 'reselect'
 
 export type ConversationProps = {
 	customEndMessages?: React.ReactNode
@@ -34,6 +34,14 @@ export default function Conversation({ customEndMessages }: ConversationProps) {
 	const situation = useSelector(situationSelector)
 	const currentQuestionIsAnswered = situation[currentQuestion] != null
 	const previousAnswers = useSelector(answeredQuestionsSelector)
+	const tracker = useContext(TrackerContext)
+
+	useEffect(() => {
+		if (previousAnswers.length === 1) {
+			tracker.push(['trackEvent', 'NGC', '1ère réponse au bilan'])
+		}
+	}, [previousAnswers, tracker])
+
 	useEffect(() => {
 		if (currentQuestion) {
 			dispatch(goToQuestion(currentQuestion))
@@ -44,10 +52,7 @@ export default function Conversation({ customEndMessages }: ConversationProps) {
 			// TODO: Skiping a question shouldn't be equivalent to answering the
 			// default value (for instance the question shouldn't appear in the
 			// answered questions).
-			validateStepWithValue(
-				currentQuestion,
-				rules[currentQuestion].defaultValue
-			)
+			validateStepWithValue(currentQuestion, undefined)
 		)
 	const goToPrevious = () =>
 		dispatch(goToQuestion(previousAnswers.slice(-1)[0]))
@@ -80,17 +85,14 @@ export default function Conversation({ customEndMessages }: ConversationProps) {
 				<Animate.fadeIn>
 					<div className="step">
 						<h3>
-							{rules[currentQuestion].question}{' '}
+							{rules[currentQuestion].rawNode.question}{' '}
 							<ExplicableRule dottedName={currentQuestion} />
 						</h3>
-
 						<fieldset>
 							<RuleInput
 								dottedName={currentQuestion}
-								value={situation[currentQuestion]}
 								onChange={onChange}
 								onSubmit={submit}
-								rules={rules}
 							/>
 						</fieldset>
 					</div>
@@ -120,7 +122,7 @@ export default function Conversation({ customEndMessages }: ConversationProps) {
 							onClick={setDefault}
 							className="ui__ simple small push-right button"
 						>
-							<Trans>Passer</Trans> →
+							<Trans>Je ne sais pas</Trans> →
 						</button>
 					)}
 				</div>
