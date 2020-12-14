@@ -8,9 +8,10 @@ import SimulationHumanWeight from './HumanWeight'
 import { useSelector } from 'react-redux'
 
 export default ({}) => {
-	let interestingFormula = formule && formule.explanation.text !== '0'
 	const objectifs = useSelector(objectifsSelector)
-	const { nodeValue, formule, dottedName } = useEvaluation(objectifs)
+	const analysis = useEvaluation(objectifs)
+
+	const { nodeValue, dottedName } = analysis[0]
 
 	return (
 		<div
@@ -24,14 +25,12 @@ export default ({}) => {
 		>
 			<div>
 				<SimulationHumanWeight nodeValue={nodeValue} />
-				{interestingFormula && (
-					<div>
-						<span css="font-size: 120%">{emoji('🔬 ')}</span>
-						<Link to={'/documentation/' + utils.encodeRuleName(dottedName)}>
-							comprendre le calcul
-						</Link>
-					</div>
-				)}
+				<div>
+					<span css="font-size: 120%">{emoji('🔬 ')}</span>
+					<Link to={'/documentation/' + utils.encodeRuleName(dottedName)}>
+						comprendre le calcul
+					</Link>
+				</div>
 			</div>
 		</div>
 	)
