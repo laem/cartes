@@ -30,7 +30,8 @@ const Simulateur = (props) => {
 		config = {
 			objectifs: [decoded],
 		},
-		configSet = useSelector((state) => state.simulation?.config)
+		configSet = useSelector((state) => state.simulation?.config),
+		state = useSelector((state) => state)
 	useEffect(
 		() =>
 			!eqValues(config.objectifs, configSet?.objectifs || [])

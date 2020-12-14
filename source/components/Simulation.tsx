@@ -10,8 +10,6 @@ import Progress from 'Components/ui/Progress'
 import { useSimulationProgress } from 'Components/utils/useNextQuestion'
 import React from 'react'
 import { Trans } from 'react-i18next'
-import { useSelector } from 'react-redux'
-import { firstStepCompletedSelector } from 'Selectors/simulationSelectors'
 import LinkToForm from './Feedback/LinkToForm'
 
 type SimulationProps = {
@@ -31,32 +29,29 @@ export default function Simulation({
 	showLinkToForm,
 	showPeriodSwitch,
 }: SimulationProps) {
-	const firstStepCompleted = useSelector(firstStepCompletedSelector)
 	return (
 		<>
 			<SearchButton invisibleButton />
-			{firstStepCompleted && (
-				<Animate.fromTop>
-					{results}
-					<Questions
-						teaseCategories={teaseCategories}
-						customEndMessages={customEndMessages}
+			<Animate.fromTop>
+				{results}
+				<Questions
+					teaseCategories={teaseCategories}
+					customEndMessages={customEndMessages}
+				/>
+				<br />
+				{showLinkToForm && <LinkToForm />}
+				{!showLinkToForm && (
+					<PageFeedback
+						customMessage={
+							<Trans i18nKey="feedback.simulator">
+								Êtes-vous satisfait de ce simulateur ?
+							</Trans>
+						}
+						customEventName="rate simulator"
 					/>
-					<br />
-					{showLinkToForm && <LinkToForm />}
-					{!showLinkToForm && (
-						<PageFeedback
-							customMessage={
-								<Trans i18nKey="feedback.simulator">
-									Êtes-vous satisfait de ce simulateur ?
-								</Trans>
-							}
-							customEventName="rate simulator"
-						/>
-					)}{' '}
-					{explanations}
-				</Animate.fromTop>
-			)}
+				)}{' '}
+				{explanations}
+			</Animate.fromTop>
 		</>
 	)
 }

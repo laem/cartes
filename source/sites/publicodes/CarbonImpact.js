@@ -5,6 +5,7 @@ import emoji from 'react-easy-emoji'
 import { Link } from 'react-router-dom'
 import { objectifsSelector } from 'Selectors/simulationSelectors'
 import SimulationHumanWeight from './HumanWeight'
+import { useSelector } from 'react-redux'
 
 export default ({}) => {
 	let interestingFormula = formule && formule.explanation.text !== '0'
