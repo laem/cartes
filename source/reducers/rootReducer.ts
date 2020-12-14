@@ -97,8 +97,10 @@ function simulation(
 			config,
 			url,
 			hiddenNotifications: state?.hiddenControls || [],
-			situation: state?.situation,
+			situation: state?.situation || {},
 			targetUnit: config['unité par défaut'] || '€/mois',
+			foldedSteps: state?.foldedSteps || [],
+			unfoldedStep: null,
 		}
 	}
 	if (state === null) {
