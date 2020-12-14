@@ -20,7 +20,7 @@ const // Rough estimate of the 2050 budget per person to stay under 2° by 2100
 
 const sortCategories = sortBy(({ nodeValue }) => -nodeValue)
 export const extractCategories = (analysis) => {
-	const bilan = analysis.targets.find((t) => t.dottedName === 'bilan')
+	const bilan = analysis.find((t) => t.dottedName === 'bilan')
 	if (!bilan) return null
 	const categories = bilan.formule.explanation.explanation.map(
 		(category) => category.explanation
@@ -33,7 +33,7 @@ export default ({ details, color, noText, noAnimation }) => {
 	const objectifs = useSelector(objectifsSelector)
 	const analysis = useEvaluation(objectifs)
 
-	const categories = analysis?.targets.length
+	const categories = analysis?.length
 		? extractCategories(analysis)
 		: details &&
 		  sortCategories(

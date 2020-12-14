@@ -5,15 +5,13 @@ import { useSelector } from 'react-redux'
 import { flatRulesSelector } from 'Selectors/analyseSelectors'
 import './RulesList.css'
 import emoji from 'react-easy-emoji'
-import {Link} from 'react-router-dom'
+import { Link } from 'react-router-dom'
 
 export default function RulesList() {
 	const flatRules = useSelector(flatRulesSelector)
 	return (
 		<div id="RulesList" className="ui__ container">
-			<h1>
-				<T>Comprendre nos calculs et conseils</T>
-			</h1>
+			<h1>Comprendre nos calculs et conseils</h1>
 			<p>
 				Notre modèle de calcul est entièrement transparent.
 				<img
@@ -27,23 +25,23 @@ export default function RulesList() {
 			</p>
 			<p>
 				Le code est non seulement transparent, mais aussi contributif : chancun
-				peut l'explorer, donner son avis, l'améliorer. 
+				peut l'explorer, donner son avis, l'améliorer.
 			</p>
 			<p>
-
 				<Link to="/contribuer">Venez contribuer</Link> !
-
 			</p>
 			<h2>Approfondissez votre connaissance des actions</h2>
 			<p>
-				En plus des actions simplifiées proposées en fin de simulation, vous pouvez approfondir chacun des enjeux en parcourant les fiches complètes qui vous donneront : contexte général et contexte associé à chaque action, chiffres clés, sources pour établir ces actions, etc. 
+				En plus des actions simplifiées proposées en fin de simulation, vous
+				pouvez approfondir chacun des enjeux en parcourant les fiches complètes
+				qui vous donneront : contexte général et contexte associé à chaque
+				action, chiffres clés, sources pour établir ces actions, etc.
 			</p>
 			<p>
-
-				<Link to="/actions/plus">Découvrez toutes les actions détaillées </Link> !
-
+				<Link to="/actions/plus">Découvrez toutes les actions détaillées </Link>{' '}
+				!
 			</p>
-			
+
 			<h2>Explorez notre documentation</h2>
 
 			<SearchBar showDefaultList={true} rules={flatRules} />

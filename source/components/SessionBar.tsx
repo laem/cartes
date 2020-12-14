@@ -93,7 +93,7 @@ export default function SessionBar({ answerButtonOnly = false }) {
 						}}
 					>
 						{emoji('📊 ')}
-						<T>Revenir à ma simulation</T>
+						Revenir à ma simulation
 					</Button>
 				) : (
 					<Button
@@ -102,7 +102,7 @@ export default function SessionBar({ answerButtonOnly = false }) {
 							history.push('/simulateur/bilan')
 						}}
 					>
-						<T>Faire le test</T>
+						Faire le test
 					</Button>
 				)}
 			</div>
@@ -117,14 +117,14 @@ export default function SessionBar({ answerButtonOnly = false }) {
 						onClick={() => setShowAnswerModal(true)}
 					>
 						{emoji('📋 ')}
-						<T>Modifier mes réponses</T>
+						Modifier mes réponses
 					</Button>
 					<Button
 						className="simple small"
 						onClick={() => history.push(buildEndURL(analysis))}
 					>
 						{emoji('💤 ')}
-						<T>Terminer</T>
+						Terminer
 					</Button>
 					{true && (
 						<Button
@@ -132,7 +132,7 @@ export default function SessionBar({ answerButtonOnly = false }) {
 							onClick={() => history.push('/actions')}
 						>
 							{emoji('💥 ')}
-							<T>Passer à l'action</T>
+							Passer à l'action
 						</Button>
 					)}
 				</>

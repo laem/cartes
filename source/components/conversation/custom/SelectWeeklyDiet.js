@@ -177,7 +177,7 @@ function RadioLabelContent({
 			className={classnames('radio', 'userAnswerButton', { selected })}
 		>
 			{icônes && emoji(icônes)}
-			<T>{label}</T>
+			{label}
 			<input
 				type="radio"
 				onClick={click(value)}
