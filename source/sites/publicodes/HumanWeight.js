@@ -14,9 +14,7 @@ export const humanWeight = (v) => {
 	return [raw, unit]
 }
 export default ({ nodeValue }) => {
-	const foldedSteps = useSelector(
-			(state) => state.conversationSteps?.foldedSteps
-		),
+	const foldedSteps = useSelector((state) => state.simulation?.foldedSteps),
 		simulationStarted = foldedSteps && foldedSteps.length
 
 	return (

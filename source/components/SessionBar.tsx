@@ -38,7 +38,7 @@ export default function SessionBar({ answerButtonOnly = false }) {
 	)
 
 	const foldedSteps = useSelector(
-		(state: RootState) => state.conversationSteps.foldedSteps
+		(state: RootState) => state.simulation.foldedSteps
 	)
 	const arePreviousAnswers = !!foldedSteps.length
 	useEffect(() => {
