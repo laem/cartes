@@ -1,13 +1,16 @@
 import { goToQuestion, loadPreviousSimulation } from 'Actions/actions'
 import { Button } from 'Components/ui/Button'
-import { useEvaluation } from 'Components/utils/EngineContext'
+import { useEngine } from 'Components/utils/EngineContext'
 import { last } from 'ramda'
 import React, { useEffect, useState } from 'react'
 import emoji from 'react-easy-emoji'
 import { useDispatch, useSelector } from 'react-redux'
 import { useHistory, useLocation } from 'react-router-dom'
 import { RootState } from 'Reducers/rootReducer'
-import { objectifsSelector } from 'Selectors/simulationSelectors'
+import {
+	answeredQuestionsSelector,
+	objectifsSelector,
+} from 'Selectors/simulationSelectors'
 import { extractCategories } from '../sites/publicodes/chart'
 import Answers from './conversation/AnswerList'
 
@@ -31,23 +34,19 @@ export const buildEndURL = (analysis) => {
 	return `/fin?total=${Math.round(total)}&details=${detailsString}`
 }
 
-export default function SessionBar({ answerButtonOnly = false }) {
+export default function SessionBar({ evaluation, answerButtonOnly = false }) {
 	const dispatch = useDispatch()
 	const previousSimulation = useSelector(
 		(state: RootState) => state.previousSimulation
 	)
 
-	const foldedSteps = useSelector(
-		(state: RootState) => state.simulation.foldedSteps
-	)
-	const arePreviousAnswers = !!foldedSteps.length
+	const answeredQuestions = useSelector(answeredQuestionsSelector)
+	const arePreviousAnswers = !!answeredQuestions.length
 	useEffect(() => {
 		if (!arePreviousAnswers && previousSimulation)
 			dispatch(loadPreviousSimulation())
 	}, [])
 	const [showAnswerModal, setShowAnswerModal] = useState(false)
-	const objectifs = useSelector(objectifsSelector)
-	const analysis = useEvaluation(objectifs)
 
 	const history = useHistory()
 	const location = useLocation()
@@ -88,7 +87,7 @@ export default function SessionBar({ answerButtonOnly = false }) {
 					<Button
 						className="simple small"
 						onClick={() => {
-							dispatch(goToQuestion(last(foldedSteps)))
+							dispatch(goToQuestion(last(answeredQuestions)))
 							history.push('/simulateur/bilan')
 						}}
 					>
@@ -121,7 +120,7 @@ export default function SessionBar({ answerButtonOnly = false }) {
 					</Button>
 					<Button
 						className="simple small"
-						onClick={() => history.push(buildEndURL(analysis))}
+						onClick={() => history.push(buildEndURL(evaluation))}
 					>
 						{emoji('💤 ')}
 						Terminer

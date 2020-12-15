@@ -1,6 +1,6 @@
-import { utils } from 'publicodes'
+import { utils, evaluateRule } from 'publicodes'
 
-import { useEvaluation } from 'Components/utils/EngineContext'
+import { useEngine } from 'Components/utils/EngineContext'
 import { motion } from 'framer-motion'
 import { sortBy } from 'ramda'
 import React from 'react'
@@ -32,7 +32,8 @@ export const extractCategories = (analysis) => {
 export default ({ details, color, noText, noAnimation }) => {
 	const rules = useSelector((state) => state.rules)
 	const objectifs = useSelector(objectifsSelector)
-	const analysis = useEvaluation(objectifs)
+	const engine = useEngine(objectifs),
+		analysis = evaluateRule(engine, 'bilan')
 
 	const categories = analysis?.length
 		? extractCategories(analysis)

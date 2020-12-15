@@ -20,6 +20,7 @@ import DateInput from './DateInput'
 import ParagrapheInput from './ParagrapheInput'
 import SelectEuropeCountry from './select/SelectEuropeCountry'
 import TextInput from './TextInput'
+import { useSelector } from 'react-redux'
 
 type Value = any
 export type RuleInputProps<Name extends string = DottedName> = {

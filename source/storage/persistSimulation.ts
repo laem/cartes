@@ -6,7 +6,7 @@ import { debounce } from '../utils'
 import safeLocalStorage from './safeLocalStorage'
 import { deserialize, serialize } from './serializeSimulation'
 
-const VERSION = 1
+const VERSION = 1.1
 
 const LOCAL_STORAGE_KEY = 'ecolab-climat::persisted-simulation::v' + VERSION
 

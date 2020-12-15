@@ -5,7 +5,7 @@ import ShareButton from 'Components/ShareButton'
 import Simulation from 'Components/Simulation'
 import { Markdown } from 'Components/utils/markdown'
 import { TrackerContext } from 'Components/utils/withTracker'
-import { utils } from 'publicodes'
+import { utils, evaluateRule } from 'publicodes'
 
 import { compose, isEmpty, symmetricDifference } from 'ramda'
 import React, { useContext, useEffect } from 'react'
@@ -15,7 +15,7 @@ import { Redirect } from 'react-router'
 import CarbonImpact from './CarbonImpact'
 import Chart from './chart/index.js'
 import { objectifsSelector } from 'Selectors/simulationSelectors'
-import { useEvaluation } from 'Components/utils/EngineContext'
+import { useEngine } from 'Components/utils/EngineContext'
 
 const eqValues = compose(isEmpty, symmetricDifference)
 
@@ -24,14 +24,14 @@ const Simulateur = (props) => {
 		decoded = utils.decodeRuleName(objectif),
 		rules = useSelector((state) => state.rules),
 		rule = rules[decoded],
-		objectifs = useSelector(objectifsSelector),
-		analysis = useEvaluation(objectifs),
+		engine = useEngine(),
+		evaluation = engine.evaluate(decoded),
 		dispatch = useDispatch(),
 		config = {
 			objectifs: [decoded],
 		},
-		configSet = useSelector((state) => state.simulation?.config),
-		state = useSelector((state) => state)
+		configSet = useSelector((state) => state.simulation?.config)
+
 	useEffect(
 		() =>
 			!eqValues(config.objectifs, configSet?.objectifs || [])
@@ -50,7 +50,7 @@ const Simulateur = (props) => {
 					<meta name="description" content={rule.description} />
 				)}
 			</Helmet>
-			<SessionBar />
+			<SessionBar evaluation={evaluation} />
 			<Simulation
 				noFeedback
 				teaseCategories
@@ -58,7 +58,7 @@ const Simulateur = (props) => {
 					rule.dottedName === 'bilan' ? (
 						<RedirectionToEndPage
 							score={rule.nodeValue}
-							url={buildEndURL(analysis)}
+							url={buildEndURL(evaluation)}
 						/>
 					) : rule.description ? (
 						<Markdown source={rule.description} />
@@ -69,7 +69,7 @@ const Simulateur = (props) => {
 				targets={<>{rule.period === 'flexible' && <PeriodBlock />}</>}
 				explanations={
 					<>
-						<CarbonImpact />
+						<CarbonImpact evaluation={evaluation} />
 						<Chart />
 					</>
 				}

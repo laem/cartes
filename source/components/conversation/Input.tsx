@@ -1,9 +1,8 @@
-import { formatValue, Unit } from 'publicodes'
+import { formatValue, Evaluation, Unit } from 'publicodes'
 import { useCallback } from 'react'
 import { useTranslation } from 'react-i18next'
 import NumberFormat from 'react-number-format'
 import { currencyFormat, debounce } from '../../utils'
-import InputEstimation from './InputEstimation'
 import InputSuggestions from './InputSuggestions'
 import { InputCommonProps } from './RuleInput'
 
@@ -14,15 +13,20 @@ export default function Input({
 	onSubmit,
 	id,
 	value,
-	defaultValue,
-	autoFocus,
+	missing,
 	unit,
-	inputEstimation,
-}: InputCommonProps & { unit?: Unit; onSubmit: (source: string) => void }) {
+	autoFocus,
+}: InputCommonProps & {
+	onSubmit: (source: string) => void
+	unit: Unit | undefined
+	value: Evaluation<number>
+}) {
 	const debouncedOnChange = useCallback(debounce(550, onChange), [])
 	const { language } = useTranslation().i18n
+	const unité = formatValue({ nodeValue: value ?? 0, unit }, { language })
+		.replace(/[\d,.]/g, '')
+		.trim()
 	const { thousandSeparator, decimalSeparator } = currencyFormat(language)
-
 	// const [currentValue, setCurrentValue] = useState(value)
 	return (
 		<div className="step input">
@@ -33,13 +37,11 @@ export default function Input({
 						onChange(value)
 					}}
 					onSecondClick={() => onSubmit?.('suggestion')}
-					unit={unit}
 				/>
 				<NumberFormat
 					autoFocus={autoFocus}
 					className="suffixed ui__"
 					id={id}
-					placeholder={defaultValue?.nodeValue ?? defaultValue}
 					thousandSeparator={thousandSeparator}
 					decimalSeparator={decimalSeparator}
 					allowEmptyFormatting={true}
@@ -47,28 +49,15 @@ export default function Input({
 					// re-render with a new "value" prop from the outside.
 					onValueChange={({ floatValue }) => {
 						if (floatValue !== value) {
-							debouncedOnChange(floatValue)
+							debouncedOnChange(
+								floatValue != undefined ? { valeur: floatValue, unité } : {}
+							)
 						}
 					}}
-					value={value}
 					autoComplete="off"
+					{...{ [missing ? 'placeholder' : 'value']: value ?? '' }}
 				/>
-				<span className="suffix">
-					{formatValue({ nodeValue: value ?? 0, unit }, { language }).replace(
-						/[\d,.]*/g,
-						''
-					)}
-				</span>
-			</div>
-			<div css="width: 100%">
-				{inputEstimation && (
-					<InputEstimation
-						inputEstimation={inputEstimation}
-						setFinalValue={(value) => {
-							setFormValue(value)
-						}}
-					/>
-				)}
+				<span className="suffix">&nbsp;{unité}</span>
 			</div>
 		</div>
 	)

@@ -1,4 +1,12 @@
-import { EngineProvider } from 'Components/utils/EngineContext'
+import {
+	EngineProvider,
+	SituationProvider,
+} from 'Components/utils/EngineContext'
+import {
+	configSituationSelector,
+	situationSelector,
+} from 'Selectors/simulationSelectors'
+
 import Engine from 'publicodes'
 import React, { useEffect, useMemo } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
@@ -75,7 +83,20 @@ export default ({ children, rulesURL, dataBranch }) => {
 }
 
 const EngineWrapper = ({ rules, children }) => {
-	const engine = useMemo(() => new Engine(rules), [rules])
+	const engine = useMemo(() => new Engine(rules), [rules]),
+		userSituation = useSelector(situationSelector),
+		configSituation = useSelector(configSituationSelector),
+		situation = useMemo(
+			() => ({
+				...configSituation,
+				...userSituation,
+			}),
+			[configSituation, userSituation]
+		)
 
-	return <EngineProvider value={engine}>{children}</EngineProvider>
+	return (
+		<EngineProvider value={engine}>
+			<SituationProvider situation={situation}>{children}</SituationProvider>
+		</EngineProvider>
+	)
 }
