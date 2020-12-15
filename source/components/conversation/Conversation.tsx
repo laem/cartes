@@ -78,6 +78,8 @@ export default function Conversation({ customEndMessages }: ConversationProps) {
 		}
 	}
 
+	console.log(currentQuestion, rules[currentQuestion])
+
 	return currentQuestion ? (
 		<>
 			<Aide />
@@ -85,7 +87,7 @@ export default function Conversation({ customEndMessages }: ConversationProps) {
 				<Animate.fadeIn>
 					<div className="step">
 						<h3>
-							{rules[currentQuestion].rawNode.question}{' '}
+							{rules[currentQuestion]?.rawNode?.question}{' '}
 							<ExplicableRule dottedName={currentQuestion} />
 						</h3>
 						<fieldset>

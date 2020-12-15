@@ -1,4 +1,8 @@
-import { goToQuestion, resetSimulation } from 'Actions/actions'
+import {
+	goToQuestion,
+	resetSimulation,
+	deletePreviousSimulation,
+} from 'Actions/actions'
 import Overlay from 'Components/Overlay'
 import { useEngine } from 'Components/utils/EngineContext'
 import { useNextQuestions } from 'Components/utils/useNextQuestion'
@@ -40,6 +44,7 @@ export default function AnswerList({ onClose }: AnswerListProps) {
 								className="ui__ simple small button"
 								onClick={() => {
 									dispatch(resetSimulation())
+									dispatch(deletePreviousSimulation())
 									onClose()
 								}}
 							>
