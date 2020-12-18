@@ -29,6 +29,7 @@ const Simulateur = (props) => {
 		dispatch = useDispatch(),
 		config = {
 			objectifs: [decoded],
+			narrow: decoded !== 'bilan',
 		},
 		configSet = useSelector((state) => state.simulation?.config)
 

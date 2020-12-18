@@ -121,6 +121,7 @@ export function getNextQuestions(
 
 export const useNextQuestions = function (): Array<DottedName> {
 	const objectifs = useSelector(objectifsSelector)
+	const narrow = useSelector(configSelector).narrow
 	const answeredQuestions = useSelector(answeredQuestionsSelector)
 	const currentQuestion = useSelector(currentQuestionSelector)
 	const questionsConfig = useSelector(configSelector).questions ?? {}
@@ -137,7 +138,12 @@ export const useNextQuestions = function (): Array<DottedName> {
 			answeredQuestions,
 			situation
 		)
-	}, [missingVariables, questionsConfig, answeredQuestions, situation])
+	}, [
+		missingVariables,
+		questionsConfig,
+		answeredQuestions,
+		situation,
+	]).filter((q) => (!narrow ? true : q.includes(objectifs[0])))
 	if (currentQuestion && currentQuestion !== nextQuestions[0]) {
 		return [currentQuestion, ...nextQuestions]
 	}
@@ -145,7 +151,11 @@ export const useNextQuestions = function (): Array<DottedName> {
 }
 
 export function useSimulationProgress(): number {
-	const numberQuestionAnswered = useSelector(answeredQuestionsSelector).length
+	const objectifs = useSelector(objectifsSelector)
+	const narrow = useSelector(configSelector).narrow
+	const numberQuestionAnswered = useSelector(
+		answeredQuestionsSelector
+	).filter((q) => (!narrow ? true : q.includes(objectifs[0]))).length
 	const numberQuestionLeft = useNextQuestions().length
 
 	return numberQuestionAnswered / (numberQuestionAnswered + numberQuestionLeft)

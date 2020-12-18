@@ -48,6 +48,7 @@ type QuestionsKind =
 	| 'liste noire'
 
 export type SimulationConfig = {
+	narrow: Boolean
 	objectifs:
 		| Array<DottedName>
 		| Array<{ icône: string; nom: string; objectifs: Array<DottedName> }>
