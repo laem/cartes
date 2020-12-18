@@ -78,8 +78,6 @@ export default function Conversation({ customEndMessages }: ConversationProps) {
 		}
 	}
 
-	console.log(currentQuestion, rules[currentQuestion])
-
 	return currentQuestion ? (
 		<>
 			<Aide />

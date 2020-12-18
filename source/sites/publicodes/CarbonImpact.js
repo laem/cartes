@@ -1,11 +1,22 @@
 import { utils } from 'publicodes'
 import React from 'react'
 import emoji from 'react-easy-emoji'
+import { useSelector } from 'react-redux'
 import { Link } from 'react-router-dom'
+import {
+	objectifsSelector,
+	situationSelector,
+} from '../../selectors/simulationSelectors'
 import SimulationHumanWeight from './HumanWeight'
+import { useEngine } from 'Components/utils/EngineContext'
 
-export default ({ evaluation }) => {
-	const { nodeValue, dottedName } = evaluation
+export default ({}) => {
+	const objectif = useSelector(objectifsSelector)[0],
+		// needed for this component to refresh on situation change :
+		situation = useSelector(situationSelector),
+		engine = useEngine(),
+		evaluation = engine.evaluate(objectif),
+		{ nodeValue, dottedName } = evaluation
 
 	return (
 		<div
