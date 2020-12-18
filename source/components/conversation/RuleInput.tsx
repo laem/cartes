@@ -11,6 +11,7 @@ import {
 	formatValue,
 	ParsedRules,
 	reduceAST,
+	utils,
 } from 'publicodes'
 import { Evaluation } from 'publicodes/dist/types/AST/types'
 import React, { useContext } from 'react'
@@ -66,7 +67,8 @@ export default function RuleInput<Name extends string = DottedName>({
 	onSubmit = () => null,
 }: RuleInputProps<Name>) {
 	const engine = useContext(EngineContext)
-	const rule = evaluateRule(engine, dottedName)
+	const rule = evaluateRule(engine, dottedName),
+		rules = engine.getParsedRules()
 
 	const language = useTranslation().i18n.language
 	const value = rule.nodeValue
@@ -177,13 +179,18 @@ export default function RuleInput<Name extends string = DottedName>({
 			<ParagrapheInput {...commonProps} value={value as Evaluation<string>} />
 		)
 	}
-
 	return (
 		<Input
 			{...commonProps}
 			onSubmit={onSubmit}
 			unit={rule.unit}
 			value={value as Evaluation<number>}
+			inputEstimation={
+				rule.aide &&
+				rules[
+					utils.disambiguateRuleReference(rules, rule.dottedName, rule.aide)
+				]
+			}
 		/>
 	)
 }
