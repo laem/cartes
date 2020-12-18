@@ -5,7 +5,8 @@ import emoji from 'react-easy-emoji'
 
 export default ({
 	nodeValue,
-	rawNode: { icônes = '🌍', couleur },
+	icons = '🌍',
+	color,
 	title,
 	empreinteMaximum,
 	noText,
@@ -30,12 +31,12 @@ export default ({
 					margin-left: -2.3rem;
 				`}
 			>
-				{emoji(icônes)}
+				{emoji(icons)}
 			</span>
 			<span
 				css={`
 					display: inline-block;
-					background: ${couleur};
+					background: ${color};
 					margin-top: 0rem;
 					margin-right: 0.8rem;
 					height: 1.1rem;

@@ -29,24 +29,23 @@ export const extractCategories = (analysis) => {
 
 	return sortCategories(categories)
 }
-export default ({ details, color, noText, noAnimation }) => {
+export default ({ details, noText, noAnimation }) => {
 	const rules = useSelector((state) => state.rules)
 	const objectifs = useSelector(objectifsSelector)
 	const engine = useEngine(objectifs),
-		analysis = evaluateRule(engine, 'bilan')
+		categories = sortCategories(
+			rules['bilan'].formule.somme.map((name) => {
+				const node = engine.evaluate(name)
+				const { icônes, couleur } = rules[name]
+				return {
+					...node,
+					icons: icônes,
+					color: couleur,
+					nodeValue: details ? details[name[0]] : node.nodeValue,
+				}
+			})
+		)
 
-	const categories = analysis?.length
-		? extractCategories(analysis)
-		: details &&
-		  sortCategories(
-				rules['bilan'].formule.explanation.explanation.map((reference) => {
-					const category = rules[reference.dottedName]
-					return {
-						...category,
-						nodeValue: details[category.name[0]],
-					}
-				})
-		  )
 	if (!categories) return null
 
 	const empreinteMaximum = categories.reduce(
@@ -121,7 +120,7 @@ export default ({ details, color, noText, noAnimation }) => {
 									'/documentation/' + utils.encodeRuleName(category.dottedName)
 								}
 							>
-								<Bar {...{ ...category, color, noText, empreinteMaximum }} />
+								<Bar {...{ ...category, noText, empreinteMaximum }} />
 							</Link>
 						</motion.li>
 					))}
