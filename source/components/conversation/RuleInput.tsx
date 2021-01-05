@@ -87,7 +87,6 @@ export default function RuleInput<Name extends string = DottedName>({
 		required: true,
 	}
 	if (getVariant(engine.getParsedRules()[dottedName])) {
-		console.log('BVT', buildVariantTree(engine.getParsedRules(), dottedName))
 		return (
 			<Question
 				{...commonProps}

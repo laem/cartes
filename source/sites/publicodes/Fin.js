@@ -27,31 +27,40 @@ const getBackgroundColor = (score) =>
 		Math.round((score < 2000 ? 0 : score > 20000 ? 19000 : score - 2000) / 1000)
 	]
 
+const sumFromDetails = (details) =>
+	details.reduce((memo, [name, value]) => memo + value, 0)
+
 export default ({}) => {
-	const query = new URLSearchParams(useLocation().search),
-		score = query.get('total') || useParams().score
+	const query = new URLSearchParams(useLocation().search)
+	const details = query.get('details')
 
 	// details=a2.6t2.1s1.3l1.0b0.8f0.2n0.1
-	const encodedDetails = query.get('details'),
+	const encodedDetails = details,
 		rehydratedDetails =
 			encodedDetails &&
-			Object.fromEntries(
-				encodedDetails
-					.match(/[a-z][0-9]+\.[0-9][0-9]/g)
-					.map(([category, ...rest]) => [category, 1000 * +rest.join('')])
-					// Here we convert categories with an old name to the new one
-					// 'biens divers' was renamed to 'divers'
-					.map(([category, ...rest]) =>
-						category === 'b' ? ['d', ...rest] : [category, ...rest]
-					)
-			)
+			encodedDetails
+				.match(/[a-z][0-9]+\.[0-9][0-9]/g)
+				.map(([category, ...rest]) => [category, 1000 * +rest.join('')])
+				// Here we convert categories with an old name to the new one
+				// 'biens divers' was renamed to 'divers'
+				.map(([category, ...rest]) =>
+					category === 'b' ? ['d', ...rest] : [category, ...rest]
+				)
+
+	const score = sumFromDetails(rehydratedDetails)
 	const { value } = useSpring({
 		config: { mass: 1, tension: 150, friction: 150, precision: 1000 },
-		value: +score,
+		value: score,
 		from: { value: 0 },
 	})
 
-	return <AnimatedDiv value={value} score={score} details={rehydratedDetails} />
+	return (
+		<AnimatedDiv
+			value={value}
+			score={score}
+			details={Object.fromEntries(rehydratedDetails)}
+		/>
+	)
 }
 
 const AnimatedDiv = animated(({ score, value, details }) => {

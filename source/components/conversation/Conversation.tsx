@@ -35,7 +35,6 @@ export default function Conversation({ customEndMessages }: ConversationProps) {
 	const currentQuestionIsAnswered = situation[currentQuestion] != null
 	const previousAnswers = useSelector(answeredQuestionsSelector)
 	const tracker = useContext(TrackerContext)
-	console.log({ currentQuestion })
 
 	useEffect(() => {
 		if (previousAnswers.length === 1) {

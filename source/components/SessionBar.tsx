@@ -16,9 +16,8 @@ import Answers from './conversation/AnswerList'
 
 // TODO should be find the rewritten version of this from mon-entreprise and merge them ?
 
-export const buildEndURL = (analysis) => {
-	const total = analysis.targets[0].nodeValue,
-		categories = extractCategories(analysis),
+export const buildEndURL = (rules, engine) => {
+	const categories = extractCategories(rules, engine),
 		detailsString =
 			categories &&
 			categories.reduce(
@@ -31,10 +30,10 @@ export const buildEndURL = (analysis) => {
 
 	if (detailsString == null) return null
 
-	return `/fin?total=${Math.round(total)}&details=${detailsString}`
+	return `/fin?details=${detailsString}`
 }
 
-export default function SessionBar({ evaluation, answerButtonOnly = false }) {
+export default function SessionBar({ answerButtonOnly = false }) {
 	const dispatch = useDispatch()
 	const previousSimulation = useSelector(
 		(state: RootState) => state.previousSimulation
@@ -47,6 +46,10 @@ export default function SessionBar({ evaluation, answerButtonOnly = false }) {
 			dispatch(loadPreviousSimulation())
 	}, [])
 	const [showAnswerModal, setShowAnswerModal] = useState(false)
+
+	const objectifs = useSelector(objectifsSelector)
+	const rules = useSelector((state) => state.rules)
+	const engine = useEngine(objectifs)
 
 	const history = useHistory()
 	const location = useLocation()
@@ -120,7 +123,7 @@ export default function SessionBar({ evaluation, answerButtonOnly = false }) {
 					</Button>
 					<Button
 						className="simple small"
-						onClick={() => history.push(buildEndURL(evaluation))}
+						onClick={() => history.push(buildEndURL(rules, engine))}
 					>
 						{emoji('💤 ')}
 						Terminer

@@ -6,7 +6,10 @@ import { sortBy } from 'ramda'
 import React from 'react'
 import { useSelector } from 'react-redux'
 import { Link } from 'react-router-dom'
-import { objectifsSelector } from 'Selectors/simulationSelectors'
+import {
+	situationSelector,
+	objectifsSelector,
+} from 'Selectors/simulationSelectors'
 import Bar from './Bar'
 
 const showBudget = false
@@ -19,32 +22,27 @@ const // Rough estimate of the 2050 budget per person to stay under 2° by 2100
 	transportClimateBudget = climateBudgetPerDay * transportShare
 
 const sortCategories = sortBy(({ nodeValue }) => -nodeValue)
-export const extractCategories = (analysis) => {
-	const bilan = analysis.find((t) => t.dottedName === 'bilan')
-	if (!bilan) return null
-	//TODO ouch, there should be a better way to navigate the evaluation tree
-	const categories = bilan.explanation.explanation.valeur.explanation.valeur.explanation.map(
-		(category) => category.explanation
-	)
+export const extractCategories = (rules, engine, valuesFromURL) => {
+	const categories = rules['bilan'].formule.somme.map((name) => {
+		const node = engine.evaluate(name)
+		const { icônes, couleur } = rules[name]
+		return {
+			...node,
+			icons: icônes,
+			color: couleur,
+			nodeValue: valuesFromURL ? valuesFromURL[name[0]] : node.nodeValue,
+		}
+	})
 
 	return sortCategories(categories)
 }
 export default ({ details, noText, noAnimation }) => {
-	const rules = useSelector((state) => state.rules)
+	// needed for this component to refresh on situation change :
+	const situation = useSelector(situationSelector)
 	const objectifs = useSelector(objectifsSelector)
-	const engine = useEngine(objectifs),
-		categories = sortCategories(
-			rules['bilan'].formule.somme.map((name) => {
-				const node = engine.evaluate(name)
-				const { icônes, couleur } = rules[name]
-				return {
-					...node,
-					icons: icônes,
-					color: couleur,
-					nodeValue: details ? details[name[0]] : node.nodeValue,
-				}
-			})
-		)
+	const rules = useSelector((state) => state.rules)
+	const engine = useEngine(objectifs)
+	const categories = extractCategories(rules, engine, details)
 
 	if (!categories) return null
 
