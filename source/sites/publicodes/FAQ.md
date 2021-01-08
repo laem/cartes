@@ -36,7 +36,7 @@ En effet, il peut être frustrant de se voir comptabiliser des impacts pour lesq
 
 **Mais c’est là tout l’enjeu de la transition au sens large.**
 
-Cette transition ne peut se penser seulement à l’échelle individuelle. Elle une condition nécessaire mais non suffisante d’une transition plus globale à l’échelle de notre société. Cela revient donc à jouer avec des leviers d’actions indirects (vote, engagement associatif, sensibilisation autour de soi, etc.).
+Cette transition ne peut se penser seulement à l’échelle individuelle. Elle est une condition nécessaire mais non suffisante d’une transition plus globale à l’échelle de notre société. Cela revient donc à jouer avec des leviers d’actions indirects (vote, engagement associatif, sensibilisation autour de soi, etc.).
 
 C’est d’ailleurs tout l’objet de Nos GEStes Climat qui œuvre à sensibiliser et faire prendre conscience des enjeux !
 
