@@ -88,37 +88,41 @@ function StepsTable({
 						`}
 					>
 						<td>
+							<div>
+								<small>
+									{rule.dottedName.split(' . ').slice(0, -1).join(' · ')}
+								</small>
+							</div>
+							<div css="font-size: 110%">{rule.title}</div>
+						</td>
+						<td>
 							<button
-								className="ui__ link-button"
+								className="answer"
+								css={`
+									display: inline-block;
+									padding: 0.6rem;
+									color: inherit;
+									font-size: inherit;
+									width: 100%;
+									text-align: end;
+									font-weight: 500;
+									> span {
+										text-decoration: underline;
+										text-decoration-style: dashed;
+										text-underline-offset: 4px;
+										padding: 0.05em 0em;
+										display: inline-block;
+									}
+								`}
 								onClick={() => {
 									dispatch(goToQuestion(rule.dottedName))
 									onClose()
 								}}
 							>
-								{rule.title}
-							</button>
-						</td>
-						<td>
-							<span
-								css={`
-									display: inline-block;
-									padding: 0.2rem;
-									color: inherit;
-									font-size: inherit;
-									width: 100%;
-									text-align: start;
-									font-weight: 600;
-									> span {
-										border-bottom-color: var(--textColorOnWhite);
-										padding: 0.05em 0em;
-										display: inline-block;
-									}
-								`}
-							>
 								<span className="answerContent">
 									{formatValue(rule, { language })}
 								</span>
-							</span>{' '}
+							</button>
 						</td>
 					</tr>
 				))}
