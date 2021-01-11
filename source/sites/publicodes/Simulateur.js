@@ -5,7 +5,7 @@ import ShareButton from 'Components/ShareButton'
 import Simulation from 'Components/Simulation'
 import { Markdown } from 'Components/utils/markdown'
 import { TrackerContext } from 'Components/utils/withTracker'
-import { utils, evaluateRule } from 'publicodes'
+import { utils } from 'publicodes'
 
 import { compose, isEmpty, symmetricDifference } from 'ramda'
 import React, { useContext, useEffect } from 'react'

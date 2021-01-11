@@ -7,7 +7,6 @@ import { EngineContext } from 'Components/utils/EngineContext'
 import {
 	ASTNode,
 	EvaluatedRule,
-	evaluateRule,
 	formatValue,
 	ParsedRules,
 	reduceAST,
@@ -67,7 +66,7 @@ export default function RuleInput<Name extends string = DottedName>({
 	onSubmit = () => null,
 }: RuleInputProps<Name>) {
 	const engine = useContext(EngineContext)
-	const rule = evaluateRule(engine, dottedName),
+	const rule = engine.evaluate(dottedName),
 		rules = engine.getParsedRules()
 
 	const language = useTranslation().i18n.language
