@@ -9,7 +9,7 @@ import * as Animate from 'Components/ui/animate'
 import { EngineContext } from 'Components/utils/EngineContext'
 import { useNextQuestions } from 'Components/utils/useNextQuestion'
 import { TrackerContext } from 'Components/utils/withTracker'
-import React, { useContext, useEffect } from 'react'
+import React, { useState, useContext, useEffect } from 'react'
 import emoji from 'react-easy-emoji'
 import { Trans } from 'react-i18next'
 import { useDispatch, useSelector } from 'react-redux'
@@ -17,17 +17,20 @@ import {
 	answeredQuestionsSelector,
 	situationSelector,
 } from 'Selectors/simulationSelectors'
+import { objectifsSelector } from '../../selectors/simulationSelectors'
 import Aide from './Aide'
 import './conversation.css'
 import { ExplicableRule } from './Explicable'
+import CategoryRespiration from './CategoryRespiration'
 
 export type ConversationProps = {
 	customEndMessages?: React.ReactNode
 }
 
-//TODO se rappeler ce que fait ce sélecteur et le convertir à publicodes
-
-export default function Conversation({ customEndMessages }: ConversationProps) {
+export default function Conversation({
+	customEndMessages,
+	teaseCategories,
+}: ConversationProps) {
 	const dispatch = useDispatch()
 	const rules = useContext(EngineContext).getParsedRules()
 	const currentQuestion = useNextQuestions()[0]
@@ -35,6 +38,9 @@ export default function Conversation({ customEndMessages }: ConversationProps) {
 	const currentQuestionIsAnswered = situation[currentQuestion] != null
 	const previousAnswers = useSelector(answeredQuestionsSelector)
 	const tracker = useContext(TrackerContext)
+	const objectifs = useSelector(objectifsSelector)
+
+	const [dismissedRespirations, dismissRespiration] = useState([])
 
 	useEffect(() => {
 		if (previousAnswers.length === 1) {
@@ -78,7 +84,50 @@ export default function Conversation({ customEndMessages }: ConversationProps) {
 		}
 	}
 
-	return currentQuestion ? (
+	if (!currentQuestion)
+		return (
+			<div style={{ textAlign: 'center' }}>
+				<h3>
+					{emoji('🌟')}{' '}
+					<Trans i18nKey="simulation-end.title">
+						Vous avez complété cette simulation
+					</Trans>
+				</h3>
+				<p>
+					{customEndMessages ? (
+						customEndMessages
+					) : (
+						<Trans i18nKey="simulation-end.text">
+							Vous avez maintenant accès à l'estimation la plus précise
+							possible.
+						</Trans>
+					)}
+				</p>
+			</div>
+		)
+
+	const questionCategoryName = currentQuestion.split(' . ')[0],
+		questionCategory = rules[questionCategoryName]
+
+	const isCategoryFirstQuestion =
+		questionCategory &&
+		previousAnswers.find(
+			(a) => a.split(' . ')[0] === questionCategory.dottedName
+		) === undefined
+
+	return teaseCategories &&
+		isCategoryFirstQuestion &&
+		!dismissedRespirations.includes(questionCategory.dottedName) ? (
+		<CategoryRespiration
+			questionCategory={questionCategory.rawNode}
+			dismiss={() =>
+				dismissRespiration([
+					...dismissedRespirations,
+					questionCategory.dottedName,
+				])
+			}
+		/>
+	) : (
 		<>
 			<Aide />
 			<div style={{ outline: 'none' }} onKeyDown={handleKeyDown}>
@@ -129,23 +178,5 @@ export default function Conversation({ customEndMessages }: ConversationProps) {
 			</div>
 			<QuickLinks />
 		</>
-	) : (
-		<div style={{ textAlign: 'center' }}>
-			<h3>
-				{emoji('🌟')}{' '}
-				<Trans i18nKey="simulation-end.title">
-					Vous avez complété cette simulation
-				</Trans>
-			</h3>
-			<p>
-				{customEndMessages ? (
-					customEndMessages
-				) : (
-					<Trans i18nKey="simulation-end.text">
-						Vous avez maintenant accès à l'estimation la plus précise possible.
-					</Trans>
-				)}
-			</p>
-		</div>
 	)
 }
