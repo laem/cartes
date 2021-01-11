@@ -22,6 +22,8 @@ import Aide from './Aide'
 import './conversation.css'
 import { ExplicableRule } from './Explicable'
 import CategoryRespiration from './CategoryRespiration'
+import { extractCategories } from '../../sites/publicodes/chart'
+import { sortBy } from 'ramda'
 
 export type ConversationProps = {
 	customEndMessages?: React.ReactNode
@@ -32,13 +34,29 @@ export default function Conversation({
 	teaseCategories,
 }: ConversationProps) {
 	const dispatch = useDispatch()
-	const rules = useContext(EngineContext).getParsedRules()
-	const currentQuestion = useNextQuestions()[0]
+	const engine = useContext(EngineContext),
+		rules = engine.getParsedRules()
+	const nextQuestions = useNextQuestions()
 	const situation = useSelector(situationSelector)
-	const currentQuestionIsAnswered = situation[currentQuestion] != null
 	const previousAnswers = useSelector(answeredQuestionsSelector)
 	const tracker = useContext(TrackerContext)
 	const objectifs = useSelector(objectifsSelector)
+	const rawRules = useSelector((state) => state.rules)
+	const categories = extractCategories(rawRules, engine)
+	const sortedQuestions = sortBy(
+		(question) =>
+			-categories.find((c) => question.indexOf(c.dottedName) === 0)?.nodeValue,
+		nextQuestions
+	)
+	const unfoldedStep = useSelector((state) => state.simulation.unfoldedStep)
+	const isMainSimulation = objectifs.length === 1 && objectifs[0] === 'bilan',
+		currentQuestion = !isMainSimulation
+			? nextQuestions[0]
+			: unfoldedStep || sortedQuestions[0]
+
+	console.log({ currentQuestion, nextQuestions, categories })
+
+	const currentQuestionIsAnswered = situation[currentQuestion] != null
 
 	const [dismissedRespirations, dismissRespiration] = useState([])
 
@@ -107,7 +125,9 @@ export default function Conversation({
 		)
 
 	const questionCategoryName = currentQuestion.split(' . ')[0],
-		questionCategory = rules[questionCategoryName]
+		questionCategory = categories.find(
+			({ dottedName }) => dottedName === questionCategoryName
+		)
 
 	const isCategoryFirstQuestion =
 		questionCategory &&
@@ -115,11 +135,13 @@ export default function Conversation({
 			(a) => a.split(' . ')[0] === questionCategory.dottedName
 		) === undefined
 
+	console.log({ questionCategory })
+
 	return teaseCategories &&
 		isCategoryFirstQuestion &&
 		!dismissedRespirations.includes(questionCategory.dottedName) ? (
 		<CategoryRespiration
-			questionCategory={questionCategory.rawNode}
+			questionCategory={questionCategory}
 			dismiss={() =>
 				dismissRespiration([
 					...dismissedRespirations,
