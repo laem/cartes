@@ -3,8 +3,7 @@ import SearchButton from 'Components/SearchButton'
 import * as Animate from 'Components/ui/animate'
 import { EngineContext } from 'Components/utils/EngineContext'
 import { ScrollToTop } from 'Components/utils/Scroll'
-import { SitePathsContext } from 'Components/utils/SitePathsContext'
-import { Documentation, getDocumentationSiteMap } from 'publicodes'
+import { Documentation, getDocumentationSiteMap } from 'publicodes-react'
 import { useCallback, useContext, useMemo } from 'react'
 import { Trans, useTranslation } from 'react-i18next'
 import { useDispatch, useSelector } from 'react-redux'
@@ -13,12 +12,14 @@ import { RootState } from 'Reducers/rootReducer'
 import SearchBar from 'Components/SearchBar'
 import Méthode from './Méthode'
 
+console.log(getDocumentationSiteMap)
+
 export default function RulePage() {
 	const currentSimulation = useSelector(
 		(state: RootState) => !!state.simulation?.url
 	)
 	const engine = useContext(EngineContext)
-	const documentationPath = useContext(SitePathsContext).documentation.index
+	const documentationPath = '/documentation'
 	const { pathname } = useLocation()
 	const documentationSitePaths = useMemo(
 		() => getDocumentationSiteMap({ engine, documentationPath }),
