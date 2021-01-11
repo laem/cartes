@@ -13,7 +13,7 @@ import { Helmet } from 'react-helmet'
 import { useDispatch, useSelector } from 'react-redux'
 import { Redirect } from 'react-router'
 import CarbonImpact from './CarbonImpact'
-import Chart from './chart/index.js'
+import Chart, { extractCategories } from './chart/index.js'
 import { objectifsSelector } from 'Selectors/simulationSelectors'
 import { useEngine } from 'Components/utils/EngineContext'
 
@@ -31,7 +31,8 @@ const Simulateur = (props) => {
 			objectifs: [decoded],
 			narrow: decoded !== 'bilan',
 		},
-		configSet = useSelector((state) => state.simulation?.config)
+		configSet = useSelector((state) => state.simulation?.config),
+		categories = decoded === 'bilan' && extractCategories(rules, engine)
 
 	useEffect(
 		() =>
@@ -54,7 +55,7 @@ const Simulateur = (props) => {
 			<SessionBar evaluation={evaluation} />
 			<Simulation
 				noFeedback
-				teaseCategories
+				orderByCategories={categories}
 				customEnd={
 					rule.dottedName === 'bilan' ? (
 						<RedirectionToEndPage

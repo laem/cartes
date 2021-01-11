@@ -31,7 +31,7 @@ export type ConversationProps = {
 
 export default function Conversation({
 	customEndMessages,
-	teaseCategories,
+	orderByCategories,
 }: ConversationProps) {
 	const dispatch = useDispatch()
 	const engine = useContext(EngineContext),
@@ -42,10 +42,11 @@ export default function Conversation({
 	const tracker = useContext(TrackerContext)
 	const objectifs = useSelector(objectifsSelector)
 	const rawRules = useSelector((state) => state.rules)
-	const categories = extractCategories(rawRules, engine)
+
 	const sortedQuestions = sortBy(
 		(question) =>
-			-categories.find((c) => question.indexOf(c.dottedName) === 0)?.nodeValue,
+			-orderByCategories.find((c) => question.indexOf(c.dottedName) === 0)
+				?.nodeValue,
 		nextQuestions
 	)
 	const unfoldedStep = useSelector((state) => state.simulation.unfoldedStep)
@@ -53,8 +54,6 @@ export default function Conversation({
 		currentQuestion = !isMainSimulation
 			? nextQuestions[0]
 			: unfoldedStep || sortedQuestions[0]
-
-	console.log({ currentQuestion, nextQuestions, categories })
 
 	const currentQuestionIsAnswered = situation[currentQuestion] != null
 
@@ -125,7 +124,7 @@ export default function Conversation({
 		)
 
 	const questionCategoryName = currentQuestion.split(' . ')[0],
-		questionCategory = categories.find(
+		questionCategory = orderByCategories.find(
 			({ dottedName }) => dottedName === questionCategoryName
 		)
 
@@ -137,7 +136,7 @@ export default function Conversation({
 
 	console.log({ questionCategory })
 
-	return teaseCategories &&
+	return orderByCategories &&
 		isCategoryFirstQuestion &&
 		!dismissedRespirations.includes(questionCategory.dottedName) ? (
 		<CategoryRespiration
@@ -153,6 +152,25 @@ export default function Conversation({
 		<>
 			<Aide />
 			<div style={{ outline: 'none' }} onKeyDown={handleKeyDown}>
+				{orderByCategories && questionCategory && (
+					<div>
+						<span
+							css={`
+								background: ${questionCategory.color || 'darkblue'};
+								color: white;
+								border-radius: 0.3rem;
+								padding: 0.15rem 0.6rem;
+								text-transform: uppercase;
+								img {
+									margin: 0 0.6rem 0 0 !important;
+								}
+							`}
+						>
+							{emoji(questionCategory.icons || '🌍')}
+							{questionCategory.title}
+						</span>
+					</div>
+				)}
 				<Animate.fadeIn>
 					<div className="step">
 						<h3>

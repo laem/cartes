@@ -18,14 +18,14 @@ type SimulationProps = {
 	customEndMessages?: ConversationProps['customEndMessages']
 	showPeriodSwitch?: boolean
 	showLinkToForm?: boolean
-	teaseCategories: boolean
+	orderByCategories: Array<Object>
 }
 
 export default function Simulation({
 	explanations,
 	results,
 	customEndMessages,
-	teaseCategories,
+	orderByCategories,
 	showLinkToForm,
 	showPeriodSwitch,
 	noFeedback,
@@ -36,7 +36,7 @@ export default function Simulation({
 			<Animate.fromTop>
 				{results}
 				<Questions
-					teaseCategories={teaseCategories}
+					orderByCategories={orderByCategories}
 					customEndMessages={customEndMessages}
 				/>
 				<br />
@@ -63,10 +63,10 @@ export default function Simulation({
 
 function Questions({
 	customEndMessages,
-	teaseCategories,
+	orderByCategories,
 }: {
 	customEndMessages?: ConversationProps['customEndMessages']
-	teaseCategories: Boolean
+	orderByCategories: Array<Object>
 }) {
 	const progress = useSimulationProgress()
 
@@ -84,7 +84,7 @@ function Questions({
 				<div className="ui__ container">
 					<Notifications />
 					<Conversation
-						teaseCategories={teaseCategories}
+						orderByCategories={orderByCategories}
 						customEndMessages={customEndMessages}
 					/>
 				</div>
