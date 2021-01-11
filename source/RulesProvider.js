@@ -1,6 +1,7 @@
 import {
 	EngineProvider,
 	SituationProvider,
+	engineOptions,
 } from 'Components/utils/EngineContext'
 import {
 	configSituationSelector,
@@ -83,7 +84,10 @@ export default ({ children, rulesURL, dataBranch }) => {
 }
 
 const EngineWrapper = ({ rules, children }) => {
-	const engine = useMemo(() => new Engine(rules), [rules]),
+	const engine = useMemo(() => new Engine(rules, engineOptions), [
+			rules,
+			engineOptions,
+		]),
 		userSituation = useSelector(situationSelector),
 		configSituation = useSelector(configSituationSelector),
 		situation = useMemo(

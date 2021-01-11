@@ -28,6 +28,7 @@ export default function Input({
 	const unité = formatValue({ nodeValue: value ?? 0, unit }, { language })
 		.replace(/[\d,.]/g, '')
 		.trim()
+	console.log({ language, unité })
 	const { thousandSeparator, decimalSeparator } = currencyFormat(language)
 	// const [currentValue, setCurrentValue] = useState(value)
 
