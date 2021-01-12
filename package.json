@@ -8,7 +8,7 @@
 		"url": "https://github.com/betagouv/ecolab-climat.git"
 	},
 	"engines": {
-		"node": ">=14"
+		"node": ">=15"
 	},
 	"browserslist": [
 		"> 1% in FR",
