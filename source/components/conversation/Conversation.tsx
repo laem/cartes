@@ -42,12 +42,14 @@ export default function Conversation({
 	const objectifs = useSelector(objectifsSelector)
 	const rawRules = useSelector((state) => state.rules)
 
-	const sortedQuestions = sortBy(
-		(question) =>
-			-orderByCategories.find((c) => question.indexOf(c.dottedName) === 0)
-				?.nodeValue,
-		nextQuestions
-	)
+	const sortedQuestions = orderByCategories
+		? sortBy(
+				(question) =>
+					-orderByCategories.find((c) => question.indexOf(c.dottedName) === 0)
+						?.nodeValue,
+				nextQuestions
+		  )
+		: nextQuestions
 	const unfoldedStep = useSelector((state) => state.simulation.unfoldedStep)
 	const isMainSimulation = objectifs.length === 1 && objectifs[0] === 'bilan',
 		currentQuestion = !isMainSimulation
@@ -123,9 +125,11 @@ export default function Conversation({
 		)
 
 	const questionCategoryName = currentQuestion.split(' . ')[0],
-		questionCategory = orderByCategories.find(
-			({ dottedName }) => dottedName === questionCategoryName
-		)
+		questionCategory =
+			orderByCategories &&
+			orderByCategories.find(
+				({ dottedName }) => dottedName === questionCategoryName
+			)
 
 	const isCategoryFirstQuestion =
 		questionCategory &&
@@ -133,8 +137,7 @@ export default function Conversation({
 			(a) => a.split(' . ')[0] === questionCategory.dottedName
 		) === undefined
 
-	console.log({ questionCategory })
-
+	console.log(currentQuestion)
 	return orderByCategories &&
 		isCategoryFirstQuestion &&
 		!dismissedRespirations.includes(questionCategory.dottedName) ? (
