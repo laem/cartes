@@ -1,10 +1,9 @@
 import React, { useContext, useEffect, useMemo, useState } from 'react'
 import { Trans, useTranslation } from 'react-i18next'
-import { DottedName } from 'Rules'
 import Worker from 'worker-loader!./SearchBar.worker.js'
 import RuleLink from './RuleLink'
 import './SearchBar.css'
-import { EngineContext } from './utils/EngineContext'
+import { EngineContext, useEngine } from './utils/EngineContext'
 import { utils } from 'publicodes'
 
 const worker = new Worker()
@@ -15,7 +14,7 @@ type SearchBarProps = {
 
 type SearchItem = {
 	title: string
-	dottedName: DottedName
+	dottedName: Object
 	espace: Array<string>
 }
 
@@ -52,17 +51,17 @@ function highlightMatches(str: string, matches: Matches) {
 						key={i}
 					>
 						{currentStr}
-					</span>
-				]
+					</span>,
+				],
 			] as [boolean, number, Array<React.ReactNode>]
 		},
 		[false, 0, []] as [boolean, number, Array<React.ReactNode>]
 	)[2]
 }
 export default function SearchBar({
-	showListByDefault = false
+	showListByDefault = false,
 }: SearchBarProps) {
-	const rules = useContext(EngineContext).getParsedRules()
+	const rules = useEngine().getParsedRules()
 	const [input, setInput] = useState('')
 	const [results, setResults] = useState<
 		Array<{
@@ -76,19 +75,19 @@ export default function SearchBar({
 		() =>
 			Object.values(rules)
 				.filter(utils.ruleWithDedicatedDocumentationPage)
-				.map(rule => ({
+				.map((rule) => ({
 					title:
-						rule.title ??
-						rule.name + (rule.acronyme ? ` (${rule.acronyme})` : ''),
+						rule.title +
+						(rule.rawNode.acronyme ? ` (${rule.rawNode.acronyme})` : ''),
 					dottedName: rule.dottedName,
-					espace: rule.dottedName.split(' . ').reverse()
+					espace: rule.dottedName.split(' . ').reverse(),
 				})),
 		[rules]
 	)
 
 	useEffect(() => {
 		worker.postMessage({
-			rules: searchIndex
+			rules: searchIndex,
 		})
 
 		worker.onmessage = ({ data: results }) => setResults(results)
@@ -104,7 +103,7 @@ export default function SearchBar({
 				className="ui__"
 				value={input}
 				placeholder={i18n.t('Entrez des mots clefs ici')}
-				onChange={e => {
+				onChange={(e) => {
 					const input = e.target.value
 					if (input.length > 0) worker.postMessage({ input })
 					setInput(input)
@@ -133,8 +132,8 @@ export default function SearchBar({
 				>
 					{(showListByDefault && !results.length && !input.length
 						? searchIndex
-								.filter(item => item.espace.length === 2)
-								.map(item => ({ item, matches: [] }))
+								.filter((item) => item.espace.length === 2)
+								.map((item) => ({ item, matches: [] }))
 						: results
 					)
 						.slice(0, showListByDefault ? 100 : 6)
@@ -145,19 +144,19 @@ export default function SearchBar({
 									style={{
 										width: '100%',
 										textDecoration: 'none',
-										lineHeight: '1.5rem'
+										lineHeight: '1.5rem',
 									}}
 								>
 									<small>
 										{item.espace
 											.slice(1)
 											.reverse()
-											.map(name => (
+											.map((name) => (
 												<span key={name}>
 													{highlightMatches(
 														name,
 														matches.filter(
-															m => m.key === 'espace' && m.value === name
+															(m) => m.key === 'espace' && m.value === name
 														)
 													)}{' '}
 													›{' '}
@@ -167,7 +166,7 @@ export default function SearchBar({
 									</small>
 									{highlightMatches(
 										item.title,
-										matches.filter(m => m.key === 'title')
+										matches.filter((m) => m.key === 'title')
 									)}
 								</RuleLink>
 							</li>
