@@ -5,7 +5,7 @@ import { RootState, SimulationConfig } from 'Reducers/rootReducer'
 export const configSelector = (state: RootState): Partial<SimulationConfig> =>
 	state.simulation?.config ?? {}
 
-export const objectifsSelector = createSelector([configSelector], config => {
+export const objectifsSelector = createSelector([configSelector], (config) => {
 	const primaryObjectifs = (config.objectifs ?? ([] as any))
 		.map((obj: DottedName | { objectifs: Array<DottedName> }) =>
 			typeof obj === 'string' ? [obj] : obj.objectifs
@@ -30,7 +30,7 @@ export const firstStepCompletedSelector = createSelector(
 		if (!situation) {
 			return false
 		}
-		return objectifs.some(objectif => {
+		return objectifs.some((objectif) => {
 			return objectif in situation
 		})
 	}

@@ -1,10 +1,10 @@
 import { setSimulationConfig } from 'Actions/actions'
 import SessionBar from 'Components/SessionBar'
-import { useEvaluation } from 'Components/utils/EngineContext'
+import { EngineContext } from 'Components/utils/EngineContext'
 import { motion } from 'framer-motion'
 import { utils } from 'publicodes'
 import { partition, sortBy, union } from 'ramda'
-import React, { useEffect } from 'react'
+import React, { useContext, useEffect } from 'react'
 import emoji from 'react-easy-emoji'
 import { useDispatch, useSelector } from 'react-redux'
 import { useLocation } from 'react-router'
@@ -12,6 +12,10 @@ import { Link, Route, Switch } from 'react-router-dom'
 import { animated } from 'react-spring'
 import { objectifsSelector } from 'Selectors/simulationSelectors'
 import tinygradient from 'tinygradient'
+import {
+	answeredQuestionsSelector,
+	configSelector,
+} from '../../selectors/simulationSelectors'
 import Action from './Action'
 import ActionPlus from './ActionPlus'
 import { humanValueAndUnit } from './HumanWeight'
@@ -54,7 +58,7 @@ const AnimatedDiv = animated(({}) => {
 
 	const simulation = useSelector((state) => state.simulation)
 
-	// Add the actions rules to the simulation, keping the user's situation
+	// Add the actions rules to the simulation, keeping the user's situation
 	const config = !simulation
 		? { objectifs: ['bilan', ...flatActions.formule.somme] }
 		: {
@@ -66,28 +70,26 @@ const AnimatedDiv = animated(({}) => {
 		  }
 
 	const objectifs = useSelector(objectifsSelector)
-	const analysis = useEvaluation(objectifs)
 
-	const configSet = useSelector((state) => state.simulation?.config)
-	const foldedSteps = useSelector(
-		(state) => state.simulation?.foldedSteps || []
-	)
+	const engine = useContext(EngineContext)
+
+	const targets = objectifs.map((o) => engine.evaluate(o))
+
+	const configSet = useSelector(configSelector)
+	const answeredQuestions = useSelector(answeredQuestionsSelector)
 
 	const dispatch = useDispatch()
 	useEffect(() => dispatch(setSimulationConfig(config)), [location.pathname])
-	if (!configSet) return null
+	if (!configSet) return <div>Config not set</div>
 
-	const [bilans, actions] = partition(
-		(t) => t.dottedName === 'bilan',
-		analysis.targets
-	)
+	const [bilans, actions] = partition((t) => t.dottedName === 'bilan', targets)
 
 	const sortedActions = sortBy((a) => a.nodeValue)(actions)
 
 	return (
 		<div css="padding: 0 .3rem 1rem; max-width: 600px; margin: 1rem auto;">
 			<SessionBar />
-			{foldedSteps.length === 0 && (
+			{!answeredQuestions.length && (
 				<p css="line-height: 1.4rem; text-align: center">
 					Les chiffres suivants seront alors personnalisés pour votre situation{' '}
 					{emoji('🧮')}
@@ -97,10 +99,11 @@ const AnimatedDiv = animated(({}) => {
 				Comment réduire mon empreinte ?
 			</h1>
 
-			{sortedActions.map((action) => (
+			{sortedActions.map((evaluation) => (
 				<MiniAction
-					key={action.dottedName}
-					data={action}
+					key={evaluation.dottedName}
+					rule={rules[evaluation.dottedName]}
+					evaluation={evaluation}
 					total={bilans.length ? bilans[0].nodeValue : null}
 				/>
 			))}
@@ -152,8 +155,10 @@ const AnimatedDiv = animated(({}) => {
 	)
 })
 
-const MiniAction = ({ data, total }) => {
-	const { title, icons, nodeValue, dottedName } = data
+const MiniAction = ({ evaluation, total, rule }) => {
+	const { nodeValue, dottedName, title } = evaluation
+	const { icônes: icons } = rule
+
 	const disabled = nodeValue === 0 || nodeValue === false
 
 	return (
