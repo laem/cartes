@@ -25,10 +25,8 @@ export default function Input({
 }) {
 	const debouncedOnChange = useCallback(debounce(550, onChange), [])
 	const { language } = useTranslation().i18n
-	const unité = formatValue({ nodeValue: value ?? 0, unit }, { language })
-		.replace(/[\d,.]/g, '')
-		.trim()
-	console.log({ language, unité })
+	const unitéRaw = formatValue({ nodeValue: value ?? 0, unit }, { language }),
+		unité = unitéRaw.replace(/[\d,.]/g, '').trim()
 	const { thousandSeparator, decimalSeparator } = currencyFormat(language)
 	// const [currentValue, setCurrentValue] = useState(value)
 

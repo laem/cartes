@@ -66,31 +66,33 @@ export default function RuleInput<Name extends string = DottedName>({
 	onSubmit = () => null,
 }: RuleInputProps<Name>) {
 	const engine = useContext(EngineContext)
-	const rule = engine.evaluate(dottedName),
-		rules = engine.getParsedRules()
+	const rule = engine.getRule(dottedName)
+	const evaluation = engine.evaluate(dottedName)
+	const rules = engine.getParsedRules()
 
 	const language = useTranslation().i18n.language
-	const value = rule.nodeValue
+	const value = evaluation.nodeValue
+
 	const commonProps: InputCommonProps<Name> = {
 		key: dottedName,
 		dottedName,
 		value,
-		missing: !!rule.missingVariables[dottedName],
+		missing: !!evaluation.missingVariables[dottedName],
 		onChange,
 		autoFocus,
 		className,
 		title: rule.title,
 		id: id ?? dottedName,
-		question: rule.question,
+		question: rule.rawNode.question,
 		suggestions: rule.suggestions,
 		required: true,
 	}
-	if (getVariant(engine.getParsedRules()[dottedName])) {
+	if (getVariant(engine.getRule(dottedName))) {
 		return (
 			<Question
 				{...commonProps}
 				onSubmit={onSubmit}
-				choices={buildVariantTree(engine.getParsedRules(), dottedName)}
+				choices={buildVariantTree(engine, dottedName)}
 			/>
 		)
 	}
@@ -109,7 +111,7 @@ export default function RuleInput<Name extends string = DottedName>({
 *
 */
 
-	if (rule.type === 'date') {
+	if (rule.rawNode.type === 'date') {
 		return (
 			<DateInput
 				{...commonProps}
@@ -122,9 +124,9 @@ export default function RuleInput<Name extends string = DottedName>({
 	}
 
 	if (
-		rule.unit == null &&
-		(rule.type === 'booléen' || rule.type == undefined) &&
-		typeof rule.nodeValue !== 'number'
+		evaluation.unit == null &&
+		(rule.rawNode.type === 'booléen' || rule.rawNode.type == undefined) &&
+		typeof evaluation.nodeValue !== 'number'
 	) {
 		return useSwitch ? (
 			<ToggleSwitch
@@ -145,9 +147,9 @@ export default function RuleInput<Name extends string = DottedName>({
 		)
 	}
 
-	if (rule.unit?.numerators.includes('€') && isTarget) {
+	if (evaluation.unit?.numerators.includes('€') && isTarget) {
 		const unité = formatValue(
-			{ nodeValue: value ?? 0, unit: rule.unit },
+			{ nodeValue: value ?? 0, unit: evaluation.unit },
 			{ language }
 		)
 			.replace(/[\d,.]/g, '')
@@ -166,22 +168,23 @@ export default function RuleInput<Name extends string = DottedName>({
 			</>
 		)
 	}
-	if (rule.unit?.numerators.includes('%') && isTarget) {
+	if (evaluation.unit?.numerators.includes('%') && isTarget) {
 		return <PercentageField {...commonProps} debounce={600} />
 	}
-	if (rule.type === 'texte') {
+	if (rule.rawNode.type === 'texte') {
 		return <TextInput {...commonProps} value={value as Evaluation<string>} />
 	}
-	if (rule.type === 'paragraphe') {
+	if (rule.rawNode.type === 'paragraphe') {
 		return (
 			<ParagrapheInput {...commonProps} value={value as Evaluation<string>} />
 		)
 	}
+
 	return (
 		<Input
 			{...commonProps}
 			onSubmit={onSubmit}
-			unit={rule.unit}
+			unit={evaluation.unit}
 			value={value as Evaluation<number>}
 			inputEstimation={
 				rule.aide &&
@@ -193,7 +196,7 @@ export default function RuleInput<Name extends string = DottedName>({
 	)
 }
 
-const getVariant = (node: ASTNode & { nodeKind: 'rule' }) =>
+const getVariant = (node: RuleNode) =>
 	reduceAST<false | (ASTNode & { nodeKind: 'une possibilité' })>(
 		(_, node) => {
 			if (node.nodeKind === 'une possibilité') {
@@ -203,11 +206,12 @@ const getVariant = (node: ASTNode & { nodeKind: 'rule' }) =>
 		false,
 		node
 	)
+
 export const buildVariantTree = <Name extends string>(
-	allRules: ParsedRules<Name>,
+	engine: Engine<Name>,
 	path: Name
 ): Choice => {
-	const node = allRules[path]
+	const node = engine.getRule(path)
 	if (!node) throw new Error(`La règle ${path} est introuvable`)
 	const variant = getVariant(node)
 	const canGiveUp =
@@ -221,7 +225,7 @@ export const buildVariantTree = <Name extends string>(
 					children: (variant.explanation as (ASTNode & {
 						nodeKind: 'reference'
 					})[]).map(({ dottedName }) =>
-						buildVariantTree(allRules, dottedName as Name)
+						buildVariantTree(engine, dottedName as Name)
 					),
 			  }
 			: null
