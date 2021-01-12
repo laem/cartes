@@ -22,6 +22,7 @@ export default function Input({
 	onSubmit: (source: string) => void
 	unit: Unit | undefined
 	value: Evaluation<number>
+	inputEstimation: Object | void
 }) {
 	const debouncedOnChange = useCallback(debounce(550, onChange), [])
 	const { language } = useTranslation().i18n

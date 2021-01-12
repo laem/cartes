@@ -180,6 +180,8 @@ export default function RuleInput<Name extends string = DottedName>({
 		)
 	}
 
+	console.log(rule, evaluation)
+
 	return (
 		<Input
 			{...commonProps}
@@ -187,9 +189,13 @@ export default function RuleInput<Name extends string = DottedName>({
 			unit={evaluation.unit}
 			value={value as Evaluation<number>}
 			inputEstimation={
-				rule.aide &&
+				rule.rawNode.aide &&
 				rules[
-					utils.disambiguateRuleReference(rules, rule.dottedName, rule.aide)
+					utils.disambiguateRuleReference(
+						rules,
+						rule.dottedName,
+						rule.rawNode.aide
+					)
 				]
 			}
 		/>

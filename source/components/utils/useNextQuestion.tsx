@@ -130,6 +130,7 @@ export const useNextQuestions = function (): Array<DottedName> {
 	const missingVariables = objectifs.map(
 		(node) => engine.evaluate(node).missingVariables ?? {}
 	)
+	console.log(missingVariables)
 	const nextQuestions = useMemo(() => {
 		return getNextQuestions(
 			missingVariables,
