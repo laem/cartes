@@ -20,15 +20,22 @@ export default function SelectWeeklyDiet({
 	const situation = useSelector(situationSelector)
 
 	const chipsCount = dietRules.reduce(
-		(memo, [_, { dottedName, defaultValue }]) =>
+		(
+			memo,
+			[
+				_,
+				{
+					dottedName,
+					rawNode: { 'par défaut': defaultValue },
+				},
+			]
+		) =>
 			memo +
 			(situation[dottedName] != undefined
 				? situation[dottedName]
 				: defaultValue),
 		0
 	)
-
-	debugger
 
 	const choiceElements = (
 		<div>
@@ -78,7 +85,9 @@ export default function SelectWeeklyDiet({
 					]) => {
 						const situationValue = situation[question.dottedName],
 							value =
-								situationValue != null ? situationValue : question.defaultValue
+								situationValue != null
+									? situationValue
+									: question.rawNode['par défaut']
 						return (
 							<li className="ui__ card" key={name}>
 								<h4>{title}</h4>
