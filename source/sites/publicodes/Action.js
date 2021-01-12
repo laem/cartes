@@ -4,45 +4,58 @@ import Simulation from 'Components/Simulation'
 import { Markdown } from 'Components/utils/markdown'
 import { ScrollToTop } from 'Components/utils/Scroll'
 import { utils } from 'publicodes'
-import React, { useEffect } from 'react'
+import React, { useContext, useEffect } from 'react'
 import emoji from 'react-easy-emoji'
 import { useDispatch, useSelector } from 'react-redux'
 import { useParams } from 'react-router'
 import { Link } from 'react-router-dom'
 import { HumanWeight } from './HumanWeight'
 import BallonGES from './images/ballonGES.svg'
+import { useNextQuestions } from 'Components/utils/useNextQuestion'
+import { EngineContext } from '../../components/utils/EngineContext'
+import { splitName } from 'Components/publicodesUtils'
+import { parentName } from '../../components/publicodesUtils'
 
-const { decodeRuleName, encodeRuleName, splitName } = utils
+const { decodeRuleName, encodeRuleName } = utils
 
 export const Footprint = ({ value }) => <div>Lala {value}</div>
 
 export default ({}) => {
 	const { encodedName } = useParams()
 	const rules = useSelector((state) => state.rules)
-	const nextSteps = useSelector(nextStepsSelector)
-	const simulation = useSelector((state) => state.simulation)
-	const dottedName = decodeRuleName(encodedName),
-		config = {
-			objectifs: [dottedName],
-		}
-
+	const nextQuestions = useNextQuestions()
+	const dottedName = decodeRuleName(encodedName)
 	const configSet = useSelector((state) => state.simulation?.config)
-	const analysis = useSelector(analysisWithDefaultsSelector)
+
+	// TODO here we need to apply a rustine to accommodate for this issue
+	// https://github.com/betagouv/mon-entreprise/issues/1316#issuecomment-758833973
+	// to be continued...
+	const actionParent = parentName(dottedName)
+	const config = {
+		objectifs: [dottedName],
+		situation: { ...(configSet?.situation || {}), [actionParent]: 'oui' },
+	}
+
+	const engine = useContext(EngineContext)
 
 	const dispatch = useDispatch()
-	useEffect(() => dispatch(setSimulationConfig(config)), [encodedName])
+	useEffect(() => {
+		dispatch(setSimulationConfig(config))
+	}, [encodedName])
 	if (!configSet) return null
 
-	const { nodeValue, description, icons, title, plus } = analysis.targets[0]
+	const { nodeValue, title, plus } = engine.evaluate(dottedName)
 
-	const flatActions = rules.find((r) => r.dottedName === 'actions')
+	const { description, icônes: icons } = rules[dottedName]
+
+	const flatActions = rules['actions']
 	const relatedActions = flatActions.formule.somme
 		.filter(
 			(actionDottedName) =>
 				actionDottedName !== dottedName &&
 				splitName(dottedName)[0] === splitName(actionDottedName)[0]
 		)
-		.map((name) => rules.find(({ dottedName }) => dottedName === name))
+		.map((name) => engine.getRule(name))
 
 	return (
 		<div css="padding: 0 .3rem 1rem; max-width: 600px; margin: 1rem auto;">
@@ -80,7 +93,7 @@ export default ({}) => {
 				</div>
 			</div>
 			<SessionBar answerButtonOnly />
-			{nextSteps.length > 0 && (
+			{nextQuestions.length > 0 && (
 				<>
 					<p>Personnalisez cette estimation</p>
 					<Simulation

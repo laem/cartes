@@ -1,2 +1,4 @@
 export const parentName = (dottedName, outputSeparator = ' . ') =>
-	dottedName.split(' . ').slice(0, -1).join(outputSeparator)
+	splitName(dottedName).slice(0, -1).join(outputSeparator)
+
+export const splitName = (dottedName) => dottedName.split(' . ')
