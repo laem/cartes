@@ -13,6 +13,7 @@ import { useDispatch, useSelector } from 'react-redux'
 import { DottedName } from 'modele-social'
 import { situationSelector } from 'Selectors/simulationSelectors'
 import './AnswerList.css'
+import { parentName } from 'Components/publicodesUtils'
 
 type AnswerListProps = {
 	onClose: () => void
@@ -89,9 +90,7 @@ function StepsTable({
 					>
 						<td>
 							<div>
-								<small>
-									{rule.dottedName.split(' . ').slice(0, -1).join(' · ')}
-								</small>
+								<small>{parentName(rule.dottedName, ' · ')}</small>
 							</div>
 							<div css="font-size: 110%">{rule.title}</div>
 						</td>

@@ -18,9 +18,10 @@ import { useTranslation } from 'react-i18next'
 import { DottedName } from 'modele-social'
 import DateInput from './DateInput'
 import ParagrapheInput from './ParagrapheInput'
-import SelectEuropeCountry from './select/SelectEuropeCountry'
+import SelectWeeklyDiet from './select/SelectWeeklyDiet'
 import TextInput from './TextInput'
 import { useSelector } from 'react-redux'
+import { parentName } from 'Components/publicodesUtils'
 
 type Value = any
 export type RuleInputProps<Name extends string = DottedName> = {
@@ -87,6 +88,32 @@ export default function RuleInput<Name extends string = DottedName>({
 		suggestions: rule.suggestions,
 		required: true,
 	}
+
+	const weeklyDietQuestion = (dottedName) =>
+		dottedName.includes('alimentation . plats') &&
+		dottedName.includes(' . nombre')
+
+	if (weeklyDietQuestion(rule.dottedName)) {
+		// This selected a precise set of questions to bypass their regular components and answer all of them in one big custom UI
+		const dietRules = Object.entries(rules)
+			.filter(([dottedName]) => weeklyDietQuestion(dottedName))
+			.map(([dottedName, questionRule]) => {
+				const parentRule = parentName(dottedName)
+				return [rules[parentRule], questionRule]
+			})
+
+		return (
+			<SelectWeeklyDiet
+				{...{
+					...commonProps,
+					question:
+						'Choisissez les plats de vos midis et dîners pour une semaine type',
+					dietRules,
+				}}
+			/>
+		)
+	}
+
 	if (getVariant(engine.getRule(dottedName))) {
 		return (
 			<Question

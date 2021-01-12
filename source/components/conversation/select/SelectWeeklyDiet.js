@@ -1,12 +1,7 @@
 import classnames from 'classnames'
-import { T } from 'Components'
 import { ThemeColorsContext } from 'Components/utils/colors'
-import { compose, is } from 'ramda'
 import React, { useCallback, useContext, useState } from 'react'
 import Explicable from 'Components/conversation/Explicable'
-import { FormDecorator } from 'Components/conversation/FormDecorator'
-import 'Components/conversation/Question.css'
-import SendButton from 'Components/conversation/SendButton'
 import emoji from 'react-easy-emoji'
 import { useDispatch, useSelector } from 'react-redux'
 import { situationSelector } from 'Selectors/simulationSelectors'
@@ -15,7 +10,7 @@ import { updateSituation } from 'Actions/actions'
 // This is the number of possible answers in this very custom input component
 const chipsTotal = 14
 
-export default compose(FormDecorator('selectWeeklyDiet'))(function Question({
+export default function SelectWeeklyDiet({
 	name,
 	setFormValue,
 	dietRules,
@@ -32,6 +27,8 @@ export default compose(FormDecorator('selectWeeklyDiet'))(function Question({
 				: defaultValue),
 		0
 	)
+
+	debugger
 
 	const choiceElements = (
 		<div>
@@ -70,7 +67,15 @@ export default compose(FormDecorator('selectWeeklyDiet'))(function Question({
 				`}
 			>
 				{dietRules.map(
-					([{ name, title, description, dottedName, icônes }, question]) => {
+					([
+						{
+							name,
+							title,
+							dottedName,
+							rawNode: { description, icônes },
+						},
+						question,
+					]) => {
 						const situationValue = situation[question.dottedName],
 							value =
 								situationValue != null ? situationValue : question.defaultValue
@@ -125,23 +130,9 @@ export default compose(FormDecorator('selectWeeklyDiet'))(function Question({
 	return (
 		<div css="margin-top: 0.6rem; display: flex; align-items: center; flex-wrap: wrap; justify-content: flex-end">
 			{choiceElements}
-			<SendButton
-				{...{
-					disabled: chipsCount !== chipsTotal,
-					// This component is special : it folds multiple questions at a time
-					submit: () =>
-						dietRules.map(([_, { dottedName }]) =>
-							dispatch({
-								type: 'STEP_ACTION',
-								name: 'fold',
-								step: dottedName,
-							})
-						),
-				}}
-			/>
 		</div>
 	)
-})
+}
 
 let RadioLabel = (props) => (
 	<>
