@@ -7066,13 +7066,15 @@ public-encrypt@^4.0.0:
     randombytes "^2.0.1"
     safe-buffer "^5.1.2"
 
-publicodes-react@../mon-entreprise/publicodes/ui-react:
-  version "1.0.0-beta.7"
+publicodes-react@^1.0.0-beta.8:
+  version "1.0.0-beta.8"
+  resolved "https://registry.yarnpkg.com/publicodes-react/-/publicodes-react-1.0.0-beta.8.tgz#01a1c6a197eececf594847753aef9fbbe8ce344e"
+  integrity sha512-W3MgqECSyfK1ouNO7dmYmLTZNA68Ot5TS3e6TTtfy50J3wDgWXYI4Ipeh9D+vStQ1Yyf+tG43XxRt7DWp1xDrA==
   dependencies:
     classnames "^2.2.6"
     focus-trap-react "^3.1.2"
     i18next "^19.4.4"
-    publicodes "1.0.0-beta.7"
+    publicodes "1.0.0-beta.8"
     ramda "^0.27.0"
     react-easy-emoji "^1.4.0"
     react-i18next "^11.4.0"
@@ -7080,22 +7082,10 @@ publicodes-react@../mon-entreprise/publicodes/ui-react:
     styled-components "^5.1.0"
     yaml "^1.9.2"
 
-"publicodes-react@file:../mon-entreprise/publicodes/ui-react":
-  version "1.0.0-beta.7"
-  dependencies:
-    classnames "^2.2.6"
-    focus-trap-react "^3.1.2"
-    i18next "^19.4.4"
-    publicodes "1.0.0-beta.7"
-    ramda "^0.27.0"
-    react-easy-emoji "^1.4.0"
-    react-i18next "^11.4.0"
-    react-markdown "^4.3.1"
-    styled-components "^5.1.0"
-    yaml "^1.9.2"
-
-publicodes@1.0.0-beta.7, "publicodes@file:../mon-entreprise/publicodes/core":
-  version "1.0.0-beta.7"
+publicodes@1.0.0-beta.8, publicodes@^1.0.0-beta.8:
+  version "1.0.0-beta.8"
+  resolved "https://registry.yarnpkg.com/publicodes/-/publicodes-1.0.0-beta.8.tgz#20a9aca160286662aa47886c3ac98f99997730e7"
+  integrity sha512-zPRLR4x5EJdQ16qKJplspvhg0gFuMeyqvmSdpz/0hqxiw5TBV3mj56iA/TLHyh3wqmzKavjm+T3SC27ImbxOWA==
   dependencies:
     moo "^0.5.1"
     nearley "^2.19.2"
