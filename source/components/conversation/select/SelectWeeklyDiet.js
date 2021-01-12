@@ -1,7 +1,7 @@
 import classnames from 'classnames'
 import { ThemeColorsContext } from 'Components/utils/colors'
 import React, { useCallback, useContext, useState } from 'react'
-import Explicable from 'Components/conversation/Explicable'
+import { Explicable } from 'Components/conversation/Explicable'
 import emoji from 'react-easy-emoji'
 import { useDispatch, useSelector } from 'react-redux'
 import { situationSelector } from 'Selectors/simulationSelectors'
@@ -78,7 +78,6 @@ export default function SelectWeeklyDiet({
 						{
 							name,
 							title,
-							dottedName,
 							rawNode: { description, icônes },
 						},
 						question,
@@ -100,7 +99,30 @@ export default function SelectWeeklyDiet({
 										}`}
 										onClick={() =>
 											value > 0 &&
-											dispatch(updateSituation(question.dottedName, value - 1))
+											// HACK
+											// This is a custom piece of code to counter the fact that the validation button visibility is handled by conversation.tsx
+											// if you hit - on 'viande 1', all the other inputs will be set, hence the validation button made visible since `currentQuestionIsAnswered` in conversation.tsx
+											// TODO should be rewritter as this component gets generic, used by other variables
+											// note : we don't need to write this dietRules.map in the (+) button, since you can't + a variable without - another one ;)
+											dietRules.map(
+												([
+													_,
+													{
+														dottedName,
+														rawNode: { 'par défaut': defaultValue },
+													},
+												]) =>
+													dispatch(
+														updateSituation(
+															dottedName,
+															question.dottedName === dottedName
+																? value - 1
+																: situation[dottedName] == null
+																? defaultValue
+																: situation[dottedName]
+														)
+													)
+											)
 										}
 									>
 										-
