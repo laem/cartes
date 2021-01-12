@@ -10,22 +10,22 @@ import './Explicable.css'
 import usePortal from 'react-useportal'
 
 export function ExplicableRule({ dottedName }: { dottedName: DottedName }) {
-	const rules = useContext(EngineContext).getParsedRules()
+	const engine = useContext(EngineContext)
 	const tracker = useContext(TrackerContext)
 	const dispatch = useDispatch()
 
 	// Rien à expliquer ici, ce n'est pas une règle
 	if (dottedName == null) return null
-	const rule = rules[dottedName]
+	const rule = engine.getRule(dottedName)
 
-	if (rule.description == null) return null
+	if (rule.rawNode.description == null) return null
 
 	//TODO montrer les variables de type 'une possibilité'
 
 	return (
 		<button
 			className="ui__ link-button"
-			onClick={e => {
+			onClick={(e) => {
 				tracker.push(['trackEvent', 'help', dottedName])
 				dispatch(explainVariable(dottedName))
 				e.preventDefault()
