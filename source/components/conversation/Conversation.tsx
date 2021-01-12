@@ -4,7 +4,6 @@ import {
 	validateStepWithValue,
 } from 'Actions/actions'
 import RuleInput, { RuleInputProps } from 'Components/conversation/RuleInput'
-import QuickLinks from 'Components/QuickLinks'
 import * as Animate from 'Components/ui/animate'
 import { EngineContext } from 'Components/utils/EngineContext'
 import { useNextQuestions } from 'Components/utils/useNextQuestion'
@@ -216,7 +215,6 @@ export default function Conversation({
 					)}
 				</div>
 			</div>
-			<QuickLinks />
 		</>
 	)
 }
