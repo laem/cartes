@@ -70,12 +70,7 @@ const Simulateur = (props) => {
 					)
 				}
 				targets={<>{rule.period === 'flexible' && <PeriodBlock />}</>}
-				explanations={
-					<>
-						<CarbonImpact evaluation={evaluation} />
-						<Chart />
-					</>
-				}
+				explanations={null}
 			/>
 			<ShareButton
 				text="Mesure ton impact sur le simulateur Ecolab climat !"

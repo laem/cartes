@@ -213,14 +213,7 @@ export default function Conversation({
 								<Trans>Suivant</Trans> →
 							</span>
 						</button>
-					) : (
-						<button
-							onClick={setDefault}
-							className="ui__ simple small push-right button"
-						>
-							<Trans>Je ne sais pas</Trans> →
-						</button>
-					)}
+					) : null}
 				</div>
 			</div>
 		</>

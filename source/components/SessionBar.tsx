@@ -120,22 +120,6 @@ export default function SessionBar({ answerButtonOnly = false }) {
 						{emoji('📋 ')}
 						Modifier mes réponses
 					</Button>
-					<Button
-						className="simple small"
-						onClick={() => history.push(buildEndURL(rules, engine))}
-					>
-						{emoji('💤 ')}
-						Terminer
-					</Button>
-					{true && (
-						<Button
-							className="simple small"
-							onClick={() => history.push('/actions')}
-						>
-							{emoji('💥 ')}
-							Passer à l'action
-						</Button>
-					)}
 				</>
 			)}
 			{showAnswerModal && <Answers onClose={() => setShowAnswerModal(false)} />}
