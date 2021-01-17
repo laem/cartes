@@ -11,6 +11,7 @@ import {
 import Engine from 'publicodes'
 import React, { useEffect, useMemo } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
+import zeros from './zeroDefaults.yaml'
 
 const removeLoader = () => {
 	// Remove loader
@@ -74,7 +75,15 @@ export default ({ children, rulesURL, dataBranch }) => {
 						.reduce((memo, next) => ({ ...memo, ...next }), {})
 				)
 			)
-			setRules(rules)
+
+			const zeroRules = Object.entries(rules).reduce(
+				(memo, [k, v]) => ({
+					...memo,
+					[k]: zeros[k] != null ? { ...v, 'par défaut': zeros[k] } : v,
+				}),
+				{}
+			)
+			setRules(zeroRules)
 			removeLoader()
 		} else {
 			fetch(rulesURL, { mode: 'cors' })

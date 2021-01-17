@@ -14,7 +14,7 @@ alimentation . déchets . niveau d'engagement: "'affirmatif'"
 divers . textile . montant: 0
 divers . électroménager . montant: 0
 divers . autres produits . montant: 0
-logement . habitants: ∞
+logement . habitants: 999999999
 logement . surface: 0
 logement . électricité . consommation: 0
 logement . bois . chauffage au bois: non
@@ -41,11 +41,11 @@ numérique . TV . présent: non
 numérique . TV . durée: 4
 numérique . vidéoprojecteur . présent: non
 numérique . vidéoprojecteur . durée: 4
-transport . voiture . voyageurs: ∞
+transport . voiture . voyageurs: 999999999
 transport . voiture . km: 0 km/an
 transport . voiture . motorisation: "'électrique'"
 transport . voiture . thermique . consommation aux 100: 0
-transport . voiture . âge: ∞
+transport . voiture . âge: 999999999
 transport . voiture . propriétaire: non
 transport . avion . usager: non
 transport . avion . court courrier . heures de vol: 0
