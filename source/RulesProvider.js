@@ -68,9 +68,11 @@ export default ({ children, rulesURL, dataBranch }) => {
 				return { ...memo, ...ruleSetPlus }
 			}, {})
 			console.log(
-				Object.entries(rules)
-					.map(([k, v]) => (v && v.question ? { [k]: v['par défaut'] } : {}))
-					.reduce((memo, next) => ({ ...memo, ...next }), {})
+				JSON.stringify(
+					Object.entries(rules)
+						.map(([k, v]) => (v && v.question ? { [k]: v['par défaut'] } : {}))
+						.reduce((memo, next) => ({ ...memo, ...next }), {})
+				)
 			)
 			setRules(rules)
 			removeLoader()
