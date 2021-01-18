@@ -3,7 +3,7 @@ import SessionBar from 'Components/SessionBar'
 import Simulation from 'Components/Simulation'
 import { Markdown } from 'Components/utils/markdown'
 import { ScrollToTop } from 'Components/utils/Scroll'
-import { utils } from 'publicodes'
+import { utils, formatValue } from 'publicodes'
 import React, { useContext, useEffect } from 'react'
 import emoji from 'react-easy-emoji'
 import { useDispatch, useSelector } from 'react-redux'
@@ -15,6 +15,7 @@ import { useNextQuestions } from 'Components/utils/useNextQuestion'
 import { EngineContext } from '../../components/utils/EngineContext'
 import { splitName } from 'Components/publicodesUtils'
 import { parentName } from '../../components/publicodesUtils'
+import { correctValue } from './Actions'
 
 const { decodeRuleName, encodeRuleName } = utils
 
@@ -44,7 +45,8 @@ export default ({}) => {
 	}, [encodedName])
 	if (!configSet) return null
 
-	const { nodeValue, title, plus } = engine.evaluate(dottedName)
+	const evaluation = engine.evaluate(dottedName),
+		{ nodeValue, title, plus } = evaluation
 
 	const { description, icônes: icons } = rules[dottedName]
 
@@ -75,7 +77,9 @@ export default ({}) => {
 						<div css="display: flex; align-items: center">
 							<img src={BallonGES} css="height: 6rem" />
 							<div>
-								<HumanWeight nodeValue={nodeValue} />
+								<HumanWeight
+									nodeValue={correctValue({ nodeValue, unit: evaluation.unit })}
+								/>
 								<Link to={'/documentation/' + encodeRuleName(dottedName)}>
 									{emoji('🔬 ')} comprendre le calcul
 								</Link>

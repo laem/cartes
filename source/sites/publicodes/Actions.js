@@ -50,6 +50,16 @@ export default ({}) => {
 	}
 }
 
+// Publicodes's % unit is strangely handlded
+// the nodeValue is * 100 to account for the unit
+// hence we divide it by 100 and drop the unit
+export const correctValue = (evaluated) => {
+	const { nodeValue, unit } = evaluated
+
+	const result = unit?.numerators.includes('%') ? nodeValue / 100 : nodeValue
+	return result
+}
+
 const AnimatedDiv = animated(({}) => {
 	const location = useLocation()
 
@@ -84,7 +94,7 @@ const AnimatedDiv = animated(({}) => {
 
 	const [bilans, actions] = partition((t) => t.dottedName === 'bilan', targets)
 
-	const sortedActions = sortBy((a) => a.nodeValue)(actions)
+	const sortedActions = sortBy((a) => correctValue(a))(actions)
 
 	return (
 		<div css="padding: 0 .3rem 1rem; max-width: 600px; margin: 1rem auto;">
@@ -156,7 +166,7 @@ const AnimatedDiv = animated(({}) => {
 })
 
 const MiniAction = ({ evaluation, total, rule }) => {
-	const { nodeValue, dottedName, title } = evaluation
+	const { nodeValue, dottedName, title, unit } = evaluation
 	const { icônes: icons } = rule
 
 	const disabled = nodeValue === 0 || nodeValue === false
@@ -228,16 +238,18 @@ const MiniAction = ({ evaluation, total, rule }) => {
 					`}
 				>
 					<h2>{title}</h2>
-					{nodeValue != null && <ActionValue {...{ total, nodeValue }} />}
+					{nodeValue != null && <ActionValue {...{ total, nodeValue, unit }} />}
 				</div>
 			</motion.div>
 		</Link>
 	)
 }
 
-const ActionValue = ({ total, nodeValue }) => {
-	const { unit, value } = humanValueAndUnit(nodeValue),
+const ActionValue = ({ total, nodeValue: rawValue, unit: rawUnit }) => {
+	const correctedValue = correctValue({ nodeValue: rawValue, unit: rawUnit })
+	const { unit, value } = humanValueAndUnit(correctedValue),
 		displayRelative = total
+
 	return (
 		<div
 			css={`
@@ -263,7 +275,7 @@ const ActionValue = ({ total, nodeValue }) => {
 				{-value} {unit}
 				{displayRelative && (
 					<div>
-						<strong>{Math.round(100 * (nodeValue / total))}%</strong>
+						<strong>{Math.round(100 * (value / total))}%</strong>
 					</div>
 				)}
 			</span>

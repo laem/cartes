@@ -150,6 +150,8 @@ export default function RuleInput<Name extends string = DottedName>({
 		)
 	}
 
+	debugger
+
 	if (
 		evaluation.unit == null &&
 		(rule.rawNode.type === 'booléen' || rule.rawNode.type == undefined) &&
