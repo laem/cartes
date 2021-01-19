@@ -23,6 +23,10 @@ import { ExplicableRule } from './Explicable'
 import CategoryRespiration from './CategoryRespiration'
 import { extractCategories } from '../../sites/publicodes/chart'
 import { sortBy } from 'ramda'
+import {
+	weeklyDietQuestion,
+	weeklyDietQuestionText,
+} from './select/SelectWeeklyDiet'
 
 export type ConversationProps = {
 	customEndMessages?: React.ReactNode
@@ -124,6 +128,10 @@ export default function Conversation({
 			</div>
 		)
 
+	const questionText = weeklyDietQuestion(currentQuestion)
+		? weeklyDietQuestionText
+		: rules[currentQuestion]?.rawNode?.question
+
 	const questionCategoryName = currentQuestion.split(' . ')[0],
 		questionCategory =
 			orderByCategories &&
@@ -137,7 +145,6 @@ export default function Conversation({
 			(a) => a.split(' . ')[0] === questionCategory.dottedName
 		) === undefined
 
-	console.log(currentQuestion)
 	return orderByCategories &&
 		isCategoryFirstQuestion &&
 		!dismissedRespirations.includes(questionCategory.dottedName) ? (
@@ -176,8 +183,7 @@ export default function Conversation({
 				<Animate.fadeIn>
 					<div className="step">
 						<h3>
-							{rules[currentQuestion]?.rawNode?.question}{' '}
-							<ExplicableRule dottedName={currentQuestion} />
+							{questionText} <ExplicableRule dottedName={currentQuestion} />
 						</h3>
 						<fieldset>
 							<RuleInput

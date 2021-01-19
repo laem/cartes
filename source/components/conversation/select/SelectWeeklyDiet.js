@@ -7,6 +7,12 @@ import { useDispatch, useSelector } from 'react-redux'
 import { situationSelector } from 'Selectors/simulationSelectors'
 import { updateSituation } from 'Actions/actions'
 
+export const weeklyDietQuestionText =
+	'Choisissez les plats de vos midis et dîners pour une semaine type'
+
+export const weeklyDietQuestion = (dottedName) =>
+	dottedName.includes('alimentation . plats') &&
+	dottedName.includes(' . nombre')
 // This is the number of possible answers in this very custom input component
 const chipsTotal = 14
 
@@ -15,6 +21,7 @@ export default function SelectWeeklyDiet({
 	setFormValue,
 	dietRules,
 	value: currentValue,
+	question,
 }) {
 	const dispatch = useDispatch()
 	const situation = useSelector(situationSelector)
