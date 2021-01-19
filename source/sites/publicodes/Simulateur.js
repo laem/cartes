@@ -57,10 +57,10 @@ const Simulateur = (props) => {
 				noFeedback
 				orderByCategories={categories}
 				customEnd={
-					rule.dottedName === 'bilan' ? (
+					decoded === 'bilan' ? (
 						<RedirectionToEndPage
 							score={rule.nodeValue}
-							url={buildEndURL(evaluation)}
+							url={buildEndURL(rules, engine)}
 						/>
 					) : rule.description ? (
 						<Markdown source={rule.description} />

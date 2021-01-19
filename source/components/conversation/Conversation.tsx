@@ -30,10 +30,12 @@ import {
 
 export type ConversationProps = {
 	customEndMessages?: React.ReactNode
+	customEnd?: React.ReactNode
 }
 
 export default function Conversation({
 	customEndMessages,
+	customEnd,
 	orderByCategories,
 }: ConversationProps) {
 	const dispatch = useDispatch()
@@ -109,22 +111,26 @@ export default function Conversation({
 	if (!currentQuestion)
 		return (
 			<div style={{ textAlign: 'center' }}>
-				<h3>
-					{emoji('🌟')}{' '}
-					<Trans i18nKey="simulation-end.title">
-						Vous avez complété cette simulation
-					</Trans>
-				</h3>
-				<p>
-					{customEndMessages ? (
-						customEndMessages
-					) : (
-						<Trans i18nKey="simulation-end.text">
-							Vous avez maintenant accès à l'estimation la plus précise
-							possible.
-						</Trans>
-					)}
-				</p>
+				{customEnd || (
+					<>
+						<h3>
+							{emoji('🌟')}{' '}
+							<Trans i18nKey="simulation-end.title">
+								Vous avez complété cette simulation
+							</Trans>
+						</h3>
+						<p>
+							{customEndMessages ? (
+								customEndMessages
+							) : (
+								<Trans i18nKey="simulation-end.text">
+									Vous avez maintenant accès à l'estimation la plus précise
+									possible.
+								</Trans>
+							)}
+						</p>
+					</>
+				)}
 			</div>
 		)
 

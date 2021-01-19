@@ -25,6 +25,7 @@ export default function Simulation({
 	explanations,
 	results,
 	customEndMessages,
+	customEnd,
 	orderByCategories,
 	showLinkToForm,
 	showPeriodSwitch,
@@ -36,6 +37,7 @@ export default function Simulation({
 			<Animate.fromTop>
 				{results}
 				<Questions
+					customEnd={customEnd}
 					orderByCategories={orderByCategories}
 					customEndMessages={customEndMessages}
 				/>
@@ -63,6 +65,7 @@ export default function Simulation({
 
 function Questions({
 	customEndMessages,
+	customEnd,
 	orderByCategories,
 }: {
 	customEndMessages?: ConversationProps['customEndMessages']
@@ -85,6 +88,7 @@ function Questions({
 					<Notifications />
 					<Conversation
 						orderByCategories={orderByCategories}
+						customEnd={customEnd}
 						customEndMessages={customEndMessages}
 					/>
 				</div>
