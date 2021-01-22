@@ -47,6 +47,7 @@ export default function Conversation({
 	const tracker = useContext(TrackerContext)
 	const objectifs = useSelector(objectifsSelector)
 	const rawRules = useSelector((state) => state.rules)
+	const previousSimulation = useSelector((state) => state.previousSimulation)
 
 	const sortedQuestions = orderByCategories
 		? sortBy(
@@ -73,7 +74,8 @@ export default function Conversation({
 	}, [previousAnswers, tracker])
 
 	useEffect(() => {
-		if (currentQuestion) {
+		// It is important to test for "previousSimulation" : if it exists, it's not loadedYet. Then currentQuestion could be the wrong one, already answered, don't put it as the unfoldedStep
+		if (currentQuestion && !previousSimulation) {
 			dispatch(goToQuestion(currentQuestion))
 		}
 	}, [dispatch, currentQuestion])

@@ -31,7 +31,6 @@ export default function Input({
 	const { thousandSeparator, decimalSeparator } = currencyFormat(language)
 	// const [currentValue, setCurrentValue] = useState(value)
 
-	debugger
 	return (
 		<>
 			<div className="step input">
