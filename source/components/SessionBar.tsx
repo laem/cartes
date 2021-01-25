@@ -55,14 +55,13 @@ export default function SessionBar({ answerButtonOnly = false }) {
 	const location = useLocation()
 
 	const css = `
-
-					display: flex;
-					justify-content: center;
-					button {
-						margin: 0 0.2rem;
-					}
-					margin: 0.6rem;
-					`
+			display: flex;
+			justify-content: center;
+			button {
+				margin: 0 0.2rem;
+			}
+			margin: 0.6rem;
+	`
 	if (answerButtonOnly)
 		return (
 			<div css={css}>
