@@ -3,10 +3,12 @@ import { ScrollToTop } from 'Components/utils/Scroll'
 import { utils } from 'publicodes'
 import { useContext } from 'react'
 import emoji from 'react-easy-emoji'
+import { useSelector } from 'react-redux'
 import { Link } from 'react-router-dom'
+import { title } from '../../components/publicodesUtils'
 
 export default () => {
-	const rules = useContext(EngineContext).getParsedRules()
+	const rules = useSelector((state) => state.rules)
 	const plusListe = Object.entries(rules)
 		.map(([dottedName, rule]) => ({ ...rule, dottedName }))
 		.filter((r) => r.plus)
@@ -19,9 +21,7 @@ export default () => {
 				<img src="https://img.shields.io/badge/-beta-purple" />
 			</h1>
 			<p>
-				<em>
-					Découvrez les enjeux qui se cachent derrière chaque action.
-				</em>
+				<em>Découvrez les enjeux qui se cachent derrière chaque action.</em>
 			</p>
 			<ul
 				css={`
@@ -37,9 +37,9 @@ export default () => {
 					}
 				`}
 			>
-				{plusListe.map(({ dottedName, icons, title }) => (
-					<li key={dottedName}>
-						<Link to={'/actions/plus/' + utils.encodeRuleName(dottedName)}>
+				{plusListe.map((rule) => (
+					<li key={rule.dottedName}>
+						<Link to={'/actions/plus/' + utils.encodeRuleName(rule.dottedName)}>
 							<div
 								className="ui__ card"
 								css={`
@@ -53,8 +53,8 @@ export default () => {
 									}
 								`}
 							>
-								<div>{emoji(icons || '🎯')}</div>
-								<div>{title}</div>
+								<div>{emoji(rule.icônes || '🎯')}</div>
+								<div>{title(rule)}</div>
 							</div>
 						</Link>
 					</li>
