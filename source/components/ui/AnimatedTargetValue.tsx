@@ -1,6 +1,5 @@
-import { formatCurrency } from 'Engine/format'
+import { formatValue } from 'publicodes'
 import React, { useRef } from 'react'
-import ReactCSSTransitionGroup from 'react-addons-css-transition-group'
 import { useTranslation } from 'react-i18next'
 import { useSelector } from 'react-redux'
 import { RootState } from 'Reducers/rootReducer'
@@ -13,7 +12,7 @@ type AnimatedTargetValueProps = {
 
 const formatDifference = (difference: number, language: string) => {
 	const prefix = difference > 0 ? '+' : ''
-	return prefix + formatCurrency(difference, language)
+	return prefix + formatValue(difference, { displayedUnit: '€', language })
 }
 
 export default function AnimatedTargetValue({
@@ -25,7 +24,7 @@ export default function AnimatedTargetValue({
 
 	// We don't want to show the animated if the difference comes from a change in the unit
 	const currentUnit = useSelector(
-		(state: RootState) => state?.simulation?.defaultUnits[0]
+		(state: RootState) => state?.simulation?.targetUnit
 	)
 	const previousUnit = useRef(currentUnit)
 
@@ -34,9 +33,12 @@ export default function AnimatedTargetValue({
 			? null
 			: (value || 0) - (previousValue.current || 0)
 	const shouldDisplayDifference =
-		difference !== null &&
+		difference != null &&
 		previousUnit.current === currentUnit &&
-		Math.abs(difference) > 1
+		Math.abs(difference) > 1 &&
+		previousValue.current != null &&
+		previousValue.current != 0 &&
+		value != null
 
 	previousValue.current = value
 	previousUnit.current = currentUnit
@@ -60,16 +62,16 @@ export default function AnimatedTargetValue({
 	)
 }
 
-const Evaporate = React.memo(
-	({ children, style }: { children: string; style: Object }) => (
-		<ReactCSSTransitionGroup
-			transitionName="evaporate"
-			transitionEnterTimeout={2500}
-			transitionLeaveTimeout={1}
-		>
-			<span key={children} style={style} className="evaporate">
-				{children}
-			</span>
-		</ReactCSSTransitionGroup>
+const Evaporate = React.memo(function Evaporate({
+	children,
+	style
+}: {
+	children: string
+	style: React.CSSProperties
+}) {
+	return (
+		<span key={children} style={style} className="evaporate">
+			{children}
+		</span>
 	)
-)
+})

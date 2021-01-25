@@ -1,58 +1,63 @@
-import React, { useEffect, useContext } from 'react'
+import { setSimulationConfig } from 'Actions/actions'
+import SessionBar from 'Components/SessionBar'
+import Simulation from 'Components/Simulation'
+import { Markdown } from 'Components/utils/markdown'
+import { ScrollToTop } from 'Components/utils/Scroll'
+import { utils, formatValue } from 'publicodes'
+import React, { useContext, useEffect } from 'react'
+import emoji from 'react-easy-emoji'
 import { useDispatch, useSelector } from 'react-redux'
 import { useParams } from 'react-router'
-import emoji from 'react-easy-emoji'
-import { animated, useSpring, config } from 'react-spring'
-import ShareButton from 'Components/ShareButton'
-import { findContrastedTextColor } from 'Components/utils/colors'
-import { motion } from 'framer-motion'
-
-import BallonGES from './images/ballonGES.svg'
-import SessionBar from 'Components/SessionBar'
 import { Link } from 'react-router-dom'
-import { humanWeight, HumanWeight } from './HumanWeight'
-import { Markdown } from 'Components/utils/markdown'
-import { encodeRuleName, decodeRuleName, splitName } from 'Engine/rules'
-import { SitePathsContext } from 'Components/utils/withSitePaths'
-import {
-	flatRulesSelector,
-	analysisWithDefaultsSelector,
-	nextStepsSelector,
-} from 'Selectors/analyseSelectors'
-import { setSimulationConfig } from 'Actions/actions'
-import Simulation from 'Components/Simulation'
-import { ScrollToTop } from 'Components/utils/Scroll'
+import { HumanWeight } from './HumanWeight'
+import BallonGES from './images/ballonGES.svg'
+import { useNextQuestions } from 'Components/utils/useNextQuestion'
+import { EngineContext } from '../../components/utils/EngineContext'
+import { splitName } from 'Components/publicodesUtils'
+import { parentName } from '../../components/publicodesUtils'
+import { correctValue } from './Actions'
+
+const { decodeRuleName, encodeRuleName } = utils
 
 export const Footprint = ({ value }) => <div>Lala {value}</div>
 
 export default ({}) => {
 	const { encodedName } = useParams()
-	const sitePaths = useContext(SitePathsContext)
-	const rules = useSelector(flatRulesSelector)
-	const nextSteps = useSelector(nextStepsSelector)
-	const simulation = useSelector((state) => state.simulation)
-	const dottedName = decodeRuleName(encodedName),
-		config = {
-			objectifs: [dottedName],
-		}
-
+	const rules = useSelector((state) => state.rules)
+	const nextQuestions = useNextQuestions()
+	const dottedName = decodeRuleName(encodedName)
 	const configSet = useSelector((state) => state.simulation?.config)
-	const analysis = useSelector(analysisWithDefaultsSelector)
+
+	// TODO here we need to apply a rustine to accommodate for this issue
+	// https://github.com/betagouv/mon-entreprise/issues/1316#issuecomment-758833973
+	// to be continued...
+	const actionParent = parentName(dottedName)
+	const config = {
+		objectifs: [dottedName],
+		situation: { ...(configSet?.situation || {}), [actionParent]: 'oui' },
+	}
+
+	const engine = useContext(EngineContext)
 
 	const dispatch = useDispatch()
-	useEffect(() => dispatch(setSimulationConfig(config)), [encodedName])
+	useEffect(() => {
+		dispatch(setSimulationConfig(config))
+	}, [encodedName])
 	if (!configSet) return null
 
-	const { nodeValue, description, icons, title, plus } = analysis.targets[0]
+	const evaluation = engine.evaluate(dottedName),
+		{ nodeValue, title, plus } = evaluation
 
-	const flatActions = rules.find((r) => r.dottedName === 'actions')
+	const { description, icônes: icons } = rules[dottedName]
+
+	const flatActions = rules['actions']
 	const relatedActions = flatActions.formule.somme
 		.filter(
 			(actionDottedName) =>
 				actionDottedName !== dottedName &&
 				splitName(dottedName)[0] === splitName(actionDottedName)[0]
 		)
-		.map((name) => rules.find(({ dottedName }) => dottedName === name))
+		.map((name) => engine.getRule(name))
 
 	return (
 		<div css="padding: 0 .3rem 1rem; max-width: 600px; margin: 1rem auto;">
@@ -72,14 +77,10 @@ export default ({}) => {
 						<div css="display: flex; align-items: center">
 							<img src={BallonGES} css="height: 6rem" />
 							<div>
-								<HumanWeight nodeValue={nodeValue} />
-								<Link
-									to={
-										sitePaths.documentation.index +
-										'/' +
-										encodeRuleName(dottedName)
-									}
-								>
+								<HumanWeight
+									nodeValue={correctValue({ nodeValue, unit: evaluation.unit })}
+								/>
+								<Link to={'/documentation/' + encodeRuleName(dottedName)}>
 									{emoji('🔬 ')} comprendre le calcul
 								</Link>
 							</div>
@@ -96,12 +97,11 @@ export default ({}) => {
 				</div>
 			</div>
 			<SessionBar answerButtonOnly />
-			{nextSteps.length > 0 && (
+			{nextQuestions.length > 0 && (
 				<>
 					<p>Personnalisez cette estimation</p>
 					<Simulation
 						noFeedback
-						noProgressMessage
 						showConversation
 						customEnd={<div />}
 						targets={<div />}

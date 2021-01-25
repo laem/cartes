@@ -1,27 +1,23 @@
-import {
-	deletePreviousSimulation,
-	loadPreviousSimulation,
-	goToQuestion,
-} from 'Actions/actions'
+import { goToQuestion, loadPreviousSimulation } from 'Actions/actions'
+import { Button } from 'Components/ui/Button'
+import { useEngine } from 'Components/utils/EngineContext'
+import { last } from 'ramda'
 import React, { useEffect, useState } from 'react'
-import { T } from 'Components'
-import { Trans } from 'react-i18next'
+import emoji from 'react-easy-emoji'
 import { useDispatch, useSelector } from 'react-redux'
+import { useHistory, useLocation } from 'react-router-dom'
 import { RootState } from 'Reducers/rootReducer'
 import {
-	noUserInputSelector,
-	analysisWithDefaultsSelector,
-} from 'Selectors/analyseSelectors'
-import emoji from 'react-easy-emoji'
-import { Button } from 'Components/ui/Button'
-import Answers from './conversation/AnswerList'
-import { useLocation, useHistory } from 'react-router-dom'
-import { last } from 'ramda'
+	answeredQuestionsSelector,
+	objectifsSelector,
+} from 'Selectors/simulationSelectors'
 import { extractCategories } from '../sites/publicodes/chart'
+import Answers from './conversation/AnswerList'
 
-export const buildEndURL = (analysis) => {
-	const total = analysis.targets[0].nodeValue,
-		categories = extractCategories(analysis),
+// TODO should be find the rewritten version of this from mon-entreprise and merge them ?
+
+export const buildEndURL = (rules, engine) => {
+	const categories = extractCategories(rules, engine),
 		detailsString =
 			categories &&
 			categories.reduce(
@@ -34,7 +30,7 @@ export const buildEndURL = (analysis) => {
 
 	if (detailsString == null) return null
 
-	return `/fin?total=${Math.round(total)}&details=${detailsString}`
+	return `/fin?details=${detailsString}`
 }
 
 export default function SessionBar({ answerButtonOnly = false }) {
@@ -43,28 +39,29 @@ export default function SessionBar({ answerButtonOnly = false }) {
 		(state: RootState) => state.previousSimulation
 	)
 
-	const foldedSteps = useSelector(
-		(state: RootState) => state.conversationSteps.foldedSteps
-	)
-	const arePreviousAnswers = !!foldedSteps.length
+	const answeredQuestions = useSelector(answeredQuestionsSelector)
+	const arePreviousAnswers = !!answeredQuestions.length
 	useEffect(() => {
 		if (!arePreviousAnswers && previousSimulation)
 			dispatch(loadPreviousSimulation())
 	}, [])
 	const [showAnswerModal, setShowAnswerModal] = useState(false)
-	const analysis = useSelector(analysisWithDefaultsSelector)
+
+	const objectifs = useSelector(objectifsSelector)
+	const rules = useSelector((state) => state.rules)
+	const engine = useEngine(objectifs)
+
 	const history = useHistory()
 	const location = useLocation()
 
 	const css = `
-
-					display: flex;
-					justify-content: center;
-					button {
-						margin: 0 0.2rem;
-					}
-					margin: 0.6rem;
-					`
+			display: flex;
+			justify-content: center;
+			button {
+				margin: 0 0.2rem;
+			}
+			margin: 0.6rem;
+	`
 	if (answerButtonOnly)
 		return (
 			<div css={css}>
@@ -75,7 +72,7 @@ export default function SessionBar({ answerButtonOnly = false }) {
 							onClick={() => setShowAnswerModal(true)}
 						>
 							{emoji('📋 ')}
-							<T>Modifier mes réponses</T>
+							Modifier mes réponses
 						</Button>
 					</>
 				)}
@@ -92,12 +89,12 @@ export default function SessionBar({ answerButtonOnly = false }) {
 					<Button
 						className="simple small"
 						onClick={() => {
-							dispatch(goToQuestion(last(foldedSteps)))
+							dispatch(goToQuestion(last(answeredQuestions)))
 							history.push('/simulateur/bilan')
 						}}
 					>
 						{emoji('📊 ')}
-						<T>Revenir à ma simulation</T>
+						Revenir à ma simulation
 					</Button>
 				) : (
 					<Button
@@ -106,7 +103,7 @@ export default function SessionBar({ answerButtonOnly = false }) {
 							history.push('/simulateur/bilan')
 						}}
 					>
-						<T>Faire le test</T>
+						Faire le test
 					</Button>
 				)}
 			</div>
@@ -121,14 +118,14 @@ export default function SessionBar({ answerButtonOnly = false }) {
 						onClick={() => setShowAnswerModal(true)}
 					>
 						{emoji('📋 ')}
-						<T>Modifier mes réponses</T>
+						Modifier mes réponses
 					</Button>
 					<Button
 						className="simple small"
-						onClick={() => history.push(buildEndURL(analysis))}
+						onClick={() => history.push(buildEndURL(rules, engine))}
 					>
 						{emoji('💤 ')}
-						<T>Terminer</T>
+						Terminer
 					</Button>
 					{true && (
 						<Button
@@ -136,7 +133,7 @@ export default function SessionBar({ answerButtonOnly = false }) {
 							onClick={() => history.push('/actions')}
 						>
 							{emoji('💥 ')}
-							<T>Passer à l'action</T>
+							Passer à l'action
 						</Button>
 					)}
 				</>

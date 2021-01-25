@@ -1,5 +1,3 @@
-import React from 'react'
-
 const humanWeightUnit = (v) =>
 	v === 0
 		? [v, '']
@@ -19,7 +17,7 @@ export default ({ nodeValue, color }) => {
 				vertical-align: baseline;
 			`}
 		>
-			{value < 10 ? value.toFixed(1) : Math.round(value)}&nbsp;{unit}
+			{value < 10 ? value?.toFixed(1) : Math.round(value)}&nbsp;{unit}
 		</span>
 	)
 }

@@ -1,18 +1,16 @@
-import React from 'react'
 import { Markdown } from 'Components/utils/markdown'
-import { useParams } from 'react-router'
-import { flatRulesSelector } from 'Selectors/analyseSelectors'
-import { useSelector } from 'react-redux'
-import { findRuleByDottedName, decodeRuleName } from 'Engine/rules'
-import { Link } from 'react-router-dom'
-import emoji from 'react-easy-emoji'
 import { ScrollToTop } from 'Components/utils/Scroll'
+import { utils } from 'publicodes'
+import emoji from 'react-easy-emoji'
+import { useSelector } from 'react-redux'
+import { useParams } from 'react-router'
+import { Link } from 'react-router-dom'
 
 export default () => {
 	const { encodedName } = useParams()
-	const rules = useSelector(flatRulesSelector)
-	const dottedName = decodeRuleName(encodedName)
-	const rule = findRuleByDottedName(rules, dottedName)
+	const rules = useSelector((state) => state.rules)
+	const dottedName = utils.decodeRuleName(encodedName)
+	const rule = rules[dottedName]
 
 	return (
 		<div css="padding: 0 .3rem 1rem; max-width: 600px; margin: 1rem auto;">

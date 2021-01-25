@@ -1,9 +1,10 @@
-import { SitePaths } from 'Components/utils/withSitePaths'
+import { SitePaths } from 'Components/utils/SitePathsContext'
 import { History } from 'history'
 import { RootState, SimulationConfig } from 'Reducers/rootReducer'
 import { ThunkAction } from 'redux-thunk'
-import { DottedName } from 'Types/rule'
+import { DottedName } from 'Rules'
 import { deletePersistedSimulation } from '../storage/persistSimulation'
+import { CompanyStatusAction } from './companyStatusActions'
 
 export type Action =
 	| ResetSimulationAction
@@ -11,16 +12,16 @@ export type Action =
 	| UpdateAction
 	| SetSimulationConfigAction
 	| DeletePreviousSimulationAction
-	| SetExempleAction
 	| ExplainVariableAction
 	| UpdateSituationAction
-	| HideControlAction
+	| HideNotificationAction
 	| LoadPreviousSimulationAction
 	| SetSituationBranchAction
-	| UpdateDefaultUnit
+	| UpdateTargetUnitAction
 	| SetActiveTargetAction
+	| CompanyStatusAction
 
-export type ThunkResult<R> = ThunkAction<
+export type ThunkResult<R = void> = ThunkAction<
 	R,
 	RootState,
 	{ history: History; sitePaths: SitePaths },
@@ -37,23 +38,12 @@ type SetSimulationConfigAction = {
 	type: 'SET_SIMULATION'
 	url: string
 	config: SimulationConfig
+	useCompanyDetails: boolean
 }
 
 type DeletePreviousSimulationAction = {
 	type: 'DELETE_PREVIOUS_SIMULATION'
 }
-
-type SetExempleAction =
-	| {
-			type: 'SET_EXAMPLE'
-			name: null
-	  }
-	| {
-			type: 'SET_EXAMPLE'
-			name: string
-			situation: object
-			dottedName: DottedName
-	  }
 
 type ResetSimulationAction = ReturnType<typeof resetSimulation>
 type UpdateAction = ReturnType<typeof updateSituation>
@@ -61,16 +51,16 @@ type UpdateSituationAction = ReturnType<typeof updateSituation>
 type LoadPreviousSimulationAction = ReturnType<typeof loadPreviousSimulation>
 type SetSituationBranchAction = ReturnType<typeof setSituationBranch>
 type SetActiveTargetAction = ReturnType<typeof setActiveTarget>
-type HideControlAction = ReturnType<typeof hideControl>
+type HideNotificationAction = ReturnType<typeof hideNotification>
 type ExplainVariableAction = ReturnType<typeof explainVariable>
-type UpdateDefaultUnit = ReturnType<typeof updateUnit>
+type UpdateTargetUnitAction = ReturnType<typeof updateUnit>
 
 export const resetSimulation = () =>
 	({
 		type: 'RESET_SIMULATION',
 	} as const)
 
-export const goToQuestion = (question: string) =>
+export const goToQuestion = (question: DottedName) =>
 	({
 		type: 'STEP_ACTION',
 		name: 'unfold',
@@ -132,22 +122,17 @@ export const updateSituation = (fieldName: DottedName, value: unknown) =>
 		value,
 	} as const)
 
-export const updateUnit = (defaultUnit: string) =>
+export const updateUnit = (targetUnit: string) =>
 	({
-		type: 'UPDATE_DEFAULT_UNIT',
-		defaultUnit,
+		type: 'UPDATE_TARGET_UNIT',
+		targetUnit
 	} as const)
 
-export function setExample(name: string, situation, dottedName: DottedName) {
-	return { type: 'SET_EXAMPLE', name, situation, dottedName } as const
-}
-
 export const goBackToSimulation = (): ThunkResult<void> => (
-	dispatch,
+	_,
 	getState,
 	{ history }
 ) => {
-	dispatch({ type: 'SET_EXAMPLE', name: null })
 	const url = getState().simulation?.url
 	url && history.push(url)
 }
@@ -158,8 +143,8 @@ export function loadPreviousSimulation() {
 	} as const
 }
 
-export function hideControl(id: string) {
-	return { type: 'HIDE_CONTROL', id } as const
+export function hideNotification(id: string) {
+	return { type: 'HIDE_NOTIFICATION', id } as const
 }
 
 export const explainVariable = (variableName: DottedName | null = null) =>

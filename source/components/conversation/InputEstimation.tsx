@@ -1,31 +1,27 @@
-import { toPairs } from 'ramda'
-import React, { useState, useContext } from 'react'
-import { useTranslation } from 'react-i18next'
-import { useSelector } from 'react-redux'
-import { defaultUnitsSelector } from 'Selectors/analyseSelectors'
-import { convertUnit, parseUnit, Unit } from '../../engine/units'
-import { ThemeColorsContext } from 'Components/utils/colors'
+import React, { useContext, useState } from 'react'
 import emoji from 'react-easy-emoji'
 
 /* This component helps input a value that is not known by suggesting another input to the user. This new input will be multiplied by 12 (to convert from month to year) and then by the inputEstimation's formule attribute.
  *
- * It's orginiated from the estimation of an annual energy bill kWh from the monthly cost in €
+ * It's originated from the estimation of an annual energy bill kWh from the monthly cost in €
  *
  * This is **highly hardcoded** for now, and the estimator can't yet be computed (since getInputComponent.js is passed non-evaluated flatRules,
  * but it could easily be made into a generic input helper */
 
 export default function InputEstimation({ inputEstimation, setFinalValue }) {
-	if (typeof inputEstimation?.formule !== 'number') return null
+	if (typeof inputEstimation.rawNode.formule !== 'number') return null
 	const [value, setValue] = useState('')
-	const colors = useContext(ThemeColorsContext)
 
 	return (
 		<div
 			css={`
 				margin-top: 1rem;
 				input {
-					margin-top: 0.4rem;
-					border: 1px dashed ${colors.color} !important;
+					margin: 0.4rem 0.6rem 0 0;
+					border: 1px dashed var(--color) !important;
+					border-radius: 0.3rem;
+					font-size: 100%;
+					width: 6rem;
 				}
 				display: flex;
 				justify-content: left;
@@ -38,7 +34,7 @@ export default function InputEstimation({ inputEstimation, setFinalValue }) {
 		>
 			<span>{emoji('🧮')} </span>
 			<span>
-				<div>{inputEstimation.question}</div>
+				<div>{inputEstimation.rawNode.question}</div>
 				<div>
 					<input
 						type="number"
@@ -49,7 +45,9 @@ export default function InputEstimation({ inputEstimation, setFinalValue }) {
 						onChange={(e) => {
 							setValue(e.target.value)
 							setFinalValue(
-								Math.round(12 * (+e.target.value / inputEstimation.formule))
+								Math.round(
+									12 * (+e.target.value / inputEstimation.rawNode.formule)
+								)
 							)
 						}}
 					/>

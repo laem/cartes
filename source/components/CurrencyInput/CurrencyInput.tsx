@@ -1,16 +1,15 @@
 import classnames from 'classnames'
-import { currencyFormat } from 'Engine/format'
-import React, { useRef, useState } from 'react'
+import React, { useMemo, useRef, useState } from 'react'
 import NumberFormat, { NumberFormatProps } from 'react-number-format'
-import { debounce } from '../../utils'
+import { debounce, currencyFormat } from '../../utils'
 import './CurrencyInput.css'
 
 type CurrencyInputProps = NumberFormatProps & {
-	value?: string | number
+	value?: string | number | null
 	debounce?: number
-	onChange?: (event: React.ChangeEvent<HTMLInputElement>) => void
+	onChange: (event: React.ChangeEvent<HTMLInputElement>) => void
 	currencySymbol?: string
-	language?: Parameters<typeof currencyFormat>[0]
+	language: string
 }
 
 export default function CurrencyInput({
@@ -24,8 +23,12 @@ export default function CurrencyInput({
 }: CurrencyInputProps) {
 	const [initialValue, setInitialValue] = useState(valueProp)
 	const [currentValue, setCurrentValue] = useState(valueProp)
-	const onChangeDebounced = useRef(
-		debounceTimeout && onChange ? debounce(debounceTimeout, onChange) : onChange
+	const onChangeDebounced = useMemo(
+		() =>
+			debounceTimeout && onChange
+				? debounce(debounceTimeout, onChange)
+				: onChange,
+		[onChange, debounceTimeout]
 	)
 	// We need some mutable reference because the <NumberFormat /> component doesn't provide
 	// the DOM `event` in its custom `onValueChange` handler
@@ -33,7 +36,8 @@ export default function CurrencyInput({
 
 	const inputRef = useRef<HTMLInputElement>()
 
-	// When the component is rendered with a new "value" prop, we reset our local state
+	// When the component is rendered with a new "value" prop, we reset our local
+	// state
 	if (valueProp !== initialValue) {
 		setCurrentValue(valueProp)
 		setInitialValue(valueProp)
@@ -43,7 +47,7 @@ export default function CurrencyInput({
 		// Only trigger the `onChange` event if the value has changed -- and not
 		// only its formating, we don't want to call it when a dot is added in `12.`
 		// for instance
-		if (!nextValue.current) {
+		if (!nextValue.current || /(\.$)|(^\.)|(-$)/.exec(nextValue.current)) {
 			return
 		}
 		event.persist()
@@ -52,7 +56,7 @@ export default function CurrencyInput({
 			value: nextValue.current
 		}
 		nextValue.current = ''
-		onChangeDebounced.current?.(event)
+		onChangeDebounced?.(event)
 	}
 
 	const {
@@ -60,9 +64,6 @@ export default function CurrencyInput({
 		thousandSeparator,
 		decimalSeparator
 	} = currencyFormat(language)
-	// We display negative numbers iff this was the provided value (but we disallow the user to enter them)
-	const valueHasChanged = currentValue !== initialValue
-
 	// Autogrow the input
 	const valueLength = currentValue.toString().length
 	const width = `${5 + (valueLength - 5) * 0.75}em`
@@ -78,7 +79,7 @@ export default function CurrencyInput({
 				{...forwardedProps}
 				thousandSeparator={thousandSeparator}
 				decimalSeparator={decimalSeparator}
-				allowNegative={!valueHasChanged}
+				allowNegative
 				className="currencyInput__input"
 				inputMode="numeric"
 				getInputRef={inputRef}
@@ -87,10 +88,10 @@ export default function CurrencyInput({
 				}
 				onValueChange={({ value }) => {
 					setCurrentValue(value)
-					nextValue.current = value.toString().replace(/^-/, '')
+					nextValue.current = value.toString().replace(/^0+/, '')
 				}}
 				onChange={handleChange}
-				value={currentValue.toString().replace('.', decimalSeparator)}
+				value={currentValue ? +currentValue : ''}
 				autoComplete="off"
 			/>
 			{!isCurrencyPrefixed && <>&nbsp;€</>}

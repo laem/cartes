@@ -1,40 +1,40 @@
 import { setSimulationConfig } from 'Actions/actions'
-import { EndingCongratulations } from 'Components/conversation/Conversation'
 import PeriodSwitch from 'Components/PeriodSwitch'
+import SessionBar, { buildEndURL } from 'Components/SessionBar'
 import ShareButton from 'Components/ShareButton'
 import Simulation from 'Components/Simulation'
 import { Markdown } from 'Components/utils/markdown'
-import { decodeRuleName, findRuleByDottedName } from 'Engine/rules'
-import React, { useEffect, useContext } from 'react'
 import { TrackerContext } from 'Components/utils/withTracker'
+import { utils } from 'publicodes'
+
+import { compose, isEmpty, symmetricDifference } from 'ramda'
+import React, { useContext, useEffect } from 'react'
 import { Helmet } from 'react-helmet'
 import { useDispatch, useSelector } from 'react-redux'
-import {
-	flatRulesSelector,
-	analysisWithDefaultsSelector,
-} from 'Selectors/analyseSelectors'
-import CarbonImpact from './CarbonImpact'
-import withTarget from './withTarget'
-import Chart from './chart/index.js'
 import { Redirect } from 'react-router'
-import SessionBar from 'Components/SessionBar'
-import { isEmpty, symmetricDifference, compose } from 'ramda'
-import { buildEndURL } from 'Components/SessionBar'
+import CarbonImpact from './CarbonImpact'
+import Chart, { extractCategories } from './chart/index.js'
+import { objectifsSelector } from 'Selectors/simulationSelectors'
+import { useEngine } from 'Components/utils/EngineContext'
+import emoji from 'react-easy-emoji'
 
-let CarbonImpactWithData = withTarget(CarbonImpact)
 const eqValues = compose(isEmpty, symmetricDifference)
 
 const Simulateur = (props) => {
 	const objectif = props.match.params.name,
-		decoded = decodeRuleName(objectif),
-		rules = useSelector(flatRulesSelector),
-		rule = findRuleByDottedName(rules, decoded),
-		analysis = useSelector(analysisWithDefaultsSelector),
+		decoded = utils.decodeRuleName(objectif),
+		rules = useSelector((state) => state.rules),
+		rule = rules[decoded],
+		engine = useEngine(),
+		evaluation = engine.evaluate(decoded),
 		dispatch = useDispatch(),
 		config = {
 			objectifs: [decoded],
+			narrow: decoded !== 'bilan',
 		},
-		configSet = useSelector((state) => state.simulation?.config)
+		configSet = useSelector((state) => state.simulation?.config),
+		categories = decoded === 'bilan' && extractCategories(rules, engine)
+
 	useEffect(
 		() =>
 			!eqValues(config.objectifs, configSet?.objectifs || [])
@@ -53,15 +53,16 @@ const Simulateur = (props) => {
 					<meta name="description" content={rule.description} />
 				)}
 			</Helmet>
-			<SessionBar />
+			<SessionBar evaluation={evaluation} />
 			<Simulation
 				noFeedback
-				teaseCategories
-				noProgressMessage
-				showConversation
+				orderByCategories={categories}
 				customEnd={
-					rule.dottedName === 'bilan' ? (
-						<RedirectionToEndPage score={rule.nodeValue} url={buildEndURL(analysis)} />
+					decoded === 'bilan' ? (
+						<RedirectionToEndPage
+							score={rule.nodeValue}
+							url={buildEndURL(rules, engine)}
+						/>
 					) : rule.description ? (
 						<Markdown source={rule.description} />
 					) : (
@@ -71,7 +72,7 @@ const Simulateur = (props) => {
 				targets={<>{rule.period === 'flexible' && <PeriodBlock />}</>}
 				explanations={
 					<>
-						<CarbonImpactWithData />
+						<CarbonImpact evaluation={evaluation} />
 						<Chart />
 					</>
 				}
@@ -102,3 +103,7 @@ const RedirectionToEndPage = ({ url, score }) => {
 }
 
 export default Simulateur
+
+const EndingCongratulations = () => (
+	<h3>{emoji('🌟')} Vous avez complété cette simulation</h3>
+)

@@ -1,12 +1,12 @@
-import { constructSitePaths } from '../mon-entreprise.fr/sitePaths'
-
-const sitePath = constructSitePaths('', {
+// This is a placeholder, not currently used.
+// see betagouv/mon-entreprise to manage sitePaths for i18n
+const sitePath = {
 	index: '',
 	documentation: {
 		index: '/documentation',
-		exemples: '/exemples'
+		exemples: '/exemples',
 	},
-	contact: '/contact'
-})
+	contact: '/contact',
+}
 
 export default () => sitePath

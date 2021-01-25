@@ -1,47 +1,45 @@
 import { explainVariable } from 'Actions/actions'
-import Animate from 'Components/ui/animate'
+import Overlay from 'Components/Overlay'
 import { Markdown } from 'Components/utils/markdown'
-import { findRuleByDottedName } from 'Engine/rules'
-import React from 'react'
-import emoji from 'react-easy-emoji'
+import { useContext } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { RootState } from 'Reducers/rootReducer'
-import { flatRulesSelector } from 'Selectors/analyseSelectors'
-import References from '../rule/References'
+import { References } from 'publicodes-react'
+import { Trans } from 'react-i18next'
 import './Aide.css'
+import { EngineContext } from 'Components/utils/EngineContext'
 
 export default function Aide() {
 	const explained = useSelector((state: RootState) => state.explainedVariable)
-	const flatRules = useSelector(flatRulesSelector)
+	const engine = useContext(EngineContext)
 	const dispatch = useDispatch()
 
 	const stopExplaining = () => dispatch(explainVariable())
 
-	if (!explained) return <section id="helpWrapper" />
+	if (!explained) return null
 
-	let rule = findRuleByDottedName(flatRules, explained),
-		text = rule.description,
-		refs = rule.références
+	const rule = engine.getRule(explained),
+		text = rule.rawNode.description,
+		refs = rule.rawNode.références
 
 	return (
-		<Animate.fromTop>
+		<Overlay onClose={stopExplaining}>
 			<div
-				className="controlText ui__ card"
-				css="padding: 0.6rem 0; flex: 1; margin-bottom: 1rem"
+				css={`
+					padding: 0.6rem;
+				`}
 			>
-				<h4>{rule.title}</h4>
-				<p>
-					<Markdown source={text} />
-				</p>
+				<h2>{rule.title}</h2>
+				<Markdown source={text} />
 				{refs && (
-					<div>
+					<>
+						<h3>
+							<Trans>En savoir plus</Trans>
+						</h3>
 						<References refs={refs} />
-					</div>
+					</>
 				)}
-				<button className="hide" aria-label="close" onClick={stopExplaining}>
-					×
-				</button>
 			</div>
-		</Animate.fromTop>
+		</Overlay>
 	)
 }

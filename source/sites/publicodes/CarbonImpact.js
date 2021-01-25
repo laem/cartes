@@ -1,13 +1,23 @@
-import { SitePathsContext } from 'Components/utils/withSitePaths'
-import { encodeRuleName } from 'Engine/rules'
-import React, { useContext } from 'react'
+import { utils } from 'publicodes'
+import React from 'react'
 import emoji from 'react-easy-emoji'
+import { useSelector } from 'react-redux'
 import { Link } from 'react-router-dom'
+import {
+	objectifsSelector,
+	situationSelector,
+} from '../../selectors/simulationSelectors'
 import SimulationHumanWeight from './HumanWeight'
+import { useEngine } from 'Components/utils/EngineContext'
 
-export default ({ nodeValue, formule, dottedName }) => {
-	const sitePaths = useContext(SitePathsContext)
-	let interestingFormula = formule && formule.explanation.text !== '0'
+export default ({}) => {
+	const objectif = useSelector(objectifsSelector)[0],
+		// needed for this component to refresh on situation change :
+		situation = useSelector(situationSelector),
+		engine = useEngine(),
+		evaluation = engine.evaluate(objectif),
+		{ nodeValue, dottedName } = evaluation
+
 	return (
 		<div
 			css={`
@@ -20,18 +30,12 @@ export default ({ nodeValue, formule, dottedName }) => {
 		>
 			<div>
 				<SimulationHumanWeight nodeValue={nodeValue} />
-				{interestingFormula && (
-					<div>
-						<span css="font-size: 120%">{emoji('🔬 ')}</span>
-						<Link
-							to={
-								sitePaths.documentation.index + '/' + encodeRuleName(dottedName)
-							}
-						>
-							comprendre le calcul
-						</Link>
-					</div>
-				)}
+				<div>
+					<span css="font-size: 120%">{emoji('🔬 ')}</span>
+					<Link to={'/documentation/' + utils.encodeRuleName(dottedName)}>
+						comprendre le calcul
+					</Link>
+				</div>
 			</div>
 		</div>
 	)

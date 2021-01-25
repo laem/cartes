@@ -1,23 +1,27 @@
 import { setSimulationConfig } from 'Actions/actions'
 import SessionBar from 'Components/SessionBar'
-import { decodeRuleName, encodeRuleName } from 'Engine/rules'
+import { EngineContext } from 'Components/utils/EngineContext'
 import { motion } from 'framer-motion'
+import { utils } from 'publicodes'
 import { partition, sortBy, union } from 'ramda'
-import React, { useEffect } from 'react'
+import React, { useContext, useEffect } from 'react'
 import emoji from 'react-easy-emoji'
 import { useDispatch, useSelector } from 'react-redux'
 import { useLocation } from 'react-router'
 import { Link, Route, Switch } from 'react-router-dom'
 import { animated } from 'react-spring'
-import {
-	analysisWithDefaultsSelector,
-	flatRulesSelector,
-} from 'Selectors/analyseSelectors'
+import { objectifsSelector } from 'Selectors/simulationSelectors'
 import tinygradient from 'tinygradient'
+import {
+	answeredQuestionsSelector,
+	configSelector,
+} from '../../selectors/simulationSelectors'
 import Action from './Action'
 import ActionPlus from './ActionPlus'
 import { humanValueAndUnit } from './HumanWeight'
 import ListeActionPlus from './ListeActionPlus'
+
+const { encodeRuleName, decodeRuleName, splitName } = utils
 
 const gradient = tinygradient(['#0000ff', '#ff0000']),
 	colors = gradient.rgb(20)
@@ -46,15 +50,25 @@ export default ({}) => {
 	}
 }
 
+// Publicodes's % unit is strangely handlded
+// the nodeValue is * 100 to account for the unit
+// hence we divide it by 100 and drop the unit
+export const correctValue = (evaluated) => {
+	const { nodeValue, unit } = evaluated
+
+	const result = unit?.numerators.includes('%') ? nodeValue / 100 : nodeValue
+	return result
+}
+
 const AnimatedDiv = animated(({}) => {
 	const location = useLocation()
 
-	const rules = useSelector(flatRulesSelector)
-	const flatActions = rules.find((r) => r.dottedName === 'actions')
+	const rules = useSelector((state) => state.rules)
+	const flatActions = rules['actions']
 
 	const simulation = useSelector((state) => state.simulation)
 
-	// Add the actions rules to the simulation, keping the user's situation
+	// Add the actions rules to the simulation, keeping the user's situation
 	const config = !simulation
 		? { objectifs: ['bilan', ...flatActions.formule.somme] }
 		: {
@@ -65,28 +79,27 @@ const AnimatedDiv = animated(({}) => {
 				),
 		  }
 
-	const analysis = useSelector(analysisWithDefaultsSelector)
+	const objectifs = useSelector(objectifsSelector)
 
-	const configSet = useSelector((state) => state.simulation?.config)
-	const foldedSteps = useSelector(
-		(state) => state.conversationSteps.foldedSteps
-	)
+	const engine = useContext(EngineContext)
+
+	const targets = objectifs.map((o) => engine.evaluate(o))
+
+	const configSet = useSelector(configSelector)
+	const answeredQuestions = useSelector(answeredQuestionsSelector)
 
 	const dispatch = useDispatch()
 	useEffect(() => dispatch(setSimulationConfig(config)), [location.pathname])
-	if (!configSet) return null
+	if (!configSet) return <div>Config not set</div>
 
-	const [bilans, actions] = partition(
-		(t) => t.dottedName === 'bilan',
-		analysis.targets
-	)
+	const [bilans, actions] = partition((t) => t.dottedName === 'bilan', targets)
 
-	const sortedActions = sortBy((a) => a.nodeValue)(actions)
+	const sortedActions = sortBy((a) => correctValue(a))(actions)
 
 	return (
 		<div css="padding: 0 .3rem 1rem; max-width: 600px; margin: 1rem auto;">
 			<SessionBar />
-			{foldedSteps.length === 0 && (
+			{!answeredQuestions.length && (
 				<p css="line-height: 1.4rem; text-align: center">
 					Les chiffres suivants seront alors personnalisés pour votre situation{' '}
 					{emoji('🧮')}
@@ -96,10 +109,11 @@ const AnimatedDiv = animated(({}) => {
 				Comment réduire mon empreinte ?
 			</h1>
 
-			{sortedActions.map((action) => (
+			{sortedActions.map((evaluation) => (
 				<MiniAction
-					key={action.dottedName}
-					data={action}
+					key={evaluation.dottedName}
+					rule={rules[evaluation.dottedName]}
+					evaluation={evaluation}
 					total={bilans.length ? bilans[0].nodeValue : null}
 				/>
 			))}
@@ -150,8 +164,10 @@ const AnimatedDiv = animated(({}) => {
 	)
 })
 
-const MiniAction = ({ data, total }) => {
-	const { title, icons, nodeValue, dottedName } = data
+const MiniAction = ({ evaluation, total, rule }) => {
+	const { nodeValue, dottedName, title, unit } = evaluation
+	const { icônes: icons } = rule
+
 	const disabled = nodeValue === 0 || nodeValue === false
 
 	return (
@@ -221,16 +237,18 @@ const MiniAction = ({ data, total }) => {
 					`}
 				>
 					<h2>{title}</h2>
-					{nodeValue != null && <ActionValue {...{ total, nodeValue }} />}
+					{nodeValue != null && <ActionValue {...{ total, nodeValue, unit }} />}
 				</div>
 			</motion.div>
 		</Link>
 	)
 }
 
-const ActionValue = ({ total, nodeValue }) => {
-	const { unit, value } = humanValueAndUnit(nodeValue),
+const ActionValue = ({ total, nodeValue: rawValue, unit: rawUnit }) => {
+	const correctedValue = correctValue({ nodeValue: rawValue, unit: rawUnit })
+	const { unit, value } = humanValueAndUnit(correctedValue),
 		displayRelative = total
+
 	return (
 		<div
 			css={`
@@ -256,7 +274,7 @@ const ActionValue = ({ total, nodeValue }) => {
 				{-value} {unit}
 				{displayRelative && (
 					<div>
-						<strong>{Math.round(100 * (nodeValue / total))}%</strong>
+						<strong>{Math.round(100 * (value / total))}%</strong>
 					</div>
 				)}
 			</span>

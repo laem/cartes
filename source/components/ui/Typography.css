@@ -1,5 +1,6 @@
 html {
 	transition: none !important;
+	line-height: 1.7rem;
 }
 @media (max-width: 500px) {
 	html {
@@ -22,6 +23,7 @@ html {
 		font-size: 1em;
 	}
 }
+
 body {
 	font-weight: 400;
 	color: #040e19;
@@ -38,12 +40,12 @@ h1 {
 h2 {
 	margin-top: 2rem;
 	margin-bottom: 1rem;
-	font-size: 1.3rem;
+	font-size: 1.4rem;
 }
 h3 {
 	margin-top: 1rem;
 	margin-bottom: 0.6rem;
-	font-size: 1.1rem;
+	font-size: 1.2rem;
 }
 h4 {
 	margin-top: 0.6rem;
@@ -51,12 +53,15 @@ h4 {
 	font-size: 1rem;
 }
 h5 {
-	font-size: 1rem;
-	font-weight: normal;
+	margin-top: 0.4rem;
+	margin-bottom: 0.2rem;
+	font-size: 0.9rem;
 }
 h6 {
-	font-size: 1rem;
-	font-weight: bold;
+	margin-top: 0.4rem;
+	margin-bottom: 0.2rem;
+	font-size: 0.9rem;
+	color: var(--lighterTextColor);
 }
 
 h1,
@@ -68,18 +73,12 @@ h6 {
 	color: var(--darkColor);
 	font-family: Arial, Helvetica, sans-serif;
 	font-weight: 600;
+	scroll-margin-top: 1rem; /* Add a margin for anchor links */
 }
 
 button {
 	font-weight: normal;
 }
-
-p,
-a,
-ul {
-	line-height: 1.7rem;
-}
-
 p,
 ul {
 	margin: 0 0 0.4rem;
@@ -103,10 +102,10 @@ li {
 }
 a {
 	border: none;
-	display: inline-block;
 	font-size: inherit;
 	padding: none;
 	text-decoration: underline;
+	text-underline-offset: 4px;
 	color: rgb(41, 117, 209);
 	color: var(--color);
 }
@@ -121,7 +120,7 @@ a:not(:disabled):not(.button):not(.button-choice):hover {
 
 strong,
 b {
-	font-weight: 500;
+	font-weight: bold;
 }
 
 textarea {
@@ -133,5 +132,9 @@ small,
 	color: rgba(0, 0, 0, 0.6);
 	color: var(--lighterTextColor);
 	font-size: 85%;
-	line-height: 1.2rem;
+	line-height: 1.5rem;
+}
+
+small {
+	display: inline-block;
 }

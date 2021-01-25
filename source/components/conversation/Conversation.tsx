@@ -1,73 +1,73 @@
-import { goToQuestion, validateStepWithValue } from 'Actions/actions'
-import { T } from 'Components'
-import QuickLinks from 'Components/QuickLinks'
-import getInputComponent from 'Engine/getInputComponent'
-import { findRuleByDottedName } from 'Engine/rules'
-import React, { useState, useEffect, useContext } from 'react'
-import { TrackerContext } from 'Components/utils/withTracker'
-import emoji from 'react-easy-emoji'
-import { useDispatch, useSelector } from 'react-redux'
-import { RootState } from 'Reducers/rootReducer'
 import {
-	flatRulesSelector,
-	nextStepsSelector,
-	analysisWithDefaultsOnlySelector,
-} from 'Selectors/analyseSelectors'
-import * as Animate from 'Ui/animate'
+	goToQuestion,
+	updateSituation,
+	validateStepWithValue,
+} from 'Actions/actions'
+import RuleInput, { RuleInputProps } from 'Components/conversation/RuleInput'
+import * as Animate from 'Components/ui/animate'
+import { EngineContext } from 'Components/utils/EngineContext'
+import { useNextQuestions } from 'Components/utils/useNextQuestion'
+import { TrackerContext } from 'Components/utils/withTracker'
+import React, { useState, useContext, useEffect } from 'react'
+import emoji from 'react-easy-emoji'
+import { Trans } from 'react-i18next'
+import { useDispatch, useSelector } from 'react-redux'
+import {
+	answeredQuestionsSelector,
+	situationSelector,
+} from 'Selectors/simulationSelectors'
+import { objectifsSelector } from '../../selectors/simulationSelectors'
 import Aide from './Aide'
 import './conversation.css'
-import { createSelector } from 'reselect'
-import { head, sortBy } from 'ramda'
-import Controls from 'Components/Controls'
+import { ExplicableRule } from './Explicable'
 import CategoryRespiration from './CategoryRespiration'
+import { extractCategories } from '../../sites/publicodes/chart'
+import { sortBy } from 'ramda'
+import {
+	weeklyDietQuestion,
+	weeklyDietQuestionText,
+} from './select/SelectWeeklyDiet'
+import styled, { css } from 'styled-components'
+import { CategoryLabel } from './UI'
 
 export type ConversationProps = {
 	customEndMessages?: React.ReactNode
+	customEnd?: React.ReactNode
 }
-
-const orderedCurrentQuestionSelector = createSelector(
-	[
-		analysisWithDefaultsOnlySelector,
-		nextStepsSelector,
-		(state) => state.conversationSteps.unfoldedStep,
-	],
-	(analysis, nextSteps, unfoldedStep) => {
-		const firstTargetFormula = analysis.targets[0].formule.explanation,
-			isSum = firstTargetFormula.name === 'somme',
-			currentQuestion = unfoldedStep || head(nextSteps)
-
-		if (!isSum) return currentQuestion
-		try {
-			const items = firstTargetFormula.explanation
-			const sortedSteps = sortBy(
-				(question) =>
-					-items.find((item) => question.indexOf(item.dottedName) === 0)
-						?.nodeValue,
-				nextSteps
-			)
-			return unfoldedStep || head(sortedSteps)
-		} catch (e) {
-			console.log(e)
-			return currentQuestion
-		}
-	}
-)
 
 export default function Conversation({
 	customEndMessages,
 	customEnd,
-	teaseCategories,
+	orderByCategories,
 }: ConversationProps) {
-	const [dismissedRespirations, dismissRespiration] = useState([])
 	const dispatch = useDispatch()
-	const flatRules = useSelector(flatRulesSelector)
-	const currentQuestion = useSelector(orderedCurrentQuestionSelector)
-	const previousAnswers = useSelector(
-		(state: RootState) => state.conversationSteps.foldedSteps
-	)
-	const nextSteps = useSelector(nextStepsSelector)
-
+	const engine = useContext(EngineContext),
+		rules = engine.getParsedRules()
+	const nextQuestions = useNextQuestions()
+	const situation = useSelector(situationSelector)
+	const previousAnswers = useSelector(answeredQuestionsSelector)
 	const tracker = useContext(TrackerContext)
+	const objectifs = useSelector(objectifsSelector)
+	const rawRules = useSelector((state) => state.rules)
+	const previousSimulation = useSelector((state) => state.previousSimulation)
+
+	const sortedQuestions = orderByCategories
+		? sortBy(
+				(question) =>
+					-orderByCategories.find((c) => question.indexOf(c.dottedName) === 0)
+						?.nodeValue,
+				nextQuestions
+		  )
+		: nextQuestions
+	const unfoldedStep = useSelector((state) => state.simulation.unfoldedStep)
+	const isMainSimulation = objectifs.length === 1 && objectifs[0] === 'bilan',
+		currentQuestion = !isMainSimulation
+			? nextQuestions[0]
+			: unfoldedStep || sortedQuestions[0]
+
+	const currentQuestionIsAnswered = situation[currentQuestion] != null
+
+	const [dismissedRespirations, dismissRespiration] = useState([])
 
 	useEffect(() => {
 		if (previousAnswers.length === 1) {
@@ -75,129 +75,154 @@ export default function Conversation({
 		}
 	}, [previousAnswers, tracker])
 
+	useEffect(() => {
+		// It is important to test for "previousSimulation" : if it exists, it's not loadedYet. Then currentQuestion could be the wrong one, already answered, don't put it as the unfoldedStep
+		if (currentQuestion && !previousSimulation) {
+			dispatch(goToQuestion(currentQuestion))
+		}
+	}, [dispatch, currentQuestion])
 	const setDefault = () =>
 		dispatch(
-			validateStepWithValue(
-				currentQuestion,
-				findRuleByDottedName(flatRules, currentQuestion).defaultValue
-			)
+			// TODO: Skiping a question shouldn't be equivalent to answering the
+			// default value (for instance the question shouldn't appear in the
+			// answered questions).
+			validateStepWithValue(currentQuestion, undefined)
 		)
 	const goToPrevious = () =>
 		dispatch(goToQuestion(previousAnswers.slice(-1)[0]))
+
+	const submit = (source: string) => {
+		dispatch({
+			type: 'STEP_ACTION',
+			name: 'fold',
+			step: currentQuestion,
+			source,
+		})
+	}
+
+	const onChange: RuleInputProps['onChange'] = (value) => {
+		dispatch(updateSituation(currentQuestion, value))
+	}
+
 	const handleKeyDown = ({ key }: React.KeyboardEvent) => {
-		if (['Escape'].includes(key)) {
+		if (key === 'Escape') {
 			setDefault()
+		} else if (key === 'Enter') {
+			submit('enter')
 		}
 	}
-	const questionCategory =
-		currentQuestion &&
-		findRuleByDottedName(flatRules, currentQuestion.split(' . ')[0])
 
-	const firstCategoryQuestion =
+	if (!currentQuestion)
+		return (
+			<div style={{ textAlign: 'center' }}>
+				{customEnd || (
+					<>
+						<h3>
+							{emoji('🌟')}{' '}
+							<Trans i18nKey="simulation-end.title">
+								Vous avez complété cette simulation
+							</Trans>
+						</h3>
+						<p>
+							{customEndMessages ? (
+								customEndMessages
+							) : (
+								<Trans i18nKey="simulation-end.text">
+									Vous avez maintenant accès à l'estimation la plus précise
+									possible.
+								</Trans>
+							)}
+						</p>
+					</>
+				)}
+			</div>
+		)
+
+	const questionText = weeklyDietQuestion(currentQuestion)
+		? weeklyDietQuestionText
+		: rules[currentQuestion]?.rawNode?.question
+
+	const questionCategoryName = currentQuestion.split(' . ')[0],
+		questionCategory =
+			orderByCategories &&
+			orderByCategories.find(
+				({ dottedName }) => dottedName === questionCategoryName
+			)
+
+	const isCategoryFirstQuestion =
 		questionCategory &&
 		previousAnswers.find(
 			(a) => a.split(' . ')[0] === questionCategory.dottedName
 		) === undefined
 
-	return teaseCategories &&
-		firstCategoryQuestion &&
+	return orderByCategories &&
+		isCategoryFirstQuestion &&
 		!dismissedRespirations.includes(questionCategory.dottedName) ? (
 		<CategoryRespiration
 			questionCategory={questionCategory}
-			dismiss={() => dismissRespiration(questionCategory.dottedName)}
+			dismiss={() =>
+				dismissRespiration([
+					...dismissedRespirations,
+					questionCategory.dottedName,
+				])
+			}
 		/>
 	) : (
-		<section className="ui__ full-width lighter-bg">
-			<div className="ui__ container">
-				<Controls />
-				{nextSteps.length ? (
-					<>
-						<Aide />
-						<div
-							tabIndex={0}
-							style={{ outline: 'none' }}
-							onKeyDown={handleKeyDown}
-						>
-							{currentQuestion && (
-								<React.Fragment key={currentQuestion}>
-									{teaseCategories && questionCategory && (
-										<div>
-											<span
-												css={`
-													background: ${questionCategory.couleur || 'darkblue'};
-													color: white;
-													border-radius: 0.3rem;
-													padding: 0.15rem 0.6rem;
-													text-transform: uppercase;
-													img {
-														margin: 0 0.6rem 0 0 !important;
-													}
-												`}
-											>
-												{emoji(questionCategory.icônes || '🌍')}
-												{questionCategory.title}
-											</span>
-										</div>
-									)}
-									<Animate.fadeIn>
-										{getInputComponent(flatRules)(currentQuestion)}
-									</Animate.fadeIn>
-									<div className="ui__ answer-group">
-										{previousAnswers.length > 0 && (
-											<>
-												<button
-													onClick={goToPrevious}
-													className="ui__ simple small push-left button"
-												>
-													← <T>Précédent</T>
-												</button>
-											</>
-										)}
-										<button
-											onClick={setDefault}
-											className="ui__ simple small push-right button"
-										>
-											<T>Je ne sais pas</T> →
-										</button>
-									</div>
-								</React.Fragment>
-							)}
-						</div>
-						<QuickLinks />
-					</>
-				) : (
-					<div style={{ textAlign: 'center' }}>
-						{customEnd || (
-							<>
-								<EndingCongratulations />
-								<p>
-									{customEndMessages ? (
-										customEndMessages
-									) : (
-										<T k="simulation-end.text">
-											Vous avez maintenant accès à l'estimation la plus précise
-											possible.
-										</T>
-									)}
-								</p>
-								<button
-									className="ui__ small simple  button "
-									onClick={resetSimulation}
-								>
-									<T>Recommencer</T>
-								</button>
-							</>
-						)}
+		<>
+			<Aide />
+			<div style={{ outline: 'none' }} onKeyDown={handleKeyDown}>
+				{orderByCategories && questionCategory && (
+					<div>
+						<CategoryLabel color={questionCategory.color}>
+							{emoji(questionCategory.icons || '🌍')}
+							{questionCategory.title}
+						</CategoryLabel>
 					</div>
 				)}
+				<Animate.fadeIn>
+					<div className="step">
+						<h3>
+							{questionText} <ExplicableRule dottedName={currentQuestion} />
+						</h3>
+						<fieldset>
+							<RuleInput
+								dottedName={currentQuestion}
+								onChange={onChange}
+								onSubmit={submit}
+							/>
+						</fieldset>
+					</div>
+				</Animate.fadeIn>
+				<div className="ui__ answer-group">
+					{previousAnswers.length > 0 && (
+						<>
+							<button
+								onClick={goToPrevious}
+								className="ui__ simple small push-left button"
+							>
+								← <Trans>Précédent</Trans>
+							</button>
+						</>
+					)}
+					{currentQuestionIsAnswered ? (
+						<button
+							className="ui__ plain small button"
+							onClick={() => submit('accept')}
+						>
+							<span className="text">
+								<Trans>Suivant</Trans> →
+							</span>
+						</button>
+					) : (
+						<button
+							onClick={setDefault}
+							className="ui__ simple small push-right button"
+						>
+							<Trans>Je ne sais pas</Trans> →
+						</button>
+					)}
+				</div>
 			</div>
-		</section>
+		</>
 	)
 }
-
-export let EndingCongratulations = () => (
-	<h3>
-		{emoji('🌟')}{' '}
-		<T k="simulation-end.title">Vous avez complété cette simulation</T>{' '}
-	</h3>
-)

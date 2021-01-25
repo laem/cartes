@@ -12,7 +12,7 @@ import {
 type Props = {
 	children: React.ReactNode
 	config?: SpringConfig
-	style?: Object
+	style?: React.CSSProperties
 	className?: string
 	delay?: number
 }
@@ -25,13 +25,14 @@ export const fromBottom = ({
 	delay = 0
 }: Props) => (
 	<Trail
-		keys={React.Children.map(children, (_, i) => i)}
+		keys={React.Children.map(children, (_, i) => i) ?? []}
 		native={true}
 		delay={delay}
 		config={config}
 		from={{ opacity: 0, y: 10 }}
 		to={{ opacity: 1, y: 0 }}
-		items={children}>
+		items={children}
+	>
 		{item => ({ y, ...style }) => (
 			<animated.div
 				style={{
@@ -40,7 +41,8 @@ export const fromBottom = ({
 					),
 					...style,
 					...inheritedStyle
-				}}>
+				}}
+			>
 				{item}
 			</animated.div>
 		)}
@@ -53,13 +55,14 @@ export const fromTop = ({
 	delay = 0
 }: Props) => (
 	<Trail
-		keys={React.Children.map(children, (_, i) => i)}
+		keys={React.Children.map(children, (_, i) => i) ?? []}
 		native={true}
 		delay={delay}
 		config={config}
 		from={{ opacity: 0, y: -20 }}
 		to={{ opacity: 1, y: 0 }}
-		items={children}>
+		items={children}
+	>
 		{item => ({ y, ...style }) => (
 			<animated.div
 				style={{
@@ -68,7 +71,8 @@ export const fromTop = ({
 					),
 					...style,
 					...inheritedStyle
-				}}>
+				}}
+			>
 				{item}
 			</animated.div>
 		)}
@@ -95,10 +99,11 @@ export const leftToRight = ({
 		delay={delay}
 		leave={{
 			opacity: 0,
-			position: 'absolute',
+			position: 'absolute' as const,
 			transform: 'translateX(-100%)'
 		}}
-		items={children}>
+		items={children}
+	>
 		{item => style => <animated.div style={style}>{item}</animated.div>}
 	</Transition>
 )
@@ -115,7 +120,8 @@ export const fadeIn = ({
 		from={{ opacity: 0 }}
 		to={{
 			opacity: 1
-		}}>
+		}}
+	>
 		{style => <animated.div style={style}>{children}</animated.div>}
 	</Spring>
 )
@@ -144,7 +150,8 @@ export function appear({
 			to={{
 				opacity: show ? 1 : 0,
 				height: show ? 'auto' : '0px'
-			}}>
+			}}
+		>
 			{animStyle => (
 				<animated.div style={{ ...style, ...animStyle }} className={className}>
 					{children}

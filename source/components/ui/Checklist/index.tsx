@@ -2,8 +2,8 @@ import classnames from 'classnames'
 import { Markdown } from 'Components/utils/markdown'
 import { ScrollToElement } from 'Components/utils/Scroll'
 import { TrackerContext } from 'Components/utils/withTracker'
-import React, { Component, useContext, useState } from 'react'
-import Animate from 'Ui/animate'
+import React, { useContext, useEffect, useState } from 'react'
+import Animate from 'Components/ui/animate'
 import Checkbox from '../Checkbox'
 import './index.css'
 
@@ -11,7 +11,7 @@ type CheckItemProps = {
 	title: React.ReactNode
 	name: string
 	explanations?: React.ReactNode
-	onChange?: (checked: boolean) => void
+	onChange?: (evt: React.ChangeEvent<HTMLInputElement>) => void
 	defaultChecked?: boolean
 }
 
@@ -29,8 +29,8 @@ export function CheckItem({
 		if (e.target.checked) {
 			setDisplayExplanations(false)
 		}
-		onChange && onChange(e.target.checked)
-		tracker.push([
+		onChange?.(e)
+		tracker.debouncedPush([
 			'trackEvent',
 			'CheckItem',
 			e.target.checked ? 'check' : 'uncheck',
@@ -39,7 +39,7 @@ export function CheckItem({
 	}
 
 	const handleClick = () => {
-		tracker.push(['trackEvent', 'CheckItem', 'click', name])
+		tracker.debouncedPush(['trackEvent', 'CheckItem', 'click', name])
 		setDisplayExplanations(!displayExplanations)
 	}
 
@@ -81,40 +81,39 @@ export function CheckItem({
 
 export type ChecklistProps = {
 	children: React.ReactNode
-	onItemCheck: (string, boolean) => void
-	onInitialization: (arg: Array<string>) => void
-	defaultChecked: { [key: string]: boolean }
+	onItemCheck?: (name: string, isChecked: boolean) => void
+	onInitialization?: (arg: Array<string>) => void
+	defaultChecked?: { [key: string]: boolean }
 }
-export class Checklist extends Component<ChecklistProps> {
-	checklist: any
-	static defaultProps = {
-		defaultChecked: {},
-		onItemCheck: () => {},
-		onInitialization: () => {}
-	}
-	constructor(props: ChecklistProps) {
-		super(props)
-		this.checklist = React.Children.toArray(props.children)
-			.filter(Boolean)
-			.map((child: any) =>
-				React.cloneElement(child, {
-					onChange: checked => props.onItemCheck(child.props.name, checked),
-					defaultChecked:
-						child.props.defaultChecked || props.defaultChecked[child.props.name]
-				})
-			)
-		props.onInitialization &&
-			props.onInitialization(
-				this.checklist.map((child: any) => child.props.name)
-			)
-	}
-	render() {
-		return (
-			<ul className="ui__ no-bullet checklist">
-				{this.checklist.map((checkItem: any) => (
-					<li key={checkItem.props.name}>{checkItem}</li>
-				))}
-			</ul>
-		)
-	}
+export function Checklist({
+	children,
+	onItemCheck,
+	onInitialization,
+	defaultChecked
+}: ChecklistProps) {
+	const checklist = React.Children.toArray(children)
+		.filter(Boolean)
+		.map(child => {
+			if (!React.isValidElement(child)) {
+				throw new Error('Invalid child passed to Checklist')
+			}
+			return React.cloneElement(child, {
+				onChange: (evt: React.ChangeEvent<HTMLInputElement>) =>
+					onItemCheck?.(child.props.name, evt.target.checked),
+				defaultChecked:
+					child.props.defaultChecked || defaultChecked?.[child.props.name]
+			})
+		})
+
+	useEffect(() => {
+		onInitialization?.(checklist.map(child => child.props.name))
+	}, [])
+
+	return (
+		<ul className="ui__ no-bullet checklist">
+			{checklist.map(checkItem => (
+				<li key={checkItem.props.name}>{checkItem}</li>
+			))}
+		</ul>
+	)
 }

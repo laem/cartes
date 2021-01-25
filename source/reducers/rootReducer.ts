@@ -1,49 +1,21 @@
 import { Action } from 'Actions/actions'
-import { Analysis } from 'Engine/traverse'
-import { areUnitConvertible, convertUnit, parseUnit, Unit } from 'Engine/units'
-import {
-	defaultTo,
-	dissoc,
-	identity,
-	lensPath,
-	omit,
-	over,
-	pipe,
-	set,
-	uniq,
-	without,
-} from 'ramda'
+import { defaultTo, omit, without } from 'ramda'
 import reduceReducers from 'reduce-reducers'
 import { combineReducers, Reducer } from 'redux'
-import { analysisWithDefaultsSelector } from 'Selectors/analyseSelectors'
 import { SavedSimulation } from 'Selectors/storageSelectors'
-import { DottedName } from 'Types/rule'
-import i18n, { AvailableLangs } from '../i18n'
-import inFranceAppReducer from './inFranceAppReducer'
+import { DottedName } from '../rules/index'
+import { objectifsSelector } from '../selectors/simulationSelectors'
 import storageRootReducer from './storageReducer'
 
-function explainedVariable(state: DottedName | null = null, action: Action) {
+function explainedVariable(
+	state: DottedName | null = null,
+	action: Action
+): DottedName | null {
 	switch (action.type) {
 		case 'EXPLAIN_VARIABLE':
 			return action.variableName
 		case 'STEP_ACTION':
 			return null
-		default:
-			return state
-	}
-}
-
-type Example = null | {
-	name: string
-	situation: object
-	dottedName: DottedName
-	defaultUnits?: Array<Unit>
-}
-
-function currentExample(state: Example = null, action: Action): Example {
-	switch (action.type) {
-		case 'SET_EXAMPLE':
-			return action.name != null ? action : null
 		default:
 			return state
 	}
@@ -69,131 +41,53 @@ function activeTargetInput(state: DottedName | null = null, action: Action) {
 	}
 }
 
-function lang(
-	state = i18n.language as AvailableLangs,
-	{ type, lang }
-): AvailableLangs {
-	switch (type) {
-		case 'SWITCH_LANG':
-			return lang
-		default:
-			return state
-	}
-}
-
-type ConversationSteps = {
-	foldedSteps: Array<DottedName>
-	unfoldedStep?: DottedName | null
-}
-
-function conversationSteps(
-	state: ConversationSteps = {
-		foldedSteps: [],
-		unfoldedStep: null,
-	},
-	action: Action
-): ConversationSteps {
-	if (['RESET_SIMULATION'].includes(action.type))
-		return { foldedSteps: [], unfoldedStep: null }
-
-	if (action.type !== 'STEP_ACTION') return state
-	const { name, step } = action
-	if (name === 'fold')
-		return {
-			foldedSteps: [...without([step], state.foldedSteps), step],
-			unfoldedStep: null,
-		}
-	if (name === 'unfold') {
-		return {
-			foldedSteps: without([step], state.foldedSteps),
-			unfoldedStep: step,
-		}
-	}
-	return state
-}
-
-function updateSituation(
-	situation,
-	{
-		fieldName,
-		value,
-		analysis,
-	}: {
-		fieldName: DottedName
-		value: any
-		analysis: Analysis | Array<Analysis> | null
-	}
-) {
-	const goals =
-		analysis &&
-		(Array.isArray(analysis) ? analysis[0] : analysis).targets
-			.map((target) => target.explanation || target)
-			.filter((target) => !!target.formule == !!target.question)
-			.map(({ dottedName }) => dottedName)
-	const removePreviousTarget = goals?.includes(fieldName)
-		? omit(goals)
-		: identity
-	return { ...removePreviousTarget(situation), [fieldName]: value }
-}
-
-function updateDefaultUnit(situation, { toUnit, analysis }) {
-	const unit = parseUnit(toUnit)
-
-	const convertedSituation = Object.keys(situation)
-		.map(
-			(dottedName) =>
-				analysis.targets.find((target) => target.dottedName === dottedName) ||
-				analysis.cache[dottedName]
-		)
-		.filter(
-			(rule) =>
-				(rule.unit || rule.defaultUnit) &&
-				!rule.unité &&
-				areUnitConvertible(rule.unit || rule.defaultUnit, unit)
-		)
-		.reduce(
-			(convertedSituation, rule) => ({
-				...convertedSituation,
-				[rule.dottedName]: convertUnit(
-					rule.unit || rule.defaultUnit,
-					unit,
-					situation[rule.dottedName]
-				),
-			}),
-			situation
-		)
-	return convertedSituation
-}
-
 type QuestionsKind =
 	| "à l'affiche"
 	| 'non prioritaires'
-	| 'uniquement'
+	| 'liste'
 	| 'liste noire'
 
-export type SimulationConfig = Partial<{
+export type SimulationConfig = {
+	narrow: Boolean
 	objectifs:
 		| Array<DottedName>
 		| Array<{ icône: string; nom: string; objectifs: Array<DottedName> }>
-	questions: Partial<Record<QuestionsKind, Array<DottedName>>>
-	bloquant: Array<DottedName>
+	'objectifs cachés': Array<DottedName>
 	situation: Simulation['situation']
-	branches: Array<{ nom: string; situation: SimulationConfig['situation'] }>
-	'unités par défaut': [string]
-}>
+	bloquant?: Array<DottedName>
+	questions?: Partial<Record<QuestionsKind, Array<DottedName>>>
+	branches?: Array<{ nom: string; situation: SimulationConfig['situation'] }>
+	'unité par défaut': string
+}
 
+type Situation = Partial<Record<DottedName, any>>
 export type Simulation = {
 	config: SimulationConfig
 	url: string
-	hiddenControls: Array<string>
-	situation: Partial<Record<DottedName, any>>
-	defaultUnits: [string]
+	hiddenNotifications: Array<string>
+	situation: Situation
+	initialSituation: Situation
+	targetUnit: string
+	foldedSteps: Array<DottedName>
+	unfoldedStep?: DottedName | null
+}
+function getCompanySituation(company: Company | null): Situation {
+	return {
+		...(company?.localisation && {
+			'établissement . localisation': company.localisation,
+		}),
+		...(company?.dateDeCréation && {
+			'entreprise . date de création': company.dateDeCréation.replace(
+				/(.*)-(.*)-(.*)/,
+				'$3/$2/$1'
+			),
+		}),
+	}
 }
 
 function simulation(
 	state: Simulation | null = null,
-	action: Action,
-	analysis: Analysis | Array<Analysis> | null
+	action: Action
 ): Simulation | null {
 	if (action.type === 'SET_SIMULATION') {
 		const { config, url } = action
@@ -203,105 +97,93 @@ function simulation(
 		return {
 			config,
 			url,
-			hiddenControls: state?.hiddenControls,
-			situation: state?.situation,
-			defaultUnits: config['unités par défaut'] || ['€/mois'],
+			hiddenNotifications: state?.hiddenControls || [],
+			situation: state?.situation || {},
+			targetUnit: config['unité par défaut'] || '€/mois',
+			foldedSteps: state?.foldedSteps || [],
+			unfoldedStep: null,
 		}
 	}
 	if (state === null) {
 		return state
 	}
+
 	switch (action.type) {
-		case 'HIDE_CONTROL':
-			return { ...state, hiddenControls: [...state.hiddenControls, action.id] }
+		case 'HIDE_NOTIFICATION':
+			return {
+				...state,
+				hiddenNotifications: [...state.hiddenNotifications, action.id],
+			}
 		case 'RESET_SIMULATION':
-			return { ...state, hiddenControls: [], situation: {} }
-		case 'UPDATE_SITUATION':
 			return {
 				...state,
-				situation: updateSituation(state.situation, {
-					fieldName: action.fieldName,
-					value: action.value,
-					analysis,
-				}),
+				hiddenNotifications: [],
+				situation: state.initialSituation,
+				foldedSteps: [],
+				unfoldedStep: null,
 			}
-		case 'UPDATE_DEFAULT_UNIT':
+		case 'UPDATE_SITUATION': {
+			const targets = objectifsSelector({ simulation: state } as RootState)
+			const situation = state.situation
+			const { fieldName: dottedName, value } = action
 			return {
 				...state,
-				defaultUnits: [action.defaultUnit],
-				situation: updateDefaultUnit(state.situation, {
-					toUnit: action.defaultUnit,
-					analysis,
-				}),
+				situation:
+					value === undefined
+						? omit([dottedName], situation)
+						: {
+								...(targets.includes(dottedName)
+									? omit(targets, situation)
+									: situation),
+								[dottedName]: value,
+						  },
+			}
+		}
+		case 'STEP_ACTION': {
+			const { name, step } = action
+			if (name === 'fold')
+				return {
+					...state,
+					foldedSteps: [...without([step], state.foldedSteps), step],
+
+					unfoldedStep: null,
+				}
+			if (name === 'unfold') {
+				return {
+					...state,
+					foldedSteps: without([step], state.foldedSteps),
+					unfoldedStep: step,
+				}
+			}
+			return state
+		}
+		case 'UPDATE_TARGET_UNIT':
+			return {
+				...state,
+				targetUnit: action.targetUnit,
 			}
 	}
 	return state
 }
-
-const addAnswerToSituation = (
-	dottedName: DottedName,
-	value: unknown,
-	state: RootState
-) => {
-	return pipe(
-		over(lensPath(['conversationSteps', 'foldedSteps']), (steps = []) =>
-			uniq([...steps, dottedName])
-		),
-		set(lensPath(['simulation', 'situation', dottedName]), value)
-	)(state)
-}
-
-const removeAnswerFromSituation = (
-	dottedName: DottedName,
-	state: RootState
-) => {
-	return pipe(
-		over(lensPath(['conversationSteps', 'foldedSteps']), without([dottedName])),
-		over(lensPath(['simulation', 'situation']), dissoc(dottedName))
-	)(state)
-}
-
-const existingCompanyRootReducer = (state: RootState, action) => {
-	if (!action.type.startsWith('EXISTING_COMPANY::')) {
-		return state
-	}
-	if (action.type.endsWith('ADD_COMMUNE_DETAILS')) {
-		return addAnswerToSituation(
-			'établissement . localisation',
-			JSON.stringify(action.details.localisation),
-			state
-		)
-	}
-	if (action.type.endsWith('RESET')) {
-		removeAnswerFromSituation('établissement . localisation', state)
-	}
-	return state
-}
-
 function rules(state = null, { type, rules }) {
 	if (type === 'SET_RULES') {
 		return rules
 	} else return state
 }
 
-const mainReducer = (state, action: Action) =>
+const mainReducer = (state: any, action: Action) =>
 	combineReducers({
-		conversationSteps,
-		lang,
-		rules,
 		explainedVariable,
 		// We need to access the `rules` in the simulation reducer
 		simulation: (a: Simulation | null = null, b: Action): Simulation | null =>
-			simulation(a, b, a && analysisWithDefaultsSelector(state)),
+			simulation(a, b),
 		previousSimulation: defaultTo(null) as Reducer<SavedSimulation | null>,
-		currentExample,
 		situationBranch,
 		activeTargetInput,
-		inFranceApp: inFranceAppReducer,
+		rules,
 	})(state, action)
 
 export default reduceReducers<RootState>(
-	existingCompanyRootReducer,
 	mainReducer as any,
 	storageRootReducer as any
 ) as Reducer<RootState>

@@ -1,7 +1,7 @@
 import { TrackerContext } from 'Components/utils/withTracker'
 import React, { useCallback, useContext, useState } from 'react'
 import { Trans } from 'react-i18next'
-import { useLocation } from 'react-router'
+import { useLocation } from 'react-router-dom'
 import safeLocalStorage from '../../storage/safeLocalStorage'
 import './Feedback.css'
 import Form from './FeedbackForm'
@@ -13,7 +13,7 @@ type PageFeedbackProps = {
 }
 
 const localStorageKey = (feedback: [string, string]) =>
-	`app::feedback::${feedback.join('::')}`
+	`app::feedback::v2::${feedback.join('::')}`
 const saveFeedbackOccurrenceInLocalStorage = ([name, path, rating]: [
 	string,
 	string,
@@ -29,7 +29,6 @@ const feedbackAlreadyGiven = (feedback: [string, string]) => {
 }
 
 export default function PageFeedback({
-	blacklist = [],
 	customMessage,
 	customEventName
 }: PageFeedbackProps) {
@@ -71,11 +70,6 @@ export default function PageFeedback({
 	}, [])
 
 	if (state.feedbackAlreadyGiven && !state.showForm && !state.showThanks) {
-		return null
-	}
-	const pathname = location.pathname === '/' ? '' : location.pathname
-
-	if (blacklist.includes(pathname)) {
 		return null
 	}
 

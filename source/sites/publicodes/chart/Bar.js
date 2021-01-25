@@ -4,13 +4,12 @@ import Value from './Value'
 import emoji from 'react-easy-emoji'
 
 export default ({
-	couleur,
 	nodeValue,
-	icônes = '🌍',
+	icons = '🌍',
+	color,
 	title,
 	empreinteMaximum,
 	noText,
-	color,
 }) => (
 	<>
 		{!noText && (
@@ -32,12 +31,12 @@ export default ({
 					margin-left: -2.3rem;
 				`}
 			>
-				{emoji(icônes)}
+				{emoji(icons)}
 			</span>
 			<span
 				css={`
 					display: inline-block;
-					background: ${couleur};
+					background: ${color};
 					margin-top: 0rem;
 					margin-right: 0.8rem;
 					height: 1.1rem;
@@ -48,7 +47,7 @@ export default ({
 					${shadowStyle}
 				`}
 			></span>
-			<Value {...{ color, nodeValue }} />
+			<Value {...{ nodeValue }} />
 		</div>
 	</>
 )

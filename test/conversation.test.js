@@ -1,160 +1,120 @@
 import { expect } from 'chai'
-import { enrichRule, rulesFr as rules } from 'Engine/rules'
-import { assocPath, merge } from 'ramda'
-import reducers from 'Reducers/rootReducer'
-import salariéConfig from '../source/components/simulationConfigs/salarié.yaml'
+import Engine from 'publicodes'
 import {
-	currentQuestionSelector,
-	nextStepsSelector
-} from '../source/selectors/analyseSelectors'
-let baseState = {
-	conversationSteps: { foldedSteps: [] },
-	simulation: { situation: {} }
-}
+	getNextQuestions,
+	getNextSteps
+} from '../source/components/utils/useNextQuestion'
+import rules from '../source/rules'
 
 describe('conversation', function() {
 	it('should start with the first missing variable', function() {
-		let rawRules = [
-				// TODO - this won't work without the indirection, figure out why
-				{ nom: 'top . startHere', formule: { somme: ['a', 'b'] } },
-				{ nom: 'top . a', formule: 'aa' },
-				{ nom: 'top . b', formule: 'bb' },
-				{ nom: 'top . aa', question: '?', titre: 'a' },
-				{ nom: 'top . bb', question: '?', titre: 'b' }
-			],
-			rules = rawRules.map(enrichRule),
-			state = merge(baseState, {
-				rules,
-				simulation: { config: { objectifs: ['startHere'] } }
-			}),
-			currentQuestion = currentQuestionSelector(state)
-
-		expect(currentQuestion).to.equal('top . aa')
+		const missingVariables = new Engine({
+			// TODO - this won't work without the indirection, figure out why
+			'top . startHere': { formule: { somme: ['a', 'b'] } },
+			'top . a': { formule: 'aa' },
+			'top . b': { formule: 'bb' },
+			'top . aa': { question: '?', titre: 'a', unité: '€' },
+			'top . bb': { question: '?', titre: 'b', unité: '€' }
+		}).evaluate('top . startHere').missingVariables
+		expect(getNextQuestions([missingVariables])[0]).to.equal('top . aa')
 	})
-	it('should deal with double unfold', function() {
-		let rawRules = [
-				// TODO - this won't work without the indirection, figure out why
-				{
-					nom: 'top . startHere',
-					formule: { somme: ['a', 'b', 'c'] }
-				},
-				{ nom: 'top . a', formule: 'aa' },
-				{ nom: 'top . b', formule: 'bb' },
-				{ nom: 'top . c', formule: 'cc' },
-				{ nom: 'top . aa', question: '?', titre: 'a' },
-				{ nom: 'top . bb', question: '?', titre: 'b' },
-				{ nom: 'top . cc', question: '?', titre: 'c' }
-			],
-			rules = rawRules.map(enrichRule)
-
-		let step1 = merge(baseState, {
-			rules,
-			simulation: { config: { objectifs: ['startHere'] } }
-		})
-		let step2 = reducers(
-			assocPath(['simulation', 'situation'], { 'top . aa': '1' }, step1),
-			{
-				type: 'STEP_ACTION',
-				name: 'fold',
-				step: 'top . aa'
-			}
-		)
-
-		let step3 = reducers(
-			assocPath(
-				['simulation', 'situation'],
-				{ 'top . aa': '1', 'top . bb': '1' },
-				step2
-			),
-			{
-				type: 'STEP_ACTION',
-				name: 'fold',
-				step: 'top . bb'
-			}
-		)
-		let step4 = reducers(step3, {
-			type: 'STEP_ACTION',
-			name: 'unfold',
-			step: 'top . aa'
-		})
-		let lastStep = reducers(step4, {
-			type: 'STEP_ACTION',
-			name: 'unfold',
-			step: 'top . bb'
-		})
-
-		expect(currentQuestionSelector(lastStep)).to.equal('top . bb')
-		expect(lastStep.conversationSteps).to.have.property('foldedSteps')
-		expect(lastStep.conversationSteps.foldedSteps).to.have.lengthOf(0)
-	})
-
 	it('should first ask for questions without defaults, then those with defaults', function() {
-		let rawRules = [
-				{ nom: 'net', formule: 'brut - cotisation' },
-				{
-					nom: 'brut',
-					question: 'Quel est le salaire brut ?',
-					unité: '€'
-				},
-				{
-					nom: 'cotisation',
-					formule: {
-						multiplication: {
-							assiette: 'brut',
-							variations: [
-								{
-									si: 'cadre',
-									alors: {
-										taux: '77%'
-									}
-								},
-								{
-									sinon: {
-										taux: '80%'
-									}
+		const engine = new Engine({
+			net: { formule: 'brut - cotisation' },
+			brut: {
+				question: 'Quel est le salaire brut ?',
+				unité: '€/an'
+			},
+			cotisation: {
+				formule: {
+					produit: {
+						assiette: 'brut',
+						variations: [
+							{
+								si: 'cadre',
+								alors: {
+									taux: '77%'
 								}
-							]
-						}
+							},
+							{
+								sinon: {
+									taux: '80%'
+								}
+							}
+						]
 					}
-				},
-				{
-					nom: 'cadre',
-					question: 'Est-ce un cadre ?',
-					'par défaut': 'non'
 				}
-			],
-			rules = rawRules.map(enrichRule)
-
-		let step1 = merge(baseState, {
-			rules,
-			simulation: { config: { objectifs: ['net'] } }
-		})
-		expect(currentQuestionSelector(step1)).to.equal('brut')
-
-		let step2 = reducers(
-			assocPath(['simulation', 'situation', 'brut'], '2300', step1),
-			{
-				type: 'STEP_ACTION',
-				name: 'fold',
-				step: 'brut'
+			},
+			cadre: {
+				question: 'Est-ce un cadre ?',
+				'par défaut': 'non'
 			}
+		})
+
+		expect(
+			getNextQuestions([engine.evaluate('net').missingVariables])[0]
+		).to.equal('brut')
+
+		engine.setSituation({
+			brut: 2300
+		})
+
+		expect(
+			getNextQuestions([engine.evaluate('net').missingVariables])[0]
+		).to.equal('cadre')
+	})
+
+	it('should ask "motif CDD" if "CDD" applies', function() {
+		const result = Object.keys(
+			new Engine(rules)
+				.setSituation({
+					'contrat salarié': 'oui',
+					'contrat salarié . CDD': 'oui',
+					'contrat salarié . rémunération . brut de base': '2300'
+				})
+				.evaluate('contrat salarié . rémunération . net').missingVariables
 		)
 
-		expect(step2.conversationSteps).to.have.property('foldedSteps')
-		expect(step2.conversationSteps.foldedSteps).to.have.lengthOf(1)
-		expect(step2.conversationSteps.foldedSteps[0]).to.equal('brut')
-		expect(currentQuestionSelector(step2)).to.equal('cadre')
+		expect(result).to.include('contrat salarié . CDD . motif')
 	})
 })
-describe('real conversation', function() {
-	it('should not have more than X questions', function() {
-		let state = merge(baseState, {
-				rules,
-				simulation: { config: salariéConfig }
-			}),
-			nextSteps = nextStepsSelector(state)
 
-		expect(nextSteps.length).to.be.below(30) // If this breaks, that's good news
-		expect(nextSteps.length).to.be.above(10)
+describe('getNextSteps', function() {
+	it('should give priority to questions that advance most targets', function() {
+		let missingVariablesByTarget = [
+			{
+				effectif: 34.01,
+				cadre: 30
+			},
+			{
+				cadre: 10.1
+			},
+			{
+				effectif: 32.0,
+				cadre: 10
+			}
+		]
+
+		let result = getNextSteps(missingVariablesByTarget)
+
+		expect(result[0]).to.equal('cadre')
+	})
+
+	it('should give priority to questions by total weight when advancing the same target count', function() {
+		let missingVariablesByTarget = [
+			{
+				effectif: 24.01,
+				cadre: 30
+			},
+			{
+				effectif: 24.01,
+				cadre: 10.1
+			},
+			{}
+		]
+
+		let result = getNextSteps(missingVariablesByTarget)
+
+		expect(result[0]).to.equal('effectif')
 	})
 })

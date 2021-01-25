@@ -7,7 +7,7 @@ export default ({ dismiss, questionCategory }) => {
 		<motion.section
 			initial={{ backgroundColor: '#ffffff', scale: 0 }}
 			animate={{
-				backgroundColor: questionCategory.couleur,
+				backgroundColor: questionCategory.color,
 				scale: 1,
 			}}
 			transition={{
@@ -36,7 +36,7 @@ export default ({ dismiss, questionCategory }) => {
 			`}
 		>
 			<h2>{questionCategory.title}</h2>
-			{emoji(questionCategory.icônes)}
+			{emoji(questionCategory.icons)}
 			<button className="ui__ plain button" onClick={dismiss}>
 				C'est parti !
 			</button>

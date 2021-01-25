@@ -1,12 +1,11 @@
 import convert from 'color-convert'
-import SetCssColor from 'Components/utils/SetCssColor'
-import React, { createContext } from 'react'
+import React, { createContext, useEffect, useRef } from 'react'
 
 /*
 	Hex to RGB conversion:
  	http://www.javascripter.net/faq/hextorgb.htm
 */
-let cutHex = (h: string) => (h.charAt(0) == '#' ? h.substring(1, 7) : h),
+const cutHex = (h: string) => (h.startsWith('#') ? h.substring(1, 7) : h),
 	hexToR = (h: string) => parseInt(cutHex(h).substring(0, 2), 16),
 	hexToG = (h: string) => parseInt(cutHex(h).substring(2, 4), 16),
 	hexToB = (h: string) => parseInt(cutHex(h).substring(4, 6), 16)
@@ -16,7 +15,7 @@ let cutHex = (h: string) => (h.charAt(0) == '#' ? h.substring(1, 7) : h),
    	Taken from http://stackoverflow.com/questions/3942878/how-to-decide-font-color-in-white-or-black-depending-on-background-color#comment61936401_3943023
 */
 export function findContrastedTextColor(color: string, simple: boolean) {
-	let r = hexToR(color),
+	const r = hexToR(color),
 		g = hexToG(color),
 		b = hexToB(color)
 
@@ -24,7 +23,7 @@ export function findContrastedTextColor(color: string, simple: boolean) {
 		// The YIQ formula
 		return r * 0.299 + g * 0.587 + b * 0.114 > 128 ? '#000000' : '#ffffff'
 	} // else complex formula
-	let uicolors = [r / 255, g / 255, b / 255],
+	const uicolors = [r / 255, g / 255, b / 255],
 		c = uicolors.map((c) =>
 			c <= 0.03928 ? c / 12.92 : Math.pow((c + 0.055) / 1.055, 2.4)
 		),
@@ -52,11 +51,12 @@ const deriveAnalogousPalettes = (hex: string) => {
 	return [
 		generateDarkenVariations(4, [(h - 45) % 360, 0.75 * s, l]),
 		generateDarkenVariations(4, [(h + 45) % 360, 0.75 * s, l]),
+		generateDarkenVariations(4, [(h + 90) % 360, 0.75 * s, l])
 	]
 }
 
 const generateTheme = (themeColor?: string) => {
-	let // Use the default theme color if the host page hasn't made a choice
+	const // Use the default theme color if the host page hasn't made a choice
 		color = themeColor || '#5758BB',
 		lightColor = lightenColor(color, 10),
 		darkColor = lightenColor(color, -20),
@@ -66,7 +66,7 @@ const generateTheme = (themeColor?: string) => {
 		grayColor = '#00000099',
 		textColor = findContrastedTextColor(color, true), // the 'simple' version feels better...
 		inverseTextColor = textColor === '#ffffff' ? '#000' : '#fff',
-		lightenTextColor = (textColor) =>
+		lightenTextColor = (textColor: string) =>
 			textColor === '#ffffff' ? 'rgba(255, 255, 255, .7)' : 'rgba(0, 0, 0, .7)',
 		lighterTextColor = darkColor + 'cc',
 		lighterInverseTextColor = lightenTextColor(inverseTextColor),
@@ -101,10 +101,27 @@ type ProviderProps = {
 
 export function ThemeColorsProvider({ color, children }: ProviderProps) {
 	const colors = generateTheme(color)
+	const divRef = useRef<HTMLDivElement>(null)
+	useEffect(() => {
+		Object.entries(colors).forEach(([key, value]) => {
+			if (typeof value === 'string') {
+				divRef.current?.style.setProperty(`--${key}`, value)
+			}
+		}, colors)
+	}, [colors])
 	return (
 		<ThemeColorsContext.Provider value={colors}>
-			<SetCssColor colors={colors} />
-			{children}
+			{/* This div is only used to set the CSS variables */}
+			<div
+				ref={divRef}
+				css={`
+					height: 100%;
+					display: flex;
+					flex-direction: column;
+				`}
+			>
+				{children}
+			</div>
 		</ThemeColorsContext.Provider>
 	)
 }

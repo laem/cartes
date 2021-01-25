@@ -1,7 +1,9 @@
 .ui__.button:not(:disabled):not(.disabled):not(.push-right):not(.push-left):active {
 	animation: push-button-down 0.1s ease-out alternate-reverse 2;
 }
-
+.ui__.button.static {
+	animation: none !important;
+}
 .ui__.button:disabled,
 .ui__.button.disabled {
 	opacity: 0.5;
@@ -23,6 +25,7 @@
 	text-align: center;
 	text-transform: uppercase;
 
+	font-family: 'Roboto', sans-serif;
 	font-weight: normal;
 	cursor: pointer;
 
@@ -166,8 +169,9 @@
 }
 
 .ui__.small.button {
+	width: inherit;
 	font-size: 90%;
-	line-height: 1rem;
+	line-height: 1.2rem;
 	transition: all 0.08s;
 	padding: 0.4rem 0.8rem;
 	border-radius: 0.3rem;
@@ -179,7 +183,7 @@
 	padding-bottom: 1rem;
 	margin-bottom: 1rem;
 	position: relative;
-	min-width: 14.4rem;
+	min-width: 14rem;
 	margin-right: 1rem;
 	text-decoration: none;
 }
