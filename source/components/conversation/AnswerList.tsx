@@ -84,7 +84,15 @@ const CategoryTable = ({ steps, categories, onClose }) =>
 
 		return (
 			<div>
-				<div>{category.title}</div>
+				<div
+					css={`
+						span {
+							border-bottom: ${category.color} 3px solid;
+						}
+					`}
+				>
+					<span>{category.title}</span>
+				</div>
 				<StepsTable
 					{...{
 						rules: categoryRules,
