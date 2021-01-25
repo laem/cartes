@@ -26,8 +26,12 @@ export default function Input({
 }) {
 	const debouncedOnChange = useCallback(debounce(550, onChange), [])
 	const { language } = useTranslation().i18n
+
+	// This test is bad. publicodes should be able to return the formatted number and the formatted unit separately
 	const unitéRaw = formatValue({ nodeValue: value ?? 0, unit }, { language }),
-		unité = unitéRaw.replace(/[\d,.]/g, '').trim()
+		unitéMatch = unitéRaw.match(/([a-zA-Z].*)/),
+		unité = unitéMatch[0] || ''
+	console.log(unitéRaw, unité)
 	const { thousandSeparator, decimalSeparator } = currencyFormat(language)
 	// const [currentValue, setCurrentValue] = useState(value)
 
