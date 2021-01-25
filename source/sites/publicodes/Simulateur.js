@@ -16,6 +16,7 @@ import CarbonImpact from './CarbonImpact'
 import Chart, { extractCategories } from './chart/index.js'
 import { objectifsSelector } from 'Selectors/simulationSelectors'
 import { useEngine } from 'Components/utils/EngineContext'
+import emoji from 'react-easy-emoji'
 
 const eqValues = compose(isEmpty, symmetricDifference)
 
@@ -104,8 +105,5 @@ const RedirectionToEndPage = ({ url, score }) => {
 export default Simulateur
 
 const EndingCongratulations = () => (
-	<h3>
-		{emoji('🌟')}{' '}
-		<T k="simulation-end.title">Vous avez complété cette simulation</T>{' '}
-	</h3>
+	<h3>{emoji('🌟')} Vous avez complété cette simulation</h3>
 )
