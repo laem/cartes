@@ -27,6 +27,8 @@ import {
 	weeklyDietQuestion,
 	weeklyDietQuestionText,
 } from './select/SelectWeeklyDiet'
+import styled, { css } from 'styled-components'
+import { CategoryLabel } from './UI'
 
 export type ConversationProps = {
 	customEndMessages?: React.ReactNode
@@ -171,21 +173,10 @@ export default function Conversation({
 			<div style={{ outline: 'none' }} onKeyDown={handleKeyDown}>
 				{orderByCategories && questionCategory && (
 					<div>
-						<span
-							css={`
-								background: ${questionCategory.color || 'darkblue'};
-								color: white;
-								border-radius: 0.3rem;
-								padding: 0.15rem 0.6rem;
-								text-transform: uppercase;
-								img {
-									margin: 0 0.6rem 0 0 !important;
-								}
-							`}
-						>
+						<CategoryLabel color={questionCategory.color}>
 							{emoji(questionCategory.icons || '🌍')}
 							{questionCategory.title}
-						</span>
+						</CategoryLabel>
 					</div>
 				)}
 				<Animate.fadeIn>
