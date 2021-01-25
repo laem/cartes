@@ -15,9 +15,16 @@ export default () => {
 	return (
 		<div css="padding: 0 .3rem 1rem; max-width: 600px; margin: 1rem auto;">
 			<ScrollToTop />
+			<div>
+				<Link to={'/actions/' + encodedName}>
+					<button className="ui__ button simple small ">
+						{emoji('◀')} Retour à la liste des fiches
+					</button>
+				</Link>
+			</div>
 			<Link to={'/actions/' + encodedName}>
 				<button className="ui__ button simple small ">
-					{emoji('◀')} Retour à la fiche
+					{emoji('🧮')} Voir le geste climat correspondant
 				</button>
 			</Link>
 			<div css="margin: 1.6rem 0">
