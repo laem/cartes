@@ -14,6 +14,7 @@ import { DottedName } from 'modele-social'
 import { situationSelector } from 'Selectors/simulationSelectors'
 import './AnswerList.css'
 import { parentName } from 'Components/publicodesUtils'
+import { sortCategories, extractCategories } from '../../sites/publicodes/chart'
 
 type AnswerListProps = {
 	onClose: () => void
@@ -31,6 +32,8 @@ export default function AnswerList({ onClose }: AnswerListProps) {
 	const nextSteps = useNextQuestions().map((dottedName) =>
 		engine.evaluate(engine.getRule(dottedName))
 	)
+	const rules = useSelector((state) => state.rules)
+	const categories = sortCategories(extractCategories(rules, engine))
 
 	return (
 		<Overlay onClose={onClose} className="answer-list">
@@ -53,7 +56,9 @@ export default function AnswerList({ onClose }: AnswerListProps) {
 							</button>
 						</small>
 					</h2>
-					<StepsTable {...{ rules: answeredQuestions, onClose }} />
+					<CategoryTable
+						{...{ steps: answeredQuestions, categories, onClose }}
+					/>
 				</>
 			)}
 			{!!nextSteps.length && (
@@ -62,13 +67,34 @@ export default function AnswerList({ onClose }: AnswerListProps) {
 						{emoji('🔮 ')}
 						<Trans>Prochaines questions</Trans>
 					</h2>
-					<StepsTable {...{ rules: nextSteps, onClose }} />
+					<CategoryTable {...{ steps: nextSteps, categories, onClose }} />
 				</>
 			)}
 		</Overlay>
 	)
 }
 
+const CategoryTable = ({ steps, categories, onClose }) =>
+	categories.map((category) => {
+		const categoryRules = steps.filter((question) =>
+			question.dottedName.includes(category.dottedName)
+		)
+
+		if (!categoryRules.length) return null
+
+		return (
+			<div>
+				<div>{category.title}</div>
+				<StepsTable
+					{...{
+						rules: categoryRules,
+						onClose,
+						categories,
+					}}
+				/>
+			</div>
+		)
+	})
 function StepsTable({
 	rules,
 	onClose,
@@ -82,50 +108,56 @@ function StepsTable({
 		<table>
 			<tbody>
 				{rules.map((rule) => (
-					<tr
-						key={rule.dottedName}
-						css={`
-							background: var(--lightestColor);
-						`}
-					>
-						<td>
-							<div>
-								<small>{parentName(rule.dottedName, ' · ')}</small>
-							</div>
-							<div css="font-size: 110%">{rule.title}</div>
-						</td>
-						<td>
-							<button
-								className="answer"
-								css={`
-									display: inline-block;
-									padding: 0.6rem;
-									color: inherit;
-									font-size: inherit;
-									width: 100%;
-									text-align: end;
-									font-weight: 500;
-									> span {
-										text-decoration: underline;
-										text-decoration-style: dashed;
-										text-underline-offset: 4px;
-										padding: 0.05em 0em;
-										display: inline-block;
-									}
-								`}
-								onClick={() => {
-									dispatch(goToQuestion(rule.dottedName))
-									onClose()
-								}}
-							>
-								<span className="answerContent">
-									{formatValue(rule, { language })}
-								</span>
-							</button>
-						</td>
-					</tr>
+					<Answer
+						{...{
+							rule,
+							dispatch,
+							onClose,
+							language,
+						}}
+					/>
 				))}
 			</tbody>
 		</table>
 	)
 }
+
+const Answer = ({ rule, dispatch, onClose, language }) => (
+	<tr
+		key={rule.dottedName}
+		css={`
+			background: var(--lightestColor);
+		`}
+	>
+		<td>
+			<div css="font-size: 110%">{rule.title}</div>
+		</td>
+		<td>
+			<button
+				className="answer"
+				css={`
+					display: inline-block;
+					padding: 0.6rem;
+					color: inherit;
+					font-size: inherit;
+					width: 100%;
+					text-align: end;
+					font-weight: 500;
+					> span {
+						text-decoration: underline;
+						text-decoration-style: dashed;
+						text-underline-offset: 4px;
+						padding: 0.05em 0em;
+						display: inline-block;
+					}
+				`}
+				onClick={() => {
+					dispatch(goToQuestion(rule.dottedName))
+					onClose()
+				}}
+			>
+				<span className="answerContent">{formatValue(rule, { language })}</span>
+			</button>
+		</td>
+	</tr>
+)
