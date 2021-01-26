@@ -14,3 +14,5 @@ node_modules/
 
 # Local Netlify folder
 .netlify
+
+source/data

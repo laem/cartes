@@ -7,6 +7,7 @@ export default ({
 	nodeValue,
 	icons = '🌍',
 	color,
+	completed,
 	title,
 	empreinteMaximum,
 	noText,
@@ -47,7 +48,7 @@ export default ({
 					${shadowStyle}
 				`}
 			></span>
-			<Value {...{ nodeValue }} />
+			<Value {...{ nodeValue, completed }} />
 		</div>
 	</>
 )

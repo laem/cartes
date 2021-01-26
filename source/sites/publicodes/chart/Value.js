@@ -1,3 +1,5 @@
+import emoji from 'react-easy-emoji'
+
 const humanWeightUnit = (v) =>
 	v === 0
 		? [v, '']
@@ -7,7 +9,7 @@ const humanWeightUnit = (v) =>
 		? [v, 'kg']
 		: [v / 1000, 't']
 
-export default ({ nodeValue, color }) => {
+export default ({ nodeValue, color, completed }) => {
 	const [value, unit] = humanWeightUnit(nodeValue)
 	return (
 		<span
@@ -18,6 +20,9 @@ export default ({ nodeValue, color }) => {
 			`}
 		>
 			{value < 10 ? value?.toFixed(1) : Math.round(value)}&nbsp;{unit}
+			{completed && <Check />}
 		</span>
 	)
 }
+
+const Check = ({}) => <span>{emoji(' ✅️')}</span>

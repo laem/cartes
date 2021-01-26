@@ -20,6 +20,7 @@ import Simulateur from './Simulateur'
 import BandeauContribuer from './VersionBeta'
 import { useTranslation } from 'react-i18next'
 import sitePaths from './sitePaths'
+import News from 'Pages/News'
 
 let tracker = devTracker
 if (process.env.NODE_ENV === 'production') {
@@ -90,6 +91,8 @@ const Router = ({}) => (
 				<Route path="/contribuer/:input?" component={Contribution} />
 				<Route path="/à-propos" component={About} />
 				<Route path="/vie-privée" component={Privacy} />
+				<Route path="/nouveautés" component={News} />
+
 				<Route component={Route404} />
 			</Switch>
 		</div>

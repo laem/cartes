@@ -14,6 +14,7 @@ module.exports.default = {
 		alias: {
 			Actions: path.resolve('source/actions/'),
 			Components: path.resolve('source/components/'),
+			Pages: path.resolve('source/pages/'),
 			Selectors: path.resolve('source/selectors/'),
 			Reducers: path.resolve('source/reducers/'),
 			Types: path.resolve('source/types/'),
@@ -36,6 +37,10 @@ module.exports.default = {
 			'./iframeResizer.contentWindow.min.js',
 			'./source/images/nosgestesclimat.png',
 			'./source/images/dessin-nosgestesclimat.png',
+			{
+				from: './source/data',
+				to: 'data',
+			},
 		]),
 	],
 }

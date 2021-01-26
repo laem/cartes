@@ -15,16 +15,8 @@ var { createDataDir, writeInDataDir } = require('./utils.js')
 // explorer can be found here : https://developer.github.com/v4/explorer/
 const githubAuthToken = process.env.GITHUB_API_SECRET
 const cursorOfV1Release = 'Y3Vyc29yOnYyOpHOARHb8g=='
-const query = `query {
-	repository(owner:"betagouv", name:"ecolab-climat") {
-		releases(after:"${cursorOfV1Release}", last:100) {
-			nodes {
-				name
-				description
-			}
-		}
-	}
-}`
+const repository = 'ecolab-data',
+	organization = 'betagouv'
 
 // In case we cannot fetch the release (the API is down or the Authorization
 // token isn't valid) we fallback to some fake data -- it would be better to
@@ -32,7 +24,7 @@ const query = `query {
 const fakeData = [
 	{
 		name: 'Fake release',
-		descriptionHTML: `You are seing this fake release because you 
+		descriptionHTML: `You are seing this fake release because you
 	didn't configure your GitHub access token and we weren't
 	able to fetch the real releases from GitHub.<br /><br />
 	See the script <pre>fetch-releases.js</pre> for more informations.`,
@@ -59,24 +51,14 @@ async function main() {
 }
 
 async function fetchReleases() {
-	if (!githubAuthToken) {
-		return fakeData
-	}
 	try {
-		const response = await fetch('https://api.github.com/graphql', {
-			method: 'post',
-			headers: new Headers({ Authorization: `bearer ${githubAuthToken}` }),
-			body: JSON.stringify({ query }),
-		})
-		const {
-			data: {
-				repository: {
-					releases: { nodes: releases },
-				},
-			},
-		} = await response.json()
-		return releases.filter(Boolean).reverse()
+		const response = await fetch(
+			`https://api.github.com/repos/${organization}/${repository}/releases`
+		)
+		const data = await response.json()
+		return data.filter(Boolean)
 	} catch (e) {
+		console.log(e)
 		return fakeData
 	}
 }

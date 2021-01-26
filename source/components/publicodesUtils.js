@@ -1,7 +1,7 @@
 import { capitalise0 } from '../utils'
 
-export const parentName = (dottedName, outputSeparator = ' . ') =>
-	splitName(dottedName).slice(0, -1).join(outputSeparator)
+export const parentName = (dottedName, outputSeparator = ' . ', shift = 0) =>
+	splitName(dottedName).slice(shift, -1).join(outputSeparator)
 
 export const splitName = (dottedName) => dottedName.split(' . ')
 
