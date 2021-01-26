@@ -138,6 +138,9 @@ const Answer = ({ rule, dispatch, onClose, language }) => (
 		`}
 	>
 		<td>
+			<div>
+				<small>{parentName(rule.dottedName, ' · ', 1)}</small>
+			</div>
 			<div css="font-size: 110%">{rule.title}</div>
 		</td>
 		<td>
