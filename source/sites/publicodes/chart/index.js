@@ -11,6 +11,7 @@ import {
 	objectifsSelector,
 } from 'Selectors/simulationSelectors'
 import Bar from './Bar'
+import { useNextQuestions } from '../../../components/utils/useNextQuestion'
 
 const showBudget = false
 const // Rough estimate of the 2050 budget per person to stay under 2° by 2100
@@ -43,7 +44,16 @@ export default ({ details, noText, noAnimation }) => {
 	const rules = useSelector((state) => state.rules)
 	const engine = useEngine(objectifs)
 	const categories = extractCategories(rules, engine, details)
+	const nextQuestions = useNextQuestions()
+	console.log(nextQuestions)
+	const completedCategories = categories
+		.filter(
+			({ dottedName }) =>
+				!nextQuestions.find((question) => question.includes(dottedName))
+		)
+		.map(({ dottedName }) => dottedName)
 
+	console.log(categories)
 	if (!categories) return null
 
 	const empreinteMaximum = categories.reduce(
@@ -118,7 +128,16 @@ export default ({ details, noText, noAnimation }) => {
 									'/documentation/' + utils.encodeRuleName(category.dottedName)
 								}
 							>
-								<Bar {...{ ...category, noText, empreinteMaximum }} />
+								<Bar
+									{...{
+										...category,
+										noText,
+										empreinteMaximum,
+										completed: completedCategories.find(
+											(c) => c === category.dottedName
+										),
+									}}
+								/>
 							</Link>
 						</motion.li>
 					))}
