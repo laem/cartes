@@ -154,7 +154,7 @@ const AnimatedDiv = animated(({ score, value, details }) => {
 
 				<div css="display: flex; flex-direction: column;">
 					<ShareButton
-						text="Mesure ton empreinte avec Nos Gestes Climat !"
+						text="Voilà mon empreinte climat. Mesure la tienne !"
 						url={window.location}
 						title={'Nos Gestes Climat'}
 						color={textColor}
