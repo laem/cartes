@@ -5,6 +5,7 @@ import { Link } from 'react-router-dom'
 import Illustration from './images/ecolab-climat-dessin.svg'
 import Marianne from './images/Marianne.png'
 import emoji from 'react-easy-emoji'
+import NewsBanner from '../../components/NewsBanner'
 
 export default () => {
 	return (
@@ -33,16 +34,20 @@ export default () => {
 		>
 			<h1>Connaissez-vous votre empreinte sur le climat ?</h1>
 			<img src={Illustration} />
-			<div css="margin: 1rem 0 .6rem;">
-				<Link to="/simulateur/bilan" className="ui__ plain button">
-					Faire le test
-				</Link>
+			<div css="margin-bottom: 1rem">
+				<div css="margin: 1rem 0 .6rem;">
+					<Link to="/simulateur/bilan" className="ui__ plain button">
+						Faire le test
+					</Link>
+				</div>
+				<div css="margin: .6rem 0 1rem;">
+					<Link to="/actions" className="ui__ button">
+						Passer à l'action
+					</Link>
+				</div>
+				<NewsBanner />
 			</div>
-			<div css="margin: .6rem 0 2rem;">
-				<Link to="/actions" className="ui__ button">
-					Passer à l'action
-				</Link>
-			</div>
+
 			<footer>
 				<div
 					css={`
@@ -81,6 +86,10 @@ export default () => {
 				>
 					<Link to="/à-propos">{emoji('❔ ')}À propos</Link>
 					<DocumentationButton />
+					<Link to="/nouveautés">
+						{emoji('✨️ ')}
+						Nouveautés
+					</Link>
 					<Link to="/vie-privée">
 						{emoji('🙈 ')}
 						Vie privée

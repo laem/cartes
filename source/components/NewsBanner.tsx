@@ -15,7 +15,6 @@ export const determinant = (word: string) =>
 
 export default function NewsBanner() {
 	const [lastViewedRelease] = useLocalStorage(localStorageKey)
-	const sitePaths = useContext(SitePathsContext)
 
 	// We only want to show the banner to returning visitors, so we initiate the
 	// local storage value with the last release.
@@ -29,10 +28,11 @@ export default function NewsBanner() {
 	return showBanner ? (
 		<div className="ui__ banner news">
 			<span>
-				{emoji('✨')} Découvrez les nouveautés {determinant(lastRelease.name)}
+				{emoji('✨')} Découvrez les nouveautés de la version{' '}
 				<Link to={'/nouveautés'}>{lastRelease.name.toLowerCase()}</Link>
 			</span>
 			<span onClick={hideNewsBanner} className="ui__ close-button">
+				{' '}
 				&times;
 			</span>
 		</div>
