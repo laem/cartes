@@ -35,7 +35,7 @@ module.exports.default = {
 			'./manifest.webmanifest',
 			'./source/sites/publicodes/sitemap.txt',
 			'./iframeResizer.contentWindow.min.js',
-			'./source/images/nosgestesclimat.png',
+			'./source/images/logo.svg',
 			'./source/images/dessin-nosgestesclimat.png',
 			{
 				from: './source/data',

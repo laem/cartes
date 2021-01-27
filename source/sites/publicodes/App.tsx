@@ -65,7 +65,7 @@ export default function Root({}) {
 
 const Router = ({}) => (
 	<>
-		<div>
+		<div css="height: 100%">
 			<Switch>
 				<Route exact path="/" component={Landing} />
 				<Route path="/documentation" component={Documentation} />
