@@ -17,6 +17,8 @@ export default () => {
 				text-align: center;
 				img {
 					height: 50%;
+					object-fit: cover;
+					width: 100vw;
 				}
 			`}
 		>
