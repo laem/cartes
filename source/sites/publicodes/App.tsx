@@ -13,7 +13,7 @@ import Actions from './Actions'
 import Contribution from './Contribution'
 import Fin from './Fin'
 import Landing from './Landing'
-import Logo from './Logo'
+import Logo from './logo.svg'
 import Documentation from './pages/Documentation'
 import Privacy from './Privacy'
 import Simulateur from './Simulateur'
@@ -77,7 +77,7 @@ const Router = ({}) => (
 						margin-bottom: 0.4rem;
 					`}
 				>
-					<Logo />
+					<img src={Logo} css="width: 4rem" />
 				</Link>
 			</nav>
 			<Switch>

@@ -6,9 +6,9 @@
 @import './Fonts.css';
 
 :root {
-	--color: rgb(41, 117, 209);
-	--darkColor: rgb(24, 69, 123);
-	--textColor: rgb(24, 69, 123);
+	--color: #57bff5;
+	--darkColor: #185abd;
+	--textColor: white;
 }
 @media (min-width: 400px) {
 	:focus:not(:active):not(input) {
@@ -30,6 +30,7 @@ html:fullscreen {
 	overflow: auto !important;
 }
 body {
+	background: #0d1117;
 	overflow-x: hidden !important;
 }
 

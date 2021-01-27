@@ -13,8 +13,11 @@ export default () => {
 			css={`
 				border-radius: 1rem;
 				padding: 0.4rem;
+				display: flex;
+				flex-direction: column;
+				justify-content: space-between;
 				h1 {
-					margin-top: 0.3rem;
+					margin: 0.3rem 0;
 					font-size: 140%;
 					line-height: 1.2em;
 				}
@@ -24,6 +27,7 @@ export default () => {
 				> img {
 					width: 70%;
 					border-radius: 0.8rem;
+					margin: 2rem auto;
 				}
 				@media (max-width: 800px) {
 					> img {
@@ -32,48 +36,22 @@ export default () => {
 				}
 			`}
 		>
-			<h1>Connaissez-vous votre empreinte sur le climat ?</h1>
-			<img src={Illustration} />
+			<h1>Êtes-vous écolo ?</h1>
+			<p>
+				<em>
+					Le jeu dont <strong>vous</strong> êtes le héros.
+				</em>
+			</p>
+			<img src="https://i.guim.co.uk/img/media/928676ae85002ab72555193db814fe0e0e8822fc/0_0_4896_3368/master/4896.jpg?width=700&quality=85&auto=format&fit=max&s=220cd2e957b4d1d02773c0aa3927f34d" />
 			<div css="margin-bottom: 1rem">
 				<div css="margin: 1rem 0 .6rem;">
 					<Link to="/simulateur/bilan" className="ui__ plain button">
 						Faire le test
 					</Link>
 				</div>
-				<div css="margin: .6rem 0 1rem;">
-					<Link to="/actions" className="ui__ button">
-						Passer à l'action
-					</Link>
-				</div>
-				<NewsBanner />
 			</div>
 
 			<footer>
-				<div
-					css={`
-						display: flex;
-						align-items: center;
-						justify-content: center;
-						margin-bottom: 1rem;
-						img {
-							margin: 0 0.6rem;
-						}
-					`}
-				>
-					<img css="height: 6rem; margin-right: .6rem" src={Marianne} />
-					<a href="https://ademe.fr">
-						<img
-							css="height: 5rem; margin-right: .6rem"
-							src="https://www.ademe.fr/sites/all/themes/ademe/logo.png"
-						/>
-					</a>
-					<a href="https://www.associationbilancarbone.fr/">
-						<img
-							css="height: 2.5rem"
-							src="https://www.associationbilancarbone.fr/wp-content/themes/abc/assets/images/brand/abc_main_logo.svg"
-						/>
-					</a>
-				</div>
 				<div
 					css={`
 						display: flex;
@@ -84,16 +62,7 @@ export default () => {
 						}
 					`}
 				>
-					<Link to="/à-propos">{emoji('❔ ')}À propos</Link>
-					<DocumentationButton />
-					<Link to="/nouveautés">
-						{emoji('✨️ ')}
-						Nouveautés
-					</Link>
-					<Link to="/vie-privée">
-						{emoji('🙈 ')}
-						Vie privée
-					</Link>
+					<Link to="/à-propos">À propos</Link>
 				</div>
 			</footer>
 		</div>

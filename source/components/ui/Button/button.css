@@ -34,7 +34,7 @@
 	border-color: var(--color);
 	/* ie11 */
 	color: rgb(41, 117, 209);
-	color: var(--color);
+	color: black;
 	background-image: linear-gradient(
 		50deg,
 		rgba(39, 69, 195, 0.87) 5%,
@@ -63,14 +63,10 @@
 		var(--color) 50%,
 		var(--lightColor) 55%
 	);
-
-	color: white;
 }
 .ui__.button:not(:disabled):not(.disabled):not(.simple):hover,
 .ui__.button.selected {
 	background-position-x: 0%;
-	border-color: white;
-	color: white;
 }
 
 .ui__.button.simple,
