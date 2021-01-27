@@ -65,21 +65,7 @@ export default function Root({}) {
 
 const Router = ({}) => (
 	<>
-		<div className="ui__ container">
-			<nav css="display: flex; justify-content: center; margin: .6rem auto">
-				<Link
-					to="/"
-					css={`
-						display: flex;
-						align-items: center;
-						text-decoration: none;
-						font-size: 170%;
-						margin-bottom: 0.4rem;
-					`}
-				>
-					<img src={Logo} css="width: 4rem" />
-				</Link>
-			</nav>
+		<div>
 			<Switch>
 				<Route exact path="/" component={Landing} />
 				<Route path="/documentation" component={Documentation} />
