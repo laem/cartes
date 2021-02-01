@@ -7,6 +7,10 @@ import Marianne from './images/Marianne.png'
 import emoji from 'react-easy-emoji'
 import NewsBanner from '../../components/NewsBanner'
 
+import useSound from 'use-sound'
+
+import boopSfx from './bite.mp3'
+
 export default () => {
 	return (
 		<div
@@ -47,11 +51,7 @@ export default () => {
 						</em>
 					</p>
 				</header>
-				<div css="">
-					<Link to="/simulateur/bilan" className="ui__ plain button">
-						Faire le test
-					</Link>
-				</div>
+				<LoudButton />
 
 				<footer>
 					<div
@@ -68,6 +68,18 @@ export default () => {
 					</div>
 				</footer>
 			</div>
+		</div>
+	)
+}
+
+const LoudButton = () => {
+	const [play] = useSound(boopSfx)
+
+	return (
+		<div onClick={play}>
+			<Link to="/simulateur/bilan" className="ui__ plain button">
+				Faire le test
+			</Link>
 		</div>
 	)
 }

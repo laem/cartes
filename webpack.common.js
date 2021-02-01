@@ -88,6 +88,11 @@ module.exports.commonLoaders = () => {
 			exclude: /node_modules|dist/,
 		},
 		{
+			test: /\.mp3$/,
+			loader: 'file-loader',
+		},
+
+		{
 			test: /\.(jpe?g|png|svg)$/,
 			use: {
 				loader: 'file-loader',
