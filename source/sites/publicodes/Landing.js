@@ -20,6 +20,13 @@ export default () => {
 					object-fit: cover;
 					width: 100vw;
 				}
+				h1 {
+					font-size: 350%;
+					margin-bottom: 2rem;
+				}
+				strong {
+					color: var(--color);
+				}
 			`}
 		>
 			<img src="https://i.guim.co.uk/img/media/928676ae85002ab72555193db814fe0e0e8822fc/0_0_4896_3368/master/4896.jpg?width=700&quality=85&auto=format&fit=max&s=220cd2e957b4d1d02773c0aa3927f34d" />
@@ -33,7 +40,7 @@ export default () => {
 				`}
 			>
 				<header>
-					<h1>Êtes-vous écolo ?</h1>
+					<h1>Écolo, ou pas ?</h1>
 					<p>
 						<em>
 							Le jeu dont <strong>vous</strong> êtes le héros.

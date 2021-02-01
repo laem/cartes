@@ -19,6 +19,7 @@ import { objectifsSelector } from 'Selectors/simulationSelectors'
 import { useEngine } from 'Components/utils/EngineContext'
 import emoji from 'react-easy-emoji'
 import { situationSelector } from '../../selectors/simulationSelectors'
+import GameOver from './GameOver'
 
 const eqValues = compose(isEmpty, symmetricDifference)
 const gradient = tinygradient([
@@ -70,6 +71,8 @@ const Simulateur = (props) => {
 
 	if (!configSet) return null
 
+	const gameOver = evaluation.nodeValue < limit
+
 	return (
 		<div
 			css={`
@@ -84,25 +87,33 @@ const Simulateur = (props) => {
 					<meta name="description" content={rule.description} />
 				)}
 			</Helmet>
+
 			<SessionBar evaluation={evaluation} />
-			<Simulation
-				noFeedback
-				orderByCategories={categories}
-				customEnd={
-					decoded === 'bilan' ? (
-						<RedirectionToEndPage
-							score={rule.nodeValue}
-							url={buildEndURL(rules, engine)}
-						/>
-					) : rule.description ? (
-						<Markdown source={rule.description} />
-					) : (
-						<EndingCongratulations />
-					)
-				}
-				targets={<>{rule.period === 'flexible' && <PeriodBlock />}</>}
-				explanations={null}
-			/>
+			{gameOver ? (
+				<>
+					<SessionBar evaluation={evaluation} />
+					<Simulation
+						noFeedback
+						orderByCategories={categories}
+						customEnd={
+							decoded === 'bilan' ? (
+								<RedirectionToEndPage
+									score={rule.nodeValue}
+									url={buildEndURL(rules, engine)}
+								/>
+							) : rule.description ? (
+								<Markdown source={rule.description} />
+							) : (
+								<EndingCongratulations />
+							)
+						}
+						targets={<>{rule.period === 'flexible' && <PeriodBlock />}</>}
+						explanations={null}
+					/>
+				</>
+			) : (
+				<GameOver />
+			)}
 			<ShareButton
 				text="Mesure ton impact sur le simulateur Ecolab climat !"
 				url={'https://' + window.location.hostname + props.match.url}
