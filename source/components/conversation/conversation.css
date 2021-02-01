@@ -66,8 +66,8 @@
 	background: none;
 	border: 1px solid var(--color) !important;
 	text-transform: none !important;
-	background-color: white;
-	color: var(--textColorOnWhite) !important;
+	background-color: var(--color);
+	color: var(--textColor) !important;
 }
 .step label.userAnswerButton.selected {
 	background: var(--lightColor);

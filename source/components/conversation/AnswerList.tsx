@@ -134,7 +134,7 @@ const Answer = ({ rule, dispatch, onClose, language }) => (
 	<tr
 		key={rule.dottedName}
 		css={`
-			background: var(--lightestColor);
+			background: var(--darkerColor);
 		`}
 	>
 		<td>

@@ -55,6 +55,7 @@ export default function Overlay({
 						<div
 							aria-modal="true"
 							className={'ui__ card  ' + className ?? ''}
+							css="background: var(--darkestColor)"
 							{...otherProps}
 						>
 							{children}

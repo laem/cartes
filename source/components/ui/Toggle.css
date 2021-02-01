@@ -72,5 +72,5 @@
 }
 .ui__.radio input[type='radio']:checked ~ *::before {
 	border: 2px solid white;
-	background: var(--color);
+	background: var(--darkColor);
 }

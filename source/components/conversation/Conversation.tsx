@@ -155,7 +155,8 @@ export default function Conversation({
 			(a) => a.split(' . ')[0] === questionCategory.dottedName
 		) === undefined
 
-	return orderByCategories &&
+	return false &&
+		orderByCategories &&
 		isCategoryFirstQuestion &&
 		!dismissedRespirations.includes(questionCategory.dottedName) ? (
 		<CategoryRespiration
