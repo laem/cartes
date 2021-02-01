@@ -22,21 +22,27 @@ import { situationSelector } from '../../selectors/simulationSelectors'
 
 const eqValues = compose(isEmpty, symmetricDifference)
 const gradient = tinygradient([
+		'#16a085',
 		'#78e08f',
 		'#e1d738',
 		'#f6b93b',
 		'#b71540',
-		'#000000',
 	]),
 	colors = gradient.rgb(20),
 	incompressible = 1112,
 	durable = 2000,
 	limit = durable + incompressible
 
-const getBackgroundColor = (score) =>
-	colors[
-		Math.round(score < 200 ? 0 : score > limit ? 19 : (score / limit) * 20)
-	]
+const getBackgroundColor = (score) => {
+	const cursor =
+		score < incompressible
+			? 0
+			: score > limit
+			? 19
+			: ((score - incompressible) / durable) * 20
+	console.log(score, cursor)
+	return colors[Math.round(cursor)]
+}
 
 const Simulateur = (props) => {
 	const objectif = props.match.params.name,
