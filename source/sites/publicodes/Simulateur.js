@@ -18,6 +18,7 @@ import Chart, { extractCategories } from './chart/index.js'
 import { objectifsSelector } from 'Selectors/simulationSelectors'
 import { useEngine } from 'Components/utils/EngineContext'
 import emoji from 'react-easy-emoji'
+import { situationSelector } from '../../selectors/simulationSelectors'
 
 const eqValues = compose(isEmpty, symmetricDifference)
 const gradient = tinygradient([
@@ -43,6 +44,7 @@ const Simulateur = (props) => {
 		rules = useSelector((state) => state.rules),
 		rule = rules[decoded],
 		engine = useEngine(),
+		situation = useSelector(situationSelector),
 		evaluation = engine.evaluate(decoded),
 		dispatch = useDispatch(),
 		config = {
@@ -67,7 +69,7 @@ const Simulateur = (props) => {
 			css={`
 				margin-bottom: 1em;
 				height: 100%;
-				border: 10px solid ${getBackgroundColor(evaluation.nodeValue)};
+				border: 1.4rem solid ${getBackgroundColor(evaluation.nodeValue)};
 			`}
 		>
 			<Helmet>
