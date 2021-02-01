@@ -83,7 +83,7 @@ function Questions({
 					marginBottom: '0.6rem',
 				}}
 			></div>
-			<section className="ui__ full-width ">
+			<section className="ui__ full-width " css="padding: 0">
 				<div className="ui__ container">
 					<Notifications />
 					<Conversation

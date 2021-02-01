@@ -17,7 +17,6 @@ import Logo from './logo.svg'
 import Documentation from './pages/Documentation'
 import Privacy from './Privacy'
 import Simulateur from './Simulateur'
-import BandeauContribuer from './VersionBeta'
 import { useTranslation } from 'react-i18next'
 import sitePaths from './sitePaths'
 import News from 'Pages/News'
@@ -82,6 +81,5 @@ const Router = ({}) => (
 				<Route component={Route404} />
 			</Switch>
 		</div>
-		<BandeauContribuer />
 	</>
 )

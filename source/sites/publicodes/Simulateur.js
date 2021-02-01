@@ -7,6 +7,7 @@ import { Markdown } from 'Components/utils/markdown'
 import { TrackerContext } from 'Components/utils/withTracker'
 import { utils } from 'publicodes'
 
+import tinygradient from 'tinygradient'
 import { compose, isEmpty, symmetricDifference } from 'ramda'
 import React, { useContext, useEffect } from 'react'
 import { Helmet } from 'react-helmet'
@@ -19,6 +20,22 @@ import { useEngine } from 'Components/utils/EngineContext'
 import emoji from 'react-easy-emoji'
 
 const eqValues = compose(isEmpty, symmetricDifference)
+const gradient = tinygradient([
+		'#78e08f',
+		'#e1d738',
+		'#f6b93b',
+		'#b71540',
+		'#000000',
+	]),
+	colors = gradient.rgb(20),
+	incompressible = 1112,
+	durable = 2000,
+	limit = durable + incompressible
+
+const getBackgroundColor = (score) =>
+	colors[
+		Math.round(score < 200 ? 0 : score > limit ? 19 : (score / limit) * 20)
+	]
 
 const Simulateur = (props) => {
 	const objectif = props.match.params.name,
@@ -46,7 +63,13 @@ const Simulateur = (props) => {
 	if (!configSet) return null
 
 	return (
-		<div css="margin-bottom: 1em">
+		<div
+			css={`
+				margin-bottom: 1em;
+				height: 100%;
+				border: 10px solid ${getBackgroundColor(evaluation.nodeValue)};
+			`}
+		>
 			<Helmet>
 				<title>{rule.title}</title>
 				{rule.description && (
