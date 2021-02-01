@@ -9,7 +9,7 @@ export default () => {
 				flex-direction: column;
 				justify-content: space-around;
 				text-align: center;
-				height: 80%;
+				height: 70%;
 			`}
 		>
 			<Steps />
