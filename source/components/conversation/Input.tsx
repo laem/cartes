@@ -29,11 +29,8 @@ export default function Input({
 
 	// This test is bad. publicodes should be able to return the formatted number and the formatted unit separately
 	const unitéRaw = formatValue({ nodeValue: value ?? 0, unit }, { language }),
-		unitéMatch = unitéRaw.match(/([a-zA-Z].*)/),
-		unité = unitéMatch[0] || ''
-	console.log(unitéRaw, unité)
-	const { thousandSeparator, decimalSeparator } = currencyFormat(language)
-	// const [currentValue, setCurrentValue] = useState(value)
+		unité = (unitéMatch && unitéMatch[0]) || ''
+  const { thousandSeparator, decimalSeparator } = currencyFormat(language)
 
 	return (
 		<>
