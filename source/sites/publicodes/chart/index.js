@@ -45,7 +45,6 @@ export default ({ details, noText, noAnimation, noCompletion }) => {
 	const engine = useEngine(objectifs)
 	const categories = extractCategories(rules, engine, details)
 	const nextQuestions = useNextQuestions()
-	console.log(nextQuestions)
 	const completedCategories = categories
 		.filter(
 			({ dottedName }) =>
