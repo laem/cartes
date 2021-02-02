@@ -15,6 +15,7 @@ import { situationSelector } from 'Selectors/simulationSelectors'
 import './AnswerList.css'
 import { parentName } from 'Components/publicodesUtils'
 import { sortCategories, extractCategories } from '../../sites/publicodes/chart'
+import { answeredQuestionsSelector } from '../../selectors/simulationSelectors'
 
 type AnswerListProps = {
 	onClose: () => void
@@ -23,11 +24,19 @@ type AnswerListProps = {
 export default function AnswerList({ onClose }: AnswerListProps) {
 	const dispatch = useDispatch()
 	const engine = useEngine()
-	const answeredQuestions = (Object.keys(
-		useSelector(situationSelector)
-	) as Array<DottedName>).map((dottedName) =>
+	const situation = useSelector(situationSelector)
+	const foldedQuestionNames = useSelector(answeredQuestionsSelector)
+	const answeredQuestionNames = Object.keys(situation)
+	const foldedQuestions = foldedQuestionNames.map((dottedName) =>
 		engine.evaluate(engine.getRule(dottedName))
 	)
+	const foldedStepsToDisplay = foldedQuestions.map((node) => ({
+		...node,
+		passedQuestion:
+			answeredQuestionNames.find(
+				(dottedName) => node.dottedName === dottedName
+			) == null,
+	}))
 
 	const nextSteps = useNextQuestions().map((dottedName) =>
 		engine.evaluate(engine.getRule(dottedName))
@@ -37,7 +46,7 @@ export default function AnswerList({ onClose }: AnswerListProps) {
 
 	return (
 		<Overlay onClose={onClose} className="answer-list">
-			{!!answeredQuestions.length && (
+			{!!foldedStepsToDisplay.length && (
 				<>
 					<h2>
 						{emoji('📋 ')}
@@ -57,7 +66,7 @@ export default function AnswerList({ onClose }: AnswerListProps) {
 						</small>
 					</h2>
 					<CategoryTable
-						{...{ steps: answeredQuestions, categories, onClose }}
+						{...{ steps: foldedStepsToDisplay, categories, onClose }}
 					/>
 				</>
 			)}
@@ -167,7 +176,15 @@ const Answer = ({ rule, dispatch, onClose, language }) => (
 					onClose()
 				}}
 			>
-				<span className="answerContent">{formatValue(rule, { language })}</span>
+				<span
+					className="answerContent"
+					css={`
+						${rule.passedQuestion ? 'opacity: .5' : ''}
+					`}
+				>
+					{formatValue(rule, { language })}
+					{rule.passedQuestion && emoji(' 🤷🏻')}
+				</span>
 			</button>
 		</td>
 	</tr>

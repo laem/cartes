@@ -17,6 +17,7 @@ import Chart, { extractCategories } from './chart/index.js'
 import { objectifsSelector } from 'Selectors/simulationSelectors'
 import { useEngine } from 'Components/utils/EngineContext'
 import emoji from 'react-easy-emoji'
+import { situationSelector } from '../../selectors/simulationSelectors'
 
 const eqValues = compose(isEmpty, symmetricDifference)
 
@@ -59,10 +60,7 @@ const Simulateur = (props) => {
 				orderByCategories={categories}
 				customEnd={
 					decoded === 'bilan' ? (
-						<RedirectionToEndPage
-							score={rule.nodeValue}
-							url={buildEndURL(rules, engine)}
-						/>
+						<RedirectionToEndPage {...{ rules, engine }} />
 					) : rule.description ? (
 						<Markdown source={rule.description} />
 					) : (
@@ -92,14 +90,22 @@ let PeriodBlock = () => (
 	</div>
 )
 
-const RedirectionToEndPage = ({ url, score }) => {
+const RedirectionToEndPage = ({ rules, engine }) => {
+	// Necessary to call 'buildEndURL' with the latest situation
+	const situation = useSelector(situationSelector)
 	const tracker = useContext(TrackerContext)
 
 	useEffect(() => {
-		tracker.push(['trackEvent', 'NGC', 'A terminé la simulation', null, score])
+		tracker.push([
+			'trackEvent',
+			'NGC',
+			'A terminé la simulation',
+			null,
+			rules['bilan'].nodeValue,
+		])
 	}, [tracker])
 
-	return <Redirect to={url} />
+	return <Redirect to={buildEndURL(rules, engine)} />
 }
 
 export default Simulateur
