@@ -168,7 +168,7 @@ export default function Conversation({
 			}
 		/>
 	) : (
-		<>
+		<section>
 			<Aide />
 			<div style={{ outline: 'none' }} onKeyDown={handleKeyDown}>
 				{orderByCategories && questionCategory && (
@@ -223,6 +223,6 @@ export default function Conversation({
 					)}
 				</div>
 			</div>
-		</>
+		</section>
 	)
 }

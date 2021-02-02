@@ -83,7 +83,7 @@ function Questions({
 					marginBottom: '0.6rem',
 				}}
 			></div>
-			<section className="ui__ full-width lighter-bg">
+			<div className="ui__ full-width lighter-bg">
 				<div className="ui__ container">
 					<Notifications />
 					<Conversation
@@ -92,7 +92,7 @@ function Questions({
 						customEndMessages={customEndMessages}
 					/>
 				</div>
-			</section>
+			</div>
 			{progress < 1 && (
 				<Progress progress={progress} className="ui__ full-width" />
 			)}
