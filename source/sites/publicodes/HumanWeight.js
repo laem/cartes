@@ -20,7 +20,7 @@ export default ({ nodeValue }) => {
 	return (
 		<span>
 			{!simulationStarted ? (
-				<em>{emoji('🇫🇷 ')} Un français émet en moyenne</em>
+				<em>{emoji('🇫🇷 ')} Un Français émet en moyenne</em>
 			) : (
 				<em>Votre total provisoire</em>
 			)}
