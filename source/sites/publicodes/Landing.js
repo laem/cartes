@@ -41,6 +41,10 @@ export default () => {
 					flex-direction: column;
 					justify-content: space-evenly;
 					height: 50%;
+					img {
+						font-size: 140%;
+						vertical-align: middle !important;
+					}
 				`}
 			>
 				<header>
@@ -52,6 +56,7 @@ export default () => {
 					</p>
 				</header>
 				<LoudButton />
+				<p>{emoji('⌚️')} 2 minutes chrono</p>
 
 				<footer>
 					<div
