@@ -1,0 +1,108 @@
+- nom: bobo lyonnais
+  icônes: 🛴🏢
+  data: 
+    alimentation . déchets . niveau d'engagement: "'affirmatif'"
+    alimentation . petit déjeuner . type: "'lait céréales'"
+    alimentation . lait . lait végétal: oui
+    alimentation . boisson . sucrées . litres:
+      explanation:
+        type: number
+        fullPrecision: true
+        nodeValue: 0
+        nodeKind: constant
+        rawNode:
+          constant:
+            type: number
+            nodeValue: 0
+      unit:
+        numerators:
+        - l
+        denominators:
+        - semaine
+      nodeKind: unité
+      rawNode: 0 l/semaine
+    alimentation . boisson . alcool . litres:
+      type: number
+      fullPrecision: true
+      nodeValue: 2
+      nodeKind: constant
+      rawNode: 2
+    alimentation . boisson . eau en bouteille . affirmatif: non
+    alimentation . plats . végétalien . nombre: 2
+    alimentation . plats . végétarien . nombre: 8
+    alimentation . plats . viande 1 . nombre: 4
+    alimentation . plats . viande 2 . nombre: 0
+    transport . voiture . km:
+      valeur: 800
+      unité: km / an
+    transport . voiture . propriétaire: non
+    transport . voiture . motorisation: "'thermique'"
+    transport . voiture . voyageurs:
+      valeur: 3
+      unité: voyageurs
+    transport . voiture . thermique . consommation aux 100:
+      type: number
+      fullPrecision: true
+      nodeValue: 7
+      nodeKind: constant
+      rawNode: 7
+    transport . avion . usager: non
+    transport . train . km:
+      type: number
+      fullPrecision: true
+      nodeValue: 10000
+      nodeKind: constant
+      rawNode: 10000
+    logement . surface:
+      type: number
+      fullPrecision: true
+      nodeValue: 25
+      nodeKind: constant
+      rawNode: 25
+    logement . habitants:
+      valeur: 1
+      unité: personnes
+    logement . gaz . chauffage au gaz: oui
+    logement . gaz . consommation: 3243
+    logement . électricité . consommation: 560
+    logement . fioul . chauffage au fioul: non
+    logement . bois . chauffage au bois: non
+    divers . textile . montant:
+      valeur: 150
+      unité: an
+    divers . électroménager . montant:
+      valeur: 50
+      unité: ''
+    divers . autres produits . montant:
+      valeur: 100
+      unité: an
+    transport . métro ou tram . heures par semaine:
+      valeur: 1
+      unité: heure / semaine
+    transport . bus . heures par semaine:
+      type: number
+      fullPrecision: true
+      nodeValue: 0
+      nodeKind: constant
+      rawNode: 0
+    numérique . téléphone . type: "'smartphone plus de 5 pouces'"
+    numérique . ordinateur . présent: oui
+    numérique . ordinateur . fixe: non
+    numérique . ordinateur . durée:
+      valeur: 1
+      unité: an
+    numérique . internet . durée journalière:
+      type: number
+      fullPrecision: true
+      nodeValue: 8
+      nodeKind: constant
+      rawNode: 8
+    numérique . TV . présent: non
+    numérique . tablette . présent: non
+    numérique . vidéoprojecteur . présent: non
+    numérique . appareil photo . présent: non
+    numérique . home cinéma . présent: "'false'"
+
+
+- nom: Ermite rural
+  icônes: 🚗🏡

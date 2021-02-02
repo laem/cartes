@@ -22,6 +22,7 @@ import { useTranslation } from 'react-i18next'
 import sitePaths from './sitePaths'
 import News from 'Pages/News'
 import { Redirect } from 'react-router'
+import Personas from './Personas.tsx'
 
 let tracker = devTracker
 if (process.env.NODE_ENV === 'production') {
@@ -98,6 +99,7 @@ const Router = ({}) => (
 				{/* Lien de compatibilité, à retirer par exemple mi-juillet 2020*/}
 				<Route path="/fin/:score" component={Fin} />
 				<Route path="/fin" component={Fin} />
+				<Route path="/personas" component={Personas} />
 				<Route path="/actions" component={Actions} />
 				<Route path="/contribuer/:input?" component={Contribution} />
 				<Route path="/à-propos" component={About} />

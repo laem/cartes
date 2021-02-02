@@ -16,6 +16,7 @@ import './AnswerList.css'
 import { parentName } from 'Components/publicodesUtils'
 import { sortCategories, extractCategories } from '../../sites/publicodes/chart'
 import { answeredQuestionsSelector } from '../../selectors/simulationSelectors'
+import { useEffect } from 'react'
 
 type AnswerListProps = {
 	onClose: () => void
@@ -43,6 +44,20 @@ export default function AnswerList({ onClose }: AnswerListProps) {
 	)
 	const rules = useSelector((state) => state.rules)
 	const categories = sortCategories(extractCategories(rules, engine))
+
+	useEffect(() => {
+		const handleKeyDown = (e: KeyboardEvent) => {
+			if (!(e.ctrlKey && e.key === 'c')) return
+			console.log('VOILA VOTRE SITUATION')
+			console.log(JSON.stringify(situation))
+			e.preventDefault()
+			return false
+		}
+		window.addEventListener('keydown', handleKeyDown)
+		return () => {
+			window.removeEventListener('keydown', handleKeyDown)
+		}
+	}, [situation])
 
 	return (
 		<Overlay onClose={onClose} className="answer-list">

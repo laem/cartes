@@ -5,6 +5,7 @@ import { useContext } from 'react'
 import emoji from 'react-easy-emoji'
 import { useSelector } from 'react-redux'
 import { Link } from 'react-router-dom'
+import styled from 'styled-components'
 import { title } from '../../components/publicodesUtils'
 
 export default () => {
@@ -23,20 +24,7 @@ export default () => {
 			<p>
 				<em>Découvrez les enjeux qui se cachent derrière chaque action.</em>
 			</p>
-			<ul
-				css={`
-					list-style-type: none;
-					display: flex;
-					flex-wrap: wrap;
-					li {
-						margin: 0.6rem;
-						text-align: center;
-					}
-					li > a {
-						text-decoration: none;
-					}
-				`}
-			>
+			<CardGrid>
 				{plusListe.map((rule) => (
 					<li key={rule.dottedName}>
 						<Link to={'/actions/plus/' + utils.encodeRuleName(rule.dottedName)}>
@@ -62,7 +50,31 @@ export default () => {
 						</Link>
 					</li>
 				))}
-			</ul>
+			</CardGrid>
 		</div>
 	)
 }
+
+export const CardGrid = styled.ul`
+	list-style-type: none;
+	display: flex;
+	flex-wrap: wrap;
+	li {
+		margin: 0.6rem;
+		text-align: center;
+	}
+	li > a {
+		text-decoration: none;
+	}
+
+	.card {
+		display: flex;
+		flex-direction: column;
+		justify-content: space-evenly;
+		width: 12rem;
+		height: 10rem;
+		img {
+			font-size: 150%;
+		}
+	}
+`
