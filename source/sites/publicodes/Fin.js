@@ -149,7 +149,13 @@ const AnimatedDiv = animated(({ score, value, details }) => {
 					</div>
 				</div>
 				<div css="padding: 1rem">
-					<Chart details={details} color={textColor} noAnimation noText />
+					<Chart
+						details={details}
+						color={textColor}
+						noAnimation
+						noText
+						noCompletion
+					/>
 				</div>
 
 				<div css="display: flex; flex-direction: column;">
