@@ -20,13 +20,13 @@
 	/* outline: none; */
 	line-height: initial;
 	display: inline-block;
-	border-radius: 0.3rem;
+	border-radius: 2rem;
 	transition: all 0.15s;
 	text-align: center;
 	text-transform: uppercase;
 
 	font-family: 'Roboto', sans-serif;
-	font-weight: normal;
+	font-weight: bold;
 	cursor: pointer;
 
 	/* ie11 */
@@ -34,7 +34,7 @@
 	border-color: var(--color);
 	/* ie11 */
 	color: rgb(41, 117, 209);
-	color: black;
+	color: white;
 	background-image: linear-gradient(
 		50deg,
 		rgba(39, 69, 195, 0.87) 5%,

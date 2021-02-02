@@ -25,7 +25,7 @@ export default () => {
 					width: 100vw;
 				}
 				h1 {
-					font-size: 350%;
+					font-size: 300%;
 					margin-bottom: 2rem;
 				}
 				strong {

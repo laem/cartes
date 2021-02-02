@@ -35,16 +35,19 @@ h1 {
 	margin-bottom: 1rem;
 	font-size: 1.9rem;
 	line-height: 2rem;
+	font-size: 300%;
 }
 h2 {
 	margin-top: 2rem;
 	margin-bottom: 1rem;
 	font-size: 1.4rem;
+	font-size: 200%;
 }
 h3 {
 	margin-top: 1rem;
 	margin-bottom: 0.6rem;
 	font-size: 1.2rem;
+	font-size: 150%;
 }
 h4 {
 	margin-top: 0.6rem;
