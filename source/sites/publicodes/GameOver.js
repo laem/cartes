@@ -1,4 +1,5 @@
 import { useState } from 'react'
+import emoji from 'react-easy-emoji'
 
 export default () => {
 	return (
@@ -22,12 +23,13 @@ const Steps = () => {
 	if (step === 1)
 		return (
 			<>
-				pacman qui bouffe la terre
-				<h1>Perdu :(</h1>
+				<h1>Perdu {emoji('🙁')}</h1>
 				<p>
-					Vous n'êtes pas écolo. Pourquoi ? Après 5 questions sur 20, nous avons
-					déjà calculé que votre train de vie nous emène vers une planète
-					anormalement réchauffée.
+					<strong>Vous n'êtes pas écolo.</strong>
+				</p>
+				<p>
+					Pourquoi ? Après 5 questions sur 20, nous avons déjà calculé que votre
+					train de vie nous emène vers une planète anormalement réchauffée.
 				</p>
 				<p>
 					On ne vous avait jamais dit que c'était si compliqué ? Oui, ce genre
