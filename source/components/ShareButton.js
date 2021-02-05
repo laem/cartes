@@ -66,7 +66,8 @@ const DesktopShareButton = (props) => {
     padding: 0.2rem 0.4rem;
     width: 60%;
     margin: 0 0 0.4rem;
-    background: #fffffff2;
+    background: transparent;
+	color: white;
 	height: 1.6rem;
 	
 }
@@ -87,13 +88,14 @@ const DesktopShareButton = (props) => {
 								border: 1px solid var(--color);
 								margin-left: -1px;
 								height: 1.6rem;
-								background: #ffffffb3;
+								background: var(--color);
+								color: white;
 								box-shadow: 0 1px 0 rgba(27, 31, 35, 0.04),
 									inset 0 1px 0 hsla(0, 0%, 100%, 0.25);
 							`}
 							onClick={copyToClipboard}
 						>
-							{!copySuccess ? 'Copier le lien' : 'Copié'}
+							{!copySuccess ? 'Partager' : 'Lien copié !'}
 						</button>
 					)
 				}
