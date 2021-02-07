@@ -20,15 +20,17 @@ import { useEngine } from 'Components/utils/EngineContext'
 import emoji from 'react-easy-emoji'
 import { situationSelector } from '../../selectors/simulationSelectors'
 import GameOver from './GameOver'
+import FuturecoMonochrome from '../../images/FuturecoMonochrome'
 
 const eqValues = compose(isEmpty, symmetricDifference)
-const gradient = tinygradient([
-		'#16a085',
-		'#78e08f',
-		'#e1d738',
-		'#f6b93b',
-		'#b71540',
-	]),
+export const colorScale = [
+	'#16a085',
+	'#78e08f',
+	'#e1d738',
+	'#f6b93b',
+	'#b71540',
+]
+const gradient = tinygradient(colorScale),
 	colors = gradient.rgb(20),
 	incompressible = 1112,
 	durable = 2000,
@@ -71,14 +73,16 @@ const Simulateur = (props) => {
 
 	if (!configSet) return null
 
-	const gameOver = evaluation.nodeValue < limit
+	const gameOver = evaluation.nodeValue > limit
+	const doomColor = getBackgroundColor(evaluation.nodeValue).toHexString()
+	console.log('DOOM', doomColor)
 
 	return (
 		<div
 			css={`
 				margin-bottom: 1em;
 				height: 100%;
-				border: 1.4rem solid ${getBackgroundColor(evaluation.nodeValue)};
+				border: 1.4rem solid ${doomColor};
 			`}
 		>
 			<Helmet>
@@ -88,8 +92,7 @@ const Simulateur = (props) => {
 				)}
 			</Helmet>
 
-			<SessionBar evaluation={evaluation} />
-			{gameOver ? (
+			{!gameOver ? (
 				<>
 					<SessionBar evaluation={evaluation} />
 					<Simulation
@@ -119,6 +122,9 @@ const Simulateur = (props) => {
 				url={'https://' + window.location.hostname + props.match.url}
 				title={rule.title}
 			/>
+			<div css="display: flex; justify-content: center">
+				<FuturecoMonochrome color={doomColor} />
+			</div>
 		</div>
 	)
 }

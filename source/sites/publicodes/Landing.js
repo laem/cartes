@@ -7,13 +7,9 @@ import Marianne from './images/Marianne.png'
 import emoji from 'react-easy-emoji'
 import NewsBanner from '../../components/NewsBanner'
 
-import useSound from 'use-sound'
-
-import boopSfx from './bite.mp3'
-import FuturecoMonochrome from '../../images/FuturecoMonochrome'
+import { LoudButton } from './UI'
 
 export default () => {
-	return <FuturecoMonochrome color="#678658" />
 	return (
 		<div
 			css={`
@@ -28,8 +24,11 @@ export default () => {
 				}
 				h1 {
 					font-size: 300%;
-					margin-bottom: 2rem;
+					margin-bottom: 0.6rem;
 					line-height: 2.4rem;
+				}
+				h1 + p {
+					margin-bottom: 1rem;
 				}
 				@media (min-width: 800px) {
 					h1 {
@@ -38,7 +37,6 @@ export default () => {
 					}
 				}
 				strong {
-					color: var(--color);
 				}
 			`}
 		>
@@ -70,7 +68,7 @@ export default () => {
 						</em>
 					</p>
 				</header>
-				<LoudButton />
+				<LoudButton to="instructions">Faire le test</LoudButton>
 				<p>{emoji('⌚️')} 2 minutes chrono</p>
 
 				<footer css="display: flex; justify-content: center; align-items: center; height: 3rem">
@@ -89,18 +87,6 @@ export default () => {
 					<img src="/logo.svg" css="width: 2rem !important" />
 				</footer>
 			</div>
-		</div>
-	)
-}
-
-const LoudButton = () => {
-	const [play] = useSound(boopSfx)
-
-	return (
-		<div onClick={play}>
-			<Link to="/simulateur/bilan" className="ui__ plain button">
-				Faire le test
-			</Link>
 		</div>
 	)
 }

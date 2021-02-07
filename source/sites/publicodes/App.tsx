@@ -20,6 +20,7 @@ import Simulateur from './Simulateur'
 import { useTranslation } from 'react-i18next'
 import sitePaths from './sitePaths'
 import News from 'Pages/News'
+import Instructions from './Instructions'
 
 let tracker = devTracker
 if (process.env.NODE_ENV === 'production') {
@@ -68,6 +69,7 @@ const Router = ({}) => (
 			<Switch>
 				<Route exact path="/" component={Landing} />
 				<Route path="/documentation" component={Documentation} />
+				<Route path="/instructions" component={Instructions} />
 				<Route path="/simulateur/:name+" component={Simulateur} />
 				{/* Lien de compatibilité, à retirer par exemple mi-juillet 2020*/}
 				<Route path="/fin/:score" component={Fin} />
