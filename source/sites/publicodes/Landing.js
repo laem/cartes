@@ -10,8 +10,10 @@ import NewsBanner from '../../components/NewsBanner'
 import useSound from 'use-sound'
 
 import boopSfx from './bite.mp3'
+import FuturecoMonochrome from '../../images/FuturecoMonochrome'
 
 export default () => {
+	return <FuturecoMonochrome color="#678658" />
 	return (
 		<div
 			css={`

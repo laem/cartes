@@ -32,7 +32,7 @@ export function findContrastedTextColor(color: string, simple: boolean) {
 	return L > 0.179 ? '#000000' : '#ffffff'
 }
 
-const lightenColor = (hex: string, x: number) => {
+export const lightenColor = (hex: string, x: number) => {
 	const [h, s, l] = convert.hex.hsl(hex.split('#')[1])
 	return '#' + convert.hsl.hex([h, s, Math.max(2, Math.min(l + x, 98))])
 }
