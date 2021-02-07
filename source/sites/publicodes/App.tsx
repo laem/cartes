@@ -21,6 +21,7 @@ import { useTranslation } from 'react-i18next'
 import sitePaths from './sitePaths'
 import News from 'Pages/News'
 import Instructions from './Instructions'
+import GameOver from './GameOver'
 
 let tracker = devTracker
 if (process.env.NODE_ENV === 'production') {
@@ -72,8 +73,7 @@ const Router = ({}) => (
 				<Route path="/instructions" component={Instructions} />
 				<Route path="/simulateur/:name+" component={Simulateur} />
 				{/* Lien de compatibilité, à retirer par exemple mi-juillet 2020*/}
-				<Route path="/fin/:score" component={Fin} />
-				<Route path="/fin" component={Fin} />
+				<Route path="/fin" component={GameOver} />
 				<Route path="/actions" component={Actions} />
 				<Route path="/contribuer/:input?" component={Contribution} />
 				<Route path="/à-propos" component={About} />

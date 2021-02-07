@@ -8,7 +8,7 @@ export const GameDialog = styled.div`
 	flex-direction: column;
 	justify-content: space-around;
 	text-align: center;
-	height: 80%;
+	height: 90%;
 	font-size: 120%;
 	h1 {
 		font-size: 230%;

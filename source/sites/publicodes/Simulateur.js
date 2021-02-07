@@ -115,7 +115,7 @@ const Simulateur = (props) => {
 					/>
 				</>
 			) : (
-				<GameOver />
+				<Redirect to="/fin" />
 			)}
 			<ShareButton
 				text="Mesure ton impact sur le simulateur Ecolab climat !"
