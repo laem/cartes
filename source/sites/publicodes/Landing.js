@@ -71,7 +71,7 @@ export default () => {
 				<LoudButton />
 				<p>{emoji('⌚️')} 2 minutes chrono</p>
 
-				<footer>
+				<footer css="display: flex; justify-content: center; align-items: center; height: 3rem">
 					<div
 						css={`
 							display: flex;
@@ -84,6 +84,7 @@ export default () => {
 					>
 						<Link to="/à-propos">À propos</Link>
 					</div>
+					<img src="/logo.svg" css="width: 2rem !important" />
 				</footer>
 			</div>
 		</div>
