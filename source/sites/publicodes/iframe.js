@@ -4,7 +4,7 @@ const script = document.getElementById('ecolab-climat'),
 	//distanceInitiale = encodeURIComponent(script.dataset.distanceInitiale),
 	integratorUrl = encodeURIComponent(window.location.href.toString())
 
-const hostname = 'ecolab.ademe.fr/apps/climat/'
+const hostname = 'nosgestesclimat.fr/'
 const src = `https://${hostname}?iframe&integratorUrl=${integratorUrl}`
 
 const iframe = document.createElement('iframe')
