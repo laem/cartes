@@ -54,11 +54,9 @@ export default function Input({
 						// We don't want to call `onValueChange` in case this component is
 						// re-render with a new "value" prop from the outside.
 						onValueChange={({ floatValue }) => {
-							if (floatValue !== value) {
-								debouncedOnChange(
-									floatValue != undefined ? { valeur: floatValue, unité } : {}
-								)
-							}
+							debouncedOnChange(
+								floatValue != undefined ? { valeur: floatValue, unité } : {}
+							)
 						}}
 						autoComplete="off"
 						{...{ [missing ? 'placeholder' : 'value']: value ?? '' }}
