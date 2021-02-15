@@ -129,7 +129,7 @@ A ce sujet, n’hésitez pas à consulter ce [simulateur](https://ecolab.ademe.f
 
 A l’heure actuelle, il vous faudra raisonner avec le combustible qui s’approche le plus possible du combustible que vous utilisez. Nos GEStes Climat fait le choix de se focaliser sur les types de combustible les plus utilisés en France.
 
-Néanmoins, dans le cadre du développement continu de Nos GEStes Climat, il est possible que certains types de combustible soit ajouté dans le futur.
+Néanmoins, dans le cadre du développement continu de Nos GEStes Climat, il est possible que certains types de combustibles soient ajoutés dans le futur.
 
 ### Je suis raccordé au réseau de chaleur de ma collectivité mais cette option n’est pas proposée par l’outil…
 
