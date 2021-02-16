@@ -63,7 +63,7 @@ export default function SelectWeeklyDiet({
 									? situationValue
 									: question.rawNode['par défaut']
 						return (
-							<li className="ui__ card" key={name}>
+							<li className="ui__ card interactive" key={name}>
 								<h4>{title}</h4>
 								<div>{emoji(icônes)}</div>
 								<p>{description.split('\n')[0]}</p>

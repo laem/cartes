@@ -7,6 +7,7 @@ import { useDispatch, useSelector } from 'react-redux'
 import { situationSelector } from 'Selectors/simulationSelectors'
 import { updateSituation } from 'Actions/actions'
 import { Mosaic } from './UI'
+import Checkbox from 'Components/ui/Checkbox'
 
 export const questionText = 'Quels appareils numériques possédez-vous ?'
 export const isApplicableQuestion = (dottedName) =>
@@ -41,41 +42,43 @@ export default function SelectWeeklyDiet({
 									? situationValue
 									: question.rawNode['par défaut']
 						return (
-							<li className="ui__ card" key={name}>
+							<li
+								className="ui__ card interactive"
+								key={name}
+								onMouseDown={() =>
+									selectedRules.map(
+										([
+											_,
+											{
+												dottedName,
+												rawNode: { 'par défaut': defaultValue },
+											},
+										]) =>
+											dispatch(
+												updateSituation(
+													dottedName,
+													question.dottedName === dottedName
+														? value == 'oui'
+															? 'non'
+															: 'oui'
+														: situation[dottedName] == null
+														? defaultValue
+														: situation[dottedName]
+												)
+											)
+									)
+								}
+							>
 								<h4>{title}</h4>
 								{icônes && <div css="font-size: 150%">{emoji(icônes)}</div>}
 								{false && description && <p>{description.split('\n')[0]}</p>}
-								<div css={' span {margin: .8rem; font-size: 120%}'}>
-									<input
-										type="checkbox"
-										id="scales"
-										name="scales"
+								<div css={'font-size: 1.8rem'}>
+									<Checkbox
+										name={name}
+										id={name}
 										checked={value === 'oui'}
-										onChange={() =>
-											selectedRules.map(
-												([
-													_,
-													{
-														dottedName,
-														rawNode: { 'par défaut': defaultValue },
-													},
-												]) =>
-													dispatch(
-														updateSituation(
-															dottedName,
-															question.dottedName === dottedName
-																? value == 'oui'
-																	? 'non'
-																	: 'oui'
-																: situation[dottedName] == null
-																? defaultValue
-																: situation[dottedName]
-														)
-													)
-											)
-										}
+										readOnly
 									/>
-									<label htmlFor="scales">{name}</label>
 								</div>
 							</li>
 						)
