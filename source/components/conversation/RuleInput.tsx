@@ -226,8 +226,6 @@ export default function RuleInput<Name extends string = DottedName>({
 		)
 	}
 
-	console.log(rule, evaluation)
-
 	return (
 		<Input
 			{...commonProps}

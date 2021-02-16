@@ -78,8 +78,8 @@ export default function SelectWeeklyDiet({
 											// This is a custom piece of code to counter the fact that the validation button visibility is handled by conversation.tsx
 											// if you hit - on 'viande 1', all the other inputs will be set, hence the validation button made visible since `currentQuestionIsAnswered` in conversation.tsx
 											// TODO should be rewritter as this component gets generic, used by other variables
-											// note : we don't need to write this dietRules.map in the (+) button, since you can't + a variable without - another one ;)
-											dietRules.map(
+											// note : we don't need to write this selectedRules.map in the (+) button, since you can't + a variable without - another one ;)
+											selectedRules.map(
 												([
 													_,
 													{

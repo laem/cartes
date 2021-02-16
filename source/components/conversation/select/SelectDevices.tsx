@@ -52,15 +52,30 @@ export default function SelectWeeklyDiet({
 										name="scales"
 										checked={value === 'oui'}
 										onChange={() =>
-											dispatch(
-												updateSituation(
-													question.dottedName,
-													value == 'oui' ? 'non' : 'oui'
-												)
+											selectedRules.map(
+												([
+													_,
+													{
+														dottedName,
+														rawNode: { 'par défaut': defaultValue },
+													},
+												]) =>
+													dispatch(
+														updateSituation(
+															dottedName,
+															question.dottedName === dottedName
+																? value == 'oui'
+																	? 'non'
+																	: 'oui'
+																: situation[dottedName] == null
+																? defaultValue
+																: situation[dottedName]
+														)
+													)
 											)
 										}
 									/>
-									<label for="scales">{name}</label>
+									<label htmlFor="scales">{name}</label>
 								</div>
 							</li>
 						)
