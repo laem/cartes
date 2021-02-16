@@ -24,9 +24,13 @@ import CategoryRespiration from './CategoryRespiration'
 import { extractCategories } from '../../sites/publicodes/chart'
 import { sortBy } from 'ramda'
 import {
-	weeklyDietQuestion,
+	isApplicableQuestion as isWeeklyDietQuestion,
 	weeklyDietQuestionText,
 } from './select/SelectWeeklyDiet'
+import {
+	isApplicableQuestion as isDeviceQuestion,
+	questionText as devicesQuestionText,
+} from './select/SelectDevices'
 import styled, { css } from 'styled-components'
 import { CategoryLabel } from './UI'
 
@@ -138,8 +142,11 @@ export default function Conversation({
 			</div>
 		)
 
-	const questionText = weeklyDietQuestion(currentQuestion)
+	console.log(currentQuestion)
+	const questionText = isWeeklyDietQuestion(currentQuestion)
 		? weeklyDietQuestionText
+		: isDeviceQuestion(currentQuestion)
+		? devicesQuestionText
 		: rules[currentQuestion]?.rawNode?.question
 
 	const questionCategoryName = currentQuestion.split(' . ')[0],

@@ -18,11 +18,15 @@ import { useTranslation } from 'react-i18next'
 import { DottedName } from 'modele-social'
 import DateInput from './DateInput'
 import ParagrapheInput from './ParagrapheInput'
-import SelectWeeklyDiet from './select/SelectWeeklyDiet'
+import SelectWeeklyDiet, {
+	isApplicableQuestion as isWeeklyDietQuestion,
+} from './select/SelectWeeklyDiet'
+import SelectDevices, {
+	isApplicableQuestion as isDeviceQuestion,
+} from './select/SelectDevices'
 import TextInput from './TextInput'
 import { useSelector } from 'react-redux'
 import { parentName } from 'Components/publicodesUtils'
-import { weeklyDietQuestion } from './select/SelectWeeklyDiet'
 
 type Value = any
 export type RuleInputProps<Name extends string = DottedName> = {
@@ -90,10 +94,10 @@ export default function RuleInput<Name extends string = DottedName>({
 		required: true,
 	}
 
-	if (weeklyDietQuestion(rule.dottedName)) {
-		// This selected a precise set of questions to bypass their regular components and answer all of them in one big custom UI
-		const dietRules = Object.entries(rules)
-			.filter(([dottedName]) => weeklyDietQuestion(dottedName))
+	if (isWeeklyDietQuestion(rule.dottedName)) {
+		// This selects a precise set of questions to bypass their regular components and answer all of them in one big custom UI
+		const selectedRules = Object.entries(rules)
+			.filter(([dottedName]) => isWeeklyDietQuestion(dottedName))
 			.map(([dottedName, questionRule]) => {
 				const parentRule = parentName(dottedName)
 				return [rules[parentRule], questionRule]
@@ -103,22 +107,41 @@ export default function RuleInput<Name extends string = DottedName>({
 			<SelectWeeklyDiet
 				{...{
 					...commonProps,
-					dietRules,
+					selectedRules,
 				}}
 			/>
 		)
 	}
 
-	if (getVariant(engine.getRule(dottedName))) {
+	if (isDeviceQuestion(rule.dottedName)) {
+		// this selects a precise set of questions to bypass their regular components and answer all of them in one big custom ui
+		const selectedRules = Object.entries(rules)
+			.filter(([dottedName]) => isDeviceQuestion(dottedName))
+			.map(([dottedName, questionRule]) => {
+				const parentRule = parentName(dottedName)
+				return [rules[parentRule], questionRule]
+			})
+
 		return (
-			<Question
-				{...commonProps}
-				onSubmit={onSubmit}
-				choices={buildVariantTree(engine, dottedName)}
+			<SelectDevices
+				{...{
+					...commonProps,
+					selectedRules,
+				}}
 			/>
 		)
 	}
-	/* These input are specific to mon-entreprise, but could be useful for us. Disactivated to prune dependencies
+
+	if (getvariant(engine.getrule(dottedname))) {
+		return (
+			<question
+				{...commonprops}
+				onsubmit={onsubmit}
+				choices={buildvarianttree(engine, dottedname)}
+			/>
+		)
+	}
+	/* these input are specific to mon-entreprise, but could be useful for us. disactivated to prune dependencies
 *
 *
 	if (rule.API && rule.API === 'commune')
