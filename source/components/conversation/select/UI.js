@@ -2,8 +2,9 @@ import styled from 'styled-components'
 
 export const Mosaic = styled.ul`
 	display: flex;
-	justify-content: center;
+	justify-content: space-evenly;
 	flex-wrap: wrap;
+	padding: 0;
 	p {
 		text-align: center;
 	}
@@ -15,7 +16,8 @@ export const Mosaic = styled.ul`
 
 	> li {
 		width: 14rem;
-		margin: 1rem;
+		min-height: 10rem;
+		margin: 1rem 0;
 		display: flex;
 		flex-direction: column;
 		justify-content: space-between;
@@ -23,7 +25,14 @@ export const Mosaic = styled.ul`
 		padding-bottom: 1rem;
 	}
 
+	@media (max-width: 800px) {
+		> li {
+			width: 10rem;
+		}
+	}
+
 	> li h4 {
+		text-align: center;
 		margin: 0;
 	}
 	> li p {
