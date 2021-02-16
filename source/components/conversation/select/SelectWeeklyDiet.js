@@ -27,7 +27,7 @@ export default function SelectWeeklyDiet({
 	const dispatch = useDispatch()
 	const situation = useSelector(situationSelector)
 
-	const chipsCount = selectedRule.reduce(
+	const chipsCount = selectedRules.reduce(
 		(
 			memo,
 			[
