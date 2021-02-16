@@ -8,7 +8,7 @@ import { situationSelector } from 'Selectors/simulationSelectors'
 import { updateSituation } from 'Actions/actions'
 import { Mosaic } from './UI'
 
-export const questionText = 'Vos appareils ! '
+export const questionText = 'Quels appareils numériques possédez-vous ?'
 export const isApplicableQuestion = (dottedName) =>
 	dottedName.includes('numérique') && dottedName.includes(' . présent')
 
@@ -43,14 +43,22 @@ export default function SelectWeeklyDiet({
 						return (
 							<li className="ui__ card" key={name}>
 								<h4>{title}</h4>
-								{icônes && <div>{emoji(icônes)}</div>}
-								{description && <p>{description.split('\n')[0]}</p>}
+								{icônes && <div css="font-size: 150%">{emoji(icônes)}</div>}
+								{false && description && <p>{description.split('\n')[0]}</p>}
 								<div css={' span {margin: .8rem; font-size: 120%}'}>
 									<input
 										type="checkbox"
 										id="scales"
 										name="scales"
-										checked={situationValue}
+										checked={value === 'oui'}
+										onChange={() =>
+											dispatch(
+												updateSituation(
+													question.dottedName,
+													value == 'oui' ? 'non' : 'oui'
+												)
+											)
+										}
 									/>
 									<label for="scales">{name}</label>
 								</div>

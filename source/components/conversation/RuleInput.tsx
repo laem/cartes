@@ -132,16 +132,16 @@ export default function RuleInput<Name extends string = DottedName>({
 		)
 	}
 
-	if (getvariant(engine.getrule(dottedname))) {
+	if (getVariant(engine.getRule(dottedName))) {
 		return (
-			<question
-				{...commonprops}
-				onsubmit={onsubmit}
-				choices={buildvarianttree(engine, dottedname)}
+			<Question
+				{...commonProps}
+				onSubmit={onSubmit}
+				choices={buildVariantTree(engine, dottedName)}
 			/>
 		)
 	}
-	/* these input are specific to mon-entreprise, but could be useful for us. disactivated to prune dependencies
+	/* These input are specific to mon-entreprise, but could be useful for us. Disactivated to prune dependencies
 *
 *
 	if (rule.API && rule.API === 'commune')
@@ -149,9 +149,7 @@ export default function RuleInput<Name extends string = DottedName>({
 	if (rule.API && rule.API === 'pays européen')
 		return <SelectEuropeCountry {...commonProps} />
 	if (rule.API) throw new Error("Les seules API implémentées sont 'commune'")
-
 	if (rule.dottedName == 'contrat salarié . ATMP . taux collectif ATMP')
-
 	return <SelectAtmp {...commonProps} onSubmit={onSubmit} />
 *
 */
