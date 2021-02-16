@@ -43,6 +43,7 @@ export default function SelectWeeklyDiet({
 									: question.rawNode['par défaut']
 						return (
 							<li
+								css="padding: 2rem"
 								className="ui__ card interactive"
 								key={name}
 								onMouseDown={() =>
@@ -69,8 +70,8 @@ export default function SelectWeeklyDiet({
 									)
 								}
 							>
-								<h4>{title}</h4>
 								{icônes && <div css="font-size: 150%">{emoji(icônes)}</div>}
+								<h4>{title}</h4>
 								{false && description && <p>{description.split('\n')[0]}</p>}
 								<div css={'font-size: 1.8rem'}>
 									<Checkbox
