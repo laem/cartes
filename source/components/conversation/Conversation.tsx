@@ -3,7 +3,10 @@ import {
 	updateSituation,
 	validateStepWithValue,
 } from 'Actions/actions'
-import RuleInput, { RuleInputProps } from 'Components/conversation/RuleInput'
+import RuleInput, {
+	RuleInputProps,
+	isMosaic,
+} from 'Components/conversation/RuleInput'
 import * as Animate from 'Components/ui/animate'
 import { EngineContext } from 'Components/utils/EngineContext'
 import { useNextQuestions } from 'Components/utils/useNextQuestion'
@@ -69,7 +72,9 @@ export default function Conversation({
 			? nextQuestions[0]
 			: unfoldedStep || sortedQuestions[0]
 
-	const currentQuestionIsAnswered = situation[currentQuestion] != null
+	const currentQuestionIsAnswered = isMosaic(currentQuestion)
+		? true
+		: situation[currentQuestion] != null
 
 	const [dismissedRespirations, dismissRespiration] = useState([])
 
@@ -142,7 +147,6 @@ export default function Conversation({
 			</div>
 		)
 
-	console.log(currentQuestion)
 	const questionText = isWeeklyDietQuestion(currentQuestion)
 		? weeklyDietQuestionText
 		: isDeviceQuestion(currentQuestion)

@@ -57,6 +57,9 @@ export const binaryQuestion = [
 	{ value: 'non', label: 'Non' },
 ] as const
 
+export const isMosaic = (dottedName) =>
+	isWeeklyDietQuestion(dottedName) || isDeviceQuestion(dottedName)
+
 // This function takes the unknown rule and finds which React component should
 // be displayed to get a user input through successive if statements
 // That's not great, but we won't invest more time until we have more diverse
