@@ -6,6 +6,7 @@ import emoji from 'react-easy-emoji'
 import { useDispatch, useSelector } from 'react-redux'
 import { situationSelector } from 'Selectors/simulationSelectors'
 import { updateSituation } from 'Actions/actions'
+import { Mosaic } from './UI'
 
 export const questionText = 'Vos appareils ! '
 export const isApplicableQuestion = (dottedName) =>
@@ -24,40 +25,7 @@ export default function SelectWeeklyDiet({
 
 	const choiceElements = (
 		<div>
-			<ul
-				css={`
-					display: flex;
-					justify-content: center;
-					flex-wrap: wrap;
-					p {
-						text-align: center;
-					}
-
-					> li > div > img {
-						margin-right: 0.4rem !important;
-						font-size: 130% !important;
-					}
-
-					> li {
-						width: 14rem;
-						margin: 1rem;
-						display: flex;
-						flex-direction: column;
-						justify-content: space-between;
-						align-items: center;
-						padding-bottom: 1rem;
-					}
-
-					> li h4 {
-						margin: 0;
-					}
-					> li p {
-						font-style: italic;
-						font-size: 85%;
-						line-height: 1.2rem;
-					}
-				`}
-			>
+			<Mosaic>
 				{selectedRules.map(
 					([
 						{
@@ -90,7 +58,7 @@ export default function SelectWeeklyDiet({
 						)
 					}
 				)}
-			</ul>
+			</Mosaic>
 		</div>
 	)
 
