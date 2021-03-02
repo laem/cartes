@@ -405,7 +405,13 @@ const CategoryFilter = ({ categories, selected, countByCategory }) => {
 						${!countByCategory[category.dottedName] ? 'background: #ccc' : ''}
 					`}
 				>
-					<Link to={'/actions/catégorie/' + category.dottedName}>
+					<Link
+						to={
+							selected === category.dottedName
+								? '/actions'
+								: '/actions/catégorie/' + category.dottedName
+						}
+					>
 						<button>
 							{category.dottedName}{' '}
 							<span
