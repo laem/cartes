@@ -109,6 +109,11 @@ const ActionList = animated(({}) => {
 		category ? splitName(action.dottedName)[0] === category : true
 	)
 	const categories = extractCategories(rules, engine)
+	const countByCategory = actions.reduce((memo, next) => {
+		const category = splitName(next.dottedName)[0]
+
+		return { ...memo, [category]: (memo[category] || 0) + 1 }
+	}, {})
 
 	return (
 		<div css="padding: 0 .3rem 1rem; max-width: 600px; margin: 1rem auto;">
@@ -121,7 +126,11 @@ const ActionList = animated(({}) => {
 			<h1 css="margin: 1rem 0 .6rem;font-size: 160%">
 				Comment réduire mon empreinte ?
 			</h1>
-			<CategoryFilter categories={categories} selected={category} />
+			<CategoryFilter
+				categories={categories}
+				selected={category}
+				countByCategory={countByCategory}
+			/>
 			<button onClick={() => setRadical(!radical)}>Mode radical 🥊</button>
 			{sortedActions.map((evaluation) => (
 				<MiniAction
@@ -300,7 +309,7 @@ const ActionValue = ({ total, nodeValue: rawValue, unit: rawUnit }) => {
 	)
 }
 
-const CategoryFilter = ({ categories, selected }) => {
+const CategoryFilter = ({ categories, selected, countByCategory }) => {
 	console.log(categories)
 	return (
 		<ul
@@ -330,7 +339,10 @@ const CategoryFilter = ({ categories, selected }) => {
 					`}
 				>
 					<Link to={'/actions/catégorie/' + category.dottedName}>
-						<button>{category.dottedName}</button>
+						<button>
+							{category.dottedName} ({countByCategory[category.dottedName] || 0}
+							)
+						</button>
 					</Link>
 				</li>
 			))}
