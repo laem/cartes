@@ -187,6 +187,7 @@ const ActionList = animated(({}) => {
 
 	const configSet = useSelector(configSelector)
 	const answeredQuestions = useSelector(answeredQuestionsSelector)
+	const mode = useSelector((state) => state.actionMode)
 
 	const dispatch = useDispatch()
 	useEffect(() => dispatch(setSimulationConfig(config)), [location.pathname])
@@ -222,7 +223,11 @@ const ActionList = animated(({}) => {
 				selected={category}
 				countByCategory={countByCategory}
 			/>
-			<button onClick={() => setRadical(!radical)}>Mode radical 🥊</button>
+			{mode === 'autonome' && (
+				<button onClick={() => setRadical(!radical)}>
+					Trié par : {radical ? "le plus d'impact" : "le moins d'impact"}
+				</button>
+			)}
 			{sortedActions.map((evaluation) => (
 				<MiniAction
 					key={evaluation.dottedName}
