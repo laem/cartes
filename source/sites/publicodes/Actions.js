@@ -18,6 +18,7 @@ import {
 } from '../../selectors/simulationSelectors'
 import Action from './Action'
 import ActionPlus from './ActionPlus'
+import { extractCategories } from './chart'
 import { humanValueAndUnit } from './HumanWeight'
 import ListeActionPlus from './ListeActionPlus'
 
@@ -95,6 +96,7 @@ const ActionList = animated(({}) => {
 	const [bilans, actions] = partition((t) => t.dottedName === 'bilan', targets)
 
 	const sortedActions = sortBy((a) => correctValue(a))(actions)
+	const categories = extractCategories(rules, engine)
 
 	return (
 		<div css="padding: 0 .3rem 1rem; max-width: 600px; margin: 1rem auto;">
@@ -107,6 +109,7 @@ const ActionList = animated(({}) => {
 			<h1 css="margin: 1rem 0 .6rem;font-size: 160%">
 				Comment réduire mon empreinte ?
 			</h1>
+			<CategoryFilter categories={categories} />
 
 			{sortedActions.map((evaluation) => (
 				<MiniAction
@@ -283,5 +286,36 @@ const ActionValue = ({ total, nodeValue: rawValue, unit: rawUnit }) => {
 				{displayRelative && <div>de votre total</div>}
 			</span>
 		</div>
+	)
+}
+
+const CategoryFilter = ({ categories }) => {
+	console.log(categories)
+	return (
+		<ul
+			css={`
+				display: flex;
+				flex-wrap: wrap;
+				list-style-type: none;
+				color: white;
+				font-weight: bold;
+				justify-content: center;
+				li {
+					padding: 0.1rem 0.4rem;
+					margin: 0.1rem 0.2rem;
+					border-radius: 0.2rem;
+				}
+			`}
+		>
+			{categories.map((category) => (
+				<li
+					css={`
+						background: ${category.color};
+					`}
+				>
+					{category.dottedName}
+				</li>
+			))}
+		</ul>
 	)
 }
