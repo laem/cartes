@@ -32,6 +32,9 @@ const gradient = tinygradient(['#0000ff', '#ff0000']),
 export default ({}) => {
 	return (
 		<Switch>
+			<Route path="/actions/mode">
+				<ModeChoice />
+			</Route>
 			<Route exact path="/actions/plus">
 				<ListeActionPlus />
 			</Route>
@@ -55,6 +58,79 @@ export default ({}) => {
 		return <Action />
 	}
 }
+
+const IllustratedButton = ({ children, to, icon }) => (
+	<Link
+		to={to}
+		className="ui__ button plain"
+		css={`
+			margin: 0.6rem 0;
+			width: 100%;
+			text-transform: none !important;
+			img {
+				font-size: 200%;
+			}
+			a {
+				color: var(--textColor);
+				text-decoration: none;
+			}
+		`}
+	>
+		<div
+			css={`
+				display: flex;
+				justify-content: center;
+				align-items: center;
+				width: 100%;
+				> div {
+					margin-left: 1.6rem;
+					text-align: left;
+					small {
+						color: var(--textColor);
+					}
+				}
+			`}
+		>
+			{emoji(icon)}
+
+			{children}
+		</div>
+	</Link>
+)
+
+const ModeChoice = ({}) => (
+	<div
+		css={`
+			> div {
+				margin: 4rem 1rem;
+			}
+		`}
+	>
+		<div>
+			<h1>Passer à l'action</h1>
+			<p>Votre mission : réduire votre empreinte.</p>
+			<p>Comment voulez-vous procéder ?</p>
+		</div>
+		<div>
+			<IllustratedButton icon="🐣">
+				<div>
+					<div>Guidé</div>
+					<p>
+						<small>On vous propose une sélection graduelle de gestes.</small>
+					</p>
+				</div>
+			</IllustratedButton>
+			<IllustratedButton icon="🐓">
+				<div>
+					<div>Autonome</div>
+					<p>
+						<small>A vous de choisir vos gestes à la carte.</small>
+					</p>
+				</div>
+			</IllustratedButton>
+		</div>
+	</div>
+)
 
 // Publicodes's % unit is strangely handlded
 // the nodeValue is * 100 to account for the unit
@@ -140,49 +216,17 @@ const ActionList = animated(({}) => {
 					total={bilans.length ? bilans[0].nodeValue : null}
 				/>
 			))}
-			<Link
-				to="/actions/plus"
-				className="ui__ button plain"
-				css={`
-					margin: 0.6rem 0;
-					width: 100%;
-					text-transform: none !important;
-					img {
-						font-size: 200%;
-					}
-					a {
-						color: var(--textColor);
-						text-decoration: none;
-					}
-				`}
-			>
-				<div
-					css={`
-						display: flex;
-						justify-content: center;
-						align-items: center;
-						width: 100%;
-						> div {
-							margin-left: 1.6rem;
-							text-align: left;
-							small {
-								color: var(--textColor);
-							}
-						}
-					`}
-				>
-					{emoji('📚')}
-					<div>
-						<div>Comprendre les actions</div>
-						<p>
-							<small>
-								Au-delà d'un simple chiffre, découvrez les enjeux qui se cachent
-								derrière chaque action.
-							</small>
-						</p>
-					</div>
+			<IllustratedButton to={'/actions/plus'} icon="📚">
+				<div>
+					<div>Comprendre les actions</div>
+					<p>
+						<small>
+							Au-delà d'un simple chiffre, découvrez les enjeux qui se cachent
+							derrière chaque action.
+						</small>
+					</p>
 				</div>
-			</Link>
+			</IllustratedButton>
 		</div>
 	)
 })
