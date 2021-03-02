@@ -25,41 +25,43 @@ import ListeActionPlus from './ListeActionPlus'
 const { encodeRuleName, decodeRuleName } = utils
 
 import { splitName } from 'Components/publicodesUtils'
+import { setActionMode } from '../../actions/actions'
 
 const gradient = tinygradient(['#0000ff', '#ff0000']),
 	colors = gradient.rgb(20)
 
 export default ({}) => {
-	return (
-		<Switch>
-			<Route path="/actions/mode">
-				<ModeChoice />
-			</Route>
-			<Route exact path="/actions/plus">
-				<ListeActionPlus />
-			</Route>
-			<Route exact path="/actions/catégorie/:category">
-				<ActionList />
-			</Route>
-			<Route path="/actions/plus/:encodedName+">
-				<ActionPlus />
-			</Route>
-			<Route path="/actions/:encodedName+">
-				<Action />
-			</Route>
+	const mode = useSelector((state) => state.actionMode)
 
-			<Route path="/actions">
-				<ActionList />
-			</Route>
-		</Switch>
+	return (
+		<>
+			<Link to="/actions/mode">Mode {mode}</Link>
+			<Switch>
+				<Route path="/actions/mode">
+					<ModeChoice />
+				</Route>
+				<Route exact path="/actions/plus">
+					<ListeActionPlus />
+				</Route>
+				<Route exact path="/actions/catégorie/:category">
+					<ActionList />
+				</Route>
+				<Route path="/actions/plus/:encodedName+">
+					<ActionPlus />
+				</Route>
+				<Route path="/actions/:encodedName+">
+					<Action />
+				</Route>
+
+				<Route path="/actions">
+					<ActionList />
+				</Route>
+			</Switch>
+		</>
 	)
-	if (action) {
-		const actionDottedName = decodeRuleName(action)
-		return <Action />
-	}
 }
 
-const IllustratedButton = ({ children, to, icon }) => (
+const IllustratedButton = ({ children, icon, to, onClick }) => (
 	<Link
 		to={to}
 		className="ui__ button plain"
@@ -75,6 +77,7 @@ const IllustratedButton = ({ children, to, icon }) => (
 				text-decoration: none;
 			}
 		`}
+		onClick={onClick}
 	>
 		<div
 			css={`
@@ -98,39 +101,51 @@ const IllustratedButton = ({ children, to, icon }) => (
 	</Link>
 )
 
-const ModeChoice = ({}) => (
-	<div
-		css={`
-			> div {
-				margin: 4rem 1rem;
-			}
-		`}
-	>
-		<div>
-			<h1>Passer à l'action</h1>
-			<p>Votre mission : réduire votre empreinte.</p>
-			<p>Comment voulez-vous procéder ?</p>
+const ModeChoice = ({}) => {
+	const dispatch = useDispatch()
+
+	return (
+		<div
+			css={`
+				> div {
+					margin: 4rem 1rem;
+				}
+			`}
+		>
+			<div>
+				<h1>Passer à l'action</h1>
+				<p>Votre mission : réduire votre empreinte.</p>
+				<p>Comment voulez-vous procéder ?</p>
+			</div>
+			<div>
+				<IllustratedButton
+					icon="🐣"
+					to="/actions"
+					onClick={() => dispatch(setActionMode('guidé'))}
+				>
+					<div>
+						<div>Guidé</div>
+						<p>
+							<small>On vous propose une sélection graduelle de gestes.</small>
+						</p>
+					</div>
+				</IllustratedButton>
+				<IllustratedButton
+					to="/actions"
+					icon="🐓"
+					onClick={() => dispatch(setActionMode('autonome'))}
+				>
+					<div>
+						<div>Autonome</div>
+						<p>
+							<small>A vous de choisir vos gestes à la carte.</small>
+						</p>
+					</div>
+				</IllustratedButton>
+			</div>
 		</div>
-		<div>
-			<IllustratedButton icon="🐣">
-				<div>
-					<div>Guidé</div>
-					<p>
-						<small>On vous propose une sélection graduelle de gestes.</small>
-					</p>
-				</div>
-			</IllustratedButton>
-			<IllustratedButton icon="🐓">
-				<div>
-					<div>Autonome</div>
-					<p>
-						<small>A vous de choisir vos gestes à la carte.</small>
-					</p>
-				</div>
-			</IllustratedButton>
-		</div>
-	</div>
-)
+	)
+}
 
 // Publicodes's % unit is strangely handlded
 // the nodeValue is * 100 to account for the unit

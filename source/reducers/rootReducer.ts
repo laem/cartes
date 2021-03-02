@@ -171,6 +171,12 @@ function rules(state = null, { type, rules }) {
 	} else return state
 }
 
+function actionMode(state = null, { type, mode }) {
+	if (type === 'SET_ACTION_MODE') {
+		return mode
+	} else return state
+}
+
 const mainReducer = (state: any, action: Action) =>
 	combineReducers({
 		explainedVariable,
@@ -181,6 +187,7 @@ const mainReducer = (state: any, action: Action) =>
 		situationBranch,
 		activeTargetInput,
 		rules,
+		actionMode,
 	})(state, action)
 
 export default reduceReducers<RootState>(
