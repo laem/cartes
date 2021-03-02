@@ -4,10 +4,10 @@ import { EngineContext } from 'Components/utils/EngineContext'
 import { motion } from 'framer-motion'
 import { utils } from 'publicodes'
 import { partition, sortBy, union } from 'ramda'
-import React, { useContext, useEffect } from 'react'
+import React, { useContext, useEffect, useState } from 'react'
 import emoji from 'react-easy-emoji'
 import { useDispatch, useSelector } from 'react-redux'
-import { useLocation } from 'react-router'
+import { useLocation, useParams } from 'react-router'
 import { Link, Route, Switch } from 'react-router-dom'
 import { animated } from 'react-spring'
 import { objectifsSelector } from 'Selectors/simulationSelectors'
@@ -22,7 +22,9 @@ import { extractCategories } from './chart'
 import { humanValueAndUnit } from './HumanWeight'
 import ListeActionPlus from './ListeActionPlus'
 
-const { encodeRuleName, decodeRuleName, splitName } = utils
+const { encodeRuleName, decodeRuleName } = utils
+
+import { splitName } from 'Components/publicodesUtils'
 
 const gradient = tinygradient(['#0000ff', '#ff0000']),
 	colors = gradient.rgb(20)
@@ -32,6 +34,9 @@ export default ({}) => {
 		<Switch>
 			<Route exact path="/actions/plus">
 				<ListeActionPlus />
+			</Route>
+			<Route exact path="/actions/catégorie/:category">
+				<ActionList />
 			</Route>
 			<Route path="/actions/plus/:encodedName+">
 				<ActionPlus />
@@ -63,9 +68,12 @@ export const correctValue = (evaluated) => {
 
 const ActionList = animated(({}) => {
 	const location = useLocation()
+	let { category } = useParams()
 
 	const rules = useSelector((state) => state.rules)
 	const flatActions = rules['actions']
+
+	const [radical, setRadical] = useState(false)
 
 	const simulation = useSelector((state) => state.simulation)
 
@@ -95,7 +103,11 @@ const ActionList = animated(({}) => {
 
 	const [bilans, actions] = partition((t) => t.dottedName === 'bilan', targets)
 
-	const sortedActions = sortBy((a) => correctValue(a))(actions)
+	const sortedActions = sortBy((a) => (radical ? -1 : 1) * correctValue(a))(
+		actions
+	).filter((action) =>
+		category ? splitName(action.dottedName)[0] === category : true
+	)
 	const categories = extractCategories(rules, engine)
 
 	return (
@@ -109,8 +121,8 @@ const ActionList = animated(({}) => {
 			<h1 css="margin: 1rem 0 .6rem;font-size: 160%">
 				Comment réduire mon empreinte ?
 			</h1>
-			<CategoryFilter categories={categories} />
-
+			<CategoryFilter categories={categories} selected={category} />
+			<button onClick={() => setRadical(!radical)}>Mode radical 🥊</button>
 			{sortedActions.map((evaluation) => (
 				<MiniAction
 					key={evaluation.dottedName}
@@ -119,7 +131,6 @@ const ActionList = animated(({}) => {
 					total={bilans.length ? bilans[0].nodeValue : null}
 				/>
 			))}
-
 			<Link
 				to="/actions/plus"
 				className="ui__ button plain"
@@ -289,7 +300,7 @@ const ActionValue = ({ total, nodeValue: rawValue, unit: rawUnit }) => {
 	)
 }
 
-const CategoryFilter = ({ categories }) => {
+const CategoryFilter = ({ categories, selected }) => {
 	console.log(categories)
 	return (
 		<ul
@@ -297,13 +308,15 @@ const CategoryFilter = ({ categories }) => {
 				display: flex;
 				flex-wrap: wrap;
 				list-style-type: none;
-				color: white;
-				font-weight: bold;
 				justify-content: center;
 				li {
 					padding: 0.1rem 0.4rem;
 					margin: 0.1rem 0.2rem;
 					border-radius: 0.2rem;
+				}
+				li button {
+					color: white;
+					font-weight: bold;
 				}
 			`}
 		>
@@ -311,9 +324,14 @@ const CategoryFilter = ({ categories }) => {
 				<li
 					css={`
 						background: ${category.color};
+						${selected === category.dottedName
+							? 'border: 3px solid var(--color)'
+							: ''}
 					`}
 				>
-					{category.dottedName}
+					<Link to={'/actions/catégorie/' + category.dottedName}>
+						<button>{category.dottedName}</button>
+					</Link>
 				</li>
 			))}
 		</ul>
