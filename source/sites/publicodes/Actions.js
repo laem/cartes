@@ -40,7 +40,7 @@ export default ({}) => {
 			</Route>
 
 			<Route path="/actions">
-				<AnimatedDiv />
+				<ActionList />
 			</Route>
 		</Switch>
 	)
@@ -60,7 +60,7 @@ export const correctValue = (evaluated) => {
 	return result
 }
 
-const AnimatedDiv = animated(({}) => {
+const ActionList = animated(({}) => {
 	const location = useLocation()
 
 	const rules = useSelector((state) => state.rules)
@@ -101,8 +101,7 @@ const AnimatedDiv = animated(({}) => {
 			<SessionBar />
 			{!answeredQuestions.length && (
 				<p css="line-height: 1.4rem; text-align: center">
-					Les chiffres suivants seront alors personnalisés pour votre situation{' '}
-					{emoji('🧮')}
+					{emoji('🧮')}&nbsp; Pour personnaliser ces propositions
 				</p>
 			)}
 			<h1 css="margin: 1rem 0 .6rem;font-size: 160%">
@@ -154,7 +153,8 @@ const AnimatedDiv = animated(({}) => {
 						<div>Comprendre les actions</div>
 						<p>
 							<small>
-								Au-delà d'un simple chiffre, découvrez les enjeux qui se cachent derrière chaque action.
+								Au-delà d'un simple chiffre, découvrez les enjeux qui se cachent
+								derrière chaque action.
 							</small>
 						</p>
 					</div>
