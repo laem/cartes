@@ -139,7 +139,7 @@ module.exports.HTMLPlugins = ({
 } = {}) => [
 	new HTMLPlugin({
 		template: 'index.html',
-		logo: 'https://ecolab.ademe.fr/apps/climat/dessin-nosgestesclimat.png',
+		logo: 'https://nosgestesclimat.fr/dessin-nosgestesclimat.png',
 		chunks: ['publicodes'],
 		title: 'Nos Gestes Climat',
 		description: 'Connaissez-vous votre empreinte sur le climat ?',
