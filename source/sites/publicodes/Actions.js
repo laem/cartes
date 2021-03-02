@@ -7,7 +7,7 @@ import { partition, sortBy, union } from 'ramda'
 import React, { useContext, useEffect, useState } from 'react'
 import emoji from 'react-easy-emoji'
 import { useDispatch, useSelector } from 'react-redux'
-import { useLocation, useParams } from 'react-router'
+import { Redirect, useLocation, useParams } from 'react-router'
 import { Link, Route, Switch } from 'react-router-dom'
 import { animated } from 'react-spring'
 import { objectifsSelector } from 'Selectors/simulationSelectors'
@@ -188,6 +188,8 @@ const ActionList = animated(({}) => {
 	const configSet = useSelector(configSelector)
 	const answeredQuestions = useSelector(answeredQuestionsSelector)
 	const mode = useSelector((state) => state.actionMode)
+
+	if (!mode) return <Redirect to="/actions/mode" />
 
 	const dispatch = useDispatch()
 	useEffect(() => dispatch(setSimulationConfig(config)), [location.pathname])
