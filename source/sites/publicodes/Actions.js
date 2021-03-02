@@ -383,7 +383,7 @@ const CategoryFilter = ({ categories, selected, countByCategory }) => {
 				list-style-type: none;
 				justify-content: center;
 				li {
-					padding: 0.1rem 0.4rem;
+					padding: 0.1rem 0rem;
 					margin: 0.1rem 0.2rem;
 					border-radius: 0.2rem;
 				}
