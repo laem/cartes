@@ -25,6 +25,7 @@ import Aide from './Aide'
 import CategoryRespiration from './CategoryRespiration'
 import './conversation.css'
 import { ExplicableRule } from './Explicable'
+import SimulationEnding from './SimulationEnding'
 import { CategoryLabel } from './UI'
 
 export type ConversationProps = {
@@ -81,24 +82,40 @@ export default function Conversation({
 			dispatch(goToQuestion(currentQuestion))
 		}
 	}, [dispatch, currentQuestion])
-	const setDefault = () =>
-		dispatch(
-			// TODO: Skiping a question shouldn't be equivalent to answering the
-			// default value (for instance the question shouldn't appear in the
-			// answered questions).
-			validateStepWithValue(currentQuestion, undefined)
-		)
 	const goToPrevious = () =>
 		dispatch(goToQuestion(previousAnswers.slice(-1)[0]))
 
+	// Some questions are grouped in an artifical questions, called mosaic questions,  not present in publicodes
+	// here we need to submit all of them when the one that triggered the UI (we don't care which) is submitted, in order to see them in the response list and to avoid repeating the same n times
+
+	const mosaicQuestion = currentQuestion && isMosaic(currentQuestion)
+	const questionText = mosaicQuestion
+		? mosaicQuestion.question
+		: rules[currentQuestion]?.rawNode?.question
+	const questionsToSubmit = mosaicQuestion
+		? Object.entries(rules)
+				.filter(([dottedName, value]) =>
+					mosaicQuestion.isApplicable(dottedName)
+				)
+				.map(([dottedName]) => dottedName)
+		: [currentQuestion]
 	const submit = (source: string) => {
-		dispatch({
-			type: 'STEP_ACTION',
-			name: 'fold',
-			step: currentQuestion,
-			source,
-		})
+		questionsToSubmit.map((question) =>
+			dispatch({
+				type: 'STEP_ACTION',
+				name: 'fold',
+				step: question,
+				source,
+			})
+		)
 	}
+	const setDefault = () =>
+		// TODO: Skiping a question shouldn't be equivalent to answering the
+		// default value (for instance the question shouldn't appear in the
+		// answered questions).
+		questionsToSubmit.map((question) =>
+			dispatch(validateStepWithValue(question, undefined))
+		)
 
 	const onChange: RuleInputProps['onChange'] = (value) => {
 		dispatch(updateSituation(currentQuestion, value))
@@ -113,35 +130,7 @@ export default function Conversation({
 	}
 
 	if (!currentQuestion)
-		return (
-			<div style={{ textAlign: 'center' }}>
-				{customEnd || (
-					<>
-						<h3>
-							{emoji('🌟')}{' '}
-							<Trans i18nKey="simulation-end.title">
-								Vous avez complété cette simulation
-							</Trans>
-						</h3>
-						<p>
-							{customEndMessages ? (
-								customEndMessages
-							) : (
-								<Trans i18nKey="simulation-end.text">
-									Vous avez maintenant accès à l'estimation la plus précise
-									possible.
-								</Trans>
-							)}
-						</p>
-					</>
-				)}
-			</div>
-		)
-
-	const mosaicQuestion = isMosaic(currentQuestion)
-	const questionText = mosaicQuestion
-		? mosaicQuestion.question
-		: rules[currentQuestion]?.rawNode?.question
+		return <SimulationEnding {...{ customEnd, customEndMessages }} />
 
 	const questionCategoryName = currentQuestion.split(' . ')[0],
 		questionCategory =
