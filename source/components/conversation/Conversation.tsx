@@ -72,9 +72,10 @@ export default function Conversation({
 			? nextQuestions[0]
 			: unfoldedStep || sortedQuestions[0]
 
-	const currentQuestionIsAnswered = isMosaic(currentQuestion)
-		? true
-		: situation[currentQuestion] != null
+	const currentQuestionIsAnswered =
+		currentQuestion && isMosaic(currentQuestion)
+			? true
+			: situation[currentQuestion] != null
 
 	const [dismissedRespirations, dismissRespiration] = useState([])
 

@@ -47,26 +47,11 @@ export default function SelectWeeklyDiet({
 								className="ui__ card interactive"
 								key={name}
 								onMouseDown={() =>
-									selectedRules.map(
-										([
-											_,
-											{
-												dottedName,
-												rawNode: { 'par défaut': defaultValue },
-											},
-										]) =>
-											dispatch(
-												updateSituation(
-													dottedName,
-													question.dottedName === dottedName
-														? value == 'oui'
-															? 'non'
-															: 'oui'
-														: situation[dottedName] == null
-														? defaultValue
-														: situation[dottedName]
-												)
-											)
+									dispatch(
+										updateSituation(
+											question.dottedName,
+											value == 'oui' ? 'non' : 'oui'
+										)
 									)
 								}
 							>
