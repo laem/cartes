@@ -21,6 +21,7 @@ import {
 	situationSelector,
 } from 'Selectors/simulationSelectors'
 import { objectifsSelector } from '../../selectors/simulationSelectors'
+import useKeypress from '../utils/useKeyPress'
 import Aide from './Aide'
 import CategoryRespiration from './CategoryRespiration'
 import './conversation.css'
@@ -121,13 +122,8 @@ export default function Conversation({
 		dispatch(updateSituation(currentQuestion, value))
 	}
 
-	const handleKeyDown = ({ key }: React.KeyboardEvent) => {
-		if (key === 'Escape') {
-			setDefault()
-		} else if (key === 'Enter') {
-			submit('enter')
-		}
-	}
+	useKeypress('Escape', setDefault, [currentQuestion])
+	useKeypress('Enter', () => submit('enter'), [currentQuestion])
 
 	if (!currentQuestion)
 		return <SimulationEnding {...{ customEnd, customEndMessages }} />
@@ -160,7 +156,7 @@ export default function Conversation({
 	) : (
 		<section>
 			<Aide />
-			<div style={{ outline: 'none' }} onKeyDown={handleKeyDown}>
+			<div style={{ outline: 'none' }}>
 				{orderByCategories && questionCategory && (
 					<div>
 						<CategoryLabel color={questionCategory.color}>
