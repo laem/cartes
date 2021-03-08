@@ -4,14 +4,15 @@ import {
 	validateStepWithValue,
 } from 'Actions/actions'
 import RuleInput, {
-	RuleInputProps,
 	isMosaic,
+	RuleInputProps,
 } from 'Components/conversation/RuleInput'
 import * as Animate from 'Components/ui/animate'
 import { EngineContext } from 'Components/utils/EngineContext'
 import { useNextQuestions } from 'Components/utils/useNextQuestion'
 import { TrackerContext } from 'Components/utils/withTracker'
-import React, { useState, useContext, useEffect } from 'react'
+import { sortBy } from 'ramda'
+import React, { useContext, useEffect, useState } from 'react'
 import emoji from 'react-easy-emoji'
 import { Trans } from 'react-i18next'
 import { useDispatch, useSelector } from 'react-redux'
@@ -21,20 +22,9 @@ import {
 } from 'Selectors/simulationSelectors'
 import { objectifsSelector } from '../../selectors/simulationSelectors'
 import Aide from './Aide'
+import CategoryRespiration from './CategoryRespiration'
 import './conversation.css'
 import { ExplicableRule } from './Explicable'
-import CategoryRespiration from './CategoryRespiration'
-import { extractCategories } from '../../sites/publicodes/chart'
-import { sortBy } from 'ramda'
-import {
-	isApplicableQuestion as isWeeklyDietQuestion,
-	weeklyDietQuestionText,
-} from './select/SelectWeeklyDiet'
-import {
-	isApplicableQuestion as isDeviceQuestion,
-	questionText as devicesQuestionText,
-} from './select/SelectDevices'
-import styled, { css } from 'styled-components'
 import { CategoryLabel } from './UI'
 
 export type ConversationProps = {
@@ -148,10 +138,9 @@ export default function Conversation({
 			</div>
 		)
 
-	const questionText = isWeeklyDietQuestion(currentQuestion)
-		? weeklyDietQuestionText
-		: isDeviceQuestion(currentQuestion)
-		? devicesQuestionText
+	const mosaicQuestion = isMosaic(currentQuestion)
+	const questionText = mosaicQuestion
+		? mosaicQuestion.question
 		: rules[currentQuestion]?.rawNode?.question
 
 	const questionCategoryName = currentQuestion.split(' . ')[0],

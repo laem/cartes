@@ -8,12 +8,6 @@ import { situationSelector } from 'Selectors/simulationSelectors'
 import { updateSituation } from 'Actions/actions'
 import { Mosaic } from './UI'
 
-export const weeklyDietQuestionText =
-	'Choisissez les plats de vos midis et dîners pour une semaine type'
-
-export const isApplicableQuestion = (dottedName) =>
-	dottedName.includes('alimentation . plats') &&
-	dottedName.includes(' . nombre')
 // This is the number of possible answers in this very custom input component
 const chipsTotal = 14
 

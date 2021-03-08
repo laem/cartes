@@ -9,10 +9,6 @@ import { updateSituation } from 'Actions/actions'
 import { Mosaic } from './UI'
 import Checkbox from 'Components/ui/Checkbox'
 
-export const questionText = 'Quels appareils numériques possédez-vous ?'
-export const isApplicableQuestion = (dottedName) =>
-	dottedName.includes('numérique') && dottedName.includes(' . présent')
-
 export default function SelectWeeklyDiet({
 	name,
 	setFormValue,
