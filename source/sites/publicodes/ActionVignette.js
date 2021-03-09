@@ -95,6 +95,9 @@ export default ({ evaluation, total, rule, effort }) => {
 									div:first-child {
 										width: 6rem;
 									}
+									img {
+										font-size: 120%;
+									}
 								`}
 							>
 								<div>Difficulté&nbsp;</div>
@@ -123,7 +126,7 @@ const ActionValue = ({ total, nodeValue: rawValue, unit: rawUnit }) => {
 					border-radius: 0.3rem;
 					color: var(--textColor);
 					padding: 0.1rem 0.4rem;
-					font-weight: normal;
+					font-weight: bold;
 				}
 				display: flex;
 				justify-content: space-start;
