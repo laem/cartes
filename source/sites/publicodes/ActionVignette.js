@@ -80,12 +80,12 @@ export default ({ evaluation, total, rule, effort }) => {
 					`}
 				>
 					<h2>{title}</h2>
-					<div>
-						Difficulté&nbsp;
-						{effort && (
+					{effort && (
+						<div>
+							Difficulté&nbsp;
 							<span>{[...new Array(effort)].map((i) => emoji('💪'))}</span>
-						)}
-					</div>
+						</div>
+					)}
 					{nodeValue != null && <ActionValue {...{ total, nodeValue, unit }} />}
 				</div>
 			</motion.div>
