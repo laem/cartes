@@ -66,7 +66,7 @@ export default ({ evaluation, total, rule, effort }) => {
 						<div
 							css={`
 								font-size: 200%;
-								width: 30%;
+								width: 5rem;
 								margin-right: 1rem;
 								img {
 									margin-top: 0.4rem !important;
