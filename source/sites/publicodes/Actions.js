@@ -227,7 +227,12 @@ const ActionList = animated(({}) => {
 			/>
 			{mode === 'autonome' && (
 				<button onClick={() => setRadical(!radical)}>
-					Trié par : {radical ? "le plus d'impact" : "le moins d'impact"}
+					Trié par :{' '}
+					{radical ? (
+						<span>le plus d'impact {emoji('📉')}</span>
+					) : (
+						<span>le moins d'impact{emoji('📈')}</span>
+					)}
 				</button>
 			)}
 			{sortedActions.map((evaluation) => (
