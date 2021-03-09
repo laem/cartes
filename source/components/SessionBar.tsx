@@ -52,7 +52,8 @@ export default function SessionBar({ answerButtonOnly = false }) {
 	const engine = useEngine(objectifs)
 
 	const history = useHistory()
-	const location = useLocation()
+	const location = useLocation(),
+		path = location.pathname
 
 	const css = `
 			display: flex;
@@ -82,7 +83,7 @@ export default function SessionBar({ answerButtonOnly = false }) {
 			</div>
 		)
 
-	if (['/fin', '/actions'].includes(location.pathname))
+	if (path.includes('/fin') || path.includes('/actions'))
 		return (
 			<div css={css}>
 				{arePreviousAnswers ? (
