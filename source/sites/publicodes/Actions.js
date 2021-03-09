@@ -1,7 +1,7 @@
 import { setSimulationConfig } from 'Actions/actions'
+import { splitName } from 'Components/publicodesUtils'
 import SessionBar from 'Components/SessionBar'
 import { EngineContext } from 'Components/utils/EngineContext'
-import { motion } from 'framer-motion'
 import { utils } from 'publicodes'
 import { partition, sortBy, union } from 'ramda'
 import React, { useContext, useEffect, useState } from 'react'
@@ -12,20 +12,21 @@ import { Link, Route, Switch } from 'react-router-dom'
 import { animated } from 'react-spring'
 import { objectifsSelector } from 'Selectors/simulationSelectors'
 import tinygradient from 'tinygradient'
+import { setActionMode } from '../../actions/actions'
+import IllustratedButton from 'Components/IllustratedButton'
 import {
 	answeredQuestionsSelector,
 	configSelector,
 } from '../../selectors/simulationSelectors'
 import Action from './Action'
 import ActionPlus from './ActionPlus'
+import ActionVignette from './ActionVignette'
 import { extractCategories } from './chart'
-import { humanValueAndUnit } from './HumanWeight'
 import ListeActionPlus from './ListeActionPlus'
+import ModeChoice from './ModeChoice'
+import CategoryFilters from './CategoryFilters'
 
 const { encodeRuleName, decodeRuleName } = utils
-
-import { splitName } from 'Components/publicodesUtils'
-import { setActionMode } from '../../actions/actions'
 
 const gradient = tinygradient(['#0000ff', '#ff0000']),
 	colors = gradient.rgb(20)
@@ -58,92 +59,6 @@ export default ({}) => {
 				</Route>
 			</Switch>
 		</>
-	)
-}
-
-const IllustratedButton = ({ children, icon, to, onClick }) => (
-	<Link
-		to={to}
-		className="ui__ button plain"
-		css={`
-			margin: 0.6rem 0;
-			width: 100%;
-			text-transform: none !important;
-			img {
-				font-size: 200%;
-			}
-			a {
-				color: var(--textColor);
-				text-decoration: none;
-			}
-		`}
-		onClick={onClick}
-	>
-		<div
-			css={`
-				display: flex;
-				justify-content: flex-start;
-				align-items: center;
-				width: 100%;
-				> div {
-					margin-left: 1.6rem;
-					text-align: left;
-					small {
-						color: var(--textColor);
-					}
-				}
-			`}
-		>
-			{emoji(icon)}
-
-			{children}
-		</div>
-	</Link>
-)
-
-const ModeChoice = ({}) => {
-	const dispatch = useDispatch()
-
-	return (
-		<div
-			css={`
-				> div {
-					margin: 4rem 1rem;
-				}
-			`}
-		>
-			<div>
-				<h1>Passer à l'action</h1>
-				<p>Votre mission : réduire votre empreinte.</p>
-				<p>Comment voulez-vous procéder ?</p>
-			</div>
-			<div>
-				<IllustratedButton
-					icon="🐣"
-					to="/actions"
-					onClick={() => dispatch(setActionMode('guidé'))}
-				>
-					<div>
-						<div>Guidé</div>
-						<p>
-							<small>On vous propose une sélection graduelle de gestes.</small>
-						</p>
-					</div>
-				</IllustratedButton>
-				<IllustratedButton
-					to="/actions"
-					icon="🐓"
-					onClick={() => dispatch(setActionMode('autonome'))}
-				>
-					<div>
-						<div>Autonome</div>
-						<p>
-							<small>A vous de choisir vos gestes à la carte.</small>
-						</p>
-					</div>
-				</IllustratedButton>
-			</div>
-		</div>
 	)
 }
 
@@ -220,7 +135,7 @@ const ActionList = animated(({}) => {
 			<h1 css="margin: 1rem 0 .6rem;font-size: 160%">
 				Comment réduire mon empreinte ?
 			</h1>
-			<CategoryFilter
+			<CategoryFilters
 				categories={categories}
 				selected={category}
 				countByCategory={countByCategory}
@@ -236,7 +151,7 @@ const ActionList = animated(({}) => {
 				</button>
 			)}
 			{sortedActions.map((evaluation) => (
-				<MiniAction
+				<ActionVignette
 					key={evaluation.dottedName}
 					rule={rules[evaluation.dottedName]}
 					evaluation={evaluation}
@@ -257,184 +172,3 @@ const ActionList = animated(({}) => {
 		</div>
 	)
 })
-
-const MiniAction = ({ evaluation, total, rule }) => {
-	const { nodeValue, dottedName, title, unit } = evaluation
-	const { icônes: icons } = rule
-
-	const disabled = nodeValue === 0 || nodeValue === false
-
-	return (
-		<Link
-			css={`
-				${disabled
-					? `
-					img {
-					filter: grayscale(1);
-					}
-					color: var(--grayColor);
-					h2 {
-					  color: var(--grayColor);
-					}
-					opacity: 0.8;`
-					: ''}
-				text-decoration: none;
-				width: 100%;
-			`}
-			to={'/actions/' + encodeRuleName(dottedName)}
-		>
-			<motion.div
-				animate={{ scale: [0.85, 1] }}
-				transition={{ duration: 0.2, ease: 'easeIn' }}
-				className="ui__ card"
-				css={`
-					margin: 1rem auto;
-					border-radius: 0.6rem;
-					padding: 0.6rem;
-					display: flex;
-					justify-content: start;
-					align-items: center;
-
-					text-align: center;
-					font-size: 100%;
-					h2 {
-						font-size: 130%;
-						font-weight: normal;
-						margin: 1rem 0;
-						text-align: left;
-					}
-					> h2 > span > img {
-						margin-right: 0.4rem !important;
-					}
-				`}
-			>
-				{icons && (
-					<div
-						css={`
-							font-size: 250%;
-							width: 5rem;
-							margin-right: 1rem;
-							img {
-								margin-top: 0.8rem !important;
-							}
-						`}
-					>
-						{emoji(icons)}
-					</div>
-				)}
-				<div
-					css={`
-						display: flex;
-						flex-direction: column;
-						justify-content: space-between;
-						align-items: flex-start;
-					`}
-				>
-					<h2>{title}</h2>
-					{nodeValue != null && <ActionValue {...{ total, nodeValue, unit }} />}
-				</div>
-			</motion.div>
-		</Link>
-	)
-}
-
-const ActionValue = ({ total, nodeValue: rawValue, unit: rawUnit }) => {
-	const correctedValue = correctValue({ nodeValue: rawValue, unit: rawUnit })
-	const { unit, value } = humanValueAndUnit(correctedValue),
-		displayRelative = total
-
-	return (
-		<div
-			css={`
-				> span {
-					border-radius: 0.3rem;
-					padding: 0.1rem 0.3rem;
-				}
-				strong {
-					font-weight: bold;
-				}
-				font-size: 120%;
-				display: flex;
-			`}
-		>
-			<span
-				css={`
-					border: 1px solid var(--color);
-					background: var(--lighterColor);
-					min-width: 8rem;
-					margin-right: 0.3rem;
-				`}
-			>
-				{-value} {unit}
-				{displayRelative && (
-					<div>
-						<strong>{Math.round(100 * (value / total))}%</strong>
-					</div>
-				)}
-			</span>
-			<span css="font-size: 80%">
-				<div>de CO₂e / an</div>
-				{displayRelative && <div>de votre total</div>}
-			</span>
-		</div>
-	)
-}
-
-const CategoryFilter = ({ categories, selected, countByCategory }) => {
-	console.log(categories)
-	return (
-		<ul
-			css={`
-				display: flex;
-				flex-wrap: wrap;
-				list-style-type: none;
-				justify-content: center;
-				li {
-					padding: 0.1rem 0rem;
-					margin: 0.15rem 0.2rem;
-					border-radius: 0.2rem;
-				}
-				li button {
-					color: white;
-					font-weight: 500;
-				}
-			`}
-		>
-			{categories.map((category) => (
-				<li
-					css={`
-						background: ${category.color};
-						${selected === category.dottedName
-							? 'border: 3px solid var(--color)'
-							: ''}
-						${!countByCategory[category.dottedName] ? 'background: #ccc' : ''}
-					`}
-				>
-					<Link
-						to={
-							selected === category.dottedName
-								? '/actions'
-								: '/actions/catégorie/' + category.dottedName
-						}
-					>
-						<button>
-							{category.dottedName}{' '}
-							<span
-								css={`
-									background: white;
-									color: var(--color);
-									border-radius: 1rem;
-									width: 1rem;
-									margin-left: 0.2rem;
-									display: inline-block;
-								`}
-							>
-								{countByCategory[category.dottedName] || 0}
-							</span>
-						</button>
-					</Link>
-				</li>
-			))}
-		</ul>
-	)
-}
