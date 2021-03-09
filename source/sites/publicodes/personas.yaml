@@ -106,3 +106,20 @@
 
 - nom: Ermite rural
   icônes: 🚗🏡
+  data: 
+    alimentation . déchets . niveau d'engagement: "'en partie'"
+    alimentation . petit déjeuner . type: "'lait céréales'"
+    alimentation . lait . lait végétal: oui
+    alimentation . boisson . sucrées . litres:
+      valeur: 0
+      unité: l / semaine
+    alimentation . boisson . alcool . litres:
+      valeur: 2
+      unité: l / semaine
+    alimentation . boisson . eau en bouteille . affirmatif: oui
+    alimentation . plats . viande 2 . nombre: 8
+    alimentation . plats . viande 1 . nombre: 0
+    transport . voiture . km:
+      valeur: 7000
+      unité: km / an
+

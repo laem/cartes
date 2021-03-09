@@ -6,7 +6,7 @@ import {
 import Overlay from 'Components/Overlay'
 import { useEngine } from 'Components/utils/EngineContext'
 import { useNextQuestions } from 'Components/utils/useNextQuestion'
-import { EvaluatedNode, formatValue } from 'publicodes'
+import { EvaluatedNode, formatValue, serializeEvaluation } from 'publicodes'
 import emoji from 'react-easy-emoji'
 import { Trans, useTranslation } from 'react-i18next'
 import { useDispatch, useSelector } from 'react-redux'
@@ -50,6 +50,16 @@ export default function AnswerList({ onClose }: AnswerListProps) {
 			if (!(e.ctrlKey && e.key === 'c')) return
 			console.log('VOILA VOTRE SITUATION')
 			console.log(JSON.stringify(situation))
+			/* MARCHE PAS : 
+			console.log(
+				Object.fromEntries(
+					Object.entries(situation).map(([key, value]) => [
+						key,
+						serializeEvaluation(value),
+					])
+				)
+			)
+			*/
 			e.preventDefault()
 			return false
 		}
