@@ -141,7 +141,7 @@ const ActionValue = ({ total, nodeValue: rawValue, unit: rawUnit }) => {
 				<strong>
 					-&nbsp;{value} {unit}
 				</strong>{' '}
-				&nbsp;({relativeValue}&nbsp;%)
+				{total && <span>&nbsp;({relativeValue}&nbsp;%)</span>}
 			</div>
 		</div>
 	)
