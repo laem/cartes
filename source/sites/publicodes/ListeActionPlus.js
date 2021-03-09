@@ -47,6 +47,9 @@ export default () => {
 									flex-direction: column;
 									justify-content: space-evenly;
 									width: 12rem;
+									@media (max-width: 800px) {
+										width: 9rem;
+									}
 									height: 10rem;
 									img {
 										font-size: 150%;
