@@ -25,4 +25,4 @@ export default ({ nodeValue, color, completed }) => {
 	)
 }
 
-const Check = ({}) => <span>{emoji(' ✅️')}</span>
+const Check = ({}) => <span css="margin-left: .3rem">{emoji(' ✅')}</span>

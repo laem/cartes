@@ -52,7 +52,6 @@ export default ({ details, noText, noAnimation, noCompletion }) => {
 		)
 		.map(({ dottedName }) => dottedName)
 
-	console.log(categories)
 	if (!categories) return null
 
 	const empreinteMaximum = categories.reduce(

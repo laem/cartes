@@ -51,7 +51,7 @@ const deriveAnalogousPalettes = (hex: string) => {
 	return [
 		generateDarkenVariations(4, [(h - 45) % 360, 0.75 * s, l]),
 		generateDarkenVariations(4, [(h + 45) % 360, 0.75 * s, l]),
-		generateDarkenVariations(4, [(h + 90) % 360, 0.75 * s, l])
+		generateDarkenVariations(4, [(h + 90) % 360, 0.75 * s, l]),
 	]
 }
 
@@ -60,8 +60,8 @@ const generateTheme = (themeColor?: string) => {
 		color = themeColor || '#5758BB',
 		lightColor = lightenColor(color, 10),
 		darkColor = lightenColor(color, -20),
-		lighterColor = lightenColor(color, 45),
-		lightestColor = lightenColor(color, 100),
+		lighterColor = lightenColor(color, 39),
+		lightestColor = lightenColor(color, 42),
 		darkestColor = lightenColor(color, -100),
 		grayColor = '#00000099',
 		textColor = findContrastedTextColor(color, true), // the 'simple' version feels better...
