@@ -7,7 +7,7 @@ import emoji from 'react-easy-emoji'
 import { correctValue } from './Actions'
 import { humanValueAndUnit } from './HumanWeight'
 
-export default ({ evaluation, total, rule }) => {
+export default ({ evaluation, total, rule, effort }) => {
 	const { nodeValue, dottedName, title, unit } = evaluation
 	const { icônes: icons } = rule
 
@@ -80,6 +80,12 @@ export default ({ evaluation, total, rule }) => {
 					`}
 				>
 					<h2>{title}</h2>
+					<div>
+						Difficulté&nbsp;
+						{effort && (
+							<span>{[...new Array(effort)].map((i) => emoji('💪'))}</span>
+						)}
+					</div>
 					{nodeValue != null && <ActionValue {...{ total, nodeValue, unit }} />}
 				</div>
 			</motion.div>

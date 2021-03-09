@@ -124,10 +124,10 @@ const ActionList = animated(({}) => {
 			category ? splitName(action.dottedName)[0] === category : true
 		)
 
-	const effortScale = { modéré: 1, conséquent: 2, faible: 0 }
+	const effortScale = { modéré: 2, conséquent: 3, faible: 1, undefined: 0 }
 	const sortedActions =
 		mode === 'guidé'
-			? sortBy((a) => effortScale[rules[a.dottedName]])(
+			? sortBy((a) => effortScale[rules[a.dottedName].effort])(
 					actions.filter((a) => rules[a.dottedName].effort != null)
 			  )
 			: sortBy((a) => (radical ? -1 : 1) * correctValue(a))(actions)
@@ -173,6 +173,9 @@ const ActionList = animated(({}) => {
 					rule={rules[evaluation.dottedName]}
 					evaluation={evaluation}
 					total={bilans.length ? bilans[0].nodeValue : null}
+					effort={
+						mode === 'guidé' && effortScale[rules[evaluation.dottedName].effort]
+					}
 				/>
 			))}
 			<IllustratedButton to={'/actions/plus'} icon="📚">
