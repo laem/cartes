@@ -40,16 +40,13 @@ export default ({ evaluation, total, rule, effort }) => {
 					margin: 1rem auto;
 					border-radius: 0.6rem;
 					padding: 0.6rem;
-					display: flex;
-					justify-content: start;
-					align-items: center;
 
 					text-align: center;
 					font-size: 100%;
 					h2 {
 						font-size: 130%;
 						font-weight: normal;
-						margin: 1rem 0;
+						margin: 0.5rem 0;
 						text-align: left;
 					}
 					> h2 > span > img {
@@ -57,43 +54,57 @@ export default ({ evaluation, total, rule, effort }) => {
 					}
 				`}
 			>
-				{icons && (
-					<div
-						css={`
-							font-size: 250%;
-							width: 5rem;
-							margin-right: 1rem;
-							img {
-								margin-top: 0.8rem !important;
-							}
-						`}
-					>
-						{emoji(icons)}
-					</div>
-				)}
+				<h2>{title}</h2>
 				<div
 					css={`
 						display: flex;
-						flex-direction: column;
-						justify-content: space-between;
-						align-items: flex-start;
-						width: 75%;
+						justify-content: start;
+						align-items: center;
 					`}
 				>
-					<h2>{title}</h2>
-					{effort && (
+					{icons && (
 						<div
 							css={`
-								display: flex;
-								justify-content: space-between;
-								width: 100%;
+								font-size: 200%;
+								width: 30%;
+								margin-right: 1rem;
+								img {
+									margin-top: 0.4rem !important;
+								}
 							`}
 						>
-							Difficulté&nbsp;
-							<span>{[...new Array(effort)].map((i) => emoji('💪'))}</span>
+							{emoji(icons)}
 						</div>
 					)}
-					{nodeValue != null && <ActionValue {...{ total, nodeValue, unit }} />}
+					<div
+						css={`
+							display: flex;
+							flex-direction: column;
+							justify-content: space-between;
+							align-items: flex-start;
+							width: 75%;
+							max-width: 16rem;
+						`}
+					>
+						{effort && (
+							<div
+								css={`
+									display: flex;
+									justify-content: space-start;
+									width: 100%;
+									div:first-child {
+										width: 6rem;
+									}
+								`}
+							>
+								<div>Difficulté&nbsp;</div>
+								<span>{[...new Array(effort)].map((i) => emoji('💪'))}</span>
+							</div>
+						)}
+						{nodeValue != null && (
+							<ActionValue {...{ total, nodeValue, unit }} />
+						)}
+					</div>
 				</div>
 			</motion.div>
 		</Link>
@@ -108,19 +119,27 @@ const ActionValue = ({ total, nodeValue: rawValue, unit: rawUnit }) => {
 		<div
 			css={`
 				strong {
-					font-weight: bold;
+					    background: var(--lightColor);
+    border-radius: .3rem;
+    color: var(--textColor);
+    padding: .1rem 0.4rem;
+    font-weight: normal;
+}
 				}
 				display: flex;
-				justify-content: space-between;
+				justify-content: space-start;
 				width: 100%;
+				div:first-child {
+					width: 6rem;
+				}
 			`}
 		>
 			<div>Impact&nbsp;</div>
 			<div>
 				<strong>
-					{-value} {unit}
+					-&nbsp;{value} {unit}
 				</strong>{' '}
-				&nbsp;({relativeValue} %)
+				&nbsp;({relativeValue}&nbsp;%)
 			</div>
 		</div>
 	)
