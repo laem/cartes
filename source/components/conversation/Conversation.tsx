@@ -141,6 +141,10 @@ export default function Conversation({
 			(a) => a.split(' . ')[0] === questionCategory.dottedName
 		) === undefined
 
+	const hasDescription =
+		((mosaicQuestion && mosaicQuestion.description) ||
+			rules[currentQuestion].rawNode.description) !== null
+
 	return orderByCategories &&
 		isCategoryFirstQuestion &&
 		!dismissedRespirations.includes(questionCategory.dottedName) ? (
@@ -168,7 +172,15 @@ export default function Conversation({
 				<Animate.fadeIn>
 					<div className="step">
 						<h3>
-							{questionText} <ExplicableRule dottedName={currentQuestion} />
+							{questionText}{' '}
+							{hasDescription && (
+								<ExplicableRule
+									dottedName={
+										(mosaicQuestion && mosaicQuestion.dottedName) ||
+										currentQuestion
+									}
+								/>
+							)}
 						</h3>
 						<fieldset>
 							<RuleInput

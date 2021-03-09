@@ -8,19 +8,23 @@ import { References } from 'publicodes-react'
 import { Trans } from 'react-i18next'
 import './Aide.css'
 import { EngineContext } from 'Components/utils/EngineContext'
+import mosaicQuestions from './mosaicQuestions'
 
 export default function Aide() {
 	const explained = useSelector((state: RootState) => state.explainedVariable)
-	const engine = useContext(EngineContext)
+	const rules = useSelector((state) => state.rules)
+
 	const dispatch = useDispatch()
 
 	const stopExplaining = () => dispatch(explainVariable())
 
 	if (!explained) return null
 
-	const rule = engine.getRule(explained),
-		text = rule.rawNode.description,
-		refs = rule.rawNode.références
+	const rule =
+			rules[explained] ||
+			mosaicQuestions.find((question) => question.dottedName === explained),
+		text = rule.description,
+		refs = rule.références
 
 	return (
 		<Overlay onClose={stopExplaining}>
