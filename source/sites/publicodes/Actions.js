@@ -112,11 +112,28 @@ const ActionList = animated(({}) => {
 
 	const [bilans, actions] = partition((t) => t.dottedName === 'bilan', targets)
 
-	const sortedActions = sortBy((a) => (radical ? -1 : 1) * correctValue(a))(
-		actions
-	).filter((action) =>
-		category ? splitName(action.dottedName)[0] === category : true
+	console.log(
+		'ACTIONS',
+		Object.entries(rules).filter(([dottedName]) =>
+			actions.find((action) => action.dottedName === dottedName)
+		)
 	)
+
+	const filterByCategory = (actions) =>
+		actions.filter((action) =>
+			category ? splitName(action.dottedName)[0] === category : true
+		)
+
+	const effortScale = { modéré: 1, conséquent: 2, faible: 0 }
+	const sortedActions =
+		mode === 'guidé'
+			? sortBy((a) => effortScale[rules[a.dottedName]])(
+					actions.filter((a) => rules[a.dottedName].effort != null)
+			  )
+			: sortBy((a) => (radical ? -1 : 1) * correctValue(a))(actions)
+
+	const finalActions = filterByCategory(sortedActions)
+
 	const categories = extractCategories(rules, engine)
 	const countByCategory = actions.reduce((memo, next) => {
 		const category = splitName(next.dottedName)[0]
@@ -150,7 +167,7 @@ const ActionList = animated(({}) => {
 					)}
 				</button>
 			)}
-			{sortedActions.map((evaluation) => (
+			{finalActions.map((evaluation) => (
 				<ActionVignette
 					key={evaluation.dottedName}
 					rule={rules[evaluation.dottedName]}
