@@ -38,11 +38,15 @@ export default ({ children, rulesURL, dataBranch }) => {
 	useEffect(() => {
 		if (process.env.NODE_ENV === 'development' && !dataBranch) {
 			// Rules are stored in nested yaml files
-			const req = require.context('../../ecolab-data/data/', true, /\.(yaml)$/)
+			const req = require.context(
+				'../../nosgestesclimat/data/',
+				true,
+				/\.(yaml)$/
+			)
 
 			// Bigger rule explanations are stored in nested .md files
 			const reqPlus = require.context(
-				'raw-loader!../../ecolab-data/data/actions/plus/',
+				'raw-loader!../../nosgestesclimat/data/actions/plus/',
 				true,
 				/\.(md)$/
 			)
