@@ -120,7 +120,7 @@ const ActionValue = ({ total, nodeValue: rawValue, unit: rawUnit }) => {
 				<strong>
 					{-value} {unit}
 				</strong>{' '}
-				<span css="font-size: 80%">de CO₂e / an</span>&nbsp;({relativeValue} %)
+				&nbsp;({relativeValue} %)
 			</div>
 		</div>
 	)

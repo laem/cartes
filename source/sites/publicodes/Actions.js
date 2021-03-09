@@ -149,7 +149,6 @@ const ActionList = animated(({}) => {
 			<h1 css="margin: 1rem 0 .6rem;font-size: 160%">
 				Comment réduire mon empreinte ?
 			</h1>
-
 			<Link
 				to="/actions/mode"
 				css="margin-bottom: .8rem; display: inline-block"
@@ -182,6 +181,7 @@ const ActionList = animated(({}) => {
 					}
 				/>
 			))}
+			<div css="font-size: 100%; text-align: center">en CO₂e / an</div>
 			<IllustratedButton to={'/actions/plus'} icon="📚">
 				<div>
 					<div>Comprendre les actions</div>
