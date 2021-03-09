@@ -32,11 +32,8 @@ const gradient = tinygradient(['#0000ff', '#ff0000']),
 	colors = gradient.rgb(20)
 
 export default ({}) => {
-	const mode = useSelector((state) => state.actionMode)
-
 	return (
 		<>
-			<Link to="/actions/mode">Mode {mode}</Link>
 			<Switch>
 				<Route path="/actions/mode">
 					<ModeChoice />
@@ -143,15 +140,22 @@ const ActionList = animated(({}) => {
 
 	return (
 		<div css="padding: 0 .3rem 1rem; max-width: 600px; margin: 1rem auto;">
-			<SessionBar />
 			{!answeredQuestions.length && (
 				<p css="line-height: 1.4rem; text-align: center">
 					{emoji('🧮')}&nbsp; Pour personnaliser ces propositions
 				</p>
 			)}
+			<SessionBar />
 			<h1 css="margin: 1rem 0 .6rem;font-size: 160%">
 				Comment réduire mon empreinte ?
 			</h1>
+
+			<Link
+				to="/actions/mode"
+				css="margin-bottom: .8rem; display: inline-block"
+			>
+				Mode {mode}
+			</Link>
 			<CategoryFilters
 				categories={categories}
 				selected={category}
