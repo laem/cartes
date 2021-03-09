@@ -119,12 +119,11 @@ const ActionValue = ({ total, nodeValue: rawValue, unit: rawUnit }) => {
 		<div
 			css={`
 				strong {
-					    background: var(--lightColor);
-    border-radius: .3rem;
-    color: var(--textColor);
-    padding: .1rem 0.4rem;
-    font-weight: normal;
-}
+					background: var(--lightColor);
+					border-radius: 0.3rem;
+					color: var(--textColor);
+					padding: 0.1rem 0.4rem;
+					font-weight: normal;
 				}
 				display: flex;
 				justify-content: space-start;
