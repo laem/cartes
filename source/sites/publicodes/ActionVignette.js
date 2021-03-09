@@ -122,7 +122,7 @@ const ActionValue = ({ total, nodeValue: rawValue, unit: rawUnit }) => {
 				{-value} {unit}
 				{displayRelative && (
 					<div>
-						<strong>{Math.round(100 * (value / total))}%</strong>
+						<strong>{Math.round(100 * (correctedValue / total))}%</strong>
 					</div>
 				)}
 			</span>
