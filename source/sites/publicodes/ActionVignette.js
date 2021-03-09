@@ -77,11 +77,18 @@ export default ({ evaluation, total, rule, effort }) => {
 						flex-direction: column;
 						justify-content: space-between;
 						align-items: flex-start;
+						width: 75%;
 					`}
 				>
 					<h2>{title}</h2>
 					{effort && (
-						<div>
+						<div
+							css={`
+								display: flex;
+								justify-content: space-between;
+								width: 100%;
+							`}
+						>
 							Difficulté&nbsp;
 							<span>{[...new Array(effort)].map((i) => emoji('💪'))}</span>
 						</div>
@@ -95,41 +102,26 @@ export default ({ evaluation, total, rule, effort }) => {
 const ActionValue = ({ total, nodeValue: rawValue, unit: rawUnit }) => {
 	const correctedValue = correctValue({ nodeValue: rawValue, unit: rawUnit })
 	const { unit, value } = humanValueAndUnit(correctedValue),
-		displayRelative = total
+		relativeValue = Math.round(100 * (correctedValue / total))
 
 	return (
 		<div
 			css={`
-				> span {
-					border-radius: 0.3rem;
-					padding: 0.1rem 0.3rem;
-				}
 				strong {
 					font-weight: bold;
 				}
-				font-size: 120%;
 				display: flex;
+				justify-content: space-between;
+				width: 100%;
 			`}
 		>
-			<span
-				css={`
-					border: 1px solid var(--color);
-					background: var(--lighterColor);
-					min-width: 8rem;
-					margin-right: 0.3rem;
-				`}
-			>
-				{-value} {unit}
-				{displayRelative && (
-					<div>
-						<strong>{Math.round(100 * (correctedValue / total))}%</strong>
-					</div>
-				)}
-			</span>
-			<span css="font-size: 80%">
-				<div>de CO₂e / an</div>
-				{displayRelative && <div>de votre total</div>}
-			</span>
+			<div>Impact&nbsp;</div>
+			<div>
+				<strong>
+					{-value} {unit}
+				</strong>{' '}
+				<span css="font-size: 80%">de CO₂e / an</span>&nbsp;({relativeValue} %)
+			</div>
 		</div>
 	)
 }
