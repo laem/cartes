@@ -10,7 +10,7 @@ export const humanWeight = (v) => {
 			? [v * 1000, 'g']
 			: v < 1000
 			? [v, 'kg']
-			: [v / 1000, 'tonnes']
+			: [v / 1000, v > 2000 ? 'tonnes' : 'tonne']
 	return [raw, unit]
 }
 export default ({ nodeValue }) => {
