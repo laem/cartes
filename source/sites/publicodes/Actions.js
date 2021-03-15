@@ -181,7 +181,9 @@ const ActionList = animated(({}) => {
 					}
 				/>
 			))}
-			<div css="font-size: 100%; text-align: center">en CO₂e / an</div>
+			<div css="font-size: 100%; text-align: center">
+				<em>en CO₂e / an et proportion de votre total</em>
+			</div>
 			<IllustratedButton to={'/actions/plus'} icon="📚">
 				<div>
 					<div>Comprendre les actions</div>
