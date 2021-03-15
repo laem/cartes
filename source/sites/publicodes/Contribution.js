@@ -135,8 +135,6 @@ ${fromLocation ? `Depuis la page : \`${fromLocation}\`` : ''}
 > Ce ticket a été créé automatiquement par notre robot depuis notre [page de contribution](https://nosgestesclimat.fr/contribuer).
 
 									`
-								console.log(fromLocation, augmentedComment)
-								return null
 								createIssue(sujet, augmentedComment, setURL, disableButton)
 							}}
 						>
