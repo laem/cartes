@@ -1,8 +1,9 @@
-import {toPairs} from 'ramda'
-import React, {useState} from 'react'
+import { toPairs } from 'ramda'
+import React, { useState } from 'react'
 import emoji from 'react-easy-emoji'
-import {Markdown} from 'Components/utils/markdown'
+import { Markdown } from 'Components/utils/markdown'
 import FAQ from 'raw-loader!./FAQ.md'
+import { useLocation } from 'react-router-dom'
 
 let formStyle = `
 label {
@@ -31,10 +32,15 @@ let createIssue = (title, body, setURL, disableButton) => {
 
 	fetch(
 		'https://publicodes.netlify.app/.netlify/functions/createIssue?' +
-		toPairs({repo: 'betagouv/ecolab-data', title, body})
-			.map(([k, v]) => k + '=' + encodeURIComponent(v))
-			.join('&'),
-		{mode: 'cors'}
+			toPairs({
+				repo: 'datagir/nosgestesclimat',
+				title,
+				body,
+				labels: ['contribution'],
+			})
+				.map(([k, v]) => k + '=' + encodeURIComponent(v))
+				.join('&'),
+		{ mode: 'cors' }
 	)
 		.then((response) => response.json())
 		.then((json) => {
@@ -42,11 +48,14 @@ let createIssue = (title, body, setURL, disableButton) => {
 			disableButton(false)
 		})
 }
+function useQuery() {
+	return new URLSearchParams(useLocation().search)
+}
 
-export default ({match}) => {
-	let input = match.params.input
-	let [sujet, setSujet] = useState(input)
-	let [source, setSource] = useState('')
+export default ({}) => {
+	let fromLocation = useQuery().get('fromLocation')
+	let [sujet, setSujet] = useState('')
+	let [comment, setComment] = useState('')
 	let [URL, setURL] = useState(null)
 	let [buttonDisabled, disableButton] = useState(false)
 
@@ -72,60 +81,73 @@ export default ({match}) => {
 			<p>
 				{emoji('➡ ')}Sinon, laissez-nous un message via le formulaire suivant.
 			</p>
-			{!URL ? (
-				<form css={formStyle}>
-					<label css="color: var(--color)">
-						Le titre bref de votre question, remarque, correction
-						<input
-							value={sujet}
-							onChange={(e) => setSujet(e.target.value)}
-							type="text"
-							name="sujet"
-							required
-						/>
-					</label>
-					<label css="color: var(--color)">
-						<p>La description complète de votre remarque</p>
+			<br />
+			<div className="ui__ card">
+				<p>{emoji('✉️🐦')}</p>
+				{!URL ? (
+					<form css={formStyle}>
+						<label css="color: var(--color)">
+							Le titre bref de votre question, remarque, correction
+							<input
+								value={sujet}
+								onChange={(e) => setSujet(e.target.value)}
+								type="text"
+								name="sujet"
+								required
+							/>
+						</label>
+						<label css="color: var(--color)">
+							<p>La description complète de votre remarque</p>
+							<p>
+								<em>
+									N'hésitez pas à inclure des chiffres, des sources, des
+									articles de presse, une ébauche de calcul par vos soins etc.
+								</em>
+							</p>
+							<textarea
+								value={comment}
+								onChange={(e) => setComment(e.target.value)}
+								name="comment"
+								required
+							/>
+						</label>
 						<p>
 							<em>
-								N'hésitez pas à inclure des chiffres, des sources, des articles
-								de presse, une ébauche de calcul par vos soins etc.
+								Cette contribution sera publique : n'y mettez pas d'informations
+								sensibles
 							</em>
 						</p>
-						<textarea
-							value={source}
-							onChange={(e) => setSource(e.target.value)}
-							name="source"
-							required
-						/>
-					</label>
-					<p>
-						<em>
-							Cette contribution sera publique : n'y mettez pas d'informations
-							sensibles
-						</em>
-					</p>
-					<button
-						className="ui__ button"
-						type="submit"
-						disabled={buttonDisabled}
-						onClick={(e) => {
-							if (buttonDisabled) return null
+						<button
+							className="ui__ button"
+							type="submit"
+							disabled={buttonDisabled}
+							onClick={(e) => {
+								if (buttonDisabled) return null
 
-							e.preventDefault()
-							disableButton(true)
-							createIssue(sujet, source, setURL, disableButton)
-						}}
-					>
-						Valider
-					</button>
-				</form>
-			) : (
+								e.preventDefault()
+								disableButton(true)
+								const augmentedComment =
+									comment +
+									`
+
+${fromLocation ? `Depuis la page : \`${fromLocation}\`` : ''}
+
+> Ce ticket a été créé automatiquement par notre robot depuis notre [page de contribution](https://nosgestesclimat.fr/contribuer).
+
+									`
+								createIssue(sujet, augmentedComment, setURL, disableButton)
+							}}
+						>
+							Valider
+						</button>
+					</form>
+				) : (
 					<p>
 						Merci {emoji('😍')} ! Suivez l'avancement de votre suggestion en
-					cliquant sur <a href={URL}>ce lien</a>.
+						cliquant sur <a href={URL}>ce lien</a>.
 					</p>
 				)}
+			</div>
 		</div>
 	)
 }
