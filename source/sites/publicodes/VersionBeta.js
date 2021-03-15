@@ -11,7 +11,9 @@ export default () => {
 	return (
 		<div css=" text-align: center; color: black; ">
 			Une idée, un problème ? {emoji('📮')}{' '}
-			<Link to="/contribuer">Faites-nous un retour !</Link>
+			<Link to={'/contribuer?fromLocation=' + window.location}>
+				Faites-nous un retour !
+			</Link>
 		</div>
 	)
 }
