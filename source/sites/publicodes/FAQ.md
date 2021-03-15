@@ -5,6 +5,7 @@ Vous trouverez sur ce document la réponse aux questions les plus fréquentes. S
 Bonne lecture !
 
 ## GENERAL
+
 <h3 id="foyer">Je ne comprends pas si le calcul est fait par foyer ou par individu</h3>
 
 Le calculateur Nos GEStes Climat est un calculateur **d’empreinte carbone individuelle.**
@@ -19,8 +20,9 @@ Vous pouvez donc répondre simplement aux questions sans vous préoccuper d’un
 
 L’équipe de Nos GEStes Climat travaille à développer une approche « foyer » du calculateur afin de pouvoir estimer l’empreinte carbone de sa famille.
 
-##  SERVICES PUBLICS
-### A la fin de mon calcul il y a un poste « service publique », qu’est-ce que c’est ?</h3>
+## SERVICES PUBLICS
+
+### A la fin de mon calcul il y a un poste « service public », qu’est-ce que c’est ?</h3>
 
 Ce poste représente l’empreinte carbone des services publics français ramené à une échelle individuelle. C’est-à-dire que l’on répartit l’impact des services entre les 66 millions de français.
 
@@ -41,6 +43,7 @@ Cette transition ne peut se penser seulement à l’échelle individuelle. Elle 
 C’est d’ailleurs tout l’objet de Nos GEStes Climat qui œuvre à sensibiliser et faire prendre conscience des enjeux !
 
 ## CONSOMMATION
+
 ### J’achète souvent des biens durables et écologiques mais l’outil ne semble pas faire la différence. Comment cela se fait-il ?
 
 C’est une remarque qui revient souvent quand il s’agit d’évaluer son empreinte carbone.
@@ -56,6 +59,7 @@ Ces ratios monétaires permettent d’estimer le contenu carbone d’un produit 
 Nos GEStes Climat a fait le choix de focaliser ses questions sur les produits achetés neufs car la différence d’impact avec les produits d’occasion est très significative. La phase de production du produit, qui représente très souvent la majorité des impacts, n’est pas prise en compte pour les produits d’occasion. Quant aux différences d’impacts entre les produits neufs (typiquement entre un jean issu de la fast-fashion et un jean éco-conçu), Nos GEStes Climat choisit, une fois encore, de rester simple.
 
 ## ALIMENTATION
+
 ### Je consomme bio mais je ne vois pas de questions spécifiques à ce sujet ?
 
 **Attention : manger bio ne réduit pas, en soit, l’empreinte carbone.**
@@ -89,27 +93,28 @@ Néanmoins, Nos GEStes Climat est un outil libre d’accès où la contribution 
 On vous explique comment [ici](https://github.com/betagouv/ecolab-data/issues/185).
 
 ## TRANSPORT
+
 ### Dois-je renseigner mes déplacements pro ?
 
 Non.
 
-Nos GEStes Climat est dédié à l’évaluation de **l’empreinte carbone individuelle**. Les déplacements que vous effectuez dans le cadre de votre travail comme livrer un client, se rendre à une réunion, prendre l’avion pour assister à 3 jours de séminaire, etc. ne sont pas à prendre en compte quand vous répondez aux questions du calculateur. 
+Nos GEStes Climat est dédié à l’évaluation de **l’empreinte carbone individuelle**. Les déplacements que vous effectuez dans le cadre de votre travail comme livrer un client, se rendre à une réunion, prendre l’avion pour assister à 3 jours de séminaire, etc. ne sont pas à prendre en compte quand vous répondez aux questions du calculateur.
 
 Ces déplacements relevant de l’activité professionnelle seront comptabilisés dans l’empreinte carbone de votre organisation (entreprise, collectivité, association, etc). On parle alors de bilans d’émissions de Gaz à Effet de Serre (BEGES).
 
-**Néanmoins, les déplacements réguliers domicile-travail vous sont demandés.** Pourquoi ? Car, à titre personnel, vous avez la main sur le type de transports que vous choisissez d’utiliser et sur l’endroit où vous habitez. 
+**Néanmoins, les déplacements réguliers domicile-travail vous sont demandés.** Pourquoi ? Car, à titre personnel, vous avez la main sur le type de transports que vous choisissez d’utiliser et sur l’endroit où vous habitez.
 
 Cependant la réalité est souvent bien différente et loin de nous la volonté de culpabiliser ceux dont la mobilité quotidienne est centrée autour de la voiture car ils sont éloignés de leur lieu de travail. Même si certains choix peuvent être questionnés, beaucoup d’entre nous sont, en effet, contraints à la voiture individuelle, faute d’alternatives sérieuses disponibles (transports en commun, télétravail, covoiturage, etc.).
 
 ### Je n'ai pas de voiture mais on me demande quand même toutes ses informations …
 
-Dès que vous renseignez un kilométrage parcouru en voiture plus grand que 0, l’outil cherche à vous « appliquer » une part de l'amortissement de la construction de la voiture que vous utilisez. 
+Dès que vous renseignez un kilométrage parcouru en voiture plus grand que 0, l’outil cherche à vous « appliquer » une part de l'amortissement de la construction de la voiture que vous utilisez.
 
 Si vous avez des suggestions à faire quant à cette limite et de manière générale sur l’outil, n’hésitez pas à contribuer. Nos GEStes Climat est un outil libre d’accès où la contribution de tous est possible et souhaitée. On vous explique comment [ici](https://github.com/betagouv/ecolab-data/issues/185).
 
 ### Mais qu’est-ce que l’amortissement ?
 
-La fabrication d'une voiture est un process industriel loin d’être anodin et qui contribue à émettre plusieurs tonnes de CO2e. Pour ne pas créer de fortes variations de l’empreinte, notamment les années où l’on achète un nouveau véhicule, cet impact est réparti sur la durée de vie du véhicule. Cela rend possible la comparaison de votre empreinte carbone d’année en année. 
+La fabrication d'une voiture est un process industriel loin d’être anodin et qui contribue à émettre plusieurs tonnes de CO2e. Pour ne pas créer de fortes variations de l’empreinte, notamment les années où l’on achète un nouveau véhicule, cet impact est réparti sur la durée de vie du véhicule. Cela rend possible la comparaison de votre empreinte carbone d’année en année.
 
 Dans le cas où vous possédez votre propre voiture, l’ensemble de l’impact de la construction vous est attribué. L’amortissement est alors linéaire, c’est-à-dire réparti à valeur égale d’année en année. Nous posons la question de l’âge de votre voiture afin de savoir quelle part de l’amortissement il vous reste à faire. La durée d’amortissement d’une voiture, considérée par Nos Gestes Climat est de 10 ans. Tout véhicule plus ancien n’est donc pas considéré (et automatiquement à émissions nulles).
 
@@ -154,11 +159,12 @@ Néanmoins, souscrire un contrat d’électricité « verte » est un bon moyen 
 Pour aller plus loin : http://changeonsdenergie.com
 
 ## NUMERIQUE
+
 ### Pourquoi me demande-t-on l’âge de mes équipements électroniques ?
 
 A l’instar de ce qui est fait pour la voiture, un amortissement est réalisé pour les produits électroniques dont la fabrication à un très fort impact sur le climat (notamment à cause de la phase d’extraction des matières premières).
 
-Nous vous demandons donc l’âge du produit afin de connaître la durée restant à amortir. Consultez la question spécifique de l’amortissement pour comprendre de quoi il s’agit. 
+Nous vous demandons donc l’âge du produit afin de connaître la durée restant à amortir. Consultez la question spécifique de l’amortissement pour comprendre de quoi il s’agit.
 
 ### J'ai entendu dire que le numérique avait un gros impact sur le climat, le simulateur semble me dire le contraire…
 
