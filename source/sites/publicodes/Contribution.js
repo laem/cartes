@@ -32,7 +32,7 @@ let createIssue = (title, body, setURL, disableButton) => {
 
 	fetch(
 		'https://publicodes.netlify.app/.netlify/functions/createIssue?' +
-			toPairs({ repo: 'betagouv/ecolab-data', title, body })
+			toPairs({ repo: 'datagir/nosgestesclimat', title, body })
 				.map(([k, v]) => k + '=' + encodeURIComponent(v))
 				.join('&'),
 		{ mode: 'cors' }
