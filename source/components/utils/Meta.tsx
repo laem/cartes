@@ -14,7 +14,7 @@ export default function Meta({
 	description,
 	ogDescription,
 	ogTitle,
-	ogImage
+	ogImage,
 }: PropType) {
 	const { pathname } = useLocation()
 	return (
@@ -24,16 +24,7 @@ export default function Meta({
 			<meta property="og:type" content="website" />
 			<meta property="og:title" content={ogTitle ?? title} />
 			<meta property="og:description" content={ogDescription ?? description} />
-			{ogImage && (
-				<meta
-					property="og:image"
-					content={
-						ogImage.startsWith('http')
-							? ogImage
-							: window.location.host + pathname + '/' + ogImage
-					}
-				/>
-			)}
+			{ogImage && <meta property="og:image" content={ogImage} />}
 		</Helmet>
 	)
 }

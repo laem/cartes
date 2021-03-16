@@ -12,6 +12,7 @@ import StartingBlock from './images/starting block.svg'
 import SessionBar from 'Components/SessionBar'
 import Chart from './chart'
 import { Link } from 'react-router-dom'
+import Meta from '../../components/utils/Meta'
 
 const gradient = tinygradient([
 		'#78e08f',
@@ -66,10 +67,20 @@ export default ({}) => {
 const AnimatedDiv = animated(({ score, value, details }) => {
 	const backgroundColor = getBackgroundColor(value).toHexString(),
 		backgroundColor2 = getBackgroundColor(value + 2000).toHexString(),
-		textColor = findContrastedTextColor(backgroundColor, true)
+		textColor = findContrastedTextColor(backgroundColor, true),
+		roundedValue = Math.round(value / 1000)
 
 	return (
 		<div css="padding: 0 .3rem 1rem; max-width: 600px; margin: 0 auto;">
+			<Meta
+				title="Nos Gestes Climat"
+				description={`Mon empreinte climat est de ${roundedValue}. Mesure la tienne !`}
+				ogImage={
+					window.location.origin +
+					'/.netlify/functions/ending-screenshot?pageToScreenshot=' +
+					window.location
+				}
+			/>
 			<SessionBar />
 			<motion.div
 				animate={{ scale: [0.85, 1] }}
@@ -101,7 +112,7 @@ const AnimatedDiv = animated(({ score, value, details }) => {
 						<div>
 							<div css="font-weight: bold; font-size: 280%; margin-bottom: .3rem">
 								<span css="width: 3.6rem; text-align: right; display: inline-block">
-									{Math.round(value / 1000)}
+									{roundedValue}
 								</span>{' '}
 								tonnes
 							</div>
