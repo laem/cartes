@@ -1,5 +1,8 @@
 const chromium = require('chrome-aws-lambda')
 
+function timeout(ms) {
+	return new Promise((resolve) => setTimeout(resolve, ms))
+}
 exports.handler = async (event, context) => {
 	const pageToScreenshot = event.queryStringParameters.pageToScreenshot
 
@@ -14,15 +17,18 @@ exports.handler = async (event, context) => {
 
 	await page.goto(pageToScreenshot)
 
-	const screenshot = await page.screenshot({ encoding: 'binary' })
+	const element = await page.$('#shareImage')
+
+	await timeout(2000)
+
+	const b64string = await element.screenshot({ encoding: 'base64' })
 
 	await browser.close()
 
 	return {
 		statusCode: 200,
-		body: JSON.stringify({
-			message: `Complete screenshot of ${pageToScreenshot}`,
-			buffer: screenshot,
-		}),
+		headers: { 'Content-Type': 'image/png' },
+		body: b64string.toString(),
+		isBase64Encoded: true,
 	}
 }

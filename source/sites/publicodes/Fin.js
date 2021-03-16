@@ -75,6 +75,7 @@ const AnimatedDiv = animated(({ score, value, details }) => {
 				animate={{ scale: [0.85, 1] }}
 				transition={{ duration: 0.2, ease: 'easeIn' }}
 				className=""
+				id="fin"
 				css={`
 					background: ${backgroundColor};
 					background: linear-gradient(
@@ -94,68 +95,70 @@ const AnimatedDiv = animated(({ score, value, details }) => {
 					font-size: 110%;
 				`}
 			>
-				<div css="display: flex; align-items: center; justify-content: center">
-					<img src={BallonGES} css="height: 10rem" />
-					<div>
-						<div css="font-weight: bold; font-size: 280%; margin-bottom: .3rem">
-							<span css="width: 3.6rem; text-align: right; display: inline-block">
-								{Math.round(value / 1000)}
-							</span>{' '}
-							tonnes
-						</div>
-						<div
-							css={`
-								background: #ffffff3d;
-								border-radius: 0.6rem;
-								margin: 0 auto;
-								padding: 0.4rem 1rem;
-
-								> div {
-									display: flex;
-									justify-content: space-between;
-									flex-wrap: wrap;
-								}
-								strong {
-									font-weight: bold;
-								}
-								> img {
-									margin: 0 0.6rem !important;
-								}
-							`}
-						>
-							<div>
-								<span>
-									{emoji('🇫🇷 ')}
-									moyenne{' '}
+				<div id="shareImage" css="padding: 2rem 0">
+					<div css="display: flex; align-items: center; justify-content: center">
+						<img src={BallonGES} css="height: 10rem" />
+						<div>
+							<div css="font-weight: bold; font-size: 280%; margin-bottom: .3rem">
+								<span css="width: 3.6rem; text-align: right; display: inline-block">
+									{Math.round(value / 1000)}
 								</span>{' '}
-								<strong> 11 tonnes</strong>
+								tonnes
 							</div>
-							<div>
-								<span>
-									{emoji('🎯 ')}
-									objectif{' '}
-								</span>
-								<strong>2 tonnes</strong>
-							</div>
-							<div css="margin-top: .2rem;justify-content: flex-end !important">
-								<a
-									css="color: inherit"
-									href="https://datagir.ademe.fr/blog/budget-empreinte-carbone-c-est-quoi/"
-								>
-									Comment ça ?
-								</a>
+							<div
+								css={`
+									background: #ffffff3d;
+									border-radius: 0.6rem;
+									margin: 0 auto;
+									padding: 0.4rem 1rem;
+
+									> div {
+										display: flex;
+										justify-content: space-between;
+										flex-wrap: wrap;
+									}
+									strong {
+										font-weight: bold;
+									}
+									> img {
+										margin: 0 0.6rem !important;
+									}
+								`}
+							>
+								<div>
+									<span>
+										{emoji('🇫🇷 ')}
+										moyenne{' '}
+									</span>{' '}
+									<strong> 11 tonnes</strong>
+								</div>
+								<div>
+									<span>
+										{emoji('🎯 ')}
+										objectif{' '}
+									</span>
+									<strong>2 tonnes</strong>
+								</div>
+								<div css="margin-top: .2rem;justify-content: flex-end !important">
+									<a
+										css="color: inherit"
+										href="https://datagir.ademe.fr/blog/budget-empreinte-carbone-c-est-quoi/"
+									>
+										Comment ça ?
+									</a>
+								</div>
 							</div>
 						</div>
 					</div>
-				</div>
-				<div css="padding: 1rem">
-					<Chart
-						details={details}
-						color={textColor}
-						noAnimation
-						noText
-						noCompletion
-					/>
+					<div css="padding: 1rem">
+						<Chart
+							details={details}
+							color={textColor}
+							noAnimation
+							noText
+							noCompletion
+						/>
+					</div>
 				</div>
 
 				<div css="display: flex; flex-direction: column;">
