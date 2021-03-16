@@ -21,6 +21,7 @@ import BandeauContribuer from './VersionBeta'
 import { useTranslation } from 'react-i18next'
 import sitePaths from './sitePaths'
 import News from 'Pages/News'
+import { Redirect } from 'react-router'
 
 let tracker = devTracker
 if (process.env.NODE_ENV === 'production') {
@@ -82,6 +83,16 @@ const Router = ({}) => (
 			</nav>
 			<Switch>
 				<Route exact path="/" component={Landing} />
+				{/* Removes trailing slashes */}
+				<Route
+					path={'/:url*(/+)'}
+					exact
+					strict
+					render={({ location }) => (
+						<Redirect to={location.pathname.replace(/\/+$/, location.search)} />
+					)}
+				/>
+
 				<Route path="/documentation" component={Documentation} />
 				<Route path="/simulateur/:name+" component={Simulateur} />
 				{/* Lien de compatibilité, à retirer par exemple mi-juillet 2020*/}
