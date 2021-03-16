@@ -28,6 +28,7 @@ export default function Meta({
 			<meta property="og:title" content={ogTitle ?? title} />
 			<meta property="og:description" content={ogDescription ?? description} />
 			{ogImage && <meta property="og:image" content={ogImage} />}
+			<meta property="twitter:card" content="summary_large_image" />
 		</Helmet>
 	)
 }
