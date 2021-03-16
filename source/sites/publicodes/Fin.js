@@ -76,6 +76,7 @@ const AnimatedDiv = animated(({ score, value, details }) => {
 				title="Nos Gestes Climat"
 				description={`Mon empreinte climat est de ${roundedValue} tonnes de CO2e. Mesure la tienne !`}
 				ogImage={
+					'https://aejkrqosjq.cloudimg.io/v7/' +
 					window.location.origin +
 					'/.netlify/functions/ending-screenshot?pageToScreenshot=' +
 					window.location
