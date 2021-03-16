@@ -1,7 +1,7 @@
 const chromium = require('chrome-aws-lambda')
 
 exports.handler = async (event, context) => {
-	const pageToScreenshot = JSON.parse(event.body).pageToScreenshot
+	const pageToScreenshot = event.queryStringParameters.pageToScreenshot
 
 	const browser = await chromium.puppeteer.launch({
 		executablePath: await chromium.executablePath,
