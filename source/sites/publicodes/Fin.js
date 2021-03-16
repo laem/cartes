@@ -68,20 +68,21 @@ const AnimatedDiv = animated(({ score, value, details }) => {
 	const backgroundColor = getBackgroundColor(value).toHexString(),
 		backgroundColor2 = getBackgroundColor(value + 2000).toHexString(),
 		textColor = findContrastedTextColor(backgroundColor, true),
-		roundedValue = Math.round(value / 1000)
+		roundedValue = Math.round(value / 1000),
+		shareImage =
+			'https://aejkrqosjq.cloudimg.io/v7/' +
+			window.location.origin +
+			'/.netlify/functions/ending-screenshot?pageToScreenshot=' +
+			window.location
 
 	return (
 		<div css="padding: 0 .3rem 1rem; max-width: 600px; margin: 0 auto;">
 			<Meta
 				title="Nos Gestes Climat"
 				description={`Mon empreinte climat est de ${roundedValue} tonnes de CO2e. Mesure la tienne !`}
-				ogImage={
-					'https://aejkrqosjq.cloudimg.io/v7/' +
-					window.location.origin +
-					'/.netlify/functions/ending-screenshot?pageToScreenshot=' +
-					window.location
-				}
+				ogImage={shareImage}
 			/>
+			<img width="0px" height="0px" src={shareImage} />
 			<SessionBar />
 			<motion.div
 				animate={{ scale: [0.85, 1] }}

@@ -17,7 +17,7 @@ exports.handler = async (event, context) => {
 
 	await page.goto(pageToScreenshot)
 
-	await timeout(1000)
+	await timeout(10000) // 10 seconds to wait for the animation to finish. Yes we'd be better disabling the animation for this usage, but how ? TODO
 
 	const element = await page.$('#shareImage')
 
