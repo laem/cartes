@@ -91,14 +91,14 @@ function simulation(
 ): Simulation | null {
 	if (action.type === 'SET_SIMULATION') {
 		const { config, url } = action
-		if (state && state.config === config) {
+		if (state && state.config && !action.situation === config) {
 			return state
 		}
 		return {
 			config,
 			url,
 			hiddenNotifications: state?.hiddenControls || [],
-			situation: state?.situation || {},
+			situation: action.situation || state?.situation || {},
 			targetUnit: config['unité par défaut'] || '€/mois',
 			foldedSteps: state?.foldedSteps || [],
 			unfoldedStep: null,

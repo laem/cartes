@@ -2,106 +2,85 @@
   icônes: 🛴🏢
   data: 
     alimentation . déchets . niveau d'engagement: "'affirmatif'"
-    alimentation . petit déjeuner . type: "'lait céréales'"
-    alimentation . lait . lait végétal: oui
+    alimentation . petit déjeuner . type: "'français'"
     alimentation . boisson . sucrées . litres:
-      explanation:
-        type: number
-        fullPrecision: true
-        nodeValue: 0
-        nodeKind: constant
-        rawNode:
-          constant:
-            type: number
-            nodeValue: 0
-      unit:
-        numerators:
-        - l
-        denominators:
-        - semaine
-      nodeKind: unité
-      rawNode: 0 l/semaine
+      valeur: 0
+      unité: l / semaine
     alimentation . boisson . alcool . litres:
-      type: number
-      fullPrecision: true
-      nodeValue: 2
-      nodeKind: constant
-      rawNode: 2
-    alimentation . boisson . eau en bouteille . affirmatif: non
-    alimentation . plats . végétalien . nombre: 2
-    alimentation . plats . végétarien . nombre: 8
+      valeur: 0
+      unité: l / semaine
+    alimentation . boisson . eau en bouteille . affirmatif: oui
     alimentation . plats . viande 1 . nombre: 4
     alimentation . plats . viande 2 . nombre: 0
+    alimentation . plats . végétarien . nombre: 6
+    alimentation . plats . végétalien . nombre: 4
     transport . voiture . km:
-      valeur: 800
+      valeur: 2000
       unité: km / an
     transport . voiture . propriétaire: non
-    transport . voiture . motorisation: "'thermique'"
+    transport . voiture . motorisation: "'hybride'"
+    transport . voiture . gabarit: "'berline'"
     transport . voiture . voyageurs:
-      valeur: 3
+      valeur: 2
       unité: voyageurs
-    transport . voiture . thermique . consommation aux 100:
-      type: number
-      fullPrecision: true
-      nodeValue: 7
-      nodeKind: constant
-      rawNode: 7
-    transport . avion . usager: non
+    transport . deux roues thermique . usager: non
+    transport . avion . usager: oui
+    transport . avion . court courrier . heures de vol:
+      valeur: 3.2
+      unité: h / an
+    transport . avion . moyen courrier . heures de vol:
+      valeur: 8
+      unité: h / an
+    transport . avion . long courrier . heures de vol:
+      valeur: 24
+      unité: h / an
+    transport . bus . heures par semaine:
+      valeur: 0
+      unité: heure / semaine
     transport . train . km:
-      type: number
-      fullPrecision: true
-      nodeValue: 10000
-      nodeKind: constant
-      rawNode: 10000
+      valeur: 10000
+      unité: km / an
+    transport . métro ou tram . heures par semaine:
+      valeur: 7
+      unité: heure / semaine
+    transport . vélo . km:
+      valeur: 35
+      unité: km
     logement . surface:
-      type: number
-      fullPrecision: true
-      nodeValue: 25
-      nodeKind: constant
-      rawNode: 25
+      valeur: 70
+      unité: m2
     logement . habitants:
-      valeur: 1
+      valeur: 2
       unité: personnes
+    logement . électricité . consommation:
+      valeur: 1200
+      unité: kWh
     logement . gaz . chauffage au gaz: oui
-    logement . gaz . consommation: 3243
-    logement . électricité . consommation: 560
+    logement . gaz . consommation:
+      valeur: 3243
+      unité: kWh
     logement . fioul . chauffage au fioul: non
     logement . bois . chauffage au bois: non
     divers . textile . montant:
-      valeur: 150
+      valeur: 1000
       unité: an
     divers . électroménager . montant:
-      valeur: 50
-      unité: ''
-    divers . autres produits . montant:
-      valeur: 100
+      valeur: 1000
       unité: an
-    transport . métro ou tram . heures par semaine:
-      valeur: 1
-      unité: heure / semaine
-    transport . bus . heures par semaine:
-      type: number
-      fullPrecision: true
-      nodeValue: 0
-      nodeKind: constant
-      rawNode: 0
-    numérique . téléphone . type: "'smartphone plus de 5 pouces'"
-    numérique . ordinateur . présent: oui
-    numérique . ordinateur . fixe: non
-    numérique . ordinateur . durée:
-      valeur: 1
-      unité: an
+    numérique . home cinéma . présent: oui
+    numérique . appareil photo . présent: oui
+    numérique . vidéoprojecteur . présent: oui
+    numérique . téléphone . type: "'smartphone haut de gamme'"
     numérique . internet . durée journalière:
-      type: number
-      fullPrecision: true
-      nodeValue: 8
-      nodeKind: constant
-      rawNode: 8
-    numérique . TV . présent: non
-    numérique . tablette . présent: non
-    numérique . vidéoprojecteur . présent: non
-    numérique . appareil photo . présent: non
-    numérique . home cinéma . présent: "'false'"
+      valeur: 8
+      unité: heure
+    numérique . TV . durée:
+      valeur: 1
+      unité: an
+    numérique . ordinateur portable . durée:
+      valeur: 1
+      unité: an
+
 
 
 - nom: Ermite rural
@@ -120,6 +99,6 @@
     alimentation . plats . viande 2 . nombre: 8
     alimentation . plats . viande 1 . nombre: 0
     transport . voiture . km:
-      valeur: 7000
+      valeur: 20000
       unité: km / an
 
