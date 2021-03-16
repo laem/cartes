@@ -74,7 +74,7 @@ const AnimatedDiv = animated(({ score, value, details }) => {
 		<div css="padding: 0 .3rem 1rem; max-width: 600px; margin: 0 auto;">
 			<Meta
 				title="Nos Gestes Climat"
-				description={`Mon empreinte climat est de ${roundedValue}. Mesure la tienne !`}
+				description={`Mon empreinte climat est de ${roundedValue} tonnes de CO2e. Mesure la tienne !`}
 				ogImage={
 					window.location.origin +
 					'/.netlify/functions/ending-screenshot?pageToScreenshot=' +
