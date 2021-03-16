@@ -81,6 +81,7 @@ const AnimatedDiv = animated(({ score, value, details }) => {
 				title="Nos Gestes Climat"
 				description={`Mon empreinte climat est de ${roundedValue} tonnes de CO2e. Mesure la tienne !`}
 				ogImage={shareImage}
+				url={window.location}
 			/>
 			<img width="0px" height="0px" src={shareImage} />
 			<SessionBar />
