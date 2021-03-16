@@ -11,6 +11,7 @@ import {
 	answeredQuestionsSelector,
 	objectifsSelector,
 } from 'Selectors/simulationSelectors'
+import CarbonImpact from '../sites/publicodes/CarbonImpact'
 import { extractCategories } from '../sites/publicodes/chart'
 import Answers from './conversation/AnswerList'
 
@@ -113,31 +114,34 @@ export default function SessionBar({ answerButtonOnly = false }) {
 	return (
 		<div css={css}>
 			{arePreviousAnswers && (
-				<>
-					<Button
-						className="simple small"
-						onClick={() => setShowAnswerModal(true)}
-					>
-						{emoji('📋 ')}
-						Modifier mes réponses
-					</Button>
-					<Button
-						className="simple small"
-						onClick={() => history.push(buildEndURL(rules, engine))}
-					>
-						{emoji('💤 ')}
-						Terminer
-					</Button>
-					{true && (
+				<div>
+					<CarbonImpact />
+					<div>
 						<Button
 							className="simple small"
-							onClick={() => history.push('/actions')}
+							onClick={() => setShowAnswerModal(true)}
 						>
-							{emoji('💥 ')}
-							Passer à l'action
+							{emoji('📋 ')}
+							Modifier mes réponses
 						</Button>
-					)}
-				</>
+						<Button
+							className="simple small"
+							onClick={() => history.push(buildEndURL(rules, engine))}
+						>
+							{emoji('💤 ')}
+							Terminer
+						</Button>
+						{true && (
+							<Button
+								className="simple small"
+								onClick={() => history.push('/actions')}
+							>
+								{emoji('💥 ')}
+								Passer à l'action
+							</Button>
+						)}
+					</div>
+				</div>
 			)}
 			{showAnswerModal && <Answers onClose={() => setShowAnswerModal(false)} />}
 		</div>

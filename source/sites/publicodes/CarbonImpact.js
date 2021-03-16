@@ -17,17 +17,46 @@ export default ({}) => {
 		engine = useEngine(),
 		evaluation = engine.evaluate(objectif),
 		{ nodeValue, dottedName } = evaluation
+	const foldedSteps = useSelector((state) => state.simulation?.foldedSteps),
+		simulationStarted = foldedSteps && foldedSteps.length
 
 	return (
 		<div
 			css={`
-				font-size: 85%;
+				background: rgba(0, 0, 0, 0)
+					linear-gradient(60deg, var(--color) 0%, var(--lightColor) 100%) repeat
+					scroll 0% 0%;
+				color: var(--textColor);
+				padding: 0.4rem;
+
+				@media (max-width: 800px) {
+					position: fixed;
+					bottom: 0;
+					left: 0;
+					width: 100%;
+					z-index: 10;
+				}
+
 				a {
 					color: inherit;
 				}
 				text-align: center;
+				display: flex;
+				justify-content: center;
+				flex-direction: column;
+				> div {
+					display: flex;
+					justify-content: center;
+					align-items: center;
+				}
+				box-shadow: 2px 2px 10px #bbb;
 			`}
 		>
+			{!simulationStarted ? (
+				<em>{emoji('🇫🇷 ')} Un Français émet en moyenne</em>
+			) : (
+				<em>Votre total provisoire</em>
+			)}
 			<div>
 				<SimulationHumanWeight nodeValue={nodeValue} />
 				<div>

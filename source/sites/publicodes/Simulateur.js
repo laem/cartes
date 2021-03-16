@@ -70,7 +70,6 @@ const Simulateur = (props) => {
 				targets={<>{rule.period === 'flexible' && <PeriodBlock />}</>}
 				explanations={
 					<>
-						<CarbonImpact evaluation={evaluation} />
 						<Chart />
 					</>
 				}
