@@ -1,5 +1,4 @@
 import { goToQuestion, loadPreviousSimulation } from 'Actions/actions'
-import { Button } from 'Components/ui/Button'
 import { useEngine } from 'Components/utils/EngineContext'
 import { last } from 'ramda'
 import React, { useEffect, useState } from 'react'
@@ -16,7 +15,7 @@ import CarbonImpact from '../sites/publicodes/CarbonImpact'
 import { extractCategories } from '../sites/publicodes/chart'
 import Answers from './conversation/AnswerList'
 
-// TODO should be find the rewritten version of this from mon-entreprise and merge them ?
+const Button = styled.button``
 
 export const buildEndURL = (rules, engine) => {
 	const categories = extractCategories(rules, engine),
@@ -67,7 +66,7 @@ export default function SessionBar({ answerButtonOnly = false }) {
 						onClick={() => setShowAnswerModal(true)}
 					>
 						{emoji('📋 ')}
-						Modifier mes réponses
+						Mes réponses
 					</Button>
 				</>
 			),
@@ -100,34 +99,36 @@ export default function SessionBar({ answerButtonOnly = false }) {
 		]
 
 	buttons = [
-		...(arePreviousAnswers && [
-			<Button
-				key="modifier"
-				className="simple small"
-				onClick={() => setShowAnswerModal(true)}
-			>
-				{emoji('📋 ')}
-				Modifier mes réponses
-			</Button>,
-			<Button
-				key="terminer"
-				className="simple small"
-				onClick={() => history.push(buildEndURL(rules, engine))}
-			>
-				{emoji('💤 ')}
-				Terminer
-			</Button>,
-			true && (
-				<Button
-					key="bouger"
-					className="simple small"
-					onClick={() => history.push('/actions')}
-				>
-					{emoji('💥 ')}
-					Passer à l'action
-				</Button>
-			),
-		]),
+		...(arePreviousAnswers
+			? [
+					<Button
+						key="modifier"
+						className="simple small"
+						onClick={() => setShowAnswerModal(true)}
+					>
+						{emoji('📋 ')}
+						Mes réponses
+					</Button>,
+					<Button
+						key="terminer"
+						className="simple small"
+						onClick={() => history.push(buildEndURL(rules, engine))}
+					>
+						{emoji('💤 ')}
+						Terminer
+					</Button>,
+					true && (
+						<Button
+							key="bouger"
+							className="simple small"
+							onClick={() => history.push('/actions')}
+						>
+							{emoji('💥 ')}
+							Passer à l'action
+						</Button>
+					),
+			  ]
+			: []),
 		showAnswerModal && <Answers onClose={() => setShowAnswerModal(false)} />,
 	]
 
@@ -139,6 +140,8 @@ export default function SessionBar({ answerButtonOnly = false }) {
 					bottom: 0;
 					left: 0;
 					z-index: 10;
+
+					width: 100%;
 				}
 			`}
 		>
@@ -156,6 +159,8 @@ const NavBar = styled.ul`
 	display: flex;
 	list-style-type: none;
 	justify-content: center;
+	align-items: center;
+	height: 3.5rem;
 	button {
 		margin: 0 0.2rem;
 	}
@@ -166,5 +171,17 @@ const NavBar = styled.ul`
 		background: white;
 		display: flex;
 		justify-content: center;
+	}
+
+	li > button {
+		display: flex;
+		flex-direction: column;
+		align-items: center;
+		justify-content: center;
+		font-size: 80%;
+	}
+	li > button > img {
+		display: block;
+		font-size: 200%;
 	}
 `
