@@ -31,7 +31,8 @@ export default ({}) => {
 
 				@media (max-width: 800px) {
 					position: fixed;
-					bottom: 0;
+
+					bottom: 4rem;
 					left: 0;
 					width: 100%;
 					z-index: 10;

@@ -11,6 +11,7 @@ import {
 	answeredQuestionsSelector,
 	objectifsSelector,
 } from 'Selectors/simulationSelectors'
+import styled from 'styled-components'
 import CarbonImpact from '../sites/publicodes/CarbonImpact'
 import { extractCategories } from '../sites/publicodes/chart'
 import Answers from './conversation/AnswerList'
@@ -56,94 +57,112 @@ export default function SessionBar({ answerButtonOnly = false }) {
 	const location = useLocation(),
 		path = location.pathname
 
-	const css = `
-			display: flex;
-			justify-content: center;
-			button {
-				margin: 0 0.2rem;
-			}
-			margin: 0.6rem;
-	`
+	let buttons = []
 	if (answerButtonOnly)
-		return (
-			<div css={css}>
-				{arePreviousAnswers && (
-					<>
-						<Button
-							className="simple small"
-							onClick={() => setShowAnswerModal(true)}
-						>
-							{emoji('📋 ')}
-							Modifier mes réponses
-						</Button>
-					</>
-				)}
-				{showAnswerModal && (
-					<Answers onClose={() => setShowAnswerModal(false)} />
-				)}
-			</div>
-		)
-
-	if (path.includes('/fin') || path.includes('/actions'))
-		return (
-			<div css={css}>
-				{arePreviousAnswers ? (
+		buttons = [
+			arePreviousAnswers && (
+				<>
 					<Button
 						className="simple small"
-						onClick={() => {
-							dispatch(goToQuestion(last(answeredQuestions)))
-							history.push('/simulateur/bilan')
-						}}
+						onClick={() => setShowAnswerModal(true)}
 					>
-						{emoji('📊 ')}
-						Revenir à ma simulation
+						{emoji('📋 ')}
+						Modifier mes réponses
 					</Button>
-				) : (
+				</>
+			),
+			showAnswerModal && <Answers onClose={() => setShowAnswerModal(false)} />,
+		]
+
+	if (path.includes('/fin') || path.includes('/actions'))
+		buttons = [
+			arePreviousAnswers ? (
+				<Button
+					className="simple small"
+					onClick={() => {
+						dispatch(goToQuestion(last(answeredQuestions)))
+						history.push('/simulateur/bilan')
+					}}
+				>
+					{emoji('📊 ')}
+					Revenir à ma simulation
+				</Button>
+			) : (
+				<Button
+					className="plain"
+					onClick={() => {
+						history.push('/simulateur/bilan')
+					}}
+				>
+					Faire le test
+				</Button>
+			),
+		]
+
+	buttons = [
+		arePreviousAnswers && (
+			<div>
+				<CarbonImpact />
+				<div>
 					<Button
-						className="plain"
-						onClick={() => {
-							history.push('/simulateur/bilan')
-						}}
+						key="modifier"
+						className="simple small"
+						onClick={() => setShowAnswerModal(true)}
 					>
-						Faire le test
+						{emoji('📋 ')}
+						Modifier mes réponses
 					</Button>
-				)}
+					<Button
+						key="terminer"
+						className="simple small"
+						onClick={() => history.push(buildEndURL(rules, engine))}
+					>
+						{emoji('💤 ')}
+						Terminer
+					</Button>
+					{true && (
+						<Button
+							key="bouger"
+							className="simple small"
+							onClick={() => history.push('/actions')}
+						>
+							{emoji('💥 ')}
+							Passer à l'action
+						</Button>
+					)}
+				</div>
 			</div>
-		)
+		),
+		showAnswerModal && <Answers onClose={() => setShowAnswerModal(false)} />,
+	]
 
 	return (
-		<div css={css}>
-			{arePreviousAnswers && (
-				<div>
-					<CarbonImpact />
-					<div>
-						<Button
-							className="simple small"
-							onClick={() => setShowAnswerModal(true)}
-						>
-							{emoji('📋 ')}
-							Modifier mes réponses
-						</Button>
-						<Button
-							className="simple small"
-							onClick={() => history.push(buildEndURL(rules, engine))}
-						>
-							{emoji('💤 ')}
-							Terminer
-						</Button>
-						{true && (
-							<Button
-								className="simple small"
-								onClick={() => history.push('/actions')}
-							>
-								{emoji('💥 ')}
-								Passer à l'action
-							</Button>
-						)}
-					</div>
-				</div>
-			)}
-			{showAnswerModal && <Answers onClose={() => setShowAnswerModal(false)} />}
+		<div>
+			<CarbonImpact />{' '}
+			<NavBar>
+				{buttons.filter(Boolean).map((Comp, i) => (
+					<li key={i}>{Comp}</li>
+				))}
+			</NavBar>
 		</div>
 	)
 }
+
+const NavBar = styled.ul`
+	display: flex;
+	list-style-type: none;
+	justify-content: center;
+	button {
+		margin: 0 0.2rem;
+	}
+	@media (max-width: 800px) {
+		position: fixed;
+		bottom: 0;
+		left: 0;
+		width: 100%;
+		z-index: 10;
+		background: white;
+		display: flex;
+		justify-content: center;
+	}
+`
