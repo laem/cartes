@@ -105,7 +105,7 @@ export default ({ evaluation, total, rule, effort }) => {
 							</div>
 						)}
 						{nodeValue != null && (
-							<ActionValue {...{ total, nodeValue, unit }} />
+							<ActionValue {...{ total, nodeValue, unit, disabled }} />
 						)}
 					</div>
 				</div>
@@ -113,7 +113,12 @@ export default ({ evaluation, total, rule, effort }) => {
 		</Link>
 	)
 }
-const ActionValue = ({ total, nodeValue: rawValue, unit: rawUnit }) => {
+const ActionValue = ({
+	total,
+	nodeValue: rawValue,
+	unit: rawUnit,
+	disabled,
+}) => {
 	const correctedValue = correctValue({ nodeValue: rawValue, unit: rawUnit })
 	const { unit, value } = humanValueAndUnit(correctedValue),
 		relativeValue = Math.round(100 * (correctedValue / total))
@@ -137,12 +142,16 @@ const ActionValue = ({ total, nodeValue: rawValue, unit: rawUnit }) => {
 			`}
 		>
 			<div>Impact&nbsp;</div>
-			<div>
-				<strong>
-					-&nbsp;{value} {unit}
-				</strong>{' '}
-				{total && <span>&nbsp;{relativeValue}%</span>}
-			</div>
+			{disabled ? (
+				'Non applicable'
+			) : (
+				<div>
+					<strong>
+						-&nbsp;{value} {unit}
+					</strong>{' '}
+					{total && <span>&nbsp;{relativeValue}%</span>}
+				</div>
+			)}
 		</div>
 	)
 }

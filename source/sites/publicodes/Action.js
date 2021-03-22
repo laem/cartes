@@ -34,7 +34,7 @@ export default ({}) => {
 	const actionParent = parentName(dottedName)
 	const config = {
 		objectifs: [dottedName],
-		situation: { ...(configSet?.situation || {}), [actionParent]: 'oui' },
+		situation: { ...(configSet?.situation || {}) },
 	}
 
 	const engine = useContext(EngineContext)
