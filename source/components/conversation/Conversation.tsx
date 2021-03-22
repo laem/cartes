@@ -143,7 +143,7 @@ export default function Conversation({
 
 	const hasDescription =
 		((mosaicQuestion && mosaicQuestion.description) ||
-			rules[currentQuestion].rawNode.description) !== null
+			rules[currentQuestion].rawNode.description) != null
 
 	return orderByCategories &&
 		isCategoryFirstQuestion &&
