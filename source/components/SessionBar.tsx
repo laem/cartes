@@ -100,44 +100,48 @@ export default function SessionBar({ answerButtonOnly = false }) {
 		]
 
 	buttons = [
-		arePreviousAnswers && (
-			<div>
-				<CarbonImpact />
-				<div>
-					<Button
-						key="modifier"
-						className="simple small"
-						onClick={() => setShowAnswerModal(true)}
-					>
-						{emoji('📋 ')}
-						Modifier mes réponses
-					</Button>
-					<Button
-						key="terminer"
-						className="simple small"
-						onClick={() => history.push(buildEndURL(rules, engine))}
-					>
-						{emoji('💤 ')}
-						Terminer
-					</Button>
-					{true && (
-						<Button
-							key="bouger"
-							className="simple small"
-							onClick={() => history.push('/actions')}
-						>
-							{emoji('💥 ')}
-							Passer à l'action
-						</Button>
-					)}
-				</div>
-			</div>
-		),
+		...(arePreviousAnswers && [
+			<Button
+				key="modifier"
+				className="simple small"
+				onClick={() => setShowAnswerModal(true)}
+			>
+				{emoji('📋 ')}
+				Modifier mes réponses
+			</Button>,
+			<Button
+				key="terminer"
+				className="simple small"
+				onClick={() => history.push(buildEndURL(rules, engine))}
+			>
+				{emoji('💤 ')}
+				Terminer
+			</Button>,
+			true && (
+				<Button
+					key="bouger"
+					className="simple small"
+					onClick={() => history.push('/actions')}
+				>
+					{emoji('💥 ')}
+					Passer à l'action
+				</Button>
+			),
+		]),
 		showAnswerModal && <Answers onClose={() => setShowAnswerModal(false)} />,
 	]
 
 	return (
-		<div>
+		<div
+			css={`
+				@media (max-width: 800px) {
+					position: fixed;
+					bottom: 0;
+					left: 0;
+					z-index: 10;
+				}
+			`}
+		>
 			<CarbonImpact />{' '}
 			<NavBar>
 				{buttons.filter(Boolean).map((Comp, i) => (
@@ -155,10 +159,8 @@ const NavBar = styled.ul`
 	button {
 		margin: 0 0.2rem;
 	}
+	margin: 0;
 	@media (max-width: 800px) {
-		position: fixed;
-		bottom: 0;
-		left: 0;
 		width: 100%;
 		z-index: 10;
 		background: white;

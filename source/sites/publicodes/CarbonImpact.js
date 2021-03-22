@@ -29,15 +29,6 @@ export default ({}) => {
 				color: var(--textColor);
 				padding: 0.4rem;
 
-				@media (max-width: 800px) {
-					position: fixed;
-
-					bottom: 4rem;
-					left: 0;
-					width: 100%;
-					z-index: 10;
-				}
-
 				a {
 					color: inherit;
 				}
