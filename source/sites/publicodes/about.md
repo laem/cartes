@@ -8,7 +8,7 @@ Il est basé sur le modèle MicMac des associations [Avenir Climatique](https://
 
 ## Qui le développe ?
 
-Il est développé par l'équipe [Datagir](https://datagir.ademe.fr/) de l’[Agence de la transition écologique](https://www.ademe.fr/) (ADEME) et [beta.gouv.fr](https://beta.gouv.fr/), en partenariat avec l’[Association Bilan Carbone](https://www.associationbilancarbone.fr/) (ABC).
+Ce calculateur carbone est développé par l'équipe [Datagir](https://datagir.ademe.fr/) de l’[Agence de la transition écologique](https://www.ademe.fr/) (ADEME) et [beta.gouv.fr](https://beta.gouv.fr/), en partenariat avec l’[Association Bilan Carbone](https://www.associationbilancarbone.fr/) (ABC).
 
 Depuis sa création en 2011, l'ABC est partenaire de l’ADEME. Ce partenariat a vu naître de nombreux projets autour du développement et de la promotion des méthodes et outils innovants pour la mise en œuvre de stratégies climat, en France et à l’international, que ce soit à l’échelle des organisations, territoires ou des citoyens.
 
