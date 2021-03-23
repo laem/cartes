@@ -80,9 +80,11 @@ export default ({}) => {
 								<HumanWeight
 									nodeValue={correctValue({ nodeValue, unit: evaluation.unit })}
 								/>
-								<Link to={'/documentation/' + encodeRuleName(dottedName)}>
-									{emoji('🔬 ')} comprendre le calcul
-								</Link>
+								<div>
+									<Link to={'/documentation/' + encodeRuleName(dottedName)}>
+										{emoji('🔬 ')} comprendre le calcul
+									</Link>
+								</div>
 							</div>
 						</div>
 					)}
