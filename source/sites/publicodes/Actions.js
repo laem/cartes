@@ -72,15 +72,10 @@ const ActionList = animated(({}) => {
 	const simulation = useSelector((state) => state.simulation)
 
 	// Add the actions rules to the simulation, keeping the user's situation
-	const config = !simulation
-		? { objectifs: ['bilan', ...flatActions.formule.somme] }
-		: {
-				...simulation.config,
-				objectifs: union(
-					simulation.config.objectifs,
-					flatActions.formule.somme
-				),
-		  }
+	const config = {
+		...(simulation.config || {}),
+		objectifs: ['bilan', ...flatActions.formule.somme],
+	}
 
 	const objectifs = useSelector(objectifsSelector)
 
@@ -131,11 +126,6 @@ const ActionList = animated(({}) => {
 
 	return (
 		<div css="padding: 0 .3rem 1rem; max-width: 600px; margin: 1rem auto;">
-			{!answeredQuestions.length && (
-				<p css="line-height: 1.4rem; text-align: center">
-					{emoji('🧮')}&nbsp; Pour personnaliser ces propositions
-				</p>
-			)}
 			<SessionBar />
 			<h1 css="margin: 1rem 0 .6rem;font-size: 160%">
 				Comment réduire mon empreinte ?

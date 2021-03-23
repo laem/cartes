@@ -27,6 +27,8 @@ export default ({}) => {
 
 	const category = rules[splitName(dottedName)[0]],
 		color = category && category.couleur
+
+	const isMainSimulation = objectif === 'bilan'
 	return (
 		<div
 			css={`
@@ -66,11 +68,12 @@ export default ({}) => {
 					width: 80%;
 				`}
 			>
-				{!simulationStarted ? (
-					<em>{emoji('🇫🇷 ')} Un Français émet en moyenne</em>
-				) : (
-					<em>Votre total provisoire</em>
-				)}
+				{isMainSimulation &&
+					(!simulationStarted ? (
+						<em>{emoji('🇫🇷 ')} Un Français émet en moyenne</em>
+					) : (
+						<em>Votre total provisoire</em>
+					))}
 				<div>
 					<SimulationHumanWeight nodeValue={nodeValue} />
 				</div>
