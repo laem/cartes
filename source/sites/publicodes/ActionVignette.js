@@ -13,9 +13,8 @@ export default ({ evaluation, total, rule, effort }) => {
 	const { nodeValue, dottedName, title, unit } = evaluation
 	const { icônes: icons } = rule
 
-	const disabled = rules[dottedName].formule
-		? nodeValue === 0 || nodeValue === false
-		: false
+	const noFormula = rules[dottedName].formule == null
+	const disabled = noFormula ? nodeValue === 0 || nodeValue === false : false
 
 	return (
 		<Link
@@ -108,9 +107,7 @@ export default ({ evaluation, total, rule, effort }) => {
 								<span>{[...new Array(effort)].map((i) => emoji('💪'))}</span>
 							</div>
 						)}
-						{nodeValue != null && (
-							<ActionValue {...{ total, nodeValue, unit, disabled }} />
-						)}
+						<ActionValue {...{ total, nodeValue, unit, disabled, noFormula }} />
 					</div>
 				</div>
 			</motion.div>
@@ -122,6 +119,7 @@ const ActionValue = ({
 	nodeValue: rawValue,
 	unit: rawUnit,
 	disabled,
+	noFormula,
 }) => {
 	const correctedValue = correctValue({ nodeValue: rawValue, unit: rawUnit })
 	const { unit, value } = humanValueAndUnit(correctedValue),
@@ -146,7 +144,9 @@ const ActionValue = ({
 			`}
 		>
 			<div>Impact&nbsp;</div>
-			{disabled ? (
+			{noFormula ? (
+				'🤷'
+			) : disabled ? (
 				'Non applicable'
 			) : (
 				<div>
