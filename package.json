@@ -134,7 +134,9 @@
 		"webpack-dev-server": "^3.11.2",
 		"whatwg-fetch": "^3.0.0",
 		"yaml": "^1.10.2",
-		"yarn": "^1.22.10"
+		"yarn": "^1.22.10",
+		"y-webrtc": "^10.1.8",
+		"yjs": "^13.5.3"
 	},
 	"resolutions": {
 		"publicodes/yaml": "1.10.2"

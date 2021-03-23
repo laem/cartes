@@ -22,6 +22,7 @@ import Personas from './Personas.tsx'
 import Privacy from './Privacy'
 import Simulateur from './Simulateur'
 import sitePaths from './sitePaths'
+import Conference from './Conference'
 
 let tracker = devTracker
 if (NODE_ENV === 'production') {
@@ -111,7 +112,7 @@ const Router = ({}) => {
 					<Route path="/à-propos" component={About} />
 					<Route path="/vie-privée" component={Privacy} />
 					<Route path="/nouveautés" component={News} />
-
+					<Route path="/conférence" component={Conference} />
 					<Route component={Route404} />
 				</Switch>
 			</div>
