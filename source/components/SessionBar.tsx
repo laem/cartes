@@ -169,9 +169,11 @@ const NavBar = styled.ul`
 	button {
 		margin: 0 0.2rem;
 	}
-	margin: 0;
+	margin: 0.6rem 0 0 0;
 	padding: 0;
+
 	@media (max-width: 800px) {
+		margin: 0;
 		width: 100%;
 		z-index: 10;
 		background: white;
@@ -181,7 +183,9 @@ const NavBar = styled.ul`
 
 	li > button {
 		display: flex;
-		flex-direction: column;
+		@media (max-width: 800px) {
+			flex-direction: column;
+		}
 		align-items: center;
 		justify-content: center;
 		font-size: 80%;
@@ -189,5 +193,9 @@ const NavBar = styled.ul`
 	li > button > img {
 		display: block;
 		font-size: 200%;
+		margin: 0.6rem !important;
+		@media (max-width: 800px) {
+			margin: 0 !important;
+		}
 	}
 `
