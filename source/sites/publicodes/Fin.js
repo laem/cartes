@@ -89,7 +89,7 @@ const AnimatedDiv = animated(({ score, value, details, headlessMode }) => {
 				ogImage={shareImage}
 				url={window.location}
 			/>
-			<SessionBar />
+			<SessionBar noResults />
 			<motion.div
 				animate={{ scale: [0.9, 1] }}
 				transition={{ duration: headlessMode ? 0 : 0.6 }}
@@ -105,7 +105,7 @@ const AnimatedDiv = animated(({ score, value, details, headlessMode }) => {
 					color: ${textColor};
 					margin: 0 auto;
 					border-radius: 0.6rem;
-					height: 65vh;
+					height: 70vh;
 					display: flex;
 					flex-direction: column;
 					justify-content: space-evenly;

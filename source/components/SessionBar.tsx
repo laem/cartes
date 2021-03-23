@@ -34,7 +34,10 @@ export const buildEndURL = (rules, engine) => {
 	return `/fin?details=${detailsString}`
 }
 
-export default function SessionBar({ answerButtonOnly = false }) {
+export default function SessionBar({
+	answerButtonOnly = false,
+	noResults = false,
+}) {
 	const dispatch = useDispatch()
 	const previousSimulation = useSelector(
 		(state: RootState) => state.previousSimulation
@@ -57,7 +60,7 @@ export default function SessionBar({ answerButtonOnly = false }) {
 		path = location.pathname
 
 	let buttons = []
-	if (answerButtonOnly)
+	if (answerButtonOnly) {
 		buttons = [
 			arePreviousAnswers && (
 				<>
@@ -72,8 +75,7 @@ export default function SessionBar({ answerButtonOnly = false }) {
 			),
 			showAnswerModal && <Answers onClose={() => setShowAnswerModal(false)} />,
 		]
-
-	if (path.includes('/fin') || path.includes('/actions'))
+	} else if (path.includes('/fin') || path.includes('/actions')) {
 		buttons = [
 			arePreviousAnswers ? (
 				<Button
@@ -84,7 +86,7 @@ export default function SessionBar({ answerButtonOnly = false }) {
 					}}
 				>
 					{emoji('📊 ')}
-					Revenir à ma simulation
+					Ma simulation
 				</Button>
 			) : (
 				<Button
@@ -97,40 +99,41 @@ export default function SessionBar({ answerButtonOnly = false }) {
 				</Button>
 			),
 		]
-
-	buttons = [
-		...(arePreviousAnswers
-			? [
-					<Button
-						key="modifier"
-						className="simple small"
-						onClick={() => setShowAnswerModal(true)}
-					>
-						{emoji('📋 ')}
-						Mes réponses
-					</Button>,
-					<Button
-						key="terminer"
-						className="simple small"
-						onClick={() => history.push(buildEndURL(rules, engine))}
-					>
-						{emoji('💤 ')}
-						Terminer
-					</Button>,
-					true && (
+	} else {
+		buttons = [
+			...(arePreviousAnswers
+				? [
 						<Button
-							key="bouger"
+							key="modifier"
 							className="simple small"
-							onClick={() => history.push('/actions')}
+							onClick={() => setShowAnswerModal(true)}
 						>
-							{emoji('💥 ')}
-							Passer à l'action
-						</Button>
-					),
-			  ]
-			: []),
-		showAnswerModal && <Answers onClose={() => setShowAnswerModal(false)} />,
-	]
+							{emoji('📋 ')}
+							Mes réponses
+						</Button>,
+						<Button
+							key="terminer"
+							className="simple small"
+							onClick={() => history.push(buildEndURL(rules, engine))}
+						>
+							{emoji('💤 ')}
+							Terminer
+						</Button>,
+						true && (
+							<Button
+								key="bouger"
+								className="simple small"
+								onClick={() => history.push('/actions')}
+							>
+								{emoji('💥 ')}
+								Passer à l'action
+							</Button>
+						),
+				  ]
+				: []),
+			showAnswerModal && <Answers onClose={() => setShowAnswerModal(false)} />,
+		]
+	}
 
 	return (
 		<div
@@ -145,7 +148,7 @@ export default function SessionBar({ answerButtonOnly = false }) {
 				}
 			`}
 		>
-			<CarbonImpact />{' '}
+			{!noResults && <CarbonImpact />}
 			{buttons.filter(Boolean).length > 0 && (
 				<NavBar>
 					{buttons.filter(Boolean).map((Comp, i) => (
