@@ -26,6 +26,7 @@ import ListeActionPlus from './ListeActionPlus'
 import ModeChoice from './ModeChoice'
 import CategoryFilters from './CategoryFilters'
 import { correctValue } from '../../components/publicodesUtils'
+import { sessionBarMargin } from '../../components/SessionBar'
 
 const { encodeRuleName, decodeRuleName } = utils
 
@@ -73,7 +74,7 @@ const ActionList = animated(({}) => {
 
 	// Add the actions rules to the simulation, keeping the user's situation
 	const config = {
-		...(simulation.config || {}),
+		...(simulation?.config || {}),
 		objectifs: ['bilan', ...flatActions.formule.somme],
 	}
 
@@ -83,7 +84,8 @@ const ActionList = animated(({}) => {
 
 	const targets = objectifs.map((o) => engine.evaluate(o))
 
-	const configSet = useSelector(configSelector)
+	const stateConfig = useSelector(configSelector),
+		configSet = stateConfig && Object.keys(stateConfig).length
 	const answeredQuestions = useSelector(answeredQuestionsSelector)
 	const mode = useSelector((state) => state.actionMode)
 
@@ -94,13 +96,6 @@ const ActionList = animated(({}) => {
 	if (!configSet) return <div>Config not set</div>
 
 	const [bilans, actions] = partition((t) => t.dottedName === 'bilan', targets)
-
-	console.log(
-		'ACTIONS',
-		Object.entries(rules).filter(([dottedName]) =>
-			actions.find((action) => action.dottedName === dottedName)
-		)
-	)
 
 	const filterByCategory = (actions) =>
 		actions.filter((action) =>
@@ -125,7 +120,15 @@ const ActionList = animated(({}) => {
 	}, {})
 
 	return (
-		<div css="padding: 0 .3rem 1rem; max-width: 600px; margin: 1rem auto;">
+		<div
+			css={`
+				padding: 0 0.3rem 1rem;
+				max-width: 600px;
+				margin: 1rem auto;
+
+				${sessionBarMargin}
+			`}
+		>
 			<SessionBar />
 			<h1 css="margin: 1rem 0 .6rem;font-size: 160%">
 				Comment réduire mon empreinte ?

@@ -15,6 +15,7 @@ import { useNextQuestions } from 'Components/utils/useNextQuestion'
 import { EngineContext } from '../../components/utils/EngineContext'
 import { splitName } from 'Components/publicodesUtils'
 import { correctValue, parentName } from '../../components/publicodesUtils'
+import { sessionBarMargin } from '../../components/SessionBar'
 
 const { decodeRuleName, encodeRuleName } = utils
 
@@ -59,7 +60,14 @@ export default ({}) => {
 		.map((name) => engine.getRule(name))
 
 	return (
-		<div css="padding: 0 .3rem 1rem; max-width: 600px; margin: 1rem auto;">
+		<div
+			css={`
+				padding: 0 0.3rem 1rem;
+				max-width: 600px;
+				margin: 1rem auto;
+				${sessionBarMargin}
+			`}
+		>
 			<ScrollToTop />
 			<Link to="/actions">
 				<button className="ui__ button simple small ">
