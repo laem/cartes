@@ -34,27 +34,31 @@ export default ({}) => {
 				}
 				text-align: center;
 				display: flex;
-				justify-content: center;
-				flex-direction: column;
+				justify-content: space-evenly;
 				> div {
 					display: flex;
 					justify-content: center;
 					align-items: center;
 				}
 				box-shadow: 2px 2px 10px #bbb;
+
+				.unitSuffix {
+					font-size: 90%;
+				}
 			`}
 		>
-			{!simulationStarted ? (
-				<em>{emoji('🇫🇷 ')} Un Français émet en moyenne</em>
-			) : (
-				<em>Votre total provisoire</em>
-			)}
 			<div>
 				<SimulationHumanWeight nodeValue={nodeValue} />
+			</div>
+			<div>
+				{!simulationStarted ? (
+					<em>{emoji('🇫🇷 ')} Un Français émet en moyenne</em>
+				) : (
+					<em>Votre total provisoire</em>
+				)}
 				<div>
-					<span css="font-size: 120%">{emoji('🔬 ')}</span>
 					<Link to={'/documentation/' + utils.encodeRuleName(dottedName)}>
-						comprendre le calcul
+						<span css="font-size: 120%">{emoji('❔️ ')}</span>
 					</Link>
 				</div>
 			</div>

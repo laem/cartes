@@ -44,7 +44,7 @@ export const HumanWeight = ({ nodeValue }) => {
 }
 
 export const UnitSuffix = () => (
-	<div>
+	<div className="unitSuffix">
 		de <strong>CO₂</strong>e / an
 	</div>
 )
