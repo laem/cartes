@@ -15,7 +15,30 @@ import CarbonImpact from '../sites/publicodes/CarbonImpact'
 import { extractCategories } from '../sites/publicodes/chart'
 import Answers from './conversation/AnswerList'
 
-const Button = styled.button``
+const Button = styled.button`
+	margin: 0 0.2rem;
+	display: flex;
+	@media (max-width: 800px) {
+		flex-direction: column;
+	}
+	align-items: center;
+	justify-content: center;
+	font-size: 80%;
+	> img {
+		display: block;
+		font-size: 200%;
+		margin: 0.6rem !important;
+		@media (max-width: 800px) {
+			margin: 0 !important;
+		}
+	}
+`
+
+export const sessionBarMargin = `
+		@media (max-width: 800px) {
+			margin-bottom: 10rem;
+		}
+`
 
 export const buildEndURL = (rules, engine) => {
 	const categories = extractCategories(rules, engine),
@@ -167,9 +190,6 @@ const NavBar = styled.ul`
 	justify-content: space-evenly !important;
 	align-items: center;
 	height: 3.5rem;
-	button {
-		margin: 0 0.2rem;
-	}
 	margin: 0.6rem 0 0 0;
 	padding: 0;
 
@@ -180,23 +200,5 @@ const NavBar = styled.ul`
 		background: white;
 		display: flex;
 		justify-content: center;
-	}
-
-	li > button {
-		display: flex;
-		@media (max-width: 800px) {
-			flex-direction: column;
-		}
-		align-items: center;
-		justify-content: center;
-		font-size: 80%;
-	}
-	li > button > img {
-		display: block;
-		font-size: 200%;
-		margin: 0.6rem !important;
-		@media (max-width: 800px) {
-			margin: 0 !important;
-		}
 	}
 `

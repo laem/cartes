@@ -19,6 +19,7 @@ import { useEngine } from 'Components/utils/EngineContext'
 import emoji from 'react-easy-emoji'
 import { situationSelector } from '../../selectors/simulationSelectors'
 import BandeauContribuer from './BandeauContribuer'
+import { sessionBarMargin } from '../../components/SessionBar'
 
 const eqValues = compose(isEmpty, symmetricDifference)
 
@@ -48,13 +49,7 @@ const Simulateur = (props) => {
 	if (!configSet) return null
 
 	return (
-		<div
-			css={`
-				@media (max-width: 800px) {
-					margin-bottom: 10rem;
-				}
-			`}
-		>
+		<div css={sessionBarMargin}>
 			<Helmet>
 				<title>{rule.title}</title>
 				{rule.description && (
