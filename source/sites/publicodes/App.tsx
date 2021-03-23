@@ -21,10 +21,7 @@ import Documentation from './pages/Documentation'
 import Personas from './Personas.tsx'
 import Privacy from './Privacy'
 import Simulateur from './Simulateur'
-import BandeauContribuer from './BandeauContribuer'
-import { useTranslation } from 'react-i18next'
 import sitePaths from './sitePaths'
-import BandeauContribuer from './VersionBeta'
 
 let tracker = devTracker
 if (process.env.NODE_ENV === 'production') {
