@@ -95,6 +95,7 @@ export default function SessionBar({
 						history.push('/simulateur/bilan')
 					}}
 				>
+					{emoji('👤 ')}
 					Faire le test
 				</Button>
 			),

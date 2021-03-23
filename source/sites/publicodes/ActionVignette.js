@@ -4,8 +4,8 @@ const { encodeRuleName, decodeRuleName } = utils
 import { motion } from 'framer-motion'
 import Emoji from '../../components/utils/Emoji'
 import emoji from 'react-easy-emoji'
-import { correctValue } from './Actions'
 import { humanValueAndUnit } from './HumanWeight'
+import { correctValue } from '../../components/publicodesUtils'
 
 export default ({ evaluation, total, rule, effort }) => {
 	const { nodeValue, dottedName, title, unit } = evaluation
