@@ -6,12 +6,16 @@ import Emoji from '../../components/utils/Emoji'
 import emoji from 'react-easy-emoji'
 import { humanValueAndUnit } from './HumanWeight'
 import { correctValue } from '../../components/publicodesUtils'
+import { useSelector } from 'react-redux'
 
 export default ({ evaluation, total, rule, effort }) => {
+	const rules = useSelector((state) => state.rules)
 	const { nodeValue, dottedName, title, unit } = evaluation
 	const { icônes: icons } = rule
 
-	const disabled = nodeValue === 0 || nodeValue === false
+	const disabled = rules[dottedName].formule
+		? nodeValue === 0 || nodeValue === false
+		: false
 
 	return (
 		<Link
