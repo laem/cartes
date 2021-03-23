@@ -28,23 +28,22 @@ export const HumanWeight = ({ nodeValue }) => {
 	const { value, unit } = humanValueAndUnit(nodeValue)
 	return (
 		<span>
-			<div>
-				<strong
-					css={`
-						font-size: 160%;
-						font-weight: 600;
-					`}
-				>
-					{value}&nbsp;{unit}
-				</strong>{' '}
-			</div>
+			<strong
+				className="humanValue"
+				css={`
+					font-size: 160%;
+					font-weight: 600;
+				`}
+			>
+				{value}&nbsp;{unit}
+			</strong>{' '}
 			<UnitSuffix />
 		</span>
 	)
 }
 
 export const UnitSuffix = () => (
-	<div className="unitSuffix">
+	<span className="unitSuffix">
 		de <strong>CO₂</strong>e / an
-	</div>
+	</span>
 )

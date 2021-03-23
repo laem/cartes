@@ -47,20 +47,27 @@ export default ({}) => {
 				}
 			`}
 		>
-			<div>
-				<SimulationHumanWeight nodeValue={nodeValue} />
-			</div>
-			<div>
+			<div
+				css={`
+					display: flex;
+					justify-content: space-evenly;
+					flex-direction: column;
+					width: 80%;
+				`}
+			>
 				{!simulationStarted ? (
 					<em>{emoji('🇫🇷 ')} Un Français émet en moyenne</em>
 				) : (
 					<em>Votre total provisoire</em>
 				)}
 				<div>
-					<Link to={'/documentation/' + utils.encodeRuleName(dottedName)}>
-						<span css="font-size: 120%">{emoji('❔️ ')}</span>
-					</Link>
+					<SimulationHumanWeight nodeValue={nodeValue} />
 				</div>
+			</div>
+			<div>
+				<Link to={'/documentation/' + utils.encodeRuleName(dottedName)}>
+					<span css="font-size: 140%">{emoji('❔️ ')}</span>
+				</Link>
 			</div>
 		</div>
 	)
