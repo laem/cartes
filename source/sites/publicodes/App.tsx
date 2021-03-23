@@ -112,7 +112,7 @@ const Router = ({}) => {
 					<Route path="/à-propos" component={About} />
 					<Route path="/vie-privée" component={Privacy} />
 					<Route path="/nouveautés" component={News} />
-					<Route path="/conférence" component={Conference} />
+					<Route path="/conférence/:room?" component={Conference} />
 					<Route component={Route404} />
 				</Switch>
 			</div>
