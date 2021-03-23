@@ -4,6 +4,7 @@ import { useParams } from 'react-router'
 import { Link } from 'react-router-dom'
 import { WebrtcProvider } from 'y-webrtc'
 import * as Y from 'yjs'
+import { usePersistingState } from '../../components/utils/persistState'
 import fruits from './fruits.json'
 
 const getRandomInt = (max) => Math.floor(Math.random() * Math.floor(max))
@@ -15,7 +16,10 @@ export default () => {
 	const [users, setUsers] = useState([])
 	const [newRoom, setNewRoom] = useState(null)
 	const { room } = useParams()
-	console.log(users)
+	const [username, setUsername] = usePersistingState(
+		'pseudo',
+		fruits[getRandomInt(fruits.length)]
+	)
 
 	useEffect(() => {
 		if (!room) return null
@@ -33,7 +37,7 @@ export default () => {
 
 		awareness.setLocalState({
 			// Define a print name that should be displayed
-			name: fruits[getRandomInt(fruits.length)],
+			name: username,
 			// Define a color that should be associated to the user:
 			color: getRandomColor(), // should be a hex color
 		})
