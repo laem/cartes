@@ -146,11 +146,13 @@ export default function SessionBar({ answerButtonOnly = false }) {
 			`}
 		>
 			<CarbonImpact />{' '}
-			<NavBar>
-				{buttons.filter(Boolean).map((Comp, i) => (
-					<li key={i}>{Comp}</li>
-				))}
-			</NavBar>
+			{buttons.filter(Boolean).length > 0 && (
+				<NavBar>
+					{buttons.filter(Boolean).map((Comp, i) => (
+						<li key={i}>{Comp}</li>
+					))}
+				</NavBar>
+			)}
 		</div>
 	)
 }
