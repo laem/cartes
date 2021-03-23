@@ -160,13 +160,14 @@ export default function SessionBar({ answerButtonOnly = false }) {
 const NavBar = styled.ul`
 	display: flex;
 	list-style-type: none;
-	justify-content: center;
+	justify-content: space-evenly !important;
 	align-items: center;
 	height: 3.5rem;
 	button {
 		margin: 0 0.2rem;
 	}
 	margin: 0;
+	padding: 0;
 	@media (max-width: 800px) {
 		width: 100%;
 		z-index: 10;
