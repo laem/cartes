@@ -18,6 +18,7 @@ import { objectifsSelector } from 'Selectors/simulationSelectors'
 import { useEngine } from 'Components/utils/EngineContext'
 import emoji from 'react-easy-emoji'
 import { situationSelector } from '../../selectors/simulationSelectors'
+import BandeauContribuer from './BandeauContribuer'
 
 const eqValues = compose(isEmpty, symmetricDifference)
 
@@ -47,7 +48,13 @@ const Simulateur = (props) => {
 	if (!configSet) return null
 
 	return (
-		<div css="margin-bottom: 1em">
+		<div
+			css={`
+				@media (max-width: 800px) {
+					margin-bottom: 10rem;
+				}
+			`}
+		>
 			<Helmet>
 				<title>{rule.title}</title>
 				{rule.description && (
@@ -79,6 +86,7 @@ const Simulateur = (props) => {
 				url={'https://' + window.location.hostname + props.match.url}
 				title={rule.title}
 			/>
+			<BandeauContribuer />
 		</div>
 	)
 }

@@ -11,6 +11,7 @@ import { Redirect, useLocation } from 'react-router-dom'
 import { RootState } from 'Reducers/rootReducer'
 import SearchBar from 'Components/SearchBar'
 import Méthode from './Méthode'
+import BandeauContribuer from '../BandeauContribuer'
 
 console.log(getDocumentationSiteMap)
 
@@ -52,6 +53,7 @@ export default function RulePage() {
 				documentationPath={documentationPath}
 			/>
 			{/* <button>Voir l</button> */}
+			<BandeauContribuer />
 		</Animate.fromBottom>
 	)
 }
