@@ -21,6 +21,7 @@ import {
 	situationSelector,
 } from 'Selectors/simulationSelectors'
 import { objectifsSelector } from '../../selectors/simulationSelectors'
+import { splitName } from '../publicodesUtils'
 import useKeypress from '../utils/useKeyPress'
 import Aide from './Aide'
 import CategoryRespiration from './CategoryRespiration'
@@ -128,7 +129,7 @@ export default function Conversation({
 	if (!currentQuestion)
 		return <SimulationEnding {...{ customEnd, customEndMessages }} />
 
-	const questionCategoryName = currentQuestion.split(' . ')[0],
+	const questionCategoryName = splitName(currentQuestion)[0],
 		questionCategory =
 			orderByCategories &&
 			orderByCategories.find(
@@ -138,7 +139,7 @@ export default function Conversation({
 	const isCategoryFirstQuestion =
 		questionCategory &&
 		previousAnswers.find(
-			(a) => a.split(' . ')[0] === questionCategory.dottedName
+			(a) => splitName(a)[0] === questionCategory.dottedName
 		) === undefined
 
 	const hasDescription =

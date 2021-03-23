@@ -67,26 +67,22 @@ export default ({}) => {
 				</button>
 			</Link>
 			<div className="ui__ card" css={'padding: .1rem; margin: .8rem 0'}>
-				<header css="margin-bottom: 1rem; h1 {font-size: 180%;}; h1 > span {margin-right: 1rem}">
+				<header
+					css={`
+						margin-bottom: 1rem;
+						h1 {
+							font-size: 180%;
+							margin: 0.6rem 0;
+						}
+						h1 > span {
+							margin-right: 1rem;
+						}
+					`}
+				>
 					<h1>
 						{icons && <span>{emoji(icons)}</span>}
 						{title}
 					</h1>
-					{nodeValue != null && (
-						<div css="display: flex; align-items: center">
-							<img src={BallonGES} css="height: 6rem" />
-							<div>
-								<HumanWeight
-									nodeValue={correctValue({ nodeValue, unit: evaluation.unit })}
-								/>
-								<div>
-									<Link to={'/documentation/' + encodeRuleName(dottedName)}>
-										{emoji('🔬 ')} comprendre le calcul
-									</Link>
-								</div>
-							</div>
-						</div>
-					)}
 				</header>
 				<div css="margin: 1.6rem 0">
 					<Markdown source={description} />
