@@ -79,7 +79,6 @@ function Questions({
 				style={{
 					display: 'flex',
 					justifyContent: 'space-between',
-					marginTop: '1.2rem',
 					marginBottom: '0.6rem',
 				}}
 			></div>
