@@ -9,6 +9,7 @@ import {
 } from '../../selectors/simulationSelectors'
 import SimulationHumanWeight from './HumanWeight'
 import { useEngine } from 'Components/utils/EngineContext'
+import { correctValue } from '../../components/publicodesUtils'
 
 export default ({}) => {
 	const objectif = useSelector(objectifsSelector)[0],
@@ -16,9 +17,11 @@ export default ({}) => {
 		situation = useSelector(situationSelector),
 		engine = useEngine(),
 		evaluation = engine.evaluate(objectif),
-		{ nodeValue, dottedName } = evaluation
+		{ nodeValue: rawNodeValue, dottedName, unit } = evaluation
 	const foldedSteps = useSelector((state) => state.simulation?.foldedSteps),
 		simulationStarted = foldedSteps && foldedSteps.length
+
+	const nodeValue = correctValue({ nodeValue: rawNodeValue, unit })
 
 	return (
 		<div

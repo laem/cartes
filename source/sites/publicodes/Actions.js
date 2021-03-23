@@ -25,6 +25,7 @@ import { extractCategories } from './chart'
 import ListeActionPlus from './ListeActionPlus'
 import ModeChoice from './ModeChoice'
 import CategoryFilters from './CategoryFilters'
+import { correctValue } from '../../components/publicodesUtils'
 
 const { encodeRuleName, decodeRuleName } = utils
 
@@ -57,16 +58,6 @@ export default ({}) => {
 			</Switch>
 		</>
 	)
-}
-
-// Publicodes's % unit is strangely handlded
-// the nodeValue is * 100 to account for the unit
-// hence we divide it by 100 and drop the unit
-export const correctValue = (evaluated) => {
-	const { nodeValue, unit } = evaluated
-
-	const result = unit?.numerators.includes('%') ? nodeValue / 100 : nodeValue
-	return result
 }
 
 const ActionList = animated(({}) => {

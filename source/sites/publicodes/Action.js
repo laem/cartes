@@ -14,8 +14,7 @@ import BallonGES from './images/ballonGES.svg'
 import { useNextQuestions } from 'Components/utils/useNextQuestion'
 import { EngineContext } from '../../components/utils/EngineContext'
 import { splitName } from 'Components/publicodesUtils'
-import { parentName } from '../../components/publicodesUtils'
-import { correctValue } from './Actions'
+import { correctValue, parentName } from '../../components/publicodesUtils'
 
 const { decodeRuleName, encodeRuleName } = utils
 
