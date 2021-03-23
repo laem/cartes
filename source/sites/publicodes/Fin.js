@@ -105,7 +105,7 @@ const AnimatedDiv = animated(({ score, value, details, headlessMode }) => {
 					color: ${textColor};
 					margin: 0 auto;
 					border-radius: 0.6rem;
-					height: 70vh;
+					height: 65vh;
 					display: flex;
 					flex-direction: column;
 					justify-content: space-evenly;
