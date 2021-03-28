@@ -8,6 +8,7 @@ import emoji from 'react-easy-emoji'
 import NewsBanner from '../../components/NewsBanner'
 
 import { LoudButton } from './UI'
+import Emoji from '../../components/Emoji'
 
 export default () => {
 	return (
@@ -70,7 +71,9 @@ export default () => {
 					</p>
 				</header>
 				<LoudButton to="instructions">Faire le test</LoudButton>
-				<p>{emoji('⌚️')} 2 minutes chrono</p>
+				<p>
+					<Emoji e="⏱️" /> 2 minutes chrono
+				</p>
 
 				<footer css="display: flex; justify-content: center; align-items: center; height: 3rem">
 					<div
