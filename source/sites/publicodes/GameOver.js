@@ -8,6 +8,7 @@ import {
 	resetSimulation,
 } from '../../actions/actions'
 import Emoji from '../../components/Emoji'
+import ShareButton from '../../components/ShareButton'
 import { useNextQuestions } from '../../components/utils/useNextQuestion'
 import FuturecoMonochrome from '../../images/FuturecoMonochrome'
 import { answeredQuestionsSelector } from '../../selectors/simulationSelectors'
@@ -52,6 +53,9 @@ export default () => {
 			<Route exact path="/fin/définition" component={Définition} />
 			<Route exact path="/fin/changer" component={Changer} />
 			<Route exact path="/fin/chemin" component={Chemin} />
+			<Route exact path="/fin/action" component={Action} />
+			<Route exact path="/fin/quand" component={Quand} />
+			<Route exact path="/fin/pourquoi-trois" component={PourquoiTrois} />
 			<Route exact path="/fin/claque" component={Claque} />
 			<Route exact path="/fin/trajectoire" component={Trajectoire} />
 			<Route exact path="/fin/ensemble" component={Ensemble} />
@@ -123,9 +127,9 @@ const Claque = () => (
 		<h1>La claque</h1>
 		<p>On ne vous avait jamais dit que c'était si compliqué ?</p>
 		<p>
-			Pipi sous la douche, ampoules basse conso, zéro déchet, fournisseur
-			"écolo", voiture électrique, les petits gestes nous allègent la conscience
-			et la technologie nous rassure.
+			Pipi sous la douche, ampoules basse conso, zéro déchet, électricité
+			"écolo", voiture électrique... les petits gestes nous allègent la
+			conscience et la technologie nous rassure.
 		</p>
 		<p>Mais le compte n'y est pas.</p>
 
@@ -189,26 +193,77 @@ const Trajectoire = () => (
 			<div>L'écolo</div>
 		</div>
 
-		<LoudButton to="/fin/trajectoire">En combien de temps ?</LoudButton>
+		<LoudButton to="/fin/quand">En combien de temps ?</LoudButton>
 	</Dialog>
 )
+const Quand = () => (
+	<Dialog>
+		<h1>C'est urgent</h1>
+		<p>
+			Oubliez les échéances en 2030, les trajectoires à 2050. C'est la plus
+			belle <strong>procrastination</strong> de l'histoire humaine.
+		</p>
+		<p>
+			Chaque année passée au-dessus de <strong>3 tonnes</strong> nous dévie du
+			but.
+		</p>
+		<p>
+			Lequel ? Un climat soutenable pour 7 milliards d'êtres humains et un
+			billion de fois plus de vie.
+		</p>
+		<LoudButton to="/fin/pourquoi-trois">Pourquoi 3 ?</LoudButton>
+	</Dialog>
+)
+
+const PourquoiTrois = () => (
+	<Dialog>
+		<h1>Les maths</h1>
+		<p>
+			Normalement, l'objectif personnel écolo est de{' '}
+			<strong>moins de 2 tonnes</strong>. Sauf que c'est inatteignable tout
+			seul.
+		</p>
+
+		<p>
+			En <Emoji e="🇫🇷" />, nos services publics représentent ~1 tonne, et on
+			espère qu'elle tendera vers 0.
+		</p>
+		<p>Il vous en reste donc 2, cordialement.</p>
+		<LoudButton to="/fin/action">Comment faire ?</LoudButton>
+	</Dialog>
+)
+
+const Action = () => (
+	<Dialog>
+		<h1>Il est où le GPS ?</h1>
+		<p>
+			Ne vous inquiétez pas, vous serez guidés : vous pourrez continuer le
+			questionnaire, puis découvrir plein de façons de réduire votre empreinte.
+		</p>
+		<p>Mais une chose avant tout ! </p>
+		<LoudButton to="/fin/ensemble">Quoi encore ?</LoudButton>
+	</Dialog>
+)
+
 const Ensemble = () => (
 	<Dialog>
 		<h1>En parler, partout, tout le temps</h1>
 		<p>
-			Quand on comprendre l'ampleur de la catastrophe et de l'effort à faire, on
-			a de quoi désespérer.
+			Tout seul, on déprimera ou on sauvera l'honneur. Ensemble, on va changer
+			ce monde. Il s'agit de notre planète, notre futur, notre paix, notre
+			bonheur bordel !
 		</p>
 		<p>
-			Quand on est tout seul, on déprime. Quand on est beaucoup, on change le
-			monde. C'est de notre planète, notre futur, notre paix, notre bonheur
-			qu'il s'agit, bordel !{' '}
+			Vous avez des amis, de la famille, l'internet ?{' '}
+			<strong>On est tous dans la même merde</strong>
 		</p>
-		<p>
-			Vous avez des amis, de la famille, l'internet ? Partagez-leur ce test ⬇️,
-			on est tous dans la <strong>même merde</strong>.
-		</p>
-		<p>Gros bouton partager</p>
+		<p>Partagez-leur ce test ⬇️</p>
+		<ShareButton
+			text="Voilà mon empreinte climat. Mesure la tienne !"
+			url={'https://futur.eco'}
+			title={'Êtes-vous écolo ? Le test.'}
+			color={'white'}
+		/>
 	</Dialog>
 )
 
