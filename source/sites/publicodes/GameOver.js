@@ -1,6 +1,6 @@
 import { useState } from 'react'
 import emoji from 'react-easy-emoji'
-import { useDispatch } from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux'
 import { Redirect } from 'react-router'
 import { Switch, Link, Route } from 'react-router-dom'
 import {
@@ -8,7 +8,9 @@ import {
 	resetSimulation,
 } from '../../actions/actions'
 import Emoji from '../../components/Emoji'
+import { useNextQuestions } from '../../components/utils/useNextQuestion'
 import FuturecoMonochrome from '../../images/FuturecoMonochrome'
+import { answeredQuestionsSelector } from '../../selectors/simulationSelectors'
 import { colorScale } from './Simulateur'
 import { GameDialog, LoudButton } from './UI'
 
@@ -55,49 +57,61 @@ export default () => {
 	)
 }
 
-const Perdu = () => (
-	<Dialog>
-		<h1>Perdu {emoji('🙁')}</h1>
-		<p>
-			<strong>Vous n'êtes pas écolo.</strong>
-		</p>
-		<p>
-			Vos x premières réponses au test sont formelles : votre train de vie nous
-			emène déjà vers une planète anormalement réchauffée. [caler l'avancemement
-			visuel ici]
-		</p>
-		<p>
-			On ne vous avait jamais dit que c'était si compliqué ? Eh oui, face à la
-			falaise on enfile les œillères des petits gestes qui nous allègent la
-			conscience et de la technologie qui nous rassure.
-		</p>
-		<LoudButton to="/fin/définition">Comment ça, "pas écolo" ?</LoudButton>
-	</Dialog>
-)
+const Perdu = () => {
+	const answeredQuestions = useSelector(answeredQuestionsSelector),
+		answerCount = answeredQuestions.length,
+		nextSteps = useNextQuestions(),
+		nextStepsCount = nextSteps.length
+
+	return (
+		<Dialog>
+			<h1>Perdu {emoji('🙁')}</h1>
+			<p>
+				<strong>Vous n'êtes pas écolo.</strong>
+			</p>
+			<p>
+				Votre train de vie nous emène vers une planète anormalement réchauffée.
+			</p>
+			<p>
+				Il a suffi de <strong>{answerCount}</strong> réponses au test sur{' '}
+				<strong>{nextStepsCount}</strong> questions pour le savoir.
+			</p>
+			<LoudButton to="/fin/définition">
+				Comment ça <br /> <em>pas écolo </em> ?
+			</LoudButton>
+		</Dialog>
+	)
+}
 
 const Définition = () => (
 	<Dialog>
 		<h1>Être écolo, définition !</h1>
 		<p>
-			On ne peut pas être écolo si on défonce le climat. Avoir une empreinte
-			climat de moins de 3 tonnes est une <em>condition nécessaire </em>.
+			On ne peut pas être écolo si on défonce le climat. Une empreinte climat
+			personnelle de moins de <strong>3 </strong> tonnes est une{' '}
+			<strong>condition nécessaire</strong>.
 		</p>
 
-		<p>Graphique, explication visuelle.</p>
-
+		<p> A l'inverse, on peut respecter le climat mais ne pas être écolo.</p>
 		<p>
-			Ce n'est pas parce qu'on respecte le climat qu'on est écolo, mais en
-			pratique, vu l'effort de sobriété que cela demande, c'est déjà une super
-			étape.
+			Mais vu l'énorme effort que ça représente, c'est déjà une{' '}
+			<strong>super étape</strong>.{' '}
 		</p>
-		<LoudButton to="/fin/changer">Que faire ?</LoudButton>
+		<LoudButton to="/fin/chemin">Que faire ?</LoudButton>
 	</Dialog>
 )
 
 const Chemin = () => (
 	<Dialog>
 		<h1>Comment prendre le bon chemin ?</h1>
-		<p>La règle est simple : -10% d'empreinte par an.</p>
+		<p>
+			La règle est simple : <br />
+			<strong>- 10% d'empreinte par an.</strong>
+		</p>
+		<p>
+			C'est simple : le français <Emoji e="🇫🇷" /> moyen a 10 tonnes d'empreinte.
+		</p>
+
 		<p>Expérience intéractive qui propose des pistes de changement</p>
 		<LoudButton to="/fin/ensemble">Et ça suffit ?</LoudButton>
 	</Dialog>
@@ -126,11 +140,20 @@ const Changer = () => (
 	<Dialog>
 		<h1>Changer, maintenant</h1>
 		<p>
-			On n'a qu'une planète, pas de bouton "recommencer", mais tout n'est pas
-			cuit !
+			On n'a qu'une planète, pas de bouton{' '}
+			<em>
+				<Emoji e="♻️" />
+				recommencer
+			</em>
+			, mais tout n'est pas cuit !
 		</p>
-		<p>Demain vous pourrez ne pas prendre votre voiture.</p>
-		<p>Dans deux semaines acheter un vélo. </p>
+		<p>
+			Demain vous pouvez ne pas prendre votre voiture <Emoji e="🚗" />.
+		</p>
+		<p>
+			Dans deux semaines acheter un vélo <Emoji e="🚲" />.
+		</p>
+
 		<p>L'été prochain choisir d'autres destinations de vacances en train. </p>
 
 		<p>L'année prochaine déménager, changer de boulot.</p>

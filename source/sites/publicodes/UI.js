@@ -27,6 +27,10 @@ export const GameDialog = styled.div`
 	button {
 		margin: 1rem;
 	}
+
+	strong {
+		color: var(--color);
+	}
 `
 export const LoudButton = ({ to, children }) => {
 	const [play] = useSound(boopSfx)
