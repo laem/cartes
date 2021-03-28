@@ -59,9 +59,8 @@
 	);
 	background-image: linear-gradient(
 		50deg,
-		var(--darkColor) -50%,
-		var(--color) 50%,
-		var(--lightColor) 55%
+		var(--darkColor) 80%,
+		var(--color) 100%
 	);
 }
 .ui__.button:not(:disabled):not(.disabled):not(.simple):hover,
