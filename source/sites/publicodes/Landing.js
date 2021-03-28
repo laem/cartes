@@ -50,6 +50,7 @@ export default () => {
 					display: flex;
 					flex-direction: column;
 					justify-content: space-evenly;
+					align-items: center;
 					height: 48%;
 					img {
 						font-size: 140%;
