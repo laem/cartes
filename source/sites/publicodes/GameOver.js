@@ -7,6 +7,7 @@ import {
 	deletePreviousSimulation,
 	resetSimulation,
 } from '../../actions/actions'
+import Emoji from '../../components/Emoji'
 import FuturecoMonochrome from '../../images/FuturecoMonochrome'
 import { colorScale } from './Simulateur'
 import { GameDialog, LoudButton } from './UI'
@@ -17,15 +18,15 @@ const Eraser = ({}) => {
 
 	if (erased) return <Redirect to="/simulateur/bilan" />
 	return (
-		<button
+		<div
 			onClick={() => {
 				dispatch(resetSimulation())
 				dispatch(deletePreviousSimulation())
 				setErased(true)
 			}}
 		>
-			Effacer
-		</button>
+			<Emoji e="💥" /> Effacer
+		</div>
 	)
 }
 
@@ -34,7 +35,9 @@ const Dialog = ({ children }) => (
 		{children}
 
 		<div css="display: flex; justify-content: center">
-			<FuturecoMonochrome color={colorScale.slice(-1)[0]} />
+			<Link to="/">
+				<FuturecoMonochrome color={colorScale.slice(-1)[0]} />
+			</Link>
 		</div>
 		<Eraser />
 	</GameDialog>

@@ -40,7 +40,12 @@ const DesktopShareButton = (props) => {
 	}
 
 	return (
-		<div>
+		<div
+			css={`
+				max-width: 800px;
+				margin: 0 auto;
+			`}
+		>
 			<div
 				css={`
 					display: flex;

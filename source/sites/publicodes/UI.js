@@ -24,15 +24,18 @@ export const GameDialog = styled.div`
 	p {
 		margin: 0.6rem 0;
 	}
+	button {
+		margin: 1rem;
+	}
 `
 export const LoudButton = ({ to, children }) => {
 	const [play] = useSound(boopSfx)
 
 	return (
-		<div onClick={play}>
+		<button onClick={play}>
 			<Link to={to} className="ui__ plain button">
 				{children}
 			</Link>
-		</div>
+		</button>
 	)
 }

@@ -72,13 +72,6 @@ export default ({ children, rulesURL, dataBranch }) => {
 				)
 				return { ...memo, ...ruleSetPlus }
 			}, {})
-			console.log(
-				JSON.stringify(
-					Object.entries(rules)
-						.map(([k, v]) => (v && v.question ? { [k]: v['par défaut'] } : {}))
-						.reduce((memo, next) => ({ ...memo, ...next }), {})
-				)
-			)
 
 			const zeroRules = Object.entries(rules).reduce(
 				(memo, [k, v]) => ({
