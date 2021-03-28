@@ -72,7 +72,7 @@
 .ui__.button.simple.small {
 	border: none;
 	background: transparent;
-	color: var(--color);
+	color: var(--lightColor);
 	padding-left: 0;
 	padding-right: 0;
 }
@@ -118,7 +118,7 @@
 	text-decoration: underline;
 	text-underline-offset: 4px;
 	color: rgb(41, 117, 209);
-	color: var(--color);
+	color: var(--lightColor);
 }
 .ui__.link-button.active {
 	font-weight: bold;
@@ -166,6 +166,7 @@
 
 .ui__.small.button {
 	width: inherit;
+	font-weight: 500;
 	font-size: 90%;
 	line-height: 1.2rem;
 	transition: all 0.08s;

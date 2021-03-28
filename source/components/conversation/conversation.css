@@ -85,7 +85,7 @@
 }
 @media (hover) {
 	.step label.userAnswerButton:hover:not(.selected) {
-		background: var(--lighterColor);
+		background: var(--lightColor);
 		transition: all 0.05s;
 	}
 }

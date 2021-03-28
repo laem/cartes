@@ -13,6 +13,7 @@ import {
 } from 'Selectors/simulationSelectors'
 import { extractCategories } from '../sites/publicodes/chart'
 import Answers from './conversation/AnswerList'
+import Emoji from './Emoji'
 
 // TODO should be find the rewritten version of this from mon-entreprise and merge them ?
 
@@ -71,7 +72,7 @@ export default function SessionBar({ answerButtonOnly = false }) {
 							className="simple small"
 							onClick={() => setShowAnswerModal(true)}
 						>
-							{emoji('📋 ')}
+							<Emoji e="📋" />
 							Modifier mes réponses
 						</Button>
 					</>
@@ -117,7 +118,7 @@ export default function SessionBar({ answerButtonOnly = false }) {
 						className="simple small"
 						onClick={() => setShowAnswerModal(true)}
 					>
-						{emoji('📋 ')}
+						<Emoji e="📜" />
 						Modifier mes réponses
 					</Button>
 				</>

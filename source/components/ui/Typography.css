@@ -41,7 +41,7 @@ h2 {
 	margin-top: 2rem;
 	margin-bottom: 1rem;
 	font-size: 1.4rem;
-	font-size: 200%;
+	font-size: 160%;
 }
 h3 {
 	margin-top: 1rem;
@@ -109,7 +109,7 @@ a {
 	padding: none;
 	text-decoration: underline;
 	text-underline-offset: 4px;
-	color: var(--color);
+	color: var(--lightColor);
 }
 
 p img {
@@ -131,8 +131,6 @@ textarea {
 
 small,
 .ui__.notice {
-	color: rgba(0, 0, 0, 0.6);
-	color: var(--lighterTextColor);
 	font-size: 85%;
 	line-height: 1.5rem;
 }

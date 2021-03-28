@@ -10,6 +10,7 @@ export default ({ e }) => (
 		css={`
 			width: ${sizeRem}rem !important;
 			height: ${sizeRem}rem !important;
+			vertical-align: middle !important;
 		`}
 		src={openmoji.url(e)}
 		alt={e}

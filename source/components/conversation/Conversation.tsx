@@ -29,6 +29,7 @@ import {
 } from './select/SelectWeeklyDiet'
 import styled, { css } from 'styled-components'
 import { CategoryLabel } from './UI'
+import Emoji from '../Emoji'
 
 export type ConversationProps = {
 	customEndMessages?: React.ReactNode
@@ -175,7 +176,6 @@ export default function Conversation({
 				{orderByCategories && questionCategory && (
 					<div>
 						<CategoryLabel color={questionCategory.color}>
-							{emoji(questionCategory.icons || '🌍')}
 							{questionCategory.title}
 						</CategoryLabel>
 					</div>
