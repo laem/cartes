@@ -52,6 +52,8 @@ export default () => {
 			<Route exact path="/fin/définition" component={Définition} />
 			<Route exact path="/fin/changer" component={Changer} />
 			<Route exact path="/fin/chemin" component={Chemin} />
+			<Route exact path="/fin/claque" component={Claque} />
+			<Route exact path="/fin/trajectoire" component={Trajectoire} />
 			<Route exact path="/fin/ensemble" component={Ensemble} />
 		</Switch>
 	)
@@ -97,7 +99,7 @@ const Définition = () => (
 			Mais vu l'énorme effort que ça représente, c'est déjà une{' '}
 			<strong>super étape</strong>.{' '}
 		</p>
-		<LoudButton to="/fin/chemin">Que faire ?</LoudButton>
+		<LoudButton to="/fin/claque">OK...</LoudButton>
 	</Dialog>
 )
 
@@ -114,6 +116,80 @@ const Chemin = () => (
 
 		<p>Expérience intéractive qui propose des pistes de changement</p>
 		<LoudButton to="/fin/ensemble">Et ça suffit ?</LoudButton>
+	</Dialog>
+)
+const Claque = () => (
+	<Dialog>
+		<h1>La claque</h1>
+		<p>On ne vous avait jamais dit que c'était si compliqué ?</p>
+		<p>
+			Pipi sous la douche, ampoules basse conso, zéro déchet, fournisseur
+			"écolo", voiture électrique, les petits gestes nous allègent la conscience
+			et la technologie nous rassure.
+		</p>
+		<p>Mais le compte n'y est pas.</p>
+
+		<LoudButton to="/fin/trajectoire">Il est où alors ?</LoudButton>
+	</Dialog>
+)
+const Trajectoire = () => (
+	<Dialog>
+		<h1>La trajectoire</h1>
+		<p>Limpide. Décroitre à 3 tonnes d'empreinte climat par personne.</p>
+		<div
+			css={`
+				width: 100%;
+				height: 25vh;
+				display: flex;
+				flex-direction: column;
+				justify-content: space-evenly;
+				> div {
+					height: 2.5rem;
+					display: flex;
+					flex-direction: column;
+					justify-content: center;
+					align-items: flex-start;
+					padding: 0.6rem;
+				}
+				> div:first-child {
+					background: ${colorScale[4]};
+					width: 100%;
+				}
+				> div:last-child {
+					background: ${colorScale[0]};
+					width: 30%;
+				}
+			`}
+		>
+			<div>Le 🇫🇷 👤 moyen</div>
+			<svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
+				<defs>
+					<marker
+						id="arrow"
+						fill="white"
+						viewBox="0 0 10 10"
+						refX="5"
+						refY="5"
+						markerWidth="5"
+						markerHeight="5"
+						orient="auto-start-reverse"
+					>
+						<path d="M 0 0 L 10 5 L 0 10 z" />
+					</marker>
+				</defs>
+
+				<polyline
+					points="10,90 180,10"
+					fill="none"
+					stroke="white"
+					strokeWidth="3px"
+					marker-start="url(#arrow)"
+				/>
+			</svg>
+			<div>L'écolo</div>
+		</div>
+
+		<LoudButton to="/fin/trajectoire">En combien de temps ?</LoudButton>
 	</Dialog>
 )
 const Ensemble = () => (
