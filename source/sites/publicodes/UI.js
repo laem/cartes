@@ -16,6 +16,14 @@ export const GameDialog = styled.div`
 	max-width: 800px;
 	width: 85vw;
 	margin: 0 auto;
+
+	@media (min-width: 800px) {
+		justify-content: center;
+	}
+
+	p {
+		margin: 0.6rem 0;
+	}
 `
 export const LoudButton = ({ to, children }) => {
 	const [play] = useSound(boopSfx)
