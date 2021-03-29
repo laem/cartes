@@ -1,6 +1,7 @@
-import { useDispatch } from 'react-redux'
 import IllustratedButton from 'Components/IllustratedButton'
+import { useDispatch } from 'react-redux'
 import { setActionMode } from '../../actions/actions'
+import { useSafePreviousSimulation } from '../../components/SessionBar'
 
 export default ({}) => {
 	const dispatch = useDispatch()

@@ -57,21 +57,28 @@ export const buildEndURL = (rules, engine) => {
 	return `/fin?details=${detailsString}`
 }
 
-export default function SessionBar({
-	answerButtonOnly = false,
-	noResults = false,
-}) {
-	const dispatch = useDispatch()
+export const useSafePreviousSimulation = () => {
 	const previousSimulation = useSelector(
 		(state: RootState) => state.previousSimulation
 	)
 
+	const dispatch = useDispatch()
 	const answeredQuestions = useSelector(answeredQuestionsSelector)
 	const arePreviousAnswers = !!answeredQuestions.length
 	useEffect(() => {
 		if (!arePreviousAnswers && previousSimulation)
 			dispatch(loadPreviousSimulation())
 	}, [])
+}
+
+export default function SessionBar({
+	answerButtonOnly = false,
+	noResults = false,
+}) {
+	const dispatch = useDispatch()
+	const answeredQuestions = useSelector(answeredQuestionsSelector)
+	const arePreviousAnswers = !!answeredQuestions.length
+	useSafePreviousSimulation()
 	const [showAnswerModal, setShowAnswerModal] = useState(false)
 
 	const objectifs = useSelector(objectifsSelector)
