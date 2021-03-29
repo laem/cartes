@@ -122,6 +122,7 @@ function simulation(
 				situation: state.initialSituation,
 				foldedSteps: [],
 				unfoldedStep: null,
+				persona: null,
 			}
 		case 'UPDATE_SITUATION': {
 			const targets = objectifsSelector({ simulation: state } as RootState)
