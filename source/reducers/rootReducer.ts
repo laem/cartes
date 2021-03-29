@@ -102,6 +102,7 @@ function simulation(
 			targetUnit: config['unité par défaut'] || '€/mois',
 			foldedSteps: state?.foldedSteps || [],
 			unfoldedStep: null,
+			persona: action.persona,
 		}
 	}
 	if (state === null) {

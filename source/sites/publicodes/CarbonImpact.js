@@ -21,7 +21,8 @@ export default ({}) => {
 		evaluation = engine.evaluate(objectif),
 		{ nodeValue: rawNodeValue, dottedName, unit, rawNode } = evaluation
 	const foldedSteps = useSelector((state) => state.simulation?.foldedSteps),
-		simulationStarted = foldedSteps && foldedSteps.length
+		simulationStarted = foldedSteps && foldedSteps.length,
+		persona = useSelector((state) => state.simulation?.persona)
 
 	const nodeValue = correctValue({ nodeValue: rawNodeValue, unit })
 
@@ -69,11 +70,17 @@ export default ({}) => {
 				`}
 			>
 				{isMainSimulation &&
+					!persona &&
 					(!simulationStarted ? (
 						<em>{emoji('🇫🇷 ')} Un Français émet en moyenne</em>
 					) : (
 						<em>Votre total provisoire</em>
 					))}
+				{persona && (
+					<em>
+						{emoji('👤')} {persona}
+					</em>
+				)}
 				<div>
 					<SimulationHumanWeight nodeValue={nodeValue} />
 				</div>

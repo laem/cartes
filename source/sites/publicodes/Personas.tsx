@@ -37,6 +37,7 @@ export default () => {
 											config: { objectifs: [objectif] },
 											url: '/simulateur/bilan',
 											situation: data,
+											persona: nom,
 										})
 									)
 								}
