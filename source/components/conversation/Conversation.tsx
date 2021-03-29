@@ -159,7 +159,13 @@ export default function Conversation({
 			}
 		/>
 	) : (
-		<section>
+		<section
+			css={`
+				@media (max-width: 800px) {
+					padding: 0.8rem 0 0.4rem;
+				}
+			`}
+		>
 			<Aide />
 			<div style={{ outline: 'none' }}>
 				{orderByCategories && questionCategory && (
@@ -172,7 +178,13 @@ export default function Conversation({
 				)}
 				<Animate.fadeIn>
 					<div className="step">
-						<h3>
+						<h3
+							css={`
+								@media (max-width: 800px) {
+									margin: 0.4rem 0;
+								}
+							`}
+						>
 							{questionText}{' '}
 							{hasDescription && (
 								<ExplicableRule

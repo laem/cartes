@@ -75,13 +75,6 @@ function Questions({
 
 	return (
 		<>
-			<div
-				style={{
-					display: 'flex',
-					justifyContent: 'space-between',
-					marginBottom: '0.6rem',
-				}}
-			></div>
 			<div className="ui__ full-width lighter-bg">
 				<div className="ui__ container">
 					<Notifications />

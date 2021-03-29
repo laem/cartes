@@ -78,6 +78,9 @@ const Router = ({}) => {
 							text-decoration: none;
 							font-size: 170%;
 							margin-bottom: 0.4rem;
+							@media (max-width: 800px) {
+								margin-bottom: 0;
+							}
 						`}
 					>
 						{location.pathname === '/' ? <Logo /> : <InlineLogo />}
