@@ -70,6 +70,7 @@ export type Simulation = {
 	targetUnit: string
 	foldedSteps: Array<DottedName>
 	unfoldedStep?: DottedName | null
+	unfoldedWasFolded?: Boolean
 }
 function getCompanySituation(company: Company | null): Situation {
 	return {
@@ -151,10 +152,15 @@ function simulation(
 					unfoldedStep: null,
 				}
 			if (name === 'unfold') {
+				const previousUnfolded = state.unfoldedStep
 				return {
 					...state,
-					foldedSteps: without([step], state.foldedSteps),
+					foldedSteps: [
+						...without([step], state.foldedSteps),
+						state.unfoldedWasFolded && previousUnfolded,
+					].filter(Boolean),
 					unfoldedStep: step,
+					unfoldedWasFolded: state.foldedSteps.includes(step),
 				}
 			}
 			return state

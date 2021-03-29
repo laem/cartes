@@ -80,7 +80,11 @@ export default function Conversation({
 
 	useEffect(() => {
 		// It is important to test for "previousSimulation" : if it exists, it's not loadedYet. Then currentQuestion could be the wrong one, already answered, don't put it as the unfoldedStep
-		if (currentQuestion && !previousSimulation) {
+		if (
+			currentQuestion &&
+			!previousSimulation &&
+			currentQuestion !== unfoldedStep
+		) {
 			dispatch(goToQuestion(currentQuestion))
 		}
 	}, [dispatch, currentQuestion])
@@ -205,16 +209,6 @@ export default function Conversation({
 					</div>
 				</Animate.fadeIn>
 				<div className="ui__ answer-group">
-					{previousAnswers.length > 0 && (
-						<>
-							<button
-								onClick={goToPrevious}
-								className="ui__ simple small push-left button"
-							>
-								← <Trans>Précédent</Trans>
-							</button>
-						</>
-					)}
 					{currentQuestionIsAnswered ? (
 						<button
 							className="ui__ plain small button"
