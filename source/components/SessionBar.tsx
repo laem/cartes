@@ -98,6 +98,19 @@ export default function SessionBar({
 			),
 			showAnswerModal && <Answers onClose={() => setShowAnswerModal(false)} />,
 		]
+	} else if (path.includes('/personas')) {
+		console.log('ZOB')
+		buttons = [
+			<Button
+				className="simple small"
+				onClick={() => {
+					history.push('/actions')
+				}}
+			>
+				{emoji('💥 ')}
+				Passer à l'action
+			</Button>,
+		]
 	} else if (path.includes('/fin') || path.includes('/actions')) {
 		buttons = [
 			arePreviousAnswers ? (

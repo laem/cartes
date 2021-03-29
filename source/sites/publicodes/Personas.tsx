@@ -9,6 +9,7 @@ import { useDispatch, useSelector } from 'react-redux'
 import { setDifferentSituation } from '../../actions/actions'
 import CarbonImpact from './CarbonImpact'
 import { useEngine } from '../../components/utils/EngineContext'
+import SessionBar from '../../components/SessionBar'
 
 export default () => {
 	const dispatch = useDispatch(),
@@ -25,7 +26,7 @@ export default () => {
 				<p>
 					<em>Cliquez pour charger ce persona dans le simulateur.</em>
 				</p>
-				{configSet && <CarbonImpact evaluation={evaluation} />}
+				{configSet && <SessionBar />}
 				<CardGrid>
 					{personas.map(({ nom, icônes, data }) => (
 						<li key={nom}>
