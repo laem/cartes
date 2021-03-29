@@ -75,7 +75,14 @@ function Questions({
 
 	return (
 		<>
-			<div className="ui__ full-width lighter-bg">
+			<div
+				className="ui__ full-width lighter-bg"
+				css={`
+					@media (min-width: 800px) {
+						margin-top: 0.6rem;
+					}
+				`}
+			>
 				<div className="ui__ container">
 					<Notifications />
 					<Conversation
