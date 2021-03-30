@@ -89,7 +89,6 @@ const AnimatedDiv = animated(({ score, value, details, headlessMode }) => {
 				ogImage={shareImage}
 				url={window.location}
 			/>
-			<img width="0px" height="0px" src={shareImage} />
 			<SessionBar />
 			<motion.div
 				animate={{ scale: [0.9, 1] }}
