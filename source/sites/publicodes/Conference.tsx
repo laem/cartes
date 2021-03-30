@@ -26,7 +26,6 @@ export default () => {
 
 	const conference = useSelector((state) => state.conference)
 
-	console.log('conference', conference, room)
 	useEffect(() => {
 		console.log('will dispatch')
 		dispatch({ type: 'SET_CONFERENCE', room })
@@ -56,13 +55,14 @@ export default () => {
 			setElements(simulations.toJSON())
 		})
 
-		setInterval(
+		/*
+		 * setInterval(
 			() =>
 				simulations.set(username, {
 					nodeValue: Math.round(Math.random() * 10),
 				}),
 			5000
-		)
+		)*/
 	}, [conference])
 	return (
 		<div>
@@ -95,6 +95,7 @@ export default () => {
 							>
 								{emoji('👤 ')}
 								{u.name}
+								{u.name === username && ' (toi)'}
 							</li>
 						))}
 					</ul>
@@ -115,21 +116,6 @@ export default () => {
 					)}
 				</label>
 			)}
-			<br />
-			<br />
-			<br />
-			<br />
-			{JSON.stringify(elements)}
-			<ul>
-				{Object.entries(elements).map(([key, { nodeValue }]) => (
-					<li key={key}>{nodeValue}</li>
-				))}
-				Moyenne
-				{Object.values(elements).reduce(
-					(memo, { nodeValue }) => memo + nodeValue,
-					0
-				) / Object.values(elements).length}
-			</ul>
 		</div>
 	)
 }
