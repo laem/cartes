@@ -20,7 +20,7 @@ import {
 } from '../../selectors/simulationSelectors'
 import Action from './Action'
 import ActionPlus from './ActionPlus'
-import ActionVignette from './ActionVignette'
+import ActionVignette, { disabledAction } from './ActionVignette'
 import { extractCategories } from './chart'
 import ListeActionPlus from './ListeActionPlus'
 import ModeChoice from './ModeChoice'
@@ -98,12 +98,16 @@ const ActionList = animated(({}) => {
 		)
 
 	const effortScale = { modéré: 2, conséquent: 3, faible: 1, undefined: 0 }
-	const sortedActions =
-		mode === 'guidé'
-			? sortBy((a) => effortScale[rules[a.dottedName].effort])(
-					actions.filter((a) => rules[a.dottedName].effort != null)
-			  )
-			: sortBy((a) => (radical ? -1 : 1) * correctValue(a))(actions)
+	const sortedActionsByMode =
+			mode === 'guidé'
+				? sortBy((a) => effortScale[rules[a.dottedName].effort])(
+						actions.filter((a) => rules[a.dottedName].effort != null)
+				  )
+				: sortBy((a) => (radical ? -1 : 1) * correctValue(a))(actions),
+		sortedActions = sortBy((action) => {
+			const flatRule = rules[action.dottedName]
+			return disabledAction(flatRule, action.nodeValue)
+		}, sortedActionsByMode)
 
 	const finalActions = filterByCategory(sortedActions)
 

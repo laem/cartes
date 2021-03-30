@@ -8,13 +8,17 @@ import { humanValueAndUnit } from './HumanWeight'
 import { correctValue } from '../../components/publicodesUtils'
 import { useSelector } from 'react-redux'
 
-export default ({ evaluation, total, rule, effort }) => {
-	const rules = useSelector((state) => state.rules)
-	const { nodeValue, dottedName, title, unit } = evaluation
-	const { icônes: icons } = rule
+export const disabledAction = (flatRule, nodeValue) =>
+	flatRule.formule == null ? false : nodeValue === 0 || nodeValue === false
 
-	const noFormula = rules[dottedName].formule == null
-	const disabled = noFormula ? nodeValue === 0 || nodeValue === false : false
+export default ({ evaluation, total, rule, effort }) => {
+	const rules = useSelector((state) => state.rules),
+		{ nodeValue, dottedName, title, unit } = evaluation,
+		{ icônes: icons } = rule
+
+	const flatRule = rules[dottedName],
+		noFormula = flatRule.formule == null,
+		disabled = disabledAction(flatRule, nodeValue)
 
 	return (
 		<Link
