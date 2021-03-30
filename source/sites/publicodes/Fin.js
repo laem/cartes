@@ -49,22 +49,28 @@ export default ({}) => {
 				)
 
 	const score = sumFromDetails(rehydratedDetails)
-	const { value } = useSpring({
-		config: { mass: 1, tension: 150, friction: 150, precision: 1000 },
-		value: score,
-		from: { value: 0 },
-	})
+	const headlessMode =
+		!window || window.navigator.userAgent.includes('HeadlessChrome')
+
+	const { value } = headlessMode
+		? { value: score }
+		: useSpring({
+				config: { mass: 1, tension: 150, friction: 150, precision: 1000 },
+				value: score,
+				from: { value: 0 },
+		  })
 
 	return (
 		<AnimatedDiv
 			value={value}
 			score={score}
 			details={Object.fromEntries(rehydratedDetails)}
+			headlessMode
 		/>
 	)
 }
 
-const AnimatedDiv = animated(({ score, value, details }) => {
+const AnimatedDiv = animated(({ score, value, details, headlessMode }) => {
 	const backgroundColor = getBackgroundColor(value).toHexString(),
 		backgroundColor2 = getBackgroundColor(value + 2000).toHexString(),
 		textColor = findContrastedTextColor(backgroundColor, true),
@@ -86,8 +92,8 @@ const AnimatedDiv = animated(({ score, value, details }) => {
 			<img width="0px" height="0px" src={shareImage} />
 			<SessionBar />
 			<motion.div
-				animate={{ scale: [0.85, 1] }}
-				transition={{ duration: 0.2, ease: 'easeIn' }}
+				animate={{ scale: [0.9, 1] }}
+				transition={{ duration: headlessMode ? 0 : 0.6 }}
 				className=""
 				id="fin"
 				css={`
