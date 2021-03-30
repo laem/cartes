@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react'
-import { useSelector } from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux'
 import { Link } from 'react-router-dom'
 import { correctValue } from '../../components/publicodesUtils'
 import { useEngine } from '../../components/utils/EngineContext'
@@ -20,35 +20,38 @@ export default () => {
 	const [username, setUsername] = usePersistingState('pseudo')
 
 	const [elements, setElements] = useState([])
+	const dispatch = useDispatch()
 
 	useEffect(() => {
-		if (!conference) return null
+		console.log('useeffect with ?', conference)
+		if (!conference) {
+			dispatch({ type: 'SET_CONFERENCE', room })
+			return null
+		}
 		const simulations = conference.ydoc.get('simulations', Y.Map)
-
-		simulations.set(username, nodeValue)
-		console.log('SET', username, nodeValue)
-	}, [situation])
-
-	useEffect(() => {
-		if (!conference) return null
 
 		conference.provider.awareness.on('change', (changes) => {
 			// Whenever somebody updates their awareness information,
 			// we log all awareness information from all users.
 			setUsers(Array.from(awareness.getStates().values()))
 		})
-		const simulations = conference.ydoc.get('simulations')
 		simulations.observe((event) => {
 			setElements(simulations.toJSON())
 			console.log(simulations.toJSON())
 		})
-	}, [])
+	}, [conference])
+
+	useEffect(() => {
+		if (!conference) return null
+
+		const simulations = conference.ydoc.get('simulations', Y.Map)
+
+		simulations.set(username, nodeValue)
+	}, [situation])
 
 	if (!conference) return <Link to="/conférence">Lancer une conférence</Link>
 	const { provider, ydoc, room } = conference
 	const awareness = provider.awareness
-
-	const simulations = conference.ydoc.get('simulations')
 
 	const simulationArray = elements && Object.values(elements),
 		rawResult =
