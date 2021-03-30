@@ -24,8 +24,14 @@ export default () => {
 	useEffect(() => {
 		if (!room) return null
 		const ydoc = new Y.Doc()
-		// clients connected to the same room-name share document updates
-		const provider = new WebrtcProvider(room, ydoc, {})
+		var provider
+		try {
+			//try catch to avoid hot-reloading errors "room already ..."
+			// clients connected to the same room-name share document updates
+			provider = new WebrtcProvider(room, ydoc, {})
+		} catch (error) {
+			console.log(error)
+		}
 		const awareness = provider.awareness
 
 		// You can observe when a any user updated their awareness information
@@ -41,10 +47,18 @@ export default () => {
 			// Define a color that should be associated to the user:
 			color: getRandomColor(), // should be a hex color
 		})
-		const yarray = ydoc.get('simulations', Y.Array)
-		yarray.observe((event) => {
-			setElements(yarray.toJSON())
+		const simulations = ydoc.get('simulations', Y.Map)
+		simulations.observe((event) => {
+			setElements(simulations.toJSON())
 		})
+
+		setInterval(
+			() =>
+				simulations.set(username, {
+					nodeValue: Math.round(Math.random() * 10),
+				}),
+			5000
+		)
 	}, [])
 	return (
 		<div>
@@ -101,11 +115,16 @@ export default () => {
 			<br />
 			<br />
 			<br />
-			<button onClick={() => yarray.insert(0, [Math.random()])}>allez</button>
+			{JSON.stringify(elements)}
 			<ul>
-				{elements.map((el) => (
-					<li key={el}>{el}</li>
+				{Object.entries(elements).map(([key, { nodeValue }]) => (
+					<li key={key}>{nodeValue}</li>
 				))}
+				Moyenne
+				{Object.values(elements).reduce(
+					(memo, { nodeValue }) => memo + nodeValue,
+					0
+				) / Object.values(elements).length}
 			</ul>
 		</div>
 	)
