@@ -20,11 +20,13 @@ import {
 } from '../../selectors/simulationSelectors'
 import Action from './Action'
 import ActionPlus from './ActionPlus'
-import ActionVignette from './ActionVignette'
+import ActionVignette, { disabledAction } from './ActionVignette'
 import { extractCategories } from './chart'
 import ListeActionPlus from './ListeActionPlus'
 import ModeChoice from './ModeChoice'
 import CategoryFilters from './CategoryFilters'
+import { correctValue } from '../../components/publicodesUtils'
+import { sessionBarMargin } from '../../components/SessionBar'
 
 const { encodeRuleName, decodeRuleName } = utils
 
@@ -35,9 +37,6 @@ export default ({}) => {
 	return (
 		<>
 			<Switch>
-				<Route path="/actions/mode">
-					<ModeChoice />
-				</Route>
 				<Route exact path="/actions/plus">
 					<ListeActionPlus />
 				</Route>
@@ -59,16 +58,6 @@ export default ({}) => {
 	)
 }
 
-// Publicodes's % unit is strangely handlded
-// the nodeValue is * 100 to account for the unit
-// hence we divide it by 100 and drop the unit
-export const correctValue = (evaluated) => {
-	const { nodeValue, unit } = evaluated
-
-	const result = unit?.numerators.includes('%') ? nodeValue / 100 : nodeValue
-	return result
-}
-
 const ActionList = animated(({}) => {
 	const location = useLocation()
 	let { category } = useParams()
@@ -81,15 +70,10 @@ const ActionList = animated(({}) => {
 	const simulation = useSelector((state) => state.simulation)
 
 	// Add the actions rules to the simulation, keeping the user's situation
-	const config = !simulation
-		? { objectifs: ['bilan', ...flatActions.formule.somme] }
-		: {
-				...simulation.config,
-				objectifs: union(
-					simulation.config.objectifs,
-					flatActions.formule.somme
-				),
-		  }
+	const config = {
+		...(simulation?.config || {}),
+		objectifs: ['bilan', ...flatActions.formule.somme],
+	}
 
 	const objectifs = useSelector(objectifsSelector)
 
@@ -97,11 +81,10 @@ const ActionList = animated(({}) => {
 
 	const targets = objectifs.map((o) => engine.evaluate(o))
 
-	const configSet = useSelector(configSelector)
+	const stateConfig = useSelector(configSelector),
+		configSet = stateConfig && Object.keys(stateConfig).length
 	const answeredQuestions = useSelector(answeredQuestionsSelector)
 	const mode = useSelector((state) => state.actionMode)
-
-	if (!mode) return <Redirect to="/actions/mode" />
 
 	const dispatch = useDispatch()
 	useEffect(() => dispatch(setSimulationConfig(config)), [location.pathname])
@@ -109,25 +92,22 @@ const ActionList = animated(({}) => {
 
 	const [bilans, actions] = partition((t) => t.dottedName === 'bilan', targets)
 
-	console.log(
-		'ACTIONS',
-		Object.entries(rules).filter(([dottedName]) =>
-			actions.find((action) => action.dottedName === dottedName)
-		)
-	)
-
 	const filterByCategory = (actions) =>
 		actions.filter((action) =>
 			category ? splitName(action.dottedName)[0] === category : true
 		)
 
 	const effortScale = { modéré: 2, conséquent: 3, faible: 1, undefined: 0 }
-	const sortedActions =
-		mode === 'guidé'
-			? sortBy((a) => effortScale[rules[a.dottedName].effort])(
-					actions.filter((a) => rules[a.dottedName].effort != null)
-			  )
-			: sortBy((a) => (radical ? -1 : 1) * correctValue(a))(actions)
+	const sortedActionsByMode =
+			mode === 'guidé'
+				? sortBy((a) => effortScale[rules[a.dottedName].effort])(
+						actions.filter((a) => rules[a.dottedName].effort != null)
+				  )
+				: sortBy((a) => (radical ? -1 : 1) * correctValue(a))(actions),
+		sortedActions = sortBy((action) => {
+			const flatRule = rules[action.dottedName]
+			return disabledAction(flatRule, action.nodeValue)
+		}, sortedActionsByMode)
 
 	const finalActions = filterByCategory(sortedActions)
 
@@ -139,62 +119,72 @@ const ActionList = animated(({}) => {
 	}, {})
 
 	return (
-		<div css="padding: 0 .3rem 1rem; max-width: 600px; margin: 1rem auto;">
-			{!answeredQuestions.length && (
-				<p css="line-height: 1.4rem; text-align: center">
-					{emoji('🧮')}&nbsp; Pour personnaliser ces propositions
-				</p>
-			)}
+		<div
+			css={`
+				padding: 0 0.3rem 1rem;
+				max-width: 600px;
+				margin: 1rem auto;
+
+				${sessionBarMargin}
+			`}
+		>
 			<SessionBar />
-			<h1 css="margin: 1rem 0 .6rem;font-size: 160%">
-				Comment réduire mon empreinte ?
-			</h1>
-			<Link
-				to="/actions/mode"
-				css="margin-bottom: .8rem; display: inline-block"
-			>
-				Mode {mode}
-			</Link>
-			<CategoryFilters
-				categories={categories}
-				selected={category}
-				countByCategory={countByCategory}
-			/>
-			{mode === 'autonome' && (
-				<button onClick={() => setRadical(!radical)}>
-					Trié par :{' '}
-					{radical ? (
-						<span>le plus d'impact {emoji('📉')}</span>
-					) : (
-						<span>le moins d'impact{emoji('📈')}</span>
+			{!mode ? (
+				<ModeChoice />
+			) : (
+				<>
+					<h1 css="margin: 1rem 0 .6rem;font-size: 160%">
+						Comment réduire mon empreinte ?
+					</h1>
+					<button
+						css="margin-bottom: .8rem; display: inline-block"
+						onClick={() => dispatch(setActionMode(null))}
+					>
+						Mode {mode}
+					</button>
+					<CategoryFilters
+						categories={categories}
+						selected={category}
+						countByCategory={countByCategory}
+					/>
+					{mode === 'autonome' && (
+						<button onClick={() => setRadical(!radical)}>
+							Trié par :{' '}
+							{radical ? (
+								<span>le plus d'impact {emoji('📉')}</span>
+							) : (
+								<span>le moins d'impact{emoji('📈')}</span>
+							)}
+						</button>
 					)}
-				</button>
+					{finalActions.map((evaluation) => (
+						<ActionVignette
+							key={evaluation.dottedName}
+							rule={rules[evaluation.dottedName]}
+							evaluation={evaluation}
+							total={bilans.length ? bilans[0].nodeValue : null}
+							effort={
+								mode === 'guidé' &&
+								effortScale[rules[evaluation.dottedName].effort]
+							}
+						/>
+					))}
+					<div css="font-size: 100%; text-align: center">
+						<em>en CO₂e / an et proportion de votre total</em>
+					</div>
+					<IllustratedButton to={'/actions/plus'} icon="📚">
+						<div>
+							<div>Comprendre les actions</div>
+							<p>
+								<small>
+									Au-delà d'un simple chiffre, découvrez les enjeux qui se
+									cachent derrière chaque action.
+								</small>
+							</p>
+						</div>
+					</IllustratedButton>
+				</>
 			)}
-			{finalActions.map((evaluation) => (
-				<ActionVignette
-					key={evaluation.dottedName}
-					rule={rules[evaluation.dottedName]}
-					evaluation={evaluation}
-					total={bilans.length ? bilans[0].nodeValue : null}
-					effort={
-						mode === 'guidé' && effortScale[rules[evaluation.dottedName].effort]
-					}
-				/>
-			))}
-			<div css="font-size: 100%; text-align: center">
-				<em>en CO₂e / an et proportion de votre total</em>
-			</div>
-			<IllustratedButton to={'/actions/plus'} icon="📚">
-				<div>
-					<div>Comprendre les actions</div>
-					<p>
-						<small>
-							Au-delà d'un simple chiffre, découvrez les enjeux qui se cachent
-							derrière chaque action.
-						</small>
-					</p>
-				</div>
-			</IllustratedButton>
 		</div>
 	)
 })

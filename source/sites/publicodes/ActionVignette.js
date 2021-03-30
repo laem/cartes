@@ -4,14 +4,21 @@ const { encodeRuleName, decodeRuleName } = utils
 import { motion } from 'framer-motion'
 import Emoji from '../../components/utils/Emoji'
 import emoji from 'react-easy-emoji'
-import { correctValue } from './Actions'
 import { humanValueAndUnit } from './HumanWeight'
+import { correctValue } from '../../components/publicodesUtils'
+import { useSelector } from 'react-redux'
+
+export const disabledAction = (flatRule, nodeValue) =>
+	flatRule.formule == null ? false : nodeValue === 0 || nodeValue === false
 
 export default ({ evaluation, total, rule, effort }) => {
-	const { nodeValue, dottedName, title, unit } = evaluation
-	const { icônes: icons } = rule
+	const rules = useSelector((state) => state.rules),
+		{ nodeValue, dottedName, title, unit } = evaluation,
+		{ icônes: icons } = rule
 
-	const disabled = nodeValue === 0 || nodeValue === false
+	const flatRule = rules[dottedName],
+		noFormula = flatRule.formule == null,
+		disabled = disabledAction(flatRule, nodeValue)
 
 	return (
 		<Link
@@ -104,9 +111,7 @@ export default ({ evaluation, total, rule, effort }) => {
 								<span>{[...new Array(effort)].map((i) => emoji('💪'))}</span>
 							</div>
 						)}
-						{nodeValue != null && (
-							<ActionValue {...{ total, nodeValue, unit, disabled }} />
-						)}
+						<ActionValue {...{ total, nodeValue, unit, disabled, noFormula }} />
 					</div>
 				</div>
 			</motion.div>
@@ -118,6 +123,7 @@ const ActionValue = ({
 	nodeValue: rawValue,
 	unit: rawUnit,
 	disabled,
+	noFormula,
 }) => {
 	const correctedValue = correctValue({ nodeValue: rawValue, unit: rawUnit })
 	const { unit, value } = humanValueAndUnit(correctedValue),
@@ -142,7 +148,9 @@ const ActionValue = ({
 			`}
 		>
 			<div>Impact&nbsp;</div>
-			{disabled ? (
+			{noFormula ? (
+				'🤷'
+			) : disabled ? (
 				'Non applicable'
 			) : (
 				<div>

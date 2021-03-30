@@ -76,14 +76,13 @@ function Questions({
 	return (
 		<>
 			<div
-				style={{
-					display: 'flex',
-					justifyContent: 'space-between',
-					marginTop: '1.2rem',
-					marginBottom: '0.6rem',
-				}}
-			></div>
-			<div className="ui__ full-width lighter-bg">
+				className="ui__ full-width lighter-bg"
+				css={`
+					@media (min-width: 800px) {
+						margin-top: 0.6rem;
+					}
+				`}
+			>
 				<div className="ui__ container">
 					<Notifications />
 					<Conversation

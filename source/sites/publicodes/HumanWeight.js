@@ -14,19 +14,7 @@ export const humanWeight = (v) => {
 	return [raw, unit]
 }
 export default ({ nodeValue }) => {
-	const foldedSteps = useSelector((state) => state.simulation?.foldedSteps),
-		simulationStarted = foldedSteps && foldedSteps.length
-
-	return (
-		<span>
-			{!simulationStarted ? (
-				<em>{emoji('🇫🇷 ')} Un Français émet en moyenne</em>
-			) : (
-				<em>Votre total provisoire</em>
-			)}
-			<HumanWeight nodeValue={nodeValue} />
-		</span>
-	)
+	return <HumanWeight nodeValue={nodeValue} />
 }
 
 export const humanValueAndUnit = (possiblyNegativeValue) => {
@@ -39,8 +27,9 @@ export const humanValueAndUnit = (possiblyNegativeValue) => {
 export const HumanWeight = ({ nodeValue }) => {
 	const { value, unit } = humanValueAndUnit(nodeValue)
 	return (
-		<div>
+		<span>
 			<strong
+				className="humanValue"
 				css={`
 					font-size: 160%;
 					font-weight: 600;
@@ -49,12 +38,12 @@ export const HumanWeight = ({ nodeValue }) => {
 				{value}&nbsp;{unit}
 			</strong>{' '}
 			<UnitSuffix />
-		</div>
+		</span>
 	)
 }
 
 export const UnitSuffix = () => (
-	<span>
+	<span className="unitSuffix">
 		de <strong>CO₂</strong>e / an
 	</span>
 )

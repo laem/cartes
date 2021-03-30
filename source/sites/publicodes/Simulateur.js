@@ -18,6 +18,8 @@ import { objectifsSelector } from 'Selectors/simulationSelectors'
 import { useEngine } from 'Components/utils/EngineContext'
 import emoji from 'react-easy-emoji'
 import { situationSelector } from '../../selectors/simulationSelectors'
+import BandeauContribuer from './BandeauContribuer'
+import { sessionBarMargin } from '../../components/SessionBar'
 
 const eqValues = compose(isEmpty, symmetricDifference)
 
@@ -47,7 +49,7 @@ const Simulateur = (props) => {
 	if (!configSet) return null
 
 	return (
-		<div css="margin-bottom: 1em">
+		<div css={sessionBarMargin}>
 			<Helmet>
 				<title>{rule.title}</title>
 				{rule.description && (
@@ -70,7 +72,6 @@ const Simulateur = (props) => {
 				targets={<>{rule.period === 'flexible' && <PeriodBlock />}</>}
 				explanations={
 					<>
-						<CarbonImpact evaluation={evaluation} />
 						<Chart />
 					</>
 				}
@@ -80,6 +81,7 @@ const Simulateur = (props) => {
 				url={'https://' + window.location.hostname + props.match.url}
 				title={rule.title}
 			/>
+			<BandeauContribuer />
 		</div>
 	)
 }

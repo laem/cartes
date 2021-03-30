@@ -85,6 +85,19 @@ export const setSituationBranch = (id: number) =>
 		id,
 	} as const)
 
+export const setDifferentSituation = ({
+	situation,
+	config,
+	url,
+	persona,
+}: Object) => ({
+	type: 'SET_SIMULATION',
+	situation,
+	config,
+	url,
+	persona,
+})
+
 export const setSimulationConfig = (config: Object): ThunkResult<void> => (
 	dispatch,
 	getState,

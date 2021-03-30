@@ -21,6 +21,7 @@ import {
 	situationSelector,
 } from 'Selectors/simulationSelectors'
 import { objectifsSelector } from '../../selectors/simulationSelectors'
+import { splitName } from '../publicodesUtils'
 import useKeypress from '../utils/useKeyPress'
 import Aide from './Aide'
 import CategoryRespiration from './CategoryRespiration'
@@ -79,7 +80,11 @@ export default function Conversation({
 
 	useEffect(() => {
 		// It is important to test for "previousSimulation" : if it exists, it's not loadedYet. Then currentQuestion could be the wrong one, already answered, don't put it as the unfoldedStep
-		if (currentQuestion && !previousSimulation) {
+		if (
+			currentQuestion &&
+			!previousSimulation &&
+			currentQuestion !== unfoldedStep
+		) {
 			dispatch(goToQuestion(currentQuestion))
 		}
 	}, [dispatch, currentQuestion])
@@ -128,7 +133,7 @@ export default function Conversation({
 	if (!currentQuestion)
 		return <SimulationEnding {...{ customEnd, customEndMessages }} />
 
-	const questionCategoryName = currentQuestion.split(' . ')[0],
+	const questionCategoryName = splitName(currentQuestion)[0],
 		questionCategory =
 			orderByCategories &&
 			orderByCategories.find(
@@ -138,7 +143,7 @@ export default function Conversation({
 	const isCategoryFirstQuestion =
 		questionCategory &&
 		previousAnswers.find(
-			(a) => a.split(' . ')[0] === questionCategory.dottedName
+			(a) => splitName(a)[0] === questionCategory.dottedName
 		) === undefined
 
 	const hasDescription =
@@ -158,7 +163,13 @@ export default function Conversation({
 			}
 		/>
 	) : (
-		<section>
+		<section
+			css={`
+				@media (max-width: 800px) {
+					padding: 0.8rem 0 0.4rem;
+				}
+			`}
+		>
 			<Aide />
 			<div style={{ outline: 'none' }}>
 				{orderByCategories && questionCategory && (
@@ -171,7 +182,13 @@ export default function Conversation({
 				)}
 				<Animate.fadeIn>
 					<div className="step">
-						<h3>
+						<h3
+							css={`
+								@media (max-width: 800px) {
+									margin: 0.4rem 0;
+								}
+							`}
+						>
 							{questionText}{' '}
 							{hasDescription && (
 								<ExplicableRule
@@ -192,16 +209,6 @@ export default function Conversation({
 					</div>
 				</Animate.fadeIn>
 				<div className="ui__ answer-group">
-					{previousAnswers.length > 0 && (
-						<>
-							<button
-								onClick={goToPrevious}
-								className="ui__ simple small push-left button"
-							>
-								← <Trans>Précédent</Trans>
-							</button>
-						</>
-					)}
 					{currentQuestionIsAnswered ? (
 						<button
 							className="ui__ plain small button"
