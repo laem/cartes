@@ -110,8 +110,6 @@ export function getNextQuestions(
 					.trim() as DottedName)
 			: lastStep
 
-	console.log({ lastStepWithAnswer })
-
 	return sortBy((question) => {
 		const indexList =
 			whitelist.findIndex((name) => question.startsWith(name)) + 1

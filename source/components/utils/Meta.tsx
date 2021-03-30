@@ -7,6 +7,7 @@ type PropType = {
 	ogDescription?: string
 	ogTitle?: string
 	ogImage?: string
+	url: string
 }
 
 export default function Meta({
@@ -14,7 +15,8 @@ export default function Meta({
 	description,
 	ogDescription,
 	ogTitle,
-	ogImage
+	ogImage,
+	url,
 }: PropType) {
 	const { pathname } = useLocation()
 	return (
@@ -22,18 +24,11 @@ export default function Meta({
 			<title>{title}</title>
 			<meta name="description" content={description} />
 			<meta property="og:type" content="website" />
+			<meta property="og:url" content={url} />
 			<meta property="og:title" content={ogTitle ?? title} />
 			<meta property="og:description" content={ogDescription ?? description} />
-			{ogImage && (
-				<meta
-					property="og:image"
-					content={
-						ogImage.startsWith('http')
-							? ogImage
-							: window.location.host + pathname + '/' + ogImage
-					}
-				/>
-			)}
+			{ogImage && <meta property="og:image" content={ogImage} />}
+			<meta property="twitter:card" content="summary_large_image" />
 		</Helmet>
 	)
 }

@@ -27,7 +27,8 @@
 			content="<%= htmlWebpackPlugin.options.description %>"
 		/>
 
-		<meta property="og:image" content="<%= htmlWebpackPlugin.options.logo %>" />
+		<meta property="og:image" content="<%= htmlWebpackPlugin.options.logo %>" data-react-helmet="true"	/>
+
 		<meta
 			name="google-site-verification"
 			content="oQ9gPKS4kocrCJP6CoguSkdIKKZ6ilZz0aQw_ZIgtVc"
@@ -35,10 +36,6 @@
 
 
 		<meta property="twitter:card" content="summary_large_image" />
-		<meta property="twitter:url" content="https://nosgestesclimat.fr/" />
-		<meta property="twitter:title" content="<%= htmlWebpackPlugin.options.title %>" />
-		<meta property="twitter:description" content="Connaissez-vous votre empreinte sur le climat ?" />
-		<meta property="twitter:image" content="<%= htmlWebpackPlugin.options.logo %>" />
 
 		<link rel="manifest" href="/manifest.webmanifest" />
 		<title>

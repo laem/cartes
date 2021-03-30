@@ -12,6 +12,7 @@ import StartingBlock from './images/starting block.svg'
 import SessionBar from 'Components/SessionBar'
 import Chart from './chart'
 import { Link } from 'react-router-dom'
+import Meta from '../../components/utils/Meta'
 
 const gradient = tinygradient([
 		'#78e08f',
@@ -48,33 +49,52 @@ export default ({}) => {
 				)
 
 	const score = sumFromDetails(rehydratedDetails)
-	const { value } = useSpring({
-		config: { mass: 1, tension: 150, friction: 150, precision: 1000 },
-		value: score,
-		from: { value: 0 },
-	})
+	const headlessMode =
+		!window || window.navigator.userAgent.includes('HeadlessChrome')
+
+	const { value } = headlessMode
+		? { value: score }
+		: useSpring({
+				config: { mass: 1, tension: 150, friction: 150, precision: 1000 },
+				value: score,
+				from: { value: 0 },
+		  })
 
 	return (
 		<AnimatedDiv
 			value={value}
 			score={score}
 			details={Object.fromEntries(rehydratedDetails)}
+			headlessMode={headlessMode}
 		/>
 	)
 }
 
-const AnimatedDiv = animated(({ score, value, details }) => {
+const AnimatedDiv = animated(({ score, value, details, headlessMode }) => {
 	const backgroundColor = getBackgroundColor(value).toHexString(),
 		backgroundColor2 = getBackgroundColor(value + 2000).toHexString(),
-		textColor = findContrastedTextColor(backgroundColor, true)
+		textColor = findContrastedTextColor(backgroundColor, true),
+		roundedValue = Math.round(value / 1000),
+		shareImage =
+			'https://aejkrqosjq.cloudimg.io/v7/' +
+			window.location.origin +
+			'/.netlify/functions/ending-screenshot?pageToScreenshot=' +
+			window.location
 
 	return (
 		<div css="padding: 0 .3rem 1rem; max-width: 600px; margin: 0 auto;">
+			<Meta
+				title="Nos Gestes Climat"
+				description={`Mon empreinte climat est de ${roundedValue} tonnes de CO2e. Mesure la tienne !`}
+				ogImage={shareImage}
+				url={window.location}
+			/>
 			<SessionBar />
 			<motion.div
-				animate={{ scale: [0.85, 1] }}
-				transition={{ duration: 0.2, ease: 'easeIn' }}
+				animate={{ scale: [0.9, 1] }}
+				transition={{ duration: headlessMode ? 0 : 0.6 }}
 				className=""
+				id="fin"
 				css={`
 					background: ${backgroundColor};
 					background: linear-gradient(
@@ -94,68 +114,78 @@ const AnimatedDiv = animated(({ score, value, details }) => {
 					font-size: 110%;
 				`}
 			>
-				<div css="display: flex; align-items: center; justify-content: center">
-					<img src={BallonGES} css="height: 10rem" />
-					<div>
-						<div css="font-weight: bold; font-size: 280%; margin-bottom: .3rem">
-							<span css="width: 3.6rem; text-align: right; display: inline-block">
-								{Math.round(value / 1000)}
-							</span>{' '}
-							tonnes
-						</div>
+				<div id="shareImage" css="padding: 2rem 0">
+					<div css="display: flex; align-items: center; justify-content: center">
+						<img src={BallonGES} css="height: 10rem" />
 						<div
 							css={`
-								background: #ffffff3d;
-								border-radius: 0.6rem;
-								margin: 0 auto;
-								padding: 0.4rem 1rem;
-
-								> div {
-									display: flex;
-									justify-content: space-between;
-									flex-wrap: wrap;
-								}
-								strong {
-									font-weight: bold;
-								}
-								> img {
-									margin: 0 0.6rem !important;
-								}
+								flex-direction: ${headlessMode ? 'column-reverse' : 'column'};
+								display: flex;
+								justify-content: space-evenly;
+								height: 10rem;
 							`}
 						>
-							<div>
-								<span>
-									{emoji('🇫🇷 ')}
-									moyenne{' '}
+							<div css="font-weight: bold; font-size: 280%;">
+								<span css="width: 3.6rem; text-align: right; display: inline-block">
+									{roundedValue}
 								</span>{' '}
-								<strong> 11 tonnes</strong>
+								tonnes
 							</div>
-							<div>
-								<span>
-									{emoji('🎯 ')}
-									objectif{' '}
-								</span>
-								<strong>2 tonnes</strong>
-							</div>
-							<div css="margin-top: .2rem;justify-content: flex-end !important">
-								<a
-									css="color: inherit"
-									href="https://datagir.ademe.fr/blog/budget-empreinte-carbone-c-est-quoi/"
-								>
-									Comment ça ?
-								</a>
+							<div
+								css={`
+									background: #ffffff3d;
+									border-radius: 0.6rem;
+									padding: 0.4rem 1rem;
+
+									> div {
+										display: flex;
+										justify-content: space-between;
+										flex-wrap: wrap;
+									}
+									strong {
+										font-weight: bold;
+									}
+									> img {
+										margin: 0 0.6rem !important;
+									}
+								`}
+							>
+								<div>
+									<span>
+										{emoji('🇫🇷 ')}
+										moyenne{' '}
+									</span>{' '}
+									<strong> 11 tonnes</strong>
+								</div>
+								<div>
+									<span>
+										{emoji('🎯 ')}
+										objectif{' '}
+									</span>
+									<strong>2 tonnes</strong>
+								</div>
+								{!headlessMode && (
+									<div css="margin-top: .2rem;justify-content: flex-end !important">
+										<a
+											css="color: inherit"
+											href="https://datagir.ademe.fr/blog/budget-empreinte-carbone-c-est-quoi/"
+										>
+											Comment ça ?
+										</a>
+									</div>
+								)}
 							</div>
 						</div>
 					</div>
-				</div>
-				<div css="padding: 1rem">
-					<Chart
-						details={details}
-						color={textColor}
-						noAnimation
-						noText
-						noCompletion
-					/>
+					<div css="padding: 1rem">
+						<Chart
+							details={details}
+							color={textColor}
+							noAnimation
+							noText
+							noCompletion
+						/>
+					</div>
 				</div>
 
 				<div css="display: flex; flex-direction: column;">
