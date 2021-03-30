@@ -1,11 +1,11 @@
 {
-	"name": "nosgestesclimat",
+	"name": "nosgestesclimat-site",
 	"license": "MIT",
-	"version": "1.2.3",
-	"description": "Library to compute the french social security contributions. Also a website that explains the calculations, and a generic engine to build cool forms that asks the question needed to compute an objective.",
+	"version": "1.0.0",
+	"description": "The leading open source climate footprint calculator",
 	"repository": {
 		"type": "git",
-		"url": "https://github.com/betagouv/ecolab-climat.git"
+		"url": "https://github.com/datagir/nosgestesclimat-site.git"
 	},
 	"engines": {
 		"node": ">=15"
