@@ -17,7 +17,7 @@ exports.handler = async (event, context) => {
 
 	await page.goto(pageToScreenshot)
 
-	await timeout(2000)
+	await timeout(6000)
 
 	const element = await page.$('#shareImage')
 
