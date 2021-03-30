@@ -40,6 +40,7 @@ export default () => {
 		const simulations = conference.ydoc.get('simulations')
 		simulations.observe((event) => {
 			setElements(simulations.toJSON())
+			console.log(simulations.toJSON())
 		})
 	}, [])
 
@@ -52,11 +53,10 @@ export default () => {
 	const simulationArray = elements && Object.values(elements),
 		rawResult =
 			simulationArray &&
-			simulationArray.reduce((memo, next) => memo + next, 0) /
-				simulationArray.length,
-		result = rawResult
-			? Math.round(rawResult / 100) / 10 + ' tonnes'
-			: 'pas commencé'
+			simulationArray
+				.filter((el) => el !== null)
+				.reduce((memo, next) => memo + next, 0) / simulationArray.length,
+		result = Math.round(rawResult / 100) / 10 + ' tonnes'
 
 	return (
 		<Link to={'/conférence/' + room} css="text-decoration: none;">
