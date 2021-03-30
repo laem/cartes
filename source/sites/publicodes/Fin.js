@@ -65,7 +65,7 @@ export default ({}) => {
 			value={value}
 			score={score}
 			details={Object.fromEntries(rehydratedDetails)}
-			headlessMode
+			headlessMode={headlessMode}
 		/>
 	)
 }
@@ -118,8 +118,15 @@ const AnimatedDiv = animated(({ score, value, details, headlessMode }) => {
 				<div id="shareImage" css="padding: 2rem 0">
 					<div css="display: flex; align-items: center; justify-content: center">
 						<img src={BallonGES} css="height: 10rem" />
-						<div>
-							<div css="font-weight: bold; font-size: 280%; margin-bottom: .3rem">
+						<div
+							css={`
+								flex-direction: ${headlessMode ? 'column-reverse' : 'column'};
+								display: flex;
+								justify-content: space-evenly;
+								height: 10rem;
+							`}
+						>
+							<div css="font-weight: bold; font-size: 280%;">
 								<span css="width: 3.6rem; text-align: right; display: inline-block">
 									{roundedValue}
 								</span>{' '}
@@ -129,7 +136,6 @@ const AnimatedDiv = animated(({ score, value, details, headlessMode }) => {
 								css={`
 									background: #ffffff3d;
 									border-radius: 0.6rem;
-									margin: 0 auto;
 									padding: 0.4rem 1rem;
 
 									> div {
@@ -159,14 +165,16 @@ const AnimatedDiv = animated(({ score, value, details, headlessMode }) => {
 									</span>
 									<strong>2 tonnes</strong>
 								</div>
-								<div css="margin-top: .2rem;justify-content: flex-end !important">
-									<a
-										css="color: inherit"
-										href="https://datagir.ademe.fr/blog/budget-empreinte-carbone-c-est-quoi/"
-									>
-										Comment ça ?
-									</a>
-								</div>
+								{!headlessMode && (
+									<div css="margin-top: .2rem;justify-content: flex-end !important">
+										<a
+											css="color: inherit"
+											href="https://datagir.ademe.fr/blog/budget-empreinte-carbone-c-est-quoi/"
+										>
+											Comment ça ?
+										</a>
+									</div>
+								)}
 							</div>
 						</div>
 					</div>
