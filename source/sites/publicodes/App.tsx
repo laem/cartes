@@ -23,6 +23,7 @@ import Privacy from './Privacy'
 import Simulateur from './Simulateur'
 import sitePaths from './sitePaths'
 import Conference from './Conference'
+import ConferenceBar from './ConferenceBar'
 
 let tracker = devTracker
 if (NODE_ENV === 'production') {
@@ -70,6 +71,7 @@ const Router = ({}) => {
 	return (
 		<>
 			<div className="ui__ container">
+				<ConferenceBar />
 				<nav css="display: flex; justify-content: center; margin: .6rem auto">
 					<Link
 						to="/"
