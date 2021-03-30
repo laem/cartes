@@ -1,5 +1,6 @@
 import { useEffect, useState } from 'react'
 import emoji from 'react-easy-emoji'
+import { useDispatch, useSelector } from 'react-redux'
 import { useParams } from 'react-router'
 import { Link } from 'react-router-dom'
 import { WebrtcProvider } from 'y-webrtc'
@@ -21,17 +22,20 @@ export default () => {
 		fruits[getRandomInt(fruits.length)]
 	)
 
+	const dispatch = useDispatch()
+
+	const conference = useSelector((state) => state.conference)
+
+	console.log('conference', conference, room)
 	useEffect(() => {
-		if (!room) return null
-		const ydoc = new Y.Doc()
-		var provider
-		try {
-			//try catch to avoid hot-reloading errors "room already ..."
-			// clients connected to the same room-name share document updates
-			provider = new WebrtcProvider(room, ydoc, {})
-		} catch (error) {
-			console.log(error)
-		}
+		console.log('will dispatch')
+		dispatch({ type: 'SET_CONFERENCE', room })
+	}, [room])
+
+	useEffect(() => {
+		if (!conference) return null
+		const { provider, ydoc, room } = conference
+
 		const awareness = provider.awareness
 
 		// You can observe when a any user updated their awareness information
@@ -59,7 +63,7 @@ export default () => {
 				}),
 			5000
 		)
-	}, [])
+	}, [conference])
 	return (
 		<div>
 			<h1>🏟️ Conférence</h1>
