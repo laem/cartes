@@ -84,7 +84,7 @@ const StyledOverlayWrapper = styled.div<{ offsetTop: number | null }>`
 	max-height: 100vh;
 	background: rgba(0, 0, 0, 0.5);
 	overflow: auto;
-	z-index: 2;
+	z-index: 3;
 	.overlayContent {
 		${({ offsetTop }) =>
 			offsetTop
