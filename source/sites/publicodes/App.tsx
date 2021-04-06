@@ -22,8 +22,8 @@ import Personas from './Personas.tsx'
 import Privacy from './Privacy'
 import Simulateur from './Simulateur'
 import sitePaths from './sitePaths'
-import Conference from './Conference'
-import ConferenceBar from './ConferenceBar'
+import Conference from './conference/Conference'
+import ConferenceBar from './conference/ConferenceBar'
 
 let tracker = devTracker
 if (NODE_ENV === 'production') {

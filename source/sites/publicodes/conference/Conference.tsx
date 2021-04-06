@@ -5,8 +5,11 @@ import { useParams } from 'react-router'
 import { Link } from 'react-router-dom'
 import { WebrtcProvider } from 'y-webrtc'
 import * as Y from 'yjs'
-import { usePersistingState } from '../../components/utils/persistState'
+import { usePersistingState } from 'Components/utils/persistState'
 import fruits from './fruits.json'
+import UserList from './UserList'
+import { mean } from 'ramda'
+import Stats from './Stats'
 
 const getRandomInt = (max) => Math.floor(Math.random() * Math.floor(max))
 const getRandomColor = () =>
@@ -54,69 +57,20 @@ export default () => {
 		simulations.observe((event) => {
 			setElements(simulations.toJSON())
 		})
-
-		/*
-		 * setInterval(
-			() =>
-				simulations.set(username, {
-					nodeValue: Math.round(Math.random() * 10),
-				}),
-			5000
-		)*/
 	}, [conference])
+
 	return (
 		<div>
 			<h1>{emoji('🏟️ ')} Conférence</h1>
+			<Stats elements={elements} />
+
 			<p>
 				{emoji('🕵 ')}En participant, vous acceptez de partager vos résultats
 				agrégés de simulation avec les autres participants de la conférence : le
 				total et les catégories (transport, logement, etc.). En revanche, nos
 				serveurs ne les stockent pas.
 			</p>
-			{room && (
-				<div>
-					<h2>Comment ça marche ?</h2>
-					<p>
-						1) {emoji('🔗 ')} Partagez{' '}
-						<a href={'/conférence/' + room}>ce lien</a> avec vos amis,
-						collègues, etc.
-					</p>
-					2) {emoji('👆 ')}Faites tous et toutes
-					<Link to={'/simulateur/bilan'}>
-						<button className="ui__ button small " css="margin-left: .6rem">
-							votre simulation
-						</button>
-					</Link>
-					<p>3) Visualisez ensemble les résultats sur cette page</p>
-					<h2>Qui est déjà là ?</h2>
-					<p css="color: #78b159; font-weight: bold">
-						{emoji('🟢')} {users.length} collègue connecté
-						{users.length > 1 ? 's' : ''}
-					</p>
-					<ul
-						css={`
-							display: flex;
-							list-style-type: none;
-							li {
-								margin: 0.6rem;
-							}
-						`}
-					>
-						{users.map((u) => (
-							<li
-								key={u.name}
-								css={`
-									color: ${u.color};
-								`}
-							>
-								{emoji('👤 ')}
-								{u.name}
-								{u.name === username && ' (toi)'}
-							</li>
-						))}
-					</ul>
-				</div>
-			)}
+			{room && <Instructions {...{ users, username }} />}
 			{!room && (
 				<label>
 					<p>Choisissez un nom de salle</p>
@@ -135,3 +89,26 @@ export default () => {
 		</div>
 	)
 }
+
+const Instructions = ({ users, username, room }) => (
+	<div>
+		<h2>Comment ça marche ?</h2>
+		<p>
+			1) {emoji('🔗 ')} Partagez <a href={'/conférence/' + room}>ce lien</a>{' '}
+			avec vos amis, collègues, etc.
+		</p>
+		2) {emoji('👆 ')}Faites tous et toutes
+		<Link to={'/simulateur/bilan'}>
+			<button className="ui__ button small " css="margin-left: .6rem">
+				votre simulation
+			</button>
+		</Link>
+		<p>3) Visualisez ensemble les résultats sur cette page</p>
+		<h2>Qui est déjà là ?</h2>
+		<p css="color: #78b159; font-weight: bold">
+			{emoji('🟢')} {users.length} collègue connecté
+			{users.length > 1 ? 's' : ''}
+		</p>
+		<UserList users={users} username={username} />
+	</div>
+)

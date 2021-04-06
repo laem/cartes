@@ -1,11 +1,12 @@
+import { correctValue } from 'Components/publicodesUtils'
+import { useEngine } from 'Components/utils/EngineContext'
+import { usePersistingState } from 'Components/utils/persistState'
 import { useEffect, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { Link } from 'react-router-dom'
-import { correctValue } from '../../components/publicodesUtils'
-import { useEngine } from '../../components/utils/EngineContext'
-import { situationSelector } from '../../selectors/simulationSelectors'
+import { situationSelector } from 'Selectors/simulationSelectors'
 import * as Y from 'yjs'
-import { usePersistingState } from '../../components/utils/persistState'
+import { humanMean } from './Stats'
 
 export default () => {
 	const conference = useSelector((state) => state.conference)
@@ -54,14 +55,7 @@ export default () => {
 	const awareness = provider.awareness
 
 	const simulationArray = elements && Object.values(elements),
-		rawResult =
-			simulationArray &&
-			simulationArray
-				.filter((el) => el !== null)
-				.reduce((memo, next) => memo + next || 0, 0) / simulationArray.length,
-		result = rawResult
-			? Math.round(rawResult / 100) / 10 + ' tonnes'
-			: 'en attente'
+		result = humanMean(simulationArray)
 
 	return (
 		<Link to={'/conférence/' + room} css="text-decoration: none;">
