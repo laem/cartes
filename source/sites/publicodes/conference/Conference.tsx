@@ -54,7 +54,9 @@ export default () => {
 			color: getRandomColor(), // should be a hex color
 		})
 		const simulations = ydoc.get('simulations', Y.Map)
+		setElements(simulations.toJSON())
 		simulations.observe((event) => {
+			console.log('did observe from Conf', event)
 			setElements(simulations.toJSON())
 		})
 	}, [conference])
@@ -62,7 +64,7 @@ export default () => {
 	return (
 		<div>
 			<h1>{emoji('🏟️ ')} Conférence</h1>
-			<Stats {...{ elements, users, username }} />
+			<Stats {...{ elements: Object.values(elements), users, username }} />
 
 			{room && <Instructions {...{ users, username }} />}
 			{!room && (

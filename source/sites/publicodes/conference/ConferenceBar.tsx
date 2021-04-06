@@ -38,7 +38,6 @@ export default () => {
 		})
 		simulations.observe((event) => {
 			setElements(simulations.toJSON())
-			console.log(simulations.toJSON())
 		})
 	}, [conference])
 
