@@ -104,6 +104,10 @@ export default () => {
 							</li>
 						))}
 					</ul>
+
+					<Link to={'/simulateur/bilan'}>
+						<button className="ui__ button ">Votre simulation</button>
+					</Link>
 				</div>
 			)}
 			{!room && (

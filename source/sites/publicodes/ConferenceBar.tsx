@@ -58,8 +58,10 @@ export default () => {
 			simulationArray &&
 			simulationArray
 				.filter((el) => el !== null)
-				.reduce((memo, next) => memo + next, 0) / simulationArray.length,
-		result = Math.round(rawResult / 100) / 10 + ' tonnes'
+				.reduce((memo, next) => memo + next || 0, 0) / simulationArray.length,
+		result = rawResult
+			? Math.round(rawResult / 100) / 10 + ' tonnes'
+			: 'en attente'
 
 	return (
 		<Link to={'/conférence/' + room} css="text-decoration: none;">
