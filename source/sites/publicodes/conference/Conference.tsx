@@ -109,9 +109,11 @@ const Instructions = ({ users, username, room }) => (
 		<p>3) Visualisez ensemble les résultats sur cette page</p>
 		<h2>Qui est déjà là ?</h2>
 		<p css="color: #78b159; font-weight: bold">
-			{emoji('🟢')} {users.length} collègue connecté
-			{users.length > 1 ? 's' : ''}
+			{emoji('🟢')} {users.length} collègue{plural(users)} connecté
+			{plural(users)}
 		</p>
 		<UserList users={users} username={username} />
 	</div>
 )
+
+const plural = (list) => (list.length > 1 ? 's' : '')
