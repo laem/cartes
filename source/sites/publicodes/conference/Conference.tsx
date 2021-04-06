@@ -62,14 +62,8 @@ export default () => {
 	return (
 		<div>
 			<h1>{emoji('🏟️ ')} Conférence</h1>
-			<Stats elements={elements} />
+			<Stats {...{ elements, users, username }} />
 
-			<p>
-				{emoji('🕵 ')}En participant, vous acceptez de partager vos résultats
-				agrégés de simulation avec les autres participants de la conférence : le
-				total et les catégories (transport, logement, etc.). En revanche, nos
-				serveurs ne les stockent pas.
-			</p>
 			{room && <Instructions {...{ users, username }} />}
 			{!room && (
 				<label>
@@ -86,6 +80,13 @@ export default () => {
 					)}
 				</label>
 			)}
+			<h2>Et mes données ?</h2>
+			<p>
+				{emoji('🕵 ')}En participant, vous acceptez de partager vos résultats
+				agrégés de simulation avec les autres participants de la conférence : le
+				total et les catégories (transport, logement, etc.). En revanche, nos
+				serveurs ne les stockent pas.
+			</p>
 		</div>
 	)
 }

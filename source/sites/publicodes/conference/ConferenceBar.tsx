@@ -6,7 +6,7 @@ import { useDispatch, useSelector } from 'react-redux'
 import { Link } from 'react-router-dom'
 import { situationSelector } from 'Selectors/simulationSelectors'
 import * as Y from 'yjs'
-import { humanMean } from './Stats'
+import { computeHumanMean } from './Stats'
 
 export default () => {
 	const conference = useSelector((state) => state.conference)
@@ -55,7 +55,7 @@ export default () => {
 	const awareness = provider.awareness
 
 	const simulationArray = elements && Object.values(elements),
-		result = humanMean(simulationArray)
+		result = computeHumanMean(simulationArray)
 
 	return (
 		<Link to={'/conférence/' + room} css="text-decoration: none;">
