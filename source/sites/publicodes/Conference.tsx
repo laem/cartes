@@ -66,13 +66,18 @@ export default () => {
 	}, [conference])
 	return (
 		<div>
-			<h1>🏟️ Conférence</h1>
-			<p>Vie privée blabla</p>
+			<h1>{emoji('🏟️ ')} Conférence</h1>
+			<p>
+				{emoji('🕵 ')}En participant, vous acceptez de partager vos résultats
+				agrégés de simulation avec les autres participants de la conférence : le
+				total et les catégories (transport, logement, etc.). En revanche, nos
+				serveurs ne les stockent pas.
+			</p>
 			{room && (
 				<div>
 					<p>
-						Partagez <a href={'/conférence/' + room}>ce lien</a> avec vos amis,
-						collègues, etc.
+						{emoji('🔗 ')} Partagez <a href={'/conférence/' + room}>ce lien</a>{' '}
+						avec vos amis, collègues, etc.
 					</p>
 					<p css="color: #78b159; font-weight: bold">
 						{emoji('🟢')} {users.length} clients connectés
@@ -108,10 +113,10 @@ export default () => {
 						placeholder="chaton-hurlant-29"
 						value={newRoom}
 						onChange={(e) => setNewRoom(e.target.value)}
-					/>
+					/>{' '}
 					{newRoom && (
 						<Link to={'/conférence/' + newRoom}>
-							<button>C'est parti ! </button>
+							<button className="ui__ button small">C'est parti ! </button>
 						</Link>
 					)}
 				</label>
