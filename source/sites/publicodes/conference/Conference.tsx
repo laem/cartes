@@ -87,7 +87,7 @@ export default () => {
 				{emoji('🕵 ')}En participant, vous acceptez de partager vos résultats
 				agrégés de simulation avec les autres participants de la conférence : le
 				total et les catégories (transport, logement, etc.). En revanche, nos
-				serveurs ne les stockent pas.
+				serveurs ne les stockent pas : cela fonctionne en P2P (pair à pair).
 			</p>
 		</div>
 	)
