@@ -75,12 +75,23 @@ export default () => {
 			</p>
 			{room && (
 				<div>
+					<h2>Comment ça marche ?</h2>
 					<p>
-						{emoji('🔗 ')} Partagez <a href={'/conférence/' + room}>ce lien</a>{' '}
-						avec vos amis, collègues, etc.
+						1) {emoji('🔗 ')} Partagez{' '}
+						<a href={'/conférence/' + room}>ce lien</a> avec vos amis,
+						collègues, etc.
 					</p>
+					2) {emoji('👆 ')}Faites tous et toutes
+					<Link to={'/simulateur/bilan'}>
+						<button className="ui__ button small " css="margin-left: .6rem">
+							votre simulation
+						</button>
+					</Link>
+					<p>3) Visualisez ensemble les résultats sur cette page</p>
+					<h2>Qui est déjà là ?</h2>
 					<p css="color: #78b159; font-weight: bold">
-						{emoji('🟢')} {users.length} clients connectés
+						{emoji('🟢')} {users.length} collègue connecté
+						{users.length > 1 ? 's' : ''}
 					</p>
 					<ul
 						css={`
@@ -104,10 +115,6 @@ export default () => {
 							</li>
 						))}
 					</ul>
-
-					<Link to={'/simulateur/bilan'}>
-						<button className="ui__ button ">Votre simulation</button>
-					</Link>
 				</div>
 			)}
 			{!room && (
