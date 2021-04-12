@@ -76,19 +76,6 @@ export default function AnswerList({ onClose }: AnswerListProps) {
 					<h2>
 						{emoji('📋 ')}
 						<Trans>Mes réponses</Trans>
-						<small css="margin-left: 2em; img {font-size: .8em}">
-							{emoji('🗑')}{' '}
-							<button
-								className="ui__ simple small button"
-								onClick={() => {
-									dispatch(resetSimulation())
-									dispatch(deletePreviousSimulation())
-									onClose()
-								}}
-							>
-								<Trans>Tout effacer</Trans>
-							</button>
-						</small>
 					</h2>
 					<CategoryTable
 						{...{ steps: foldedStepsToDisplay, categories, onClose }}
