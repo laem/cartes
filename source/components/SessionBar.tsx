@@ -1,4 +1,9 @@
-import { goToQuestion, loadPreviousSimulation } from 'Actions/actions'
+import {
+	deletePreviousSimulation,
+	goToQuestion,
+	loadPreviousSimulation,
+	resetSimulation,
+} from 'Actions/actions'
 import { useEngine } from 'Components/utils/EngineContext'
 import { last } from 'ramda'
 import React, { useEffect, useState } from 'react'
@@ -147,20 +152,23 @@ export default function SessionBar({
 			...(arePreviousAnswers
 				? [
 						<Button
+							key="terminer"
+							className="simple small"
+							onClick={() => {
+								dispatch(resetSimulation())
+								dispatch(deletePreviousSimulation())
+							}}
+						>
+							{emoji('♻️ ')}
+							Recommencer
+						</Button>,
+						<Button
 							key="modifier"
 							className="simple small"
 							onClick={() => setShowAnswerModal(true)}
 						>
 							{emoji('📋 ')}
 							Mes réponses
-						</Button>,
-						<Button
-							key="terminer"
-							className="simple small"
-							onClick={() => history.push(buildEndURL(rules, engine))}
-						>
-							{emoji('💤 ')}
-							Terminer
 						</Button>,
 						true && (
 							<Button
