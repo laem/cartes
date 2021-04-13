@@ -1,4 +1,4 @@
-import { formatValue, Evaluation, Unit } from 'publicodes'
+import { formatValue, Evaluation, Unit, serializeUnit } from 'publicodes'
 import { useCallback } from 'react'
 import { useTranslation } from 'react-i18next'
 import NumberFormat from 'react-number-format'
@@ -26,12 +26,10 @@ export default function Input({
 }) {
 	const debouncedOnChange = useCallback(debounce(550, onChange), [])
 	const { language } = useTranslation().i18n
-
-	// This test is bad. publicodes should be able to return the formatted number and the formatted unit separately
-	const unitéRaw = formatValue({ nodeValue: value ?? 0, unit }, { language }),
-		unitéMatch = unitéRaw.match(/([a-zA-Z].*)/),
-		unité = (unitéMatch && unitéMatch[0]) || ''
+	const unité = serializeUnit(unit)
 	const { thousandSeparator, decimalSeparator } = currencyFormat(language)
+
+	console.log()
 
 	return (
 		<>
