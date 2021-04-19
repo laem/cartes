@@ -65,7 +65,7 @@ const ActionList = animated(({}) => {
 	const rules = useSelector((state) => state.rules)
 	const flatActions = rules['actions']
 
-	const [radical, setRadical] = useState(false)
+	const [radical, setRadical] = useState(true)
 
 	const simulation = useSelector((state) => state.simulation)
 
