@@ -84,7 +84,7 @@ module.exports.commonLoaders = () => {
 	return [
 		{
 			test: /\.(js|ts|tsx)$/,
-			loader: babelLoader,
+			use: [babelLoader],
 			exclude: /node_modules|dist/,
 		},
 		{
