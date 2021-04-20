@@ -96,6 +96,7 @@
 		"moo": "^0.5.0",
 		"nearley": "^2.19.0",
 		"path-browserify": "^1.0.1",
+		"process": "^0.11.10",
 		"publicodes": "^1.0.0-beta.14",
 		"publicodes-react": "^1.0.0-beta.14",
 		"puppeteer-core": "^8.0.0",
@@ -134,10 +135,13 @@
 		"yaml": "^1.10.2",
 		"yarn": "^1.22.10"
 	},
+	"resolutions": {
+		"publicodes/yaml": "1.10.2"
+	},
 	"scripts": {
 		"prepare": "node scripts/prepare.js",
 		"start": "webpack serve --mode development --config webpack.dev.js",
-		"compile": "URL_PATH=/apps/climat NODE_ENV=production yarn run webpack --config webpack.prod.js",
+		"compile": "NODE_ENV=production yarn run webpack --config webpack.prod.js",
 		"stats": "webpack --config webpack.prod.js --profile --json > stats.json",
 		"analyze-bundle": "ANALYZE_BUNDLE=1 yarn run build",
 		"clean": "rimraf dist node_modules source/data",

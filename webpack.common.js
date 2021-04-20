@@ -137,10 +137,7 @@ module.exports.commonLoaders = () => {
 	]
 }
 
-module.exports.HTMLPlugins = ({
-	injectTrackingScript = false,
-	prodPath,
-} = {}) => [
+module.exports.HTMLPlugins = ({ injectTrackingScript = false } = {}) => [
 	new HTMLPlugin({
 		template: 'index.html',
 		logo: 'https://nosgestesclimat.fr/dessin-nosgestesclimat.png',
@@ -149,6 +146,6 @@ module.exports.HTMLPlugins = ({
 		description: 'Connaissez-vous votre empreinte sur le climat ?',
 		filename: 'index.html',
 		injectTrackingScript,
-		base: prodPath || '/',
+		base: '/',
 	}),
 ]
