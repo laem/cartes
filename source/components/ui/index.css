@@ -256,3 +256,8 @@ input.ui__::placeholder {
 	opacity: 0.6;
 	color: grey;
 }
+
+img[src="http://twemoji.maxcdn.com/2/72x72/.png"]
+{
+	display: none;
+}
