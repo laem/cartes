@@ -87,6 +87,18 @@ module.exports.commonLoaders = () => {
 
 	return [
 		{
+			test: /node_modules\/vfile\/core\.js/,
+			use: [
+				{
+					loader: 'imports-loader',
+					options: {
+						type: 'commonjs',
+						imports: ['single process/browser process'],
+					},
+				},
+			],
+		},
+		{
 			test: /\.(js|ts|tsx)$/,
 			use: [babelLoader],
 			exclude: /node_modules|dist/,

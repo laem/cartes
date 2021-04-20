@@ -91,6 +91,7 @@
 		"html-webpack-plugin": "^5.3.1",
 		"i18next": "^19.8.4",
 		"iframe-resizer": "^4.1.1",
+		"imports-loader": "^2.0.0",
 		"isomorphic-fetch": "^3.0.0",
 		"mini-css-extract-plugin": "^1.5.0",
 		"moo": "^0.5.0",
