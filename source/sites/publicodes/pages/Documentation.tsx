@@ -14,8 +14,6 @@ import Méthode from './Méthode'
 import BandeauContribuer from '../BandeauContribuer'
 import Meta from '../../../components/utils/Meta'
 
-console.log(getDocumentationSiteMap)
-
 export default function RulePage() {
 	const currentSimulation = useSelector(
 		(state: RootState) => !!state.simulation?.url
@@ -27,6 +25,7 @@ export default function RulePage() {
 		() => getDocumentationSiteMap({ engine, documentationPath }),
 		[engine, documentationPath]
 	)
+	console.log(documentationSitePaths)
 	const { i18n } = useTranslation()
 
 	if (pathname === '/documentation') {
