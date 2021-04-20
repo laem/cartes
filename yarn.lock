@@ -4996,7 +4996,7 @@ i18next-parser@^3.6.0:
     vinyl-fs "^3.0.2"
     vue-template-compiler "^2.6.11"
 
-i18next@^19.0.1, i18next@^19.4.4, i18next@^19.8.4:
+i18next@^19.0.1, i18next@^19.8.4:
   version "19.8.4"
   resolved "https://registry.yarnpkg.com/i18next/-/i18next-19.8.4.tgz"
   integrity sha512-FfVPNWv+felJObeZ6DSXZkj9QM1Ivvh7NcFCgA8XPtJWHz0iXVa9BUy+QY8EPrCLE+vWgDfV/sc96BgXVo6HAA==
@@ -7188,27 +7188,24 @@ public-encrypt@^4.0.0:
     randombytes "^2.0.1"
     safe-buffer "^5.1.2"
 
-publicodes-react@^1.0.0-beta.13:
-  version "1.0.0-beta.13"
-  resolved "https://registry.yarnpkg.com/publicodes-react/-/publicodes-react-1.0.0-beta.13.tgz#5ad1db94b0c151f0869a53b19083970c44857510"
-  integrity sha512-sJXhSVPfrWQ7O1F33yktL0z9wO6OltFkZhyIkGUeUQkheobf+830DFxn5i5Frnawqq7sCzCjcor1BYtUp+szGg==
+publicodes-react@^1.0.0-beta.14:
+  version "1.0.0-beta.14"
+  resolved "https://registry.yarnpkg.com/publicodes-react/-/publicodes-react-1.0.0-beta.14.tgz#ceb50128df590ee8ca9884ba98a87d9511f62441"
+  integrity sha512-w/YaKDiOK0CSWCTDFaOIMk1APc8FIEEMsrYb2cVKN6lqQxsRmcclg7UEiowuAMGnzUfWhVhLU/nz434wn5UIyg==
   dependencies:
     classnames "^2.2.6"
     focus-trap-react "^3.1.2"
-    i18next "^19.4.4"
-    publicodes "1.0.0-beta.13"
     ramda "^0.27.0"
     react-easy-emoji "^1.4.0"
     react-helmet "^6.1.0"
-    react-i18next "^11.4.0"
     react-markdown "^4.3.1"
     styled-components "^5.1.0"
     yaml "^1.9.2"
 
-publicodes@1.0.0-beta.13, publicodes@^1.0.0-beta.13:
-  version "1.0.0-beta.13"
-  resolved "https://registry.yarnpkg.com/publicodes/-/publicodes-1.0.0-beta.13.tgz#1fc67042ae47e88f66b3fa415bf3847734b314b0"
-  integrity sha512-RjLoI/8lWs34EB8Ni13s0haFyYmjKCGsyb9w0Xt5CIu9uYgY+rHVQtnXJiYu/3Pm1qIj8zB6cTyu6w0O7eQU6A==
+publicodes@^1.0.0-beta.14:
+  version "1.0.0-beta.14"
+  resolved "https://registry.yarnpkg.com/publicodes/-/publicodes-1.0.0-beta.14.tgz#9ef9e6723830198fe45a330e9b5e737fa502dd2b"
+  integrity sha512-WeOp3dGkC2RS02BFaqyNLvFMa7B717uTcXAcXKcyfZHuYcVWMZodowutqS7kSrJQUUvz6Xrfo2AkZY6vRPbK3Q==
   dependencies:
     moo "^0.5.1"
     nearley "^2.19.2"
@@ -7472,7 +7469,7 @@ react-helmet@^6.1.0:
     react-fast-compare "^3.1.1"
     react-side-effect "^2.1.0"
 
-react-i18next@^11.4.0, react-i18next@^11.8.5:
+react-i18next@^11.8.5:
   version "11.8.5"
   resolved "https://registry.yarnpkg.com/react-i18next/-/react-i18next-11.8.5.tgz"
   integrity sha512-2jY/8NkhNv2KWBnZuhHxTn13aMxAbvhiDUNskm+1xVVnrPId78l8fA7fCyVeO3XU1kptM0t4MtvxV1Nu08cjLw==
