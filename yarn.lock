@@ -4996,7 +4996,7 @@ i18next-parser@^3.6.0:
     vinyl-fs "^3.0.2"
     vue-template-compiler "^2.6.11"
 
-i18next@^19.0.1, i18next@^19.4.4, i18next@^19.8.4:
+i18next@^19.0.1, i18next@^19.8.4:
   version "19.8.4"
   resolved "https://registry.yarnpkg.com/i18next/-/i18next-19.8.4.tgz"
   integrity sha512-FfVPNWv+felJObeZ6DSXZkj9QM1Ivvh7NcFCgA8XPtJWHz0iXVa9BUy+QY8EPrCLE+vWgDfV/sc96BgXVo6HAA==
@@ -7188,26 +7188,24 @@ public-encrypt@^4.0.0:
     randombytes "^2.0.1"
     safe-buffer "^5.1.2"
 
-publicodes-react@1.0.0-beta.8:
-  version "1.0.0-beta.8"
-  resolved "https://registry.yarnpkg.com/publicodes-react/-/publicodes-react-1.0.0-beta.8.tgz#01a1c6a197eececf594847753aef9fbbe8ce344e"
-  integrity sha512-W3MgqECSyfK1ouNO7dmYmLTZNA68Ot5TS3e6TTtfy50J3wDgWXYI4Ipeh9D+vStQ1Yyf+tG43XxRt7DWp1xDrA==
+publicodes-react@^1.0.0-beta.14:
+  version "1.0.0-beta.14"
+  resolved "https://registry.yarnpkg.com/publicodes-react/-/publicodes-react-1.0.0-beta.14.tgz#ceb50128df590ee8ca9884ba98a87d9511f62441"
+  integrity sha512-w/YaKDiOK0CSWCTDFaOIMk1APc8FIEEMsrYb2cVKN6lqQxsRmcclg7UEiowuAMGnzUfWhVhLU/nz434wn5UIyg==
   dependencies:
     classnames "^2.2.6"
     focus-trap-react "^3.1.2"
-    i18next "^19.4.4"
-    publicodes "1.0.0-beta.8"
     ramda "^0.27.0"
     react-easy-emoji "^1.4.0"
-    react-i18next "^11.4.0"
+    react-helmet "^6.1.0"
     react-markdown "^4.3.1"
     styled-components "^5.1.0"
     yaml "^1.9.2"
 
-publicodes@1.0.0-beta.8:
-  version "1.0.0-beta.8"
-  resolved "https://registry.yarnpkg.com/publicodes/-/publicodes-1.0.0-beta.8.tgz#20a9aca160286662aa47886c3ac98f99997730e7"
-  integrity sha512-zPRLR4x5EJdQ16qKJplspvhg0gFuMeyqvmSdpz/0hqxiw5TBV3mj56iA/TLHyh3wqmzKavjm+T3SC27ImbxOWA==
+publicodes@^1.0.0-beta.14:
+  version "1.0.0-beta.14"
+  resolved "https://registry.yarnpkg.com/publicodes/-/publicodes-1.0.0-beta.14.tgz#9ef9e6723830198fe45a330e9b5e737fa502dd2b"
+  integrity sha512-WeOp3dGkC2RS02BFaqyNLvFMa7B717uTcXAcXKcyfZHuYcVWMZodowutqS7kSrJQUUvz6Xrfo2AkZY6vRPbK3Q==
   dependencies:
     moo "^0.5.1"
     nearley "^2.19.2"
@@ -7446,6 +7444,11 @@ react-fast-compare@^2.0.2:
   resolved "https://registry.yarnpkg.com/react-fast-compare/-/react-fast-compare-2.0.4.tgz"
   integrity sha512-suNP+J1VU1MWFKcyt7RtjiSWUjvidmQSlqu+eHslq+342xCbGTYmC0mEhPCOHxlW0CywylOC1u2DFAT+bv4dBw==
 
+react-fast-compare@^3.1.1:
+  version "3.2.0"
+  resolved "https://registry.yarnpkg.com/react-fast-compare/-/react-fast-compare-3.2.0.tgz#641a9da81b6a6320f270e89724fb45a0b39e43bb"
+  integrity sha512-rtGImPZ0YyLrscKI9xTpV8psd6I8VAtjKCzQDlzyDvqJA8XOW78TXYQwNRNd8g8JZnDu8q9Fu/1v4HPAVwVdHA==
+
 react-helmet@6.0.0-beta:
   version "6.0.0-beta"
   resolved "https://registry.yarnpkg.com/react-helmet/-/react-helmet-6.0.0-beta.tgz"
@@ -7456,7 +7459,17 @@ react-helmet@6.0.0-beta:
     react-fast-compare "^2.0.2"
     react-side-effect "^1.1.0"
 
-react-i18next@^11.4.0, react-i18next@^11.8.5:
+react-helmet@^6.1.0:
+  version "6.1.0"
+  resolved "https://registry.yarnpkg.com/react-helmet/-/react-helmet-6.1.0.tgz#a750d5165cb13cf213e44747502652e794468726"
+  integrity sha512-4uMzEY9nlDlgxr61NL3XbKRy1hEkXmKNXhjbAIOVw5vcFrsdYbH2FEwcNyWvWinl103nXgzYNlns9ca+8kFiWw==
+  dependencies:
+    object-assign "^4.1.1"
+    prop-types "^15.7.2"
+    react-fast-compare "^3.1.1"
+    react-side-effect "^2.1.0"
+
+react-i18next@^11.8.5:
   version "11.8.5"
   resolved "https://registry.yarnpkg.com/react-i18next/-/react-i18next-11.8.5.tgz"
   integrity sha512-2jY/8NkhNv2KWBnZuhHxTn13aMxAbvhiDUNskm+1xVVnrPId78l8fA7fCyVeO3XU1kptM0t4MtvxV1Nu08cjLw==
@@ -7597,6 +7610,11 @@ react-side-effect@^1.1.0:
   integrity sha512-v1ht1aHg5k/thv56DRcjw+WtojuuDHFUgGfc+bFHOWsF4ZK6C2V57DO0Or0GPsg6+LSTE0M6Ry/gfzhzSwbc5w==
   dependencies:
     shallowequal "^1.0.1"
+
+react-side-effect@^2.1.0:
+  version "2.1.1"
+  resolved "https://registry.yarnpkg.com/react-side-effect/-/react-side-effect-2.1.1.tgz#66c5701c3e7560ab4822a4ee2742dee215d72eb3"
+  integrity sha512-2FoTQzRNTncBVtnzxFOk2mCpcfxQpenBMbk5kSVBg5UcPqV9fRbgY2zhb7GTWWOlpFmAxhClBDlIq8Rsubz1yQ==
 
 react-signature-pad-wrapper@^1.2.11:
   version "1.3.0"
