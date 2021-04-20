@@ -104,7 +104,7 @@
 		"react-color": "^2.14.0",
 		"react-dom": "^17.0.1",
 		"react-easy-emoji": "^1.4.0",
-		"react-helmet": "6.0.0-beta",
+		"react-helmet": "6.1.0",
 		"react-i18next": "^11.8.5",
 		"react-markdown": "^5.0.3",
 		"react-monaco-editor": "^0.40.0",
