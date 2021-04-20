@@ -22,9 +22,11 @@ export default () => (
 			qui contient le total de votre empreinte et sa répartition en grande
 			catégories (transport, logement, ...).
 		</p>
-		<p>
-			Vous pouvez en savoir plus et désactiver ce suivi{' '}
-			<a href="https://ecolab.ademe.fr/vieprivee">sur cette page</a>
-		</p>
+		<p>Vous pouvez en savoir plus et désactiver ce suivi ci-dessous.</p>
+
+		<iframe
+			css="border: 0; height: 200px; width: 600px;"
+			src="https://stats.data.gouv.fr/index.php?module=CoreAdminHome&action=optOut&language=fr&backgroundColor=&fontColor=&fontSize=&fontFamily="
+		></iframe>
 	</div>
 )
