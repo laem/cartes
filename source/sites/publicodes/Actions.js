@@ -27,6 +27,7 @@ import ModeChoice from './ModeChoice'
 import CategoryFilters from './CategoryFilters'
 import { correctValue } from '../../components/publicodesUtils'
 import { sessionBarMargin } from '../../components/SessionBar'
+import Meta from '../../components/utils/Meta'
 
 const { encodeRuleName, decodeRuleName } = utils
 
@@ -36,6 +37,10 @@ const gradient = tinygradient(['#0000ff', '#ff0000']),
 export default ({}) => {
 	return (
 		<>
+			<Meta
+				title="Passer à l'action"
+				title="Découvrez les gestes qui vous permettent de réduire votre empreinte climat"
+			/>
 			<Switch>
 				<Route exact path="/actions/plus">
 					<ListeActionPlus />
