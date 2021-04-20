@@ -11,6 +11,10 @@ module.exports.default = {
 		ignored: /node_modules/,
 	},
 	resolve: {
+		fallback: {
+			path: 'path-browserify',
+			buffer: 'buffer',
+		},
 		alias: {
 			Actions: path.resolve('source/actions/'),
 			Components: path.resolve('source/components/'),
