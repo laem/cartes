@@ -27,7 +27,12 @@ module.exports.default = {
 		path: path.resolve('./dist/'),
 		globalObject: 'self',
 	},
-	plugins: [new CopyPlugin(['./manifest.webmanifest'])],
+	plugins: [
+		new CopyPlugin([
+			'./manifest.webmanifest',
+			'./iframeResizer.contentWindow.min.js',
+		]),
+	],
 }
 
 module.exports.styleLoader = (styleLoader) => ({
