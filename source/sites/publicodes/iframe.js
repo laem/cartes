@@ -1,10 +1,11 @@
 import { iframeResize } from 'iframe-resizer'
 
 const script = document.getElementById('futureco'),
-	integratorUrl = encodeURIComponent(window.location.href.toString())
+	path = script.getAttribute('path') || ''
+integratorUrl = encodeURIComponent(window.location.href.toString())
 
 const hostname = 'futur.eco/'
-const src = `https://${hostname}?iframe&integratorUrl=${integratorUrl}`
+const src = `https://${hostname}${path}?iframe&integratorUrl=${integratorUrl}`
 
 const iframe = document.createElement('iframe')
 
