@@ -21,12 +21,18 @@ module.exports.default = {
 	},
 	entry: {
 		publicodes: './source/sites/publicodes/entry.js',
+		iframe: './source/sites/publicodes/iframe.js',
 	},
 	output: {
 		path: path.resolve('./dist/'),
 		globalObject: 'self',
 	},
-	plugins: [new CopyPlugin(['./manifest.webmanifest'])],
+	plugins: [
+		new CopyPlugin([
+			'./manifest.webmanifest',
+			'./iframeResizer.contentWindow.min.js',
+		]),
+	],
 }
 
 module.exports.styleLoader = (styleLoader) => ({
