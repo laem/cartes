@@ -21,6 +21,7 @@ module.exports.default = {
 	},
 	entry: {
 		publicodes: './source/sites/publicodes/entry.js',
+		iframe: './source/sites/publicodes/iframe.js',
 	},
 	output: {
 		path: path.resolve('./dist/'),
