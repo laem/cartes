@@ -16,6 +16,7 @@ import { EngineContext } from '../../components/utils/EngineContext'
 import { splitName } from 'Components/publicodesUtils'
 import { correctValue, parentName } from '../../components/publicodesUtils'
 import { sessionBarMargin } from '../../components/SessionBar'
+import Meta from '../../components/utils/Meta'
 
 const { decodeRuleName, encodeRuleName } = utils
 
@@ -68,6 +69,7 @@ export default ({}) => {
 				${sessionBarMargin}
 			`}
 		>
+			<Meta title={title} description={description} />
 			<ScrollToTop />
 			<Link to="/actions">
 				<button className="ui__ button simple small ">

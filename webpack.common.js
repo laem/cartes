@@ -11,6 +11,10 @@ module.exports.default = {
 		ignored: /node_modules/,
 	},
 	resolve: {
+		fallback: {
+			path: 'path-browserify',
+			buffer: 'buffer',
+		},
 		alias: {
 			Actions: path.resolve('source/actions/'),
 			Components: path.resolve('source/components/'),
@@ -83,8 +87,20 @@ module.exports.commonLoaders = () => {
 
 	return [
 		{
+			test: /node_modules\/vfile\/core\.js/,
+			use: [
+				{
+					loader: 'imports-loader',
+					options: {
+						type: 'commonjs',
+						imports: ['single process/browser process'],
+					},
+				},
+			],
+		},
+		{
 			test: /\.(js|ts|tsx)$/,
-			loader: babelLoader,
+			use: [babelLoader],
 			exclude: /node_modules|dist/,
 		},
 		{
@@ -133,10 +149,7 @@ module.exports.commonLoaders = () => {
 	]
 }
 
-module.exports.HTMLPlugins = ({
-	injectTrackingScript = false,
-	prodPath,
-} = {}) => [
+module.exports.HTMLPlugins = ({ injectTrackingScript = false } = {}) => [
 	new HTMLPlugin({
 		template: 'index.html',
 		logo: 'https://nosgestesclimat.fr/dessin-nosgestesclimat.png',
@@ -145,6 +158,6 @@ module.exports.HTMLPlugins = ({
 		description: 'Connaissez-vous votre empreinte sur le climat ?',
 		filename: 'index.html',
 		injectTrackingScript,
-		base: prodPath || '/',
+		base: '/',
 	}),
 ]

@@ -1,15 +1,13 @@
-import fs from 'fs'
-import fetch from 'node-fetch'
-import lines from './ecolab-URLs.js'
+const fs = require('fs')
+const fetch = require('node-fetch')
+const lines = require('./base-URLs.js')
 
 fetch('https://ecolab-data.netlify.app/co2.json')
 	.then((res) => res.json())
 	.then((json) => {
 		const documentationLines = Object.keys(json).map(
 			(dottedName) =>
-				`https://ecolab.ademe.fr/apps/climat/documentation/${encodeRuleName(
-					dottedName
-				)}`
+				`https://nosgestesclimat.fr/documentation/${encodeRuleName(dottedName)}`
 		)
 		const text = documentationLines.join('\n')
 		fs.writeFileSync('./sitemap.txt', lines + text, 'utf8')
@@ -17,7 +15,7 @@ fetch('https://ecolab-data.netlify.app/co2.json')
 	})
 
 /* Unfortunately, we can't yet import this function from engine/rules */
-export let encodeRuleName = (name) =>
+const encodeRuleName = (name) =>
 	name
 		.replace(/\s\.\s/g, '/')
 		.replace(/-/g, '\u2011') // replace with a insecable tiret to differenciate from space

@@ -24,7 +24,9 @@ module.exports = {
 		...(common.plugins || []),
 		...HTMLPlugins({ injectTrackingScript: true }),
 		new ReactRefreshWebpackPlugin(),
-		new webpack.EnvironmentPlugin({ NODE_ENV: 'development' }),
+		new webpack.DefinePlugin({
+			NODE_ENV: JSON.stringify('development'),
+		}),
 		new webpack.HotModuleReplacementPlugin(),
 	],
 }

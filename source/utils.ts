@@ -17,7 +17,7 @@ export const debounce = <F extends (...args: any[]) => void>(
 	}
 }
 
-export const fetcher = (url: RequestInfo) => fetch(url).then(r => r.json())
+export const fetcher = (url: RequestInfo) => fetch(url).then((r) => r.json())
 
 export function inIframe(): boolean {
 	try {
@@ -27,19 +27,10 @@ export function inIframe(): boolean {
 	}
 }
 
-// We use this variable to hide some features in production while keeping them
-// in feature-branches. In case we do A/B testing with several branches served
-// in production, we should add the public faced branch names in the test below.
-// This is different from the process.env.NODE_ENV in that a feature branch may
-// be build in production mode (with the NODE_ENV) but we may still want to show
-// or hide some features.
-export const productionMode =
-	process.env.HEAD && ['master', 'next'].includes(process.env.HEAD)
-
 export function softCatch<ArgType, ReturnType>(
 	fn: (arg: ArgType) => ReturnType
 ): (arg: ArgType) => ReturnType | null {
-	return function(...args) {
+	return function (...args) {
 		try {
 			return fn(...args)
 		} catch (e) {
@@ -76,7 +67,7 @@ export const currencyFormat = (language: string) => ({
 		/^€/
 	),
 	thousandSeparator: formatValue(1000, { language }).charAt(1),
-	decimalSeparator: formatValue(0.1, { language }).charAt(1)
+	decimalSeparator: formatValue(0.1, { language }).charAt(1),
 })
 
 export function hash(str: string): number {

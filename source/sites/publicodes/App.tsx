@@ -24,7 +24,7 @@ import Simulateur from './Simulateur'
 import sitePaths from './sitePaths'
 
 let tracker = devTracker
-if (process.env.NODE_ENV === 'production') {
+if (NODE_ENV === 'production') {
 	tracker = new Tracker()
 }
 

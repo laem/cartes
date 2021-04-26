@@ -22,11 +22,7 @@ declare global {
 
 const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose
 
-if (
-	process.env.NODE_ENV === 'production' &&
-	'serviceWorker' in navigator &&
-	!inIframe()
-) {
+if (NODE_ENV === 'production' && 'serviceWorker' in navigator && !inIframe()) {
 	window.addEventListener('load', () => {
 		navigator.serviceWorker
 			.register('/sw.js')
@@ -60,13 +56,7 @@ export default function Provider({
 	dataBranch,
 	rulesURL,
 }: ProviderProps) {
-	const history = useMemo(
-		() =>
-			createBrowserHistory({
-				basename: process.env.URL_PATH || '',
-			}),
-		[]
-	)
+	const history = useMemo(() => createBrowserHistory(), [])
 	useEffect(() => {
 		tracker?.connectToHistory(history)
 		return () => {
