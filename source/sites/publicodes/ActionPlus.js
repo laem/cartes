@@ -5,6 +5,7 @@ import emoji from 'react-easy-emoji'
 import { useSelector } from 'react-redux'
 import { useParams } from 'react-router'
 import { Link } from 'react-router-dom'
+import Meta from 'Components/utils/Meta'
 
 export default () => {
 	const { encodedName } = useParams()
@@ -12,8 +13,11 @@ export default () => {
 	const dottedName = utils.decodeRuleName(encodedName)
 	const rule = rules[dottedName]
 
+	console.log(rule)
+
 	return (
 		<div css="padding: 0 .3rem 1rem; max-width: 600px; margin: 1rem auto;">
+			<Meta title={rule.titre} />
 			<ScrollToTop />
 			<div>
 				<Link to={'/actions/' + encodedName}>
