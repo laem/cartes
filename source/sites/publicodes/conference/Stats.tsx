@@ -16,8 +16,10 @@ export const computeHumanMean = (simulationArray) => {
 const testResults = [12, 25, 22, 8, 4, 7, 9, 8, 11, 10]
 
 export default ({ elements, users, username }) => {
-	const mean = computeMean(elements),
-		humanMean = computeHumanMean(elements)
+	if (!users) return null
+	const values = Object.values(elements)
+	const mean = computeMean(values),
+		humanMean = computeHumanMean(values)
 
 	return (
 		<div>
@@ -43,20 +45,21 @@ export default ({ elements, users, username }) => {
 						}
 					`}
 				>
-					<li key="legendLeft">{Math.round(Math.min(...elements) / 1000)}</li>
-					{elements.map((el) => (
+					<li key="legendLeft">{Math.round(Math.min(...values) / 1000)}</li>
+					{Object.entries(elements).map(([usernameI, value]) => (
 						<li
-							key={el}
+							key={usernameI}
 							css={`
 								height: 100%;
 								width: 10px;
-								left: ${(el / Math.max(...elements)) * 100 * 0.8}%;
-								background: black;
+								left: ${(value / Math.max(...values)) * 100 * 0.8}%;
+								background: ${users.find((u) => u.name === usernameI)?.color ||
+								'black'};
 								opacity: 0.2;
 							`}
 						></li>
 					))}
-					<li key="legendRight">{Math.round(Math.max(...elements) / 1000)}</li>
+					<li key="legendRight">{Math.round(Math.max(...values) / 1000)}</li>
 				</div>
 			)}
 		</div>
