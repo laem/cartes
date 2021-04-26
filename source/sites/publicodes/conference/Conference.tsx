@@ -66,7 +66,7 @@ export default () => {
 			<h1>{emoji('🏟️ ')} Conférence</h1>
 			<Stats {...{ elements: Object.values(elements), users, username }} />
 
-			{room && <Instructions {...{ users, username }} />}
+			{room && <Instructions {...{ users, username, room }} />}
 			{!room && (
 				<label>
 					<p>Choisissez un nom de salle</p>
