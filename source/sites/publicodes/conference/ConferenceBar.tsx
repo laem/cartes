@@ -6,6 +6,7 @@ import { useDispatch, useSelector } from 'react-redux'
 import { Link } from 'react-router-dom'
 import { situationSelector } from 'Selectors/simulationSelectors'
 import * as Y from 'yjs'
+import { useSimulationProgress } from '../../../components/utils/useNextQuestion'
 import { computeHumanMean } from './Stats'
 
 export default () => {
@@ -16,6 +17,8 @@ export default () => {
 		engine = useEngine(),
 		evaluation = engine.evaluate('bilan'),
 		{ nodeValue: rawNodeValue, dottedName, unit, rawNode } = evaluation
+
+	const progress = useSimulationProgress()
 
 	const nodeValue = correctValue({ nodeValue: rawNodeValue, unit })
 	const [username, setUsername] = usePersistingState('pseudo')
@@ -38,6 +41,7 @@ export default () => {
 		})
 		simulations.observe((event) => {
 			setElements(simulations.toJSON())
+			console.log('SIMULATIONS', simulations.toJSON())
 		})
 	}, [conference])
 
@@ -46,7 +50,7 @@ export default () => {
 
 		const simulations = conference.ydoc.get('simulations', Y.Map)
 
-		simulations.set(username, nodeValue)
+		simulations.set(username, { bilan: nodeValue, progress })
 	}, [situation])
 
 	if (!conference) return <Link to="/conférence">Lancer une conférence</Link>
@@ -54,7 +58,7 @@ export default () => {
 	const awareness = provider.awareness
 
 	const simulationArray = elements && Object.values(elements),
-		result = computeHumanMean(simulationArray)
+		result = computeHumanMean(simulationArray.map((el) => el.bilan))
 
 	return (
 		<Link to={'/conférence/' + room} css="text-decoration: none;">

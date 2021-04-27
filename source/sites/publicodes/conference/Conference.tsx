@@ -12,8 +12,19 @@ import { mean } from 'ramda'
 import Stats from './Stats'
 
 const getRandomInt = (max) => Math.floor(Math.random() * Math.floor(max))
-const getRandomColor = () =>
-	'#' + Math.floor(Math.random() * 16777215).toString(16)
+
+const stringToColour = function (str) {
+	var hash = 0
+	for (var i = 0; i < str.length; i++) {
+		hash = str.charCodeAt(i) + ((hash << 5) - hash)
+	}
+	var colour = '#'
+	for (var i = 0; i < 3; i++) {
+		var value = (hash >> (i * 8)) & 0xff
+		colour += ('00' + value.toString(16)).substr(-2)
+	}
+	return colour
+}
 
 export default () => {
 	const [elements, setElements] = useState([])
@@ -51,7 +62,7 @@ export default () => {
 			// Define a print name that should be displayed
 			name: username,
 			// Define a color that should be associated to the user:
-			color: getRandomColor(), // should be a hex color
+			color: stringToColour(username), // should be a hex color
 		})
 		const simulations = ydoc.get('simulations', Y.Map)
 		setElements(simulations.toJSON())

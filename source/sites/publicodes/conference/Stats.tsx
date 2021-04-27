@@ -1,3 +1,5 @@
+import Progress from '../../../components/ui/Progress'
+
 export const computeMean = (simulationArray) =>
 	simulationArray &&
 	simulationArray
@@ -16,11 +18,14 @@ const testResults = [12, 25, 22, 8, 4, 7, 9, 8, 11, 10]
 
 export default ({ elements, users, username }) => {
 	if (!users) return null
-	const values = Object.values(elements)
+	const values = Object.values(elements).map((el) => el.bilan)
 	const mean = computeMean(values),
 		humanMean = computeHumanMean(values)
 
-	console.log('STATS', elements, users, username, true)
+	const progressList = Object.values(elements).map((el) => el.progress),
+		meanProgress = computeMean(progressList)
+
+	console.log('PORGRESSLIST', progressList.join('  -  '))
 
 	if (isNaN(mean)) return null
 
@@ -48,7 +53,7 @@ export default ({ elements, users, username }) => {
 				`}
 			>
 				<li key="legendLeft">{Math.round(Math.min(...values) / 1000)}</li>
-				{Object.entries(elements).map(([usernameI, value]) => (
+				{Object.entries(elements).map(([usernameI, { bilan: value }]) => (
 					<li
 						key={usernameI}
 						css={`
@@ -57,11 +62,15 @@ export default ({ elements, users, username }) => {
 							left: ${(value / Math.max(...values)) * 100 * 0.8}%;
 							background: ${users.find((u) => u.name === usernameI)?.color ||
 							'black'};
-							opacity: 0.2;
+							opacity: 0.5;
 						`}
 					></li>
 				))}
 				<li key="legendRight">{Math.round(Math.max(...values) / 1000)}</li>
+			</div>
+			<div css="margin: .6rem; text-align: center">
+				<p>Avancement du groupe</p>
+				<Progress progress={meanProgress} />
 			</div>
 		</div>
 	)
