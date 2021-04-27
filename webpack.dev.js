@@ -23,10 +23,10 @@ module.exports = {
 	plugins: [
 		...(common.plugins || []),
 		...HTMLPlugins({ injectTrackingScript: true }),
-		new ReactRefreshWebpackPlugin(),
 		new webpack.DefinePlugin({
 			NODE_ENV: JSON.stringify('development'),
 		}),
 		new webpack.HotModuleReplacementPlugin(),
+		new ReactRefreshWebpackPlugin(),
 	],
 }
