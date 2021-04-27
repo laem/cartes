@@ -20,7 +20,7 @@ export default ({ elements, users, username }) => {
 	const mean = computeMean(values),
 		humanMean = computeHumanMean(values)
 
-	console.log('STATS', elements, users, username)
+	console.log('STATS', elements, users, username, true)
 
 	if (isNaN(mean)) return null
 

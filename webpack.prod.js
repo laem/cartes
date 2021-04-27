@@ -14,7 +14,10 @@ const TerserPlugin = require('terser-webpack-plugin')
 module.exports = {
 	...common,
 	module: {
-		rules: [...commonLoaders(), styleLoader(MiniCssExtractPlugin.loader)],
+		rules: [
+			...commonLoaders('production'),
+			styleLoader(MiniCssExtractPlugin.loader),
+		],
 	},
 	mode: 'production',
 	devtool: 'source-map',

@@ -66,7 +66,7 @@ module.exports.styleLoader = (styleLoader) => ({
 	],
 })
 
-module.exports.commonLoaders = () => {
+module.exports.commonLoaders = (mode = 'production') => {
 	const babelLoader = {
 		loader: 'babel-loader',
 		options: {
@@ -82,6 +82,10 @@ module.exports.commonLoaders = () => {
 					},
 				],
 			],
+			plugins: [
+				// ... other plugins
+				mode === 'development' && require.resolve('react-refresh/babel'),
+			].filter(Boolean),
 		},
 	}
 

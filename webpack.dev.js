@@ -12,11 +12,11 @@ const {
 module.exports = {
 	...common,
 	module: {
-		rules: [...commonLoaders(), styleLoader('style-loader')],
+		rules: [...commonLoaders('development'), styleLoader('style-loader')],
 	},
 	devServer: {
 		historyApiFallback: true,
-		contentBase: path.join(__dirname, 'dist'),
+		static: path.join(__dirname, 'dist'),
 		hot: true,
 	},
 	mode: 'development',
