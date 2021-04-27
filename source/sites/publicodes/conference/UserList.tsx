@@ -1,4 +1,5 @@
 import emoji from 'react-easy-emoji'
+import { findContrastedTextColor } from '../../../components/utils/colors'
 export default ({ users, username }) => (
 	<ul
 		css={`
@@ -13,7 +14,9 @@ export default ({ users, username }) => (
 			<li
 				key={u.name}
 				css={`
-					color: ${u.color};
+					background: ${u.color};
+					color: ${findContrastedTextColor(u.color, true)};
+					padding: 0.1rem 0.4rem;
 				`}
 			>
 				{emoji('👤 ')}

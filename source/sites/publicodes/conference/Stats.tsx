@@ -6,7 +6,6 @@ export const computeMean = (simulationArray) =>
 
 export const computeHumanMean = (simulationArray) => {
 	const result = computeMean(simulationArray)
-	console.log('RES', result)
 
 	return result
 		? Math.round(result / 100) / 10 + ' tonnes'
@@ -20,6 +19,8 @@ export default ({ elements, users, username }) => {
 	const values = Object.values(elements)
 	const mean = computeMean(values),
 		humanMean = computeHumanMean(values)
+
+	console.log('STATS', elements, users, username)
 
 	if (isNaN(mean)) return null
 
