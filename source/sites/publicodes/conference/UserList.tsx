@@ -5,6 +5,7 @@ export default ({ users, username }) => (
 		css={`
 			display: flex;
 			list-style-type: none;
+			flex-wrap: wrap;
 			li {
 				margin: 0.6rem;
 			}

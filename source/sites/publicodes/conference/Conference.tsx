@@ -106,11 +106,10 @@ export default () => {
 
 const Instructions = ({ users, username, room }) => (
 	<div>
-		<h2>Qui est déjà là ?</h2>
-		<p css="color: #78b159; font-weight: bold">
-			{emoji('🟢')} {users.length} partipant{plural(users)} connecté
-			{plural(users)}
-		</p>
+		<h2 css="display: inline-block ;margin-right: 1rem">Qui est connecté ?</h2>
+		<span css="color: #78b159; font-weight: bold">
+			{emoji('🟢')} {users.length} partipant{plural(users)}
+		</span>
 		<UserList users={users} username={username} />
 		<h2>Comment ça marche ?</h2>
 		<p>
