@@ -106,6 +106,12 @@ export default () => {
 
 const Instructions = ({ users, username, room }) => (
 	<div>
+		<h2>Qui est déjà là ?</h2>
+		<p css="color: #78b159; font-weight: bold">
+			{emoji('🟢')} {users.length} collègue{plural(users)} connecté
+			{plural(users)}
+		</p>
+		<UserList users={users} username={username} />
 		<h2>Comment ça marche ?</h2>
 		<p>
 			1) {emoji('🔗 ')} Partagez <a href={'/conférence/' + room}>ce lien</a>{' '}
@@ -118,12 +124,6 @@ const Instructions = ({ users, username, room }) => (
 			</button>
 		</Link>
 		<p>3) Visualisez ensemble les résultats sur cette page</p>
-		<h2>Qui est déjà là ?</h2>
-		<p css="color: #78b159; font-weight: bold">
-			{emoji('🟢')} {users.length} collègue{plural(users)} connecté
-			{plural(users)}
-		</p>
-		<UserList users={users} username={username} />
 	</div>
 )
 

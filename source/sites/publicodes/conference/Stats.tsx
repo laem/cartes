@@ -35,7 +35,9 @@ export default ({ elements, users, username }) => {
 		maxCategory = Object.values(categories).reduce(
 			(memo, next) => Math.max(memo, ...next),
 			0
-		)
+		),
+		maxValue = Math.max(...values),
+		minValue = Math.min(...values)
 
 	console.log('CAR', categories)
 
@@ -60,10 +62,10 @@ export default ({ elements, users, username }) => {
 							position: absolute;
 						}
 						li:first-child {
-							left: 5%;
+							left: 2%;
 						}
 						li:last-child {
-							right: 5%;
+							right: 2%;
 						}
 					`}
 				>
@@ -74,7 +76,7 @@ export default ({ elements, users, username }) => {
 							css={`
 								height: 100%;
 								width: 10px;
-								left: ${(value / Math.max(...values)) * 100 * 0.8}%;
+								left: ${((value - minValue) / (maxValue - minValue)) * 80 + 8}%;
 								background: ${users.find((u) => u.name === usernameI)?.color ||
 								'black'};
 								opacity: 0.5;
