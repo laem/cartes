@@ -49,7 +49,7 @@
 		"enzyme-adapter-react-16": "^1.1.1",
 		"eslint-plugin-react": "^7.12.4",
 		"file-loader": "^6.2.0",
-		"framer-motion": "^2.9.4",
+		"framer-motion": "^4.1.10",
 		"i18next-parser": "^3.6.0",
 		"intl-locales-supported": "^1.0.0",
 		"json-loader": "^0.5.7",
