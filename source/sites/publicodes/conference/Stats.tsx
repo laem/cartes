@@ -86,7 +86,7 @@ export default ({ elements, users, username }) => {
 			</div>
 			<ul
 				css={`
-					li:nth-child(2n) {
+					> li:nth-child(2n) {
 						background: var(--lightestColor);
 					}
 					list-style-type: none;
@@ -101,7 +101,7 @@ export default ({ elements, users, username }) => {
 						list-style-type: none;
 						display: inline-block;
 						position: relative;
-						width: 70%;
+						width: 65%;
 					}
 					ul li {
 						position: absolute;
@@ -110,7 +110,7 @@ export default ({ elements, users, username }) => {
 						display: inline-block;
 						background: black;
 						border-radius: 1rem;
-						opacity: 0.1;
+						opacity: 0.2;
 					}
 				`}
 			>
