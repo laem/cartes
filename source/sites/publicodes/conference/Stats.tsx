@@ -29,6 +29,12 @@ export default ({ elements, users, username }) => {
 
 	if (isNaN(mean)) return null
 
+	const categories = reduceCategories(
+		Object.values(elements).map((el) => el.byCategory)
+	)
+
+	console.log('CAR', categories)
+
 	return (
 		<div>
 			<div css="text-align: center">Moyenne du groupe : {humanMean}</div>
@@ -75,3 +81,21 @@ export default ({ elements, users, username }) => {
 		</div>
 	)
 }
+
+const reduceCategories = (list) =>
+	list.reduce(
+		(memo, next) => {
+			return next.reduce(
+				(countByCategory, nextCategory) => ({
+					...countByCategory,
+					[nextCategory.name]: [
+						...(countByCategory[nextCategory.name] || []),
+						nextCategory.nodeValue,
+					],
+				}),
+				memo
+			)
+		},
+
+		{}
+	)

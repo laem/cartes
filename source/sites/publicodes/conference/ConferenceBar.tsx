@@ -7,6 +7,7 @@ import { Link } from 'react-router-dom'
 import { situationSelector } from 'Selectors/simulationSelectors'
 import * as Y from 'yjs'
 import { useSimulationProgress } from '../../../components/utils/useNextQuestion'
+import { extractCategories } from '../chart'
 import { computeHumanMean } from './Stats'
 
 export default () => {
@@ -17,8 +18,11 @@ export default () => {
 		engine = useEngine(),
 		evaluation = engine.evaluate('bilan'),
 		{ nodeValue: rawNodeValue, dottedName, unit, rawNode } = evaluation
+	const rules = useSelector((state) => state.rules)
 
 	const progress = useSimulationProgress()
+
+	const byCategory = extractCategories(rules, engine)
 
 	const nodeValue = correctValue({ nodeValue: rawNodeValue, unit })
 	const [username, setUsername] = usePersistingState('pseudo')
@@ -50,7 +54,7 @@ export default () => {
 
 		const simulations = conference.ydoc.get('simulations', Y.Map)
 
-		simulations.set(username, { bilan: nodeValue, progress })
+		simulations.set(username, { bilan: nodeValue, progress, byCategory })
 	}, [situation])
 
 	if (!conference) return <Link to="/conférence">Lancer une conférence</Link>
