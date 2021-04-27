@@ -24,11 +24,5 @@ module.exports = {
 		'@babel/plugin-proposal-object-rest-spread',
 		'@babel/plugin-syntax-dynamic-import',
 		['webpack-alias', { config: './webpack.dev.js' }],
-		[
-			'ramda',
-			{
-				useES: true,
-			},
-		],
 	].filter(Boolean),
 }
