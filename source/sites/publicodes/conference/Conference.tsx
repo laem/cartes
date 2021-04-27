@@ -108,7 +108,7 @@ const Instructions = ({ users, username, room }) => (
 	<div>
 		<h2>Qui est déjà là ?</h2>
 		<p css="color: #78b159; font-weight: bold">
-			{emoji('🟢')} {users.length} collègue{plural(users)} connecté
+			{emoji('🟢')} {users.length} partipant{plural(users)} connecté
 			{plural(users)}
 		</p>
 		<UserList users={users} username={username} />
