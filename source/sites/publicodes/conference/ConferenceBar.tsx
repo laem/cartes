@@ -75,6 +75,17 @@ export default () => {
 		<Link to={'/conférence/' + room} css="text-decoration: none;">
 			<div
 				css={`
+					@keyframes gradient {
+						0% {
+							background-position: 0% 50%;
+						}
+						50% {
+							background-position: 100% 50%;
+						}
+						100% {
+							background-position: 0% 50%;
+						}
+					}
 					background: linear-gradient(
 						90deg,
 						white -10%,
@@ -82,6 +93,8 @@ export default () => {
 						#b71540 90%,
 						white 110%
 					);
+					background-size: 400% 400%;
+					animation: gradient 15s ease infinite;
 					color: white;
 					padding: 0.3rem 1rem;
 					display: flex;
