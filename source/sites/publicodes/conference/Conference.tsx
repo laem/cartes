@@ -78,7 +78,20 @@ export default () => {
 
 	return (
 		<div>
-			<h1>{emoji('🏟️ ')} Conférence</h1>
+			<h1>
+				{emoji('🏟️ ')} Conférence
+				<span
+					css={`
+						margin-left: 1rem;
+						background: var(--color);
+						color: var(--textColor);
+						padding: 0.1rem 0.4rem;
+						border-radius: 0.6rem;
+					`}
+				>
+					beta
+				</span>
+			</h1>
 			<Stats {...{ elements, users, username }} />
 
 			{room && <Instructions {...{ users, username, room }} />}
