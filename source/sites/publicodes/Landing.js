@@ -85,10 +85,6 @@ export default () => {
 				>
 					<Link to="/à-propos">{emoji('❔ ')}À propos</Link>
 					<DocumentationButton />
-					<Link to="/nouveautés">
-						{emoji('✨️ ')}
-						Nouveautés
-					</Link>
 					<Link to="/vie-privée">
 						{emoji('🙈 ')}
 						Vie privée
