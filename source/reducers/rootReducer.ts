@@ -6,8 +6,6 @@ import { SavedSimulation } from 'Selectors/storageSelectors'
 import { DottedName } from '../rules/index'
 import { objectifsSelector } from '../selectors/simulationSelectors'
 import storageRootReducer from './storageReducer'
-import * as Y from 'yjs'
-import { WebrtcProvider } from 'y-webrtc'
 
 function explainedVariable(
 	state: DottedName | null = null,
@@ -187,14 +185,13 @@ function actionMode(state = null, { type, mode }) {
 	} else return state
 }
 
-function conference(state = null, { type, room }) {
+function conference(state = null, { type, room, ydoc, provider }) {
 	if (type === 'SET_CONFERENCE') {
 		if (state?.room === room) return state
-		const ydoc = new Y.Doc()
 		return {
-			room: room,
-			provider: new WebrtcProvider(room, ydoc, {}),
-			ydoc: ydoc,
+			room,
+			ydoc,
+			provider,
 		}
 	} else return state
 }

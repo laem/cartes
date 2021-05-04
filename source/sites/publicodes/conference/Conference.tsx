@@ -41,36 +41,40 @@ export default () => {
 	const conference = useSelector((state) => state.conference)
 
 	useEffect(() => {
-		console.log('will dispatch')
-		dispatch({ type: 'SET_CONFERENCE', room })
-	}, [room])
+		if (!conference) {
+			const ydoc = new Y.Doc()
+			const provider = new WebrtcProvider(room, ydoc, {})
+			dispatch({ type: 'SET_CONFERENCE', room, ydoc, provider })
+		} else {
+			console.log('yo')
+			const { room } = conference
 
-	useEffect(() => {
-		if (!conference) return null
-		const { provider, ydoc, room } = conference
+			const ydoc = conference.ydoc,
+				provider = conference.provider
 
-		const awareness = provider.awareness
+			const awareness = provider.awareness
 
-		// You can observe when a any user updated their awareness information
-		awareness.on('change', (changes) => {
-			// Whenever somebody updates their awareness information,
-			// we log all awareness information from all users.
-			setUsers(Array.from(awareness.getStates().values()))
-		})
+			// You can observe when a any user updated their awareness information
+			awareness.on('change', (changes) => {
+				// Whenever somebody updates their awareness information,
+				// we log all awareness information from all users.
+				setUsers(Array.from(awareness.getStates().values()))
+			})
 
-		awareness.setLocalState({
-			// Define a print name that should be displayed
-			name: username,
-			// Define a color that should be associated to the user:
-			color: stringToColour(username), // should be a hex color
-		})
-		const simulations = ydoc.get('simulations', Y.Map)
-		setElements(simulations.toJSON())
-		simulations.observe((event) => {
-			console.log('did observe from Conf', event)
+			awareness.setLocalState({
+				// Define a print name that should be displayed
+				name: username,
+				// Define a color that should be associated to the user:
+				color: stringToColour(username), // should be a hex color
+			})
+			const simulations = conference.ydoc.get('simulations', Y.Map)
 			setElements(simulations.toJSON())
-		})
-	}, [conference])
+			simulations.observe((event) => {
+				console.log('did observe from Conf', event)
+				setElements(simulations.toJSON())
+			})
+		}
+	}, [room, conference])
 
 	return (
 		<div>
@@ -88,7 +92,6 @@ export default () => {
 							placeholder="chaton-hurlant-29"
 							value={newRoom}
 							onChange={(e) => setNewRoom(e.target.value)}
-							on={(e) => setNewRoom(e.target.value)}
 						/>{' '}
 						{newRoom && (
 							<Link to={'/conférence/' + newRoom}>

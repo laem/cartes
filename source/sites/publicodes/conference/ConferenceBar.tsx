@@ -5,6 +5,7 @@ import { useEffect, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { Link } from 'react-router-dom'
 import { situationSelector } from 'Selectors/simulationSelectors'
+import { WebrtcProvider } from 'y-webrtc'
 import * as Y from 'yjs'
 import { useSimulationProgress } from '../../../components/utils/useNextQuestion'
 import { extractCategories } from '../chart'
@@ -12,6 +13,9 @@ import { computeHumanMean } from './Stats'
 
 export default () => {
 	const conference = useSelector((state) => state.conference)
+
+	const { room, ydoc, provider } = conference
+
 	const [users, setUsers] = useState([])
 
 	const situation = useSelector(situationSelector),
@@ -30,37 +34,38 @@ export default () => {
 	const [elements, setElements] = useState([])
 	const dispatch = useDispatch()
 
+	const simulations = ydoc.get('simulations', Y.Map)
+
+	const awareness = provider.awareness
+
 	useEffect(() => {
 		console.log('useeffect with ?', conference)
 		if (!conference) {
-			dispatch({ type: 'SET_CONFERENCE', room })
-			return null
+			const ydoc = new Y.Doc()
+			const provider = new WebrtcProvider(room, ydoc, {})
+			dispatch({ type: 'SET_CONFERENCE', room, ydoc, provider })
+		} else {
+			awareness.on('change', (changes) => {
+				// Whenever somebody updates their awareness information,
+				// we log all awareness information from all users.
+				setUsers(Array.from(awareness.getStates().values()))
+			})
+			simulations.observe((event) => {
+				setElements(simulations.toJSON())
+				console.log('SIMULATIONS', simulations.toJSON())
+			})
 		}
-		const simulations = conference.ydoc.get('simulations', Y.Map)
-
-		conference.provider.awareness.on('change', (changes) => {
-			// Whenever somebody updates their awareness information,
-			// we log all awareness information from all users.
-			setUsers(Array.from(awareness.getStates().values()))
-		})
-		simulations.observe((event) => {
-			setElements(simulations.toJSON())
-			console.log('SIMULATIONS', simulations.toJSON())
-		})
-	}, [conference])
+	}, [room, conference])
 
 	useEffect(() => {
 		if (!conference) return null
 
-		const simulations = conference.ydoc.get('simulations', Y.Map)
+		const simulations = ydoc.get('simulations', Y.Map)
 
 		simulations.set(username, { bilan: nodeValue, progress, byCategory })
 	}, [situation])
 
 	if (!conference) return <Link to="/conférence">Lancer une conférence</Link>
-
-	const { provider, ydoc, room } = conference
-	const awareness = provider.awareness
 
 	const simulationArray = elements && Object.values(elements),
 		result = computeHumanMean(simulationArray.map((el) => el.bilan))
