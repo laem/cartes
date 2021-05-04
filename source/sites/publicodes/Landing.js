@@ -81,10 +81,14 @@ export default () => {
 						> * {
 							margin: 0 0.6rem;
 						}
+						img {
+							font-size: 120%;
+						}
 					`}
 				>
 					<Link to="/à-propos">{emoji('❔ ')}À propos</Link>
 					<DocumentationButton />
+					<Link to="/partenaires">{emoji('🤝 ')}Partenaires</Link>
 				</div>
 			</footer>
 		</div>
