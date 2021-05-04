@@ -2,6 +2,7 @@ import { correctValue } from 'Components/publicodesUtils'
 import { useEngine } from 'Components/utils/EngineContext'
 import { usePersistingState } from 'Components/utils/persistState'
 import { useEffect, useState } from 'react'
+import emoji from 'react-easy-emoji'
 import { useDispatch, useSelector } from 'react-redux'
 import { Link } from 'react-router-dom'
 import { situationSelector } from 'Selectors/simulationSelectors'
@@ -74,18 +75,36 @@ export default () => {
 		<Link to={'/conférence/' + room} css="text-decoration: none;">
 			<div
 				css={`
-					background: #b71540;
+					background: linear-gradient(
+						90deg,
+						white -10%,
+						var(--color) 10%,
+						#b71540 90%,
+						white 110%
+					);
 					color: white;
-					padding: 0.1rem 1rem;
+					padding: 0.3rem 1rem;
 					display: flex;
 					justify-content: space-evenly;
 					align-items: center;
+					> span {
+						display: flex;
+						align-items: center;
+					}
+					img {
+						font-size: 150%;
+						margin-right: 0.4rem !important;
+					}
 				`}
 			>
-				<span>🏟️ {room}</span>
-				<span>🧮 {result}</span>
 				<span>
-					👥{' '}
+					{emoji('🏟️')} {room}
+				</span>
+				<span>
+					{emoji('🧮')} {result}
+				</span>
+				<span>
+					{emoji('👥')}{' '}
 					<span
 						css={`
 							background: #78b159;
