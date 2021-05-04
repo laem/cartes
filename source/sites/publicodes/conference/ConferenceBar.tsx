@@ -97,8 +97,8 @@ export default () => {
 					}
 				`}
 			>
-				<span>
-					{emoji('🏟️')} {room}
+				<span css="text-transform: uppercase">
+					{emoji('🏟️')}« {room} »
 				</span>
 				<span>
 					{emoji('🧮')} {result}
