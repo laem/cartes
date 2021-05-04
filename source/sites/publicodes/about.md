@@ -26,11 +26,9 @@ Nous collectons des donées anonymisées uniquement pour améliorer ce simulateu
 
 [🙈 En savoir plus](/vie-privée)
 
-## Comment intégrer ce simulateur directement à un site ?
+## Comment intégrer ce simulateur dans votre site ?
 
-Intégrez le dans un article de blog ou un site simplement en ajoutant la ligne ci-dessous à votre page web. Le module restera automatiquement à jour avec les dernières évolutions.
-
-`<script id="nosgestesclimat" src="https://nosgestesclimat.fr/iframe.js"></script>`
+On vous dit tout sur notre page [partenaires](/partenaires).
 
 ## Nous contacter
 
