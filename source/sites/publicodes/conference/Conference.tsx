@@ -80,17 +80,24 @@ export default () => {
 			{room && <Instructions {...{ users, username, room }} />}
 			{!room && (
 				<label>
-					<p>Choisissez un nom de salle</p>
-					<input
-						placeholder="chaton-hurlant-29"
-						value={newRoom}
-						onChange={(e) => setNewRoom(e.target.value)}
-					/>{' '}
-					{newRoom && (
-						<Link to={'/conférence/' + newRoom}>
-							<button className="ui__ button small">C'est parti ! </button>
-						</Link>
-					)}
+					<p>
+						Choisissez un nom de salle pour lancer ou rejoindre une conférence.
+					</p>
+					<form>
+						<input
+							placeholder="chaton-hurlant-29"
+							value={newRoom}
+							onChange={(e) => setNewRoom(e.target.value)}
+							on={(e) => setNewRoom(e.target.value)}
+						/>{' '}
+						{newRoom && (
+							<Link to={'/conférence/' + newRoom}>
+								<button type="submit" className="ui__ button small">
+									C'est parti !{' '}
+								</button>
+							</Link>
+						)}
+					</form>
 				</label>
 			)}
 			<h2>Et mes données ?</h2>
