@@ -83,25 +83,35 @@ export default () => {
 
 			{room && <Instructions {...{ users, username, room }} />}
 			{!room && (
-				<label>
-					<p>
-						Choisissez un nom de salle pour lancer ou rejoindre une conférence.
-					</p>
-					<form>
-						<input
-							placeholder="chaton-hurlant-29"
-							value={newRoom}
-							onChange={(e) => setNewRoom(e.target.value)}
-						/>{' '}
-						{newRoom && (
-							<Link to={'/conférence/' + newRoom}>
-								<button type="submit" className="ui__ button small">
-									C'est parti !{' '}
-								</button>
-							</Link>
-						)}
-					</form>
-				</label>
+				<>
+					<label>
+						<p>
+							Choisissez un nom de salle pour lancer ou rejoindre une
+							conférence.
+						</p>
+						<form>
+							<input
+								placeholder="Saisissez un nom de salle"
+								value={newRoom}
+								onChange={(e) => setNewRoom(e.target.value)}
+							/>{' '}
+							{newRoom && (
+								<Link to={'/conférence/' + newRoom}>
+									<button type="submit" className="ui__ button small">
+										C'est parti !{' '}
+									</button>
+								</Link>
+							)}
+						</form>
+					</label>
+
+					{newRoom && newRoom.length < 10 && (
+						<p>
+							⚠️ Votre nom de salle est court, vous risquez de vous retrouver
+							avec des inconnus...
+						</p>
+					)}
+				</>
 			)}
 			<h2>Et mes données ?</h2>
 			<p>
