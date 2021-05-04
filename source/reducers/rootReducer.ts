@@ -185,6 +185,17 @@ function actionMode(state = null, { type, mode }) {
 	} else return state
 }
 
+function conference(state = null, { type, room, ydoc, provider }) {
+	if (type === 'SET_CONFERENCE') {
+		if (state?.room === room) return state
+		return {
+			room,
+			ydoc,
+			provider,
+		}
+	} else return state
+}
+
 const mainReducer = (state: any, action: Action) =>
 	combineReducers({
 		explainedVariable,
@@ -196,6 +207,7 @@ const mainReducer = (state: any, action: Action) =>
 		activeTargetInput,
 		rules,
 		actionMode,
+		conference,
 	})(state, action)
 
 export default reduceReducers<RootState>(

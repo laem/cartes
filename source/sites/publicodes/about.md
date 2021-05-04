@@ -14,6 +14,18 @@ Depuis sa création en 2011, l'ABC est partenaire de l’ADEME. Ce partenariat a
 
 L'incubateur [beta.gouv.fr](https://beta.gouv.fr/) de la Direction interministérielle du numérique (DINUM) vise à concevoir des services numériques simples et faciles à utiliser.
 
+## Nouveautés
+
+Le simulateur est amélioré en continu.
+
+[✨️ Découvrez les dernières nouveautés et les notes de versions](/nouveautés).
+
+## Vie privée
+
+Nous collectons des donées anonymisées uniquement pour améliorer ce simulateur.
+
+[🙈 En savoir plus](/vie-privée)
+
 ## Comment intégrer ce simulateur directement à un site ?
 
 Intégrez le dans un article de blog ou un site simplement en ajoutant la ligne ci-dessous à votre page web. Le module restera automatiquement à jour avec les dernières évolutions.
