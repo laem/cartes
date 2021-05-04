@@ -16,7 +16,15 @@ L'incubateur [beta.gouv.fr](https://beta.gouv.fr/) de la Direction interministé
 
 ## Nouveautés
 
-✨️ Le simulateur est amélioré en continu, [découvrez les dernières nouveautés et les notes de versions](/nouveautés).
+Le simulateur est amélioré en continu.
+
+[✨️ Découvrez les dernières nouveautés et les notes de versions](/nouveautés).
+
+## Vie privée
+
+Nous collectons des donées anonymisées uniquement pour améliorer ce simulateur.
+
+[🙈 En savoir plus](/vie-privée)
 
 ## Comment intégrer ce simulateur directement à un site ?
 
