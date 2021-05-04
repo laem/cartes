@@ -129,7 +129,7 @@ const Instructions = ({ users, username, room }) => (
 				votre simulation
 			</button>
 		</Link>
-		<p>3) Visualisez ensemble les résultats sur cette page</p>
+		<p>3) {emoji('🧮 ')}Visualisez ensemble les résultats sur cette page</p>
 	</div>
 )
 

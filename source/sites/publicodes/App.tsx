@@ -1,7 +1,7 @@
 import Route404 from 'Components/Route404'
 import 'Components/ui/index.css'
 import News from 'Pages/News'
-import React from 'react'
+import React, { Suspense } from 'react'
 import { useTranslation } from 'react-i18next'
 import { Redirect, useLocation } from 'react-router'
 import { Link, Route, Switch } from 'react-router-dom'
@@ -22,8 +22,8 @@ import Personas from './Personas.tsx'
 import Privacy from './Privacy'
 import Simulateur from './Simulateur'
 import sitePaths from './sitePaths'
-import Conference from './conference/Conference'
-import ConferenceBar from './conference/ConferenceBar'
+const ConferenceLazy = React.lazy(() => import('./conference/Conference'))
+import ConferenceBarLazy from './conference/ConferenceBarLazy'
 
 let tracker = devTracker
 if (NODE_ENV === 'production') {
@@ -71,7 +71,7 @@ const Router = ({}) => {
 	return (
 		<>
 			<div className="ui__ container">
-				<ConferenceBar />
+				<ConferenceBarLazy />
 				<nav css="display: flex; justify-content: center; margin: .6rem auto">
 					<Link
 						to="/"
@@ -114,7 +114,11 @@ const Router = ({}) => {
 					<Route path="/à-propos" component={About} />
 					<Route path="/vie-privée" component={Privacy} />
 					<Route path="/nouveautés" component={News} />
-					<Route path="/conférence/:room?" component={Conference} />
+					<Route path="/conférence/:room?">
+						<Suspense fallback="Chargement">
+							<ConferenceLazy />
+						</Suspense>
+					</Route>
 					<Route component={Route404} />
 				</Switch>
 			</div>

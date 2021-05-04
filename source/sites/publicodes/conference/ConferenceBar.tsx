@@ -58,6 +58,7 @@ export default () => {
 	}, [situation])
 
 	if (!conference) return <Link to="/conférence">Lancer une conférence</Link>
+
 	const { provider, ydoc, room } = conference
 	const awareness = provider.awareness
 
