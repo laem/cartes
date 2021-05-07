@@ -1,7 +1,5 @@
 ## Futureco
 
-💬 Venez discuter sur notre salon `proj-futureco` sur le Slack de `La Base tech` [inscription très rapide ici](https://airtable.com/shrbc0nMHLy5DW9eT).
-
 ## C'est quoi ?
 
 La catastrophe climatique n'est plus une menace lointaine et incertaine, c'est une actualité. Comment éviter le pire ? Chaque aspect de notre vie moderne a un impact.
