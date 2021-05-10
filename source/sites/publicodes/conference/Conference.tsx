@@ -139,7 +139,10 @@ export default () => {
 
 const Instructions = ({ users, username, room }) => (
 	<div>
-		<h2 css="display: inline-block ;margin-right: 1rem">Qui est connecté ?</h2>
+		<h2 css="display: inline-block ;margin-right: 1rem">
+			{emoji('👤 ')}
+			Qui est connecté ?
+		</h2>
 		<span css="color: #78b159; font-weight: bold">
 			{emoji('🟢')} {users.length} partipant{plural(users)}
 		</span>
