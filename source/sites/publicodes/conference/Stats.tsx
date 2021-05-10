@@ -88,7 +88,7 @@ export default ({ elements, users, username }) => {
 			</div>
 			<ul
 				css={`
-					> li:nth-child(2n) {
+					> li:nth-child(2n + 1) {
 						background: var(--lightestColor);
 					}
 					list-style-type: none;
