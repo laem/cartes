@@ -1,4 +1,5 @@
 import Progress from '../../../components/ui/Progress'
+import { humanWeight } from '../HumanWeight'
 import CategoryStats from './CategoryStats'
 
 export const computeMean = (simulationArray) =>
@@ -26,8 +27,6 @@ export default ({ elements, users, username }) => {
 	const progressList = Object.values(elements).map((el) => el.progress),
 		meanProgress = computeMean(progressList)
 
-	console.log('PORGRESSLIST', progressList.join('  -  '))
-
 	if (isNaN(mean)) return null
 
 	const categories = reduceCategories(
@@ -38,9 +37,9 @@ export default ({ elements, users, username }) => {
 			0
 		),
 		maxValue = Math.max(...values),
-		minValue = Math.min(...values)
-
-	console.log('CAR', categories)
+		minValue = Math.min(...values),
+		max = humanWeight(maxValue, true).join(' '),
+		min = humanWeight(minValue, true).join(' ')
 
 	return (
 		<div>
@@ -70,7 +69,6 @@ export default ({ elements, users, username }) => {
 						}
 					`}
 				>
-					<li key="legendLeft">{Math.round(Math.min(...values) / 1000)}</li>
 					{Object.entries(elements).map(([usernameI, { bilan: value }]) => (
 						<li
 							key={usernameI}
@@ -84,7 +82,11 @@ export default ({ elements, users, username }) => {
 							`}
 						></li>
 					))}
-					<li key="legendRight">{Math.round(Math.max(...values) / 1000)}</li>
+				</div>
+
+				<div css="display: flex; justify-content: space-between; width: 100%">
+					<small key="legendLeft">{min}</small>
+					<small key="legendRight">{max}</small>
 				</div>
 			</div>
 			<CategoryStats {...{ categories, maxCategory }} />

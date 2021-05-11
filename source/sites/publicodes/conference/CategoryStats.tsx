@@ -6,7 +6,6 @@ export default ({ categories, maxCategory }) => {
 		max = Math.max(...values),
 		humanMax = humanWeight(max, true)
 
-	console.log('allez', min, max)
 	return (
 		<div>
 			<ul
@@ -55,7 +54,7 @@ export default ({ categories, maxCategory }) => {
 					</li>
 				))}
 			</ul>
-
+			t{' '}
 			<div css="width: 70%; margin-left: 32%;  display: flex; justify-content: space-between">
 				<small>{Math.round(0)}</small>
 				<small>
