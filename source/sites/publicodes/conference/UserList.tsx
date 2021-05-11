@@ -18,9 +18,9 @@ export default ({ users, username }) => (
 					background: ${u.color};
 					color: ${findContrastedTextColor(u.color, true)};
 					padding: 0.1rem 0.4rem;
+					border-radius: 0.6rem;
 				`}
 			>
-				{emoji('👤 ')}
 				{u.name}
 				{u.name === username && ' (toi)'}
 			</li>

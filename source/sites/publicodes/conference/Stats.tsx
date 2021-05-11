@@ -1,4 +1,8 @@
+import { useState } from 'react'
+import emoji from 'react-easy-emoji'
 import Progress from '../../../components/ui/Progress'
+import { humanWeight } from '../HumanWeight'
+import CategoryStats from './CategoryStats'
 
 export const computeMean = (simulationArray) =>
 	simulationArray &&
@@ -14,9 +18,10 @@ export const computeHumanMean = (simulationArray) => {
 		: 'résultats en attente'
 }
 
-const testResults = [12, 25, 22, 8, 4, 7, 9, 8, 11, 10]
-
 export default ({ elements, users, username }) => {
+	const [spotlight, setSpotlightRaw] = useState(null)
+	const setSpotlight = (username) =>
+		spotlight === username ? setSpotlightRaw(null) : setSpotlightRaw(username)
 	if (!users) return null
 	const values = Object.values(elements).map((el) => el.bilan)
 	const mean = computeMean(values),
@@ -25,21 +30,26 @@ export default ({ elements, users, username }) => {
 	const progressList = Object.values(elements).map((el) => el.progress),
 		meanProgress = computeMean(progressList)
 
-	console.log('PORGRESSLIST', progressList.join('  -  '))
-
 	if (isNaN(mean)) return null
 
 	const categories = reduceCategories(
-			Object.values(elements).map((el) => el.byCategory)
+			Object.entries(elements).map(([username, data]) => [
+				username,
+				data.byCategory,
+			])
 		),
+		yo = console.log('CAT', categories),
 		maxCategory = Object.values(categories).reduce(
-			(memo, next) => Math.max(memo, ...next),
+			(memo, next) => Math.max(memo, ...next.map((el) => el.value)),
 			0
-		),
-		maxValue = Math.max(...values),
-		minValue = Math.min(...values)
+		)
 
-	console.log('CAR', categories)
+	const maxValue = Math.max(...values),
+		minValue = 2000, // 2 tonnes, the ultimate objective
+		max = humanWeight(maxValue, true).join(' '),
+		min = humanWeight(minValue, true).join(' ')
+
+	console.log('ALL', elements, users, username)
 
 	return (
 		<div>
@@ -52,7 +62,7 @@ export default ({ elements, users, username }) => {
 				<div css="text-align: center">Moyenne française : 11 tonnes</div>
 				<div
 					css={`
-						width: 90%;
+						width: 100%;
 						position: relative;
 						margin: 0 auto;
 						border: 2px solid black;
@@ -61,90 +71,52 @@ export default ({ elements, users, username }) => {
 						li {
 							position: absolute;
 						}
-						li:first-child {
-							left: 2%;
-						}
-						li:last-child {
-							right: 2%;
-						}
 					`}
 				>
-					<li key="legendLeft">{Math.round(Math.min(...values) / 1000)}</li>
 					{Object.entries(elements).map(([usernameI, { bilan: value }]) => (
 						<li
 							key={usernameI}
 							css={`
 								height: 100%;
 								width: 10px;
-								left: ${((value - minValue) / (maxValue - minValue)) * 80 + 8}%;
+								margin-left: -10px;
+								left: ${((value - minValue) / (maxValue - minValue)) * 100}%;
 								background: ${users.find((u) => u.name === usernameI)?.color ||
 								'black'};
 								opacity: 0.5;
+
+								cursor: pointer;
+								${spotlight === usernameI
+									? `background: yellow; opacity: 1`
+									: ''}
 							`}
+							onClick={() => setSpotlight(usernameI)}
 						></li>
 					))}
-					<li key="legendRight">{Math.round(Math.max(...values) / 1000)}</li>
+				</div>
+
+				<div css="display: flex; justify-content: space-between; width: 100%">
+					<small key="legendLeft">
+						{emoji('🎯 ')}
+						{min}
+					</small>
+					<small key="legendRight">{max}</small>
 				</div>
 			</div>
-			<ul
-				css={`
-					> li:nth-child(2n) {
-						background: var(--lightestColor);
-					}
-					list-style-type: none;
-					li > span {
-						padding-left: 0.6rem;
-						width: 30%;
-						display: inline-block;
-						border-right: 1px solid var(--lightColor);
-					}
-
-					ul {
-						list-style-type: none;
-						display: inline-block;
-						position: relative;
-						width: 65%;
-					}
-					ul li {
-						position: absolute;
-						width: 8px;
-						height: 8px;
-						display: inline-block;
-						background: black;
-						border-radius: 1rem;
-						opacity: 0.2;
-					}
-				`}
-			>
-				{Object.entries(categories).map(([name, values]) => (
-					<li key={name}>
-						<span>{name}</span>
-						<ul>
-							{values.map((value) => (
-								<li
-									key={value}
-									css={`
-										left: ${(value / maxCategory) * 100}%;
-									`}
-								></li>
-							))}
-						</ul>
-					</li>
-				))}
-			</ul>
+			<CategoryStats {...{ categories, maxCategory, spotlight }} />
 		</div>
 	)
 }
 
 const reduceCategories = (list) =>
 	list.reduce(
-		(memo, next) => {
-			return next.reduce(
+		(memo, [username, categories]) => {
+			return categories.reduce(
 				(countByCategory, nextCategory) => ({
 					...countByCategory,
 					[nextCategory.name]: [
 						...(countByCategory[nextCategory.name] || []),
-						nextCategory.nodeValue,
+						{ value: nextCategory.nodeValue, username },
 					],
 				}),
 				memo

@@ -54,6 +54,8 @@ export default () => {
 
 			const awareness = provider.awareness
 
+			setUsers(Array.from(awareness.getStates().values()))
+
 			// You can observe when a any user updated their awareness information
 			awareness.on('change', (changes) => {
 				// Whenever somebody updates their awareness information,
@@ -139,9 +141,12 @@ export default () => {
 
 const Instructions = ({ users, username, room }) => (
 	<div>
-		<h2 css="display: inline-block ;margin-right: 1rem">Qui est connecté ?</h2>
+		<h2 css="display: inline-block ;margin-right: 1rem">
+			{emoji('👤 ')}
+			Qui est connecté ?
+		</h2>
 		<span css="color: #78b159; font-weight: bold">
-			{emoji('🟢')} {users.length} partipant{plural(users)}
+			{emoji('🟢')} {users.length} participant{plural(users)}
 		</span>
 		<UserList users={users} username={username} />
 		<h2>Comment ça marche ?</h2>
