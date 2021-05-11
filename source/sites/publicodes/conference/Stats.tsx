@@ -1,3 +1,4 @@
+import emoji from 'react-easy-emoji'
 import Progress from '../../../components/ui/Progress'
 import { humanWeight } from '../HumanWeight'
 import CategoryStats from './CategoryStats'
@@ -16,8 +17,6 @@ export const computeHumanMean = (simulationArray) => {
 		: 'résultats en attente'
 }
 
-const testResults = [12, 25, 22, 8, 4, 7, 9, 8, 11, 10]
-
 export default ({ elements, users, username }) => {
 	if (!users) return null
 	const values = Object.values(elements).map((el) => el.bilan)
@@ -35,11 +34,14 @@ export default ({ elements, users, username }) => {
 		maxCategory = Object.values(categories).reduce(
 			(memo, next) => Math.max(memo, ...next),
 			0
-		),
-		maxValue = Math.max(...values),
-		minValue = Math.min(...values),
+		)
+
+	const maxValue = Math.max(...values),
+		minValue = 2000, // 2 tonnes, the ultimate objective
 		max = humanWeight(maxValue, true).join(' '),
 		min = humanWeight(minValue, true).join(' ')
+
+	console.log('ALL', elements, users, username)
 
 	return (
 		<div>
@@ -61,12 +63,6 @@ export default ({ elements, users, username }) => {
 						li {
 							position: absolute;
 						}
-						li:first-child {
-							left: 2%;
-						}
-						li:last-child {
-							right: 2%;
-						}
 					`}
 				>
 					{Object.entries(elements).map(([usernameI, { bilan: value }]) => (
@@ -75,7 +71,8 @@ export default ({ elements, users, username }) => {
 							css={`
 								height: 100%;
 								width: 10px;
-								left: ${((value - minValue) / (maxValue - minValue)) * 80 + 8}%;
+								margin-left: -10px;
+								left: ${((value - minValue) / (maxValue - minValue)) * 100}%;
 								background: ${users.find((u) => u.name === usernameI)?.color ||
 								'black'};
 								opacity: 0.5;
@@ -85,7 +82,10 @@ export default ({ elements, users, username }) => {
 				</div>
 
 				<div css="display: flex; justify-content: space-between; width: 100%">
-					<small key="legendLeft">{min}</small>
+					<small key="legendLeft">
+						{emoji('🎯 ')}
+						{min}
+					</small>
 					<small key="legendRight">{max}</small>
 				</div>
 			</div>
