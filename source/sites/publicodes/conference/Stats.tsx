@@ -1,3 +1,4 @@
+import { useState } from 'react'
 import emoji from 'react-easy-emoji'
 import Progress from '../../../components/ui/Progress'
 import { humanWeight } from '../HumanWeight'
@@ -18,6 +19,9 @@ export const computeHumanMean = (simulationArray) => {
 }
 
 export default ({ elements, users, username }) => {
+	const [spotlight, setSpotlightRaw] = useState(null)
+	const setSpotlight = (username) =>
+		spotlight === username ? setSpotlightRaw(null) : setSpotlightRaw(username)
 	if (!users) return null
 	const values = Object.values(elements).map((el) => el.bilan)
 	const mean = computeMean(values),
@@ -29,10 +33,14 @@ export default ({ elements, users, username }) => {
 	if (isNaN(mean)) return null
 
 	const categories = reduceCategories(
-			Object.values(elements).map((el) => el.byCategory)
+			Object.entries(elements).map(([username, data]) => [
+				username,
+				data.byCategory,
+			])
 		),
+		yo = console.log('CAT', categories),
 		maxCategory = Object.values(categories).reduce(
-			(memo, next) => Math.max(memo, ...next),
+			(memo, next) => Math.max(memo, ...next.map((el) => el.value)),
 			0
 		)
 
@@ -76,7 +84,13 @@ export default ({ elements, users, username }) => {
 								background: ${users.find((u) => u.name === usernameI)?.color ||
 								'black'};
 								opacity: 0.5;
+
+								cursor: pointer;
+								${spotlight === usernameI
+									? `background: yellow; opacity: 1`
+									: ''}
 							`}
+							onClick={() => setSpotlight(usernameI)}
 						></li>
 					))}
 				</div>
@@ -89,20 +103,20 @@ export default ({ elements, users, username }) => {
 					<small key="legendRight">{max}</small>
 				</div>
 			</div>
-			<CategoryStats {...{ categories, maxCategory }} />
+			<CategoryStats {...{ categories, maxCategory, spotlight }} />
 		</div>
 	)
 }
 
 const reduceCategories = (list) =>
 	list.reduce(
-		(memo, next) => {
-			return next.reduce(
+		(memo, [username, categories]) => {
+			return categories.reduce(
 				(countByCategory, nextCategory) => ({
 					...countByCategory,
 					[nextCategory.name]: [
 						...(countByCategory[nextCategory.name] || []),
-						nextCategory.nodeValue,
+						{ value: nextCategory.nodeValue, username },
 					],
 				}),
 				memo

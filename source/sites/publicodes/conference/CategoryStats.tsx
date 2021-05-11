@@ -1,11 +1,14 @@
 import { humanWeight } from '../HumanWeight'
 
-export default ({ categories, maxCategory }) => {
-	const values = Object.values(categories).flat(),
+export default ({ categories, maxCategory, spotlight }) => {
+	const values = Object.values(categories)
+			.flat()
+			.map(({ username, value }) => value),
 		min = Math.min(...values),
 		max = Math.max(...values),
 		humanMax = humanWeight(max, true)
 
+	console.log(categories)
 	return (
 		<div>
 			<ul
@@ -42,11 +45,14 @@ export default ({ categories, maxCategory }) => {
 					<li key={name}>
 						<span>{name}</span>
 						<ul>
-							{values.map((value) => (
+							{values.map(({ username, value }) => (
 								<li
 									key={value}
 									css={`
 										left: ${(value / maxCategory) * 100}%;
+										${spotlight === username
+											? `background: yellow !important; opacity: 1 !important; z-index: 2`
+											: ''}
 									`}
 								></li>
 							))}
