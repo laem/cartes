@@ -52,7 +52,7 @@ export default ({ elements, users, username }) => {
 				<div css="text-align: center">Moyenne française : 11 tonnes</div>
 				<div
 					css={`
-						width: 90%;
+						width: 100%;
 						position: relative;
 						margin: 0 auto;
 						border: 2px solid black;
