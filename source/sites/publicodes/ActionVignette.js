@@ -1,12 +1,11 @@
-import { utils } from 'publicodes'
-import { Link } from 'react-router-dom'
-const { encodeRuleName, decodeRuleName } = utils
 import { motion } from 'framer-motion'
-import Emoji from '../../components/utils/Emoji'
+import { utils } from 'publicodes'
 import emoji from 'react-easy-emoji'
-import { humanValueAndUnit } from './HumanWeight'
-import { correctValue } from '../../components/publicodesUtils'
 import { useSelector } from 'react-redux'
+import { Link } from 'react-router-dom'
+import { correctValue } from '../../components/publicodesUtils'
+import { humanWeight } from './HumanWeight'
+const { encodeRuleName, decodeRuleName } = utils
 
 export const disabledAction = (flatRule, nodeValue) =>
 	flatRule.formule == null ? false : nodeValue === 0 || nodeValue === false
@@ -126,7 +125,7 @@ const ActionValue = ({
 	noFormula,
 }) => {
 	const correctedValue = correctValue({ nodeValue: rawValue, unit: rawUnit })
-	const { unit, value } = humanValueAndUnit(correctedValue),
+	const [value, unit] = humanWeight(correctedValue),
 		relativeValue = Math.round(100 * (correctedValue / total))
 
 	return (
