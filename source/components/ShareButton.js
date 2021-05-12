@@ -8,6 +8,7 @@ export default (props) =>
 				display: flex;
 				align-items: center;
 			`}
+			title="Cliquez pour partager le lien"
 			onClick={() =>
 				navigator
 					.share(props)
@@ -46,9 +47,6 @@ const DesktopShareButton = (props) => {
 					align-items: center;
 					justify-content: center;
 					color: ${props.color || 'black'};
-					svg {
-						width: 2rem;
-					}
 				`}
 			>
 				<Icon />
@@ -110,6 +108,9 @@ const Icon = ({}) => (
 			border-radius: 2rem;
 			padding: 0.5rem;
 			margin: 0.6rem;
+			svg {
+				width: 2rem;
+			}
 		`}
 	>
 		<svg version="1.1" x="0px" y="0px" viewBox="0 0 100 100" width="4rem">
