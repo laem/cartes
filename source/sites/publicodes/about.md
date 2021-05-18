@@ -18,9 +18,9 @@ Le simulateur est amélioré en continu.
 
 ## Vie privée
 
-Nous collectons des donées anonymisées uniquement pour améliorer ce simulateur.
+Nous collectons des données anonymisées uniquement pour améliorer ce simulateur.
 
-[🙈 En savoir plus](/vie-privée)
+[🍪 En savoir plus](https://datagir.ademe.fr/cookies)
 
 ## Comment intégrer ce simulateur dans votre site ?
 
