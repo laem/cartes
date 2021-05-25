@@ -20,7 +20,7 @@ Le simulateur est amélioré en continu.
 
 Nous collectons des données anonymisées uniquement pour améliorer ce simulateur.
 
-[🍪 En savoir plus](https://datagir.ademe.fr/cookies)
+[🍪 En savoir plus](/vie-privée)
 
 ## Comment intégrer ce simulateur dans votre site ?
 

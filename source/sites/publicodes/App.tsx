@@ -114,7 +114,7 @@ const Router = ({}) => {
 					<Route path="/contribuer/:input?" component={Contribution} />
 					<Route path="/à-propos" component={About} />
 					<Route path="/partenaires" component={Partenaires} />
-					<Route path="/vie-privée" component={About} />
+					<Route path="/vie-privée" component={Privacy} />
 					<Route path="/nouveautés" component={News} />
 					<Route path="/conférence/:room?">
 						<Suspense fallback="Chargement">
