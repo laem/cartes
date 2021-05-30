@@ -1,7 +1,7 @@
 import { iframeResize } from 'iframe-resizer'
 
 const script = document.getElementById('futureco'),
-	path = script.getAttribute('path') || '',
+	path = script?.getAttribute('path') || '',
 	integratorUrl = encodeURIComponent(window.location.href.toString())
 
 const hostname = 'futur.eco/'
@@ -22,4 +22,4 @@ for (var key in iframeAttributes) {
 }
 iframeResize({}, iframe)
 
-script.parentNode.insertBefore(iframe, script)
+script?.parentNode.insertBefore(iframe, script)
