@@ -4,7 +4,7 @@
 
 Ce simulateur vous permet d'évaluer votre empreinte carbone individuelle annuelle totale et par grandes catégories (alimentation, transport, logement, divers, services publics, numérique), de la situer par rapport aux objectifs climatiques et surtout de passer à l’action à votre niveau avec des gestes personnalisés en fonction de vos réponses.
 
-Il est basé sur le modèle MicMac des associations [Avenir Climatique](https://avenirclimatique.org/les-outils/) et [TaCa](https://www.taca.asso.fr/).
+Basé sur une [analyse des calculateurs existants début 2020](https://www.associationbilancarbone.fr/wp-content/uploads/2020/12/analyse-des-calculateurs-dempreinte-carbone-individuelle-a-lorigine-de-nos-gestes-climat-vf-.pdf), il s'appuie sur le modèle MicMac des associations [Avenir Climatique](https://avenirclimatique.org/les-outils/) et [TaCa](https://www.taca.asso.fr/).
 
 ## Qui le développe ?
 
