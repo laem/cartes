@@ -89,44 +89,8 @@ export default () => {
 					<Instructions />
 				</div>
 			)}
-			{!room && (
-				<>
-					<label>
-						<p>
-							Choisissez un nom de salle pour lancer ou rejoindre une
-							conférence.
-						</p>
-						<form>
-							<input
-								value={newRoom}
-								className="ui__"
-								onChange={(e) => setNewRoom(e.target.value)}
-							/>{' '}
-							<Link to={'/conférence/' + newRoom}>
-								<button type="submit" className="ui__ button small plain">
-									C'est parti !{' '}
-								</button>
-							</Link>
-						</form>
-					</label>
-
-					<button
-						onClick={() => setNewRoom(generateRoomName())}
-						className="ui__ dashed-button"
-					>
-						{emoji('🔃')} Générer un autre nom
-					</button>
-
-					{newRoom && newRoom.length < 10 && (
-						<p>
-							⚠️ Votre nom de salle est court, vous risquez de vous retrouver
-							avec des inconnus...
-						</p>
-					)}
-
-					<Instructions />
-				</>
-			)}
+			{!room && <NamingBlock />}
+			<Instructions />
 			<h2>Et mes données ?</h2>
 			<p>
 				{emoji('🕵 ')}En participant, vous acceptez de partager vos résultats
@@ -145,6 +109,40 @@ export default () => {
 	)
 }
 
+const NamingBlock = ({ newRoom, setNewRoom }) => (
+	<>
+		<label>
+			<p>Choisissez un nom de salle pour lancer ou rejoindre une conférence.</p>
+			<form>
+				<input
+					value={newRoom}
+					className="ui__"
+					onChange={(e) => setNewRoom(e.target.value)}
+				/>{' '}
+				<Link to={'/conférence/' + newRoom}>
+					<button type="submit" className="ui__ button small plain">
+						C'est parti !{' '}
+					</button>
+				</Link>
+			</form>
+		</label>
+
+		<button
+			onClick={() => setNewRoom(generateRoomName())}
+			className="ui__ dashed-button"
+		>
+			{emoji('🔃')} Générer un autre nom
+		</button>
+
+		{newRoom && newRoom.length < 10 && (
+			<p>
+				⚠️ Votre nom de salle est court, vous risquez de vous retrouver avec des
+				inconnus...
+			</p>
+		)}
+	</>
+)
+
 const UserBlock = ({ users, username, room }) => (
 	<div>
 		<h2 css="display: inline-block ;margin-right: 1rem">
@@ -160,7 +158,12 @@ const UserBlock = ({ users, username, room }) => (
 
 const Instructions = ({ room }) => (
 	<div>
+		<p>Faites le test Nos Gestes Climat à plusieurs ! </p>
 		<h2>Comment ça marche ?</h2>
+		<p>
+			1) {emoji('💡 ')} Choisissez un nom de salle pour lancer ou rejoindre une
+			conférence
+		</p>
 		<p>
 			1) {emoji('🔗 ')} Partagez{' '}
 			{room ? <a href={'/conférence/' + room}>ce lien</a> : 'le lien '}
