@@ -184,6 +184,7 @@ const AnimatedDiv = animated(({ score, value, details, headlessMode }) => {
 							noAnimation
 							noText
 							noCompletion
+							valueColor={textColor}
 						/>
 					</div>
 				</div>
