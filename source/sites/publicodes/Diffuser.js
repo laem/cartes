@@ -1,5 +1,5 @@
 import { Markdown } from 'Components/utils/markdown'
-import about from 'raw-loader!./partenaires.md'
+import about from 'raw-loader!./diffuser.md'
 import React from 'react'
 import { Link } from 'react-router-dom'
 import Meta from '../../components/utils/Meta'

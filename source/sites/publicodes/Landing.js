@@ -87,7 +87,7 @@ export default () => {
 				>
 					<Link to="/à-propos">{emoji('❔ ')}À propos</Link>
 					<DocumentationButton />
-					<Link to="/partenaires">{emoji('🤝 ')}Partenaires</Link>
+					<Link to="/diffuser">{emoji('📤 ')}Diffuser</Link>
 				</div>
 			</footer>
 		</div>
