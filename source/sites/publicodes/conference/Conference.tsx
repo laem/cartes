@@ -197,7 +197,7 @@ const Instructions = ({ room, newRoom, setNewRoom }) => (
 			}
 		>
 			{!room && <NamingBlock {...{ newRoom, setNewRoom }} />}
-			{room && <p>{emoji('✅️')} C'est fait</p>}
+			{room && <p>{emoji('✅')} C'est fait</p>}
 		</InstructionBlock>
 		<InstructionBlock
 			index="2"
