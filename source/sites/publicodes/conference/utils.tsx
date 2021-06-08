@@ -32,5 +32,7 @@ export const generateRoomName = () => {
 		geologicalPeriods[getRandomInt(periodsCount)],
 		adjectifs[getRandomInt(adjectifsCount)],
 		verbs[getRandomInt(verbsCount)],
-	].join('-')
+	]
+		.join('-')
+		.toLowerCase()
 }
