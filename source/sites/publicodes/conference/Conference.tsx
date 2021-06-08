@@ -116,6 +116,7 @@ const NamingBlock = ({ newRoom, setNewRoom }) => (
 					value={newRoom}
 					className="ui__"
 					onChange={(e) => setNewRoom(e.target.value)}
+					css="width: 90% !important"
 				/>{' '}
 			</form>
 		</label>
@@ -158,6 +159,9 @@ const InstructionBlock = ({ title, index, children }) => (
 			align-items: center;
 			margin: 1rem;
 			padding-bottom: 0.6rem;
+			@media (max-width: 800px) {
+				flex-direction: column;
+			}
 		`}
 	>
 		<div
@@ -233,7 +237,7 @@ const Instructions = ({ room, newRoom, setNewRoom }) => (
 			groupe.
 		</InstructionBlock>
 		{newRoom !== '' && (
-			<InstructionBlock index="4" title="Prêt à démarrer ?">
+			<InstructionBlock index="5" title="Prêt à démarrer ?">
 				<p>
 					<Link to={'/conférence/' + newRoom}>
 						<button type="submit" className="ui__ button small plain">
