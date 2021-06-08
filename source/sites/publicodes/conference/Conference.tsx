@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react'
+import { useEffect, useRef, useState } from 'react'
 import emoji from 'react-easy-emoji'
 import { useDispatch, useSelector } from 'react-redux'
 import { useParams } from 'react-router'
@@ -10,26 +10,15 @@ import fruits from './fruits.json'
 import UserList from './UserList'
 import { mean } from 'ramda'
 import Stats from './Stats'
-
-const getRandomInt = (max) => Math.floor(Math.random() * Math.floor(max))
-
-const stringToColour = function (str) {
-	var hash = 0
-	for (var i = 0; i < str.length; i++) {
-		hash = str.charCodeAt(i) + ((hash << 5) - hash)
-	}
-	var colour = '#'
-	for (var i = 0; i < 3; i++) {
-		var value = (hash >> (i * 8)) & 0xff
-		colour += ('00' + value.toString(16)).substr(-2)
-	}
-	return colour
-}
+import { stringToColour, getRandomInt, generateRoomName } from './utils'
+import Checkbox from '../../../components/ui/Checkbox'
+import ShareButton from '../../../components/ShareButton'
+import { ScrollToTop } from '../../../components/utils/Scroll'
 
 export default () => {
 	const [elements, setElements] = useState([])
 	const [users, setUsers] = useState([])
-	const [newRoom, setNewRoom] = useState(null)
+	const [newRoom, setNewRoom] = useState(generateRoomName())
 	const { room } = useParams()
 	const [username, setUsername] = usePersistingState(
 		'pseudo',
@@ -80,6 +69,7 @@ export default () => {
 
 	return (
 		<div>
+			{room && <ScrollToTop />}
 			<h1>
 				{emoji('🏟️ ')} Conférence
 				<span
@@ -96,38 +86,12 @@ export default () => {
 			</h1>
 			<Stats {...{ elements, users, username }} />
 
-			{room && <Instructions {...{ users, username, room }} />}
-			{!room && (
-				<>
-					<label>
-						<p>
-							Choisissez un nom de salle pour lancer ou rejoindre une
-							conférence.
-						</p>
-						<form>
-							<input
-								placeholder="Saisissez un nom de salle"
-								value={newRoom}
-								onChange={(e) => setNewRoom(e.target.value)}
-							/>{' '}
-							{newRoom && (
-								<Link to={'/conférence/' + newRoom}>
-									<button type="submit" className="ui__ button small">
-										C'est parti !{' '}
-									</button>
-								</Link>
-							)}
-						</form>
-					</label>
-
-					{newRoom && newRoom.length < 10 && (
-						<p>
-							⚠️ Votre nom de salle est court, vous risquez de vous retrouver
-							avec des inconnus...
-						</p>
-					)}
-				</>
+			{room && (
+				<div>
+					<UserBlock {...{ users, username, room }} />
+				</div>
 			)}
+			<Instructions {...{ room, newRoom, setNewRoom }} />
 			<h2>Et mes données ?</h2>
 			<p>
 				{emoji('🕵 ')}En participant, vous acceptez de partager vos résultats
@@ -135,11 +99,61 @@ export default () => {
 				total et les catégories (transport, logement, etc.). En revanche, nos
 				serveurs ne les stockent pas : cela fonctionne en P2P (pair à pair).
 			</p>
+			<p>
+				Seul le nom de la salle de conférence sera indexé dans{' '}
+				<a href="https://nosgestesclimat.fr/vie-privée">
+					les statistiques d'utilisation
+				</a>{' '}
+				de Nos Gestes Climat.{' '}
+			</p>
 		</div>
 	)
 }
 
-const Instructions = ({ users, username, room }) => (
+const NamingBlock = ({ newRoom, setNewRoom }) => {
+	const inputRef = useRef(null)
+	return (
+		<>
+			<label>
+				<form>
+					<input
+						value={newRoom}
+						className="ui__"
+						onChange={(e) => setNewRoom(e.target.value)}
+						css="width: 90% !important"
+						ref={inputRef}
+					/>
+					<button
+						onClick={(e) => {
+							setNewRoom('')
+							inputRef.current.focus()
+							e.preventDefault()
+						}}
+						title="Effacer le nom actuel"
+					>
+						{emoji('❌️')}
+					</button>
+				</form>
+			</label>
+
+			<button
+				onClick={() => setNewRoom(generateRoomName())}
+				className="ui__ dashed-button"
+			>
+				{emoji('🔃')} Générer un autre nom
+			</button>
+
+			{newRoom && newRoom.length < 10 && (
+				<p>
+					⚠️ Votre nom de salle est court, vous risquez de vous retrouver avec
+					des inconnus...
+				</p>
+			)}
+		</>
+	)
+}
+
+const UserBlock = ({ users, username, room }) => (
 	<div>
 		<h2 css="display: inline-block ;margin-right: 1rem">
 			{emoji('👤 ')}
@@ -149,18 +163,108 @@ const Instructions = ({ users, username, room }) => (
 			{emoji('🟢')} {users.length} participant{plural(users)}
 		</span>
 		<UserList users={users} username={username} />
+	</div>
+)
+
+const InstructionBlock = ({ title, index, children }) => (
+	<div
+		className="ui__ card"
+		css={`
+			display: flex;
+			justify-content: start;
+			align-items: center;
+			margin: 1rem;
+			padding-bottom: 0.6rem;
+			@media (max-width: 800px) {
+				flex-direction: column;
+			}
+		`}
+	>
+		<div
+			css={`
+				font-size: 300%;
+				padding: 1rem;
+				background: var(--lighterColor);
+				border-radius: 5rem;
+				margin: 0 1rem;
+			`}
+		>
+			{index}
+		</div>
+		<div>
+			<h3>{title}</h3>
+			{children}
+		</div>
+	</div>
+)
+const Instructions = ({ room, newRoom, setNewRoom }) => (
+	<div>
+		{!room && <p>Faites le test à plusieurs ! </p>}
 		<h2>Comment ça marche ?</h2>
-		<p>
-			1) {emoji('🔗 ')} Partagez <a href={'/conférence/' + room}>ce lien</a>{' '}
-			avec vos amis, collègues, etc.
-		</p>
-		2) {emoji('👆 ')}Faites tous et toutes
-		<Link to={'/simulateur/bilan'}>
-			<button className="ui__ button small " css="margin-left: .6rem">
-				votre simulation
-			</button>
-		</Link>
-		<p>3) {emoji('🧮 ')}Visualisez ensemble les résultats sur cette page</p>
+		<InstructionBlock
+			index="1"
+			title={
+				<span>
+					{emoji('💡 ')} Choisissez un nom de salle pour lancer une conf
+				</span>
+			}
+		>
+			{!room && <NamingBlock {...{ newRoom, setNewRoom }} />}
+			{room && <p>{emoji('✅')} C'est fait</p>}
+		</InstructionBlock>
+		<InstructionBlock
+			index="2"
+			title={
+				<span>{emoji('🔗 ')} Partagez le lien à vos amis, collègues, etc.</span>
+			}
+		>
+			<ShareButton
+				text="Faites un test d'empreinte climat avec moi"
+				url={
+					'https://' + window.location.hostname + '/conférence/' + newRoom ||
+					room
+				}
+				title={'Nos Gestes Climat Conférence'}
+			/>
+		</InstructionBlock>
+		<InstructionBlock
+			index="3"
+			title={<span>{emoji('👆 ')} Faites toutes et tous votre simulation</span>}
+		>
+			{room ? (
+				<Link to={'/simulateur/bilan'}>
+					<button className="ui__ button plain">Faites votre test </button>
+				</Link>
+			) : (
+				<p>
+					Au moment convenu, ouvrez ce lien tous en même temps et
+					commencez&nbsp; votre simulation.
+				</p>
+			)}
+		</InstructionBlock>
+		<InstructionBlock
+			index="4"
+			title={
+				<span>
+					{emoji('🧮 ')}Visualisez ensemble les résultats de votre groupe
+				</span>
+			}
+		>
+			Les résultats pour chaque catégorie (alimentation, transport, logement
+			...) s'affichent progressivement et en temps réel pour l'ensemble du
+			groupe.
+		</InstructionBlock>
+		{newRoom !== '' && !room && (
+			<InstructionBlock index="5" title="Prêt à démarrer ?">
+				<p>
+					<Link to={'/conférence/' + newRoom}>
+						<button type="submit" className="ui__ button small plain">
+							C'est parti !{' '}
+						</button>
+					</Link>
+				</p>
+			</InstructionBlock>
+		)}
 	</div>
 )
 

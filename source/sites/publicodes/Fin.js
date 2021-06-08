@@ -176,6 +176,7 @@ const AnimatedDiv = animated(({ score, value, details, headlessMode }) => {
 							</div>
 						</div>
 					</div>
+					<ActionButton />
 					<div css="padding: 1rem">
 						<Chart
 							details={details}
@@ -183,6 +184,7 @@ const AnimatedDiv = animated(({ score, value, details, headlessMode }) => {
 							noAnimation
 							noText
 							noCompletion
+							valueColor={textColor}
 						/>
 					</div>
 				</div>
@@ -197,38 +199,39 @@ const AnimatedDiv = animated(({ score, value, details, headlessMode }) => {
 					/>
 				</div>
 			</motion.div>
-			{true && (
-				<Link
-					to="/actions"
-					className="ui__ button plain"
-					css={`
-						margin: 0.6rem 0;
-						width: 100%;
-						img {
-							transform: scaleX(-1);
-							height: 3rem;
-							margin: 0 0.6rem;
-							display: inline-block;
-						}
-						a {
-							color: var(--textColor);
-							text-decoration: none;
-						}
-					`}
-				>
-					<div
-						css={`
-							display: flex;
-							justify-content: center;
-							align-items: center;
-							width: 100%;
-						`}
-					>
-						<img src={StartingBlock} />
-						Passer à l'action
-					</div>
-				</Link>
-			)}
 		</div>
 	)
 })
+
+const ActionButton = () => (
+	<Link
+		to="/actions"
+		className="ui__ button plain"
+		css={`
+			margin: 0.6rem 0;
+			width: 100%;
+			img {
+				transform: scaleX(-1);
+				height: 2rem;
+				margin: 0 0.6rem;
+				display: inline-block;
+			}
+			a {
+				color: var(--textColor);
+				text-decoration: none;
+			}
+		`}
+	>
+		<div
+			css={`
+				display: flex;
+				justify-content: center;
+				align-items: center;
+				width: 100%;
+			`}
+		>
+			<img src={StartingBlock} />
+			Passer à l'action
+		</div>
+	</Link>
+)

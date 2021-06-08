@@ -37,7 +37,7 @@ export const extractCategories = (rules, engine, valuesFromURL) => {
 
 	return sortCategories(categories)
 }
-export default ({ details, noText, noAnimation, noCompletion }) => {
+export default ({ details, noText, noAnimation, noCompletion, valueColor }) => {
 	// needed for this component to refresh on situation change :
 	const situation = useSelector(situationSelector)
 	const objectifs = useSelector(objectifsSelector)
@@ -136,6 +136,7 @@ export default ({ details, noText, noAnimation, noCompletion }) => {
 											completedCategories.find(
 												(c) => c === category.dottedName
 											),
+										valueColor,
 									}}
 								/>
 							</Link>

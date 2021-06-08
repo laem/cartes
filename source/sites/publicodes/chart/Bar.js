@@ -11,6 +11,7 @@ export default ({
 	title,
 	empreinteMaximum,
 	noText,
+	valueColor,
 }) => (
 	<>
 		{!noText && (
@@ -48,7 +49,7 @@ export default ({
 					${shadowStyle}
 				`}
 			></span>
-			<Value {...{ nodeValue, completed }} />
+			<Value {...{ nodeValue, completed, color: valueColor }} />
 		</div>
 	</>
 )

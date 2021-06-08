@@ -1,4 +1,3 @@
-import React from 'react'
 import DocumentationButton from './DocumentationButton'
 import { Link } from 'react-router-dom'
 import Illustration from './images/ecolab-climat-dessin.svg'
@@ -40,8 +39,8 @@ export default () => {
 					</Link>
 				</div>
 				<div css="margin: .6rem 0 1rem;">
-					<Link to="/actions" className="ui__ button">
-						Passer à l'action
+					<Link to="/conférence" className="ui__ button small">
+						{emoji('👥')} Faire le test à plusieurs
 					</Link>
 				</div>
 				<NewsBanner />
@@ -88,7 +87,7 @@ export default () => {
 				>
 					<Link to="/à-propos">{emoji('❔ ')}À propos</Link>
 					<DocumentationButton />
-					<Link to="/partenaires">{emoji('🤝 ')}Partenaires</Link>
+					<Link to="/diffuser">{emoji('📤 ')}Diffuser</Link>
 				</div>
 			</footer>
 		</div>

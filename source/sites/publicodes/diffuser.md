@@ -1,4 +1,4 @@
-# Partenaires
+# Diffuser Nos Gestes Climat
 
 Nos Gestes Climat est un service public, son code [est libre](/documentation) et réutilisable par tout le monde.
 

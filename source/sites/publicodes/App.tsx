@@ -12,7 +12,7 @@ import {
 } from '../../storage/persistSimulation'
 import Tracker, { devTracker } from '../../Tracker'
 import About from './About'
-import Partenaires from './Partenaires'
+import Diffuser from './Diffuser'
 import Actions from './Actions'
 import Contribution from './Contribution'
 import Fin from './Fin'
@@ -113,7 +113,8 @@ const Router = ({}) => {
 					<Route path="/actions" component={Actions} />
 					<Route path="/contribuer/:input?" component={Contribution} />
 					<Route path="/à-propos" component={About} />
-					<Route path="/partenaires" component={Partenaires} />
+					<Route path="/partenaires" component={Diffuser} />
+					<Route path="/diffuser" component={Diffuser} />
 					<Route path="/vie-privée" component={Privacy} />
 					<Route path="/nouveautés" component={News} />
 					<Route path="/conférence/:room?">
