@@ -189,7 +189,8 @@ const Instructions = ({ room, newRoom, setNewRoom }) => (
 			index="1"
 			title={
 				<span>
-					{emoji('💡 ')} Choisissez un nom de salle pour la lancer ou rejoindre
+					{emoji('💡 ')} Choisissez un de salle pour lancer ou rejoindre une
+					conf
 				</span>
 			}
 		>
@@ -199,9 +200,7 @@ const Instructions = ({ room, newRoom, setNewRoom }) => (
 		<InstructionBlock
 			index="2"
 			title={
-				<span>
-					{emoji('🔗 ')} Partagez le lien avec vos amis, collègues, etc.
-				</span>
+				<span>{emoji('🔗 ')} Partagez le lien à vos amis, collègues, etc.</span>
 			}
 		>
 			<ShareButton
@@ -215,7 +214,7 @@ const Instructions = ({ room, newRoom, setNewRoom }) => (
 		</InstructionBlock>
 		<InstructionBlock
 			index="3"
-			title={<span>{emoji('👆 ')} Faites tous et toutes votre simulation</span>}
+			title={<span>{emoji('👆 ')} Faites toutes et tous votre simulation</span>}
 		>
 			Au moment convenu, ouvrez ce lien tous en même temps et commencez&nbsp;
 			<Link to={'/simulateur/bilan'}>
