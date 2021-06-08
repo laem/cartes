@@ -10,21 +10,7 @@ import fruits from './fruits.json'
 import UserList from './UserList'
 import { mean } from 'ramda'
 import Stats from './Stats'
-
-const getRandomInt = (max) => Math.floor(Math.random() * Math.floor(max))
-
-const stringToColour = function (str) {
-	var hash = 0
-	for (var i = 0; i < str.length; i++) {
-		hash = str.charCodeAt(i) + ((hash << 5) - hash)
-	}
-	var colour = '#'
-	for (var i = 0; i < 3; i++) {
-		var value = (hash >> (i * 8)) & 0xff
-		colour += ('00' + value.toString(16)).substr(-2)
-	}
-	return colour
-}
+import { stringToColour, getRandomInt } from './utils'
 
 export default () => {
 	const [elements, setElements] = useState([])
@@ -96,7 +82,13 @@ export default () => {
 			</h1>
 			<Stats {...{ elements, users, username }} />
 
-			{room && <Instructions {...{ users, username, room }} />}
+			{room && (
+				<div>
+					<UserBlock {...{ users, username, room }} />
+
+					<Instructions />
+				</div>
+			)}
 			{!room && (
 				<>
 					<label>
@@ -108,11 +100,12 @@ export default () => {
 							<input
 								placeholder="Saisissez un nom de salle"
 								value={newRoom}
+								className="ui__"
 								onChange={(e) => setNewRoom(e.target.value)}
 							/>{' '}
 							{newRoom && (
 								<Link to={'/conférence/' + newRoom}>
-									<button type="submit" className="ui__ button small">
+									<button type="submit" className="ui__ button small plain">
 										C'est parti !{' '}
 									</button>
 								</Link>
@@ -126,6 +119,8 @@ export default () => {
 							avec des inconnus...
 						</p>
 					)}
+
+					<Instructions />
 				</>
 			)}
 			<h2>Et mes données ?</h2>
@@ -140,7 +135,7 @@ export default () => {
 	)
 }
 
-const Instructions = ({ users, username, room }) => (
+const UserBlock = ({ users, username, room }) => (
 	<div>
 		<h2 css="display: inline-block ;margin-right: 1rem">
 			{emoji('👤 ')}
@@ -150,9 +145,15 @@ const Instructions = ({ users, username, room }) => (
 			{emoji('🟢')} {users.length} participant{plural(users)}
 		</span>
 		<UserList users={users} username={username} />
+	</div>
+)
+
+const Instructions = ({ room }) => (
+	<div>
 		<h2>Comment ça marche ?</h2>
 		<p>
-			1) {emoji('🔗 ')} Partagez <a href={'/conférence/' + room}>ce lien</a>{' '}
+			1) {emoji('🔗 ')} Partagez{' '}
+			{room ? <a href={'/conférence/' + room}>ce lien</a> : 'le lien '}
 			avec vos amis, collègues, etc.
 		</p>
 		2) {emoji('👆 ')}Faites tous et toutes
@@ -161,7 +162,7 @@ const Instructions = ({ users, username, room }) => (
 				votre simulation
 			</button>
 		</Link>
-		<p>3) {emoji('🧮 ')}Visualisez ensemble les résultats sur cette page</p>
+		<p>3) {emoji('🧮 ')}Visualisez ensemble les résultats de votre groupe</p>
 	</div>
 )
 
