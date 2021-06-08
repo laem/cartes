@@ -134,7 +134,13 @@ export default () => {
 				total et les catégories (transport, logement, etc.). En revanche, nos
 				serveurs ne les stockent pas : cela fonctionne en P2P (pair à pair).
 			</p>
-			<p>Seul le nom de la salle de conférence sera indexé dans <a href="https://nosgestesclimat.fr/vie-privée">les statistiques d'utilisation</a> de nosgestesclimat. </p>
+			<p>
+				Seul le nom de la salle de conférence sera indexé dans{' '}
+				<a href="https://nosgestesclimat.fr/vie-privée">
+					les statistiques d'utilisation
+				</a>{' '}
+				de Nos Gestes Climat.{' '}
+			</p>
 		</div>
 	)
 }
