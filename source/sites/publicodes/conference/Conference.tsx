@@ -10,12 +10,12 @@ import fruits from './fruits.json'
 import UserList from './UserList'
 import { mean } from 'ramda'
 import Stats from './Stats'
-import { stringToColour, getRandomInt } from './utils'
+import { stringToColour, getRandomInt, generateRoomName } from './utils'
 
 export default () => {
 	const [elements, setElements] = useState([])
 	const [users, setUsers] = useState([])
-	const [newRoom, setNewRoom] = useState(null)
+	const [newRoom, setNewRoom] = useState(generateRoomName())
 	const { room } = useParams()
 	const [username, setUsername] = usePersistingState(
 		'pseudo',
@@ -98,20 +98,24 @@ export default () => {
 						</p>
 						<form>
 							<input
-								placeholder="Saisissez un nom de salle"
 								value={newRoom}
 								className="ui__"
 								onChange={(e) => setNewRoom(e.target.value)}
 							/>{' '}
-							{newRoom && (
-								<Link to={'/conférence/' + newRoom}>
-									<button type="submit" className="ui__ button small plain">
-										C'est parti !{' '}
-									</button>
-								</Link>
-							)}
+							<Link to={'/conférence/' + newRoom}>
+								<button type="submit" className="ui__ button small plain">
+									C'est parti !{' '}
+								</button>
+							</Link>
 						</form>
 					</label>
+
+					<button
+						onClick={() => setNewRoom(generateRoomName())}
+						className="ui__ dashed-button"
+					>
+						{emoji('🔃')} Générer un autre nom
+					</button>
 
 					{newRoom && newRoom.length < 10 && (
 						<p>

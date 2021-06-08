@@ -1,3 +1,8 @@
+import geologicalPeriods from './périodesGéologiques.json'
+import adjectifs from './adjectifs.json'
+// Merci https://github.com/akaAgar/vocabulaire-francais
+import verbs from './participePassés.json'
+
 export const getRandomInt = (max) => Math.floor(Math.random() * Math.floor(max))
 
 export const stringToColour = function (str) {
@@ -11,4 +16,21 @@ export const stringToColour = function (str) {
 		colour += ('00' + value.toString(16)).substr(-2)
 	}
 	return colour
+}
+
+export const generateRoomName = () => {
+	const periodsCount = geologicalPeriods.length
+	const adjectifsCount = adjectifs.length
+	const verbsCount = verbs.length
+
+	console.log(
+		'Suggestion de nom de conférence unique à 1/' +
+			periodsCount * adjectifsCount * verbsCount
+	)
+
+	return [
+		geologicalPeriods[getRandomInt(periodsCount)],
+		adjectifs[getRandomInt(adjectifsCount)],
+		verbs[getRandomInt(verbsCount)],
+	].join('-')
 }
