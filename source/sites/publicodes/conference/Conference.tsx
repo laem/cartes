@@ -217,11 +217,16 @@ const Instructions = ({ room, newRoom, setNewRoom }) => (
 			index="3"
 			title={<span>{emoji('👆 ')} Faites toutes et tous votre simulation</span>}
 		>
-			Au moment convenu, ouvrez ce lien tous en même temps et commencez&nbsp;
-			<Link to={'/simulateur/bilan'}>
-				<button className="ui__ link-button">votre simulation</button>
-			</Link>
-			.
+			{room ? (
+				<Link to={'/simulateur/bilan'}>
+					<button className="ui__ button plain">Faites votre test </button>
+				</Link>
+			) : (
+				<p>
+					Au moment convenu, ouvrez ce lien tous en même temps et
+					commencez&nbsp; votre simulation.
+				</p>
+			)}
 		</InstructionBlock>
 		<InstructionBlock
 			index="4"
@@ -235,7 +240,7 @@ const Instructions = ({ room, newRoom, setNewRoom }) => (
 			...) s'affichent progressivement et en temps réel pour l'ensemble du
 			groupe.
 		</InstructionBlock>
-		{newRoom !== '' && (
+		{newRoom !== '' && !room && (
 			<InstructionBlock index="5" title="Prêt à démarrer ?">
 				<p>
 					<Link to={'/conférence/' + newRoom}>
