@@ -13,6 +13,7 @@ import Stats from './Stats'
 import { stringToColour, getRandomInt, generateRoomName } from './utils'
 import Checkbox from '../../../components/ui/Checkbox'
 import ShareButton from '../../../components/ShareButton'
+import { ScrollToTop } from '../../../components/utils/Scroll'
 
 export default () => {
 	const [elements, setElements] = useState([])
@@ -68,6 +69,7 @@ export default () => {
 
 	return (
 		<div>
+			{room && <ScrollToTop />}
 			<h1>
 				{emoji('🏟️ ')} Conférence
 				<span
@@ -183,7 +185,7 @@ const InstructionBlock = ({ title, index, children }) => (
 )
 const Instructions = ({ room, newRoom, setNewRoom }) => (
 	<div>
-		<p>Faites le test à plusieurs ! </p>
+		{!room && <p>Faites le test à plusieurs ! </p>}
 		<h2>Comment ça marche ?</h2>
 		<InstructionBlock
 			index="1"
