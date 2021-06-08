@@ -191,8 +191,7 @@ const Instructions = ({ room, newRoom, setNewRoom }) => (
 			index="1"
 			title={
 				<span>
-					{emoji('💡 ')} Choisissez un nom de salle pour lancer ou rejoindre une
-					conf
+					{emoji('💡 ')} Choisissez un nom de salle pour lancer une conf
 				</span>
 			}
 		>
