@@ -176,6 +176,7 @@ const AnimatedDiv = animated(({ score, value, details, headlessMode }) => {
 							</div>
 						</div>
 					</div>
+					<ActionButton />
 					<div css="padding: 1rem">
 						<Chart
 							details={details}
@@ -197,7 +198,6 @@ const AnimatedDiv = animated(({ score, value, details, headlessMode }) => {
 					/>
 				</div>
 			</motion.div>
-			<ActionButton />
 		</div>
 	)
 })
@@ -211,7 +211,7 @@ const ActionButton = () => (
 			width: 100%;
 			img {
 				transform: scaleX(-1);
-				height: 3rem;
+				height: 2rem;
 				margin: 0 0.6rem;
 				display: inline-block;
 			}
