@@ -152,7 +152,7 @@ export default function SessionBar({
 			...(arePreviousAnswers
 				? [
 						<Button
-							key="terminer"
+							key="recommencer"
 							className="simple small"
 							onClick={() => {
 								dispatch(resetSimulation())
@@ -170,14 +170,22 @@ export default function SessionBar({
 							{emoji('📋 ')}
 							Mes réponses
 						</Button>,
-						true && (
+						<Button
+							key="bouger"
+							className="simple small"
+							onClick={() => history.push('/actions')}
+						>
+							{emoji('💥 ')}
+							Passer à l'action
+						</Button>,
+						NODE_ENV === 'development' && (
 							<Button
-								key="bouger"
+								key="fin"
 								className="simple small"
-								onClick={() => history.push('/actions')}
+								onClick={() => history.push(buildEndURL(rules, engine))}
 							>
-								{emoji('💥 ')}
-								Passer à l'action
+								{emoji('🔚 ')}
+								Ecran de fin [DEVMODE]
 							</Button>
 						),
 				  ]
