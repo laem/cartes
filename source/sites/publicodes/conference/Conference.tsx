@@ -194,14 +194,13 @@ const Instructions = ({ room, newRoom, setNewRoom }) => (
 			}
 		>
 			{!room && <NamingBlock {...{ newRoom, setNewRoom }} />}
+			{room && <p>{emoji('✅️')} C'est fait</p>}
 		</InstructionBlock>
 		<InstructionBlock
 			index="2"
 			title={
 				<span>
-					{emoji('🔗 ')} Partagez{' '}
-					{room ? <a href={'/conférence/' + room}>ce lien</a> : 'le lien '}
-					avec vos amis, collègues, etc.
+					{emoji('🔗 ')} Partagez le lien avec vos amis, collègues, etc.
 				</span>
 			}
 		>
