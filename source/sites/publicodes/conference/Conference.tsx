@@ -11,6 +11,8 @@ import UserList from './UserList'
 import { mean } from 'ramda'
 import Stats from './Stats'
 import { stringToColour, getRandomInt, generateRoomName } from './utils'
+import Checkbox from '../../../components/ui/Checkbox'
+import ShareButton from '../../../components/ShareButton'
 
 export default () => {
 	const [elements, setElements] = useState([])
@@ -85,12 +87,9 @@ export default () => {
 			{room && (
 				<div>
 					<UserBlock {...{ users, username, room }} />
-
-					<Instructions />
 				</div>
 			)}
-			{!room && <NamingBlock />}
-			<Instructions />
+			<Instructions {...{ room, newRoom, setNewRoom }} />
 			<h2>Et mes données ?</h2>
 			<p>
 				{emoji('🕵 ')}En participant, vous acceptez de partager vos résultats
@@ -112,18 +111,12 @@ export default () => {
 const NamingBlock = ({ newRoom, setNewRoom }) => (
 	<>
 		<label>
-			<p>Choisissez un nom de salle pour lancer ou rejoindre une conférence.</p>
 			<form>
 				<input
 					value={newRoom}
 					className="ui__"
 					onChange={(e) => setNewRoom(e.target.value)}
 				/>{' '}
-				<Link to={'/conférence/' + newRoom}>
-					<button type="submit" className="ui__ button small plain">
-						C'est parti !{' '}
-					</button>
-				</Link>
 			</form>
 		</label>
 
@@ -156,26 +149,100 @@ const UserBlock = ({ users, username, room }) => (
 	</div>
 )
 
-const Instructions = ({ room }) => (
+const InstructionBlock = ({ title, index, children }) => (
+	<div
+		className="ui__ card"
+		css={`
+			display: flex;
+			justify-content: start;
+			align-items: center;
+			margin: 1rem;
+			padding-bottom: 0.6rem;
+		`}
+	>
+		<div
+			css={`
+				font-size: 300%;
+				padding: 1rem;
+				background: var(--lighterColor);
+				border-radius: 5rem;
+				margin: 0 1rem;
+			`}
+		>
+			{index}
+		</div>
+		<div>
+			<h3>{title}</h3>
+			{children}
+		</div>
+	</div>
+)
+const Instructions = ({ room, newRoom, setNewRoom }) => (
 	<div>
-		<p>Faites le test Nos Gestes Climat à plusieurs ! </p>
+		<p>Faites le test à plusieurs ! </p>
 		<h2>Comment ça marche ?</h2>
-		<p>
-			1) {emoji('💡 ')} Choisissez un nom de salle pour lancer ou rejoindre une
-			conférence
-		</p>
-		<p>
-			1) {emoji('🔗 ')} Partagez{' '}
-			{room ? <a href={'/conférence/' + room}>ce lien</a> : 'le lien '}
-			avec vos amis, collègues, etc.
-		</p>
-		2) {emoji('👆 ')}Faites tous et toutes
-		<Link to={'/simulateur/bilan'}>
-			<button className="ui__ button small " css="margin-left: .6rem">
-				votre simulation
-			</button>
-		</Link>
-		<p>3) {emoji('🧮 ')}Visualisez ensemble les résultats de votre groupe</p>
+		<InstructionBlock
+			index="1"
+			title={
+				<span>
+					{emoji('💡 ')} Choisissez un nom de salle pour la lancer ou rejoindre
+				</span>
+			}
+		>
+			{!room && <NamingBlock {...{ newRoom, setNewRoom }} />}
+		</InstructionBlock>
+		<InstructionBlock
+			index="2"
+			title={
+				<span>
+					{emoji('🔗 ')} Partagez{' '}
+					{room ? <a href={'/conférence/' + room}>ce lien</a> : 'le lien '}
+					avec vos amis, collègues, etc.
+				</span>
+			}
+		>
+			<ShareButton
+				text="Faites un test d'empreinte climat avec moi"
+				url={
+					'https://' + window.location.hostname + '/conférence/' + newRoom ||
+					room
+				}
+				title={'Nos Gestes Climat Conférence'}
+			/>
+		</InstructionBlock>
+		<InstructionBlock
+			index="3"
+			title={<span>{emoji('👆 ')} Faites tous et toutes votre simulation</span>}
+		>
+			Au moment convenu, ouvrez ce lien tous en même temps et commencez&nbsp;
+			<Link to={'/simulateur/bilan'}>
+				<button className="ui__ link-button">votre simulation</button>
+			</Link>
+			.
+		</InstructionBlock>
+		<InstructionBlock
+			index="4"
+			title={
+				<span>
+					{emoji('🧮 ')}Visualisez ensemble les résultats de votre groupe
+				</span>
+			}
+		>
+			Les résultats pour chaque catégorie (alimentation, transport, logement
+			...) s'affichent progressivement et en temps réel pour l'ensemble du
+			groupe.
+		</InstructionBlock>
+		{newRoom !== '' && (
+			<InstructionBlock index="4" title="Prêt à démarrer ?">
+				<p>
+					<Link to={'/conférence/' + newRoom}>
+						<button type="submit" className="ui__ button small plain">
+							C'est parti !{' '}
+						</button>
+					</Link>
+				</p>
+			</InstructionBlock>
+		)}
 	</div>
 )
 

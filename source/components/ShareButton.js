@@ -24,7 +24,7 @@ export default (props) =>
 		<DesktopShareButton {...props} />
 	)
 
-const DesktopShareButton = (props) => {
+export const DesktopShareButton = (props) => {
 	const [copySuccess, setCopySuccess] = useState(false)
 	const textAreaRef = useRef(null)
 
