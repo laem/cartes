@@ -24,7 +24,7 @@ Nous collectons des données anonymisées uniquement pour améliorer ce simulate
 
 ## Comment intégrer ce simulateur dans votre site ?
 
-On vous dit tout sur notre page [partenaires](/partenaires).
+On vous dit tout sur notre page [diffuser](/diffuser).
 
 ## Nous contacter
 
