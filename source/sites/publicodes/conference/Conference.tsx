@@ -142,6 +142,15 @@ const NamingBlock = ({ newRoom, setNewRoom }) => {
 			>
 				{emoji('🔃')} Générer un autre nom
 			</button>
+			<p>
+				<em>
+					{emoji('🕵️‍♀️')} Le nom de la salle apparaitra dans nos{' '}
+					<a href="https://nosgestesclimat.fr/vie-privée">
+						statistiques d'utilisation
+					</a>
+					.
+				</em>
+			</p>
 
 			{newRoom && newRoom.length < 10 && (
 				<p>
