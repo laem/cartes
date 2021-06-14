@@ -26,6 +26,10 @@ Vous pouvez donc répondre simplement aux questions sans vous préoccuper d’un
 
 L’équipe de NGC travaille à développer une approche « foyer » du calculateur afin de pouvoir estimer l’empreinte carbone de sa famille.
 
+<h3 id="finance">Pourquoi ne pas prendre en compte l'épargne individuelle ?</h3>
+
+Les émissions des énergies fossiles financées par les banques sont comptabilisées pour ceux qui les utilisent. De façon illustrée, votre banque finance peut-être l'extraction du pétrole au large de la Sibérie, mais ce pétrole est extrait pour un usage précis : faire 10km de voiture, chauffer une maison ou produire du plastique. Ce sont les consommations voiture, logement et plastique qui dans le modèle se voient attribuer ces émissions. Il nous serait très difficile au vu des données actuelles d'inclure une part de responsabilité de l'empreinte des fortunes personnelles dans le modèle, sans faire un double comptage.
+
 ## SERVICES PUBLICS
 
 ### A la fin de mon calcul il y a un poste « service public », qu’est-ce que c’est ?</h3>
