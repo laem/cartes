@@ -120,9 +120,10 @@ const NamingBlock = ({ newRoom, setNewRoom }) => {
 						value={newRoom}
 						className="ui__"
 						onChange={(e) => setNewRoom(e.target.value)}
-						css="width: 90% !important"
+						css="width: 80% !important"
 						ref={inputRef}
 					/>
+					&nbsp;
 					<button
 						onClick={(e) => {
 							setNewRoom('')
