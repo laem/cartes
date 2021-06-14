@@ -123,7 +123,6 @@ const NamingBlock = ({ newRoom, setNewRoom }) => {
 						css="width: 80% !important"
 						ref={inputRef}
 					/>
-					&nbsp;
 					<button
 						onClick={(e) => {
 							setNewRoom('')
@@ -145,11 +144,8 @@ const NamingBlock = ({ newRoom, setNewRoom }) => {
 			</button>
 			<p>
 				<em>
-					{emoji('🕵️‍♀️')} Le nom de la salle apparaitra dans nos{' '}
-					<a href="https://nosgestesclimat.fr/vie-privée">
-						statistiques d'utilisation
-					</a>
-					.
+					{emoji('🕵️‍♀️')} Le nom apparaitra dans nos{' '}
+					<a href="https://nosgestesclimat.fr/vie-privée">stats</a>.
 				</em>
 			</p>
 
