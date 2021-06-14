@@ -120,7 +120,7 @@ const NamingBlock = ({ newRoom, setNewRoom }) => {
 						value={newRoom}
 						className="ui__"
 						onChange={(e) => setNewRoom(e.target.value)}
-						css="width: 90% !important"
+						css="width: 80% !important"
 						ref={inputRef}
 					/>
 					<button
@@ -131,7 +131,7 @@ const NamingBlock = ({ newRoom, setNewRoom }) => {
 						}}
 						title="Effacer le nom actuel"
 					>
-						{emoji('❌️')}
+						{emoji('❌')}
 					</button>
 				</form>
 			</label>
@@ -142,6 +142,12 @@ const NamingBlock = ({ newRoom, setNewRoom }) => {
 			>
 				{emoji('🔃')} Générer un autre nom
 			</button>
+			<p>
+				<em>
+					{emoji('🕵️‍♀️')} Le nom apparaitra dans nos{' '}
+					<a href="https://nosgestesclimat.fr/vie-privée">stats</a>.
+				</em>
+			</p>
 
 			{newRoom && newRoom.length < 10 && (
 				<p>
@@ -218,14 +224,18 @@ const Instructions = ({ room, newRoom, setNewRoom }) => (
 				<span>{emoji('🔗 ')} Partagez le lien à vos amis, collègues, etc.</span>
 			}
 		>
-			<ShareButton
-				text="Faites un test d'empreinte climat avec moi"
-				url={
-					'https://' + window.location.hostname + '/conférence/' + newRoom ||
-					room
-				}
-				title={'Nos Gestes Climat Conférence'}
-			/>
+			{!newRoom && !room ? (
+				<p>Choississez d'abord un nom</p>
+			) : (
+				<ShareButton
+					text="Faites un test d'empreinte climat avec moi"
+					url={
+						'https://' + window.location.hostname + '/conférence/' + newRoom ||
+						room
+					}
+					title={'Nos Gestes Climat Conférence'}
+				/>
+			)}
 		</InstructionBlock>
 		<InstructionBlock
 			index="3"
