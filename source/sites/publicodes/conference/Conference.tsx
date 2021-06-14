@@ -131,7 +131,7 @@ const NamingBlock = ({ newRoom, setNewRoom }) => {
 						}}
 						title="Effacer le nom actuel"
 					>
-						{emoji('❌️')}
+						{emoji('❌')}
 					</button>
 				</form>
 			</label>
