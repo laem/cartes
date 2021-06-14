@@ -224,14 +224,18 @@ const Instructions = ({ room, newRoom, setNewRoom }) => (
 				<span>{emoji('🔗 ')} Partagez le lien à vos amis, collègues, etc.</span>
 			}
 		>
-			<ShareButton
-				text="Faites un test d'empreinte climat avec moi"
-				url={
-					'https://' + window.location.hostname + '/conférence/' + newRoom ||
-					room
-				}
-				title={'Nos Gestes Climat Conférence'}
-			/>
+			{!newRoom && !room ? (
+				<p>Choississez d'abord un nom</p>
+			) : (
+				<ShareButton
+					text="Faites un test d'empreinte climat avec moi"
+					url={
+						'https://' + window.location.hostname + '/conférence/' + newRoom ||
+						room
+					}
+					title={'Nos Gestes Climat Conférence'}
+				/>
+			)}
 		</InstructionBlock>
 		<InstructionBlock
 			index="3"
