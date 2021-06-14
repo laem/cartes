@@ -47,9 +47,10 @@ export default ({}) => {
 	if (!configSet) return null
 
 	const evaluation = engine.evaluate(dottedName),
-		{ nodeValue, title, plus } = evaluation
+		{ nodeValue, title } = evaluation
 
-	const { description, icônes: icons } = rules[dottedName]
+	const { description, icônes: icons, plus } = rules[dottedName]
+	console.log('EVAL', plus)
 
 	const flatActions = rules['actions']
 	const relatedActions = flatActions.formule.somme
@@ -98,7 +99,7 @@ export default ({}) => {
 					<Markdown source={description} />
 					{plus && (
 						<Link to={'/actions/plus/' + encodedName}>
-							<button className="ui__ button plain">En savoir plus</button>
+							<button className="ui__ button simple">En savoir plus</button>
 						</Link>
 					)}
 				</div>
