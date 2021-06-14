@@ -48,12 +48,15 @@ export default function News() {
 	}
 
 	const releaseName = data[selectedRelease].name.toLowerCase()
+	const body = data[selectedRelease].body,
+		image = body.match(/!\[.*?\]\((.*?)\)/)[1] || null
 
 	return (
 		<>
 			<Meta
 				description="Découvrez les nouveautés de Nos Gestes Climat"
-				title="Nouveautés"
+				title={`Nouveautés - version ${releaseName}`}
+				image={image}
 			/>
 			<ScrollToTop key={selectedRelease} />
 			<h1>Les nouveautés {emoji('✨')}</h1>
@@ -92,7 +95,7 @@ export default function News() {
 				</Sidebar>
 				<MainBlock>
 					<MarkdownWithAnchorLinks
-						source={data[selectedRelease].body}
+						source={body}
 						escapeHtml={false}
 						renderers={{ text: TextRenderer }}
 					/>
