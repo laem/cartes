@@ -53,6 +53,7 @@ export default () => {
 			<Route exact path="/fin/définition" component={Définition} />
 			<Route exact path="/fin/changer" component={Changer} />
 			<Route exact path="/fin/chemin" component={Chemin} />
+			<Route exact path="/fin/sources" component={Sources} />
 			<Route exact path="/fin/action" component={Action} />
 			<Route exact path="/fin/quand" component={Quand} />
 			<Route exact path="/fin/pourquoi-trois" component={PourquoiTrois} />
@@ -152,6 +153,7 @@ const Trajectoire = () => (
 		</p>
 		<div
 			css={`
+				margin: 1rem 0;
 				width: 100%;
 				height: 25vh;
 				display: flex;
@@ -203,7 +205,7 @@ const Trajectoire = () => (
 			<div>L'écolo</div>
 		</div>
 
-		<LoudButton to="/fin/quand">Mais quand ?</LoudButton>
+		<LoudButton to="/fin/quand">À partir de quand ?</LoudButton>
 	</Dialog>
 )
 const Quand = () => (
@@ -241,6 +243,33 @@ const PourquoiTrois = () => (
 		<p>
 			2 <Emoji e="➕" /> 1 = 3
 		</p>
+		<LoudButton to="/fin/sources">Pourquoi vous croire ?</LoudButton>
+	</Dialog>
+)
+
+const Sources = () => (
+	<Dialog>
+		<h1>Pourquoi nous croire ?</h1>
+		<p>
+			Le calcul utilisé ici est{' '}
+			<a href="https://github.com/datagir/nosgestesclimat">
+				<strong>complètement ouvert</strong>
+			</a>
+			, développé par l'ADEME, sans cesse amélioré...
+		</p>
+		<p>
+			Et si on se trompait, que l'empreinte de la <Emoji e="🚗" /> était de 1 et
+			pas de 1,234 ?
+		</p>
+		<p>
+			<Emoji e="🎯" /> Peu importe à ce stade, on explose tous tellement les
+			objectifs que l'
+			<a href="https://www.assistancescolaire.com/eleve/6e/maths/reviser-une-notion/donner-un-ordre-de-grandeur-6mcp13">
+				orde de grandeur
+			</a>{' '}
+			suffit.
+		</p>
+
 		<LoudButton to="/fin/action">Comment faire ?</LoudButton>
 	</Dialog>
 )
