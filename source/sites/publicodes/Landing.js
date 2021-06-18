@@ -65,16 +65,19 @@ export default () => {
 						font-size: 140%;
 						vertical-align: middle !important;
 					}
+					strong {
+						background: var(--color);
+					}
 				`}
 			>
 				<header>
 					<h1>
-						Écolo,
+						T'es <strong>écolo</strong>,
 						<br /> ou pas ?
 					</h1>
 					<p>
 						<em>
-							Le jeu dont <strong>vous</strong> êtes le héros.
+							Le jeu dont <em>tu</em> es le héros.
 						</em>
 					</p>
 				</header>
