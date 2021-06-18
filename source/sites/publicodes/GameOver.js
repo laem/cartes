@@ -76,7 +76,7 @@ const Perdu = () => {
 				<strong>Tu n'es pas écolo.</strong>
 			</p>
 			<p>
-				Votre train de vie nous emène vers une planète anormalement réchauffée.
+				Ton train de vie nous emène vers une planète anormalement réchauffée.
 			</p>
 			<p>
 				Il a suffi de <strong>{answerCount}</strong> réponses au test sur{' '}
@@ -254,10 +254,10 @@ const Ensemble = () => (
 			bonheur bordel !
 		</p>
 		<p>
-			Vous avez des amis, de la famille, l'internet ?{' '}
+			Tu as des amis, de la famille, l'internet ?{' '}
 			<strong>On est tous dans la même merde</strong>
 		</p>
-		<p>Partagez-leur ce test ⬇️</p>
+		<p>Partage-leur ce test ⬇️</p>
 		<ShareButton
 			text="Voilà mon empreinte climat. Mesure la tienne !"
 			url={'https://futur.eco'}
