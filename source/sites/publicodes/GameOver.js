@@ -271,7 +271,7 @@ const Ensemble = () => (
 		</p>
 		<p>Partage-leur ce test ⬇️</p>
 		<ShareButton
-			text="Voilà mon empreinte climat. Mesure la tienne !"
+			text="Es-tu écolo ? Fais le test."
 			url={'https://futur.eco'}
 			title={'Es-tu écolo ? Le test.'}
 			color={'white'}
