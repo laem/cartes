@@ -27,7 +27,7 @@ export const Mosaic = styled.ul`
 
 	@media (max-width: 800px) {
 		> li {
-			width: 10rem;
+			width: 9rem;
 		}
 	}
 

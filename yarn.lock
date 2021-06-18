@@ -1239,49 +1239,49 @@
     "@sentry/types" "5.15.5"
     tslib "^1.9.3"
 
-"@svgmoji/blob@^3.1.0":
-  version "3.1.0"
-  resolved "https://registry.yarnpkg.com/@svgmoji/blob/-/blob-3.1.0.tgz#966946d47c1704c17e795e56ba3eeb0b8db131f7"
-  integrity sha512-aVr3AUqEaHjr+HibPKNnL3p91mv2MwnkJc/ARsYF050rSRLbzPIIyw8M5k45owm/en2ukfanfvgYLXq5cbgsiQ==
+"@svgmoji/blob@^3.2.0":
+  version "3.2.0"
+  resolved "https://registry.yarnpkg.com/@svgmoji/blob/-/blob-3.2.0.tgz#62a0ab1ba22a0d27f23cb38aacf6d4fb13123dfb"
+  integrity sha512-N96WOrH9GxPSPZ/FuvZl6T9Rh54stAEuUcBppIRFh9/WwkU7Hczrjabw4uunwxFLX5TgR+rHlKJl3/jaTnXJrQ==
   dependencies:
     "@babel/runtime" "^7.12.5"
-    "@svgmoji/core" "^3.1.0"
+    "@svgmoji/core" "^3.2.0"
 
-"@svgmoji/core@^3.1.0":
-  version "3.1.0"
-  resolved "https://registry.yarnpkg.com/@svgmoji/core/-/core-3.1.0.tgz#82161003e7be946927e4552f0544ddd1c9e44005"
-  integrity sha512-iztEW4uyavGbmd2/iKw+t2uc+53HLlkuJ2BAtEXhf1eCoY48+Ah4DvIzIIr1bcqr+fXrCQPG0o6AxjeceqB3Xg==
+"@svgmoji/core@^3.2.0":
+  version "3.2.0"
+  resolved "https://registry.yarnpkg.com/@svgmoji/core/-/core-3.2.0.tgz#792326078ded3446747691d633278010f322f460"
+  integrity sha512-QsD78Op3S/5kUVsa5ierr4Wu/xwAdYuMI3Zmc/Y2ekYBEMGEUY8QxilXQRSAQ4ku4PnNV4xlB9e7xhD5hy113A==
   dependencies:
     "@babel/runtime" "^7.12.5"
     emojibase "^5.1.0"
     emojibase-regex "^5.1.1"
     idb-keyval "^5.0.2"
     match-sorter "^6.2.0"
-    type-fest "^0.20 || ^0.21"
+    type-fest "^1.2.0"
 
-"@svgmoji/noto@^3.1.0":
-  version "3.1.0"
-  resolved "https://registry.yarnpkg.com/@svgmoji/noto/-/noto-3.1.0.tgz#79bbccf1c68f4681af734a6460a4bb6a94d5f377"
-  integrity sha512-Xc2cJ7gqHkEpWk6m7zLjP2pKcYxNdQxjPmkPFMLrZfYQnzpteEgyiKXNfLidwqgY0shz6+MxIa8gWHdLVKwAEA==
+"@svgmoji/noto@^3.2.0":
+  version "3.2.0"
+  resolved "https://registry.yarnpkg.com/@svgmoji/noto/-/noto-3.2.0.tgz#ff99dc95f2d098050d9d19696d019fe22677760b"
+  integrity sha512-JgtNciB06hMDI1Pb1N2IgLh44XRMZUUNwBANzjY5jXTPqOCu1A1VA35ENvUsRhEUZOm8I+hbdAEHkwMVqxLeIQ==
   dependencies:
     "@babel/runtime" "^7.12.5"
-    "@svgmoji/core" "^3.1.0"
+    "@svgmoji/core" "^3.2.0"
 
-"@svgmoji/openmoji@^3.1.0":
-  version "3.1.0"
-  resolved "https://registry.yarnpkg.com/@svgmoji/openmoji/-/openmoji-3.1.0.tgz#d8a6e2497688749ece789cbbd37c34b1e03fea01"
-  integrity sha512-8FpVItrNhQKWYlUJReVbpmSKOpLBdkLpk2c/GHp1ynMZNeyV16GGL2NaUOqj2Nhp3Qgqb7datmGNHIun/tQEaw==
+"@svgmoji/openmoji@^3.2.0":
+  version "3.2.0"
+  resolved "https://registry.yarnpkg.com/@svgmoji/openmoji/-/openmoji-3.2.0.tgz#776fece19f8c253206182cb65685c864ba9bebd2"
+  integrity sha512-USHbG+O80HfmdoNAHbOnlO+2gppXJfHFWKSRFj53Th4aimWEx4/9MB3cFbC3KZ1NOqXaLBq9jDaw4vFuGDVTUQ==
   dependencies:
     "@babel/runtime" "^7.12.5"
-    "@svgmoji/core" "^3.1.0"
+    "@svgmoji/core" "^3.2.0"
 
-"@svgmoji/twemoji@^3.1.0":
-  version "3.1.0"
-  resolved "https://registry.yarnpkg.com/@svgmoji/twemoji/-/twemoji-3.1.0.tgz#65c059edbc1fddcdea4b5adc55b7b55fcf163f38"
-  integrity sha512-7xbBE/7Hkr8oOuWIAP4WoP2ZjocOcO9aOIvr7ffKMVJ+exVUtIH5aE3h+4unZo92dzLkugmfEH9TAuwQO42cPQ==
+"@svgmoji/twemoji@^3.2.0":
+  version "3.2.0"
+  resolved "https://registry.yarnpkg.com/@svgmoji/twemoji/-/twemoji-3.2.0.tgz#0a12df9f5b30af457b4a1779051de470a15c1b00"
+  integrity sha512-6xqZgh9viFDKf5wvrxw56ImCR3Ni84IqwK45lxojOe1Gc1Mni1GpPfr4gb7WHDKjumfx+K7BHSvX0KXt3Nr3CQ==
   dependencies:
     "@babel/runtime" "^7.12.5"
-    "@svgmoji/core" "^3.1.0"
+    "@svgmoji/core" "^3.2.0"
 
 "@types/anymatch@*":
   version "1.3.1"
@@ -7680,17 +7680,17 @@ supports-color@^7.0.0:
   dependencies:
     has-flag "^4.0.0"
 
-svgmoji@^3.1.0:
-  version "3.1.0"
-  resolved "https://registry.yarnpkg.com/svgmoji/-/svgmoji-3.1.0.tgz#e87597efa100801da1222472fe27a6f4127ac500"
-  integrity sha512-rCo+0x7LOj46Lq20UOevrBVFsv9VE6X6Jxp2RjSStSy0d3G7JoE/pyLbcDopW7PlezsjH1x2+PlfsC2PcWL3KA==
+svgmoji@^3.2.0:
+  version "3.2.0"
+  resolved "https://registry.yarnpkg.com/svgmoji/-/svgmoji-3.2.0.tgz#2214f4930e76e82c33bae23139c85b3973610b32"
+  integrity sha512-tjmdQhIju2ZQ81FLBlPngg1aWMOhQjP9ErXb2ROikM0aBGA/hqI0/DN/5J0sDsXzJPHmODpSFhWfiSsUieU3bA==
   dependencies:
     "@babel/runtime" "^7.12.5"
-    "@svgmoji/blob" "^3.1.0"
-    "@svgmoji/core" "^3.1.0"
-    "@svgmoji/noto" "^3.1.0"
-    "@svgmoji/openmoji" "^3.1.0"
-    "@svgmoji/twemoji" "^3.1.0"
+    "@svgmoji/blob" "^3.2.0"
+    "@svgmoji/core" "^3.2.0"
+    "@svgmoji/noto" "^3.2.0"
+    "@svgmoji/openmoji" "^3.2.0"
+    "@svgmoji/twemoji" "^3.2.0"
 
 swr@^0.1.16:
   version "0.1.18"
@@ -7971,10 +7971,10 @@ tsutils@^3.17.1:
   dependencies:
     tslib "^1.8.1"
 
-"type-fest@^0.20 || ^0.21":
-  version "0.21.3"
-  resolved "https://registry.yarnpkg.com/type-fest/-/type-fest-0.21.3.tgz#d260a24b0198436e133fa26a524a6d65fa3b2e37"
-  integrity sha512-t0rzBq87m3fVcduHDUFhKmyyX+9eo6WQjZvf51Ea/M0Q7+T374Jp1aUiyUl0GKxp8M/OETVHSDvmkyPgvX+X2w==
+type-fest@^1.2.0:
+  version "1.2.1"
+  resolved "https://registry.yarnpkg.com/type-fest/-/type-fest-1.2.1.tgz#232990aa513f3f5223abf54363975dfe3a121a2e"
+  integrity sha512-SbmIRuXhJs8KTneu77Ecylt9zuqL683tuiLYpTRil4H++eIhqCmx6ko6KAFem9dty8sOdnEiX7j4K1nRE628fQ==
 
 type-is@~1.6.17, type-is@~1.6.18:
   version "1.6.18"

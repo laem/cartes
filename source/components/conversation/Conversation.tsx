@@ -174,7 +174,7 @@ export default function Conversation({
 		>
 			<Aide />
 			<div style={{ outline: 'none' }}>
-				{orderByCategories && questionCategory && (
+				{false && orderByCategories && questionCategory && (
 					<div>
 						<CategoryLabel color={questionCategory.color}>
 							{questionCategory.title}

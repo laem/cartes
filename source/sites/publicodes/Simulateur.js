@@ -93,7 +93,7 @@ const Simulateur = (props) => {
 
 			{!gameOver ? (
 				<>
-					<SessionBar evaluation={evaluation} />
+					{false && <SessionBar evaluation={evaluation} />}
 					<Simulation
 						noFeedback
 						orderByCategories={categories}
@@ -116,11 +116,6 @@ const Simulateur = (props) => {
 			) : (
 				<Redirect to="/fin" />
 			)}
-			<ShareButton
-				text="Mesure ton impact sur le simulateur Ecolab climat !"
-				url={'https://' + window.location.hostname + props.match.url}
-				title={rule.title}
-			/>
 			<div css="display: flex; justify-content: center">
 				<FuturecoMonochrome color={doomColor} />
 			</div>
