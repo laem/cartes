@@ -92,40 +92,8 @@ export default function SessionBar({
 	const engine = useEngine(objectifs)
 
 	const history = useHistory()
-<<<<<<< HEAD
-	const location = useLocation()
-
-	const css = `
-			display: flex;
-			justify-content: center;
-			button {
-				margin: 0 0.2rem;
-			}
-			margin: 0.6rem;
-	`
-	if (answerButtonOnly)
-		return (
-			<div css={css}>
-				{arePreviousAnswers && (
-					<>
-						<Button
-							className="simple small"
-							onClick={() => setShowAnswerModal(true)}
-						>
-							<Emoji e="📋" />
-							Modifier mes réponses
-						</Button>
-					</>
-				)}
-				{showAnswerModal && (
-					<Answers onClose={() => setShowAnswerModal(false)} />
-				)}
-			</div>
-		)
-=======
 	const location = useLocation(),
 		path = location.pathname
->>>>>>> ngc/master
 
 	let buttons = []
 	if (answerButtonOnly) {
@@ -136,13 +104,7 @@ export default function SessionBar({
 						className="simple small"
 						onClick={() => setShowAnswerModal(true)}
 					>
-<<<<<<< HEAD
 						<Emoji e="📜" />
-						Modifier mes réponses
-					</Button>
-				</>
-=======
-						{emoji('📋 ')}
 						Mes réponses
 					</Button>
 				</>
@@ -253,7 +215,6 @@ export default function SessionBar({
 						<li key={i}>{Comp}</li>
 					))}
 				</NavBar>
->>>>>>> ngc/master
 			)}
 		</div>
 	)
