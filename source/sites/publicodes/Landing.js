@@ -19,14 +19,22 @@ export default () => {
 				}
 				text-align: center;
 				img {
-					height: 50%;
+					height: 60%;
 					object-fit: cover;
 					width: 100vw;
+					-webkit-mask-image: -webkit-gradient(
+						linear,
+						left top,
+						left bottom,
+						from(rgba(0, 0, 0, 1)),
+						to(rgba(0, 0, 0, 0))
+					);
 				}
 				h1 {
 					font-size: 300%;
 					margin-bottom: 0.6rem;
 					line-height: 2.4rem;
+					margin-top: -6rem;
 				}
 				h1 + p {
 					margin-bottom: 1rem;
