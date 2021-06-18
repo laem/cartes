@@ -1,10 +1,10 @@
 {
-	"name": "Futureco - le test",
-	"description": "Calcule ton empreinte sur le climat",
+	"name": "Futureco",
+	"description": "Es-tu écolo ? Fais le test",
 	"display": "standalone",
 	"lang": "fr",
 	"orientation": "portrait-primary",
-	"theme_color": "#2975D1",
+	"theme_color": "#000000",
 	"icons": [
 		{
 			"src": "/images/logo.svg",
