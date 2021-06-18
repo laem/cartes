@@ -73,7 +73,7 @@ const Perdu = () => {
 		<Dialog>
 			<h1>Perdu {emoji('🙁')}</h1>
 			<p>
-				<strong>Vous n'êtes pas écolo.</strong>
+				<strong>Tu n'es pas écolo.</strong>
 			</p>
 			<p>
 				Votre train de vie nous emène vers une planète anormalement réchauffée.
@@ -125,7 +125,7 @@ const Chemin = () => (
 const Claque = () => (
 	<Dialog>
 		<h1>La claque</h1>
-		<p>On ne vous avait jamais dit que c'était si compliqué ?</p>
+		<p>On ne t'avait jamais dit que c'était si compliqué ?</p>
 		<p>
 			Pipi sous la douche, ampoules basse conso, zéro déchet, électricité
 			"écolo", voiture électrique... les petits gestes nous allègent la
@@ -228,7 +228,7 @@ const PourquoiTrois = () => (
 			En <Emoji e="🇫🇷" />, nos services publics représentent ~1 tonne, et on
 			espère qu'elle tendera vers 0.
 		</p>
-		<p>Il vous en reste donc 2, cordialement.</p>
+		<p>Il t'en reste donc 2, cordialement.</p>
 		<LoudButton to="/fin/action">Comment faire ?</LoudButton>
 	</Dialog>
 )
@@ -237,8 +237,8 @@ const Action = () => (
 	<Dialog>
 		<h1>Il est où le GPS ?</h1>
 		<p>
-			Ne vous inquiétez pas, vous serez guidés : vous pourrez continuer le
-			questionnaire, puis découvrir plein de façons de réduire votre empreinte.
+			Ne t'inquiète pas, tu sera guidé : tu pourras continuer le questionnaire,
+			puis découvrir plein de façons de réduire ton empreinte.
 		</p>
 		<p>Mais une chose avant tout ! </p>
 		<LoudButton to="/fin/ensemble">Quoi encore ?</LoudButton>
@@ -261,7 +261,7 @@ const Ensemble = () => (
 		<ShareButton
 			text="Voilà mon empreinte climat. Mesure la tienne !"
 			url={'https://futur.eco'}
-			title={'Êtes-vous écolo ? Le test.'}
+			title={'Es-tu écolo ? Le test.'}
 			color={'white'}
 		/>
 	</Dialog>
@@ -279,7 +279,7 @@ const Changer = () => (
 			, mais tout n'est pas cuit !
 		</p>
 		<p>
-			Demain vous pouvez ne pas prendre votre voiture <Emoji e="🚗" />.
+			Demain tu pourra ne pas prendre ta voiture <Emoji e="🚗" />.
 		</p>
 		<p>
 			Dans deux semaines acheter un vélo <Emoji e="🚲" />.

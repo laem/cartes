@@ -11,14 +11,13 @@ export default () => {
 				<h1>Mode d'emploi</h1>
 				<p>Répondez simplement aux questions qui s'affichent.</p>
 				<p>
-					La couleur vous indique votre score. On commence tous en{' '}
+					La couleur t'indique ton score. On commence tous en{' '}
 					<span
 						css={`
 							background: ${colorScale[0]};
-							padding: 0.1rem 0.2rem;
+							padding: 0rem 0.3rem;
 							margin: 0 0.1rem;
 							color: black;
-							border-radius: 0.3rem;
 						`}
 					>
 						vert
