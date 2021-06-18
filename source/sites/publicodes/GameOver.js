@@ -75,9 +75,7 @@ const Perdu = () => {
 			<p>
 				<strong>Tu n'es pas écolo.</strong>
 			</p>
-			<p>
-				Ton train de vie nous emène vers une planète anormalement réchauffée.
-			</p>
+			<p>Ton train de vie nous emène vers une planète anormalement chaude.</p>
 			<p>
 				Il a suffi de <strong>{answerCount}</strong> réponses au test sur{' '}
 				<strong>{nextStepsCount}</strong> questions pour le savoir.
@@ -94,14 +92,16 @@ const Définition = () => (
 		<h1>Être écolo, définition !</h1>
 		<p>
 			On ne peut pas être écolo si on défonce le climat. Une empreinte climat
-			personnelle de moins de <strong>3 </strong> tonnes est une{' '}
+			personnelle de <Emoji e="➖" /> de <strong>3 </strong> tonnes est une{' '}
 			<strong>condition nécessaire</strong>.
 		</p>
 
-		<p> A l'inverse, on peut respecter le climat mais ne pas être écolo.</p>
 		<p>
-			Mais vu l'énorme effort que ça représente, c'est déjà une{' '}
-			<strong>super étape</strong>.{' '}
+			{' '}
+			À l'inverse, peut-on respecter le climat sans être écolo ? Peut-être, mais
+			vu l'énorme effort que ça représente, c'est <strong>
+				peu probable
+			</strong>.{' '}
 		</p>
 		<LoudButton to="/fin/claque">OK...</LoudButton>
 	</Dialog>
@@ -125,13 +125,18 @@ const Chemin = () => (
 const Claque = () => (
 	<Dialog>
 		<h1>La claque</h1>
-		<p>On ne t'avait jamais dit que c'était si compliqué ?</p>
+		<p>
+			On ne t'avait jamais dit que c'était si compliqué ? Que ce test était{' '}
+			<strong>très&nbsp;dur</strong> à passer ?{' '}
+		</p>
 		<p>
 			Pipi sous la douche, ampoules basse conso, zéro déchet, électricité
 			"écolo", voiture électrique... les petits gestes nous allègent la
 			conscience et la technologie nous rassure.
 		</p>
-		<p>Mais le compte n'y est pas.</p>
+		<p>
+			Mais le compte n'y est pas <strong>du tout</strong>.
+		</p>
 
 		<LoudButton to="/fin/trajectoire">Il est où alors ?</LoudButton>
 	</Dialog>
@@ -139,7 +144,12 @@ const Claque = () => (
 const Trajectoire = () => (
 	<Dialog>
 		<h1>La trajectoire</h1>
-		<p>Limpide. Décroitre à 3 tonnes d'empreinte climat par personne.</p>
+		<p>
+			Elle est limpide. Décroitre à 3 tonnes d'empreinte climat par personne.
+		</p>
+		<p>
+			<strong>Diviser par 3</strong> notre empreinte moyenne.
+		</p>
 		<div
 			css={`
 				width: 100%;
@@ -193,7 +203,7 @@ const Trajectoire = () => (
 			<div>L'écolo</div>
 		</div>
 
-		<LoudButton to="/fin/quand">En combien de temps ?</LoudButton>
+		<LoudButton to="/fin/quand">Mais quand ?</LoudButton>
 	</Dialog>
 )
 const Quand = () => (
@@ -204,14 +214,14 @@ const Quand = () => (
 			belle <strong>procrastination</strong> de l'histoire humaine.
 		</p>
 		<p>
-			Chaque année passée au-dessus de <strong>3 tonnes</strong> nous dévie du
-			but.
+			Chaque année passée au-dessus de <strong>3 tonnes</strong> nous met tous
+			en danger.
 		</p>
 		<p>
-			Lequel ? Un climat soutenable pour 7 milliards d'êtres humains et un
-			billion de fois plus de vie.
+			Lequel ? Perdre un environnement où peuvent vivre 7 milliards d'êtres
+			humains et un billion de fois plus de vie.
 		</p>
-		<LoudButton to="/fin/pourquoi-trois">Pourquoi 3 ?</LoudButton>
+		<LoudButton to="/fin/pourquoi-trois">Pourquoi 3 tonnes ?</LoudButton>
 	</Dialog>
 )
 
@@ -219,7 +229,7 @@ const PourquoiTrois = () => (
 	<Dialog>
 		<h1>Les maths</h1>
 		<p>
-			Normalement, l'objectif personnel écolo est de{' '}
+			Normalement, l'objectif personnel d'équilibre est de{' '}
 			<strong>moins de 2 tonnes</strong>. Sauf que c'est inatteignable tout
 			seul.
 		</p>
@@ -228,14 +238,16 @@ const PourquoiTrois = () => (
 			En <Emoji e="🇫🇷" />, nos services publics représentent ~1 tonne, et on
 			espère qu'elle tendera vers 0.
 		</p>
-		<p>Il t'en reste donc 2, cordialement.</p>
+		<p>
+			2 <Emoji e="➕" /> 1 = 3
+		</p>
 		<LoudButton to="/fin/action">Comment faire ?</LoudButton>
 	</Dialog>
 )
 
 const Action = () => (
 	<Dialog>
-		<h1>Il est où le GPS ?</h1>
+		<h1>Il est où le GPS&nbsp;?</h1>
 		<p>
 			Ne t'inquiète pas, tu sera guidé : tu pourras continuer le questionnaire,
 			puis découvrir plein de façons de réduire ton empreinte.
@@ -247,15 +259,15 @@ const Action = () => (
 
 const Ensemble = () => (
 	<Dialog>
-		<h1>En parler, partout, tout le temps</h1>
+		<h1>En parler</h1>
 		<p>
-			Tout seul, on déprimera ou on sauvera l'honneur. Ensemble, on va changer
-			ce monde. Il s'agit de notre planète, notre futur, notre paix, notre
-			bonheur bordel !
+			Tout seul, on se recroqueville et on ne va pas loin. Ensemble, on va
+			changer ce monde. Il s'agit de notre planète, notre paix, notre bonheur,
+			notre futur bordel !
 		</p>
 		<p>
 			Tu as des amis, de la famille, l'internet ?{' '}
-			<strong>On est tous dans la même merde</strong>
+			<strong>On est tous dans la même merde.</strong>
 		</p>
 		<p>Partage-leur ce test ⬇️</p>
 		<ShareButton
