@@ -77,49 +77,60 @@ const Simulateur = (props) => {
 	console.log('DOOM', doomColor)
 
 	return (
-		<div
-			css={`
-				height: 100%;
-				border: 1.4rem solid ${doomColor};
-				${sessionBarMargin}
-			`}
-		>
-			<Helmet>
-				<title>{rule.title}</title>
-				{rule.description && (
-					<meta name="description" content={rule.description} />
-				)}
-			</Helmet>
-
-			{!gameOver ? (
-				<>
-					{false && <SessionBar evaluation={evaluation} />}
-					<Simulation
-						noFeedback
-						orderByCategories={categories}
-						customEnd={
-							decoded === 'bilan' ? (
-								<RedirectionToEndPage
-									score={rule.nodeValue}
-									url={buildEndURL(rules, engine)}
-								/>
-							) : rule.description ? (
-								<Markdown source={rule.description} />
-							) : (
-								<EndingCongratulations />
-							)
-						}
-						targets={<>{rule.period === 'flexible' && <PeriodBlock />}</>}
-						explanations={null}
-					/>
-				</>
-			) : (
-				<Redirect to="/fin" />
-			)}
-			<div css="display: flex; justify-content: center">
+		<>
+			<div
+				css={`
+					display: flex;
+					justify-content: center;
+					height: 10%;
+					svg {
+						height: 4rem;
+					}
+				`}
+			>
 				<FuturecoMonochrome color={doomColor} />
 			</div>
-		</div>
+			<div
+				css={`
+					height: 90%;
+					border: 1.4rem solid ${doomColor};
+					${sessionBarMargin}
+				`}
+			>
+				<Helmet>
+					<title>{rule.title}</title>
+					{rule.description && (
+						<meta name="description" content={rule.description} />
+					)}
+				</Helmet>
+
+				{!gameOver ? (
+					<>
+						{false && <SessionBar evaluation={evaluation} />}
+						<Simulation
+							noFeedback
+							orderByCategories={categories}
+							customEnd={
+								decoded === 'bilan' ? (
+									<RedirectionToEndPage
+										score={rule.nodeValue}
+										url={buildEndURL(rules, engine)}
+									/>
+								) : rule.description ? (
+									<Markdown source={rule.description} />
+								) : (
+									<EndingCongratulations />
+								)
+							}
+							targets={<>{rule.period === 'flexible' && <PeriodBlock />}</>}
+							explanations={null}
+						/>
+					</>
+				) : (
+					<Redirect to="/fin" />
+				)}
+			</div>
+		</>
 	)
 }
 
