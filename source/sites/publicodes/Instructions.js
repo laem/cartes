@@ -9,7 +9,7 @@ export default () => {
 		<GameDialog>
 			<>
 				<h1>Mode d'emploi</h1>
-				<p>Répondez simplement aux questions qui s'affichent.</p>
+				<p>Répond simplement aux questions qui s'affichent.</p>
 				<p>
 					La couleur t'indique ton score. On commence tous en{' '}
 					<span
