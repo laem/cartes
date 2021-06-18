@@ -8,6 +8,7 @@ import { Link, NavLink } from 'react-router-dom'
 import styled from 'styled-components'
 import useSWR from 'swr'
 import { determinant, hideNewsBanner } from 'Components/NewsBanner'
+import Meta from '../components/utils/Meta'
 
 const dateCool = (date) =>
 	date.toLocaleString(undefined, {
@@ -47,9 +48,16 @@ export default function News() {
 	}
 
 	const releaseName = data[selectedRelease].name.toLowerCase()
+	const body = data[selectedRelease].body,
+		image = body.match(/!\[.*?\]\((.*?)\)/)[1] || null
 
 	return (
 		<>
+			<Meta
+				description="Découvrez les nouveautés de Nos Gestes Climat"
+				title={`Nouveautés - version ${releaseName}`}
+				image={image}
+			/>
 			<ScrollToTop key={selectedRelease} />
 			<h1>Les nouveautés {emoji('✨')}</h1>
 			<p>
@@ -87,7 +95,7 @@ export default function News() {
 				</Sidebar>
 				<MainBlock>
 					<MarkdownWithAnchorLinks
-						source={data[selectedRelease].body}
+						source={body}
 						escapeHtml={false}
 						renderers={{ text: TextRenderer }}
 					/>

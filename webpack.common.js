@@ -11,6 +11,10 @@ module.exports.default = {
 		ignored: /node_modules/,
 	},
 	resolve: {
+		fallback: {
+			path: 'path-browserify',
+			buffer: 'buffer',
+		},
 		alias: {
 			Actions: path.resolve('source/actions/'),
 			Components: path.resolve('source/components/'),
@@ -62,7 +66,7 @@ module.exports.styleLoader = (styleLoader) => ({
 	],
 })
 
-module.exports.commonLoaders = () => {
+module.exports.commonLoaders = (mode = 'production') => {
 	const babelLoader = {
 		loader: 'babel-loader',
 		options: {
@@ -78,13 +82,29 @@ module.exports.commonLoaders = () => {
 					},
 				],
 			],
+			plugins: [
+				// ... other plugins
+				mode === 'development' && require.resolve('react-refresh/babel'),
+			].filter(Boolean),
 		},
 	}
 
 	return [
 		{
+			test: /node_modules\/vfile\/core\.js/,
+			use: [
+				{
+					loader: 'imports-loader',
+					options: {
+						type: 'commonjs',
+						imports: ['single process/browser process'],
+					},
+				},
+			],
+		},
+		{
 			test: /\.(js|ts|tsx)$/,
-			loader: babelLoader,
+			use: [babelLoader],
 			exclude: /node_modules|dist/,
 		},
 		{
@@ -138,18 +158,15 @@ module.exports.commonLoaders = () => {
 	]
 }
 
-module.exports.HTMLPlugins = ({
-	injectTrackingScript = false,
-	prodPath,
-} = {}) => [
+module.exports.HTMLPlugins = ({ injectTrackingScript = false } = {}) => [
 	new HTMLPlugin({
 		template: 'index.html',
-		logo: 'https://ecolab.ademe.fr/apps/climat/dessin-nosgestesclimat.png',
+		logo: 'https://nosgestesclimat.fr/dessin-nosgestesclimat.png',
 		chunks: ['publicodes'],
 		title: 'Nos Gestes Climat',
 		description: 'Connaissez-vous votre empreinte sur le climat ?',
 		filename: 'index.html',
 		injectTrackingScript,
-		base: prodPath || '/',
+		base: '/',
 	}),
 ]

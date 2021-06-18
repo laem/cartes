@@ -109,6 +109,7 @@ export function getNextQuestions(
 					.replace(/'/g, '')
 					.trim() as DottedName)
 			: lastStep
+
 	return sortBy((question) => {
 		const indexList =
 			whitelist.findIndex((name) => question.startsWith(name)) + 1

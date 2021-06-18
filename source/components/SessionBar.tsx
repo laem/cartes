@@ -1,5 +1,9 @@
-import { goToQuestion, loadPreviousSimulation } from 'Actions/actions'
-import { Button } from 'Components/ui/Button'
+import {
+	deletePreviousSimulation,
+	goToQuestion,
+	loadPreviousSimulation,
+	resetSimulation,
+} from 'Actions/actions'
 import { useEngine } from 'Components/utils/EngineContext'
 import { last } from 'ramda'
 import React, { useEffect, useState } from 'react'
@@ -11,11 +15,36 @@ import {
 	answeredQuestionsSelector,
 	objectifsSelector,
 } from 'Selectors/simulationSelectors'
+import styled from 'styled-components'
+import CarbonImpact from '../sites/publicodes/CarbonImpact'
 import { extractCategories } from '../sites/publicodes/chart'
 import Answers from './conversation/AnswerList'
 import Emoji from './Emoji'
 
-// TODO should be find the rewritten version of this from mon-entreprise and merge them ?
+const Button = styled.button`
+	margin: 0 0.2rem;
+	display: flex;
+	@media (max-width: 800px) {
+		flex-direction: column;
+	}
+	align-items: center;
+	justify-content: center;
+	font-size: 80%;
+	> img {
+		display: block;
+		font-size: 200%;
+		margin: 0.6rem !important;
+		@media (max-width: 800px) {
+			margin: 0 !important;
+		}
+	}
+`
+
+export const sessionBarMargin = `
+		@media (max-width: 800px) {
+			margin-bottom: 10rem;
+		}
+`
 
 export const buildEndURL = (rules, engine) => {
 	const categories = extractCategories(rules, engine),
@@ -34,18 +63,28 @@ export const buildEndURL = (rules, engine) => {
 	return `/fin?details=${detailsString}`
 }
 
-export default function SessionBar({ answerButtonOnly = false }) {
-	const dispatch = useDispatch()
+export const useSafePreviousSimulation = () => {
 	const previousSimulation = useSelector(
 		(state: RootState) => state.previousSimulation
 	)
 
+	const dispatch = useDispatch()
 	const answeredQuestions = useSelector(answeredQuestionsSelector)
 	const arePreviousAnswers = !!answeredQuestions.length
 	useEffect(() => {
 		if (!arePreviousAnswers && previousSimulation)
 			dispatch(loadPreviousSimulation())
 	}, [])
+}
+
+export default function SessionBar({
+	answerButtonOnly = false,
+	noResults = false,
+}) {
+	const dispatch = useDispatch()
+	const answeredQuestions = useSelector(answeredQuestionsSelector)
+	const arePreviousAnswers = !!answeredQuestions.length
+	useSafePreviousSimulation()
 	const [showAnswerModal, setShowAnswerModal] = useState(false)
 
 	const objectifs = useSelector(objectifsSelector)
@@ -53,6 +92,7 @@ export default function SessionBar({ answerButtonOnly = false }) {
 	const engine = useEngine(objectifs)
 
 	const history = useHistory()
+<<<<<<< HEAD
 	const location = useLocation()
 
 	const css = `
@@ -82,48 +122,158 @@ export default function SessionBar({ answerButtonOnly = false }) {
 				)}
 			</div>
 		)
+=======
+	const location = useLocation(),
+		path = location.pathname
+>>>>>>> ngc/master
 
-	if (['/fin', '/actions'].includes(location.pathname))
-		return (
-			<div css={css}>
-				{arePreviousAnswers ? (
-					<Button
-						className="simple small"
-						onClick={() => {
-							dispatch(goToQuestion(last(answeredQuestions)))
-							history.push('/simulateur/bilan')
-						}}
-					>
-						{emoji('📊 ')}
-						Revenir à ma simulation
-					</Button>
-				) : (
-					<Button
-						className="plain"
-						onClick={() => {
-							history.push('/simulateur/bilan')
-						}}
-					>
-						Faire le test
-					</Button>
-				)}
-			</div>
-		)
-
-	return (
-		<div css={css}>
-			{arePreviousAnswers && (
+	let buttons = []
+	if (answerButtonOnly) {
+		buttons = [
+			arePreviousAnswers && (
 				<>
 					<Button
 						className="simple small"
 						onClick={() => setShowAnswerModal(true)}
 					>
+<<<<<<< HEAD
 						<Emoji e="📜" />
 						Modifier mes réponses
 					</Button>
 				</>
+=======
+						{emoji('📋 ')}
+						Mes réponses
+					</Button>
+				</>
+			),
+			showAnswerModal && <Answers onClose={() => setShowAnswerModal(false)} />,
+		]
+	} else if (path.includes('/personas')) {
+		buttons = [
+			<Button
+				className="simple small"
+				onClick={() => {
+					history.push('/actions')
+				}}
+			>
+				{emoji('💥 ')}
+				Passer à l'action
+			</Button>,
+		]
+	} else if (path.includes('/fin') || path.includes('/actions')) {
+		buttons = [
+			arePreviousAnswers ? (
+				<Button
+					className="simple small"
+					onClick={() => {
+						dispatch(goToQuestion(last(answeredQuestions)))
+						history.push('/simulateur/bilan')
+					}}
+				>
+					{emoji('📊 ')}
+					Ma simulation
+				</Button>
+			) : (
+				<Button
+					className="plain"
+					onClick={() => {
+						history.push('/simulateur/bilan')
+					}}
+				>
+					{emoji('👤 ')}
+					Faire le test
+				</Button>
+			),
+		]
+	} else {
+		buttons = [
+			...(arePreviousAnswers
+				? [
+						<Button
+							key="recommencer"
+							className="simple small"
+							onClick={() => {
+								dispatch(resetSimulation())
+								dispatch(deletePreviousSimulation())
+							}}
+						>
+							{emoji('♻️ ')}
+							Recommencer
+						</Button>,
+						<Button
+							key="modifier"
+							className="simple small"
+							onClick={() => setShowAnswerModal(true)}
+						>
+							{emoji('📋 ')}
+							Mes réponses
+						</Button>,
+						<Button
+							key="bouger"
+							className="simple small"
+							onClick={() => history.push('/actions')}
+						>
+							{emoji('💥 ')}
+							Passer à l'action
+						</Button>,
+						NODE_ENV === 'development' && (
+							<Button
+								key="fin"
+								className="simple small"
+								onClick={() => history.push(buildEndURL(rules, engine))}
+							>
+								{emoji('🔚 ')}
+								Ecran de fin [DEVMODE]
+							</Button>
+						),
+				  ]
+				: []),
+			showAnswerModal && <Answers onClose={() => setShowAnswerModal(false)} />,
+		]
+	}
+
+	return (
+		<div
+			css={`
+				@media (max-width: 800px) {
+					position: fixed;
+					bottom: 0;
+					left: 0;
+					z-index: 10;
+
+					width: 100%;
+				}
+			`}
+		>
+			{!noResults && <CarbonImpact />}
+			{buttons.filter(Boolean).length > 0 && (
+				<NavBar>
+					{buttons.filter(Boolean).map((Comp, i) => (
+						<li key={i}>{Comp}</li>
+					))}
+				</NavBar>
+>>>>>>> ngc/master
 			)}
-			{showAnswerModal && <Answers onClose={() => setShowAnswerModal(false)} />}
 		</div>
 	)
 }
+
+const NavBar = styled.ul`
+	display: flex;
+	list-style-type: none;
+	justify-content: space-evenly !important;
+	align-items: center;
+	height: 3.5rem;
+	margin: 0.6rem 0 0 0;
+	padding: 0;
+
+	@media (max-width: 800px) {
+		margin: 0;
+		width: 100%;
+		z-index: 10;
+		background: white;
+		display: flex;
+		justify-content: center;
+	}
+`

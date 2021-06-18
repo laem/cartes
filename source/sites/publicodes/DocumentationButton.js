@@ -16,7 +16,7 @@ const DocumentationButton = (props) => {
 		>
 			{emoji('📄')}
 			<Link {...props} to={'/documentation'}>
-				Comprendre nos calculs
+				Documentation
 			</Link>
 		</div>
 	)

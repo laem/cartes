@@ -14,8 +14,9 @@ import BallonGES from './images/ballonGES.svg'
 import { useNextQuestions } from 'Components/utils/useNextQuestion'
 import { EngineContext } from '../../components/utils/EngineContext'
 import { splitName } from 'Components/publicodesUtils'
-import { parentName } from '../../components/publicodesUtils'
-import { correctValue } from './Actions'
+import { correctValue, parentName } from '../../components/publicodesUtils'
+import { sessionBarMargin } from '../../components/SessionBar'
+import Meta from '../../components/utils/Meta'
 
 const { decodeRuleName, encodeRuleName } = utils
 
@@ -34,7 +35,7 @@ export default ({}) => {
 	const actionParent = parentName(dottedName)
 	const config = {
 		objectifs: [dottedName],
-		situation: { ...(configSet?.situation || {}), [actionParent]: 'oui' },
+		situation: { ...(configSet?.situation || {}) },
 	}
 
 	const engine = useContext(EngineContext)
@@ -46,9 +47,10 @@ export default ({}) => {
 	if (!configSet) return null
 
 	const evaluation = engine.evaluate(dottedName),
-		{ nodeValue, title, plus } = evaluation
+		{ nodeValue, title } = evaluation
 
-	const { description, icônes: icons } = rules[dottedName]
+	const { description, icônes: icons, plus } = rules[dottedName]
+	console.log('EVAL', plus)
 
 	const flatActions = rules['actions']
 	const relatedActions = flatActions.formule.somme
@@ -60,7 +62,15 @@ export default ({}) => {
 		.map((name) => engine.getRule(name))
 
 	return (
-		<div css="padding: 0 .3rem 1rem; max-width: 600px; margin: 1rem auto;">
+		<div
+			css={`
+				padding: 0 0.3rem 1rem;
+				max-width: 600px;
+				margin: 1rem auto;
+				${sessionBarMargin}
+			`}
+		>
+			<Meta title={title} description={description} />
 			<ScrollToTop />
 			<Link to="/actions">
 				<button className="ui__ button simple small ">
@@ -68,30 +78,28 @@ export default ({}) => {
 				</button>
 			</Link>
 			<div className="ui__ card" css={'padding: .1rem; margin: .8rem 0'}>
-				<header css="margin-bottom: 1rem; h1 {font-size: 180%;}; h1 > span {margin-right: 1rem}">
+				<header
+					css={`
+						margin-bottom: 1rem;
+						h1 {
+							font-size: 180%;
+							margin: 0.6rem 0;
+						}
+						h1 > span {
+							margin-right: 1rem;
+						}
+					`}
+				>
 					<h1>
 						{icons && <span>{emoji(icons)}</span>}
 						{title}
 					</h1>
-					{nodeValue != null && (
-						<div css="display: flex; align-items: center">
-							<img src={BallonGES} css="height: 6rem" />
-							<div>
-								<HumanWeight
-									nodeValue={correctValue({ nodeValue, unit: evaluation.unit })}
-								/>
-								<Link to={'/documentation/' + encodeRuleName(dottedName)}>
-									{emoji('🔬 ')} comprendre le calcul
-								</Link>
-							</div>
-						</div>
-					)}
 				</header>
 				<div css="margin: 1.6rem 0">
 					<Markdown source={description} />
 					{plus && (
 						<Link to={'/actions/plus/' + encodedName}>
-							<button className="ui__ button plain">En savoir plus</button>
+							<button className="ui__ button simple">En savoir plus</button>
 						</Link>
 					)}
 				</div>

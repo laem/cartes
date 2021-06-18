@@ -2,27 +2,24 @@ import Input from 'Components/conversation/Input'
 import Question, { Choice } from 'Components/conversation/Question'
 import CurrencyInput from 'Components/CurrencyInput/CurrencyInput'
 import PercentageField from 'Components/PercentageField'
+import { parentName } from 'Components/publicodesUtils'
 import ToggleSwitch from 'Components/ui/ToggleSwitch'
 import { EngineContext } from 'Components/utils/EngineContext'
+import { DottedName } from 'modele-social'
 import {
 	ASTNode,
 	EvaluatedRule,
 	formatValue,
-	ParsedRules,
 	reduceAST,
 	utils,
 } from 'publicodes'
 import { Evaluation } from 'publicodes/dist/types/AST/types'
 import React, { useContext } from 'react'
 import { useTranslation } from 'react-i18next'
-import { DottedName } from 'modele-social'
 import DateInput from './DateInput'
+import mosaicQuestions from './mosaicQuestions'
 import ParagrapheInput from './ParagrapheInput'
-import SelectWeeklyDiet from './select/SelectWeeklyDiet'
 import TextInput from './TextInput'
-import { useSelector } from 'react-redux'
-import { parentName } from 'Components/publicodesUtils'
-import { weeklyDietQuestion } from './select/SelectWeeklyDiet'
 
 type Value = any
 export type RuleInputProps<Name extends string = DottedName> = {
@@ -52,6 +49,9 @@ export const binaryQuestion = [
 	{ value: 'oui', label: 'Oui' },
 	{ value: 'non', label: 'Non' },
 ] as const
+
+export const isMosaic = (dottedName) =>
+	mosaicQuestions.find(({ isApplicable }) => isApplicable(dottedName))
 
 // This function takes the unknown rule and finds which React component should
 // be displayed to get a user input through successive if statements
@@ -90,20 +90,22 @@ export default function RuleInput<Name extends string = DottedName>({
 		required: true,
 	}
 
-	if (weeklyDietQuestion(rule.dottedName)) {
-		// This selected a precise set of questions to bypass their regular components and answer all of them in one big custom UI
-		const dietRules = Object.entries(rules)
-			.filter(([dottedName]) => weeklyDietQuestion(dottedName))
+	if (isMosaic(rule.dottedName)) {
+		// This selects a precise set of questions to bypass their regular components and answer all of them in one big custom UI
+		const question = isMosaic(rule.dottedName)
+		console.log({ question })
+		const selectedRules = Object.entries(rules)
+			.filter(([dottedName]) => question.isApplicable(dottedName))
 			.map(([dottedName, questionRule]) => {
 				const parentRule = parentName(dottedName)
 				return [rules[parentRule], questionRule]
 			})
 
 		return (
-			<SelectWeeklyDiet
+			<question.component
 				{...{
 					...commonProps,
-					dietRules,
+					selectedRules,
 				}}
 			/>
 		)
@@ -126,9 +128,7 @@ export default function RuleInput<Name extends string = DottedName>({
 	if (rule.API && rule.API === 'pays européen')
 		return <SelectEuropeCountry {...commonProps} />
 	if (rule.API) throw new Error("Les seules API implémentées sont 'commune'")
-
 	if (rule.dottedName == 'contrat salarié . ATMP . taux collectif ATMP')
-
 	return <SelectAtmp {...commonProps} onSubmit={onSubmit} />
 *
 */
@@ -201,8 +201,6 @@ export default function RuleInput<Name extends string = DottedName>({
 			<ParagrapheInput {...commonProps} value={value as Evaluation<string>} />
 		)
 	}
-
-	console.log(rule, evaluation)
 
 	return (
 		<Input

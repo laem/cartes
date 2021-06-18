@@ -11,6 +11,7 @@ export default ({
 	title,
 	empreinteMaximum,
 	noText,
+	valueColor,
 }) => (
 	<>
 		{!noText && (
@@ -43,12 +44,12 @@ export default ({
 					height: 1.1rem;
 					padding-left: 0.1rem;
 					border-radius: 0.4rem;
-					width: ${(nodeValue / empreinteMaximum) * 100 * 0.9}%;
+					width: ${(nodeValue / empreinteMaximum) * 100 * 0.85}%;
 					color: white;
 					${shadowStyle}
 				`}
 			></span>
-			<Value {...{ nodeValue, completed }} />
+			<Value {...{ nodeValue, completed, color: valueColor }} />
 		</div>
 	</>
 )

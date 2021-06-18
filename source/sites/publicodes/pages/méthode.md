@@ -8,7 +8,7 @@ Notre modèle de calcul est entièrement transparent.
 
 Le code est non seulement transparent, mais aussi contributif : chancun peut l'explorer, donner son avis, l'améliorer.
 
-[Venez contribuer](/contribuer) !
+[🎤 Venez contribuer](/contribuer) !
 
 ## Approfondissez votre connaissance des actions
 

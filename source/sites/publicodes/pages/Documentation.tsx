@@ -11,8 +11,8 @@ import { Redirect, useLocation } from 'react-router-dom'
 import { RootState } from 'Reducers/rootReducer'
 import SearchBar from 'Components/SearchBar'
 import Méthode from './Méthode'
-
-console.log(getDocumentationSiteMap)
+import BandeauContribuer from '../BandeauContribuer'
+import Meta from '../../../components/utils/Meta'
 
 export default function RulePage() {
 	const currentSimulation = useSelector(
@@ -25,6 +25,7 @@ export default function RulePage() {
 		() => getDocumentationSiteMap({ engine, documentationPath }),
 		[engine, documentationPath]
 	)
+	console.log(documentationSitePaths)
 	const { i18n } = useTranslation()
 
 	if (pathname === '/documentation') {
@@ -52,6 +53,7 @@ export default function RulePage() {
 				documentationPath={documentationPath}
 			/>
 			{/* <button>Voir l</button> */}
+			<BandeauContribuer />
 		</Animate.fromBottom>
 	)
 }
@@ -73,6 +75,10 @@ function BackToSimulation() {
 function DocumentationLanding() {
 	return (
 		<>
+			<Meta
+				title="Comprendre nos calculs"
+				description="Notre modèle de calcul est entièrement transparent. Chacun peut l'explorer, donner son avis, l'améliorer."
+			/>
 			<Méthode />
 			<h2>Explorer notre documentation</h2>
 			<SearchBar showListByDefault={true} />

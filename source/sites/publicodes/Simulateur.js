@@ -3,24 +3,21 @@ import PeriodSwitch from 'Components/PeriodSwitch'
 import SessionBar, { buildEndURL } from 'Components/SessionBar'
 import ShareButton from 'Components/ShareButton'
 import Simulation from 'Components/Simulation'
+import { useEngine } from 'Components/utils/EngineContext'
 import { Markdown } from 'Components/utils/markdown'
 import { TrackerContext } from 'Components/utils/withTracker'
 import { utils } from 'publicodes'
-
-import tinygradient from 'tinygradient'
 import { compose, isEmpty, symmetricDifference } from 'ramda'
 import React, { useContext, useEffect } from 'react'
+import emoji from 'react-easy-emoji'
 import { Helmet } from 'react-helmet'
 import { useDispatch, useSelector } from 'react-redux'
 import { Redirect } from 'react-router'
-import CarbonImpact from './CarbonImpact'
-import Chart, { extractCategories } from './chart/index.js'
-import { objectifsSelector } from 'Selectors/simulationSelectors'
-import { useEngine } from 'Components/utils/EngineContext'
-import emoji from 'react-easy-emoji'
-import { situationSelector } from '../../selectors/simulationSelectors'
-import GameOver from './GameOver'
+import tinygradient from 'tinygradient'
+import { sessionBarMargin } from '../../components/SessionBar'
 import FuturecoMonochrome from '../../images/FuturecoMonochrome'
+import { situationSelector } from '../../selectors/simulationSelectors'
+import { extractCategories } from './chart/index.js'
 
 const eqValues = compose(isEmpty, symmetricDifference)
 export const colorScale = [
@@ -84,6 +81,7 @@ const Simulateur = (props) => {
 			css={`
 				height: 100%;
 				border: 1.4rem solid ${doomColor};
+				${sessionBarMargin}
 			`}
 		>
 			<Helmet>
@@ -136,14 +134,22 @@ let PeriodBlock = () => (
 	</div>
 )
 
-const RedirectionToEndPage = ({ url, score }) => {
+const RedirectionToEndPage = ({ rules, engine }) => {
+	// Necessary to call 'buildEndURL' with the latest situation
+	const situation = useSelector(situationSelector)
 	const tracker = useContext(TrackerContext)
 
 	useEffect(() => {
-		tracker.push(['trackEvent', 'NGC', 'A terminé la simulation', null, score])
+		tracker.push([
+			'trackEvent',
+			'NGC',
+			'A terminé la simulation',
+			null,
+			rules['bilan'].nodeValue,
+		])
 	}, [tracker])
 
-	return <Redirect to={url} />
+	return <Redirect to={buildEndURL(rules, engine)} />
 }
 
 export default Simulateur

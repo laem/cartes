@@ -85,6 +85,19 @@ export const setSituationBranch = (id: number) =>
 		id,
 	} as const)
 
+export const setDifferentSituation = ({
+	situation,
+	config,
+	url,
+	persona,
+}: Object) => ({
+	type: 'SET_SIMULATION',
+	situation,
+	config,
+	url,
+	persona,
+})
+
 export const setSimulationConfig = (config: Object): ThunkResult<void> => (
 	dispatch,
 	getState,
@@ -125,7 +138,7 @@ export const updateSituation = (fieldName: DottedName, value: unknown) =>
 export const updateUnit = (targetUnit: string) =>
 	({
 		type: 'UPDATE_TARGET_UNIT',
-		targetUnit
+		targetUnit,
 	} as const)
 
 export const goBackToSimulation = (): ThunkResult<void> => (
@@ -151,4 +164,10 @@ export const explainVariable = (variableName: DottedName | null = null) =>
 	({
 		type: 'EXPLAIN_VARIABLE',
 		variableName,
+	} as const)
+
+export const setActionMode = (mode: 'guidé' | 'autonome') =>
+	({
+		type: 'SET_ACTION_MODE',
+		mode,
 	} as const)

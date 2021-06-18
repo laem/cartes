@@ -1,14 +1,14 @@
-## Ecolab-climat
+## Nosgestesclimat-site
 
 ## C'est quoi ?
 
-Un simulateur d'empreinte carbone personnelle à l'année, utilisant le modèle climat de [ecolab-data](https://github.com/betagouv/ecolab-data).
+Un simulateur d'empreinte carbone personnelle à l'année, utilisant le modèle climat de [nosgestesclimat](https://github.com/datagir/nosgestesclimat).
 
-Pour contribuer au modèle et données sous-jacentes (calculs, textes, questions, suggestions de saisie), rendez-vous [ici](https://github.com/betagouv/ecolab-data/blob/master/CONTRIBUTING.md).
+Pour contribuer au modèle et données sous-jacentes (calculs, textes, questions, suggestions de saisie), rendez-vous [ici](https://github.com/datagir/nosgestesclimat/blob/master/CONTRIBUTING.md).
 
-Pour tout ce qui touche à l'interface (style d'un bouton, graphique de résultat, code javascript, etc.) c'est ici dans les [_issues_](https://github.com/betagouv/ecolab-climat/issues).
+Pour tout ce qui touche à l'interface (style d'un bouton, graphique de résultat, code javascript, etc.) c'est ici dans les [_issues_](https://github.com/datagir/nosgestesclimat-site/issues).
 
-> 🌐 Most of the documentation (including issues and the wiki) is written in french, please raise an [issue](https://github.com/betagouv/ecolab-climat/issues/new) if you are interested and do not speak French.
+> 🌐 Most of the documentation (including issues and the wiki) is written in french, please raise an [issue](https://github.com/datagir/nosgestesclimat-site/issues/new) if you are interested and do not speak French.
 
 ## Et techniquement ?
 
@@ -18,7 +18,7 @@ La bibliothèque de calcul publicodes, qui fournit le langage du modèle, vient 
 
 ### Installation
 
-You need to clone another repo, https://github.com/betagouv/ecolab-data, in the same directory than this one. The model YAML files will then be loaded locally (no installation needed, they are loaded by webpack), and your changes to these files will refresh the UI instantly.
+You need to clone another repo, https://github.com/datagir/nosgestesclimat, in the same directory than this one. The model YAML files will then be loaded locally (no installation needed, they are loaded by webpack), and your changes to these files will refresh the UI instantly.
 
 Then run this command in this repo :
 

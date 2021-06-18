@@ -1,26 +1,19 @@
 import { explainVariable } from 'Actions/actions'
 import Overlay from 'Components/Overlay'
-import { EngineContext } from 'Components/utils/EngineContext'
 import React, { useContext, useState } from 'react'
 import emoji from 'react-easy-emoji'
 import { useDispatch } from 'react-redux'
+import usePortal from 'react-useportal'
 import { DottedName } from 'Rules'
 import { TrackerContext } from '../utils/withTracker'
 import './Explicable.css'
-import usePortal from 'react-useportal'
 
 export function ExplicableRule({ dottedName }: { dottedName: DottedName }) {
-	const engine = useContext(EngineContext)
 	const tracker = useContext(TrackerContext)
 	const dispatch = useDispatch()
 
 	// Rien à expliquer ici, ce n'est pas une règle
 	if (dottedName == null) return null
-	const rule = engine.getRule(dottedName)
-
-	if (rule.rawNode.description == null) return null
-
-	//TODO montrer les variables de type 'une possibilité'
 
 	return (
 		<button

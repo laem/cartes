@@ -1,10 +1,11 @@
 import { iframeResize } from 'iframe-resizer'
 
-const script = document.getElementById('ecolab-climat'),
-	//distanceInitiale = encodeURIComponent(script.dataset.distanceInitiale),
+const script =
+		document.getElementById('ecolab-climat') ||
+		document.getElementById('nosgestesclimat'),
 	integratorUrl = encodeURIComponent(window.location.href.toString())
 
-const hostname = 'ecolab.ademe.fr/apps/climat/'
+const hostname = 'nosgestesclimat.fr/'
 const src = `https://${hostname}?iframe&integratorUrl=${integratorUrl}`
 
 const iframe = document.createElement('iframe')

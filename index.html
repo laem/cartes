@@ -27,11 +27,15 @@
 			content="<%= htmlWebpackPlugin.options.description %>"
 		/>
 
-		<meta property="og:image" content="<%= htmlWebpackPlugin.options.logo %>" />
+		<meta property="og:image" content="<%= htmlWebpackPlugin.options.logo %>" data-react-helmet="true"	/>
+
 		<meta
 			name="google-site-verification"
 			content="oQ9gPKS4kocrCJP6CoguSkdIKKZ6ilZz0aQw_ZIgtVc"
 		/>
+
+
+		<meta property="twitter:card" content="summary_large_image" />
 
 		<link rel="manifest" href="/manifest.webmanifest" />
 		<title>
@@ -155,7 +159,7 @@
 		  (function() {
 			var u="//stats.data.gouv.fr/";
 			_paq.push(['setTrackerUrl', u+'matomo.php']);
-			_paq.push(['setSiteId', '128']);
+			_paq.push(['setSiteId', '153']);
 			var d=document, g=d.createElement('script'), s=d.getElementsByTagName('script')[0];
 			g.type='text/javascript'; g.async=true; g.defer=true; g.src=u+'matomo.js'; s.parentNode.insertBefore(g,s);
 		  })();

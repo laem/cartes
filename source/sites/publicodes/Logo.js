@@ -21,19 +21,18 @@ export const InlineLogo = () => (
 		css={`
 			display: flex;
 			align-items: center;
-			margin-top: 0.6rem;
 			font-weight: 400;
 			color: black;
 			position: relative;
 		`}
 	>
-		<span css=" font-size: 60%;">nos</span>
+		<span css=" font-size: 70%; align-self: center">nos</span>
 		<span css="margin: 0 .25rem">
 			<span css="color: var(--color); font-weight: bold; text-transform: uppercase; font-size: 75%">
 				ges
 			</span>
 			tes
 		</span>
-		<span css="font-size: 60%; ">climat</span>
+		<span css="font-size: 70%; align-self: center">climat</span>
 	</span>
 )

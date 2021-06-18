@@ -37,7 +37,7 @@ export const extractCategories = (rules, engine, valuesFromURL) => {
 
 	return sortCategories(categories)
 }
-export default ({ details, noText, noAnimation }) => {
+export default ({ details, noText, noAnimation, noCompletion, valueColor }) => {
 	// needed for this component to refresh on situation change :
 	const situation = useSelector(situationSelector)
 	const objectifs = useSelector(objectifsSelector)
@@ -45,7 +45,6 @@ export default ({ details, noText, noAnimation }) => {
 	const engine = useEngine(objectifs)
 	const categories = extractCategories(rules, engine, details)
 	const nextQuestions = useNextQuestions()
-	console.log(nextQuestions)
 	const completedCategories = categories
 		.filter(
 			({ dottedName }) =>
@@ -53,7 +52,6 @@ export default ({ details, noText, noAnimation }) => {
 		)
 		.map(({ dottedName }) => dottedName)
 
-	console.log(categories)
 	if (!categories) return null
 
 	const empreinteMaximum = categories.reduce(
@@ -133,9 +131,12 @@ export default ({ details, noText, noAnimation }) => {
 										...category,
 										noText,
 										empreinteMaximum,
-										completed: completedCategories.find(
-											(c) => c === category.dottedName
-										),
+										completed:
+											!noCompletion &&
+											completedCategories.find(
+												(c) => c === category.dottedName
+											),
+										valueColor,
 									}}
 								/>
 							</Link>

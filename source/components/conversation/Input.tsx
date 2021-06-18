@@ -1,4 +1,5 @@
 import { formatValue, Evaluation, Unit } from 'publicodes'
+const { serializeUnit } = require('publicodes')
 import { useCallback } from 'react'
 import { useTranslation } from 'react-i18next'
 import NumberFormat from 'react-number-format'
@@ -26,13 +27,8 @@ export default function Input({
 }) {
 	const debouncedOnChange = useCallback(debounce(550, onChange), [])
 	const { language } = useTranslation().i18n
-
-	// This test is bad. publicodes should be able to return the formatted number and the formatted unit separately
-	const unitéRaw = formatValue({ nodeValue: value ?? 0, unit }, { language }),
-		unitéMatch = unitéRaw.match(/([a-zA-Z].*)/),
-		unité = (unitéMatch && unitéMatch[0]) || ''
+	const unité = serializeUnit(unit)
 	const { thousandSeparator, decimalSeparator } = currencyFormat(language)
-	// const [currentValue, setCurrentValue] = useState(value)
 
 	return (
 		<>
@@ -55,11 +51,9 @@ export default function Input({
 						// We don't want to call `onValueChange` in case this component is
 						// re-render with a new "value" prop from the outside.
 						onValueChange={({ floatValue }) => {
-							if (floatValue !== value) {
-								debouncedOnChange(
-									floatValue != undefined ? { valeur: floatValue, unité } : {}
-								)
-							}
+							debouncedOnChange(
+								floatValue != undefined ? { valeur: floatValue, unité } : {}
+							)
 						}}
 						autoComplete="off"
 						{...{ [missing ? 'placeholder' : 'value']: value ?? '' }}

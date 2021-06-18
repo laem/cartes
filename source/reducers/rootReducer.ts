@@ -70,6 +70,7 @@ export type Simulation = {
 	targetUnit: string
 	foldedSteps: Array<DottedName>
 	unfoldedStep?: DottedName | null
+	unfoldedWasFolded?: Boolean
 }
 function getCompanySituation(company: Company | null): Situation {
 	return {
@@ -91,17 +92,18 @@ function simulation(
 ): Simulation | null {
 	if (action.type === 'SET_SIMULATION') {
 		const { config, url } = action
-		if (state && state.config === config) {
+		if (state && state.config && !action.situation === config) {
 			return state
 		}
 		return {
 			config,
 			url,
 			hiddenNotifications: state?.hiddenControls || [],
-			situation: state?.situation || {},
+			situation: action.situation || state?.situation || {},
 			targetUnit: config['unité par défaut'] || '€/mois',
 			foldedSteps: state?.foldedSteps || [],
 			unfoldedStep: null,
+			persona: action.persona,
 		}
 	}
 	if (state === null) {
@@ -121,6 +123,7 @@ function simulation(
 				situation: state.initialSituation,
 				foldedSteps: [],
 				unfoldedStep: null,
+				persona: null,
 			}
 		case 'UPDATE_SITUATION': {
 			const targets = objectifsSelector({ simulation: state } as RootState)
@@ -149,10 +152,15 @@ function simulation(
 					unfoldedStep: null,
 				}
 			if (name === 'unfold') {
+				const previousUnfolded = state.unfoldedStep
 				return {
 					...state,
-					foldedSteps: without([step], state.foldedSteps),
+					foldedSteps: [
+						...without([step], state.foldedSteps),
+						state.unfoldedWasFolded && previousUnfolded,
+					].filter(Boolean),
 					unfoldedStep: step,
+					unfoldedWasFolded: state.foldedSteps.includes(step),
 				}
 			}
 			return state
@@ -171,6 +179,23 @@ function rules(state = null, { type, rules }) {
 	} else return state
 }
 
+function actionMode(state = null, { type, mode }) {
+	if (type === 'SET_ACTION_MODE') {
+		return mode
+	} else return state
+}
+
+function conference(state = null, { type, room, ydoc, provider }) {
+	if (type === 'SET_CONFERENCE') {
+		if (state?.room === room) return state
+		return {
+			room,
+			ydoc,
+			provider,
+		}
+	} else return state
+}
+
 const mainReducer = (state: any, action: Action) =>
 	combineReducers({
 		explainedVariable,
@@ -181,6 +206,8 @@ const mainReducer = (state: any, action: Action) =>
 		situationBranch,
 		activeTargetInput,
 		rules,
+		actionMode,
+		conference,
 	})(state, action)
 
 export default reduceReducers<RootState>(
