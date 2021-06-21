@@ -1,0 +1,50 @@
+.ui__.dialog-wrapper {
+	background: #0005;
+	position: fixed;
+	inset: 0;
+	display: grid;
+	place-items: center;
+	--reject-color: hsl(348, 98%, 35%);
+	--accept-color: hsl(95, 98%, 35%);
+	--hover-brightness: 1.2;
+	--hover-scale: 1.05;
+
+}
+.ui__.dialog {
+	width: min(750px, 95%);
+	background: white;
+	border-radius: 15px;
+	display: flex;
+	flex-direction: column;
+	padding: 15px;
+	gap: 15px;
+}
+.ui__.dialog-title {
+	text-align: center;
+}
+.ui__.dialog-action {
+	display: flex;
+	justify-content: space-evenly;
+	padding: 15px 0;
+}
+.ui__.ui__.dialog-reject, .ui__.dialog-accept {
+	color: white;
+	place-self: center;
+	padding: 5px 15px;
+	font-size: 1.25em;
+	border-radius: 5px;
+	transition: all ease-in-out 0.1s;
+}
+.ui__.ui__.dialog-reject:hover, .ui__.dialog-accept:hover {
+	transform: scale3d(var(--hover-scale), var(--hover-scale), 1);
+	filter: brightness(var(--hover-brightness));
+}
+.ui__.ui__.dialog-reject:active, .ui__.dialog-accept:active {
+	transform: scale3d(1, 1, 1);
+}
+.ui__.dialog-reject {
+	background: var(--reject-color);
+}
+.ui__.dialog-accept {
+	background: var(--accept-color);
+}
