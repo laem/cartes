@@ -3,6 +3,7 @@ import emoji from 'react-easy-emoji'
 import Progress from '../../../components/ui/Progress'
 import { humanWeight } from '../HumanWeight'
 import CategoryStats from './CategoryStats'
+import DefaultFootprint, { meanFormatter } from '../DefaultFootprint'
 
 export const computeMean = (simulationArray) =>
 	simulationArray &&
@@ -13,9 +14,7 @@ export const computeMean = (simulationArray) =>
 export const computeHumanMean = (simulationArray) => {
 	const result = computeMean(simulationArray)
 
-	return result
-		? Math.round(result / 100) / 10 + ' tonnes'
-		: 'résultats en attente'
+	return result ? meanFormatter(result) : 'résultats en attente'
 }
 
 export default ({ elements, users, username }) => {
@@ -59,7 +58,9 @@ export default ({ elements, users, username }) => {
 			</div>
 			<div css="margin: 1.6rem 0">
 				<div css="text-align: center">Moyenne du groupe : {humanMean}</div>
-				<div css="text-align: center">Moyenne française : 11 tonnes</div>
+				<div css="text-align: center">
+					Moyenne française : <DefaultFootprint />
+				</div>
 				<div
 					css={`
 						width: 100%;

@@ -93,7 +93,6 @@ export default function RuleInput<Name extends string = DottedName>({
 	if (isMosaic(rule.dottedName)) {
 		// This selects a precise set of questions to bypass their regular components and answer all of them in one big custom UI
 		const question = isMosaic(rule.dottedName)
-		console.log({ question })
 		const selectedRules = Object.entries(rules)
 			.filter(([dottedName]) => question.isApplicable(dottedName))
 			.map(([dottedName, questionRule]) => {
