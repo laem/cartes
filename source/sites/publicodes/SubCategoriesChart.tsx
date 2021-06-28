@@ -12,8 +12,8 @@ export default ({ total, category, color }) => {
 	return (
 		<InlineBarChart
 			css={`
-				border: 2px solid ${color};
-				background: white;
+				border: 2px solid var(--lighterColor);
+				background: ${color};
 			`}
 		>
 			{subCategories.map(({ nodeValue, title, icons }) => (
@@ -21,7 +21,7 @@ export default ({ total, category, color }) => {
 					key={title}
 					css={`
 						width: calc(${(nodeValue / total) * 100}% - 10px);
-						border-right: 2px solid ${color};
+						border-right: 2px solid var(--lighterColor);
 					`}
 					title={Math.round(nodeValue)}
 				>
@@ -49,13 +49,24 @@ const InlineBarChart = styled.ul`
 	li span {
 		position: relative;
 		font-size: 110%;
+		background: white;
+		border-radius: 2rem;
+		height: 1.5rem;
+		display: inline-block;
+		width: 1.5rem;
+	}
+	li img {
+		vertical-align: -0.2em !important;
 	}
 	li img:nth-child(2) {
-		font-size: 75%;
+		font-size: 95%;
 		position: absolute;
 		bottom: 0px;
 		right: 0px;
 		transform: translate(60%, 10%);
+		background: white;
+		border-radius: 2rem;
+		padding: 0.15rem;
 	}
 	li:last-child {
 		border-right: none;
