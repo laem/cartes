@@ -4,6 +4,8 @@ import styled from 'styled-components'
 import { useEngine } from '../../components/utils/EngineContext'
 import { extractCategories } from './chart'
 
+const emojiBackground = '#ffffffa6'
+
 export default ({ total, category, color }) => {
 	const rules = useSelector((state) => state.rules)
 	const engine = useEngine()
@@ -16,6 +18,7 @@ export default ({ total, category, color }) => {
 		false
 	)
 	console.log(total, subCategories)
+
 	return (
 		<InlineBarChart
 			css={`
@@ -23,18 +26,79 @@ export default ({ total, category, color }) => {
 				background: ${color};
 			`}
 		>
-			{subCategories.map(({ nodeValue, title, icons }) => (
-				<li
-					key={title}
-					css={`
-						width: calc(${(nodeValue / total) * 100}% - 10px);
-						border-right: 2px solid var(--lighterColor);
-					`}
-					title={title}
-				>
-					<span>{emoji(icons || '')}</span>
-				</li>
-			))}
+			{subCategories.map(({ nodeValue, title, icons }) => {
+				const emojiComponents = emoji(icons || '')
+				return (
+					<li
+						key={title}
+						css={`
+							width: calc(${(nodeValue / total) * 100}% - 10px);
+							border-right: 2px solid var(--lighterColor);
+						`}
+						title={title}
+					>
+						<span
+							css={`
+								position: relative;
+								font-size: 110%;
+								background: ${emojiBackground};
+								border-radius: 2rem;
+								height: 1.5rem;
+								display: inline-block;
+								width: 1.5rem;
+								z-index: 6;
+							`}
+						>
+							<span
+								css={`
+									img {
+										vertical-align: -0.2em !important;
+									}
+								`}
+							>
+								{emojiComponents[0]}
+							</span>
+							{emojiComponents.length > 1 && (
+								<>
+									<span
+										css={`
+											z-index: -1;
+											font-size: 70%;
+											position: absolute;
+											bottom: 0px;
+											right: 0px;
+											transform: translate(60%, 10%);
+											background: ${emojiBackground};
+											border-radius: 2rem;
+											padding: 0.15rem;
+											height: 1rem;
+											width: 1rem;
+										`}
+									></span>
+									<span
+										css={`
+											z-index: 7;
+											font-size: 70%;
+											position: absolute;
+											bottom: 0px;
+											right: 0px;
+											transform: translate(60%, 10%);
+											border-radius: 2rem;
+											height: 1rem;
+											width: 1rem;
+											img {
+												vertical-align: 0.1rem !important;
+											}
+										`}
+									>
+										{emojiComponents[1]}
+									</span>
+								</>
+							)}
+						</span>
+					</li>
+				)
+			})}
 		</InlineBarChart>
 	)
 }
@@ -50,31 +114,10 @@ const InlineBarChart = styled.ul`
 		text-align: center;
 		list-style-type: none;
 		min-width: 2.4rem;
-		height: 1.8rem;
+		height: 1.9rem;
 		line-height: 1.4rem;
 	}
-	li span {
-		position: relative;
-		font-size: 110%;
-		background: white;
-		border-radius: 2rem;
-		height: 1.5rem;
-		display: inline-block;
-		width: 1.5rem;
-	}
-	li img {
-		vertical-align: -0.2em !important;
-	}
-	li img:nth-child(2) {
-		font-size: 95%;
-		position: absolute;
-		bottom: 0px;
-		right: 0px;
-		transform: translate(60%, 10%);
-		background: white;
-		border-radius: 2rem;
-		padding: 0.15rem;
-	}
+
 	li:last-child {
 		border-right: none;
 	}
