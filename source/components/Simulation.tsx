@@ -3,7 +3,6 @@ import Conversation, {
 } from 'Components/conversation/Conversation'
 import SeeAnswersButton from 'Components/conversation/SeeAnswersButton'
 import PageFeedback from 'Components/Feedback/PageFeedback'
-import Notifications from 'Components/Notifications'
 import SearchButton from 'Components/SearchButton'
 import * as Animate from 'Components/ui/animate'
 import Progress from 'Components/ui/Progress'
@@ -84,7 +83,6 @@ function Questions({
 				`}
 			>
 				<div className="ui__ container">
-					<Notifications />
 					<Conversation
 						orderByCategories={orderByCategories}
 						customEnd={customEnd}

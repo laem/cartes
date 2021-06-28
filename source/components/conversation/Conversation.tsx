@@ -29,6 +29,7 @@ import './conversation.css'
 import { ExplicableRule } from './Explicable'
 import SimulationEnding from './SimulationEnding'
 import { CategoryLabel } from './UI'
+import Notifications from 'Components/Notifications'
 
 export type ConversationProps = {
 	customEndMessages?: React.ReactNode
@@ -227,6 +228,7 @@ export default function Conversation({
 						</button>
 					)}
 				</div>
+				<Notifications />
 			</div>
 		</section>
 	)
