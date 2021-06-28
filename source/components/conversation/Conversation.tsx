@@ -30,6 +30,7 @@ import { ExplicableRule } from './Explicable'
 import SimulationEnding from './SimulationEnding'
 import { CategoryLabel } from './UI'
 import Notifications from 'Components/Notifications'
+import SubCategoriesChart from '../../sites/publicodes/SubCategoriesChart'
 
 export type ConversationProps = {
 	customEndMessages?: React.ReactNode
@@ -174,11 +175,25 @@ export default function Conversation({
 			<Aide />
 			<div style={{ outline: 'none' }}>
 				{orderByCategories && questionCategory && (
-					<div>
-						<CategoryLabel color={questionCategory.color}>
-							{emoji(questionCategory.icons || '🌍')}
-							{questionCategory.title}
-						</CategoryLabel>
+					<div
+						css={`
+							display: flex;
+							align-items: center;
+						`}
+					>
+						<div css="width: 30%">
+							<CategoryLabel>
+								{emoji(questionCategory.icons || '🌍')}
+								{questionCategory.title}
+							</CategoryLabel>
+						</div>
+						<div css="width: 65%">
+							<SubCategoriesChart
+								category={questionCategory.dottedName}
+								total={questionCategory.nodeValue}
+								color={questionCategory.color}
+							/>
+						</div>
 					</div>
 				)}
 				<Animate.fadeIn>

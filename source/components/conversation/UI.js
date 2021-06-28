@@ -1,7 +1,7 @@
 import styled, { css } from 'styled-components'
 export const CategoryLabel = styled.span`
 	background: 'darkblue';
-	color: white;
+	color: var(--darkColor);
 	border-radius: 0.3rem;
 	padding: 0.15rem 0.6rem;
 	text-transform: uppercase;

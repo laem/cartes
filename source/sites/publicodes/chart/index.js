@@ -23,10 +23,19 @@ const // Rough estimate of the 2050 budget per person to stay under 2° by 2100
 	transportClimateBudget = climateBudgetPerDay * transportShare
 
 export const sortCategories = sortBy(({ nodeValue }) => -nodeValue)
-export const extractCategories = (rules, engine, valuesFromURL) => {
-	const categories = rules['bilan'].formule.somme.map((name) => {
-		const node = engine.evaluate(name)
-		const { icônes, couleur } = rules[name]
+export const extractCategories = (
+	rules,
+	engine,
+	valuesFromURL,
+	parentRule = 'bilan',
+	prefixWithParent
+) => {
+	const categories = rules[parentRule].formule.somme.map((name) => {
+		const prefixedName = prefixWithParent
+			? [parentRule, name].join(' . ')
+			: name
+		const node = engine.evaluate(prefixedName)
+		const { icônes, couleur } = rules[prefixedName]
 		return {
 			...node,
 			icons: icônes,
