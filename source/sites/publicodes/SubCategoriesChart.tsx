@@ -25,7 +25,7 @@ export default ({ total, category, color }) => {
 					`}
 					title={Math.round(nodeValue)}
 				>
-					{emoji(icons || '')}
+					<span>{emoji(icons || '')}</span>
 				</li>
 			))}
 		</InlineBarChart>
@@ -43,10 +43,19 @@ const InlineBarChart = styled.ul`
 		text-align: center;
 		list-style-type: none;
 		min-width: 2.4rem;
-		height: 1.6rem;
+		height: 1.8rem;
 		line-height: 1.4rem;
 	}
-	li img {
+	li span {
+		position: relative;
+		font-size: 110%;
+	}
+	li img:nth-child(2) {
+		font-size: 75%;
+		position: absolute;
+		bottom: 0px;
+		right: 0px;
+		transform: translate(60%, 10%);
 	}
 	li:last-child {
 		border-right: none;
