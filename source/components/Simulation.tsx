@@ -5,8 +5,6 @@ import SeeAnswersButton from 'Components/conversation/SeeAnswersButton'
 import PageFeedback from 'Components/Feedback/PageFeedback'
 import SearchButton from 'Components/SearchButton'
 import * as Animate from 'Components/ui/animate'
-import Progress from 'Components/ui/Progress'
-import { useSimulationProgress } from 'Components/utils/useNextQuestion'
 import React from 'react'
 import { Trans } from 'react-i18next'
 import LinkToForm from './Feedback/LinkToForm'
@@ -70,8 +68,6 @@ function Questions({
 	customEndMessages?: ConversationProps['customEndMessages']
 	orderByCategories: Array<Object>
 }) {
-	const progress = useSimulationProgress()
-
 	return (
 		<>
 			<div
@@ -90,9 +86,6 @@ function Questions({
 					/>
 				</div>
 			</div>
-			{progress < 1 && (
-				<Progress progress={progress} className="ui__ full-width" />
-			)}
 		</>
 	)
 }

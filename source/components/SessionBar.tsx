@@ -232,6 +232,7 @@ const NavBar = styled.ul`
 		margin: 0;
 		width: 100%;
 		z-index: 10;
+		height: 4rem;
 		background: white;
 		display: flex;
 		justify-content: center;
