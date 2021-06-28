@@ -110,7 +110,9 @@ export default ({}) => {
 					</Link>
 				</div>
 			</div>
-			{progress < 1 && <Progress progress={progress} className="" />}
+			{progress < 1 && (
+				<Progress progress={progress} style={!progress ? 'height: 0' : ''} />
+			)}
 		</div>
 	)
 }
