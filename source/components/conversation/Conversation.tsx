@@ -179,15 +179,16 @@ export default function Conversation({
 						css={`
 							display: flex;
 							align-items: center;
+							justify-content: space-evenly;
 						`}
 					>
-						<div css="width: 30%">
+						<div css="">
 							<CategoryLabel>
 								{emoji(questionCategory.icons || '🌍')}
 								{questionCategory.title}
 							</CategoryLabel>
 						</div>
-						<div css="width: 65%">
+						<div css="width: 70%">
 							<SubCategoriesChart
 								category={questionCategory.dottedName}
 								total={questionCategory.nodeValue}

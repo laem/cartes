@@ -1,3 +1,4 @@
+import emoji from 'react-easy-emoji'
 import { useSelector } from 'react-redux'
 import styled from 'styled-components'
 import { useEngine } from '../../components/utils/EngineContext'
@@ -24,7 +25,7 @@ export default ({ total, category, color }) => {
 					`}
 					title={Math.round(nodeValue)}
 				>
-					{icons}
+					{emoji(icons || '')}
 				</li>
 			))}
 		</InlineBarChart>
@@ -37,11 +38,14 @@ const InlineBarChart = styled.ul`
 	width: 100%;
 	border-radius: 0.4rem;
 	padding-left: 0;
+	margin: 0;
 	li {
 		text-align: center;
 		list-style-type: none;
-		min-width: 2.2rem;
+		min-width: 2.4rem;
 		height: 1.8rem;
+	}
+	li img {
 	}
 	li:last-child {
 		border-right: none;
