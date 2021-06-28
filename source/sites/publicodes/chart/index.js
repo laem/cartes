@@ -28,7 +28,8 @@ export const extractCategories = (
 	engine,
 	valuesFromURL,
 	parentRule = 'bilan',
-	prefixWithParent
+	prefixWithParent,
+	sort = true
 ) => {
 	const categories = rules[parentRule].formule.somme.map((name) => {
 		const prefixedName = prefixWithParent
@@ -44,7 +45,7 @@ export const extractCategories = (
 		}
 	})
 
-	return sortCategories(categories)
+	return sort ? sortCategories(categories) : categories
 }
 export default ({ details, noText, noAnimation, noCompletion, valueColor }) => {
 	// needed for this component to refresh on situation change :

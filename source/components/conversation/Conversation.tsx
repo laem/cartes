@@ -180,15 +180,21 @@ export default function Conversation({
 							display: flex;
 							align-items: center;
 							justify-content: space-evenly;
+							flex-wrap: wrap;
 						`}
 					>
-						<div css="">
-							<CategoryLabel>
-								{emoji(questionCategory.icons || '🌍')}
-								{questionCategory.title}
-							</CategoryLabel>
-						</div>
-						<div css="width: 70%">
+						<CategoryLabel>
+							{emoji(questionCategory.icons || '🌍')}
+							{questionCategory.title}
+						</CategoryLabel>
+						<div
+							css={`
+								width: 70%;
+								@media (max-width: 800px) {
+									width: 100%;
+								}
+							`}
+						>
 							<SubCategoriesChart
 								category={questionCategory.dottedName}
 								total={questionCategory.nodeValue}

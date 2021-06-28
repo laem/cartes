@@ -7,7 +7,14 @@ import { extractCategories } from './chart'
 export default ({ total, category, color }) => {
 	const rules = useSelector((state) => state.rules)
 	const engine = useEngine()
-	const subCategories = extractCategories(rules, engine, null, category, true)
+	const subCategories = extractCategories(
+		rules,
+		engine,
+		null,
+		category,
+		true,
+		false
+	)
 	console.log(total, subCategories)
 	return (
 		<InlineBarChart
@@ -23,7 +30,7 @@ export default ({ total, category, color }) => {
 						width: calc(${(nodeValue / total) * 100}% - 10px);
 						border-right: 2px solid var(--lighterColor);
 					`}
-					title={Math.round(nodeValue)}
+					title={title}
 				>
 					<span>{emoji(icons || '')}</span>
 				</li>
