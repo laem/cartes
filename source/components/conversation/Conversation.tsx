@@ -179,7 +179,7 @@ export default function Conversation({
 						css={`
 							display: flex;
 							align-items: center;
-							justify-content: space-evenly;
+							justify-content: flex-start;
 							flex-wrap: wrap;
 						`}
 					>
@@ -189,7 +189,7 @@ export default function Conversation({
 						</CategoryLabel>
 						<div
 							css={`
-								width: 70%;
+								width: 75%;
 								@media (max-width: 800px) {
 									width: 100%;
 								}
