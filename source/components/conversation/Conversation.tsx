@@ -197,7 +197,6 @@ export default function Conversation({
 						>
 							<SubCategoriesChart
 								category={questionCategory.dottedName}
-								total={questionCategory.nodeValue}
 								color={questionCategory.color}
 							/>
 						</div>

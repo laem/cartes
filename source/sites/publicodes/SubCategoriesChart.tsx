@@ -6,9 +6,10 @@ import { extractCategories } from './chart'
 
 const emojiBackground = '#ffffffa6'
 
-export default ({ total, category, color }) => {
+export default ({ category, color }) => {
 	const rules = useSelector((state) => state.rules)
 	const engine = useEngine()
+	const total = engine.evaluate(category).nodeValue
 	const subCategories = extractCategories(
 		rules,
 		engine,
@@ -17,23 +18,31 @@ export default ({ total, category, color }) => {
 		true,
 		false
 	)
-	console.log(total, subCategories)
+
+	const rest = subCategories.reduce(
+			(memo, { nodeValue, title, icons }) =>
+				nodeValue < 0.1 * total ? memo + nodeValue : memo,
+			0
+		),
+		restWidth = (rest / total) * 100
 
 	return (
 		<InlineBarChart
 			css={`
 				border: 2px solid var(--lighterColor);
-				background: ${color};
 			`}
 		>
 			{subCategories.map(({ nodeValue, title, icons }) => {
 				const emojiComponents = emoji(icons || '')
+				const percent = (nodeValue / total) * 100
+				if (percent < 10) return null // will be unreadable
 				return (
 					<li
 						key={title}
 						css={`
-							width: calc(${(nodeValue / total) * 100}% - 10px);
+							width: calc(${percent}% - 2px);
 							border-right: 2px solid var(--lighterColor);
+							background: ${color};
 						`}
 						title={title}
 					>
@@ -99,21 +108,31 @@ export default ({ total, category, color }) => {
 					</li>
 				)
 			})}
+			<li
+				css={`
+					width: ${restWidth}%;
+					background: ${color};
+					font-size: 200%;
+					color: white;
+					line-height: 0.3rem !important;
+				`}
+			>
+				{restWidth > 7 ? '...' : ''}
+			</li>
 		</InlineBarChart>
 	)
 }
 
 const InlineBarChart = styled.ul`
-	display: flex;
-	justify-content: space-evenly;
 	width: 100%;
 	border-radius: 0.4rem;
 	padding-left: 0;
 	margin: 0;
+	display: flex;
 	li {
+		display: inline-block;
 		text-align: center;
 		list-style-type: none;
-		min-width: 2.4rem;
 		height: 1.9rem;
 		line-height: 1.4rem;
 	}
