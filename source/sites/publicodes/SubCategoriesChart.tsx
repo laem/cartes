@@ -43,7 +43,8 @@ const InlineBarChart = styled.ul`
 		text-align: center;
 		list-style-type: none;
 		min-width: 2.4rem;
-		height: 1.8rem;
+		height: 1.6rem;
+		line-height: 1.4rem;
 	}
 	li img {
 	}
