@@ -34,7 +34,7 @@ export default ({ data }) => {
 		setIsOpen(false)
 		window.parent.postMessage(data, '*')
 	}
-	const parent = document.referrer
+	const parent = new URL(document.referrer).hostname
 	const text = (
 		<div>
 			<p>
