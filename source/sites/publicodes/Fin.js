@@ -15,6 +15,7 @@ import { Link } from 'react-router-dom'
 import Meta from '../../components/utils/Meta'
 import DefaultFootprint from './DefaultFootprint'
 import Dialog from '../../components/ui/Dialog'
+import { inIframe } from '../../utils'
 
 const gradient = tinygradient([
 		'#78e08f',
@@ -46,7 +47,7 @@ export default ({}) => {
 				.map(([category, ...rest]) => [category, 1000 * +rest.join('')])
 				// Here we convert categories with an old name to the new one
 				// 'biens divers' was renamed to 'divers'
-				.map(([category, ...rest]) => 
+				.map(([category, ...rest]) =>
 					category === 'b' ? ['d', ...rest] : [category, ...rest]
 				)
 
@@ -60,38 +61,36 @@ export default ({}) => {
 				config: { mass: 1, tension: 150, friction: 150, precision: 1000 },
 				value: score,
 				from: { value: 0 },
-		  });
-	function inIframe () {
-		try {
-			return window.self !== window.top;
-		} catch (e) {
-			return true;
-		}
-	}
-	var [isOpen, setIsOpen] = useState(false);
+		  })
+	var [isOpen, setIsOpen] = useState(false)
 	//To delay the dialog show in to let the animation play
-	const timeoutRef = useRef(null);
+	const timeoutRef = useRef(null)
 	useEffect(() => {
-		if (!inIframe()) return;
-		if (timeoutRef.current !== null) clearTimeout(timeoutRef.current);
-		timeoutRef.current = setTimeout(()=> {
-			timeoutRef.current = null;
-			setIsOpen(true);
-		},3500);
-	},[null]);
+		if (!inIframe()) return
+		if (timeoutRef.current !== null) clearTimeout(timeoutRef.current)
+		timeoutRef.current = setTimeout(() => {
+			timeoutRef.current = null
+			setIsOpen(true)
+		}, 3500)
+	}, [null])
 	function onReject() {
-		setIsOpen(false);
-		window.parent.postMessage({error: "The user refused to share his result."}, '*');
-	};
+		setIsOpen(false)
+		window.parent.postMessage(
+			{ error: 'The user refused to share his result.' },
+			'*'
+		)
+	}
 	function onAccept() {
-		setIsOpen(false);
-		window.parent.postMessage(rehydratedDetails, '*');
-	};
-	const parent = document.referrer;
-	const title = "Partage de vos résultats à "+parent+"?",
-	text = "En cliquant sur le bouton Accepter, vous acceptez d'envoyer les données de votre Bilan Carbone au site "
-		+parent+
-		". Nos Gestes Climat n'est en aucun cas affilié à "+parent;
+		setIsOpen(false)
+		window.parent.postMessage(rehydratedDetails, '*')
+	}
+	const parent = document.referrer
+	const title = 'Partage de vos résultats à ' + parent + '?',
+		text =
+			"En cliquant sur le bouton Accepter, vous acceptez d'envoyer les données de votre Bilan Carbone au site " +
+			parent +
+			". Nos Gestes Climat n'est en aucun cas affilié à " +
+			parent
 
 	return (
 		<div>
@@ -101,13 +100,18 @@ export default ({}) => {
 				details={Object.fromEntries(rehydratedDetails)}
 				headlessMode={headlessMode}
 			/>
-			<Dialog title={title} text={text} isOpen={isOpen} onReject={onReject} onAccept={onAccept} />
+			<Dialog
+				title={title}
+				text={text}
+				isOpen={isOpen}
+				onReject={onReject}
+				onAccept={onAccept}
+			/>
 		</div>
 	)
 }
 
 const AnimatedDiv = animated(({ score, value, details, headlessMode }) => {
-
 	const backgroundColor = getBackgroundColor(value).toHexString(),
 		backgroundColor2 = getBackgroundColor(value + 2000).toHexString(),
 		textColor = findContrastedTextColor(backgroundColor, true),
