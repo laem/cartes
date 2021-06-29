@@ -1,5 +1,6 @@
 import { useState, useRef, useEffect } from 'react'
 import emoji from 'react-easy-emoji'
+import { useSelector } from 'react-redux'
 import Overlay from '../../components/Overlay'
 import Dialog from '../../components/ui/Dialog'
 import Emoji from '../../components/utils/Emoji'
@@ -12,8 +13,10 @@ export default ({ data }) => {
 	var [isOpen, setIsOpen] = useState(false)
 	//To delay the dialog show in to let the animation play
 	const timeoutRef = useRef(null)
+	const iframeOptions = useSelector((state) => state.iframeOptions)
+
 	useEffect(() => {
-		if (!inIframe()) return
+		if (!inIframe() || !iframeOptions?.iframeShareData) return
 		if (timeoutRef.current !== null) clearTimeout(timeoutRef.current)
 		timeoutRef.current = setTimeout(() => {
 			timeoutRef.current = null

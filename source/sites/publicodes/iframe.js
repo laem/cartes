@@ -8,8 +8,10 @@ const script =
 const shareData = script.dataset.partageDonnéesFinSimulation != undefined,
 	couleur = script.dataset.couleurt
 
-const hostname = 'nosgestesclimat.fr/'
-const src = `https://${hostname}?iframe&integratorUrl=${integratorUrl}&shareData=${shareData}`
+const srcURL = new URL(script.src)
+const hostname = srcURL.hostname || 'nosgestesclimat.fr'
+
+const src = `https://${hostname}/?iframe&integratorUrl=${integratorUrl}&shareData=${shareData}`
 
 const iframe = document.createElement('iframe')
 

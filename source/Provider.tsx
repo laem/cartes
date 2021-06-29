@@ -85,10 +85,6 @@ export default function Provider({
 		new URLSearchParams(document?.location.search.substring(1)).get(
 			'couleur'
 		) ?? undefined
-	const iframeShareData =
-		new URLSearchParams(document?.location.search.substring(1)).get(
-			'shareData'
-		) ?? undefined
 
 	return (
 		// If IE < 11 display nothing
