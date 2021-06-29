@@ -5,8 +5,8 @@ const script =
 		document.getElementById('nosgestesclimat'),
 	integratorUrl = encodeURIComponent(window.location.href.toString())
 
-const shareData = script.dataset.partageDonnéesFinSimulation != undefined,
-	couleur = script.dataset.couleurt
+const shareData = script.dataset['partagedatafinsimulation'] != undefined,
+	couleur = script.dataset.couleur
 
 const srcURL = new URL(script.src)
 const hostname = srcURL.hostname || 'nosgestesclimat.fr'
