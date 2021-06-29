@@ -38,10 +38,15 @@ export default ({ data }) => {
 	const text = (
 		<div>
 			<p>
-				En cliquant sur le bouton Accepter, vous acceptez d'envoyer les données
-				de votre Bilan Carbone au site {parent}.
+				En cliquant sur le bouton Accepter, vous nous autoriser à communiquer le
+				résumé de votre test d'empreinte climat au site {parent}.
 			</p>
-			<p>Nosgestesclimat.fr n'est pas affilié à {parent}</p>
+			<p>
+				Il s'agit donc de vos résultats sur les grandes catégories (transport,
+				alimentation...), mais <em>pas</em> le détail question par question (vos
+				km en voiture, les m² de votre logement...).
+			</p>
+			<p>Nosgestesclimat.fr n'est pas affilié à {parent}.</p>
 		</div>
 	)
 
