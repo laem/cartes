@@ -77,6 +77,7 @@ const AnimatedDiv = animated(({ score, value, details, headlessMode }) => {
 		textColor = findContrastedTextColor(backgroundColor, true),
 		roundedValue = Math.round(value / 1000),
 		shareImage =
+			'https://aejkrqosjq.cloudimg.io/v7/' +
 			window.location.origin +
 			'/.netlify/functions/ending-screenshot?pageToScreenshot=' +
 			window.location
