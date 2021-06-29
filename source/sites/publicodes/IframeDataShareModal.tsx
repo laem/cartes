@@ -1,4 +1,5 @@
 import { useState, useRef, useEffect } from 'react'
+import Overlay from '../../components/Overlay'
 import Dialog from '../../components/ui/Dialog'
 import { inIframe } from '../../utils'
 
@@ -36,13 +37,29 @@ export default ({ data }) => {
 			". Nos Gestes Climat n'est en aucun cas affilié à " +
 			parent
 
+	if (!isOpen) return null
 	return (
-		<Dialog
-			title={title}
-			text={text}
-			isOpen={isOpen}
-			onReject={onReject}
-			onAccept={onAccept}
-		/>
+		<Overlay onClose={onReject}>
+			<div className="ui__ dialog-wrapper">
+				<div className="ui__ dialog">
+					<h5 className="ui__ dialog-title">{title}</h5>
+					<p className="ui__ dialog-text">{text}</p>
+					<div
+						css={`
+							display: flex;
+							justify-content: space-evenly;
+							padding: 1rem;
+						`}
+					>
+						<button onClick={onReject} className="ui__ plain button">
+							Accepter
+						</button>
+						<button onClick={onAccept} className="ui__ button small">
+							Refuser
+						</button>
+					</div>
+				</div>
+			</div>
+		</Overlay>
 	)
 }
