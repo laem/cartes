@@ -13,7 +13,7 @@ export default ({ data }) => {
 	//To delay the dialog show in to let the animation play
 	const timeoutRef = useRef(null)
 	useEffect(() => {
-		if (false && !inIframe()) return
+		if (!inIframe()) return
 		if (timeoutRef.current !== null) clearTimeout(timeoutRef.current)
 		timeoutRef.current = setTimeout(() => {
 			timeoutRef.current = null
