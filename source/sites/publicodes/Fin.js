@@ -1,21 +1,18 @@
-import { useState, useRef, useEffect } from 'react'
-import { useLocation } from 'react-router'
-import emoji from 'react-easy-emoji'
-import tinygradient from 'tinygradient'
-import { animated, useSpring } from 'react-spring'
+import SessionBar from 'Components/SessionBar'
 import ShareButton from 'Components/ShareButton'
 import { findContrastedTextColor } from 'Components/utils/colors'
 import { motion } from 'framer-motion'
-
+import emoji from 'react-easy-emoji'
+import { useLocation } from 'react-router'
+import { Link } from 'react-router-dom'
+import { animated, useSpring } from 'react-spring'
+import tinygradient from 'tinygradient'
+import Meta from '../../components/utils/Meta'
+import Chart from './chart'
+import DefaultFootprint from './DefaultFootprint'
+import IframeDataShareModal from './IframeDataShareModal'
 import BallonGES from './images/ballonGES.svg'
 import StartingBlock from './images/starting block.svg'
-import SessionBar from 'Components/SessionBar'
-import Chart from './chart'
-import { Link } from 'react-router-dom'
-import Meta from '../../components/utils/Meta'
-import DefaultFootprint from './DefaultFootprint'
-import Dialog from '../../components/ui/Dialog'
-import { inIframe } from '../../utils'
 
 const gradient = tinygradient([
 		'#78e08f',
@@ -33,9 +30,6 @@ const getBackgroundColor = (score) =>
 
 const sumFromDetails = (details) =>
 	details.reduce((memo, [name, value]) => memo + value, 0)
-
-// We let iframe integrators ask the user if he wants to share its simulation data to the parent window
-const shareDataPopupTimeout = 3500
 
 export default ({}) => {
 	const query = new URLSearchParams(useLocation().search)
@@ -65,35 +59,6 @@ export default ({}) => {
 				value: score,
 				from: { value: 0 },
 		  })
-	var [isOpen, setIsOpen] = useState(false)
-	//To delay the dialog show in to let the animation play
-	const timeoutRef = useRef(null)
-	useEffect(() => {
-		if (!inIframe()) return
-		if (timeoutRef.current !== null) clearTimeout(timeoutRef.current)
-		timeoutRef.current = setTimeout(() => {
-			timeoutRef.current = null
-			setIsOpen(true)
-		}, shareDataPopupTimeout)
-	}, [null])
-	function onReject() {
-		setIsOpen(false)
-		window.parent.postMessage(
-			{ error: 'The user refused to share his result.' },
-			'*'
-		)
-	}
-	function onAccept() {
-		setIsOpen(false)
-		window.parent.postMessage(rehydratedDetails, '*')
-	}
-	const parent = document.referrer
-	const title = 'Partage de vos résultats à ' + parent + '?',
-		text =
-			"En cliquant sur le bouton Accepter, vous acceptez d'envoyer les données de votre Bilan Carbone au site " +
-			parent +
-			". Nos Gestes Climat n'est en aucun cas affilié à " +
-			parent
 
 	return (
 		<div>
@@ -103,13 +68,7 @@ export default ({}) => {
 				details={Object.fromEntries(rehydratedDetails)}
 				headlessMode={headlessMode}
 			/>
-			<Dialog
-				title={title}
-				text={text}
-				isOpen={isOpen}
-				onReject={onReject}
-				onAccept={onAccept}
-			/>
+			<IframeDataShareModal data={rehydratedDetails} />
 		</div>
 	)
 }
