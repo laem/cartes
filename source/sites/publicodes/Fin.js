@@ -34,6 +34,9 @@ const getBackgroundColor = (score) =>
 const sumFromDetails = (details) =>
 	details.reduce((memo, [name, value]) => memo + value, 0)
 
+// We let iframe integrators ask the user if he wants to share its simulation data to the parent window
+const shareDataPopupTimeout = 3500
+
 export default ({}) => {
 	const query = new URLSearchParams(useLocation().search)
 	const details = query.get('details')
@@ -71,7 +74,7 @@ export default ({}) => {
 		timeoutRef.current = setTimeout(() => {
 			timeoutRef.current = null
 			setIsOpen(true)
-		}, 3500)
+		}, shareDataPopupTimeout)
 	}, [null])
 	function onReject() {
 		setIsOpen(false)
