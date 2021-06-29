@@ -1,6 +1,8 @@
 import { useState, useRef, useEffect } from 'react'
+import emoji from 'react-easy-emoji'
 import Overlay from '../../components/Overlay'
 import Dialog from '../../components/ui/Dialog'
+import Emoji from '../../components/utils/Emoji'
 import { inIframe } from '../../utils'
 
 // We let iframe integrators ask the user if he wants to share its simulation data to the parent window
@@ -30,20 +32,23 @@ export default ({ data }) => {
 		window.parent.postMessage(data, '*')
 	}
 	const parent = document.referrer
-	const title = 'Partage de vos résultats à ' + parent + '?',
-		text =
-			"En cliquant sur le bouton Accepter, vous acceptez d'envoyer les données de votre Bilan Carbone au site " +
-			parent +
-			". Nos Gestes Climat n'est en aucun cas affilié à " +
-			parent
+	const text = (
+		<div>
+			<p>
+				En cliquant sur le bouton Accepter, vous acceptez d'envoyer les données
+				de votre Bilan Carbone au site {parent}.
+			</p>
+			<p>Nosgestesclimat.fr n'est pas affilié à {parent}</p>
+		</div>
+	)
 
 	if (!isOpen) return null
 	return (
 		<Overlay onClose={onReject}>
-			<div className="ui__ dialog-wrapper">
-				<div className="ui__ dialog">
-					<h5 className="ui__ dialog-title">{title}</h5>
-					<p className="ui__ dialog-text">{text}</p>
+			<div className="">
+				<div className="">
+					<h2>Partage de vos résultats à {parent} ?</h2>
+					<p>{text}</p>
 					<div
 						css={`
 							display: flex;
@@ -52,10 +57,10 @@ export default ({ data }) => {
 						`}
 					>
 						<button onClick={onReject} className="ui__ plain button">
-							Accepter
+							{emoji('👍')} Accepter
 						</button>
-						<button onClick={onAccept} className="ui__ button small">
-							Refuser
+						<button onClick={onAccept} className="ui__ button ">
+							{emoji('👎')} refuser
 						</button>
 					</div>
 				</div>
