@@ -100,3 +100,71 @@
     logement . habitants:
       valeur: 3
       unité: personnes
+
+
+- nom: Mehdi Baudry d'Agen 
+  description: |
+    Va au travail en voiture. Adore la viande. Se sert de la voiture partir en vaances/weekend avec sa femme et ses deux enfants
+    Maison de 100 m2 chauffée à l'electrique. 
+  icônes: 🛴🏢
+  data:
+    alimentation . déchets . niveau d'engagement: "'pas du tout'"
+    alimentation . petit déjeuner . type: "'lait céréales'"
+        alimentation . lait . type: "'lait de vache'"
+        alimentation . boisson . sucrées . litres:
+          valeur: 0
+          unité: l / semaine
+    alimentation . boisson . alcool . litres:
+      valeur: 0
+      unité: l / semaine
+    alimentation . boisson . eau en bouteille . affirmatif: non
+    alimentation . plats . viande 2 . nombre: 7
+    alimentation . plats . viande 1 . nombre: 7
+    alimentation . plats . végétarien . nombre: 0
+    alimentation . plats . végétalien . nombre: 0
+    transport . voiture . km:
+      valeur: 30000
+      unité: km / an
+    transport . voiture . propriétaire: oui
+    transport . voiture . gabarit: "'moyenne'"
+    transport . voiture . âge:
+      valeur: 5
+      unité: années
+    transport . voiture . motorisation: "'thermique'"
+    transport . voiture . voyageurs:
+      valeur: 2.33
+      unité: voyageurs
+    transport . voiture . thermique . consommation aux 100:
+      valeur: 7
+      unité: l / centkm
+    transport . deux roues thermique . usager: non
+    transport . avion . usager: non
+    transport . bus . heures par semaine:
+      valeur: 0
+      unité: heure / semaine
+    transport . train . km:
+      valeur: 0
+      unité: km / an
+    transport . métro ou tram . heures par semaine:
+      valeur: 0
+      unité: heure / semaine
+    transport . vélo . km:
+      valeur: 0
+      unité: km
+    logement . âge:
+      valeur: 20
+      unité: an
+    logement . éco-construit: non
+    logement . appartement: non
+    logement . surface:
+      valeur: 100
+      unité: m2
+    logement . habitants:
+      valeur: 4
+      unité: personnes
+    logement . gaz . chauffage au gaz: non
+    logement . électricité . consommation:
+      valeur: 15000
+      unité: kWh
+    logement . fioul . chauffage au fioul: non
+    logement . bois . chauffage au bois: non
