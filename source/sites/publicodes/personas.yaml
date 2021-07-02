@@ -102,11 +102,11 @@
       unité: personnes
 
 
-- nom: Mehdi Baudry d'Agen 
+- nom: Mehdi d'Agen 
   description: |
     Va au travail en voiture. Adore la viande. Se sert de la voiture partir en vaances/weekend avec sa femme et ses deux enfants
     Maison de 100 m2 chauffée à l'electrique. 
-  icônes: 🛴🏢
+  icônes: 🚗🥩
   data:
     alimentation . déchets . niveau d'engagement: "'pas du tout'"
     alimentation . petit déjeuner . type: "'lait céréales'"
@@ -151,20 +151,59 @@
     transport . vélo . km:
       valeur: 0
       unité: km
+
+
+- nom: Ximun d'Arcangues 
+  description: |
+    Va au travail en bus mais utilise sa voiture pour des petits trajets quotidien. Vit avec son frere dans une vieille ferme mal isolée et chauffée au fuel. 
+  icônes: 🚗🏚️
+  data:
+    transport . voiture . km:
+      valeur: 4000
+      unité: km / an
+    transport . voiture . propriétaire: oui
+    transport . voiture . gabarit: "'moyenne'"
+    transport . voiture . âge:
+      valeur: 5
+      unité: années
+    transport . voiture . motorisation: "'thermique'"
+    transport . voiture . voyageurs:
+      valeur: 1
+      unité: voyageurs
+    transport . voiture . thermique . consommation aux 100:
+      valeur: 7
+      unité: l / centkm
+    transport . deux roues thermique . usager: non
+    transport . avion . usager: non
+    transport . bus . heures par semaine:
+      valeur: 6
+      unité: heure / semaine
+    transport . train . km:
+      valeur: 0
+      unité: km / an
+    transport . métro ou tram . heures par semaine:
+      valeur: 0
+      unité: heure / semaine
+    transport . vélo . km:
+      valeur: 0
+      unité: km
     logement . âge:
-      valeur: 20
+      valeur: 60
       unité: an
     logement . éco-construit: non
     logement . appartement: non
-    logement . surface:
-      valeur: 100
+    logement . surface: 
+      valeur: 150 #une ferme ça doit être plus grand encore mais je ne considère que la partie "ou il habite" 
       unité: m2
     logement . habitants:
-      valeur: 4
+      valeur: 2
       unité: personnes
     logement . gaz . chauffage au gaz: non
     logement . électricité . consommation:
+      valeur: 5000
+      unité: kWh
+    logement . fioul . chauffage au fioul: oui
+    logement . fioul . consommation:
       valeur: 15000
       unité: kWh
-    logement . fioul . chauffage au fioul: non
     logement . bois . chauffage au bois: non
