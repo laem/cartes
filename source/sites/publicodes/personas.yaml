@@ -104,7 +104,7 @@
 
 - nom: Mehdi d'Agen 
   description: |
-    Va au travail en voiture. Adore la viande. Se sert de la voiture partir en vaances/weekend avec sa femme et ses deux enfants
+    Va au travail en voiture. Adore la viande. Se sert de la voiture partir en vacances/weekend avec sa femme et ses deux enfants
     Maison de 100 m2 chauffée à l'electrique. 
   icônes: 🚗🥩
   data:
@@ -155,7 +155,7 @@
 
 - nom: Ximun d'Arcangues 
   description: |
-    Va au travail en bus mais utilise sa voiture pour des petits trajets quotidien. Vit avec son frere dans une vieille ferme mal isolée et chauffée au fuel. 
+    Va au travail en bus mais utilise sa voiture pour des petits trajets quotidien. Vit avec son frère dans une vieille ferme mal isolée et chauffée au fuel. 
   icônes: 🚗🏚️
   data:
     transport . voiture . km:
