@@ -110,10 +110,10 @@
   data:
     alimentation . déchets . niveau d'engagement: "'pas du tout'"
     alimentation . petit déjeuner . type: "'lait céréales'"
-        alimentation . lait . type: "'lait de vache'"
-        alimentation . boisson . sucrées . litres:
-          valeur: 0
-          unité: l / semaine
+    alimentation . lait . type: "'lait de vache'"
+    alimentation . boisson . sucrées . litres:
+      valeur: 0
+      unité: l / semaine
     alimentation . boisson . alcool . litres:
       valeur: 0
       unité: l / semaine
