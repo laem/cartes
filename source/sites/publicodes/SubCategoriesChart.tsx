@@ -3,18 +3,35 @@ import emoji from 'react-easy-emoji'
 import { useSelector } from 'react-redux'
 import styled from 'styled-components'
 import { useEngine } from '../../components/utils/EngineContext'
-import { extractCategories } from './chart'
+import { extractCategories } from 'Components/publicodesUtils'
 import SubCategoryBar from './SubCategoryBar'
 
 export default ({ category, color }) => {
 	const rules = useSelector((state) => state.rules)
 	const engine = useEngine()
-	const total = engine.evaluate(category).nodeValue
+	const evaluated = engine.evaluate(category),
+		total = evaluated.nodeValue,
+		rule = engine.getRule(category),
+		formula = rule?.explanation?.valeur?.explanation?.valeur
+
+	if (!formula) return null
+
+	console.log(formula)
+
+	const sumToDisplay =
+		formula.nodeKind === 'somme'
+			? category
+			: formula.operationKind === '/'
+			? formula.explanation[0].dottedName
+			: null
+
+	if (!sumToDisplay) return null
+
 	const subCategories = extractCategories(
 		rules,
 		engine,
 		null,
-		category,
+		sumToDisplay,
 		true,
 		false
 	)

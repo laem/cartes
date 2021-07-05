@@ -14,7 +14,7 @@ import { DottedName } from 'modele-social'
 import { situationSelector } from 'Selectors/simulationSelectors'
 import './AnswerList.css'
 import { parentName } from 'Components/publicodesUtils'
-import { sortCategories, extractCategories } from '../../sites/publicodes/chart'
+import { sortCategories, extractCategories } from 'Components/publicodesUtils'
 import { answeredQuestionsSelector } from '../../selectors/simulationSelectors'
 import { useEffect } from 'react'
 

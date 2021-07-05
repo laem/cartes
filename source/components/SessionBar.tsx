@@ -17,7 +17,7 @@ import {
 } from 'Selectors/simulationSelectors'
 import styled from 'styled-components'
 import CarbonImpact from '../sites/publicodes/CarbonImpact'
-import { extractCategories } from '../sites/publicodes/chart'
+import { extractCategories } from 'Components/publicodesUtils'
 import Answers from './conversation/AnswerList'
 
 const Button = styled.button`

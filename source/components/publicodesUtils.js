@@ -17,3 +17,32 @@ export const correctValue = (evaluated) => {
 	const result = unit?.numerators.includes('%') ? nodeValue / 100 : nodeValue
 	return result
 }
+
+export const extractCategories = (
+	rules,
+	engine,
+	valuesFromURL,
+	parentRule = 'bilan',
+	prefixWithParent,
+	sort = true
+) => {
+	const categories2 = engine.getRule(parentRule)
+	console.log('CAT', categories2)
+	const categories = rules[parentRule].formule.somme.map((name) => {
+		const prefixedName = prefixWithParent
+			? [parentRule, name].join(' . ')
+			: name
+		const node = engine.evaluate(prefixedName)
+		const { icônes, couleur } = rules[prefixedName]
+		return {
+			...node,
+			icons: icônes,
+			color: couleur,
+			nodeValue: valuesFromURL ? valuesFromURL[name[0]] : node.nodeValue,
+		}
+	})
+
+	return sort ? sortCategories(categories) : categories
+}
+
+export const sortCategories = sortBy(({ nodeValue }) => -nodeValue)

@@ -21,7 +21,7 @@ import {
 import Action from './Action'
 import ActionPlus from './ActionPlus'
 import ActionVignette, { disabledAction } from './ActionVignette'
-import { extractCategories } from './chart'
+import { extractCategories } from 'Components/publicodesUtils'
 import ListeActionPlus from './ListeActionPlus'
 import ModeChoice from './ModeChoice'
 import CategoryFilters from './CategoryFilters'

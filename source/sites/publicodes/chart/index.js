@@ -1,17 +1,16 @@
-import { utils } from 'publicodes'
-
+import { extractCategories } from 'Components/publicodesUtils'
 import { useEngine } from 'Components/utils/EngineContext'
 import { motion } from 'framer-motion'
-import { sortBy } from 'ramda'
+import { utils } from 'publicodes'
 import React from 'react'
 import { useSelector } from 'react-redux'
 import { Link } from 'react-router-dom'
 import {
-	situationSelector,
 	objectifsSelector,
+	situationSelector,
 } from 'Selectors/simulationSelectors'
-import Bar from './Bar'
 import { useNextQuestions } from '../../../components/utils/useNextQuestion'
+import Bar from './Bar'
 
 const showBudget = false
 const // Rough estimate of the 2050 budget per person to stay under 2° by 2100
@@ -22,31 +21,6 @@ const // Rough estimate of the 2050 budget per person to stay under 2° by 2100
 	transportShare = 1 / 4,
 	transportClimateBudget = climateBudgetPerDay * transportShare
 
-export const sortCategories = sortBy(({ nodeValue }) => -nodeValue)
-export const extractCategories = (
-	rules,
-	engine,
-	valuesFromURL,
-	parentRule = 'bilan',
-	prefixWithParent,
-	sort = true
-) => {
-	const categories = rules[parentRule].formule.somme.map((name) => {
-		const prefixedName = prefixWithParent
-			? [parentRule, name].join(' . ')
-			: name
-		const node = engine.evaluate(prefixedName)
-		const { icônes, couleur } = rules[prefixedName]
-		return {
-			...node,
-			icons: icônes,
-			color: couleur,
-			nodeValue: valuesFromURL ? valuesFromURL[name[0]] : node.nodeValue,
-		}
-	})
-
-	return sort ? sortCategories(categories) : categories
-}
 export default ({ details, noText, noAnimation, noCompletion, valueColor }) => {
 	// needed for this component to refresh on situation change :
 	const situation = useSelector(situationSelector)
