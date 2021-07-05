@@ -7,13 +7,13 @@ import RuleInput, {
 	isMosaic,
 	RuleInputProps,
 } from 'Components/conversation/RuleInput'
+import Notifications from 'Components/Notifications'
 import * as Animate from 'Components/ui/animate'
 import { EngineContext } from 'Components/utils/EngineContext'
 import { useNextQuestions } from 'Components/utils/useNextQuestion'
 import { TrackerContext } from 'Components/utils/withTracker'
 import { sortBy } from 'ramda'
 import React, { useContext, useEffect, useState } from 'react'
-import emoji from 'react-easy-emoji'
 import { Trans } from 'react-i18next'
 import { useDispatch, useSelector } from 'react-redux'
 import {
@@ -28,9 +28,7 @@ import CategoryRespiration from './CategoryRespiration'
 import './conversation.css'
 import { ExplicableRule } from './Explicable'
 import SimulationEnding from './SimulationEnding'
-import { CategoryLabel } from './UI'
-import Notifications from 'Components/Notifications'
-import SubCategoriesChart from '../../sites/publicodes/SubCategoriesChart'
+import CategoryVisualisation from '../../sites/publicodes/CategoryVisualisation'
 
 export type ConversationProps = {
 	customEndMessages?: React.ReactNode
@@ -175,32 +173,7 @@ export default function Conversation({
 			<Aide />
 			<div style={{ outline: 'none' }}>
 				{orderByCategories && questionCategory && (
-					<div
-						css={`
-							display: flex;
-							align-items: center;
-							justify-content: flex-start;
-							flex-wrap: wrap;
-						`}
-					>
-						<CategoryLabel>
-							{emoji(questionCategory.icons || '🌍')}
-							{questionCategory.title}
-						</CategoryLabel>
-						<div
-							css={`
-								width: 75%;
-								@media (max-width: 800px) {
-									width: 100%;
-								}
-							`}
-						>
-							<SubCategoriesChart
-								category={questionCategory.dottedName}
-								color={questionCategory.color}
-							/>
-						</div>
-					</div>
+					<CategoryVisualisation questionCategory={questionCategory} />
 				)}
 				<Animate.fadeIn>
 					<div className="step">
