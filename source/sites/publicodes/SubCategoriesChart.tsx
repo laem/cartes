@@ -6,6 +6,7 @@ import { useEngine } from '../../components/utils/EngineContext'
 import { extractCategories } from 'Components/publicodesUtils'
 import SubCategoryBar from './SubCategoryBar'
 import { ruleFormula } from '../../components/publicodesUtils'
+import { shadowStyle } from './styles'
 
 export default ({ category, color }) => {
 	const rules = useSelector((state) => state.rules)
@@ -16,8 +17,6 @@ export default ({ category, color }) => {
 		formula = ruleFormula(rule)
 
 	if (!formula) return null
-
-	console.log(formula)
 
 	const sumToDisplay =
 		formula.nodeKind === 'somme'
@@ -44,28 +43,27 @@ export default ({ category, color }) => {
 		restWidth = (rest / total) * 100
 
 	return (
-		<InlineBarChart
-			css={`
-				border: 2px solid var(--lighterColor);
-			`}
-		>
-			<AnimatePresence>
-				{subCategories.map(({ nodeValue, title, icons }) => (
-					<SubCategoryBar {...{ nodeValue, title, icons, total, color }} />
-				))}
-				<li
-					css={`
-						width: ${restWidth}%;
-						background: ${color};
-						font-size: 200%;
-						color: white;
-						line-height: 0.3rem !important;
-					`}
-				>
-					{restWidth > 7 ? '...' : ''}
-				</li>
-			</AnimatePresence>
-		</InlineBarChart>
+		<div>
+			{formula.operationKind === '/' && <span>Salut</span>}
+			<InlineBarChart>
+				<AnimatePresence>
+					{subCategories.map(({ nodeValue, title, icons }) => (
+						<SubCategoryBar {...{ nodeValue, title, icons, total, color }} />
+					))}
+					<li
+						css={`
+							width: ${restWidth}%;
+							background: ${color};
+							font-size: 200%;
+							color: white;
+							line-height: 0.3rem !important;
+						`}
+					>
+						{restWidth > 7 ? '...' : ''}
+					</li>
+				</AnimatePresence>
+			</InlineBarChart>
+		</div>
 	)
 }
 
@@ -75,6 +73,7 @@ const InlineBarChart = styled.ul`
 	padding-left: 0;
 	margin: 0;
 	display: flex;
+	${shadowStyle};
 	li {
 		display: inline-block;
 		text-align: center;
