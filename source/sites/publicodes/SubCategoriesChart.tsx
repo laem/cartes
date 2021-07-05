@@ -5,6 +5,7 @@ import styled from 'styled-components'
 import { useEngine } from '../../components/utils/EngineContext'
 import { extractCategories } from 'Components/publicodesUtils'
 import SubCategoryBar from './SubCategoryBar'
+import { ruleFormula } from '../../components/publicodesUtils'
 
 export default ({ category, color }) => {
 	const rules = useSelector((state) => state.rules)
@@ -12,7 +13,7 @@ export default ({ category, color }) => {
 	const evaluated = engine.evaluate(category),
 		total = evaluated.nodeValue,
 		rule = engine.getRule(category),
-		formula = rule?.explanation?.valeur?.explanation?.valeur
+		formula = ruleFormula(rule)
 
 	if (!formula) return null
 
@@ -32,7 +33,6 @@ export default ({ category, color }) => {
 		engine,
 		null,
 		sumToDisplay,
-		true,
 		false
 	)
 

@@ -1,3 +1,4 @@
+import { sortBy } from 'ramda'
 import { capitalise0 } from '../utils'
 
 export const parentName = (dottedName, outputSeparator = ' . ', shift = 0) =>
@@ -18,27 +19,37 @@ export const correctValue = (evaluated) => {
 	return result
 }
 
+export const ruleFormula = (rule) =>
+	rule?.explanation?.valeur?.explanation?.valeur
+
+export const ruleSumNode = (rule) => {
+	const formula = ruleFormula(rule)
+	console.log('FOR', formula)
+
+	if (formula.nodeKind !== 'somme') return null
+	return formula.explanation.map((node) => node.dottedName)
+}
+
 export const extractCategories = (
 	rules,
 	engine,
 	valuesFromURL,
 	parentRule = 'bilan',
-	prefixWithParent,
 	sort = true
 ) => {
-	const categories2 = engine.getRule(parentRule)
-	console.log('CAT', categories2)
-	const categories = rules[parentRule].formule.somme.map((name) => {
-		const prefixedName = prefixWithParent
-			? [parentRule, name].join(' . ')
-			: name
-		const node = engine.evaluate(prefixedName)
-		const { icônes, couleur } = rules[prefixedName]
+	const rule = engine.getRule(parentRule),
+		sumNodes = ruleSumNode(rule)
+
+	console.log(sumNodes)
+
+	const categories = sumNodes.map((dottedName) => {
+		const node = engine.evaluate(dottedName)
+		const { icônes, couleur } = rules[dottedName]
 		return {
 			...node,
 			icons: icônes,
 			color: couleur,
-			nodeValue: valuesFromURL ? valuesFromURL[name[0]] : node.nodeValue,
+			nodeValue: valuesFromURL ? valuesFromURL[dottedName[0]] : node.nodeValue,
 		}
 	})
 
