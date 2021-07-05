@@ -71,8 +71,11 @@ const Inhabitants = ({ formula, engine }) => {
 			engine.evaluate(denominator.dottedName).nodeValue
 	if (!denominator) return null
 	return (
-		<span>
-			{emoji('👥')} {inhabitants} {inhabitants <= 1 ? 'habitant' : 'habitants'}
+		<span
+			title={inhabitants <= 1 ? 'habitant' : 'habitants'}
+			css="margin: 0 .4rem"
+		>
+			{emoji(inhabitants > 1 ? '👥' : '👤')}x{inhabitants}
 		</span>
 	)
 }
