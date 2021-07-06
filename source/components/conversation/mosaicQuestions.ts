@@ -49,7 +49,7 @@ Si tous vos appareils ne sont pas proposés dans cette liste, ce n'est pas grave
 
 Choisissez 14 plats qui représentent votre semaine type : 7 midi et 7 dîners. 
 
-> Bien sûr, toute la diversité des régimes ne peut-être simplifiée en 4 boutons : il manque par exemple le poison... le menu du pêcheur arrive bientôt ! 
+> Bien sûr, toute la diversité des régimes ne peut-être simplifiée en 4 boutons : il manque par exemple le poisson... le menu du pêcheur arrive bientôt ! 
 
 			`,
 		isApplicable: (dottedName: DottedName) =>
