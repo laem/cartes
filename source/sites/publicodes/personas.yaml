@@ -300,3 +300,43 @@
     transport . avion . long courrier . heures de vol:
       valeur: 14
       unité: kgCO2e/km
+
+
+- nom: Zoé de Damblain
+  description: |
+    Habite en zone rurale. Magasinière de nuit dans un entrepôt de distribution à 20 km de son domicile. Va au travail en voiture car les bus ne tournent pas de nuit
+    Prend aussi sa voiture pour des trajets de -5km
+  icônes: 🚗🌙
+  data:
+    transport . voiture . km:
+      valeur: 17000
+      unité: km / an
+    transport . voiture . propriétaire: oui
+    transport . voiture . gabarit: "'moyenne'"
+    transport . voiture . âge:
+      valeur: 5
+      unité: années
+    transport . voiture . motorisation: "'thermique'"
+    transport . voiture . voyageurs:
+      valeur: 1.15 # 12 000 km seul et 5000 km avec un taux moyen de 1,5
+      unité: voyageurs
+    transport . voiture . thermique . consommation aux 100:
+      valeur: 7
+      unité: l / centkm
+    transport . deux roues thermique . usager: non
+    transport . avion . usager: non
+    transport . bus . heures par semaine:
+      valeur: 0
+      unité: heure / semaine
+    transport . train . km:
+      valeur: 0
+      unité: km / an
+    transport . métro ou tram . heures par semaine:
+      valeur: 0
+      unité: heure / semaine
+    transport . vélo . km:
+      valeur: 0
+      unité: km
+      
+      
+ 
