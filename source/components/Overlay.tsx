@@ -99,7 +99,7 @@ const StyledOverlayWrapper = styled.div<{ offsetTop: number | null }>`
 	}
 	.overlayCloseButton {
 		position: absolute;
-		bottom: 0rem;
+		top: 0rem;
 		text-decoration: none;
 		font-size: 3rem;
 		color: rgba(0, 0, 0, 0.6);
