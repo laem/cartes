@@ -1,6 +1,7 @@
 import { motion } from 'framer-motion'
 import { useState } from 'react'
 import emoji from 'react-easy-emoji'
+import { findContrastedTextColor } from '../../components/utils/colors'
 
 const emojiBackground = '#ffffffa6'
 
@@ -26,7 +27,13 @@ export default ({ nodeValue, total, icons, color, title }) => {
 			onClick={() => click(!clicked)}
 		>
 			{clicked ? (
-				title
+				<span
+					css={`
+						color: ${findContrastedTextColor(color, true)};
+					`}
+				>
+					{title}
+				</span>
 			) : (
 				<span
 					css={`
