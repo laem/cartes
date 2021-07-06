@@ -84,7 +84,7 @@ const StyledOverlayWrapper = styled.div<{ offsetTop: number | null }>`
 	max-height: 100vh;
 	background: rgba(0, 0, 0, 0.5);
 	overflow: auto;
-	z-index: 3;
+	z-index: 30;
 	.overlayContent {
 		${({ offsetTop }) =>
 			offsetTop
@@ -99,7 +99,7 @@ const StyledOverlayWrapper = styled.div<{ offsetTop: number | null }>`
 	}
 	.overlayCloseButton {
 		position: absolute;
-		bottom: 0rem;
+		top: 0rem;
 		text-decoration: none;
 		font-size: 3rem;
 		color: rgba(0, 0, 0, 0.6);

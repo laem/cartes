@@ -9,7 +9,7 @@ import { situationSelector } from 'Selectors/simulationSelectors'
 import { WebrtcProvider } from 'y-webrtc'
 import * as Y from 'yjs'
 import { useSimulationProgress } from '../../../components/utils/useNextQuestion'
-import { extractCategories } from '../chart'
+import { extractCategories } from 'Components/publicodesUtils'
 import { computeHumanMean } from './Stats'
 
 export default () => {

@@ -11,6 +11,8 @@ import SimulationHumanWeight from './HumanWeight'
 import { useEngine } from 'Components/utils/EngineContext'
 import { correctValue, splitName } from '../../components/publicodesUtils'
 import { lightenColor } from '../../components/utils/colors'
+import Progress from 'Components/ui/Progress'
+import { useSimulationProgress } from 'Components/utils/useNextQuestion'
 
 export default ({}) => {
 	const objectif = useSelector(objectifsSelector)[0],
@@ -30,6 +32,8 @@ export default ({}) => {
 		color = category && category.couleur
 
 	const isMainSimulation = objectif === 'bilan'
+
+	const progress = useSimulationProgress()
 	return (
 		<div
 			css={`
@@ -41,19 +45,10 @@ export default ({}) => {
 					)
 					repeat scroll 0% 0%;
 				color: var(--textColor);
-				padding: 0.4rem;
-
 				a {
 					color: inherit;
 				}
 				text-align: center;
-				display: flex;
-				justify-content: space-evenly;
-				> div {
-					display: flex;
-					justify-content: center;
-					align-items: center;
-				}
 				box-shadow: 2px 2px 10px #bbb;
 
 				.unitSuffix {
@@ -65,43 +60,59 @@ export default ({}) => {
 				css={`
 					display: flex;
 					justify-content: space-evenly;
-					flex-direction: column;
-					width: 80%;
+					> div {
+						display: flex;
+						justify-content: center;
+						align-items: center;
+					}
+					padding: 0.4rem;
 				`}
 			>
-				{isMainSimulation &&
-					!persona &&
-					(!simulationStarted ? (
-						<em>{emoji('🇫🇷 ')} Un Français émet en moyenne</em>
-					) : (
-						<em>Votre total provisoire</em>
-					))}
-				{persona && (
-					<em>
-						{emoji('👤')} {persona}
-					</em>
-				)}
+				<div
+					css={`
+						display: flex;
+						justify-content: space-evenly;
+						flex-direction: column;
+						width: 80%;
+					`}
+				>
+					{isMainSimulation &&
+						!persona &&
+						(!simulationStarted ? (
+							<em>{emoji('🇫🇷 ')} Un Français émet en moyenne</em>
+						) : (
+							<em>Votre total provisoire</em>
+						))}
+					{persona && (
+						<em>
+							{emoji('👤')} {persona}
+						</em>
+					)}
+					<div>
+						<SimulationHumanWeight nodeValue={nodeValue} />
+					</div>
+				</div>
 				<div>
-					<SimulationHumanWeight nodeValue={nodeValue} />
+					<Link to={'/documentation/' + utils.encodeRuleName(dottedName)}>
+						<span css="font-size: 140%" alt="Comprendre le calcul">
+							{emoji('❔ ')}
+						</span>
+						<small
+							css={`
+								color: var(--textColor);
+								@media (max-width: 800px) {
+									display: none;
+								}
+							`}
+						>
+							Comprendre le calcul
+						</small>
+					</Link>
 				</div>
 			</div>
-			<div>
-				<Link to={'/documentation/' + utils.encodeRuleName(dottedName)}>
-					<span css="font-size: 140%" alt="Comprendre le calcul">
-						{emoji('❔ ')}
-					</span>
-					<small
-						css={`
-							color: var(--textColor);
-							@media (max-width: 800px) {
-								display: none;
-							}
-						`}
-					>
-						Comprendre le calcul
-					</small>
-				</Link>
-			</div>
+			{progress < 1 && (
+				<Progress progress={progress} style={!progress ? 'height: 0' : ''} />
+			)}
 		</div>
 	)
 }
