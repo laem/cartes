@@ -204,6 +204,16 @@ export default function Conversation({
 					</div>
 				</Animate.fadeIn>
 				<div className="ui__ answer-group">
+					{previousAnswers.length > 0 && (
+						<>
+							<button
+								onClick={goToPrevious}
+								className="ui__ simple small push-left button"
+							>
+								← <Trans>Précédent</Trans>
+							</button>
+						</>
+					)}
 					{currentQuestionIsAnswered ? (
 						<button
 							className="ui__ plain small button"
