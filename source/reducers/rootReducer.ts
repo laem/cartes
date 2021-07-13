@@ -147,7 +147,9 @@ function simulation(
 			if (name === 'fold')
 				return {
 					...state,
-					foldedSteps: [...without([step], state.foldedSteps), step],
+					foldedSteps: state.foldedSteps.includes(step)
+						? state.foldedSteps
+						: [...state.foldedSteps, step],
 
 					unfoldedStep: null,
 				}
