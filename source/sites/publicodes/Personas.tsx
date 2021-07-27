@@ -47,7 +47,7 @@ export default () => {
 									<div>{emoji(icônes || '👥')}</div>
 									<div>{nom}</div>
 								</Link>
-								<p>
+								<p css=" overflow-x: scroll">
 									<small>{description}</small>
 								</p>
 							</div>

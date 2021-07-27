@@ -1,7 +1,7 @@
 import { setSimulationConfig } from 'Actions/actions'
 import PeriodSwitch from 'Components/PeriodSwitch'
+import { extractCategories } from 'Components/publicodesUtils'
 import SessionBar, { buildEndURL } from 'Components/SessionBar'
-import ShareButton from 'Components/ShareButton'
 import Simulation from 'Components/Simulation'
 import { useEngine } from 'Components/utils/EngineContext'
 import { Markdown } from 'Components/utils/markdown'
@@ -17,7 +17,6 @@ import tinygradient from 'tinygradient'
 import { sessionBarMargin } from '../../components/SessionBar'
 import FuturecoMonochrome from '../../images/FuturecoMonochrome'
 import { situationSelector } from '../../selectors/simulationSelectors'
-import { extractCategories } from './chart/index.js'
 
 const eqValues = compose(isEmpty, symmetricDifference)
 export const colorScale = [

@@ -13,6 +13,7 @@ import SessionBar from 'Components/SessionBar'
 import Chart from './chart'
 import { Link } from 'react-router-dom'
 import Meta from '../../components/utils/Meta'
+import DefaultFootprint from './DefaultFootprint'
 
 const gradient = tinygradient([
 		'#78e08f',
@@ -154,7 +155,10 @@ const AnimatedDiv = animated(({ score, value, details, headlessMode }) => {
 										{emoji('🇫🇷 ')}
 										moyenne{' '}
 									</span>{' '}
-									<strong> 11 tonnes</strong>
+									<strong>
+										{' '}
+										<DefaultFootprint />{' '}
+									</strong>
 								</div>
 								<div>
 									<span>
