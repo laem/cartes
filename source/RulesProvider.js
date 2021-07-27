@@ -13,6 +13,15 @@ import React, { useEffect, useMemo } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import zeros from './zeroDefaults.yaml'
 
+const setDefaultsToZero = (rules) =>
+	Object.entries(rules).reduce(
+		(memo, [k, v]) => ({
+			...memo,
+			[k]: zeros[k] != null ? { ...v, 'par défaut': zeros[k] } : v,
+		}),
+		{}
+	)
+
 const removeLoader = () => {
 	// Remove loader
 	var css = document.createElement('style')
@@ -73,20 +82,13 @@ export default ({ children, rulesURL, dataBranch }) => {
 				return { ...memo, ...ruleSetPlus }
 			}, {})
 
-			const zeroRules = Object.entries(rules).reduce(
-				(memo, [k, v]) => ({
-					...memo,
-					[k]: zeros[k] != null ? { ...v, 'par défaut': zeros[k] } : v,
-				}),
-				{}
-			)
-			setRules(zeroRules)
+			setRules(setDefaultsToZero(rules))
 			removeLoader()
 		} else {
 			fetch(rulesURL, { mode: 'cors' })
 				.then((response) => response.json())
 				.then((json) => {
-					setRules(json)
+					setRules(setDefaultsToZero(json))
 					removeLoader()
 				})
 		}
