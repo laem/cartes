@@ -12,6 +12,7 @@ export const GameDialog = styled.div`
 	font-size: 120%;
 	h1 {
 		font-size: 230%;
+		margin-top: 0rem;
 	}
 	max-width: 800px;
 	width: 90vw;

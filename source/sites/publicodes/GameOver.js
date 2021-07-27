@@ -23,6 +23,7 @@ const Eraser = ({}) => {
 	return (
 		<button
 			className="ui__ button simple small"
+			css="margin: 0"
 			onClick={() => {
 				dispatch(resetSimulation())
 				dispatch(deletePreviousSimulation())
@@ -36,13 +37,22 @@ const Eraser = ({}) => {
 
 const Dialog = ({ children }) => (
 	<GameDialog>
-		{children}
-
-		<div css="display: flex; justify-content: center">
+		<div
+			css={`
+				display: flex;
+				justify-content: center;
+				margin-top: 0.6rem;
+				svg {
+					height: 4rem;
+				}
+			`}
+		>
 			<Link to="/">
 				<FuturecoMonochrome color={colorScale.slice(-1)[0]} />
 			</Link>
 		</div>
+		{children}
+
 		<Eraser />
 	</GameDialog>
 )
