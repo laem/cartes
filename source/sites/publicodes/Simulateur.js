@@ -94,6 +94,7 @@ const Simulateur = (props) => {
 					height: 90%;
 					border: 1.4rem solid ${doomColor};
 					${false && sessionBarMargin}
+					overflow: auto; /* Some questions are very high, the mosaic ones*/
 				`}
 			>
 				<Helmet>
