@@ -93,7 +93,7 @@ const Définition = () => (
 		<h1>Être écolo, définition !</h1>
 		<p>
 			On ne peut pas être écolo si on défonce le climat. Une empreinte climat
-			personnelle de <Emoji e="➖" /> de <strong>3 </strong> tonnes est une{' '}
+			personnelle de <strong>moins de 3 tonnes</strong> est une{' '}
 			<strong>condition nécessaire</strong>.
 		</p>
 
@@ -132,7 +132,7 @@ const Claque = () => (
 		</p>
 		<p>
 			Pipi sous la douche, ampoules basse conso, zéro déchet, électricité
-			"écolo", voiture électrique... les petits gestes nous allègent la
+			"verte", voiture électrique... les petits gestes nous allègent la
 			conscience et la technologie nous rassure.
 		</p>
 		<p>
@@ -249,13 +249,13 @@ const PourquoiTrois = () => (
 
 const Sources = () => (
 	<Dialog>
-		<h1>Pourquoi nous croire ?</h1>
+		<h1>Ça sort d'où ?</h1>
 		<p>
 			Le calcul utilisé ici est{' '}
 			<a href="https://github.com/datagir/nosgestesclimat">
 				<strong>complètement ouvert</strong>
 			</a>
-			, développé par l'ADEME, sans cesse amélioré...
+			, développé par l'ADEME, sans cesse amélioré.
 		</p>
 		<p>
 			Et si on se trompait, que l'empreinte de la <Emoji e="🚗" /> était de 1 et
@@ -278,8 +278,12 @@ const Action = () => (
 	<Dialog>
 		<h1>Il est où le GPS&nbsp;?</h1>
 		<p>
-			Ne t'inquiète pas, tu sera guidé : tu pourras continuer le questionnaire,
-			puis découvrir plein de façons de réduire ton empreinte.
+			Ne t'inquiète pas, tu sera guidé : tu pourras refaire ce test quand tu
+			voudras.{' '}
+		</p>
+		<p>
+			De nombreux autres guides sont en train de sortir pour nous aider tous à
+			réduire notre empreinte.
 		</p>
 		<p>Mais une chose avant tout ! </p>
 		<LoudButton to="/fin/ensemble">Quoi encore ?</LoudButton>
@@ -290,9 +294,12 @@ const Ensemble = () => (
 	<Dialog>
 		<h1>En parler</h1>
 		<p>
-			Tout seul, on se recroqueville et on ne va pas loin. Ensemble, on va
-			changer ce monde. Il s'agit de notre planète, notre paix, notre bonheur,
-			notre futur bordel !
+			Tout seul, on se recroqueville et on ne va pas loin. Ensemble, on change
+			le monde.{' '}
+		</p>
+		<p>
+			Il s'agit de notre planète, notre paix, notre bonheur,{' '}
+			<strong>notre futur</strong> bordel !
 		</p>
 		<p>
 			Tu as des amis, de la famille, l'internet ?{' '}

@@ -14,7 +14,7 @@ export const GameDialog = styled.div`
 		font-size: 230%;
 	}
 	max-width: 800px;
-	width: 85vw;
+	width: 90vw;
 	margin: 0 auto;
 
 	@media (min-width: 800px) {
