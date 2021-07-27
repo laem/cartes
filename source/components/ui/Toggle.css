@@ -52,7 +52,7 @@
 	box-shadow: 0 0 0px 2px rgb(41, 117, 209);
 	box-shadow: 0 0 0px 2px var(--color);
 	transition: all 0.1s;
-	border: 0.4em solid white;
+	border: 0.15em solid white;
 }
 
 .ui__.radio input[type='radio']:focus ~ *::before {

@@ -68,6 +68,8 @@
 	text-transform: none !important;
 	background-color: var(--color);
 	color: var(--textColor) !important;
+	font-weight: 500 !important;
+	border-radius: 0.3rem;
 }
 .step label.userAnswerButton.selected {
 	background: var(--lightColor);

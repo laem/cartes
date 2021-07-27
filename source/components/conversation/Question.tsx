@@ -228,7 +228,7 @@ function RadioLabelContent({
 				onSubmit('dblClick', value)
 			}}
 			style={labelStyle}
-			className={classnames('userAnswerButton ui__ button small', {
+			className={classnames('userAnswerButton ui__ button ', {
 				selected,
 			})}
 		>
