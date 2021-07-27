@@ -93,7 +93,7 @@ const Simulateur = (props) => {
 				css={`
 					height: 90%;
 					border: 1.4rem solid ${doomColor};
-					${sessionBarMargin}
+					${false && sessionBarMargin}
 				`}
 			>
 				<Helmet>
