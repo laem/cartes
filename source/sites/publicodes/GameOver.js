@@ -87,7 +87,7 @@ const Perdu = () => {
 			<p>
 				<strong>Tu n'es pas écolo.</strong>
 			</p>
-			<p>Ton train de vie nous emène vers une planète anormalement chaude.</p>
+			<p>Ton train de vie nous emène vers une planète dangereusement chaude.</p>
 			<p>
 				Il a suffi de <strong>{answerCount}</strong> réponses au test sur{' '}
 				<strong>{nextStepsCount}</strong> questions pour le savoir.
@@ -102,10 +102,11 @@ const Perdu = () => {
 const Définition = () => (
 	<Dialog>
 		<h1>Être écolo, définition !</h1>
+		<p>On ne peut pas être écolo si on défonce le climat. </p>
 		<p>
-			On ne peut pas être écolo si on défonce le climat. Une empreinte climat
-			personnelle de <strong>moins de 3 tonnes</strong> est une{' '}
-			<strong>condition nécessaire</strong>.
+			Une empreinte climat personnelle de <strong>moins de 3 tonnes</strong> en
+			est une <strong>condition nécessaire</strong>. Tu dépasses nettement cette
+			limite.
 		</p>
 
 		<p>
