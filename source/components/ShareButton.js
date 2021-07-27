@@ -4,9 +4,7 @@ export default (props) =>
 	navigator.share ? (
 		<button
 			css={`
-				margin: 0 auto;
-				display: flex;
-				align-items: center;
+				margin: 0 auto !important;
 			`}
 			title="Cliquez pour partager le lien"
 			onClick={() =>
