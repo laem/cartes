@@ -67,6 +67,7 @@ export default () => {
 			<Route exact path="/fin/sources" component={Sources} />
 			<Route exact path="/fin/action" component={Action} />
 			<Route exact path="/fin/quand" component={Quand} />
+			<Route exact path="/fin/danger" component={Danger} />
 			<Route exact path="/fin/pourquoi-trois" component={PourquoiTrois} />
 			<Route exact path="/fin/claque" component={Claque} />
 			<Route exact path="/fin/trajectoire" component={Trajectoire} />
@@ -231,9 +232,24 @@ const Quand = () => (
 			Chaque année passée au-dessus de <strong>3 tonnes</strong> nous met tous
 			en danger.
 		</p>
+		<img src={require('Images/EUROPE-France--1899-2020-MF-bars.png').default} />
+		<LoudButton to="/fin/danger">Lequel ?</LoudButton>
+	</Dialog>
+)
+const Danger = () => (
+	<Dialog>
+		<h1>Quel danger ?</h1>
 		<p>
-			Lequel ? Perdre un environnement où peuvent vivre 7 milliards d'êtres
-			humains et un billion de fois plus de vie.
+			Perdre un environnement où peuvent vivre 7 milliards d'êtres humains et un
+			billion de fois plus de vie.
+		</p>
+		<p>
+			On parle de montée des eaux—Ré, Camargue et Bordeaux engloutis... parce
+			qu'on sait modéliser ces catastrophes naturelles.
+		</p>
+		<p>
+			Mais les vrais risques, imprévisibles, sont les{' '}
+			<strong>famines, les guerres et les génocides</strong>.
 		</p>
 		<LoudButton to="/fin/pourquoi-trois">Pourquoi 3 tonnes ?</LoudButton>
 	</Dialog>
