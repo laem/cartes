@@ -23,7 +23,7 @@ const Eraser = ({}) => {
 	return (
 		<button
 			className="ui__ button simple small"
-			css="margin: 0 auto; width: auto"
+			css="width: auto !important"
 			onClick={() => {
 				dispatch(resetSimulation())
 				dispatch(deletePreviousSimulation())
