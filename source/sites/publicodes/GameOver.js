@@ -287,7 +287,7 @@ const Sources = () => (
 
 const Action = () => (
 	<Dialog>
-		<h1>Il est où le GPS&nbsp;?</h1>
+		<h1>Où est le GPS&nbsp;?</h1>
 		<p>
 			Ne t'inquiète pas, tu sera guidé : tu pourras refaire ce test quand tu
 			voudras.{' '}
