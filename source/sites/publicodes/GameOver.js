@@ -232,7 +232,11 @@ const Quand = () => (
 			Chaque année passée au-dessus de <strong>3 tonnes</strong> nous met tous
 			en danger.
 		</p>
-		<img src={require('Images/EUROPE-France--1899-2020-MF-bars.png').default} />
+		<a href="https://showyourstripes.info">
+			<img
+				src={require('Images/EUROPE-France--1899-2020-MF-bars.png').default}
+			/>
+		</a>
 		<LoudButton to="/fin/danger">Lequel ?</LoudButton>
 	</Dialog>
 )
