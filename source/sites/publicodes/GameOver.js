@@ -21,15 +21,16 @@ const Eraser = ({}) => {
 
 	if (erased) return <Redirect to="/simulateur/bilan" />
 	return (
-		<div
+		<button
+			className="ui__ button simple small"
 			onClick={() => {
 				dispatch(resetSimulation())
 				dispatch(deletePreviousSimulation())
 				setErased(true)
 			}}
 		>
-			<Emoji e="💥" /> Effacer
-		</div>
+			<Emoji e="🚮" /> Recommencer
+		</button>
 	)
 }
 
