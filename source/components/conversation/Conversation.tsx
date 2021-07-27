@@ -173,7 +173,7 @@ export default function Conversation({
 		>
 			<Aide />
 			<div style={{ outline: 'none' }}>
-				{orderByCategories && questionCategory && (
+				{false && orderByCategories && questionCategory && (
 					<CategoryVisualisation questionCategory={questionCategory} />
 				)}
 				<Animate.fadeIn>
