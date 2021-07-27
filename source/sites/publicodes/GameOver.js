@@ -159,14 +159,11 @@ const Trajectoire = () => (
 		<p>
 			Elle est limpide. Décroitre à 3 tonnes d'empreinte climat par personne.
 		</p>
-		<p>
-			<strong>Diviser par 3</strong> notre empreinte moyenne.
-		</p>
 		<div
 			css={`
 				margin: 1rem 0;
 				width: 100%;
-				height: 25vh;
+				height: 20vh;
 				display: flex;
 				flex-direction: column;
 				justify-content: space-evenly;
@@ -197,8 +194,8 @@ const Trajectoire = () => (
 						viewBox="0 0 10 10"
 						refX="5"
 						refY="5"
-						markerWidth="5"
-						markerHeight="5"
+						markerWidth="4"
+						markerHeight="4"
 						orient="auto-start-reverse"
 					>
 						<path d="M 0 0 L 10 5 L 0 10 z" />
@@ -206,15 +203,18 @@ const Trajectoire = () => (
 				</defs>
 
 				<polyline
-					points="10,90 180,10"
+					points="-30,80 300,20"
 					fill="none"
 					stroke="white"
-					strokeWidth="3px"
+					strokeWidth="8px"
 					marker-start="url(#arrow)"
 				/>
 			</svg>
 			<div>L'écolo</div>
 		</div>
+		<p>
+			<strong>Diviser par 3</strong> notre empreinte moyenne.
+		</p>
 
 		<LoudButton to="/fin/quand">À partir de quand ?</LoudButton>
 	</Dialog>
