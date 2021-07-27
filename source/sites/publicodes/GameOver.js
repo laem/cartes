@@ -290,7 +290,8 @@ const Action = () => (
 		<h1>Où est le GPS&nbsp;?</h1>
 		<p>
 			Ne t'inquiète pas, tu sera guidé : tu pourras refaire ce test quand tu
-			voudras.{' '}
+			voudras. La 1ère étape vers la solution, c'est de{' '}
+			<strong>comprendre l'ampleur du problème</strong>.
 		</p>
 		<p>
 			De nombreux autres guides sont en train de sortir pour nous aider tous à
