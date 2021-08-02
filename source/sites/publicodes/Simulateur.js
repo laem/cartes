@@ -1,7 +1,7 @@
 import { setSimulationConfig } from 'Actions/actions'
 import PeriodSwitch from 'Components/PeriodSwitch'
 import { extractCategories } from 'Components/publicodesUtils'
-import SessionBar, { buildEndURL } from 'Components/SessionBar'
+import { buildEndURL } from 'Components/SessionBar'
 import Simulation from 'Components/Simulation'
 import { useEngine } from 'Components/utils/EngineContext'
 import { Markdown } from 'Components/utils/markdown'
@@ -14,7 +14,10 @@ import { Helmet } from 'react-helmet'
 import { useDispatch, useSelector } from 'react-redux'
 import { Redirect } from 'react-router'
 import tinygradient from 'tinygradient'
-import { sessionBarMargin } from '../../components/SessionBar'
+import {
+	sessionBarMargin,
+	useSafePreviousSimulation,
+} from '../../components/SessionBar'
 import FuturecoMonochrome from '../../images/FuturecoMonochrome'
 import { situationSelector } from '../../selectors/simulationSelectors'
 
@@ -70,6 +73,7 @@ const Simulateur = (props) => {
 				: () => null,
 		[]
 	)
+	useSafePreviousSimulation()
 
 	if (!configSet) return null
 
