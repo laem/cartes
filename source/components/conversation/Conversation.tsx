@@ -52,13 +52,14 @@ export default function Conversation({
 	const previousSimulation = useSelector((state) => state.previousSimulation)
 
 	const sortedQuestions = orderByCategories
-		? sortBy(
-				(question) =>
-					-orderByCategories.find((c) => question.indexOf(c.dottedName) === 0)
-						?.nodeValue,
-				nextQuestions
-		  )
+		? sortBy((question) => {
+				const categoryIndex = orderByCategories.findIndex(
+					(c) => question.indexOf(c.dottedName) === 0
+				)
+				return categoryIndex * 1000 + nextQuestions.indexOf(question)
+		  }, nextQuestions)
 		: nextQuestions
+	console.log('NQ', sortedQuestions, nextQuestions, orderByCategories)
 	const unfoldedStep = useSelector((state) => state.simulation.unfoldedStep)
 	const isMainSimulation = objectifs.length === 1 && objectifs[0] === 'bilan',
 		currentQuestion = !isMainSimulation

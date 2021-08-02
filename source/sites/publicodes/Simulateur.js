@@ -59,7 +59,9 @@ const Simulateur = (props) => {
 			narrow: decoded !== 'bilan',
 		},
 		configSet = useSelector((state) => state.simulation?.config),
-		categories = decoded === 'bilan' && extractCategories(rules, engine)
+		categories =
+			decoded === 'bilan' &&
+			extractCategories(rules, engine, null, 'bilan', false)
 
 	useEffect(
 		() =>
@@ -73,7 +75,6 @@ const Simulateur = (props) => {
 
 	const gameOver = evaluation.nodeValue > limit
 	const doomColor = getBackgroundColor(evaluation.nodeValue).toHexString()
-	console.log('DOOM', doomColor)
 
 	return (
 		<>
@@ -104,30 +105,24 @@ const Simulateur = (props) => {
 					)}
 				</Helmet>
 
-				{!gameOver ? (
-					<>
-						{false && <SessionBar evaluation={evaluation} />}
-						<Simulation
-							noFeedback
-							orderByCategories={categories}
-							customEnd={
-								decoded === 'bilan' ? (
-									<RedirectionToEndPage
-										score={rule.nodeValue}
-										url={buildEndURL(rules, engine)}
-									/>
-								) : rule.description ? (
-									<Markdown source={rule.description} />
-								) : (
-									<EndingCongratulations />
-								)
-							}
-							targets={<>{rule.period === 'flexible' && <PeriodBlock />}</>}
-							explanations={null}
-						/>
-					</>
-				) : (
+				{gameOver ? (
 					<Redirect to="/fin" />
+				) : (
+					<Simulation
+						noFeedback
+						orderByCategories={categories}
+						customEnd={
+							decoded === 'bilan' ? (
+								<RedirectionToEndPage {...{ rules, engine }} />
+							) : rule.description ? (
+								<Markdown source={rule.description} />
+							) : (
+								<EndingCongratulations />
+							)
+						}
+						targets={<>{rule.period === 'flexible' && <PeriodBlock />}</>}
+						explanations={null}
+					/>
 				)}
 			</div>
 		</>
