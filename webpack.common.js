@@ -161,10 +161,10 @@ module.exports.commonLoaders = (mode = 'production') => {
 module.exports.HTMLPlugins = ({ injectTrackingScript = false } = {}) => [
 	new HTMLPlugin({
 		template: 'index.html',
-		logo: 'https://nosgestesclimat.fr/dessin-nosgestesclimat.png',
+		logo: 'https://nosgestesclimat.fr/images/logo.svg',
 		chunks: ['publicodes'],
-		title: 'Nos Gestes Climat',
-		description: 'Connaissez-vous votre empreinte sur le climat ?',
+		title: 'Futureco',
+		description: 'Êtes-vous écolo ? Faites le test en 2 minutes.',
 		filename: 'index.html',
 		injectTrackingScript,
 		base: '/',
