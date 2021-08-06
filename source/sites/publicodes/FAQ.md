@@ -6,6 +6,12 @@ Bonne lecture !
 
 ## GENERAL
 
+<h3> Qu'est-ce que l'empreinte carbone ? Comment se fait-il que ce que je mange ou que ma poubelle émettent des Gaz à Effet de Serre ?</h3>
+En effet, tous ce que nous consommons, utilisons, jetons a nécessité de la matière (qui a du être extraite), de l'énergie pour être assemblé, mis en forme ou bien encore conditionné. Il est également nécessaire que ces biens soient transportés, stockés et quand ils arrivent en fin de vie tous ne s'arrête pas. Nos déchets doivent encore être collectés puis traités. 
+C'est pourquoi, même si cela peut sembler contre intuitif tous nos gestes quotidiens participent à émettre des gaz à de serre. Certains énormément d'autres très peu. Manger un kg de patate émet des gaz à effet de serre, rouler 10 000 km en voiture aussi, mais bien évidemment dans des proportions très différentes. 
+Pour savoir combien émettent chacunes de nos actions, nous nous en remettons à [Base Carbone](https://www.bilans-ges.ademe.fr/fr/accueil) qui pour différentes données (km roulé, kg de viande, kWh consommé, une TV, etc.) permettent d'estimer la quantité de gaz à effet de serre émise.
+Le but de nos Nos Gestes Climat est donc de questionner votre mode de vie afin d'identifier ce qui contribue plus ou moins à votre empreinte carbone. 
+
 <h3>Le calculateur est il destiné uniquement aux Français ?</h3>
 
 Pour l'instant oui. Certains paramètres du modèle, en particulier l'empreinte du mix électrique (en gCO2e/kWh) influence particulièrement le résultat final, qui ne sera donc pas valide en Belgique, au Congo, au Québec, en Algérie ou ailleurs.
