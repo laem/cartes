@@ -104,8 +104,8 @@
 
 - nom: Mehdi d'Agen 
   description: |
-    Va au travail en voiture. Adore la viande. Se sert de la voiture partir en vacances/weekend avec sa femme et ses deux enfants
-    Maison de 100 m2 chauffée à l'electrique. 
+    Va au travail en voiture (~ 40 km AR/jour). Se sert de la voiture partir en vacances/weekend avec sa femme et ses deux enfants.
+    Adore la viande. Maison de 100 m2 chauffée à l'electrique. 
   icônes: 🚗🥩
   data:
     alimentation . déchets . niveau d'engagement: "'pas du tout'"
