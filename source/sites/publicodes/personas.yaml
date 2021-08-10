@@ -105,7 +105,7 @@
 - nom: Mehdi d'Agen 
   description: |
     Va au travail en voiture (~ 40 km AR/jour). Se sert de la voiture partir en vacances/weekend avec sa femme et ses deux enfants.
-    Adore la viande. Maison de 100 m2 chauffée à l'electrique. 
+    Adore la viande.
   icônes: 🚗🥩
   data:
     alimentation . déchets . niveau d'engagement: "'pas du tout'"
@@ -151,7 +151,20 @@
     transport . vélo . km:
       valeur: 0
       unité: km
-
+    transport . jours travaillés en voiture:
+      valeur: 5
+      unité: jours
+    transport . boulot . distance:
+      valeur: 20
+      unité: km
+    transport . boulot . commun . type: "'bus'"
+    transport . boulot . télétravail . compatible: "'oui'"
+    transport . boulot . jours télétravaillés:
+      valeur: 2
+      unité: jours
+    transport . voiture 5km . fréquence:
+      valeur: 7
+      unité: trajets
 
 - nom: Ximun d'Arcangues 
   description: |
@@ -207,3 +220,24 @@
       valeur: 15000
       unité: kWh
     logement . bois . chauffage au bois: non
+    
+    
+- nom: Marie de Laval
+  description: |
+    Grande amatrice de viande et de bière. Boit de l'eau en bouteille et aime la boisson.
+  icônes: 🚗🥩
+  data:
+    alimentation . déchets . niveau d'engagement: "'pas du tout'"
+    alimentation . petit déjeuner . type: "'lait céréales'"
+    alimentation . lait . type: "'lait de vache'"
+    alimentation . boisson . sucrées . litres:
+      valeur: 2
+      unité: l / semaine
+    alimentation . boisson . alcool . litres:
+      valeur: 4
+      unité: l / semaine
+    alimentation . boisson . eau en bouteille . affirmatif: oui
+    alimentation . plats . viande 2 . nombre: 7
+    alimentation . plats . viande 1 . nombre: 7
+    alimentation . plats . végétarien . nombre: 0
+    alimentation . plats . végétalien . nombre: 0
