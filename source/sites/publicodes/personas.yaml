@@ -77,7 +77,7 @@
 - nom: Sandy de Pacé
   icônes: 🚗🏡
   description: |
-    Vit à 11km de Rennes. 20 000km de voiture. Grande maison partagée à 3.
+    Vit à 11km de Rennes. 20 000km de voiture presque toujours seule. Grande maison partagée à 3.
   data: 
     alimentation . déchets . niveau d'engagement: "'en partie'"
     alimentation . petit déjeuner . type: "'lait céréales'"
@@ -91,15 +91,52 @@
     alimentation . boisson . eau en bouteille . affirmatif: oui
     alimentation . plats . viande 2 . nombre: 8
     alimentation . plats . viande 1 . nombre: 0
-    transport . voiture . km:
-      valeur: 20000
-      unité: km / an
     logement . surface:
       valeur: 150
       unité: m2
     logement . habitants:
       valeur: 3
       unité: personnes
+    transport . voiture . km:
+      valeur: 20000
+      unité: km / an
+    transport . voiture . propriétaire: oui
+    transport . voiture . gabarit: "'moyenne'"
+    transport . voiture . âge:
+      valeur: 3
+      unité: années
+    transport . voiture . motorisation: "'thermique'"
+    transport . voiture . voyageurs:
+      valeur: 1
+      unité: voyageurs
+    transport . voiture . thermique . consommation aux 100:
+      valeur: 7
+      unité: l / centkm
+    transport . deux roues thermique . usager: non
+    transport . avion . usager: non
+    transport . bus . heures par semaine:
+      valeur: 0
+      unité: heure / semaine
+    transport . train . km:
+      valeur: 0
+      unité: km / an
+    transport . métro ou tram . heures par semaine:
+      valeur: 0
+      unité: heure / semaine
+    transport . vélo . km:
+      valeur: 0
+      unité: km
+    transport . jours travaillés en voiture:
+      valeur: 5
+      unité: jours
+    transport . boulot . distance:
+      valeur: 11
+      unité: km
+    transport . boulot . commun . type: "'tramway'"
+    transport . boulot . télétravail . compatible: "'non'"
+    transport . voiture 5km . fréquence:
+      valeur: 15
+      unité: trajets
 
 
 - nom: Mehdi d'Agen 
