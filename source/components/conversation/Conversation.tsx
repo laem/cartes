@@ -78,6 +78,14 @@ export default function Conversation({
 		}
 	}, [previousAnswers, tracker])
 
+	const currentQuestionIndex = previousAnswers.findIndex(
+			(a) => a === unfoldedStep
+		),
+		previousQuestion =
+			currentQuestionIndex < 0 && previousAnswers.length > 0
+				? previousAnswers[previousAnswers.length - 1]
+				: previousAnswers[currentQuestionIndex - 1]
+
 	useEffect(() => {
 		// It is important to test for "previousSimulation" : if it exists, it's not loadedYet. Then currentQuestion could be the wrong one, already answered, don't put it as the unfoldedStep
 		if (
@@ -87,9 +95,11 @@ export default function Conversation({
 		) {
 			dispatch(goToQuestion(currentQuestion))
 		}
-	}, [dispatch, currentQuestion])
-	const goToPrevious = () =>
-		dispatch(goToQuestion(previousAnswers.slice(-1)[0]))
+	}, [dispatch, currentQuestion, previousAnswers, unfoldedStep])
+
+	const goToPrevious = () => {
+		return dispatch(goToQuestion(previousQuestion))
+	}
 
 	// Some questions are grouped in an artifical questions, called mosaic questions,  not present in publicodes
 	// here we need to submit all of them when the one that triggered the UI (we don't care which) is submitted, in order to see them in the response list and to avoid repeating the same n times
@@ -204,7 +214,7 @@ export default function Conversation({
 					</div>
 				</Animate.fadeIn>
 				<div className="ui__ answer-group">
-					{previousAnswers.length > 0 && (
+					{previousAnswers.length > 0 && currentQuestionIndex !== 0 && (
 						<>
 							<button
 								onClick={goToPrevious}
