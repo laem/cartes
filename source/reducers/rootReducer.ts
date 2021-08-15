@@ -71,6 +71,7 @@ export type Simulation = {
 	foldedSteps: Array<DottedName>
 	unfoldedStep?: DottedName | null
 	unfoldedWasFolded?: Boolean
+	messages: Object
 }
 function getCompanySituation(company: Company | null): Situation {
 	return {
@@ -90,6 +91,12 @@ function simulation(
 	state: Simulation | null = null,
 	action: Action
 ): Simulation | null {
+	if (action.type === 'SET_MESSAGE_READ') {
+		return {
+			...state,
+			messages: { ...state.messages, [action.message]: true },
+		}
+	}
 	if (action.type === 'SET_SIMULATION') {
 		const { config, url } = action
 		if (state && state.config && !action.situation === config) {
@@ -104,6 +111,7 @@ function simulation(
 			foldedSteps: state?.foldedSteps || [],
 			unfoldedStep: null,
 			persona: action.persona,
+			messages: state?.messages || {},
 		}
 	}
 	if (state === null) {
@@ -124,6 +132,7 @@ function simulation(
 				foldedSteps: [],
 				unfoldedStep: null,
 				persona: null,
+				messages: {},
 			}
 		case 'UPDATE_SITUATION': {
 			const targets = objectifsSelector({ simulation: state } as RootState)

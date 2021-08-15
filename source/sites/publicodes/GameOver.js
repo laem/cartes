@@ -35,7 +35,7 @@ const Eraser = ({}) => {
 	)
 }
 
-const Dialog = ({ children }) => (
+export const Dialog = ({ children, noEraser = false }) => (
 	<GameDialog>
 		<div
 			css={`
@@ -53,7 +53,7 @@ const Dialog = ({ children }) => (
 		</div>
 		{children}
 
-		<Eraser />
+		{!noEraser && <Eraser />}
 	</GameDialog>
 )
 export default () => {

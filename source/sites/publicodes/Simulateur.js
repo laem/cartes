@@ -18,8 +18,13 @@ import {
 	sessionBarMargin,
 	useSafePreviousSimulation,
 } from '../../components/SessionBar'
+import { useNextQuestions } from '../../components/utils/useNextQuestion'
 import FuturecoMonochrome from '../../images/FuturecoMonochrome'
-import { situationSelector } from '../../selectors/simulationSelectors'
+import {
+	answeredQuestionsSelector,
+	situationSelector,
+} from '../../selectors/simulationSelectors'
+import { NotBad } from './Congratulations'
 
 const eqValues = compose(isEmpty, symmetricDifference)
 export const colorScale = [
@@ -75,10 +80,20 @@ const Simulateur = (props) => {
 	)
 	useSafePreviousSimulation()
 
+	const nextQuestions = useNextQuestions(),
+		answeredQuestions = useSelector(answeredQuestionsSelector)
+	const messages = useSelector((state) => state.simulation?.messages)
+
 	if (!configSet) return null
 
 	const gameOver = evaluation.nodeValue > limit
+	const answeredRatio = answeredQuestions.length / nextQuestions.length
+	const notBad = answeredRatio >= 0.1
+	console.log('AR', answeredRatio)
+
 	const doomColor = getBackgroundColor(evaluation.nodeValue).toHexString()
+	if (notBad && !messages['notBad'])
+		return <NotBad answeredRatio={answeredRatio} />
 
 	return (
 		<>
