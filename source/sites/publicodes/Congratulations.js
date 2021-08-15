@@ -2,9 +2,15 @@ import emoji from 'react-easy-emoji'
 import { useDispatch } from 'react-redux'
 import { Dialog } from './GameOver'
 import { LoudButton } from './UI'
+import tinygradient from 'tinygradient'
+import { colorScale } from './Simulateur'
 
 export const NotBad = ({ answeredRatio }) => {
 	const dispatch = useDispatch()
+	const number = 20
+	const confettis = [...new Array(number)]
+	const gradientColors = tinygradient(colorScale).rgb(number)
+
 	return (
 		<div
 			css={`
@@ -19,56 +25,17 @@ export const NotBad = ({ answeredRatio }) => {
 					animation: confetti 5s ease-in-out -2s infinite;
 					transform-origin: left top;
 				}
-				.confetti:nth-child(1) {
-					background-color: #f2d74e;
-					left: 10%;
-					animation-delay: 0;
+				${confettis.map(
+					(_, i) => `
+
+				.confetti:nth-child(${i + 1}) {
+					background-color: ${gradientColors[i]};
+					left: ${(100 / confettis.length) * i}%;
+					animation-delay: ${Math.random() * 5 - 5}s;
 				}
-				.confetti:nth-child(2) {
-					background-color: #95c3de;
-					left: 20%;
-					animation-delay: -5s;
-				}
-				.confetti:nth-child(3) {
-					background-color: #ff9a91;
-					left: 30%;
-					animation-delay: -3s;
-				}
-				.confetti:nth-child(4) {
-					background-color: #f2d74e;
-					left: 40%;
-					animation-delay: -2.5s;
-				}
-				.confetti:nth-child(5) {
-					background-color: #95c3de;
-					left: 50%;
-					animation-delay: -4s;
-				}
-				.confetti:nth-child(6) {
-					background-color: #ff9a91;
-					left: 60%;
-					animation-delay: -6s;
-				}
-				.confetti:nth-child(7) {
-					background-color: #f2d74e;
-					left: 70%;
-					animation-delay: -1.5s;
-				}
-				.confetti:nth-child(8) {
-					background-color: #95c3de;
-					left: 80%;
-					animation-delay: -2s;
-				}
-				.confetti:nth-child(9) {
-					background-color: #ff9a91;
-					left: 90%;
-					animation-delay: -3.5s;
-				}
-				.confetti:nth-child(10) {
-					background-color: #f2d74e;
-					left: 100%;
-					animation-delay: -2.5s;
-				}
+
+				`
+				)}
 
 				@keyframes confetti {
 					0% {
@@ -84,12 +51,12 @@ export const NotBad = ({ answeredRatio }) => {
 						transform: rotateZ(5deg) rotateY(1080deg) translate(-10vw, 80vh);
 					}
 					100% {
-						transform: rotateZ(15deg) rotateY(1440deg) translate(10vw, 100vh);
+						transform: rotateZ(15deg) rotateY(1440deg) translate(10vw, 96vh);
 					}
 				}
 			`}
 		>
-			{[...new Array(10)].map((_, i) => (
+			{confettis.map((_, i) => (
 				<div className="confetti" key={i} />
 			))}
 			<Dialog noEraser neutralColor>
