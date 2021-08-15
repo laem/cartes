@@ -6,7 +6,7 @@ import { LoudButton } from './UI'
 export const NotBad = ({ answeredRatio }) => {
 	const dispatch = useDispatch()
 	return (
-		<Dialog noEraser>
+		<Dialog noEraser neutralColor>
 			<h1>Pas mal ! {emoji('🧐')}</h1>
 			<p>
 				Tu as répondu à {Math.round(answeredRatio * 100)}% des questions du

@@ -35,7 +35,7 @@ const Eraser = ({}) => {
 	)
 }
 
-export const Dialog = ({ children, noEraser = false }) => (
+export const Dialog = ({ children, noEraser = false, neutralColor }) => (
 	<GameDialog>
 		<div
 			css={`
@@ -48,7 +48,9 @@ export const Dialog = ({ children, noEraser = false }) => (
 			`}
 		>
 			<Link to="/">
-				<FuturecoMonochrome color={colorScale.slice(-1)[0]} />
+				<FuturecoMonochrome
+					color={neutralColor ? '#2988e6' : colorScale.slice(-1)[0]}
+				/>
 			</Link>
 		</div>
 		{children}
