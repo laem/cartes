@@ -62,8 +62,8 @@ export const NotBad = ({ answeredRatio }) => {
 			<Dialog noEraser neutralColor>
 				<h1>Pas mal ! {emoji('🧐')}</h1>
 				<p>
-					Tu as répondu à {Math.round(answeredRatio * 100)}% des questions du
-					test.
+					Tu as répondu à <strong>{Math.round(answeredRatio * 100)}% </strong>
+					des questions du test.
 				</p>
 				<p>
 					Beaucoup de gens sont <strong>déjà hors-jeu.</strong>
