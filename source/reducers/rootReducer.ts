@@ -70,20 +70,6 @@ export type Simulation = {
 	targetUnit: string
 	foldedSteps: Array<DottedName>
 	unfoldedStep?: DottedName | null
-	unfoldedWasFolded?: Boolean
-}
-function getCompanySituation(company: Company | null): Situation {
-	return {
-		...(company?.localisation && {
-			'établissement . localisation': company.localisation,
-		}),
-		...(company?.dateDeCréation && {
-			'entreprise . date de création': company.dateDeCréation.replace(
-				/(.*)-(.*)-(.*)/,
-				'$3/$2/$1'
-			),
-		}),
-	}
 }
 
 function simulation(
@@ -147,7 +133,9 @@ function simulation(
 			if (name === 'fold')
 				return {
 					...state,
-					foldedSteps: [...without([step], state.foldedSteps), step],
+					foldedSteps: state.foldedSteps.includes(step)
+						? state.foldedSteps
+						: [...state.foldedSteps, step],
 
 					unfoldedStep: null,
 				}
@@ -155,12 +143,8 @@ function simulation(
 				const previousUnfolded = state.unfoldedStep
 				return {
 					...state,
-					foldedSteps: [
-						...without([step], state.foldedSteps),
-						state.unfoldedWasFolded && previousUnfolded,
-					].filter(Boolean),
+					foldedSteps: state.foldedSteps,
 					unfoldedStep: step,
-					unfoldedWasFolded: state.foldedSteps.includes(step),
 				}
 			}
 			return state
