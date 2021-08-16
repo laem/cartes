@@ -141,7 +141,7 @@
 
 - nom: Mehdi d'Agen 
   description: |
-    Va au travail en voiture (~ 40 km AR/jour). Se sert de la voiture partir en vacances/weekend avec sa femme et ses deux enfants.
+    Va au travail en voiture (~ 40 km AR/jour). Prend la voiture pour partir en vacances/weekend avec sa femme et ses 2 enfants.
     Adore la viande.
   icônes: 🚗🥩
   data:
@@ -205,7 +205,7 @@
 
 - nom: Ximun d'Arcangues 
   description: |
-    Va au travail en bus mais utilise sa voiture pour des petits trajets quotidien. Vit avec son frère dans une vieille ferme mal isolée et chauffée au fuel. 
+    Va au travail en bus mais utilise sa voiture pour des petits trajets quotidiens. Vit avec son frère dans une vieille ferme mal isolée et chauffée au fioul. 
   icônes: 🚗🏚️
   data:
     transport . voiture . km:
@@ -282,9 +282,8 @@
 
 - nom: Jessica de Lyon 
   description: |
-    Végétarienne et faisant des efforts au quotidien pour réduire son empreinte. Elle n'a pas de voiture mais prend l'avion pour des weekends en Europe et change de continent 
-    pour les vacances
-  icônes:✈️🌍
+    Végétarienne, fait des efforts au quotidien pour réduire son empreinte. Elle n'a pas de voiture mais prend l'avion pour des weekends en Europe et changer de continent pour les vacances.
+  icônes: ✈️🌍
   data:
     transport . voiture . km:
       valeur: 0
