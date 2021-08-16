@@ -72,6 +72,9 @@ export const CardGrid = styled.ul`
 		flex-direction: column;
 		justify-content: space-evenly;
 		width: 12rem;
+		@media (max-width: 800px) {
+			width: 10rem;
+		}
 		height: 10rem;
 		img {
 			font-size: 150%;
