@@ -30,8 +30,6 @@ export default function Input({
 	const unité = serializeUnit(unit)
 	const { thousandSeparator, decimalSeparator } = currencyFormat(language)
 
-	console.log()
-
 	return (
 		<>
 			<div className="step input">
