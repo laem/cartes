@@ -48,6 +48,7 @@ const Simulateur = (props) => {
 		[]
 	)
 
+	const isMainSimulation = decoded === 'bilan'
 	if (!configSet) return null
 
 	return (
@@ -55,15 +56,16 @@ const Simulateur = (props) => {
 			<Helmet>
 				<title>{rule.title}</title>
 				{rule.description && (
-					<meta name="description" content={rule.description} />
+					<meta name="description" content={evaluation.title} />
 				)}
 			</Helmet>
+			{!isMainSimulation && <h1>{evaluation.title}</h1>}
 			<SessionBar evaluation={evaluation} />
 			<Simulation
 				noFeedback
 				orderByCategories={categories}
 				customEnd={
-					decoded === 'bilan' ? (
+					isMainSimulation ? (
 						<RedirectionToEndPage {...{ rules, engine }} />
 					) : rule.description ? (
 						<Markdown source={rule.description} />
