@@ -24,7 +24,7 @@ import {
 	answeredQuestionsSelector,
 	situationSelector,
 } from '../../selectors/simulationSelectors'
-import { NotBad } from './Congratulations'
+import { NotBad, QuiteGood, Half, Almost } from './Congratulations'
 
 const eqValues = compose(isEmpty, symmetricDifference)
 export const colorScale = [
@@ -88,12 +88,22 @@ const Simulateur = (props) => {
 
 	const gameOver = evaluation.nodeValue > limit
 	const answeredRatio = answeredQuestions.length / nextQuestions.length
-	const notBad = answeredRatio >= 0.1
-	console.log('AR', answeredRatio)
+	const notBad = console.log(
+		'AR',
+		answeredRatio,
+		answeredQuestions.length,
+		nextQuestions.length
+	)
 
 	const doomColor = getBackgroundColor(evaluation.nodeValue).toHexString()
-	if (notBad && !messages['notBad'])
+	if (answeredRatio >= 0.1 && !messages['notBad'])
 		return <NotBad answeredRatio={answeredRatio} />
+	if (answeredRatio >= 0.3 && !messages['quiteGood'])
+		return <QuiteGood answeredRatio={answeredRatio} />
+	if (answeredRatio >= 0.5 && !messages['half'])
+		return <Half answeredRatio={answeredRatio} />
+	if (answeredRatio >= 0.75 && !messages['almost'])
+		return <Almost answeredRatio={answeredRatio} />
 
 	return (
 		<>
