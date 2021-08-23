@@ -94,6 +94,7 @@ export default function Conversation({
 			currentQuestion !== unfoldedStep
 		) {
 			dispatch(goToQuestion(currentQuestion))
+			window.scrollTo(0, 0)
 		}
 	}, [dispatch, currentQuestion, previousAnswers, unfoldedStep])
 
