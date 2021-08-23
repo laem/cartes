@@ -79,8 +79,8 @@ const AnimatedDiv = animated(({ score, value, details, headlessMode }) => {
 			maximumSignificantDigits: 2,
 			minimumSignificantDigits: 2,
 		}),
-		integerValue = roundedValue[0],
-		decimalValue = roundedValue[2],
+		integerValue = roundedValue.split(',')[0],
+		decimalValue = roundedValue.split(',')[1],
 		shareImage =
 			'https://aejkrqosjq.cloudimg.io/v7/' +
 			window.location.origin +
