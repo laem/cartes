@@ -55,9 +55,12 @@
       unité: kWh
     logement . fioul . chauffage au fioul: non
     logement . bois . chauffage au bois: non
-    divers . textile . montant:
-      valeur: 500
-      unité: an
+    divers . textile . chemise . nombre:
+      valeur: 6
+    divers . textile . robe . nombre:
+      valeur: 0
+    divers . textile . manteau . nombre:
+      valeur: 0
     divers . électroménager . montant:
       valeur: 100
       unité: an

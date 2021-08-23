@@ -94,6 +94,7 @@ export default function Conversation({
 			currentQuestion !== unfoldedStep
 		) {
 			dispatch(goToQuestion(currentQuestion))
+			window.scrollTo(0, 0)
 		}
 	}, [dispatch, currentQuestion, previousAnswers, unfoldedStep])
 
@@ -157,7 +158,9 @@ export default function Conversation({
 		) === undefined
 
 	const hasDescription =
-		((mosaicQuestion && mosaicQuestion.description) ||
+		((mosaicQuestion &&
+			(mosaicQuestion.description ||
+				rules[mosaicQuestion.dottedName].rawNode.description)) ||
 			rules[currentQuestion].rawNode.description) != null
 
 	return orderByCategories &&

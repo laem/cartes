@@ -9,7 +9,7 @@ import { updateSituation } from 'Actions/actions'
 import { Mosaic } from './UI'
 import Checkbox from 'Components/ui/Checkbox'
 
-export default function SelectWeeklyDiet({
+export default function SelectDevices({
 	name,
 	setFormValue,
 	selectedRules,
