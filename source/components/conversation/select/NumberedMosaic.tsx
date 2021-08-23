@@ -11,7 +11,7 @@ import { Mosaic } from './UI'
 // This is the number of possible answers in this very custom input component
 const chipsTotal = 14
 
-export default function SelectWeeklyDiet({
+export default function NumberedMosaic({
 	name,
 	setFormValue,
 	selectedRules,

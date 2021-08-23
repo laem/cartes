@@ -1,4 +1,4 @@
-import SelectWeeklyDiet from './select/SelectWeeklyDiet'
+import NumberedMosaic from './select/NumberedMosaic'
 import SelectDevices from './select/SelectDevices'
 import { DottedName } from 'Rules'
 
@@ -55,7 +55,7 @@ Choisissez 14 plats qui représentent votre semaine type : 7 midi et 7 dîners.
 		isApplicable: (dottedName: DottedName) =>
 			dottedName.includes('alimentation . plats') &&
 			dottedName.includes(' . nombre'),
-		component: SelectWeeklyDiet,
+		component: NumberedMosaic,
 		options: { chipsTotal: 14 },
 	},
 	{
@@ -64,7 +64,7 @@ Choisissez 14 plats qui représentent votre semaine type : 7 midi et 7 dîners.
 		isApplicable: (dottedName: DottedName) =>
 			dottedName.includes('divers . textile') &&
 			dottedName.includes(' . nombre'),
-		component: SelectWeeklyDiet,
+		component: NumberedMosaic,
 	},
 ]
 
