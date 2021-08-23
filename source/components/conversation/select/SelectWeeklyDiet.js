@@ -17,6 +17,7 @@ export default function SelectWeeklyDiet({
 	selectedRules,
 	value: currentValue,
 	question,
+	options: { chipsTotal },
 }) {
 	const dispatch = useDispatch()
 	const situation = useSelector(situationSelector)
@@ -94,19 +95,23 @@ export default function SelectWeeklyDiet({
 					}
 				)}
 			</Mosaic>
-			<div css="p {text-align: center}">
-				{chipsCount > chipsTotal ? (
-					<p css="text-decoration: underline; text-decoration-color: red;   text-decoration-thickness: 0.2rem;">
-						Vous avez fait {chipsCount - chipsTotal} choix en trop !
-					</p>
-				) : chipsCount === chipsTotal ? (
-					<p>{emoji('😋👍')}</p>
-				) : (
-					<p css="text-decoration: underline; text-decoration-color: yellow; text-decoration-thickness: 0.2rem;">
-						Il vous reste {chipsTotal - chipsCount} choix à faire.
-					</p>
-				)}
-			</div>
+			/* If "chipsTotal" is specified, show to the user the exact number of
+			choices that must be filled */
+			{chipsTotal && (
+				<div css="p {text-align: center}">
+					{chipsCount > chipsTotal ? (
+						<p css="text-decoration: underline; text-decoration-color: red;   text-decoration-thickness: 0.2rem;">
+							Vous avez fait {chipsCount - chipsTotal} choix en trop !
+						</p>
+					) : chipsCount === chipsTotal ? (
+						<p>{emoji('😋👍')}</p>
+					) : (
+						<p css="text-decoration: underline; text-decoration-color: yellow; text-decoration-thickness: 0.2rem;">
+							Il vous reste {chipsTotal - chipsCount} choix à faire.
+						</p>
+					)}
+				</div>
+			)}
 		</div>
 	)
 

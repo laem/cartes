@@ -56,6 +56,7 @@ Choisissez 14 plats qui représentent votre semaine type : 7 midi et 7 dîners.
 			dottedName.includes('alimentation . plats') &&
 			dottedName.includes(' . nombre'),
 		component: SelectWeeklyDiet,
+		options: { chipsTotal: 14 },
 	},
 	{
 		dottedName: 'divers . textile',
