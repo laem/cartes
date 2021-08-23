@@ -24,15 +24,18 @@ export default ({ data }) => {
 		}, shareDataPopupTimeout)
 	}, [null])
 	function onReject() {
-		setIsOpen(false)
 		window.parent.postMessage(
 			{ error: 'The user refused to share his result.' },
 			'*'
 		)
+		setIsOpen(false)
 	}
 	function onAccept() {
-		setIsOpen(false)
 		window.parent.postMessage(data, '*')
+		setIsOpen(false)
+	}
+	function onClose() {
+		setIsOpen(false)
 	}
 	const parent = new URL(document.referrer).hostname
 	const text = (
@@ -52,7 +55,7 @@ export default ({ data }) => {
 
 	if (!isOpen) return null
 	return (
-		<Overlay onClose={onReject}>
+		<Overlay onClose={onClose}>
 			<div className="">
 				<div className="">
 					<h2>Partage de vos résultats à {parent} ?</h2>
@@ -64,10 +67,10 @@ export default ({ data }) => {
 							padding: 1rem;
 						`}
 					>
-						<button onClick={onReject} className="ui__ plain button">
+						<button onClick={onAccept} className="ui__ plain button">
 							{emoji('👍')} Accepter
 						</button>
-						<button onClick={onAccept} className="ui__ button ">
+						<button onClick={onReject} className="ui__ button ">
 							{emoji('👎')} refuser
 						</button>
 					</div>
