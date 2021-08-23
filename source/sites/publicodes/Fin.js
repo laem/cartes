@@ -5,7 +5,7 @@ import tinygradient from 'tinygradient'
 import { animated, useSpring } from 'react-spring'
 import ShareButton from 'Components/ShareButton'
 import { findContrastedTextColor } from 'Components/utils/colors'
-import { motion } from 'framer-motion'
+import { AnimatePresence, motion } from 'framer-motion'
 
 import BallonGES from './images/ballonGES.svg'
 import StartingBlock from './images/starting block.svg'
@@ -75,7 +75,12 @@ const AnimatedDiv = animated(({ score, value, details, headlessMode }) => {
 	const backgroundColor = getBackgroundColor(value).toHexString(),
 		backgroundColor2 = getBackgroundColor(value + 2000).toHexString(),
 		textColor = findContrastedTextColor(backgroundColor, true),
-		roundedValue = Math.round(value / 1000),
+		roundedValue = (value / 1000).toLocaleString('fr-FR', {
+			maximumSignificantDigits: 2,
+			minimumSignificantDigits: 2,
+		}),
+		integerValue = roundedValue[0],
+		decimalValue = roundedValue[2],
 		shareImage =
 			'https://aejkrqosjq.cloudimg.io/v7/' +
 			window.location.origin +
@@ -126,8 +131,24 @@ const AnimatedDiv = animated(({ score, value, details, headlessMode }) => {
 							`}
 						>
 							<div css="font-weight: bold; font-size: 280%;">
-								<span css="width: 3.6rem; text-align: right; display: inline-block">
-									{roundedValue}
+								<span css="width: 4rem; text-align: right; display: inline-block">
+									{integerValue}
+									{score < 10000 && (
+										<AnimatePresence>
+											{(score - value) / score < 0.01 && (
+												<motion.small
+													initial={{ opacity: 0, width: 0 }}
+													animate={{ opacity: 1, width: 'auto' }}
+													css={`
+														color: inherit;
+														font-size: 60%;
+													`}
+												>
+													,{decimalValue}
+												</motion.small>
+											)}
+										</AnimatePresence>
+									)}
 								</span>{' '}
 								tonnes
 							</div>
