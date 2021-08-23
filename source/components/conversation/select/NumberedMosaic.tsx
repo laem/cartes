@@ -95,8 +95,8 @@ export default function NumberedMosaic({
 					}
 				)}
 			</Mosaic>
-			/* If "chipsTotal" is specified, show to the user the exact number of
-			choices that must be filled */
+			{/* If "chipsTotal" is specified, show to the user the exact number of
+			choices that must be filled */}
 			{chipsTotal && (
 				<div css="p {text-align: center}">
 					{chipsCount > chipsTotal ? (
