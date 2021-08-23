@@ -59,8 +59,14 @@ export default function SelectWeeklyDiet({
 						return (
 							<li className="ui__ card interactive" key={name}>
 								<h4>{title}</h4>
-								<div>{emoji(icônes)}</div>
-								<p>{description.split('\n')[0]}</p>
+								<div
+									css={`
+										${!description ? 'font-size: 200%' : ''}
+									`}
+								>
+									{icônes && emoji(icônes)}
+								</div>
+								<p>{description && description.split('\n')[0]}</p>
 								<div css={' span {margin: .8rem; font-size: 120%}'}>
 									<button
 										className={`ui__ button small plain ${

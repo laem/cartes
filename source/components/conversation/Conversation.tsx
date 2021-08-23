@@ -158,6 +158,7 @@ export default function Conversation({
 
 	const hasDescription =
 		((mosaicQuestion && mosaicQuestion.description) ||
+			rules[mosaicQuestion.dottedName].rawNode.description ||
 			rules[currentQuestion].rawNode.description) != null
 
 	return orderByCategories &&

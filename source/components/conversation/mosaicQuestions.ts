@@ -57,6 +57,14 @@ Choisissez 14 plats qui représentent votre semaine type : 7 midi et 7 dîners.
 			dottedName.includes(' . nombre'),
 		component: SelectWeeklyDiet,
 	},
+	{
+		dottedName: 'divers . textile',
+		question: 'Quels vêtements achetez-vous en général dans une année ?',
+		isApplicable: (dottedName: DottedName) =>
+			dottedName.includes('divers . textile') &&
+			dottedName.includes(' . nombre'),
+		component: SelectWeeklyDiet,
+	},
 ]
 
 export default mosaicQuestions
