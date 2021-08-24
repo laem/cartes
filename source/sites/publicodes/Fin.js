@@ -86,7 +86,6 @@ const AnimatedDiv = animated(({ score, value, details, headlessMode }) => {
 			window.location.origin +
 			'/.netlify/functions/ending-screenshot?pageToScreenshot=' +
 			window.location
-
 	return (
 		<div css="padding: 0 .3rem 1rem; max-width: 600px; margin: 0 auto;">
 			<Meta
@@ -193,6 +192,7 @@ const AnimatedDiv = animated(({ score, value, details, headlessMode }) => {
 										<a
 											css="color: inherit"
 											href="https://datagir.ademe.fr/blog/budget-empreinte-carbone-c-est-quoi/"
+											target="_blank"
 										>
 											Comment ça ?
 										</a>
