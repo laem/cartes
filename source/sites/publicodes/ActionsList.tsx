@@ -3,18 +3,21 @@ import IllustratedButton from 'Components/IllustratedButton'
 import { extractCategories, splitName } from 'Components/publicodesUtils'
 import SessionBar from 'Components/SessionBar'
 import { EngineContext } from 'Components/utils/EngineContext'
+import { motion } from 'framer-motion'
 import { utils } from 'publicodes'
 import { partition, sortBy } from 'ramda'
 import React, { useContext, useEffect, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { useLocation, useParams } from 'react-router'
 import { objectifsSelector } from 'Selectors/simulationSelectors'
+import styled from 'styled-components'
 import { correctValue } from '../../components/publicodesUtils'
 import { sessionBarMargin } from '../../components/SessionBar'
 import {
 	answeredQuestionsSelector,
 	configSelector,
 } from '../../selectors/simulationSelectors'
+import ActionStack from './ActionStack'
 import ActionVignette, { disabledAction } from './ActionVignette'
 
 const { encodeRuleName, decodeRuleName } = utils
@@ -26,7 +29,7 @@ export default ({}) => {
 	const rules = useSelector((state) => state.rules)
 	const flatActions = rules['actions']
 
-	const [radical, setRadical] = useState(true)
+	const radical = true
 
 	const simulation = useSelector((state) => state.simulation)
 
@@ -90,6 +93,35 @@ export default ({}) => {
 			`}
 		>
 			<SessionBar />
+			<div
+				css={`
+					text-align: center;
+					display: flex;
+					justify-content: center;
+					align-content: center;
+					height: 60vh;
+					width: 100vw;
+				`}
+			>
+				<ActionStack onVote={(item, vote) => console.log(item.props, vote)}>
+					<Item
+						className="plop"
+						data-value="pancakes"
+						whileTap={{ scale: 1.15 }}
+					>
+						🥩
+					</Item>
+					<Item className="plop" data-value="1" whileTap={{ scale: 1.15 }}>
+						💸
+					</Item>
+					<Item className="plop" data-value="2" whileTap={{ scale: 1.15 }}>
+						🚗
+					</Item>
+					<Item className="plop" data-value="3" whileTap={{ scale: 1.15 }}>
+						🚴‍
+					</Item>
+				</ActionStack>
+			</div>
 			{finalActions.map((evaluation) => (
 				<ActionVignette
 					key={evaluation.dottedName}
@@ -118,3 +150,19 @@ export default ({}) => {
 		</div>
 	)
 }
+
+const Item = styled(motion.div)`
+	width: 200px;
+	height: 250px;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	font-size: 80px;
+	text-shadow: 0 10px 10px #d1d5db;
+	box-shadow: 0 0 20px rgba(0, 0, 0, 0.15);
+	border-radius: 8px;
+	transform: ${() => {
+		let rotation = Math.random() * (5 - -5) + -5
+		return `rotate(${rotation}deg)`
+	}};
+`
