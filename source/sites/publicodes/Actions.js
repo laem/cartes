@@ -134,62 +134,31 @@ const ActionList = animated(({}) => {
 			`}
 		>
 			<SessionBar />
-			{!mode ? (
-				<ModeChoice />
-			) : (
-				<>
-					<h1 css="margin: 1rem 0 .6rem;font-size: 160%">
-						Comment réduire mon empreinte ?
-					</h1>
-					<button
-						css="margin-bottom: .8rem; display: inline-block"
-						onClick={() => dispatch(setActionMode(null))}
-					>
-						Mode {mode}
-					</button>
-					<CategoryFilters
-						categories={categories}
-						selected={category}
-						countByCategory={countByCategory}
-					/>
-					{mode === 'autonome' && (
-						<button onClick={() => setRadical(!radical)}>
-							Trié par :{' '}
-							{radical ? (
-								<span>le plus d'impact {emoji('📉')}</span>
-							) : (
-								<span>le moins d'impact{emoji('📈')}</span>
-							)}
-						</button>
-					)}
-					{finalActions.map((evaluation) => (
-						<ActionVignette
-							key={evaluation.dottedName}
-							rule={rules[evaluation.dottedName]}
-							evaluation={evaluation}
-							total={bilans.length ? bilans[0].nodeValue : null}
-							effort={
-								mode === 'guidé' &&
-								effortScale[rules[evaluation.dottedName].effort]
-							}
-						/>
-					))}
-					<div css="font-size: 100%; text-align: center">
-						<em>en CO₂e / an et proportion de votre total</em>
-					</div>
-					<IllustratedButton to={'/actions/plus'} icon="📚">
-						<div>
-							<div>Comprendre les actions</div>
-							<p>
-								<small>
-									Au-delà d'un simple chiffre, découvrez les enjeux qui se
-									cachent derrière chaque action.
-								</small>
-							</p>
-						</div>
-					</IllustratedButton>
-				</>
-			)}
+			{finalActions.map((evaluation) => (
+				<ActionVignette
+					key={evaluation.dottedName}
+					rule={rules[evaluation.dottedName]}
+					evaluation={evaluation}
+					total={bilans.length ? bilans[0].nodeValue : null}
+					effort={
+						mode === 'guidé' && effortScale[rules[evaluation.dottedName].effort]
+					}
+				/>
+			))}
+			<div css="font-size: 100%; text-align: center">
+				<em>en CO₂e / an et proportion de votre total</em>
+			</div>
+			<IllustratedButton to={'/actions/plus'} icon="📚">
+				<div>
+					<div>Comprendre les actions</div>
+					<p>
+						<small>
+							Au-delà d'un simple chiffre, découvrez les enjeux qui se cachent
+							derrière chaque action.
+						</small>
+					</p>
+				</div>
+			</IllustratedButton>
 		</div>
 	)
 })
