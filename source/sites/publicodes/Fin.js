@@ -14,6 +14,7 @@ import Chart from './chart'
 import { Link } from 'react-router-dom'
 import Meta from '../../components/utils/Meta'
 import DefaultFootprint from './DefaultFootprint'
+import { sessionBarMargin } from '../../components/SessionBar'
 
 const gradient = tinygradient([
 		'#78e08f',
@@ -87,7 +88,14 @@ const AnimatedDiv = animated(({ score, value, details, headlessMode }) => {
 			'/.netlify/functions/ending-screenshot?pageToScreenshot=' +
 			window.location
 	return (
-		<div css="padding: 0 .3rem 1rem; max-width: 600px; margin: 0 auto;">
+		<div
+			css={`
+				padding: 0 0.3rem 1rem;
+				max-width: 600px;
+				margin: 0 auto;
+				${sessionBarMargin}
+			`}
+		>
 			<Meta
 				title="Nos Gestes Climat"
 				description={`Mon empreinte climat est de ${roundedValue} tonnes de CO2e. Mesure la tienne !`}
@@ -118,7 +126,7 @@ const AnimatedDiv = animated(({ score, value, details, headlessMode }) => {
 					font-size: 110%;
 				`}
 			>
-				<div id="shareImage" css="padding: 2rem 0">
+				<div id="shareImage" css="padding: 2rem 0 0">
 					<div css="display: flex; align-items: center; justify-content: center">
 						<img src={BallonGES} css="height: 10rem" />
 						<div
