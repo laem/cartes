@@ -127,7 +127,7 @@ const AnimatedDiv = animated(({ score, value, details, headlessMode }) => {
 					font-size: 110%;
 				`}
 			>
-				<div id="shareImage" css="padding: 2rem 0">
+				<div id="shareImage" css="padding: 2rem 0 0">
 					<div css="display: flex; align-items: center; justify-content: center">
 						<img src={BallonGES} css="height: 10rem" />
 						<div
