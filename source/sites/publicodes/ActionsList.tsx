@@ -104,35 +104,22 @@ export default ({}) => {
 				`}
 			>
 				<ActionStack onVote={(item, vote) => console.log(item.props, vote)}>
-					<Item
-						className="plop"
-						data-value="pancakes"
-						whileTap={{ scale: 1.15 }}
-					>
-						🥩
-					</Item>
-					<Item className="plop" data-value="1" whileTap={{ scale: 1.15 }}>
-						💸
-					</Item>
-					<Item className="plop" data-value="2" whileTap={{ scale: 1.15 }}>
-						🚗
-					</Item>
-					<Item className="plop" data-value="3" whileTap={{ scale: 1.15 }}>
-						🚴‍
-					</Item>
+					{finalActions.map((evaluation) => (
+						<Item
+							className="plop"
+							data-value={evaluation.dottedName}
+							whileTap={{ scale: 1.15 }}
+						>
+							<ActionVignette
+								key={evaluation.dottedName}
+								rule={rules[evaluation.dottedName]}
+								evaluation={evaluation}
+								total={bilans.length ? bilans[0].nodeValue : null}
+							/>
+						</Item>
+					))}
 				</ActionStack>
 			</div>
-			{finalActions.map((evaluation) => (
-				<ActionVignette
-					key={evaluation.dottedName}
-					rule={rules[evaluation.dottedName]}
-					evaluation={evaluation}
-					total={bilans.length ? bilans[0].nodeValue : null}
-					effort={
-						mode === 'guidé' && effortScale[rules[evaluation.dottedName].effort]
-					}
-				/>
-			))}
 			<div css="font-size: 100%; text-align: center">
 				<em>en CO₂e / an et proportion de votre total</em>
 			</div>

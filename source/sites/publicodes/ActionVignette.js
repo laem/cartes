@@ -38,82 +38,19 @@ export default ({ evaluation, total, rule, effort }) => {
 			`}
 			to={'/actions/' + encodeRuleName(dottedName)}
 		>
-			<motion.div
-				animate={{ scale: [0.85, 1] }}
-				transition={{ duration: 0.2, ease: 'easeIn' }}
-				className="ui__ card"
-				css={`
-					margin: 1rem auto;
-					border-radius: 0.6rem;
-					padding: 0.6rem;
-
-					text-align: center;
-					font-size: 100%;
-					h2 {
-						font-size: 130%;
-						font-weight: normal;
-						margin: 0.5rem 0;
-						text-align: left;
-					}
-					> h2 > span > img {
-						margin-right: 0.4rem !important;
-					}
-				`}
-			>
+			<div css={``}>
 				<h2>{title}</h2>
-				<div
-					css={`
-						display: flex;
-						justify-content: start;
-						align-items: center;
-					`}
-				>
-					{icons && (
-						<div
-							css={`
-								font-size: 200%;
-								width: 5rem;
-								margin-right: 1rem;
-								img {
-									margin-top: 0.4rem !important;
-								}
-							`}
-						>
-							{emoji(icons)}
-						</div>
-					)}
+				<div css={``}>
+					{icons && <div css={``}>{emoji(icons)}</div>}
 					<div
 						css={`
-							display: flex;
-							flex-direction: column;
-							justify-content: space-between;
-							align-items: flex-start;
-							width: 75%;
-							max-width: 16rem;
+							display: none;
 						`}
 					>
-						{effort && (
-							<div
-								css={`
-									display: flex;
-									justify-content: space-start;
-									width: 100%;
-									div:first-child {
-										width: 6rem;
-									}
-									img {
-										font-size: 120%;
-									}
-								`}
-							>
-								<div>Difficulté&nbsp;</div>
-								<span>{[...new Array(effort)].map((i) => emoji('💪'))}</span>
-							</div>
-						)}
 						<ActionValue {...{ total, nodeValue, unit, disabled, noFormula }} />
 					</div>
 				</div>
-			</motion.div>
+			</div>
 		</Link>
 	)
 }
