@@ -5,7 +5,7 @@ import tinygradient from 'tinygradient'
 import { animated, useSpring } from 'react-spring'
 import ShareButton from 'Components/ShareButton'
 import { findContrastedTextColor } from 'Components/utils/colors'
-import { motion } from 'framer-motion'
+import { AnimatePresence, motion } from 'framer-motion'
 
 import BallonGES from './images/ballonGES.svg'
 import StartingBlock from './images/starting block.svg'
@@ -14,6 +14,7 @@ import Chart from './chart'
 import { Link } from 'react-router-dom'
 import Meta from '../../components/utils/Meta'
 import DefaultFootprint from './DefaultFootprint'
+import { sessionBarMargin } from '../../components/SessionBar'
 
 const gradient = tinygradient([
 		'#78e08f',
@@ -75,15 +76,26 @@ const AnimatedDiv = animated(({ score, value, details, headlessMode }) => {
 	const backgroundColor = getBackgroundColor(value).toHexString(),
 		backgroundColor2 = getBackgroundColor(value + 2000).toHexString(),
 		textColor = findContrastedTextColor(backgroundColor, true),
-		roundedValue = Math.round(value / 1000),
+		roundedValue = (value / 1000).toLocaleString('fr-FR', {
+			maximumSignificantDigits: 2,
+			minimumSignificantDigits: 2,
+		}),
+		integerValue = roundedValue.split(',')[0],
+		decimalValue = roundedValue.split(',')[1],
 		shareImage =
 			'https://aejkrqosjq.cloudimg.io/v7/' +
 			window.location.origin +
 			'/.netlify/functions/ending-screenshot?pageToScreenshot=' +
 			window.location
-
 	return (
-		<div css="padding: 0 .3rem 1rem; max-width: 600px; margin: 0 auto;">
+		<div
+			css={`
+				padding: 0 0.3rem 1rem;
+				max-width: 600px;
+				margin: 0 auto;
+				${sessionBarMargin}
+			`}
+		>
 			<Meta
 				title="Nos Gestes Climat"
 				description={`Mon empreinte climat est de ${roundedValue} tonnes de CO2e. Mesure la tienne !`}
@@ -114,7 +126,7 @@ const AnimatedDiv = animated(({ score, value, details, headlessMode }) => {
 					font-size: 110%;
 				`}
 			>
-				<div id="shareImage" css="padding: 2rem 0">
+				<div id="shareImage" css="padding: 2rem 0 0">
 					<div css="display: flex; align-items: center; justify-content: center">
 						<img src={BallonGES} css="height: 10rem" />
 						<div
@@ -126,8 +138,24 @@ const AnimatedDiv = animated(({ score, value, details, headlessMode }) => {
 							`}
 						>
 							<div css="font-weight: bold; font-size: 280%;">
-								<span css="width: 3.6rem; text-align: right; display: inline-block">
-									{roundedValue}
+								<span css="width: 4rem; text-align: right; display: inline-block">
+									{integerValue}
+									{score < 10000 && (
+										<AnimatePresence>
+											{(score - value) / score < 0.01 && (
+												<motion.small
+													initial={{ opacity: 0, width: 0 }}
+													animate={{ opacity: 1, width: 'auto' }}
+													css={`
+														color: inherit;
+														font-size: 60%;
+													`}
+												>
+													,{decimalValue}
+												</motion.small>
+											)}
+										</AnimatePresence>
+									)}
 								</span>{' '}
 								tonnes
 							</div>
@@ -172,6 +200,7 @@ const AnimatedDiv = animated(({ score, value, details, headlessMode }) => {
 										<a
 											css="color: inherit"
 											href="https://datagir.ademe.fr/blog/budget-empreinte-carbone-c-est-quoi/"
+											target="_blank"
 										>
 											Comment ça ?
 										</a>

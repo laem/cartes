@@ -55,9 +55,12 @@
       unité: kWh
     logement . fioul . chauffage au fioul: non
     logement . bois . chauffage au bois: non
-    divers . textile . montant:
-      valeur: 500
-      unité: an
+    divers . textile . chemise . nombre:
+      valeur: 6
+    divers . textile . robe . nombre:
+      valeur: 0
+    divers . textile . manteau . nombre:
+      valeur: 0
     divers . électroménager . montant:
       valeur: 100
       unité: an
@@ -77,7 +80,7 @@
 - nom: Sandy de Pacé
   icônes: 🚗🏡
   description: |
-    Vit à 11km de Rennes. 20 000km de voiture. Grande maison partagée à 3.
+    Vit à 11km de Rennes. 20 000km de voiture presque toujours seule. Grande maison partagée à 3.
   data: 
     alimentation . déchets . niveau d'engagement: "'en partie'"
     alimentation . petit déjeuner . type: "'lait céréales'"
@@ -91,21 +94,58 @@
     alimentation . boisson . eau en bouteille . affirmatif: oui
     alimentation . plats . viande 2 . nombre: 8
     alimentation . plats . viande 1 . nombre: 0
-    transport . voiture . km:
-      valeur: 20000
-      unité: km / an
     logement . surface:
       valeur: 150
       unité: m2
     logement . habitants:
       valeur: 3
       unité: personnes
+    transport . voiture . km:
+      valeur: 20000
+      unité: km / an
+    transport . voiture . propriétaire: oui
+    transport . voiture . gabarit: "'moyenne'"
+    transport . voiture . âge:
+      valeur: 3
+      unité: années
+    transport . voiture . motorisation: "'thermique'"
+    transport . voiture . voyageurs:
+      valeur: 1
+      unité: voyageurs
+    transport . voiture . thermique . consommation aux 100:
+      valeur: 7
+      unité: l / centkm
+    transport . deux roues thermique . usager: non
+    transport . avion . usager: non
+    transport . bus . heures par semaine:
+      valeur: 0
+      unité: heure / semaine
+    transport . train . km:
+      valeur: 0
+      unité: km / an
+    transport . métro ou tram . heures par semaine:
+      valeur: 0
+      unité: heure / semaine
+    transport . vélo . km:
+      valeur: 0
+      unité: km
+    transport . jours travaillés en voiture:
+      valeur: 5
+      unité: jours
+    transport . boulot . distance:
+      valeur: 11
+      unité: km
+    transport . boulot . commun . type: "'tramway'"
+    transport . boulot . télétravail . compatible: "'non'"
+    transport . voiture 5km . fréquence:
+      valeur: 15
+      unité: trajets
 
 
 - nom: Mehdi d'Agen 
   description: |
-    Va au travail en voiture. Adore la viande. Se sert de la voiture partir en vacances/weekend avec sa femme et ses deux enfants
-    Maison de 100 m2 chauffée à l'electrique. 
+    Va au travail en voiture (~ 40 km AR/jour). Prend la voiture pour partir en vacances/weekend avec sa femme et ses 2 enfants.
+    Adore la viande.
   icônes: 🚗🥩
   data:
     alimentation . déchets . niveau d'engagement: "'pas du tout'"
@@ -151,11 +191,24 @@
     transport . vélo . km:
       valeur: 0
       unité: km
-
+    transport . jours travaillés en voiture:
+      valeur: 5
+      unité: jours
+    transport . boulot . distance:
+      valeur: 20
+      unité: km
+    transport . boulot . commun . type: "'bus'"
+    transport . boulot . télétravail . compatible: "'oui'"
+    transport . boulot . jours télétravaillés:
+      valeur: 2
+      unité: jours
+    transport . voiture 5km . fréquence:
+      valeur: 7
+      unité: trajets
 
 - nom: Ximun d'Arcangues 
   description: |
-    Va au travail en bus mais utilise sa voiture pour des petits trajets quotidien. Vit avec son frère dans une vieille ferme mal isolée et chauffée au fuel. 
+    Va au travail en bus mais utilise sa voiture pour des petits trajets quotidiens. Vit avec son frère dans une vieille ferme mal isolée et chauffée au fioul. 
   icônes: 🚗🏚️
   data:
     transport . voiture . km:
@@ -207,3 +260,86 @@
       valeur: 15000
       unité: kWh
     logement . bois . chauffage au bois: non
+    
+    
+- nom: Marie de Laval
+  description: |
+    Grande amatrice de viande et de bière. Boit de l'eau en bouteille et aime la boisson.
+  icônes: 🚗🥩
+  data:
+    alimentation . déchets . niveau d'engagement: "'pas du tout'"
+    alimentation . petit déjeuner . type: "'lait céréales'"
+    alimentation . lait . type: "'lait de vache'"
+    alimentation . boisson . sucrées . litres:
+      valeur: 2
+      unité: l / semaine
+    alimentation . boisson . alcool . litres:
+      valeur: 4
+      unité: l / semaine
+    alimentation . boisson . eau en bouteille . affirmatif: oui
+    alimentation . plats . viande 2 . nombre: 7
+    alimentation . plats . viande 1 . nombre: 7
+    alimentation . plats . végétarien . nombre: 0
+    alimentation . plats . végétalien . nombre: 0
+
+
+- nom: Jessica de Lyon 
+  description: |
+    Végétarienne, fait des efforts au quotidien pour réduire son empreinte. Elle n'a pas de voiture mais prend l'avion pour des weekends en Europe et changer de continent pour les vacances.
+  icônes: ✈️🌍
+  data:
+    transport . voiture . km:
+      valeur: 0
+      unité: km / an
+    transport . voiture . propriétaire: non
+    transport . deux roues thermique . usager: non
+    transport . avion . usager: oui
+    transport . avion . court courrier . heures de vol:
+      valeur: 8
+      unité: kgCO2e/km
+    transport . avion . moyen courrier . heures de vol:
+      valeur: 6
+      unité: kgCO2e/km
+    transport . avion . long courrier . heures de vol:
+      valeur: 14
+      unité: kgCO2e/km
+
+
+- nom: Zoé de Damblain
+  description: |
+    Habite en zone rurale. Magasinière de nuit dans un entrepôt de distribution à 20 km de son domicile. Va au travail en voiture car les bus ne tournent pas de nuit
+    Prend aussi sa voiture pour des trajets de -5km
+  icônes: 🚗🌙
+  data:
+    transport . voiture . km:
+      valeur: 17000
+      unité: km / an
+    transport . voiture . propriétaire: oui
+    transport . voiture . gabarit: "'moyenne'"
+    transport . voiture . âge:
+      valeur: 5
+      unité: années
+    transport . voiture . motorisation: "'thermique'"
+    transport . voiture . voyageurs:
+      valeur: 1.15 # 12 000 km seul et 5000 km avec un taux moyen de 1,5
+      unité: voyageurs
+    transport . voiture . thermique . consommation aux 100:
+      valeur: 7
+      unité: l / centkm
+    transport . deux roues thermique . usager: non
+    transport . avion . usager: non
+    transport . bus . heures par semaine:
+      valeur: 0
+      unité: heure / semaine
+    transport . train . km:
+      valeur: 0
+      unité: km / an
+    transport . métro ou tram . heures par semaine:
+      valeur: 0
+      unité: heure / semaine
+    transport . vélo . km:
+      valeur: 0
+      unité: km
+      
+      
+ 

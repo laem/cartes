@@ -84,6 +84,7 @@ const Simulateur = (props) => {
 		answeredQuestions = useSelector(answeredQuestionsSelector)
 	const messages = useSelector((state) => state.simulation?.messages)
 
+	const isMainSimulation = decoded === 'bilan'
 	if (!configSet) return null
 
 	const gameOver = evaluation.nodeValue > limit

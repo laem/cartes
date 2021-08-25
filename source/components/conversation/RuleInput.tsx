@@ -105,6 +105,7 @@ export default function RuleInput<Name extends string = DottedName>({
 				{...{
 					...commonProps,
 					selectedRules,
+					options: question.options || {},
 				}}
 			/>
 		)
