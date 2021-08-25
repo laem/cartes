@@ -11,8 +11,30 @@ alimentation . plats . viande 2 . nombre: 0
 alimentation . petit déjeuner . type: "'aucun'"
 alimentation . lait . lait végétal: oui
 alimentation . déchets . niveau d'engagement: "'affirmatif'"
-divers . textile . montant: 0
-divers . électroménager . montant: 0
+divers . textile . t-shirt . nombre: 0
+divers . textile . pantalon . nombre: 0
+divers . textile . short . nombre: 0
+divers . textile . sweat . nombre: 0
+divers . textile . robe . nombre: 0
+divers . textile . chemise . nombre: 0
+divers . textile . pull . nombre: 0
+divers . textile . chaussure . nombre: 0
+divers . textile . manteau . nombre: 0
+divers . textile . petit article . nombre: 0
+divers . textile . gros article . nombre: 0
+divers . électroménager . réfrigérateur . présent: non
+divers . électroménager . mini réfrigérateur . présent: non
+divers . électroménager . lave-linge . présent: non
+divers . électroménager . sèche-linge . présent: non
+divers . électroménager . lave-vaisselle . présent: non
+divers . électroménager . four . présent: non
+divers . électroménager . micro-ondes . présent: non
+divers . électroménager . plaques . présent: non
+divers . électroménager . bouilloire . présent: non
+divers . électroménager . cafetière . présent: non
+divers . électroménager . aspirateur . présent: non
+divers . électroménager . robot cuisine . présent: non
+divers . électroménager . tondeuse électrique . présent: non
 divers . autres produits . montant: 0
 logement . habitants: 9
 logement . surface: 0
