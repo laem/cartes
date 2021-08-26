@@ -24,7 +24,11 @@ import {
 	answeredQuestionsSelector,
 	situationSelector,
 } from '../../selectors/simulationSelectors'
-import { NotBad, QuiteGood, Half, Almost } from './Congratulations'
+import {
+	deletePreviousSimulation,
+	resetSimulation,
+} from '../../actions/actions'
+import { NotBad, QuiteGood, Half, Almost, Done } from './Congratulations'
 
 const eqValues = compose(isEmpty, symmetricDifference)
 export const colorScale = [
@@ -78,6 +82,20 @@ const Simulateur = (props) => {
 				: () => null,
 		[]
 	)
+
+	useEffect(() => {
+		const handleKeyDown = (e) => {
+			if (!(e.ctrlKey && e.key === 'c')) return
+			dispatch(resetSimulation())
+			dispatch(deletePreviousSimulation())
+			e.preventDefault()
+			return false
+		}
+		window.addEventListener('keydown', handleKeyDown)
+		return () => {
+			window.removeEventListener('keydown', handleKeyDown)
+		}
+	}, [])
 	useSafePreviousSimulation()
 
 	const nextQuestions = useNextQuestions(),
@@ -106,6 +124,7 @@ const Simulateur = (props) => {
 		return <Half answeredRatio={answeredRatio} />
 	if (answeredRatio >= 0.75 && !messages['almost'])
 		return <Almost answeredRatio={answeredRatio} />
+	if (!nextQuestions.length) return <Done />
 
 	return (
 		<>

@@ -66,7 +66,7 @@ export const Almost = ({ answeredRatio }) => (
 		name={'almost'}
 		buttonText="En finir !"
 	>
-		<h1>Oh la la ! {emoji('😍')}</h1>
+		<h1>Oh la la ! {emoji('😃')}</h1>
 		<p>
 			Tu as répondu à <strong>{Math.round(answeredRatio * 100)}% </strong>
 			des questions du test.
@@ -75,6 +75,19 @@ export const Almost = ({ answeredRatio }) => (
 			C'est <strong>remarquable</strong> !
 		</p>
 		<p>Plus qu'un dernier bout de chemin à faire...</p>
+	</CongratulationScreen>
+)
+export const Done = () => (
+	<CongratulationScreen
+		confettisAmount={60}
+		name={'done'}
+		buttonText="Et maintenant ?"
+	>
+		<h1> Exceptionnel ! {emoji('😍')}</h1>
+		<p>Tu as passé le test.</p>
+		<p>
+			C'est <strong>extrêmement rare</strong> !
+		</p>
 	</CongratulationScreen>
 )
 
