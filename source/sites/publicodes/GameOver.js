@@ -64,12 +64,14 @@ export default () => {
 			<Route exact path="/fin" component={Perdu} />
 			<Route exact path="/fin/perdu" component={Perdu} />
 			<Route exact path="/fin/définition" component={Définition} />
+			<Route exact path="/fin/suffisant" component={Suffisant} />
 			<Route exact path="/fin/changer" component={Changer} />
 			<Route exact path="/fin/chemin" component={Chemin} />
 			<Route exact path="/fin/sources" component={Sources} />
 			<Route exact path="/fin/action" component={Action} />
 			<Route exact path="/fin/quand" component={Quand} />
 			<Route exact path="/fin/danger" component={Danger} />
+			<Route exact path="/fin/culpabilisation" component={Culpabilisation} />
 			<Route exact path="/fin/pourquoi-trois" component={PourquoiTrois} />
 			<Route exact path="/fin/claque" component={Claque} />
 			<Route exact path="/fin/trajectoire" component={Trajectoire} />
@@ -108,15 +110,37 @@ const Définition = () => (
 		<h1>Être écolo, définition !</h1>
 		<p>On ne peut pas être écolo si on défonce le climat. </p>
 		<p>
+			Votre médecin ne vous déclarera jamais en "bonne santé" si vos dents sont
+			propres, votre tension normale, mais que vous avez{' '}
+			<a href="https://kont.me/41-de-fièvre-mais-toutes-vos-dents">
+				41° de fièvre
+			</a>{' '}
+			!{' '}
+		</p>
+		<p>
 			Une empreinte climat personnelle de <strong>moins de 3 tonnes</strong> en
 			est une <strong>condition nécessaire</strong>. Tu dépasses nettement cette
 			limite.
 		</p>
 
+		<LoudButton to="/fin/suffisant">Et c'est suffisant ?</LoudButton>
+	</Dialog>
+)
+
+const Suffisant = () => (
+	<Dialog>
+		<h1>Non, mais...</h1>
 		<p>
-			Et ça suffit ? Pas forcément, mais l'effort de déconsommation est si grand
-			que beaucoup d'autres critères pourraient être cochés d'office
-			(biodiversité, épuisement des resssources, etc.).
+			Le climat n'est certes qu'un critère à suivre dans la santé de notre
+			biosphère {emoji('🌍')}.
+		</p>
+		<p>
+			Mais l'effort de déconsommation nécessaire pour passer le "test climat"
+			est colossal.
+		</p>
+		<p>
+			Il se pourrait bien que beaucoup d'autres critères soient alors cochés
+			d'office (biodiversité, épuisement des resssources, etc.).
 		</p>
 		<LoudButton to="/fin/claque">OK...</LoudButton>
 	</Dialog>
@@ -257,6 +281,31 @@ const Danger = () => (
 		<p>
 			Mais les vrais risques, imprévisibles, sont les <strong>famines</strong>,
 			les <strong>guerres</strong> et les <strong>génocides</strong>.
+		</p>
+		<LoudButton to="/fin/culpabilisation">
+			Vous voulez nous culpabiliser ?
+		</LoudButton>
+	</Dialog>
+)
+const Culpabilisation = () => (
+	<Dialog>
+		<h1>Nous sommes tous responsables</h1>
+		<p>
+			Nous avons tous le réflexe de remettre la responsabilité de nos choix sur
+			d'autres : le grand méchant Total, l'État, la Chine, les riches, ou même
+			"le système" qui écraserait les "gestes individuels".
+		</p>
+		<p>
+			Dénoncer ce "système" et espérer trop patiemment qu'il change, c'est ce
+			que l'on fait depuis 20 ans. Il est temps de{' '}
+			<a href="https://kont.me/éloge-décroissance-individuelle">
+				déconsommer et faire déconsommer
+			</a>
+			.
+		</p>
+		<p>
+			Quand aux "riches", faites-leur passer ce test {emoji('😏')}. On dit que
+			l'argent ne fait pas le bonheur, mais il défonce assurément le climat.
 		</p>
 		<LoudButton to="/fin/pourquoi-trois">Pourquoi 3 tonnes ?</LoudButton>
 	</Dialog>
