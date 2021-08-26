@@ -114,11 +114,9 @@ const Définition = () => (
 		</p>
 
 		<p>
-			{' '}
-			À l'inverse, peut-on respecter le climat sans être écolo ? Peut-être, mais
-			vu l'énorme effort que ça représente, c'est <strong>
-				peu probable
-			</strong>.{' '}
+			Et ça suffit ? Pas forcément, mais l'effort de déconsommation est si grand
+			que beaucoup d'autres critères pourraient être cochés d'office
+			(biodiversité, épuisement des resssources, etc.).
 		</p>
 		<LoudButton to="/fin/claque">OK...</LoudButton>
 	</Dialog>
@@ -148,8 +146,8 @@ const Claque = () => (
 		</p>
 		<p>
 			Pipi sous la douche, ampoules basse conso, zéro déchet, électricité
-			"verte", voiture électrique... les petits gestes nous allègent la
-			conscience et la technologie nous rassure.
+			"verte", voiture électrique, compensation carbone... les petits gestes
+			nous allègent la conscience et la technologie nous rassure.
 		</p>
 		<p>
 			Mais le compte n'y est pas <strong>du tout</strong>.
@@ -218,7 +216,8 @@ const Trajectoire = () => (
 			<div>L'écolo</div>
 		</div>
 		<p>
-			<strong>Diviser par 3</strong> notre empreinte moyenne.
+			<strong>Diviser par 3</strong> notre empreinte moyenne française de 10
+			tonnes.
 		</p>
 
 		<LoudButton to="/fin/quand">À partir de quand ?</LoudButton>
@@ -237,6 +236,7 @@ const Quand = () => (
 		</p>
 		<a href="https://showyourstripes.info">
 			<img
+				css="width: 100%"
 				src={require('Images/EUROPE-France--1899-2020-MF-bars.png').default}
 			/>
 		</a>
@@ -255,8 +255,8 @@ const Danger = () => (
 			qu'on sait modéliser ces catastrophes naturelles.
 		</p>
 		<p>
-			Mais les vrais risques, imprévisibles, sont les{' '}
-			<strong>famines, les guerres et les génocides</strong>.
+			Mais les vrais risques, imprévisibles, sont les <strong>famines</strong>,
+			les <strong>guerres</strong> et les <strong>génocides</strong>.
 		</p>
 		<LoudButton to="/fin/pourquoi-trois">Pourquoi 3 tonnes ?</LoudButton>
 	</Dialog>
@@ -267,13 +267,12 @@ const PourquoiTrois = () => (
 		<h1>Les maths</h1>
 		<p>
 			Normalement, l'objectif personnel d'équilibre est de{' '}
-			<strong>moins de 2 tonnes</strong>. Sauf que c'est inatteignable tout
-			seul.
+			<strong>moins de 2 tonnes</strong>.
 		</p>
 
 		<p>
-			En <Emoji e="🇫🇷" />, nos services publics représentent ~1 tonne, et on
-			espère qu'elle tendera vers 0.
+			Mais nos services publics (l'éducation, les routes, l'armée etc.)
+			représentent déjà environ 1 tonne. Pour ce test, on l'a mise de côté.
 		</p>
 		<p>
 			2 <Emoji e="➕" /> 1 = 3
@@ -297,8 +296,8 @@ const Sources = () => (
 			pas de 1,234 ?
 		</p>
 		<p>
-			<Emoji e="🎯" /> Peu importe à ce stade, on explose tous tellement les
-			objectifs que l'
+			<Emoji e="🎯" /> Peu importe à ce stade, on explose toutes et tous
+			tellement les objectifs que l'
 			<a href="https://www.assistancescolaire.com/eleve/6e/maths/reviser-une-notion/donner-un-ordre-de-grandeur-6mcp13">
 				orde de grandeur
 			</a>{' '}
@@ -313,9 +312,9 @@ const Action = () => (
 	<Dialog>
 		<h1>Où est le GPS&nbsp;?</h1>
 		<p>
-			Ne t'inquiète pas, tu sera guidé : tu pourras refaire ce test quand tu
-			voudras. La 1ère étape vers la solution, c'est de{' '}
-			<strong>comprendre l'ampleur du problème</strong>.
+			La 1ère étape vers la solution, c'est de{' '}
+			<strong>comprendre l'ampleur du problème</strong>. C'était le but de ce
+			test.
 		</p>
 		<p>
 			De nombreux autres guides sont en train de sortir pour nous aider tous à
