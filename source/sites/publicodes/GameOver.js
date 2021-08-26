@@ -23,7 +23,7 @@ const Eraser = ({}) => {
 	return (
 		<button
 			className="ui__ button simple small"
-			css="width: auto !important"
+			css="width: auto !important; margin: 0rem !important; "
 			onClick={() => {
 				dispatch(resetSimulation())
 				dispatch(deletePreviousSimulation())
@@ -72,6 +72,7 @@ export default () => {
 			<Route exact path="/fin/quand" component={Quand} />
 			<Route exact path="/fin/danger" component={Danger} />
 			<Route exact path="/fin/culpabilisation" component={Culpabilisation} />
+			<Route exact path="/fin/le-système" component={LeSystème} />
 			<Route exact path="/fin/pourquoi-trois" component={PourquoiTrois} />
 			<Route exact path="/fin/claque" component={Claque} />
 			<Route exact path="/fin/trajectoire" component={Trajectoire} />
@@ -289,24 +290,40 @@ const Danger = () => (
 )
 const Culpabilisation = () => (
 	<Dialog>
-		<h1>Nous sommes tous responsables</h1>
 		<p>
-			Nous avons tous le réflexe de remettre la responsabilité de nos choix sur
-			d'autres : le grand méchant Total, l'État, la Chine, les riches, ou même
-			"le système" qui écraserait les "gestes individuels".
+			En tant que français, nous sommes et serons parmi les moins touchés par la
+			catastrophe climatique. Pourtant nous y contribuons bien plus que ceux qui
+			la subiront de plein fouet.{' '}
 		</p>
 		<p>
-			Dénoncer ce "système" et espérer trop patiemment qu'il change, c'est ce
-			que l'on fait depuis 20 ans. Il est temps de{' '}
-			<a href="https://kont.me/éloge-décroissance-individuelle">
-				déconsommer et faire déconsommer
-			</a>
-			.
+			Chacun peut trouver plus responsable que lui, du français moyen dénonçant
+			le riche, à l'Éthiopien moyen qui fustigera le français modeste.
 		</p>
 		<p>
-			Quand aux "riches", faites-leur passer ce test {emoji('😏')}. On dit que
+			Les "riches", faites-leur passer ce test {emoji('😏')}. On dit que
 			l'argent ne fait pas le bonheur, mais il défonce assurément le climat.
 		</p>
+
+		<LoudButton to="/fin/le-système">Et les entreprises ?</LoudButton>
+	</Dialog>
+)
+const LeSystème = () => (
+	<Dialog>
+		<p>
+			Nous avons tous le réflexe naturel de faire endosser la responsabilité à
+			d'autres : le méchant Total, l'État, la Chine, les riches...
+		</p>
+		<p>
+			Ou même "le système" qui reléguerait les "gestes individuels" à
+			l'impuissance&nbsp;(
+			<a href="https://kont.me/éloge-décroissance-individuelle">c'est faux</a>).
+		</p>
+		<p>
+			Dénoncer ce système et espérer trop patiemment qu'il change, c'est ce
+			qu'on fait depuis 20 ans, sans remettre en question, au quotidien, nos
+			modes de vie.
+		</p>
+
 		<LoudButton to="/fin/pourquoi-trois">Pourquoi 3 tonnes ?</LoudButton>
 	</Dialog>
 )
