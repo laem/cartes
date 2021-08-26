@@ -47,6 +47,11 @@ export default () => {
 				}
 			`}
 		>
+			<img
+				srcSet="https://i.imgur.com/HXWewY4l.jpg 640w, https://i.imgur.com/HXWewY4.jpg 1720w "
+				src="https://i.imgur.com/HXWewY4.jpg"
+			/>
+
 			<div
 				className="ui__ container"
 				css={`
