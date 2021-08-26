@@ -1,9 +1,9 @@
 import emoji from 'react-easy-emoji'
 import { useDispatch } from 'react-redux'
-import { Dialog } from './GameOver'
-import { LoudButton } from './UI'
 import tinygradient from 'tinygradient'
+import { Dialog } from './GameOver'
 import { colorScale } from './Simulateur'
+import { LoudButton } from './UI'
 
 export const NotBad = ({ answeredRatio }) => (
 	<CongratulationScreen
@@ -80,8 +80,8 @@ export const Almost = ({ answeredRatio }) => (
 export const Done = () => (
 	<CongratulationScreen
 		confettisAmount={60}
-		name={'done'}
 		buttonText="Et maintenant ?"
+		buttonURL="/fin/ensemble"
 	>
 		<h1> Exceptionnel ! {emoji('😍')}</h1>
 		<p>Tu as passé le test.</p>
@@ -96,6 +96,7 @@ export const CongratulationScreen = ({
 	confettisAmount = 20,
 	children,
 	buttonText,
+	buttonURL,
 }) => {
 	const dispatch = useDispatch()
 	const confettis = [...new Array(confettisAmount)]
@@ -151,11 +152,17 @@ export const CongratulationScreen = ({
 			))}
 			<Dialog noEraser neutralColor>
 				{children}
-				<div
-					onClick={() => dispatch({ type: 'SET_MESSAGE_READ', message: name })}
-				>
-					<LoudButton>{buttonText}</LoudButton>
-				</div>
+				{buttonURL ? (
+					<LoudButton to={buttonURL}>{buttonText}</LoudButton>
+				) : (
+					<div
+						onClick={() =>
+							dispatch({ type: 'SET_MESSAGE_READ', message: name })
+						}
+					>
+						<LoudButton>{buttonText}</LoudButton>
+					</div>
+				)}
 			</Dialog>
 		</div>
 	)
