@@ -92,9 +92,11 @@ const Perdu = () => {
 		<Dialog>
 			<h1>Perdu {emoji('🙁')}</h1>
 			<p>
-				<strong>Tu n'es pas écolo.</strong>
+				<strong>Vous n'êtes pas écolo.</strong>
 			</p>
-			<p>Ton train de vie nous emène vers une planète dangereusement chaude.</p>
+			<p>
+				Votre train de vie nous emène vers une planète dangereusement chaude.
+			</p>
 			<p>
 				Il a suffi de <strong>{answerCount}</strong> réponses au test sur{' '}
 				<strong>{totalCount}</strong> questions pour le savoir.
@@ -120,8 +122,8 @@ const Définition = () => (
 		</p>
 		<p>
 			Une empreinte climat personnelle de <strong>moins de 3 tonnes</strong> en
-			est une <strong>condition nécessaire</strong>. Tu dépasses nettement cette
-			limite.
+			est une <strong>condition nécessaire</strong>. Vous dépassez nettement
+			cette limite.
 		</p>
 
 		<LoudButton to="/fin/suffisant">Et c'est suffisant ?</LoudButton>
@@ -166,7 +168,7 @@ const Claque = () => (
 	<Dialog>
 		<h1>La claque</h1>
 		<p>
-			On ne t'avait jamais dit que c'était si compliqué ? Que ce test était{' '}
+			On ne vous avait jamais dit que c'était si compliqué ? Que ce test était{' '}
 			<strong>très&nbsp;dur</strong> à passer ?{' '}
 		</p>
 		<p>
@@ -407,10 +409,10 @@ const Ensemble = () => (
 			<strong>notre futur</strong> bordel !
 		</p>
 		<p>
-			Tu as des amis, de la famille, l'internet ?{' '}
+			Vous as des amis, de la famille, l'internet ?{' '}
 			<strong>On est tous dans la même merde.</strong>
 		</p>
-		<p>Partage-leur ce test ⬇️</p>
+		<p>Partagez-leur ce test ⬇️</p>
 		<ShareButton
 			text="Es-tu écolo ? Fais le test."
 			url={'https://futur.eco'}

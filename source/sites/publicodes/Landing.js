@@ -76,7 +76,7 @@ export default () => {
 					</h1>
 					<p>
 						<em>
-							Le jeu dont <em>tu</em> es le héros.
+							Le jeu dont <em>vous</em> êtes le héros.
 						</em>
 					</p>
 				</header>
