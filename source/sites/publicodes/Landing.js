@@ -71,7 +71,7 @@ export default () => {
 			>
 				<header>
 					<h1>
-						T'es <strong>écolo</strong>,
+						<strong>Écolo</strong>,
 						<br /> ou pas ?
 					</h1>
 					<p>
