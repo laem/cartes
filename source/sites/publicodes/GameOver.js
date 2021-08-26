@@ -82,7 +82,8 @@ const Perdu = () => {
 	const answeredQuestions = useSelector(answeredQuestionsSelector),
 		answerCount = answeredQuestions.length,
 		nextSteps = useNextQuestions(),
-		nextStepsCount = nextSteps.length
+		nextStepsCount = nextSteps.length,
+		totalCount = answerCount + nextStepsCount
 
 	return (
 		<Dialog>
@@ -93,7 +94,7 @@ const Perdu = () => {
 			<p>Ton train de vie nous emène vers une planète dangereusement chaude.</p>
 			<p>
 				Il a suffi de <strong>{answerCount}</strong> réponses au test sur{' '}
-				<strong>{nextStepsCount}</strong> questions pour le savoir.
+				<strong>{totalCount}</strong> questions pour le savoir.
 			</p>
 			<LoudButton to="/fin/définition">
 				Comment ça <br /> <em>pas écolo </em> ?

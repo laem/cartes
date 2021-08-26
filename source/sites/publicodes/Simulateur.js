@@ -88,12 +88,13 @@ const Simulateur = (props) => {
 	if (!configSet) return null
 
 	const gameOver = evaluation.nodeValue > limit
-	const answeredRatio = answeredQuestions.length / nextQuestions.length
+	const answeredRatio =
+		answeredQuestions.length / (answeredQuestions.length + nextQuestions.length)
 	const notBad = console.log(
 		'AR',
 		answeredRatio,
 		answeredQuestions.length,
-		nextQuestions.length
+		nextQuestions.length + answeredQuestions.length
 	)
 
 	const doomColor = getBackgroundColor(evaluation.nodeValue).toHexString()

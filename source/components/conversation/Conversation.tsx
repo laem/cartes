@@ -59,7 +59,6 @@ export default function Conversation({
 				return categoryIndex * 1000 + nextQuestions.indexOf(question)
 		  }, nextQuestions)
 		: nextQuestions
-	console.log('NQ', sortedQuestions, nextQuestions, orderByCategories)
 	const unfoldedStep = useSelector((state) => state.simulation.unfoldedStep)
 	const isMainSimulation = objectifs.length === 1 && objectifs[0] === 'bilan',
 		currentQuestion = !isMainSimulation
