@@ -353,21 +353,25 @@ const Sources = () => (
 		<p>
 			Le calcul utilisé ici est{' '}
 			<a href="https://github.com/datagir/nosgestesclimat">
-				<strong>complètement ouvert</strong>
-			</a>
-			, développé par l'ADEME, sans cesse amélioré.
+				<strong>ouvert</strong>
+			</a>{' '}
+			et activement développé par l'ADEME.
 		</p>
 		<p>
 			Et si on se trompait, que l'empreinte de la <Emoji e="🚗" /> était de 1 et
-			pas de 1,234 ?
+			pas 1,234 ?
 		</p>
 		<p>
-			<Emoji e="🎯" /> Peu importe à ce stade, on explose toutes et tous
-			tellement les objectifs que l'
+			<Emoji e="🎯" /> Peu importe aujourd'hui, on explose tellement l'objectif
+			que l'
 			<a href="https://www.assistancescolaire.com/eleve/6e/maths/reviser-une-notion/donner-un-ordre-de-grandeur-6mcp13">
 				orde de grandeur
 			</a>{' '}
 			suffit.
+		</p>
+		<p>
+			Investissons dans la technologie, mais ne parions pas religieusement
+			dessus.
 		</p>
 
 		<LoudButton to="/fin/action">Comment faire ?</LoudButton>
