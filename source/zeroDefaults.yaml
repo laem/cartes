@@ -67,7 +67,6 @@ numérique . vidéoprojecteur . durée: 4
 transport . voiture . voyageurs: 2
 transport . voiture . km: 0 km/an
 transport . voiture . motorisation: "'électrique'"
-transport . voiture . thermique . consommation aux 100: 0
 transport . voiture . âge: 99
 transport . voiture . propriétaire: non
 transport . avion . usager: non
