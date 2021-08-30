@@ -103,8 +103,11 @@ export default ({}) => {
 					height: 60vh;
 				`}
 			>
-				<ActionStack onVote={(item, vote) => console.log(item.props, vote)}>
-					{finalActions.slice(0, 5).map((evaluation) => (
+				<ActionStack
+					key={category}
+					onVote={(item, vote) => console.log(item.props, vote)}
+				>
+					{finalActions.map((evaluation) => (
 						<Item
 							className="plop"
 							data-value={evaluation.dottedName}
