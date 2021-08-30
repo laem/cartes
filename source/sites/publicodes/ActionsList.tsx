@@ -63,7 +63,7 @@ export default ({}) => {
 		)
 
 	const sortedActionsByImpact = sortBy(
-			(a) => (radical ? -1 : 1) * correctValue(a)
+			(a) => (radical ? 1 : -1) * correctValue(a)
 		)(actions),
 		interestingActions = sortedActionsByImpact.filter((action) => {
 			const flatRule = rules[action.dottedName]
