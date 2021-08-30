@@ -41,7 +41,15 @@ export default ({ evaluation, total, rule, effort }) => {
 			<div css={``}>
 				<h2>{title}</h2>
 				<div css={``}>
-					{icons && <div css={``}>{emoji(icons)}</div>}
+					{icons && (
+						<div
+							css={`
+								font-size: 250%;
+							`}
+						>
+							{emoji(icons)}
+						</div>
+					)}
 					<div
 						css={`
 							display: none;

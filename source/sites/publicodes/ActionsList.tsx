@@ -104,7 +104,7 @@ export default ({}) => {
 				`}
 			>
 				<ActionStack onVote={(item, vote) => console.log(item.props, vote)}>
-					{finalActions.map((evaluation) => (
+					{finalActions.slice(0, 5).map((evaluation) => (
 						<Item
 							className="plop"
 							data-value={evaluation.dottedName}
@@ -144,10 +144,9 @@ const Item = styled(motion.div)`
 	display: flex;
 	align-items: center;
 	justify-content: center;
-	font-size: 80px;
-	text-shadow: 0 10px 10px #d1d5db;
 	box-shadow: 0 0 20px rgba(0, 0, 0, 0.15);
 	border-radius: 8px;
+	padding: 1rem 0.4rem;
 	transform: ${() => {
 		let rotation = Math.random() * (5 - -5) + -5
 		return `rotate(${rotation}deg)`
