@@ -19,6 +19,7 @@ import {
 } from '../../selectors/simulationSelectors'
 import ActionStack from './ActionStack'
 import ActionVignette, { disabledAction } from './ActionVignette'
+import CategoryFilters from './CategoryFilters'
 
 const { encodeRuleName, decodeRuleName } = utils
 
@@ -100,7 +101,6 @@ export default ({}) => {
 					justify-content: center;
 					align-content: center;
 					height: 60vh;
-					width: 100vw;
 				`}
 			>
 				<ActionStack onVote={(item, vote) => console.log(item.props, vote)}>
@@ -120,20 +120,11 @@ export default ({}) => {
 					))}
 				</ActionStack>
 			</div>
-			<div css="font-size: 100%; text-align: center">
-				<em>en CO₂e / an et proportion de votre total</em>
-			</div>
-			<IllustratedButton to={'/actions/plus'} icon="📚">
-				<div>
-					<div>Comprendre les actions</div>
-					<p>
-						<small>
-							Au-delà d'un simple chiffre, découvrez les enjeux qui se cachent
-							derrière chaque action.
-						</small>
-					</p>
-				</div>
-			</IllustratedButton>
+			<CategoryFilters
+				categories={categories}
+				selected={category}
+				countByCategory={countByCategory}
+			/>
 		</div>
 	)
 }
