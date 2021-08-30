@@ -129,8 +129,13 @@ export default ({}) => {
 }
 
 const Item = styled(motion.div)`
-	width: 200px;
-	height: 250px;
+	width: 16rem;
+	height: 21rem;
+	@media (max-width: 800px) {
+		width: 13rem;
+		height: 18rem;
+	}
+
 	display: flex;
 	align-items: center;
 	justify-content: center;
