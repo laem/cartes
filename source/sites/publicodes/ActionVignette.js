@@ -82,7 +82,7 @@ const ActionValue = ({
 			`}
 		>
 			{noFormula ? (
-				'🤷'
+				'Non chiffré'
 			) : disabled ? (
 				'Non applicable'
 			) : (
