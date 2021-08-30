@@ -7,6 +7,7 @@ import { motion } from 'framer-motion'
 import { utils } from 'publicodes'
 import { partition, sortBy } from 'ramda'
 import React, { useContext, useEffect, useState } from 'react'
+import emoji from 'react-easy-emoji'
 import { useDispatch, useSelector } from 'react-redux'
 import { useLocation, useParams } from 'react-router'
 import { objectifsSelector } from 'Selectors/simulationSelectors'
@@ -90,25 +91,30 @@ export default ({}) => {
 			`}
 		>
 			<SessionBar />
-			<ActionStack
-				key={category}
-				onVote={(item, vote) => console.log(item.props, vote)}
-			>
-				{finalActions.map((evaluation) => (
-					<Item
-						className="plop"
-						data-value={evaluation.dottedName}
-						whileTap={{ scale: 1.15 }}
-					>
-						<ActionVignette
-							key={evaluation.dottedName}
-							rule={rules[evaluation.dottedName]}
-							evaluation={evaluation}
-							total={bilans.length ? bilans[0].nodeValue : null}
-						/>
-					</Item>
-				))}
-			</ActionStack>
+			{finalActions.length ? (
+				<ActionStack
+					key={category}
+					actions={finalActions}
+					onVote={(item, vote) => console.log(item.props, vote)}
+				>
+					{finalActions.map((evaluation) => (
+						<Item
+							className="plop"
+							data-value={evaluation.dottedName}
+							whileTap={{ scale: 1.15 }}
+						>
+							<ActionVignette
+								key={evaluation.dottedName}
+								rule={rules[evaluation.dottedName]}
+								evaluation={evaluation}
+								total={bilans.length ? bilans[0].nodeValue : null}
+							/>
+						</Item>
+					))}
+				</ActionStack>
+			) : (
+				<p>{emoji('🤷')} Plus d'actions dans cette catégorie</p>
+			)}
 
 			<CategoryFilters
 				categories={categories}

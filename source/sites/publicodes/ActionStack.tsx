@@ -2,6 +2,7 @@ import React, { useState, Children } from 'react'
 import emoji from 'react-easy-emoji'
 import styled from 'styled-components'
 import { Card } from './ActionCard'
+import ActionConversation from './ActionConversation'
 
 // basic default styles for container
 const Frame = styled.div`
@@ -13,7 +14,7 @@ const Frame = styled.div`
 	position: relative;
 `
 
-export default ({ onVote, children, ...props }) => {
+export default ({ onVote, children, actions, ...props }) => {
 	const [stack, setStack] = useState(Children.toArray(children))
 
 	// return new array with last item removed
@@ -53,6 +54,7 @@ export default ({ onVote, children, ...props }) => {
 				}
 			`}
 		>
+			<ActionConversation dottedName={actions.slice(-1)[0].dottedName} />
 			<DesktopDiv>{stackLeft && <CancelButton />}</DesktopDiv>
 			<div
 				css={`
