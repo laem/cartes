@@ -20,8 +20,6 @@ import Meta from '../../components/utils/Meta'
 
 const { decodeRuleName, encodeRuleName } = utils
 
-export const Footprint = ({ value }) => <div>Lala {value}</div>
-
 export default ({}) => {
 	const { encodedName } = useParams()
 	const rules = useSelector((state) => state.rules)
