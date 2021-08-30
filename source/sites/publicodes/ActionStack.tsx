@@ -1,4 +1,5 @@
 import React, { useState, Children } from 'react'
+import emoji from 'react-easy-emoji'
 import styled from 'styled-components'
 import { Card } from './ActionCard'
 
@@ -31,8 +32,15 @@ export default ({ onVote, children, ...props }) => {
 		onVote(item, vote)
 	}
 
+	const stackLeft = stack.length > 0
+
 	return (
 		<>
+			{stackLeft && (
+				<StackButton onClick={() => handleVote(stack[stack.length - 1], false)}>
+					{emoji('❌️')}
+				</StackButton>
+			)}
 			<Frame {...props}>
 				{stack.map((item, index) => {
 					const fromUserIndex = stack.length - 1 - index,
@@ -49,6 +57,15 @@ export default ({ onVote, children, ...props }) => {
 					)
 				})}
 			</Frame>
+			{stackLeft && (
+				<StackButton onClick={() => handleVote(stack[stack.length - 1], false)}>
+					{emoji('✅️')}
+				</StackButton>
+			)}
 		</>
 	)
 }
+
+const StackButton = styled.button`
+	font-size: 200%;
+`
