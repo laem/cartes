@@ -33,39 +33,92 @@ export default ({ onVote, children, ...props }) => {
 	}
 
 	const stackLeft = stack.length > 0
+	const CancelButton = () => (
+			<StackButton onClick={() => handleVote(stack[stack.length - 1], false)}>
+				{emoji('❌')}
+			</StackButton>
+		),
+		CheckButton = () => (
+			<StackButton onClick={() => handleVote(stack[stack.length - 1], false)}>
+				{emoji('✅')}
+			</StackButton>
+		)
 
 	return (
-		<>
+		<div
+			css={`
+				display: flex;
+				@media (max-width: 800px) {
+					flex-direction: column;
+				}
+			`}
+		>
+			<DesktopDiv>{stackLeft && <CancelButton />}</DesktopDiv>
+			<div
+				css={`
+					text-align: center;
+					display: flex;
+					justify-content: center;
+					align-content: center;
+					height: 50vh;
+					min-width: 30vw;
+				`}
+			>
+				<Frame {...props}>
+					{stack.map((item, index) => {
+						const fromUserIndex = stack.length - 1 - index,
+							isTop = fromUserIndex === 0
+						return (
+							<Card
+								css={fromUserIndex > 4 ? 'display: none' : ''}
+								drag={isTop} // Only top card is draggable
+								key={item.key || index}
+								onVote={(result) => handleVote(item, result)}
+							>
+								{item}
+							</Card>
+						)
+					})}
+				</Frame>
+			</div>
 			{stackLeft && (
-				<StackButton onClick={() => handleVote(stack[stack.length - 1], false)}>
-					{emoji('❌️')}
-				</StackButton>
+				<DesktopDiv>
+					<CheckButton />
+				</DesktopDiv>
 			)}
-			<Frame {...props}>
-				{stack.map((item, index) => {
-					const fromUserIndex = stack.length - 1 - index,
-						isTop = fromUserIndex === 0
-					return (
-						<Card
-							css={fromUserIndex > 4 ? 'display: none' : ''}
-							drag={isTop} // Only top card is draggable
-							key={item.key || index}
-							onVote={(result) => handleVote(item, result)}
-						>
-							{item}
-						</Card>
-					)
-				})}
-			</Frame>
 			{stackLeft && (
-				<StackButton onClick={() => handleVote(stack[stack.length - 1], false)}>
-					{emoji('✅️')}
-				</StackButton>
+				<MobileDiv>
+					<div
+						css={`
+							display: flex;
+							justify-content: center;
+							margin-bottom: 2rem;
+						`}
+					>
+						<CancelButton />
+						<CheckButton />
+					</div>
+				</MobileDiv>
 			)}
-		</>
+		</div>
 	)
 }
 
+const DesktopDiv = styled.div`
+	@media (max-width: 800px) {
+		display: none;
+	}
+	display: flex;
+	align-items: center;
+`
+const MobileDiv = styled.div`
+	@media (min-width: 800px) {
+		display: none;
+	}
+`
+
 const StackButton = styled.button`
-	font-size: 200%;
+	font-size: 260%;
+	display: flex;
+	align-items: center;
 `

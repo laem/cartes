@@ -90,35 +90,26 @@ export default ({}) => {
 			`}
 		>
 			<SessionBar />
-			<div
-				css={`
-					text-align: center;
-					display: flex;
-					justify-content: center;
-					align-content: center;
-					height: 60vh;
-				`}
+			<ActionStack
+				key={category}
+				onVote={(item, vote) => console.log(item.props, vote)}
 			>
-				<ActionStack
-					key={category}
-					onVote={(item, vote) => console.log(item.props, vote)}
-				>
-					{finalActions.map((evaluation) => (
-						<Item
-							className="plop"
-							data-value={evaluation.dottedName}
-							whileTap={{ scale: 1.15 }}
-						>
-							<ActionVignette
-								key={evaluation.dottedName}
-								rule={rules[evaluation.dottedName]}
-								evaluation={evaluation}
-								total={bilans.length ? bilans[0].nodeValue : null}
-							/>
-						</Item>
-					))}
-				</ActionStack>
-			</div>
+				{finalActions.map((evaluation) => (
+					<Item
+						className="plop"
+						data-value={evaluation.dottedName}
+						whileTap={{ scale: 1.15 }}
+					>
+						<ActionVignette
+							key={evaluation.dottedName}
+							rule={rules[evaluation.dottedName]}
+							evaluation={evaluation}
+							total={bilans.length ? bilans[0].nodeValue : null}
+						/>
+					</Item>
+				))}
+			</ActionStack>
+
 			<CategoryFilters
 				categories={categories}
 				selected={category}
