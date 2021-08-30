@@ -13,11 +13,14 @@ export default ({ categories, selected, countByCategory }) => {
 					overflow-x: auto;
 					white-space: nowrap;
 					justify-content: normal;
+					height: 3rem;
 				}
 				li {
 					padding: 0.1rem 0rem;
 					margin: 0.15rem 0.2rem;
 					border-radius: 0.2rem;
+					line-height: 1.6rem;
+					height: 1.8rem;
 				}
 				li button {
 					color: white;
@@ -29,8 +32,9 @@ export default ({ categories, selected, countByCategory }) => {
 				<li
 					css={`
 						background: ${category.color};
+						${selected && 'background: #aaa;'}
 						${selected === category.dottedName
-							? 'border: 3px solid var(--color)'
+							? `background: ${category.color}`
 							: ''}
 						${!countByCategory[category.dottedName] ? 'background: #ccc' : ''}
 					`}
