@@ -14,6 +14,7 @@ export default ({ categories, selected, countByCategory }) => {
 					white-space: nowrap;
 					justify-content: normal;
 					height: 3rem;
+					scrollbar-width: none;
 				}
 				li {
 					padding: 0.1rem 0rem;
