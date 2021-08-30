@@ -62,19 +62,15 @@ export default ({}) => {
 			category ? splitName(action.dottedName)[0] === category : true
 		)
 
-	const effortScale = { modéré: 2, conséquent: 3, faible: 1, undefined: 0 }
-	const sortedActionsByMode =
-			mode === 'guidé'
-				? sortBy((a) => effortScale[rules[a.dottedName].effort])(
-						actions.filter((a) => rules[a.dottedName].effort != null)
-				  )
-				: sortBy((a) => (radical ? -1 : 1) * correctValue(a))(actions),
-		sortedActions = sortBy((action) => {
+	const sortedActionsByImpact = sortBy(
+			(a) => (radical ? -1 : 1) * correctValue(a)
+		)(actions),
+		interestingActions = sortedActionsByImpact.filter((action) => {
 			const flatRule = rules[action.dottedName]
-			return disabledAction(flatRule, action.nodeValue)
-		}, sortedActionsByMode)
+			return !disabledAction(flatRule, action.nodeValue)
+		})
 
-	const finalActions = filterByCategory(sortedActions)
+	const finalActions = filterByCategory(interestingActions)
 
 	const categories = extractCategories(rules, engine)
 	const countByCategory = actions.reduce((memo, next) => {
