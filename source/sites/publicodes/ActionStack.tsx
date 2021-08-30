@@ -35,9 +35,11 @@ export default ({ onVote, children, ...props }) => {
 		<>
 			<Frame {...props}>
 				{stack.map((item, index) => {
-					let isTop = index === stack.length - 1
+					const fromUserIndex = stack.length - 1 - index,
+						isTop = fromUserIndex === 0
 					return (
 						<Card
+							css={fromUserIndex > 4 ? 'display: none' : ''}
 							drag={isTop} // Only top card is draggable
 							key={item.key || index}
 							onVote={(result) => handleVote(item, result)}
