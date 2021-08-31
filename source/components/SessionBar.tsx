@@ -262,7 +262,7 @@ export default function SessionBar({
 				}
 			`}
 		>
-			{objectifs.length && !noResults && <CarbonImpact />}
+			{objectifs.length > 0 && !noResults && <CarbonImpact />}
 			{buttons.filter(Boolean).length > 0 && (
 				<NavBar>
 					{buttons.filter(Boolean).map((Comp, i) => (
