@@ -1,3 +1,4 @@
+import { motion } from 'framer-motion'
 import React, { useState, Children } from 'react'
 import emoji from 'react-easy-emoji'
 import styled from 'styled-components'
@@ -87,7 +88,15 @@ export default ({ onVote, children, actions, ...props }) => {
 	)
 }
 
-const StackButton = styled.button`
+const AnimatedButton = (props) => (
+	<motion.button
+		whileHover={{ scale: 1.1 }}
+		whileTap={{ scale: 0.8 }}
+		{...props}
+	/>
+)
+
+const StackButton = styled(AnimatedButton)`
 	font-size: 260%;
 	display: flex;
 	align-items: center;
