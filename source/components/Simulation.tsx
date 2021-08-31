@@ -31,14 +31,18 @@ export default function Simulation({
 		<>
 			<SearchButton invisibleButton />
 
-			<motion.div>
+			<motion.div
+				initial={{ opacity: 0, y: 200, scale: 0.3 }}
+				animate={{ opacity: 1, y: 0, scale: 1 }}
+				transition={{ delay: 0.3 }}
+				exit={{ opacity: 0, scale: 0.5, transition: { duration: 0.2 } }}
+			>
 				{results}
 				<Questions
 					customEnd={customEnd}
 					orderByCategories={orderByCategories}
 					customEndMessages={customEndMessages}
 				/>
-				<br />
 				{!noFeedback && (
 					<>
 						{showLinkToForm && <LinkToForm />}

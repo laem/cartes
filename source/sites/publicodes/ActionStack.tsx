@@ -55,7 +55,7 @@ export default ({ onVote, actions, total }) => {
 
 	return (
 		<div>
-			<ActionConversation dottedName={stackTop} />
+			<ActionConversation key={stackTop} dottedName={stackTop} />
 			<div
 				css={`
 					display: flex;
