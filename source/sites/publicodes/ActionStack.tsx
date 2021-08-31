@@ -46,81 +46,53 @@ export default ({ onVote, children, actions, ...props }) => {
 		)
 
 	return (
-		<div
-			css={`
-				display: flex;
-				@media (max-width: 800px) {
-					flex-direction: column;
-				}
-			`}
-		>
+		<div>
 			<ActionConversation dottedName={actions.slice(-1)[0].dottedName} />
-			<DesktopDiv>{stackLeft && <CancelButton />}</DesktopDiv>
 			<div
 				css={`
-					text-align: center;
 					display: flex;
-					justify-content: center;
-					align-content: center;
-					height: 50vh;
-					min-width: 30vw;
 				`}
 			>
-				<Frame {...props}>
-					{stack.map((item, index) => {
-						const fromUserIndex = stack.length - 1 - index,
-							isTop = fromUserIndex === 0
-						return (
-							<Card
-								css={fromUserIndex > 4 ? 'display: none' : ''}
-								drag={isTop} // Only top card is draggable
-								key={item.key || index}
-								onVote={(result) => handleVote(item, result)}
-							>
-								{item}
-							</Card>
-						)
-					})}
-				</Frame>
+				{stackLeft && <CancelButton />}
+				<div
+					css={`
+						text-align: center;
+						display: flex;
+						justify-content: center;
+						align-content: center;
+						height: 50vh;
+						min-width: 80%;
+					`}
+				>
+					<Frame {...props}>
+						{stack.map((item, index) => {
+							const fromUserIndex = stack.length - 1 - index,
+								isTop = fromUserIndex === 0
+							return (
+								<Card
+									css={fromUserIndex > 4 ? 'display: none' : ''}
+									drag={isTop} // Only top card is draggable
+									key={item.key || index}
+									onVote={(result) => handleVote(item, result)}
+								>
+									{item}
+								</Card>
+							)
+						})}
+					</Frame>
+				</div>
+				{stackLeft && <CheckButton />}
 			</div>
-			{stackLeft && (
-				<DesktopDiv>
-					<CheckButton />
-				</DesktopDiv>
-			)}
-			{stackLeft && (
-				<MobileDiv>
-					<div
-						css={`
-							display: flex;
-							justify-content: center;
-							margin-bottom: 2rem;
-						`}
-					>
-						<CancelButton />
-						<CheckButton />
-					</div>
-				</MobileDiv>
-			)}
 		</div>
 	)
 }
-
-const DesktopDiv = styled.div`
-	@media (max-width: 800px) {
-		display: none;
-	}
-	display: flex;
-	align-items: center;
-`
-const MobileDiv = styled.div`
-	@media (min-width: 800px) {
-		display: none;
-	}
-`
 
 const StackButton = styled.button`
 	font-size: 260%;
 	display: flex;
 	align-items: center;
+	padding: 0;
+	@media (max-width: 800px) {
+		font-size: 180%;
+	}
 `
