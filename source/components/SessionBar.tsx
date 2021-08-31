@@ -122,8 +122,63 @@ export default function SessionBar({
 				Passer à l'action
 			</Button>,
 		]
+	} else if (path.includes('/fin')) {
+		buttons = [
+			<Button
+				key="recommencer"
+				className="simple small"
+				onClick={() => {
+					dispatch(resetSimulation())
+					dispatch(deletePreviousSimulation())
+				}}
+			>
+				{emoji('♻️ ')}
+				Recommencer
+			</Button>,
+			arePreviousAnswers ? (
+				<Button
+					className="simple small"
+					onClick={() => {
+						dispatch(goToQuestion(last(answeredQuestions)))
+						history.push('/simulateur/bilan')
+					}}
+				>
+					{emoji('📊 ')}
+					Ma simulation
+				</Button>
+			) : (
+				<Button
+					className="plain"
+					onClick={() => {
+						history.push('/simulateur/bilan')
+					}}
+				>
+					{emoji('👤 ')}
+					Faire le test
+				</Button>
+			),
+		]
 	} else if (path.includes('/fin') || path.includes('/actions')) {
 		buttons = [
+			<Button
+				key="recommencer"
+				className="simple small"
+				onClick={() => {
+					dispatch(resetSimulation())
+					dispatch(deletePreviousSimulation())
+				}}
+			>
+				{emoji('♻️ ')}
+				Recommencer
+			</Button>,
+			<Button
+				key="modifier"
+				className="simple small"
+				onClick={() => setShowAnswerModal(true)}
+			>
+				{emoji('📋 ')}
+				Mes réponses
+			</Button>,
 			arePreviousAnswers ? (
 				<Button
 					className="simple small"
@@ -207,7 +262,7 @@ export default function SessionBar({
 				}
 			`}
 		>
-			{!noResults && <CarbonImpact />}
+			{objectifs.length && !noResults && <CarbonImpact />}
 			{buttons.filter(Boolean).length > 0 && (
 				<NavBar>
 					{buttons.filter(Boolean).map((Comp, i) => (

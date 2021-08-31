@@ -9,7 +9,7 @@ import { useDispatch, useSelector } from 'react-redux'
 import { useLocation, useParams } from 'react-router'
 import styled from 'styled-components'
 import { correctValue } from '../../components/publicodesUtils'
-import { sessionBarMargin } from '../../components/SessionBar'
+import SessionBar, { sessionBarMargin } from '../../components/SessionBar'
 import ActionStack from './ActionStack'
 import ActionVignette, { disabledAction } from './ActionVignette'
 import CategoryFilters from './CategoryFilters'
@@ -69,6 +69,7 @@ export default ({}) => {
 				${sessionBarMargin}
 			`}
 		>
+			<SessionBar />
 			{finalActions.length ? (
 				<ActionStack
 					key={category}
