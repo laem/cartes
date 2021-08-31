@@ -1,23 +1,15 @@
-import { setSimulationConfig } from 'Actions/actions'
-import IllustratedButton from 'Components/IllustratedButton'
 import { extractCategories, splitName } from 'Components/publicodesUtils'
-import SessionBar from 'Components/SessionBar'
 import { EngineContext } from 'Components/utils/EngineContext'
 import { motion } from 'framer-motion'
 import { utils } from 'publicodes'
 import { partition, sortBy } from 'ramda'
-import React, { useContext, useEffect, useState } from 'react'
+import React, { useContext } from 'react'
 import emoji from 'react-easy-emoji'
 import { useDispatch, useSelector } from 'react-redux'
 import { useLocation, useParams } from 'react-router'
-import { objectifsSelector } from 'Selectors/simulationSelectors'
 import styled from 'styled-components'
 import { correctValue } from '../../components/publicodesUtils'
 import { sessionBarMargin } from '../../components/SessionBar'
-import {
-	answeredQuestionsSelector,
-	configSelector,
-} from '../../selectors/simulationSelectors'
 import ActionStack from './ActionStack'
 import ActionVignette, { disabledAction } from './ActionVignette'
 import CategoryFilters from './CategoryFilters'
@@ -35,26 +27,13 @@ export default ({}) => {
 
 	const simulation = useSelector((state) => state.simulation)
 
-	// Add the actions rules to the simulation, keeping the user's situation
-	const config = {
-		...(simulation?.config || {}),
-		objectifs: ['bilan', ...flatActions.formule.somme],
-	}
-
-	const objectifs = useSelector(objectifsSelector)
+	const objectifs = ['bilan', ...flatActions.formule.somme]
 
 	const engine = useContext(EngineContext)
 
 	const targets = objectifs.map((o) => engine.evaluate(o))
 
-	const stateConfig = useSelector(configSelector),
-		configSet = stateConfig && Object.keys(stateConfig).length
-	const answeredQuestions = useSelector(answeredQuestionsSelector)
-	const mode = useSelector((state) => state.actionMode)
-
 	const dispatch = useDispatch()
-	useEffect(() => dispatch(setSimulationConfig(config)), [location.pathname])
-	if (!configSet) return <div>Config not set</div>
 
 	const [bilans, actions] = partition((t) => t.dottedName === 'bilan', targets)
 
