@@ -1,17 +1,15 @@
 import { extractCategories, splitName } from 'Components/publicodesUtils'
 import { EngineContext } from 'Components/utils/EngineContext'
-import { motion } from 'framer-motion'
 import { utils } from 'publicodes'
 import { partition, sortBy } from 'ramda'
 import React, { useContext } from 'react'
 import emoji from 'react-easy-emoji'
 import { useDispatch, useSelector } from 'react-redux'
 import { useLocation, useParams } from 'react-router'
-import styled from 'styled-components'
 import { correctValue } from '../../components/publicodesUtils'
 import SessionBar, { sessionBarMargin } from '../../components/SessionBar'
 import ActionStack from './ActionStack'
-import ActionVignette, { disabledAction } from './ActionVignette'
+import { disabledAction } from './ActionVignette'
 import CategoryFilters from './CategoryFilters'
 
 const { encodeRuleName, decodeRuleName } = utils
@@ -75,23 +73,8 @@ export default ({}) => {
 					key={category}
 					actions={finalActions}
 					onVote={(item, vote) => console.log(item.props, vote)}
-				>
-					{finalActions.map((evaluation) => (
-						<Item
-							className="plop"
-							key={evaluation.dottedName}
-							data-value={evaluation.dottedName}
-							whileTap={{ scale: 1.15 }}
-						>
-							<ActionVignette
-								key={evaluation.dottedName}
-								rule={rules[evaluation.dottedName]}
-								evaluation={evaluation}
-								total={bilans.length ? bilans[0].nodeValue : null}
-							/>
-						</Item>
-					))}
-				</ActionStack>
+					total={bilans.length ? bilans[0].nodeValue : null}
+				></ActionStack>
 			) : (
 				<p>{emoji('🤷')} Plus d'actions dans cette catégorie</p>
 			)}
@@ -104,23 +87,3 @@ export default ({}) => {
 		</div>
 	)
 }
-
-const Item = styled(motion.div)`
-	width: 16rem;
-	height: 21rem;
-	@media (max-width: 800px) {
-		width: 13rem;
-		height: 18rem;
-	}
-
-	display: flex;
-	align-items: center;
-	justify-content: center;
-	box-shadow: 0 0 20px rgba(0, 0, 0, 0.15);
-	border-radius: 8px;
-	padding: 1rem 0.4rem;
-	transform: ${() => {
-		let rotation = Math.random() * (5 - -5) + -5
-		return `rotate(${rotation}deg)`
-	}};
-`

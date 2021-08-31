@@ -1,9 +1,11 @@
 import { motion } from 'framer-motion'
 import React, { useState, Children } from 'react'
 import emoji from 'react-easy-emoji'
+import { useSelector } from 'react-redux'
 import styled from 'styled-components'
 import { Card } from './ActionCard'
 import ActionConversation from './ActionConversation'
+import ActionVignette from './ActionVignette'
 
 // basic default styles for container
 const Frame = styled.div`
@@ -15,8 +17,10 @@ const Frame = styled.div`
 	position: relative;
 `
 
-export default ({ onVote, children, actions, ...props }) => {
-	const [stack, setStack] = useState(Children.toArray(children))
+export default ({ onVote, actions, total }) => {
+	const [stack, setStack] = useState(actions)
+
+	const rules = useSelector((state) => state.rules)
 
 	// return new array with last item removed
 	const pop = (array) => {
@@ -34,7 +38,6 @@ export default ({ onVote, children, actions, ...props }) => {
 		onVote(item, vote)
 	}
 
-	const stackLeft = stack.length > 0
 	const CancelButton = () => (
 			<StackButton onClick={() => handleVote(stack[stack.length - 1], false)}>
 				{emoji('❌')}
@@ -46,9 +49,13 @@ export default ({ onVote, children, actions, ...props }) => {
 			</StackButton>
 		)
 
+	const stackTop = stack.slice(-1)[0].dottedName
+	const stackLeft = stack.length > 0
+	console.log('stacktop', stackTop)
+
 	return (
 		<div>
-			<ActionConversation dottedName={actions.slice(-1)[0].dottedName} />
+			<ActionConversation dottedName={stackTop} />
 			<div
 				css={`
 					display: flex;
@@ -65,7 +72,7 @@ export default ({ onVote, children, actions, ...props }) => {
 						min-width: 80%;
 					`}
 				>
-					<Frame {...props}>
+					<Frame>
 						{stack.map((item, index) => {
 							const fromUserIndex = stack.length - 1 - index,
 								isTop = fromUserIndex === 0
@@ -76,7 +83,19 @@ export default ({ onVote, children, actions, ...props }) => {
 									key={item.key || index}
 									onVote={(result) => handleVote(item, result)}
 								>
-									{item}
+									<Item
+										className="plop"
+										key={item.dottedName}
+										data-value={item.dottedName}
+										whileTap={{ scale: 1.15 }}
+									>
+										<ActionVignette
+											key={item.dottedName}
+											rule={rules[item.dottedName]}
+											evaluation={item}
+											total={total}
+										/>
+									</Item>
 								</Card>
 							)
 						})}
@@ -104,4 +123,23 @@ const StackButton = styled(AnimatedButton)`
 	@media (max-width: 800px) {
 		font-size: 180%;
 	}
+`
+const Item = styled(motion.div)`
+	width: 16rem;
+	height: 21rem;
+	@media (max-width: 800px) {
+		width: 13rem;
+		height: 18rem;
+	}
+
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	box-shadow: 0 0 20px rgba(0, 0, 0, 0.15);
+	border-radius: 8px;
+	padding: 1rem 0.4rem;
+	transform: ${() => {
+		let rotation = Math.random() * (5 - -5) + -5
+		return `rotate(${rotation}deg)`
+	}};
 `
