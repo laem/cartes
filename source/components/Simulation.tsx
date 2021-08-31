@@ -3,7 +3,7 @@ import Conversation, {
 } from 'Components/conversation/Conversation'
 import PageFeedback from 'Components/Feedback/PageFeedback'
 import SearchButton from 'Components/SearchButton'
-import { motion } from 'framer-motion'
+import * as animate from 'Components/ui/animate'
 import React from 'react'
 import { Trans } from 'react-i18next'
 import LinkToForm from './Feedback/LinkToForm'
@@ -26,17 +26,13 @@ export default function Simulation({
 	showLinkToForm,
 	showPeriodSwitch,
 	noFeedback,
+	animation = 'appear',
 }: SimulationProps) {
+	const Animation = animate[animation]
 	return (
 		<>
 			<SearchButton invisibleButton />
-
-			<motion.div
-				initial={{ opacity: 0, y: 200, scale: 0.3 }}
-				animate={{ opacity: 1, y: 0, scale: 1 }}
-				transition={{ delay: 0.3 }}
-				exit={{ opacity: 0, scale: 0.5, transition: { duration: 0.2 } }}
-			>
+			<Animation delay={0.3}>
 				{results}
 				<Questions
 					customEnd={customEnd}
@@ -59,7 +55,7 @@ export default function Simulation({
 					</>
 				)}{' '}
 				{explanations}
-			</motion.div>
+			</Animation>
 		</>
 	)
 }

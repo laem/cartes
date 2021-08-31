@@ -53,6 +53,7 @@ export default ({ dottedName }) => {
 			customEnd={<div />}
 			targets={<div />}
 			explanations={null}
+			animation="fromBottom"
 		/>
 	) : null
 }

@@ -2,11 +2,17 @@ import SessionBar from 'Components/SessionBar'
 import ShareButton from 'Components/ShareButton'
 import { findContrastedTextColor } from 'Components/utils/colors'
 import { AnimatePresence, motion } from 'framer-motion'
-import React, { useContext } from 'react'
+import {
+	default as React,
+	default as React,
+	useContext,
+	useEffect,
+	useState,
+} from 'react'
 import emoji from 'react-easy-emoji'
 import { useLocation } from 'react-router'
 import { Link } from 'react-router-dom'
-import { animated, useSpring } from 'react-spring'
+import { useSpring } from 'react-spring'
 import tinygradient from 'tinygradient'
 import { sessionBarMargin } from '../../components/SessionBar'
 import { IframeOptionsContext } from '../../components/utils/IframeOptionsProvider'
@@ -55,28 +61,43 @@ export default ({}) => {
 	const headlessMode =
 		!window || window.navigator.userAgent.includes('HeadlessChrome')
 
-	const { value } = headlessMode
-		? { value: score }
-		: useSpring({
-				config: { mass: 1, tension: 150, friction: 150, precision: 1000 },
-				value: score,
-				from: { value: 0 },
-		  })
+	//	Configuration is try and test, feeling, really
+	const valueSpring = useSpring(0, {
+		mass: 10,
+		tension: 10,
+		stiffness: 50,
+		friction: 500,
+		damping: 60,
+	})
+
+	const [value, setValue] = useState(0)
+
+	useEffect(() => {
+		const unsubscribe = valueSpring.onChange((v) => {
+			setValue(v)
+		})
+
+		headlessMode ? setValue(score) : valueSpring.set(score)
+
+		return () => unsubscribe()
+	})
 
 	return (
 		<div>
-			<AnimatedDiv
-				value={value}
-				score={score}
-				details={Object.fromEntries(rehydratedDetails)}
-				headlessMode={headlessMode}
-			/>
+			<animate.appear>
+				<AnimatedDiv
+					value={value}
+					score={score}
+					details={Object.fromEntries(rehydratedDetails)}
+					headlessMode={headlessMode}
+				/>
+			</animate.appear>
 			<IframeDataShareModal data={rehydratedDetails} />
 		</div>
 	)
 }
 
-const AnimatedDiv = animated(({ score, value, details, headlessMode }) => {
+const AnimatedDiv = ({ score, value, details, headlessMode }) => {
 	const backgroundColor = getBackgroundColor(value).toHexString(),
 		backgroundColor2 = getBackgroundColor(value + 2000).toHexString(),
 		textColor = findContrastedTextColor(backgroundColor, true),
@@ -270,7 +291,7 @@ const AnimatedDiv = animated(({ score, value, details, headlessMode }) => {
 			</motion.div>
 		</div>
 	)
-})
+}
 
 const ActionButton = ({ text }) => (
 	<Link
