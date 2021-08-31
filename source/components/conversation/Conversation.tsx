@@ -21,6 +21,7 @@ import {
 	situationSelector,
 } from 'Selectors/simulationSelectors'
 import { objectifsSelector } from '../../selectors/simulationSelectors'
+import CategoryVisualisation from '../../sites/publicodes/CategoryVisualisation'
 import { splitName } from '../publicodesUtils'
 import useKeypress from '../utils/useKeyPress'
 import Aide from './Aide'
@@ -28,7 +29,6 @@ import CategoryRespiration from './CategoryRespiration'
 import './conversation.css'
 import { ExplicableRule } from './Explicable'
 import SimulationEnding from './SimulationEnding'
-import CategoryVisualisation from '../../sites/publicodes/CategoryVisualisation'
 
 export type ConversationProps = {
 	customEndMessages?: React.ReactNode
@@ -88,15 +88,17 @@ export default function Conversation({
 
 	useEffect(() => {
 		// It is important to test for "previousSimulation" : if it exists, it's not loadedYet. Then currentQuestion could be the wrong one, already answered, don't put it as the unfoldedStep
+		console.log({ currentQuestion, previousSimulation, unfoldedStep })
 		if (
 			currentQuestion &&
 			!previousSimulation &&
 			currentQuestion !== unfoldedStep
 		) {
+			console.log('do dispatch')
 			dispatch(goToQuestion(currentQuestion))
 			window.scrollTo(0, 0)
 		}
-	}, [dispatch, currentQuestion, previousAnswers, unfoldedStep])
+	}, [dispatch, currentQuestion, previousAnswers, unfoldedStep, objectifs])
 
 	const goToPrevious = () => {
 		return dispatch(goToQuestion(previousQuestion))

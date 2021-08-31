@@ -99,6 +99,7 @@ export default ({}) => {
 					{finalActions.map((evaluation) => (
 						<Item
 							className="plop"
+							key={evaluation.dottedName}
 							data-value={evaluation.dottedName}
 							whileTap={{ scale: 1.15 }}
 						>

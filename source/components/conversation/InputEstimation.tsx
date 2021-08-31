@@ -14,7 +14,6 @@ export default function InputEstimation({ inputEstimation, setFinalValue }) {
 		evaluation = engine.evaluate(inputEstimation),
 		nodeValue = evaluation.nodeValue || 1000
 
-	console.log('YYI', evaluation)
 
 	const [value, setValue] = useState('')
 

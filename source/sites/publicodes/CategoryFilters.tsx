@@ -31,6 +31,7 @@ export default ({ categories, selected, countByCategory }) => {
 		>
 			{categories.map((category) => (
 				<li
+					key={category.dottedName}
 					css={`
 						background: ${category.color};
 						${selected && 'background: #aaa;'}

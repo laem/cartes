@@ -48,7 +48,6 @@ export default ({}) => {
 		{ nodeValue, title } = evaluation
 
 	const { description, icônes: icons, plus } = rules[dottedName]
-	console.log('EVAL', plus)
 
 	const flatActions = rules['actions']
 	const relatedActions = flatActions.formule.somme
