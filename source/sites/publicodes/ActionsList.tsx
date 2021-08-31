@@ -90,7 +90,6 @@ export default ({}) => {
 				${sessionBarMargin}
 			`}
 		>
-			<SessionBar />
 			{finalActions.length ? (
 				<ActionStack
 					key={category}

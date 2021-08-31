@@ -1,19 +1,12 @@
 import { setSimulationConfig } from 'Actions/actions'
 import { splitName } from 'Components/publicodesUtils'
-import SessionBar from 'Components/SessionBar'
 import Simulation from 'Components/Simulation'
-import { Markdown } from 'Components/utils/markdown'
-import { ScrollToTop } from 'Components/utils/Scroll'
 import { useNextQuestions } from 'Components/utils/useNextQuestion'
 import { utils } from 'publicodes'
 import React, { useContext, useEffect } from 'react'
-import emoji from 'react-easy-emoji'
 import { useDispatch, useSelector } from 'react-redux'
-import { Link } from 'react-router-dom'
 import { parentName } from '../../components/publicodesUtils'
-import { sessionBarMargin } from '../../components/SessionBar'
 import { EngineContext } from '../../components/utils/EngineContext'
-import Meta from '../../components/utils/Meta'
 
 const { decodeRuleName, encodeRuleName } = utils
 

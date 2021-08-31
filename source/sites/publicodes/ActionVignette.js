@@ -4,6 +4,8 @@ import emoji from 'react-easy-emoji'
 import { useSelector } from 'react-redux'
 import { Link } from 'react-router-dom'
 import { correctValue } from '../../components/publicodesUtils'
+import { useEngine } from '../../components/utils/EngineContext'
+import { situationSelector } from '../../selectors/simulationSelectors'
 import { humanWeight } from './HumanWeight'
 const { encodeRuleName, decodeRuleName } = utils
 
@@ -50,20 +52,21 @@ export default ({ evaluation, total, rule, effort }) => {
 							{emoji(icons)}
 						</div>
 					)}
-					<ActionValue {...{ total, nodeValue, unit, disabled, noFormula }} />
+					<ActionValue {...{ dottedName, total, disabled, noFormula }} />
 				</div>
 			</div>
 		</Link>
 	)
 }
-const ActionValue = ({
-	total,
-	nodeValue: rawValue,
-	unit: rawUnit,
-	disabled,
-	noFormula,
-}) => {
-	const correctedValue = correctValue({ nodeValue: rawValue, unit: rawUnit })
+const ActionValue = ({ total, disabled, noFormula, dottedName }) => {
+	const engine = useEngine(),
+		situation = useSelector(situationSelector),
+		evaluation = engine.evaluate(dottedName),
+		rawValue = evaluation.nodeValue
+	const correctedValue = correctValue({
+		nodeValue: rawValue,
+		unit: evaluation.unit,
+	})
 	const [value, unit] = humanWeight(correctedValue),
 		relativeValue = Math.round(100 * (correctedValue / total))
 
