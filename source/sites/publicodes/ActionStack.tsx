@@ -80,12 +80,13 @@ export default ({ onVote, actions, total }) => {
 								<Card
 									css={fromUserIndex > 4 ? 'display: none' : ''}
 									drag={isTop} // Only top card is draggable
-									key={item.key || index}
+									key={item.dottedName}
 									onVote={(result) => handleVote(item, result)}
 								>
 									<Item
 										className="plop"
 										key={item.dottedName}
+										keyString={item.dottedName}
 										data-value={item.dottedName}
 										whileTap={{ scale: 1.15 }}
 									>
@@ -138,8 +139,15 @@ const Item = styled(motion.div)`
 	box-shadow: 0 0 20px rgba(0, 0, 0, 0.15);
 	border-radius: 8px;
 	padding: 1rem 0.4rem;
-	transform: ${() => {
-		let rotation = Math.random() * (5 - -5) + -5
+	transform: ${({ keyString }) => {
+		let rotation = cachedRandom(keyString) * 10 + -5
 		return `rotate(${rotation}deg)`
 	}};
 `
+
+const randomCache = {}
+const cachedRandom = (key) => {
+	if (randomCache[key]) return randomCache[key]
+	else randomCache[key] = Math.random()
+	return randomCache[key]
+}
