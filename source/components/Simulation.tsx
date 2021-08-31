@@ -1,10 +1,9 @@
 import Conversation, {
 	ConversationProps,
 } from 'Components/conversation/Conversation'
-import SeeAnswersButton from 'Components/conversation/SeeAnswersButton'
 import PageFeedback from 'Components/Feedback/PageFeedback'
 import SearchButton from 'Components/SearchButton'
-import * as Animate from 'Components/ui/animate'
+import { motion } from 'framer-motion'
 import React from 'react'
 import { Trans } from 'react-i18next'
 import LinkToForm from './Feedback/LinkToForm'
@@ -31,7 +30,8 @@ export default function Simulation({
 	return (
 		<>
 			<SearchButton invisibleButton />
-			<Animate.fromTop>
+
+			<motion.div>
 				{results}
 				<Questions
 					customEnd={customEnd}
@@ -55,7 +55,7 @@ export default function Simulation({
 					</>
 				)}{' '}
 				{explanations}
-			</Animate.fromTop>
+			</motion.div>
 		</>
 	)
 }

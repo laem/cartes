@@ -8,7 +8,6 @@ import RuleInput, {
 	RuleInputProps,
 } from 'Components/conversation/RuleInput'
 import Notifications from 'Components/Notifications'
-import * as Animate from 'Components/ui/animate'
 import { EngineContext } from 'Components/utils/EngineContext'
 import { useNextQuestions } from 'Components/utils/useNextQuestion'
 import { TrackerContext } from 'Components/utils/withTracker'
@@ -191,34 +190,32 @@ export default function Conversation({
 				{orderByCategories && questionCategory && (
 					<CategoryVisualisation questionCategory={questionCategory} />
 				)}
-				<Animate.fadeIn>
-					<div className="step">
-						<h3
-							css={`
-								@media (max-width: 800px) {
-									margin: 0.4rem 0;
+				<div className="step">
+					<h3
+						css={`
+							@media (max-width: 800px) {
+								margin: 0.4rem 0;
+							}
+						`}
+					>
+						{questionText}{' '}
+						{hasDescription && (
+							<ExplicableRule
+								dottedName={
+									(mosaicQuestion && mosaicQuestion.dottedName) ||
+									currentQuestion
 								}
-							`}
-						>
-							{questionText}{' '}
-							{hasDescription && (
-								<ExplicableRule
-									dottedName={
-										(mosaicQuestion && mosaicQuestion.dottedName) ||
-										currentQuestion
-									}
-								/>
-							)}
-						</h3>
-						<fieldset>
-							<RuleInput
-								dottedName={currentQuestion}
-								onChange={onChange}
-								onSubmit={submit}
 							/>
-						</fieldset>
-					</div>
-				</Animate.fadeIn>
+						)}
+					</h3>
+					<fieldset>
+						<RuleInput
+							dottedName={currentQuestion}
+							onChange={onChange}
+							onSubmit={submit}
+						/>
+					</fieldset>
+				</div>
 				<div className="ui__ answer-group">
 					{previousAnswers.length > 0 && currentQuestionIndex !== 0 && (
 						<>
