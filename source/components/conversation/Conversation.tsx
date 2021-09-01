@@ -88,7 +88,6 @@ export default function Conversation({
 	useEffect(() => {
 		// It is important to test for "previousSimulation" : if it exists, it's not loadedYet. Then currentQuestion could be the wrong one, already answered, don't put it as the unfoldedStep
 		// TODO this is really unclear
-		console.log({ currentQuestion, previousSimulation, unfoldedStep })
 		if (
 			currentQuestion &&
 			!previousSimulation &&

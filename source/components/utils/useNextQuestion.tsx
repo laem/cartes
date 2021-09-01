@@ -48,6 +48,7 @@ export function getNextSteps(
 		missingVariables
 	)
 
+	console.log(missingByTotalScore)
 	const innerKeys = flatten(map(keys, missingVariables)),
 		missingByTargetsAdvanced = Object.fromEntries(
 			Object.entries(countBy(identity, innerKeys)).map(
@@ -59,6 +60,8 @@ export function getNextSteps(
 			)
 		)
 
+	console.log('MTAV', missingByTargetsAdvanced)
+
 	const missingByCompound = mergeWith(
 			pair,
 			missingByTargetsAdvanced,
@@ -66,6 +69,7 @@ export function getNextSteps(
 		),
 		pairs = toPairs<number>(missingByCompound),
 		sortedPairs = sortWith([descend(byCount), descend(byScore) as any], pairs)
+	console.log('SP', sortedPairs)
 	return map(head, sortedPairs) as any
 }
 
