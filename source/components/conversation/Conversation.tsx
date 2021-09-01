@@ -181,7 +181,7 @@ export default function Conversation({
 		<section
 			css={`
 				@media (max-width: 800px) {
-					padding: 0.8rem 0 0.4rem;
+					padding: 0.4rem 0 0.4rem;
 				}
 			`}
 		>
