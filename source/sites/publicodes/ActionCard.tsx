@@ -80,7 +80,7 @@ export const Card = ({ children, style, onVote, id, ...props }) => {
 
 	const xInput = [-100, 0, 100]
 	const background = useTransform(x, xInput, [
-		'linear-gradient(180deg, #ff008c 0%, rgb(211, 9, 225) 100%)',
+		'linear-gradient(180deg, #f2a4f4 0%, #f49494 100%)',
 		'linear-gradient(180deg, #fff 0%, #fff 100%)',
 		'linear-gradient(180deg, rgb(230, 255, 0) 0%, rgb(3, 209, 0) 100%)',
 	])
