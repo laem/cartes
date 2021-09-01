@@ -10,7 +10,6 @@ import ActionVignette from './ActionVignette'
 // basic default styles for container
 const Frame = styled.div`
 	width: 100%;
-	overflow: hidden;
 	display: flex;
 	justify-content: center;
 	align-items: center;
