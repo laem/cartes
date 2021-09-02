@@ -22,6 +22,7 @@ import emoji from 'react-easy-emoji'
 import { situationSelector } from '../../selectors/simulationSelectors'
 import BandeauContribuer from './BandeauContribuer'
 import { sessionBarMargin } from '../../components/SessionBar'
+import { FullName, splitName } from '../../components/publicodesUtils'
 
 const eqValues = compose(isEmpty, symmetricDifference)
 
@@ -35,7 +36,6 @@ const Simulateur = (props) => {
 		dispatch = useDispatch(),
 		config = {
 			objectifs: [decoded],
-			narrow: decoded !== 'bilan',
 		},
 		configSet = useSelector((state) => state.simulation?.config),
 		categories = decoded === 'bilan' && extractCategories(rules, engine)
@@ -59,7 +59,13 @@ const Simulateur = (props) => {
 					<meta name="description" content={evaluation.title} />
 				)}
 			</Helmet>
-			{!isMainSimulation && <h1>{evaluation.title}</h1>}
+			{!isMainSimulation && (
+				<h1>
+					{evaluation.rawNode.title || (
+						<FullName dottedName={evaluation.dottedName} />
+					)}
+				</h1>
+			)}
 			<SessionBar evaluation={evaluation} />
 			<Simulation
 				noFeedback

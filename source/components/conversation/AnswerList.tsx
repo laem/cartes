@@ -1,22 +1,21 @@
-import {
-	goToQuestion,
-	resetSimulation,
-	deletePreviousSimulation,
-} from 'Actions/actions'
+import { goToQuestion } from 'Actions/actions'
 import Overlay from 'Components/Overlay'
+import {
+	extractCategoriesNamespaces,
+	parentName,
+	sortCategories,
+} from 'Components/publicodesUtils'
 import { useEngine } from 'Components/utils/EngineContext'
 import { useNextQuestions } from 'Components/utils/useNextQuestion'
-import { EvaluatedNode, formatValue, serializeEvaluation } from 'publicodes'
+import { DottedName } from 'modele-social'
+import { EvaluatedNode, formatValue } from 'publicodes'
+import { useEffect } from 'react'
 import emoji from 'react-easy-emoji'
 import { Trans, useTranslation } from 'react-i18next'
 import { useDispatch, useSelector } from 'react-redux'
-import { DottedName } from 'modele-social'
 import { situationSelector } from 'Selectors/simulationSelectors'
-import './AnswerList.css'
-import { parentName } from 'Components/publicodesUtils'
-import { sortCategories, extractCategories } from 'Components/publicodesUtils'
 import { answeredQuestionsSelector } from '../../selectors/simulationSelectors'
-import { useEffect } from 'react'
+import './AnswerList.css'
 
 type AnswerListProps = {
 	onClose: () => void
@@ -43,7 +42,7 @@ export default function AnswerList({ onClose }: AnswerListProps) {
 		engine.evaluate(engine.getRule(dottedName))
 	)
 	const rules = useSelector((state) => state.rules)
-	const categories = sortCategories(extractCategories(rules, engine))
+	const categories = sortCategories(extractCategoriesNamespaces(rules, engine))
 
 	useEffect(() => {
 		const handleKeyDown = (e: KeyboardEvent) => {

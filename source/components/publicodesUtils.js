@@ -6,6 +6,17 @@ export const parentName = (dottedName, outputSeparator = ' . ', shift = 0) =>
 
 export const splitName = (dottedName) => dottedName.split(' . ')
 
+export const FullName = ({ dottedName }) => (
+	<span>
+		{splitName(dottedName).map((fragment, index) => (
+			<span>
+				{index > 0 && ' > '}
+				{capitalise0(fragment)}
+			</span>
+		))}
+	</span>
+)
+
 export const title = (rule) =>
 	rule.titre ||
 	capitalise0(splitName(rule.dottedName)[splitName(rule.dottedName).length - 1])
@@ -27,6 +38,29 @@ export const ruleSumNode = (rule) => {
 
 	if (formula.nodeKind !== 'somme') return null
 	return formula.explanation.map((node) => node.dottedName)
+}
+
+export const extractCategoriesNamespaces = (
+	rules,
+	engine,
+	parentRule = 'bilan'
+) => {
+	const rule = engine.getRule(parentRule),
+		sumNodes = ruleSumNode(rule)
+
+	const categories = sumNodes.map((dottedName) => {
+		const categoryName = splitName(dottedName)[0]
+		const node = engine.getRule(categoryName)
+
+		const { icônes, couleur } = rules[categoryName]
+		return {
+			...node,
+			icons: icônes,
+			color: couleur,
+		}
+	})
+
+	return categories
 }
 
 export const extractCategories = (

@@ -6,7 +6,10 @@ import React, { useContext } from 'react'
 import emoji from 'react-easy-emoji'
 import { useDispatch, useSelector } from 'react-redux'
 import { useLocation, useParams } from 'react-router'
-import { correctValue } from '../../components/publicodesUtils'
+import {
+	correctValue,
+	extractCategoriesNamespaces,
+} from '../../components/publicodesUtils'
 import SessionBar, { sessionBarMargin } from '../../components/SessionBar'
 import ActionStack from './ActionStack'
 import { disabledAction } from './ActionVignette'
@@ -50,7 +53,8 @@ export default ({}) => {
 
 	const finalActions = filterByCategory(interestingActions)
 
-	const categories = extractCategories(rules, engine)
+	const categories = extractCategoriesNamespaces(rules, engine)
+	console.log('C', categories)
 	const countByCategory = actions.reduce((memo, next) => {
 		const category = splitName(next.dottedName)[0]
 
