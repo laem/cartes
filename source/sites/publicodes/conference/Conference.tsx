@@ -10,13 +10,19 @@ import fruits from './fruits.json'
 import UserList from './UserList'
 import { mean } from 'ramda'
 import Stats from './Stats'
-import { stringToColour, getRandomInt, generateRoomName } from './utils'
+import {
+	stringToColour,
+	getRandomInt,
+	generateRoomName,
+	filterExtremes,
+	extremeThreshold,
+} from './utils'
 import Checkbox from '../../../components/ui/Checkbox'
 import ShareButton from '../../../components/ShareButton'
 import { ScrollToTop } from '../../../components/utils/Scroll'
 
 export default () => {
-	const [elements, setElements] = useState([])
+	const [rawElements, setElements] = useState([])
 	const [users, setUsers] = useState([])
 	const [newRoom, setNewRoom] = useState(generateRoomName())
 	const { room } = useParams()
@@ -67,6 +73,10 @@ export default () => {
 		}
 	}, [room, conference])
 
+	const elements = filterExtremes(rawElements)
+	const hasExtremes =
+		Object.entries(elements).length < Object.entries(rawElements).length
+
 	return (
 		<div>
 			{room && <ScrollToTop />}
@@ -88,7 +98,7 @@ export default () => {
 
 			{room && (
 				<div>
-					<UserBlock {...{ users, username, room }} />
+					<UserBlock {...{ users, hasExtremes, username, room }} />
 				</div>
 			)}
 			<Instructions {...{ room, newRoom, setNewRoom }} />
@@ -159,7 +169,7 @@ const NamingBlock = ({ newRoom, setNewRoom }) => {
 	)
 }
 
-const UserBlock = ({ users, username, room }) => (
+const UserBlock = ({ hasExtremes, users, username, room }) => (
 	<div>
 		<h2 css="display: inline-block ;margin-right: 1rem">
 			{emoji('👤 ')}
@@ -169,6 +179,12 @@ const UserBlock = ({ users, username, room }) => (
 			{emoji('🟢')} {users.length} participant{plural(users)}
 		</span>
 		<UserList users={users} username={username} />
+		{hasExtremes && (
+			<div>
+				{emoji('⚠️')} Certains utilisateurs ont des bilans au-dessus de{' '}
+				{extremeThreshold / 1000}t, nous les avons exclus.
+			</div>
+		)}
 	</div>
 )
 

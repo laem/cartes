@@ -4,6 +4,7 @@ import Progress from '../../../components/ui/Progress'
 import { humanWeight } from '../HumanWeight'
 import CategoryStats from './CategoryStats'
 import DefaultFootprint, { meanFormatter } from '../DefaultFootprint'
+import { extremeThreshold } from './utils'
 
 export const computeMean = (simulationArray) =>
 	simulationArray &&
