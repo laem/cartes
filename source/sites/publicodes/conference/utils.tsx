@@ -45,3 +45,6 @@ export const filterExtremes = (elements) =>
 			([_, { bilan }]) => bilan < extremeThreshold
 		)
 	)
+
+export const getExtremes = (elements) =>
+	Object.entries(elements).filter(([_, { bilan }]) => bilan >= extremeThreshold)

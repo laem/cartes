@@ -16,6 +16,7 @@ import {
 	generateRoomName,
 	filterExtremes,
 	extremeThreshold,
+	getExtremes,
 } from './utils'
 import Checkbox from '../../../components/ui/Checkbox'
 import ShareButton from '../../../components/ShareButton'
@@ -73,9 +74,8 @@ export default () => {
 		}
 	}, [room, conference])
 
-	const elements = filterExtremes(rawElements)
-	const hasExtremes =
-		Object.entries(elements).length < Object.entries(rawElements).length
+	const elements = filterExtremes(rawElements),
+		extremes = getExtremes(rawElements)
 
 	return (
 		<div>
@@ -98,7 +98,7 @@ export default () => {
 
 			{room && (
 				<div>
-					<UserBlock {...{ users, hasExtremes, username, room }} />
+					<UserBlock {...{ users, extremes, username, room }} />
 				</div>
 			)}
 			<Instructions {...{ room, newRoom, setNewRoom }} />
@@ -169,7 +169,7 @@ const NamingBlock = ({ newRoom, setNewRoom }) => {
 	)
 }
 
-const UserBlock = ({ hasExtremes, users, username, room }) => (
+const UserBlock = ({ extremes, users, username, room }) => (
 	<div>
 		<h2 css="display: inline-block ;margin-right: 1rem">
 			{emoji('👤 ')}
@@ -178,11 +178,11 @@ const UserBlock = ({ hasExtremes, users, username, room }) => (
 		<span css="color: #78b159; font-weight: bold">
 			{emoji('🟢')} {users.length} participant{plural(users)}
 		</span>
-		<UserList users={users} username={username} />
-		{hasExtremes && (
+		<UserList users={users} username={username} extremes={extremes} />
+		{extremes.length > 0 && (
 			<div>
 				{emoji('⚠️')} Certains utilisateurs ont des bilans au-dessus de{' '}
-				{extremeThreshold / 1000}t, nous les avons exclus.
+				{extremeThreshold / 1000} t, nous les avons exclus.
 			</div>
 		)}
 	</div>
