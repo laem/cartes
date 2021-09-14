@@ -36,3 +36,15 @@ export const generateRoomName = () => {
 		.join('-')
 		.toLowerCase()
 }
+
+export const extremeThreshold = 100 * 1000
+
+export const filterExtremes = (elements) =>
+	Object.fromEntries(
+		Object.entries(elements).filter(
+			([_, { bilan }]) => bilan < extremeThreshold
+		)
+	)
+
+export const getExtremes = (elements) =>
+	Object.entries(elements).filter(([_, { bilan }]) => bilan >= extremeThreshold)

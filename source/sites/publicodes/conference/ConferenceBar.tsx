@@ -11,6 +11,7 @@ import * as Y from 'yjs'
 import { useSimulationProgress } from '../../../components/utils/useNextQuestion'
 import { extractCategories } from 'Components/publicodesUtils'
 import { computeHumanMean } from './Stats'
+import { filterExtremes } from './utils'
 
 export default () => {
 	const conference = useSelector((state) => state.conference)
@@ -32,7 +33,8 @@ export default () => {
 	const nodeValue = correctValue({ nodeValue: rawNodeValue, unit })
 	const [username, setUsername] = usePersistingState('pseudo')
 
-	const [elements, setElements] = useState([])
+	const [rawElements, setElements] = useState([])
+	const elements = filterExtremes(rawElements)
 	const dispatch = useDispatch()
 
 	const simulations = ydoc.get('simulations', Y.Map)
