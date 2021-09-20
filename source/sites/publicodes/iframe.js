@@ -5,8 +5,11 @@ const script =
 		document.getElementById('nosgestesclimat'),
 	integratorUrl = encodeURIComponent(window.location.href.toString())
 
+const integratorLogo = script.dataset.integratorLogo
+const integratorName = script.dataset.integratorName
+
 const hostname = 'nosgestesclimat.fr/'
-const src = `https://${hostname}?iframe&integratorUrl=${integratorUrl}`
+const src = `https://${hostname}?iframe&integratorUrl=${integratorUrl}&integratorLogo=${integratorLogo}`
 
 const iframe = document.createElement('iframe')
 
