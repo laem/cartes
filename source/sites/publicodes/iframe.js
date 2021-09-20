@@ -5,11 +5,12 @@ const script =
 		document.getElementById('nosgestesclimat'),
 	integratorUrl = encodeURIComponent(window.location.href.toString())
 
-const integratorLogo = script.dataset.integratorLogo
-const integratorName = script.dataset.integratorName
+const integratorLogo = script.dataset.integratorLogo,
+	integratorName = script.dataset.integratorName,
+	integratorYoutubeVideo = script.dataset.integratorYoutubeVideo
 
 const hostname = 'nosgestesclimat.fr/'
-const src = `https://${hostname}?iframe&integratorUrl=${integratorUrl}&integratorLogo=${integratorLogo}`
+const src = `https://${hostname}?iframe&integratorUrl=${integratorUrl}&integratorLogo=${integratorLogo}&integratorYoutubeVideo=${integratorYoutubeVideo}`
 
 const iframe = document.createElement('iframe')
 

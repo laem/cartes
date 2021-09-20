@@ -87,6 +87,10 @@ const AnimatedDiv = animated(({ score, value, details, headlessMode }) => {
 			window.location.origin +
 			'/.netlify/functions/ending-screenshot?pageToScreenshot=' +
 			window.location
+	const integratorYoutubeVideo =
+		new URLSearchParams(document.location.search).get(
+			'integratorYoutubeVideo'
+		) || 'https://www.youtube.com/embed/DZnWYPM8dzg'
 	return (
 		<div
 			css={`
@@ -231,6 +235,20 @@ const AnimatedDiv = animated(({ score, value, details, headlessMode }) => {
 						label="Partager mes résultats"
 					/>
 				</div>
+
+				{integratorYoutubeVideo && (
+					<div class="videoWrapper">
+						<iframe
+							width="560"
+							height="315"
+							src={integratorYoutubeVideo}
+							title="YouTube video player"
+							frameborder="0"
+							allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+							allowfullscreen
+						></iframe>
+					</div>
+				)}
 			</motion.div>
 		</div>
 	)
