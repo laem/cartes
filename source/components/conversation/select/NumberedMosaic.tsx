@@ -1,11 +1,8 @@
-import classnames from 'classnames'
-import { ThemeColorsContext } from 'Components/utils/colors'
-import React, { useCallback, useContext, useState } from 'react'
-import { Explicable } from 'Components/conversation/Explicable'
+import { updateSituation } from 'Actions/actions'
+import React from 'react'
 import emoji from 'react-easy-emoji'
 import { useDispatch, useSelector } from 'react-redux'
 import { situationSelector } from 'Selectors/simulationSelectors'
-import { updateSituation } from 'Actions/actions'
 import { Mosaic } from './UI'
 
 // This is the number of possible answers in this very custom input component

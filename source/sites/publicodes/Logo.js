@@ -1,4 +1,6 @@
-import React from 'react'
+import React, { useContext } from 'react'
+import emoji from 'react-easy-emoji'
+import { IframeOptionsContext } from 'Components/utils/IframeOptionsProvider'
 //This component is unfortunately repeated in index.html, where we can't yet use a component :-(
 
 export default () => (
@@ -16,7 +18,48 @@ export default () => (
 	</span>
 )
 
-export const InlineLogo = () => (
+export const InlineLogo = () => {
+	const { integratorLogo, integratorName } = useContext(IframeOptionsContext)
+	console.log('YO', integratorName, integratorLogo)
+
+	return (
+		<div
+			css={`
+				display: flex;
+				justify-content: space-between;
+				align-items: center;
+				@media (max-width: 800px) {
+					flex-direction: column;
+					justify-content: center;
+					align-items: center;
+				}
+				> span {
+					color: black;
+				}
+			`}
+		>
+			{integratorLogo && integratorName && (
+				<>
+					<span
+						css={`
+							display: flex;
+							justify-content: center;
+							align-items: center;
+						`}
+					>
+						<img src={integratorLogo} width="40px" css={``} />
+						<span css="font-size: 70%">{integratorName}</span>
+					</span>
+					<span css="margin: 0 .6rem; font-size: 80%">x</span>
+				</>
+			)}
+
+			<NosGestesClimatInline />
+		</div>
+	)
+}
+
+const NosGestesClimatInline = () => (
 	<span
 		css={`
 			display: flex;

@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useContext } from 'react'
 import { useLocation, useParams } from 'react-router'
 import emoji from 'react-easy-emoji'
 import tinygradient from 'tinygradient'
@@ -15,6 +15,9 @@ import { Link } from 'react-router-dom'
 import Meta from '../../components/utils/Meta'
 import DefaultFootprint from './DefaultFootprint'
 import { sessionBarMargin } from '../../components/SessionBar'
+import IframeOptionsProvider, {
+	IframeOptionsContext,
+} from '../../components/utils/IframeOptionsProvider'
 
 const gradient = tinygradient([
 		'#78e08f',
@@ -87,6 +90,12 @@ const AnimatedDiv = animated(({ score, value, details, headlessMode }) => {
 			window.location.origin +
 			'/.netlify/functions/ending-screenshot?pageToScreenshot=' +
 			window.location
+	const {
+		integratorYoutubeVideo,
+		integratorActionText,
+		integratorActionUrl,
+	} = useContext(IframeOptionsContext)
+
 	return (
 		<div
 			css={`
@@ -209,7 +218,7 @@ const AnimatedDiv = animated(({ score, value, details, headlessMode }) => {
 							</div>
 						</div>
 					</div>
-					<ActionButton />
+					{!integratorActionText && <ActionButton text="Passer à l'action" />}
 					<div css="padding: 1rem">
 						<Chart
 							details={details}
@@ -231,18 +240,46 @@ const AnimatedDiv = animated(({ score, value, details, headlessMode }) => {
 						label="Partager mes résultats"
 					/>
 				</div>
+
+				{integratorActionText && integratorActionUrl && (
+					<IntegratorActionButton />
+				)}
+
+				{integratorYoutubeVideo && (
+					<div
+						class="videoWrapper"
+						css={`
+							iframe {
+								width: 100%;
+							}
+						`}
+					>
+						<iframe
+							width="560"
+							height="315"
+							src={integratorYoutubeVideo}
+							title="YouTube video player"
+							frameborder="0"
+							allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+							allowfullscreen
+						></iframe>
+					</div>
+				)}
+
+				{integratorActionText && <ActionButton text="Réduire mon empreinte" />}
 			</motion.div>
 		</div>
 	)
 })
 
-const ActionButton = () => (
+const ActionButton = ({ text }) => (
 	<Link
 		to="/actions"
 		className="ui__ button plain"
 		css={`
-			margin: 0.6rem 0;
-			width: 100%;
+			margin: 0.6rem auto;
+			width: 90%;
+
 			img {
 				transform: scaleX(-1);
 				height: 2rem;
@@ -264,7 +301,54 @@ const ActionButton = () => (
 			`}
 		>
 			<img src={StartingBlock} />
-			Passer à l'action
+			{text}
 		</div>
 	</Link>
 )
+
+const IntegratorActionButton = () => {
+	const {
+		integratorLogo,
+		integratorActionUrl,
+		integratorActionText,
+	} = useContext(IframeOptionsContext)
+
+	return (
+		<a
+			href={integratorActionUrl}
+			className="ui__ button plain"
+			target="_blank"
+			css={`
+				margin: 0.6rem auto 1rem;
+				width: 90%;
+				img {
+					transform: scaleX(-1);
+					height: 2rem;
+					margin: 0 0.6rem;
+					display: inline-block;
+				}
+				a {
+					color: var(--textColor);
+					text-decoration: none;
+				}
+			`}
+		>
+			<div
+				css={`
+					display: flex;
+					justify-content: center;
+					align-items: center;
+					@media (max-width: 800px) {
+						flex-direction: column-reverse;
+						img {
+							display: none;
+						}
+					}
+				`}
+			>
+				{integratorActionText}
+				<img src={integratorLogo} />
+			</div>
+		</a>
+	)
+}
