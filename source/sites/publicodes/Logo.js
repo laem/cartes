@@ -20,6 +20,7 @@ export default () => (
 
 export const InlineLogo = () => {
 	const { integratorLogo, integratorName } = useContext(IframeOptionsContext)
+	console.log('YO', integratorName, integratorLogo)
 
 	return (
 		<div
@@ -37,17 +38,22 @@ export const InlineLogo = () => {
 				}
 			`}
 		>
-			<span
-				css={`
-					display: flex;
-					justify-content: center;
-					align-items: center;
-				`}
-			>
-				{integratorLogo && <img src={integratorLogo} width="40px" css={``} />}
-				<span css="font-size: 70%">{integratorName}</span>
-			</span>
-			<span css="margin: 0 .6rem; font-size: 80%">{emoji('x')}</span>
+			{integratorLogo && integratorName && (
+				<>
+					<span
+						css={`
+							display: flex;
+							justify-content: center;
+							align-items: center;
+						`}
+					>
+						<img src={integratorLogo} width="40px" css={``} />
+						<span css="font-size: 70%">{integratorName}</span>
+					</span>
+					<span css="margin: 0 .6rem; font-size: 80%">x</span>
+				</>
+			)}
+
 			<NosGestesClimatInline />
 		</div>
 	)

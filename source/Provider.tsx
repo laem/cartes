@@ -87,21 +87,6 @@ export default function Provider({
 			'couleur'
 		) ?? undefined
 
-	const iframeIntegratorOptions = Object.fromEntries(
-		[
-			'integratorLogo',
-			'integratorName',
-			'integratorActionUrl',
-			'integratorYoutubeVideo',
-			'integratorActionText',
-		].map((key) => [
-			key,
-			decodeURIComponent(
-				new URLSearchParams(document.location.search).get(key)
-			),
-		])
-	)
-
 	return (
 		// If IE < 11 display nothing
 		<ReduxProvider store={store}>
@@ -109,7 +94,7 @@ export default function Provider({
 				<ThemeColorsProvider
 					color={iframeCouleur && decodeURIComponent(iframeCouleur)}
 				>
-					<IframeOptionsProvider options={iframeIntegratorOptions}>
+					<IframeOptionsProvider>
 						<TrackerProvider value={tracker}>
 							<SitePathProvider value={sitePaths}>
 								<I18nextProvider i18n={i18next}>
