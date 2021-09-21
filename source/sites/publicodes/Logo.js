@@ -1,5 +1,6 @@
-import React from 'react'
+import React, { useContext } from 'react'
 import emoji from 'react-easy-emoji'
+import { IframeOptionsContext } from 'Components/utils/IframeOptionsProvider'
 //This component is unfortunately repeated in index.html, where we can't yet use a component :-(
 
 export default () => (
@@ -18,13 +19,7 @@ export default () => (
 )
 
 export const InlineLogo = () => {
-	const integratorLogo = new URLSearchParams(document.location.search).get(
-		'integratorLogo'
-	)
-	const integratorName = new URLSearchParams(document.location.search).get(
-		'integratorName'
-	)
-	console.log('LOGO', integratorLogo, integratorName)
+	const { integratorLogo, integratorName } = useContext(IframeOptionsContext)
 
 	return (
 		<div

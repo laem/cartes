@@ -1,18 +1,19 @@
 import { ThemeColorsProvider } from 'Components/utils/colors'
+import IframeOptionsProvider from 'Components/utils/IframeOptionsProvider'
 import { SitePathProvider, SitePaths } from 'Components/utils/SitePathsContext'
 import { TrackerProvider } from 'Components/utils/withTracker'
 import { createBrowserHistory } from 'history'
 import i18next from 'i18next'
-import React, { createContext, useEffect, useMemo } from 'react'
+import React, { useEffect, useMemo } from 'react'
 import { I18nextProvider } from 'react-i18next'
 import { Provider as ReduxProvider } from 'react-redux'
 import { Router } from 'react-router-dom'
 import reducers, { RootState } from 'Reducers/rootReducer'
 import { applyMiddleware, compose, createStore, Middleware, Store } from 'redux'
 import thunk from 'redux-thunk'
+import RulesProvider from './RulesProvider'
 import Tracker from './Tracker'
 import { inIframe } from './utils'
-import RulesProvider from './RulesProvider'
 
 declare global {
 	interface Window {
@@ -86,6 +87,21 @@ export default function Provider({
 			'couleur'
 		) ?? undefined
 
+	const iframeIntegratorOptions = Object.fromEntries(
+		[
+			'integratorLogo',
+			'integratorName',
+			'integratorActionUrl',
+			'integratorYoutubeVideo',
+			'integratorActionText',
+		].map((key) => [
+			key,
+			decodeURIComponent(
+				new URLSearchParams(document.location.search).get(key)
+			),
+		])
+	)
+
 	return (
 		// If IE < 11 display nothing
 		<ReduxProvider store={store}>
@@ -93,15 +109,17 @@ export default function Provider({
 				<ThemeColorsProvider
 					color={iframeCouleur && decodeURIComponent(iframeCouleur)}
 				>
-					<TrackerProvider value={tracker}>
-						<SitePathProvider value={sitePaths}>
-							<I18nextProvider i18n={i18next}>
-								<Router history={history}>
-									<>{children}</>
-								</Router>
-							</I18nextProvider>
-						</SitePathProvider>
-					</TrackerProvider>
+					<IframeOptionsProvider options={iframeIntegratorOptions}>
+						<TrackerProvider value={tracker}>
+							<SitePathProvider value={sitePaths}>
+								<I18nextProvider i18n={i18next}>
+									<Router history={history}>
+										<>{children}</>
+									</Router>
+								</I18nextProvider>
+							</SitePathProvider>
+						</TrackerProvider>
+					</IframeOptionsProvider>
 				</ThemeColorsProvider>
 			</RulesProvider>
 		</ReduxProvider>

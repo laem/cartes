@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useContext } from 'react'
 import { useLocation, useParams } from 'react-router'
 import emoji from 'react-easy-emoji'
 import tinygradient from 'tinygradient'
@@ -15,6 +15,9 @@ import { Link } from 'react-router-dom'
 import Meta from '../../components/utils/Meta'
 import DefaultFootprint from './DefaultFootprint'
 import { sessionBarMargin } from '../../components/SessionBar'
+import IframeOptionsProvider, {
+	IframeOptionsContext,
+} from '../../components/utils/IframeOptionsProvider'
 
 const gradient = tinygradient([
 		'#78e08f',
@@ -87,12 +90,10 @@ const AnimatedDiv = animated(({ score, value, details, headlessMode }) => {
 			window.location.origin +
 			'/.netlify/functions/ending-screenshot?pageToScreenshot=' +
 			window.location
-	const integratorYoutubeVideo = new URLSearchParams(
-		document.location.search
-	).get('integratorYoutubeVideo')
-	const integratorActionText = new URLSearchParams(
-		document.location.search
-	).get('integratorActionText')
+	const { integratorYoutubeVideo, integratorActionText } = useContext(
+		IframeOptionsContext
+	)
+
 	return (
 		<div
 			css={`
@@ -302,16 +303,15 @@ const ActionButton = ({ text }) => (
 )
 
 const IntegratorActionButton = () => {
-	const integratorLogo =
-		new URLSearchParams(document.location.search).get('integratorLogo') ||
-		'https://ngc.time-planet.com/images/logo_time.svg'
-	const integratorActionUrl =
-		new URLSearchParams(document.location.search).get('integratorActionUrl') ||
-		'https://time-planet.com'
+	const {
+		integratorLogo,
+		integratorActionUrl,
+		integratorActionText,
+	} = useContext(IframeOptionsContext)
 
 	return (
 		<a
-			href="https://time-planet.com/"
+			href={integratorActionUrl}
 			className="ui__ button plain"
 			target="_blank"
 			css={`
@@ -342,8 +342,8 @@ const IntegratorActionButton = () => {
 					}
 				`}
 			>
-				Agir avec Time for the Planet
-				<img src={integratorLogo} alt="Logo de Time for the Planet" />
+				{integratorActionText}
+				<img src={integratorLogo} />
 			</div>
 		</a>
 	)
