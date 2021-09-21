@@ -18,12 +18,13 @@ export default () => (
 )
 
 export const InlineLogo = () => {
-	const integratorLogo =
-		new URLSearchParams(document.location.search).get('integratorLogo') ||
-		'https://ngc.time-planet.com/images/logo_time.svg'
-	const integratorName =
-		new URLSearchParams(document.location.search).get('integratorName') ||
-		'Time for the Planet'
+	const integratorLogo = new URLSearchParams(document.location.search).get(
+		'integratorLogo'
+	)
+	const integratorName = new URLSearchParams(document.location.search).get(
+		'integratorName'
+	)
+	console.log('LOGO', integratorLogo, integratorName)
 
 	return (
 		<div

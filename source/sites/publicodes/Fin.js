@@ -87,13 +87,12 @@ const AnimatedDiv = animated(({ score, value, details, headlessMode }) => {
 			window.location.origin +
 			'/.netlify/functions/ending-screenshot?pageToScreenshot=' +
 			window.location
-	const integratorYoutubeVideo =
-		new URLSearchParams(document.location.search).get(
-			'integratorYoutubeVideo'
-		) || 'https://www.youtube.com/embed/DZnWYPM8dzg'
-	const integratorActionText =
-		new URLSearchParams(document.location.search).get('integratorActionText') ||
-		'Agir avec Time for the Planet'
+	const integratorYoutubeVideo = new URLSearchParams(
+		document.location.search
+	).get('integratorYoutubeVideo')
+	const integratorActionText = new URLSearchParams(
+		document.location.search
+	).get('integratorActionText')
 	return (
 		<div
 			css={`
@@ -306,8 +305,8 @@ const IntegratorActionButton = () => {
 	const integratorLogo =
 		new URLSearchParams(document.location.search).get('integratorLogo') ||
 		'https://ngc.time-planet.com/images/logo_time.svg'
-	const integratorUrl =
-		new URLSearchParams(document.location.search).get('integratorUrl') ||
+	const integratorActionUrl =
+		new URLSearchParams(document.location.search).get('integratorActionUrl') ||
 		'https://time-planet.com'
 
 	return (

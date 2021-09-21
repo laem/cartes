@@ -7,10 +7,12 @@ const script =
 
 const integratorLogo = script.dataset.integratorLogo,
 	integratorName = script.dataset.integratorName,
-	integratorYoutubeVideo = script.dataset.integratorYoutubeVideo
+	integratorActionUrl = script.dataset.integratorActionUrl,
+	integratorYoutubeVideo = script.dataset.integratorYoutubeVideo,
+	integratorActionText = script.dataset.integratorActionText
 
 const hostname = 'nosgestesclimat.fr/'
-const src = `https://${hostname}?iframe&integratorUrl=${integratorUrl}&integratorLogo=${integratorLogo}&integratorYoutubeVideo=${integratorYoutubeVideo}`
+const src = `https://${hostname}?iframe&integratorUrl=${integratorUrl}&integratorLogo=${integratorLogo}&integratorYoutubeVideo=${integratorYoutubeVideo}&integratorName=${integratorName}&integratorActionText=${integratorActionText}&integratorActionUrl=${integratorActionUrl}`
 
 const iframe = document.createElement('iframe')
 
