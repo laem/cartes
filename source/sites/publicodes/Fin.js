@@ -90,9 +90,11 @@ const AnimatedDiv = animated(({ score, value, details, headlessMode }) => {
 			window.location.origin +
 			'/.netlify/functions/ending-screenshot?pageToScreenshot=' +
 			window.location
-	const { integratorYoutubeVideo, integratorActionText } = useContext(
-		IframeOptionsContext
-	)
+	const {
+		integratorYoutubeVideo,
+		integratorActionText,
+		integratorActionUrl,
+	} = useContext(IframeOptionsContext)
 
 	return (
 		<div
