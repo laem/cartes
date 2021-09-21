@@ -91,6 +91,9 @@ const AnimatedDiv = animated(({ score, value, details, headlessMode }) => {
 		new URLSearchParams(document.location.search).get(
 			'integratorYoutubeVideo'
 		) || 'https://www.youtube.com/embed/DZnWYPM8dzg'
+	const integratorActionText =
+		new URLSearchParams(document.location.search).get('integratorActionText') ||
+		'Agir avec Time for the Planet'
 	return (
 		<div
 			css={`
@@ -213,7 +216,7 @@ const AnimatedDiv = animated(({ score, value, details, headlessMode }) => {
 							</div>
 						</div>
 					</div>
-					<ActionButton />
+					{!integratorActionText && <ActionButton text="Passer à l'action" />}
 					<div css="padding: 1rem">
 						<Chart
 							details={details}
@@ -236,8 +239,17 @@ const AnimatedDiv = animated(({ score, value, details, headlessMode }) => {
 					/>
 				</div>
 
+				<IntegratorActionButton />
+
 				{integratorYoutubeVideo && (
-					<div class="videoWrapper">
+					<div
+						class="videoWrapper"
+						css={`
+							iframe {
+								width: 100%;
+							}
+						`}
+					>
 						<iframe
 							width="560"
 							height="315"
@@ -249,18 +261,21 @@ const AnimatedDiv = animated(({ score, value, details, headlessMode }) => {
 						></iframe>
 					</div>
 				)}
+
+				{integratorActionText && <ActionButton text="Réduire mon empreinte" />}
 			</motion.div>
 		</div>
 	)
 })
 
-const ActionButton = () => (
+const ActionButton = ({ text }) => (
 	<Link
 		to="/actions"
 		className="ui__ button plain"
 		css={`
-			margin: 0.6rem 0;
-			width: 100%;
+			margin: 0.6rem auto;
+			width: 90%;
+
 			img {
 				transform: scaleX(-1);
 				height: 2rem;
@@ -282,7 +297,55 @@ const ActionButton = () => (
 			`}
 		>
 			<img src={StartingBlock} />
-			Passer à l'action
+			{text}
 		</div>
 	</Link>
 )
+
+const IntegratorActionButton = () => {
+	const integratorLogo =
+		new URLSearchParams(document.location.search).get('integratorLogo') ||
+		'https://ngc.time-planet.com/images/logo_time.svg'
+	const integratorUrl =
+		new URLSearchParams(document.location.search).get('integratorUrl') ||
+		'https://time-planet.com'
+
+	return (
+		<a
+			href="https://time-planet.com/"
+			className="ui__ button plain"
+			target="_blank"
+			css={`
+				margin: 0.6rem auto 1rem;
+				width: 90%;
+				img {
+					transform: scaleX(-1);
+					height: 2rem;
+					margin: 0 0.6rem;
+					display: inline-block;
+				}
+				a {
+					color: var(--textColor);
+					text-decoration: none;
+				}
+			`}
+		>
+			<div
+				css={`
+					display: flex;
+					justify-content: center;
+					align-items: center;
+					@media (max-width: 800px) {
+						flex-direction: column-reverse;
+						img {
+							display: none;
+						}
+					}
+				`}
+			>
+				Agir avec Time for the Planet
+				<img src={integratorLogo} alt="Logo de Time for the Planet" />
+			</div>
+		</a>
+	)
+}
