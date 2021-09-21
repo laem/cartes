@@ -239,7 +239,9 @@ const AnimatedDiv = animated(({ score, value, details, headlessMode }) => {
 					/>
 				</div>
 
-				<IntegratorActionButton />
+				{integratorActionText && integratorActionUrl && (
+					<IntegratorActionButton />
+				)}
 
 				{integratorYoutubeVideo && (
 					<div
