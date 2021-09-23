@@ -1,9 +1,7 @@
-import { useState, useRef, useEffect } from 'react'
+import { useEffect, useRef, useState } from 'react'
 import emoji from 'react-easy-emoji'
 import { useSelector } from 'react-redux'
 import Overlay from '../../components/Overlay'
-import Dialog from '../../components/ui/Dialog'
-import Emoji from '../../components/utils/Emoji'
 import { inIframe } from '../../utils'
 
 // We let iframe integrators ask the user if he wants to share its simulation data to the parent window
