@@ -192,6 +192,7 @@ const mainReducer = (state: any, action: Action) =>
 		rules,
 		actionMode,
 		conference,
+		iframeOptions: defaultTo(null),
 	})(state, action)
 
 export default reduceReducers<RootState>(
