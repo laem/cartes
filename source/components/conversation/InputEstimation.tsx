@@ -1,5 +1,6 @@
 import React, { useContext, useState } from 'react'
 import emoji from 'react-easy-emoji'
+import { useEngine } from '../utils/EngineContext'
 
 /* This component helps input a value that is not known by suggesting another input to the user. This new input will be multiplied by 12 (to convert from month to year) and then by the inputEstimation's formule attribute.
  *
@@ -9,7 +10,12 @@ import emoji from 'react-easy-emoji'
  * but it could easily be made into a generic input helper */
 
 export default function InputEstimation({ inputEstimation, setFinalValue }) {
-	if (typeof inputEstimation.rawNode.formule !== 'number') return null
+	const engine = useEngine(),
+		evaluation = engine.evaluate(inputEstimation),
+		nodeValue = evaluation.nodeValue || 1000
+
+	console.log('YYI', evaluation)
+
 	const [value, setValue] = useState('')
 
 	return (
@@ -44,14 +50,10 @@ export default function InputEstimation({ inputEstimation, setFinalValue }) {
 						value={value}
 						onChange={(e) => {
 							setValue(e.target.value)
-							setFinalValue(
-								Math.round(
-									12 * (+e.target.value / inputEstimation.rawNode.formule)
-								)
-							)
+							setFinalValue(Math.round(12 * (+e.target.value / nodeValue)))
 						}}
 					/>
-					<span>€</span>
+					<span>{inputEstimation.rawNode['unité'].split('/')[0]}</span>
 				</div>
 			</span>
 		</div>

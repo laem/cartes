@@ -29,3 +29,27 @@ On vous dit tout sur notre page [diffuser](/diffuser).
 ## Nous contacter
 
 contact@nosgestesclimat.fr
+
+## Mentions légales
+
+Siège social de l'ADEME :
+
+20, avenue du Grésillé
+
+BP 90406
+
+49004 Angers Cedex 01
+
+Tél. : 02 41 20 41 20
+
+### Directeur de publication
+
+Martin Régner - ADEME
+
+### Prestataire d'hébergement
+
+Netlify, Inc
+2325 3rd Street, Suite 296,
+San Francisco, California 94107
+
+Les données sont hébergées en Europe.

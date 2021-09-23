@@ -47,7 +47,7 @@ export default () => {
 									<div>{emoji(icônes || '👥')}</div>
 									<div>{nom}</div>
 								</Link>
-								<p>
+								<p css=" overflow-x: scroll">
 									<small>{description}</small>
 								</p>
 							</div>
@@ -69,7 +69,7 @@ export default () => {
 					persona et les modifier, soit en créer un de zéro depuis la
 					simulation. Une fois la simulation satisfaisante, cliquer sur
 					"Modifier mes réponses" puis taper Ctrl-C, ouvrir la console du
-					navigateur (F12), copier le JSON affiché, le coller dans{' '}
+					navigateur (F12), vérifiez bien que vous êtes dans l'onglet "Console", allez tout en bas de la console (elle est un peu chargée...), puis copier le JSON affiché, le coller dans{' '}
 					<a href="https://www.json2yaml.com">cet outil</a> pour générer un
 					YAML, puis l'insérer dans personas.yaml.
 				</p>

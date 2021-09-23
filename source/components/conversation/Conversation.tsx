@@ -7,13 +7,13 @@ import RuleInput, {
 	isMosaic,
 	RuleInputProps,
 } from 'Components/conversation/RuleInput'
+import Notifications from 'Components/Notifications'
 import * as Animate from 'Components/ui/animate'
 import { EngineContext } from 'Components/utils/EngineContext'
 import { useNextQuestions } from 'Components/utils/useNextQuestion'
 import { TrackerContext } from 'Components/utils/withTracker'
 import { sortBy } from 'ramda'
 import React, { useContext, useEffect, useState } from 'react'
-import emoji from 'react-easy-emoji'
 import { Trans } from 'react-i18next'
 import { useDispatch, useSelector } from 'react-redux'
 import {
@@ -28,7 +28,7 @@ import CategoryRespiration from './CategoryRespiration'
 import './conversation.css'
 import { ExplicableRule } from './Explicable'
 import SimulationEnding from './SimulationEnding'
-import { CategoryLabel } from './UI'
+import CategoryVisualisation from '../../sites/publicodes/CategoryVisualisation'
 
 export type ConversationProps = {
 	customEndMessages?: React.ReactNode
@@ -78,6 +78,14 @@ export default function Conversation({
 		}
 	}, [previousAnswers, tracker])
 
+	const currentQuestionIndex = previousAnswers.findIndex(
+			(a) => a === unfoldedStep
+		),
+		previousQuestion =
+			currentQuestionIndex < 0 && previousAnswers.length > 0
+				? previousAnswers[previousAnswers.length - 1]
+				: previousAnswers[currentQuestionIndex - 1]
+
 	useEffect(() => {
 		// It is important to test for "previousSimulation" : if it exists, it's not loadedYet. Then currentQuestion could be the wrong one, already answered, don't put it as the unfoldedStep
 		if (
@@ -86,10 +94,13 @@ export default function Conversation({
 			currentQuestion !== unfoldedStep
 		) {
 			dispatch(goToQuestion(currentQuestion))
+			window.scrollTo(0, 0)
 		}
-	}, [dispatch, currentQuestion])
-	const goToPrevious = () =>
-		dispatch(goToQuestion(previousAnswers.slice(-1)[0]))
+	}, [dispatch, currentQuestion, previousAnswers, unfoldedStep])
+
+	const goToPrevious = () => {
+		return dispatch(goToQuestion(previousQuestion))
+	}
 
 	// Some questions are grouped in an artifical questions, called mosaic questions,  not present in publicodes
 	// here we need to submit all of them when the one that triggered the UI (we don't care which) is submitted, in order to see them in the response list and to avoid repeating the same n times
@@ -147,7 +158,9 @@ export default function Conversation({
 		) === undefined
 
 	const hasDescription =
-		((mosaicQuestion && mosaicQuestion.description) ||
+		((mosaicQuestion &&
+			(mosaicQuestion.description ||
+				rules[mosaicQuestion.dottedName].rawNode.description)) ||
 			rules[currentQuestion].rawNode.description) != null
 
 	return orderByCategories &&
@@ -173,12 +186,7 @@ export default function Conversation({
 			<Aide />
 			<div style={{ outline: 'none' }}>
 				{orderByCategories && questionCategory && (
-					<div>
-						<CategoryLabel color={questionCategory.color}>
-							{emoji(questionCategory.icons || '🌍')}
-							{questionCategory.title}
-						</CategoryLabel>
-					</div>
+					<CategoryVisualisation questionCategory={questionCategory} />
 				)}
 				<Animate.fadeIn>
 					<div className="step">
@@ -209,6 +217,16 @@ export default function Conversation({
 					</div>
 				</Animate.fadeIn>
 				<div className="ui__ answer-group">
+					{previousAnswers.length > 0 && currentQuestionIndex !== 0 && (
+						<>
+							<button
+								onClick={goToPrevious}
+								className="ui__ simple small push-left button"
+							>
+								← <Trans>Précédent</Trans>
+							</button>
+						</>
+					)}
 					{currentQuestionIsAnswered ? (
 						<button
 							className="ui__ plain small button"
@@ -227,6 +245,7 @@ export default function Conversation({
 						</button>
 					)}
 				</div>
+				<Notifications />
 			</div>
 		</section>
 	)

@@ -11,7 +11,14 @@ const shareData = script.dataset['partagedatafinsimulation'] != undefined,
 const srcURL = new URL(script.src)
 const hostname = srcURL.hostname || 'nosgestesclimat.fr'
 
-const src = `https://${hostname}/?iframe&integratorUrl=${integratorUrl}&shareData=${shareData}`
+const integratorLogo = script.dataset.integratorLogo,
+	integratorName = script.dataset.integratorName,
+	integratorActionUrl = script.dataset.integratorActionUrl,
+	integratorYoutubeVideo = script.dataset.integratorYoutubeVideo,
+	integratorActionText = script.dataset.integratorActionText
+
+const hostname = 'nosgestesclimat.fr/'
+const src = `https://${hostname}/?iframe&integratorUrl=${integratorUrl}&integratorLogo=${integratorLogo}&integratorYoutubeVideo=${integratorYoutubeVideo}&integratorName=${integratorName}&integratorActionText=${integratorActionText}&integratorActionUrl=${integratorActionUrl}&shareData=${shareData}`
 
 const iframe = document.createElement('iframe')
 

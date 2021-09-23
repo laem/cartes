@@ -1,15 +1,12 @@
-import classnames from 'classnames'
-import { ThemeColorsContext } from 'Components/utils/colors'
-import React, { useCallback, useContext, useState } from 'react'
-import { Explicable } from 'Components/conversation/Explicable'
+import { updateSituation } from 'Actions/actions'
+import Checkbox from 'Components/ui/Checkbox'
+import React from 'react'
 import emoji from 'react-easy-emoji'
 import { useDispatch, useSelector } from 'react-redux'
 import { situationSelector } from 'Selectors/simulationSelectors'
-import { updateSituation } from 'Actions/actions'
 import { Mosaic } from './UI'
-import Checkbox from 'Components/ui/Checkbox'
 
-export default function SelectWeeklyDiet({
+export default function SelectDevices({
 	name,
 	setFormValue,
 	selectedRules,

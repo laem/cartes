@@ -1,12 +1,15 @@
 import SessionBar from 'Components/SessionBar'
 import ShareButton from 'Components/ShareButton'
 import { findContrastedTextColor } from 'Components/utils/colors'
-import { motion } from 'framer-motion'
+import { AnimatePresence, motion } from 'framer-motion'
+import React, { useContext } from 'react'
 import emoji from 'react-easy-emoji'
 import { useLocation } from 'react-router'
 import { Link } from 'react-router-dom'
 import { animated, useSpring } from 'react-spring'
 import tinygradient from 'tinygradient'
+import { sessionBarMargin } from '../../components/SessionBar'
+import { IframeOptionsContext } from '../../components/utils/IframeOptionsProvider'
 import Meta from '../../components/utils/Meta'
 import Chart from './chart'
 import DefaultFootprint from './DefaultFootprint'
@@ -77,15 +80,32 @@ const AnimatedDiv = animated(({ score, value, details, headlessMode }) => {
 	const backgroundColor = getBackgroundColor(value).toHexString(),
 		backgroundColor2 = getBackgroundColor(value + 2000).toHexString(),
 		textColor = findContrastedTextColor(backgroundColor, true),
-		roundedValue = Math.round(value / 1000),
+		roundedValue = (value / 1000).toLocaleString('fr-FR', {
+			maximumSignificantDigits: 2,
+			minimumSignificantDigits: 2,
+		}),
+		integerValue = roundedValue.split(',')[0],
+		decimalValue = roundedValue.split(',')[1],
 		shareImage =
 			'https://aejkrqosjq.cloudimg.io/v7/' +
 			window.location.origin +
 			'/.netlify/functions/ending-screenshot?pageToScreenshot=' +
 			window.location
+	const {
+		integratorYoutubeVideo,
+		integratorActionText,
+		integratorActionUrl,
+	} = useContext(IframeOptionsContext)
 
 	return (
-		<div css="padding: 0 .3rem 1rem; max-width: 600px; margin: 0 auto;">
+		<div
+			css={`
+				padding: 0 0.3rem 1rem;
+				max-width: 600px;
+				margin: 0 auto;
+				${sessionBarMargin}
+			`}
+		>
 			<Meta
 				title="Nos Gestes Climat"
 				description={`Mon empreinte climat est de ${roundedValue} tonnes de CO2e. Mesure la tienne !`}
@@ -116,7 +136,7 @@ const AnimatedDiv = animated(({ score, value, details, headlessMode }) => {
 					font-size: 110%;
 				`}
 			>
-				<div id="shareImage" css="padding: 2rem 0">
+				<div id="shareImage" css="padding: 2rem 0 0">
 					<div css="display: flex; align-items: center; justify-content: center">
 						<img src={BallonGES} css="height: 10rem" />
 						<div
@@ -128,8 +148,24 @@ const AnimatedDiv = animated(({ score, value, details, headlessMode }) => {
 							`}
 						>
 							<div css="font-weight: bold; font-size: 280%;">
-								<span css="width: 3.6rem; text-align: right; display: inline-block">
-									{roundedValue}
+								<span css="width: 4rem; text-align: right; display: inline-block">
+									{integerValue}
+									{score < 10000 && (
+										<AnimatePresence>
+											{(score - value) / score < 0.01 && (
+												<motion.small
+													initial={{ opacity: 0, width: 0 }}
+													animate={{ opacity: 1, width: 'auto' }}
+													css={`
+														color: inherit;
+														font-size: 60%;
+													`}
+												>
+													,{decimalValue}
+												</motion.small>
+											)}
+										</AnimatePresence>
+									)}
 								</span>{' '}
 								tonnes
 							</div>
@@ -174,6 +210,7 @@ const AnimatedDiv = animated(({ score, value, details, headlessMode }) => {
 										<a
 											css="color: inherit"
 											href="https://datagir.ademe.fr/blog/budget-empreinte-carbone-c-est-quoi/"
+											target="_blank"
 										>
 											Comment ça ?
 										</a>
@@ -182,7 +219,7 @@ const AnimatedDiv = animated(({ score, value, details, headlessMode }) => {
 							</div>
 						</div>
 					</div>
-					<ActionButton />
+					{!integratorActionText && <ActionButton text="Passer à l'action" />}
 					<div css="padding: 1rem">
 						<Chart
 							details={details}
@@ -203,18 +240,46 @@ const AnimatedDiv = animated(({ score, value, details, headlessMode }) => {
 						label="Partager mes résultats"
 					/>
 				</div>
+
+				{integratorActionText && integratorActionUrl && (
+					<IntegratorActionButton />
+				)}
+
+				{integratorYoutubeVideo && (
+					<div
+						class="videoWrapper"
+						css={`
+							iframe {
+								width: 100%;
+							}
+						`}
+					>
+						<iframe
+							width="560"
+							height="315"
+							src={integratorYoutubeVideo}
+							title="YouTube video player"
+							frameborder="0"
+							allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+							allowfullscreen
+						></iframe>
+					</div>
+				)}
+
+				{integratorActionText && <ActionButton text="Réduire mon empreinte" />}
 			</motion.div>
 		</div>
 	)
 })
 
-const ActionButton = () => (
+const ActionButton = ({ text }) => (
 	<Link
 		to="/actions"
 		className="ui__ button plain"
 		css={`
-			margin: 0.6rem 0;
-			width: 100%;
+			margin: 0.6rem auto;
+			width: 90%;
+
 			img {
 				transform: scaleX(-1);
 				height: 2rem;
@@ -236,7 +301,54 @@ const ActionButton = () => (
 			`}
 		>
 			<img src={StartingBlock} />
-			Passer à l'action
+			{text}
 		</div>
 	</Link>
 )
+
+const IntegratorActionButton = () => {
+	const {
+		integratorLogo,
+		integratorActionUrl,
+		integratorActionText,
+	} = useContext(IframeOptionsContext)
+
+	return (
+		<a
+			href={integratorActionUrl}
+			className="ui__ button plain"
+			target="_blank"
+			css={`
+				margin: 0.6rem auto 1rem;
+				width: 90%;
+				img {
+					transform: scaleX(-1);
+					height: 2rem;
+					margin: 0 0.6rem;
+					display: inline-block;
+				}
+				a {
+					color: var(--textColor);
+					text-decoration: none;
+				}
+			`}
+		>
+			<div
+				css={`
+					display: flex;
+					justify-content: center;
+					align-items: center;
+					@media (max-width: 800px) {
+						flex-direction: column-reverse;
+						img {
+							display: none;
+						}
+					}
+				`}
+			>
+				{integratorActionText}
+				<img src={integratorLogo} />
+			</div>
+		</a>
+	)
+}

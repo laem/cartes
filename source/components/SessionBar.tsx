@@ -17,7 +17,7 @@ import {
 } from 'Selectors/simulationSelectors'
 import styled from 'styled-components'
 import CarbonImpact from '../sites/publicodes/CarbonImpact'
-import { extractCategories } from '../sites/publicodes/chart'
+import { extractCategories } from 'Components/publicodesUtils'
 import Answers from './conversation/AnswerList'
 
 const Button = styled.button`
@@ -232,6 +232,7 @@ const NavBar = styled.ul`
 		margin: 0;
 		width: 100%;
 		z-index: 10;
+		height: 4rem;
 		background: white;
 		display: flex;
 		justify-content: center;

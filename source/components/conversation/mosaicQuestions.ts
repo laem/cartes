@@ -1,4 +1,4 @@
-import SelectWeeklyDiet from './select/SelectWeeklyDiet'
+import NumberedMosaic from './select/NumberedMosaic'
 import SelectDevices from './select/SelectDevices'
 import { DottedName } from 'Rules'
 
@@ -49,13 +49,22 @@ Si tous vos appareils ne sont pas proposés dans cette liste, ce n'est pas grave
 
 Choisissez 14 plats qui représentent votre semaine type : 7 midi et 7 dîners. 
 
-> Bien sûr, toute la diversité des régimes ne peut-être simplifiée en 4 boutons : il manque par exemple le poison... le menu du pêcheur arrive bientôt ! 
+> Bien sûr, toute la diversité des régimes ne peut-être simplifiée en 4 boutons : il manque par exemple le poisson... le menu du pêcheur arrive bientôt ! 
 
 			`,
 		isApplicable: (dottedName: DottedName) =>
 			dottedName.includes('alimentation . plats') &&
 			dottedName.includes(' . nombre'),
-		component: SelectWeeklyDiet,
+		component: NumberedMosaic,
+		options: { chipsTotal: 14 },
+	},
+	{
+		dottedName: 'divers . textile',
+		question: 'Quels vêtements achetez-vous en général dans une année ?',
+		isApplicable: (dottedName: DottedName) =>
+			dottedName.includes('divers . textile') &&
+			dottedName.includes(' . nombre'),
+		component: NumberedMosaic,
 	},
 ]
 

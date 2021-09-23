@@ -13,7 +13,9 @@ import { Helmet } from 'react-helmet'
 import { useDispatch, useSelector } from 'react-redux'
 import { Redirect } from 'react-router'
 import CarbonImpact from './CarbonImpact'
-import Chart, { extractCategories } from './chart/index.js'
+import Chart from './chart/index.js'
+import { extractCategories } from 'Components/publicodesUtils'
+
 import { objectifsSelector } from 'Selectors/simulationSelectors'
 import { useEngine } from 'Components/utils/EngineContext'
 import emoji from 'react-easy-emoji'
@@ -46,6 +48,7 @@ const Simulateur = (props) => {
 		[]
 	)
 
+	const isMainSimulation = decoded === 'bilan'
 	if (!configSet) return null
 
 	return (
@@ -53,15 +56,16 @@ const Simulateur = (props) => {
 			<Helmet>
 				<title>{rule.title}</title>
 				{rule.description && (
-					<meta name="description" content={rule.description} />
+					<meta name="description" content={evaluation.title} />
 				)}
 			</Helmet>
+			{!isMainSimulation && <h1>{evaluation.title}</h1>}
 			<SessionBar evaluation={evaluation} />
 			<Simulation
 				noFeedback
 				orderByCategories={categories}
 				customEnd={
-					decoded === 'bilan' ? (
+					isMainSimulation ? (
 						<RedirectionToEndPage {...{ rules, engine }} />
 					) : rule.description ? (
 						<Markdown source={rule.description} />
