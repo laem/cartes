@@ -18,7 +18,7 @@
     alimentation . plats . végétarien . nombre: 8
     alimentation . plats . végétalien . nombre: 5
     transport . voiture . km:
-      valeur: 500
+      valeur: 200
       unité: km / an
     transport . voiture . propriétaire: non
     transport . voiture . motorisation: "'thermique'"
