@@ -76,6 +76,7 @@ function Questions({
 					@media (min-width: 800px) {
 						margin-top: 0.6rem;
 					}
+					border-radius: 0.6rem;
 				`}
 			>
 				<div className="ui__ container">
