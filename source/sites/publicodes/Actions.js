@@ -30,6 +30,9 @@ export default ({}) => {
 				<Route path="/actions/plus/:encodedName+">
 					<ActionPlus />
 				</Route>
+				<Route path="/actions/liste">
+					<ActionsList display="list" />
+				</Route>
 				<Route path="/actions/:encodedName+">
 					<Action />
 				</Route>
