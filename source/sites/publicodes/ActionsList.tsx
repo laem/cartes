@@ -16,6 +16,9 @@ import ActionStack from './ActionStack'
 import ActionVignette, { disabledAction } from './ActionVignette'
 import CategoryFilters from './CategoryFilters'
 import { partition } from 'ramda'
+import Overlay from '../../components/Overlay'
+import Personas, { PersonaGrid } from './Personas'
+import { situationSelector } from '../../selectors/simulationSelectors'
 
 const { encodeRuleName, decodeRuleName } = utils
 
@@ -24,6 +27,7 @@ export default ({ display }) => {
 	let { category } = useParams()
 
 	const rules = useSelector((state) => state.rules)
+	const situation = useSelector(situationSelector)
 	const flatActions = rules['actions']
 
 	const radical = true
@@ -61,7 +65,32 @@ export default ({ display }) => {
 
 		return { ...memo, [category]: (memo[category] || 0) + 1 }
 	}, {})
-	console.log('FA', finalActions)
+
+	const situationLength = Object.entries(situation).length
+
+	if (situationLength < 10) {
+		return (
+			<Overlay onClose={() => null}>
+				<div>
+					<h1>Simulation manquante</h1>
+					<p>
+						{emoji('⏳️ ')}Vous n'avez pas encore fait le test. Le parcours de
+						passage à l'action ne sera pas du tout personnalisé.
+					</p>
+					<div css="margin: 1rem 0 .6rem;">
+						<Link to="/simulateur/bilan" className="ui__ plain button">
+							Faire le test
+						</Link>
+					</div>
+					<p>
+						Vous pouvez aussi voir le parcours action comme si vous étiez l'un
+						de ces personas :
+					</p>
+					<PersonaGrid additionnalOnClick={() => null} />
+				</div>
+			</Overlay>
+		)
+	}
 
 	return (
 		<div

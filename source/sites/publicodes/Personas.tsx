@@ -11,12 +11,8 @@ import CarbonImpact from './CarbonImpact'
 import { useEngine } from '../../components/utils/EngineContext'
 import SessionBar from '../../components/SessionBar'
 
-export default () => {
-	const dispatch = useDispatch(),
-		objectif = 'bilan',
-		engine = useEngine(),
-		evaluation = engine.evaluate(objectif),
-		configSet = useSelector((state) => state.simulation?.config)
+export default ({}) => {
+	const configSet = useSelector((state) => state.simulation?.config)
 
 	return (
 		<div>
@@ -24,36 +20,10 @@ export default () => {
 				<ScrollToTop />
 				<h1>Personas</h1>
 				<p>
-					<em>Cliquez pour charger ce persona dans le simulateur.</em>
+					<em>Cliquez pour charger un dans le simulateur.</em>
 				</p>
 				{configSet && <SessionBar />}
-				<CardGrid>
-					{personas.map(({ nom, icônes, data, description }) => (
-						<li key={nom}>
-							<div className="ui__ card">
-								<Link
-									to={'/personas'}
-									onClick={() =>
-										dispatch(
-											setDifferentSituation({
-												config: { objectifs: [objectif] },
-												url: '/simulateur/bilan',
-												situation: data,
-												persona: nom,
-											})
-										)
-									}
-								>
-									<div>{emoji(icônes || '👥')}</div>
-									<div>{nom}</div>
-								</Link>
-								<p css=" overflow-x: scroll">
-									<small>{description}</small>
-								</p>
-							</div>
-						</li>
-					))}
-				</CardGrid>
+				<PersonaGrid />
 				<p>
 					Les personas nous permettront de prendre le parti d'une diversité
 					d'utilisateurs quand ils voient notamment notre écran "passer à
@@ -69,7 +39,9 @@ export default () => {
 					persona et les modifier, soit en créer un de zéro depuis la
 					simulation. Une fois la simulation satisfaisante, cliquer sur
 					"Modifier mes réponses" puis taper Ctrl-C, ouvrir la console du
-					navigateur (F12), vérifiez bien que vous êtes dans l'onglet "Console", allez tout en bas de la console (elle est un peu chargée...), puis copier le JSON affiché, le coller dans{' '}
+					navigateur (F12), vérifiez bien que vous êtes dans l'onglet "Console",
+					allez tout en bas de la console (elle est un peu chargée...), puis
+					copier le JSON affiché, le coller dans{' '}
 					<a href="https://www.json2yaml.com">cet outil</a> pour générer un
 					YAML, puis l'insérer dans personas.yaml.
 				</p>
@@ -80,5 +52,41 @@ export default () => {
 				</p>
 			</div>
 		</div>
+	)
+}
+
+export const PersonaGrid = ({ additionnalOnClick }) => {
+	const dispatch = useDispatch(),
+		objectif = 'bilan'
+
+	return (
+		<CardGrid>
+			{personas.map(({ nom, icônes, data, description }) => (
+				<li key={nom}>
+					<div className="ui__ card">
+						<Link
+							to={'#'}
+							onClick={() => {
+								dispatch(
+									setDifferentSituation({
+										config: { objectifs: [objectif] },
+										url: '/simulateur/bilan',
+										situation: data,
+										persona: nom,
+									})
+								)
+								additionnalOnClick && additionnalOnClick()
+							}}
+						>
+							<div>{emoji(icônes || '👥')}</div>
+							<div>{nom}</div>
+						</Link>
+						<p css=" overflow-x: scroll">
+							<small>{description}</small>
+						</p>
+					</div>
+				</li>
+			))}
+		</CardGrid>
 	)
 }
