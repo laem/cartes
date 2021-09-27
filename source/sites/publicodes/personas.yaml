@@ -3,8 +3,8 @@
     Presque zéro voiture, vit seul dans un studio au gaz, végétarien.
   icônes: 🛴🏢
   data:
-    alimentation . déchets . niveau d'engagement: "'affirmatif'"
-    alimentation . petit déjeuner . type: "'lait céréales'"
+    alimentation . déchets . niveau d'engagement: '''affirmatif'''
+    alimentation . petit déjeuner . type: '''lait céréales'''
     alimentation . lait . lait végétal: oui
     alimentation . boisson . sucrées . litres:
       valeur: 1
@@ -21,8 +21,8 @@
       valeur: 200
       unité: km / an
     transport . voiture . propriétaire: non
-    transport . voiture . motorisation: "'thermique'"
-    transport . voiture . gabarit: "'moyenne'"
+    transport . voiture . motorisation: '''thermique'''
+    transport . voiture . gabarit: '''moyenne'''
     transport . voiture . voyageurs:
       valeur: 4
       unité: voyageurs
@@ -55,12 +55,6 @@
       unité: kWh
     logement . fioul . chauffage au fioul: non
     logement . bois . chauffage au bois: non
-    divers . textile . chemise . nombre:
-      valeur: 6
-    divers . textile . robe . nombre:
-      valeur: 0
-    divers . textile . manteau . nombre:
-      valeur: 0
     divers . électroménager . montant:
       valeur: 100
       unité: an
@@ -69,10 +63,37 @@
       unité: an
     numérique . ordinateur fixe . présent: non
     numérique . TV . présent: non
-    numérique . téléphone . type: "'smartphone haut de gamme'"
+    numérique . téléphone . type: '''smartphone haut de gamme'''
     numérique . internet . durée journalière:
       valeur: 8
       unité: heure
+    alimentation . lait . type: '''lait végétal'''
+    logement . âge:
+      valeur: 45
+      unité: an
+    logement . éco-construit: non
+    logement . appartement: oui
+    divers . électroménager . préservation: '''maximum'''
+    divers . électroménager . réfrigérateur . présent: non
+    divers . électroménager . sèche-linge . présent: non
+    divers . électroménager . lave-vaisselle . présent: non
+    divers . électroménager . micro-ondes . présent: non
+    divers . textile . t-shirt . nombre: 2
+    divers . textile . pantalon . nombre: 1
+    divers . textile . short . nombre: 0
+    divers . textile . robe . nombre: 0
+    divers . textile . sweat . nombre: 0
+    divers . textile . chaussure . nombre: 1
+    divers . textile . manteau . nombre: 0
+    transport . voiture . thermique . consommation aux 100:
+      valeur: 7
+      unité: l / centkm
+    numérique . téléphone . durée:
+      valeur: 3
+      unité: an
+    numérique . ordinateur portable . durée:
+      valeur: 4
+      unité: an
 
 
 
