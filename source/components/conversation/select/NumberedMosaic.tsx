@@ -36,6 +36,7 @@ export default function NumberedMosaic({
 				: defaultValue),
 		0
 	)
+	console.log(chipsCount)
 
 	const choiceElements = (
 		<div>
@@ -54,6 +55,7 @@ export default function NumberedMosaic({
 								situationValue != null
 									? situationValue
 									: question.rawNode['par défaut']
+						console.log(title, icônes, description, value)
 						return (
 							<li className="ui__ card interactive" key={name}>
 								<h4>{title}</h4>

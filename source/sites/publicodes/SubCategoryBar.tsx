@@ -28,6 +28,7 @@ export default ({ nodeValue, total, icons, color, title }) => {
 		>
 			{clicked ? (
 				<span
+					key={title}
 					css={`
 						color: ${findContrastedTextColor(color, true)};
 					`}
@@ -36,6 +37,7 @@ export default ({ nodeValue, total, icons, color, title }) => {
 				</span>
 			) : (
 				<span
+					key={title}
 					css={`
 						position: relative;
 						font-size: 110%;
@@ -48,6 +50,7 @@ export default ({ nodeValue, total, icons, color, title }) => {
 					`}
 				>
 					<span
+						key="emoji"
 						css={`
 							img {
 								vertical-align: -0.2em !important;
@@ -59,6 +62,7 @@ export default ({ nodeValue, total, icons, color, title }) => {
 					{emojiComponents.length > 1 && (
 						<>
 							<span
+								key="background"
 								css={`
 									z-index: -1;
 									font-size: 70%;
@@ -74,6 +78,7 @@ export default ({ nodeValue, total, icons, color, title }) => {
 								`}
 							></span>
 							<span
+								key="emoji2"
 								css={`
 									z-index: 7;
 									font-size: 70%;

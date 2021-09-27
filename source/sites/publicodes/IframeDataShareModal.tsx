@@ -14,13 +14,12 @@ export default ({ data }) => {
 	const iframeOptions = useSelector((state) => state.iframeOptions)
 
 	useEffect(() => {
-		if (!inIframe() || !iframeOptions?.iframeShareData) return
 		if (timeoutRef.current !== null) clearTimeout(timeoutRef.current)
 		timeoutRef.current = setTimeout(() => {
 			timeoutRef.current = null
 			setIsOpen(true)
 		}, shareDataPopupTimeout)
-	}, [null])
+	}, [])
 	function onReject() {
 		window.parent.postMessage(
 			{ error: 'The user refused to share his result.' },
@@ -35,6 +34,8 @@ export default ({ data }) => {
 	function onClose() {
 		setIsOpen(false)
 	}
+	if (!inIframe() || !document.referrer || !iframeOptions?.iframeShareData)
+		return null
 	const parent = new URL(document.referrer).hostname
 	const text = (
 		<div>

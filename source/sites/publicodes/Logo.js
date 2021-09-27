@@ -20,7 +20,6 @@ export default () => (
 
 export const InlineLogo = () => {
 	const { integratorLogo, integratorName } = useContext(IframeOptionsContext)
-	console.log('YO', integratorName, integratorLogo)
 
 	return (
 		<div
