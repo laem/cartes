@@ -83,6 +83,7 @@ export default ({ display }) => {
 						</Link>
 					</div>
 					<p>
+						{emoji('💡 ')}
 						Vous pouvez aussi voir le parcours action comme si vous étiez l'un
 						de ces personas :
 					</p>

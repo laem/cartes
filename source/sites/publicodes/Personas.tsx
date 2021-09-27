@@ -63,7 +63,10 @@ export const PersonaGrid = ({ additionnalOnClick }) => {
 		<CardGrid>
 			{personas.map(({ nom, icônes, data, description }) => (
 				<li key={nom}>
-					<div className="ui__ card">
+					<div
+						className="ui__ card"
+						css="width: 11rem !important; height: 14rem !important"
+					>
 						<Link
 							to={'#'}
 							onClick={() => {
