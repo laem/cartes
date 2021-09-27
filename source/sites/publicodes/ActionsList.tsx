@@ -116,10 +116,12 @@ export default ({ display }) => {
 				<p>{emoji('🤷')} Plus d'actions dans cette catégorie</p>
 			)}
 			<Link
-				to="/actions/liste"
+				to={display === 'list' ? '/actions' : '/actions/liste'}
 				css="margin: 0 auto; text-align: center; display: block; margin: .4rem"
 			>
-				<button className="ui__ button">Vue liste</button>
+				<button className="ui__ button">
+					{display === 'list' ? 'Vue jeu de cartes' : 'Vue liste'}
+				</button>
 			</Link>
 
 			<CategoryFilters
