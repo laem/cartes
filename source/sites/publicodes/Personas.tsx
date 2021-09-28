@@ -22,7 +22,6 @@ export default ({}) => {
 				<p>
 					<em>Cliquez pour charger un dans le simulateur.</em>
 				</p>
-				{configSet && <SessionBar />}
 				<PersonaGrid />
 				<p>
 					Les personas nous permettront de prendre le parti d'une diversité

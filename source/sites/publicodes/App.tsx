@@ -26,6 +26,7 @@ import Simulateur from './Simulateur'
 import sitePaths from './sitePaths'
 const ConferenceLazy = React.lazy(() => import('./conference/Conference'))
 import ConferenceBarLazy from './conference/ConferenceBarLazy'
+import SessionBar, { sessionBarMargin } from '../../components/SessionBar'
 
 let tracker = devTracker
 if (NODE_ENV === 'production') {
@@ -78,7 +79,7 @@ const Router = ({}) => {
 	const location = useLocation()
 	return (
 		<>
-			<div className="ui__ container">
+			<div className="ui__ container" css={sessionBarMargin}>
 				<ConferenceBarLazy />
 				<nav css="display: flex; justify-content: center; margin: .6rem auto">
 					<Link
@@ -97,6 +98,7 @@ const Router = ({}) => {
 						{location.pathname === '/' ? <Logo /> : <InlineLogo />}
 					</Link>
 				</nav>
+				{location.pathname !== '/' && <SessionBar />}
 				<Switch>
 					<Route exact path="/" component={Landing} />
 					{/* Removes trailing slashes */}

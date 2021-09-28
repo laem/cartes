@@ -164,6 +164,7 @@ export default function SessionBar({
 
 const NavBar = styled.ul`
 	display: flex;
+	box-shadow: rgb(187 187 187) 2px 2px 10px;
 	list-style-type: none;
 	justify-content: space-evenly !important;
 	align-items: center;

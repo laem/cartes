@@ -65,7 +65,7 @@ export default function AnswerList() {
 	}, [situation])
 
 	return (
-		<>
+		<div className="answer-list">
 			{foldedStepsToDisplay.length === 0 && (
 				<div>
 					<p>{emoji('🤷')}</p>
@@ -78,9 +78,7 @@ export default function AnswerList() {
 						{emoji('📋 ')}
 						<Trans>Mes réponses</Trans>
 					</h2>
-					<CategoryTable
-						{...{ steps: foldedStepsToDisplay, categories, onClose }}
-					/>
+					<CategoryTable {...{ steps: foldedStepsToDisplay, categories }} />
 				</>
 			)}
 			{!!nextSteps.length && (
@@ -89,14 +87,14 @@ export default function AnswerList() {
 						{emoji('🔮 ')}
 						<Trans>Prochaines questions</Trans>
 					</h2>
-					<CategoryTable {...{ steps: nextSteps, categories, onClose }} />
+					<CategoryTable {...{ steps: nextSteps, categories }} />
 				</>
 			)}
-		</>
+		</div>
 	)
 }
 
-const CategoryTable = ({ steps, categories, onClose }) =>
+const CategoryTable = ({ steps, categories }) =>
 	categories.map((category) => {
 		const categoryRules = steps.filter((question) =>
 			question.dottedName.includes(category.dottedName)
@@ -107,18 +105,31 @@ const CategoryTable = ({ steps, categories, onClose }) =>
 		return (
 			<div>
 				<div
+					className="ui__ card"
 					css={`
-						span {
-							border-bottom: ${category.color} 3px solid;
+						background: ${category.color} !important;
+						display: flex;
+						justify-content: start;
+						align-items: center;
+						img {
+							font-size: 300%;
+						}
+						max-width: 20rem;
+						margin: 1rem 0;
+						h2 {
+							color: white;
+							margin: 1rem;
+							font-weight: 300;
+							text-transform: uppercase;
 						}
 					`}
 				>
-					<span>{category.title}</span>
+					{emoji(category.icons)}
+					<h2>{category.title}</h2>
 				</div>
 				<StepsTable
 					{...{
 						rules: categoryRules,
-						onClose,
 						categories,
 					}}
 				/>
@@ -127,10 +138,8 @@ const CategoryTable = ({ steps, categories, onClose }) =>
 	})
 function StepsTable({
 	rules,
-	onClose,
 }: {
 	rules: Array<EvaluatedNode & { nodeKind: 'rule'; dottedName: DottedName }>
-	onClose: () => void
 }) {
 	const dispatch = useDispatch()
 	const language = useTranslation().i18n.language
@@ -142,7 +151,6 @@ function StepsTable({
 						{...{
 							rule,
 							dispatch,
-							onClose,
 							language,
 						}}
 					/>
@@ -152,7 +160,7 @@ function StepsTable({
 	)
 }
 
-const Answer = ({ rule, dispatch, onClose, language }) => (
+const Answer = ({ rule, dispatch, language }) => (
 	<tr
 		key={rule.dottedName}
 		css={`
@@ -186,7 +194,6 @@ const Answer = ({ rule, dispatch, onClose, language }) => (
 				`}
 				onClick={() => {
 					dispatch(goToQuestion(rule.dottedName))
-					onClose()
 				}}
 			>
 				<span

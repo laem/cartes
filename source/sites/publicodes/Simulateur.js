@@ -66,7 +66,6 @@ const Simulateur = (props) => {
 					)}
 				</h1>
 			)}
-			<SessionBar evaluation={evaluation} />
 			<Simulation
 				noFeedback
 				orderByCategories={categories}

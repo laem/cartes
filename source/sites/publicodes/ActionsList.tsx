@@ -99,11 +99,8 @@ export default ({ display }) => {
 				padding: 0 0.3rem 1rem;
 				${display !== 'list' && `max-width: 600px;`}
 				margin: 1rem auto;
-
-				${sessionBarMargin}
 			`}
 		>
-			<SessionBar />
 			{display === 'list' ? (
 				<AllActions {...{ actions: finalActions.reverse(), bilans, rules }} />
 			) : finalActions.length ? (

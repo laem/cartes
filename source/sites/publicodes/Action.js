@@ -64,7 +64,6 @@ export default ({}) => {
 				padding: 0 0.3rem 1rem;
 				max-width: 600px;
 				margin: 1rem auto;
-				${sessionBarMargin}
 			`}
 		>
 			<Meta title={title} description={description} />
@@ -101,7 +100,6 @@ export default ({}) => {
 					)}
 				</div>
 			</div>
-			<SessionBar answerButtonOnly />
 			{nextQuestions.length > 0 && (
 				<>
 					<p>Personnalisez cette estimation</p>
