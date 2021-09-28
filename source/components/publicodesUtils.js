@@ -76,10 +76,12 @@ export const extractCategories = (
 	const categories = sumNodes.map((dottedName) => {
 		const node = engine.evaluate(dottedName)
 		const { icônes, couleur } = rules[dottedName]
+		const split = splitName(dottedName),
+			parent = split.length > 1 && split[0]
 		return {
 			...node,
-			icons: icônes,
-			color: couleur,
+			icons: icônes || rules[parent].icônes,
+			color: couleur || rules[parent].couleur,
 			nodeValue: valuesFromURL ? valuesFromURL[dottedName[0]] : node.nodeValue,
 		}
 	})
