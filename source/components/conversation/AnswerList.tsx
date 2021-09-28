@@ -17,11 +17,7 @@ import { situationSelector } from 'Selectors/simulationSelectors'
 import { answeredQuestionsSelector } from '../../selectors/simulationSelectors'
 import './AnswerList.css'
 
-type AnswerListProps = {
-	onClose: () => void
-}
-
-export default function AnswerList({ onClose }: AnswerListProps) {
+export default function AnswerList() {
 	const dispatch = useDispatch()
 	const engine = useEngine()
 	const situation = useSelector(situationSelector)
@@ -69,7 +65,13 @@ export default function AnswerList({ onClose }: AnswerListProps) {
 	}, [situation])
 
 	return (
-		<Overlay onClose={onClose} className="answer-list">
+		<>
+			{foldedStepsToDisplay.length === 0 && (
+				<div>
+					<p>{emoji('🤷')}</p>
+					<p>Vous n'avez pas encore fait le test.</p>
+				</div>
+			)}
 			{!!foldedStepsToDisplay.length && (
 				<>
 					<h2>
@@ -90,7 +92,7 @@ export default function AnswerList({ onClose }: AnswerListProps) {
 					<CategoryTable {...{ steps: nextSteps, categories, onClose }} />
 				</>
 			)}
-		</Overlay>
+		</>
 	)
 }
 
