@@ -126,7 +126,7 @@ export default function SessionBar({
 				src="https://openmoji.org/data/black/svg/1F464.svg"
 				css="width: 2rem"
 			/>
-			Mes réponses
+			Mon profil
 		</Button>,
 		NODE_ENV === 'development' && (
 			<Button

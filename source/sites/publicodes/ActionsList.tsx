@@ -115,7 +115,7 @@ export default ({ display }) => {
 			)}
 			<Link
 				to={display === 'list' ? '/actions' : '/actions/liste'}
-				css="margin: 0 auto; text-align: center; display: block; margin: .4rem"
+				css=" text-align: center; display: block; margin: 1rem"
 			>
 				<button className="ui__ button">
 					{display === 'list' ? 'Vue jeu de cartes' : 'Vue liste'}
