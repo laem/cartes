@@ -94,160 +94,40 @@ export default function SessionBar({
 	const location = useLocation(),
 		path = location.pathname
 
-	let buttons = []
-	if (answerButtonOnly) {
-		buttons = [
-			arePreviousAnswers && (
-				<>
-					<Button
-						className="simple small"
-						onClick={() => setShowAnswerModal(true)}
-					>
-						{emoji('📋 ')}
-						Mes réponses
-					</Button>
-				</>
-			),
-			showAnswerModal && <Answers onClose={() => setShowAnswerModal(false)} />,
-		]
-	} else if (path.includes('/personas')) {
-		buttons = [
-			<Button
-				className="simple small"
-				onClick={() => {
-					history.push('/actions')
-				}}
-			>
-				{emoji('💥 ')}
-				Passer à l'action
-			</Button>,
-		]
-	} else if (path.includes('/fin')) {
-		buttons = [
-			<Button
-				key="recommencer"
-				className="simple small"
-				onClick={() => {
-					dispatch(resetSimulation())
-					dispatch(deletePreviousSimulation())
-				}}
-			>
-				{emoji('♻️ ')}
-				Recommencer
-			</Button>,
-			arePreviousAnswers ? (
-				<Button
-					className="simple small"
-					onClick={() => {
-						dispatch(goToQuestion(last(answeredQuestions)))
-						history.push('/simulateur/bilan')
-					}}
-				>
-					{emoji('📊 ')}
-					Ma simulation
-				</Button>
-			) : (
-				<Button
-					className="plain"
-					onClick={() => {
-						history.push('/simulateur/bilan')
-					}}
-				>
-					{emoji('👤 ')}
-					Faire le test
-				</Button>
-			),
-		]
-	} else if (path.includes('/fin') || path.includes('/actions')) {
-		buttons = [
-			<Button
-				key="recommencer"
-				className="simple small"
-				onClick={() => {
-					dispatch(resetSimulation())
-					dispatch(deletePreviousSimulation())
-				}}
-			>
-				{emoji('♻️ ')}
-				Recommencer
-			</Button>,
-			<Button
-				key="modifier"
-				className="simple small"
-				onClick={() => setShowAnswerModal(true)}
-			>
-				{emoji('📋 ')}
-				Mes réponses
-			</Button>,
-			arePreviousAnswers ? (
-				<Button
-					className="simple small"
-					onClick={() => {
-						dispatch(goToQuestion(last(answeredQuestions)))
-						history.push('/simulateur/bilan')
-					}}
-				>
-					{emoji('📊 ')}
-					Ma simulation
-				</Button>
-			) : (
-				<Button
-					className="plain"
-					onClick={() => {
-						history.push('/simulateur/bilan')
-					}}
-				>
-					{emoji('👤 ')}
-					Faire le test
-				</Button>
-			),
-		]
-	} else {
-		buttons = [
-			...(arePreviousAnswers
-				? [
-						<Button
-							key="recommencer"
-							className="simple small"
-							onClick={() => {
-								dispatch(resetSimulation())
-								dispatch(deletePreviousSimulation())
-							}}
-						>
-							{emoji('♻️ ')}
-							Recommencer
-						</Button>,
-						<Button
-							key="modifier"
-							className="simple small"
-							onClick={() => setShowAnswerModal(true)}
-						>
-							{emoji('📋 ')}
-							Mes réponses
-						</Button>,
-						<Button
-							key="bouger"
-							className="simple small"
-							onClick={() => history.push('/actions')}
-						>
-							{emoji('💥 ')}
-							Passer à l'action
-						</Button>,
-						NODE_ENV === 'development' && (
-							<Button
-								key="fin"
-								className="simple small"
-								onClick={() => history.push(buildEndURL(rules, engine))}
-							>
-								{emoji('🔚 ')}
-								Ecran de fin [DEVMODE]
-							</Button>
-						),
-				  ]
-				: []),
-			showAnswerModal && <Answers onClose={() => setShowAnswerModal(false)} />,
-		]
-	}
+	let buttons = [
+		<Button
+			className="simple small"
+			onClick={() => {
+				dispatch(goToQuestion(last(answeredQuestions)))
+				history.push('/simulateur/bilan')
+			}}
+		>
+			<img
+				src="https://openmoji.org/data/black/svg/25B6.svg"
+				css="width: 2rem"
+			/>
+			Le test
+		</Button>,
+		<Button
+			className="simple small"
+			onClick={() => {
+				history.push('/actions')
+			}}
+		>
+			<img
+				src="https://openmoji.org/data/black/svg/1F3AF.svg"
+				css="width: 2rem"
+			/>
+			Agir
+		</Button>,
+		<Button className="simple small" onClick={() => setShowAnswerModal(true)}>
+			<img
+				src="https://openmoji.org/data/black/svg/1F464.svg"
+				css="width: 2rem"
+			/>
+			Mes réponses
+		</Button>,
+	]
 
 	return (
 		<div
