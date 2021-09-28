@@ -87,7 +87,7 @@ function simulation(
 			hiddenNotifications: state?.hiddenControls || [],
 			situation: action.situation || state?.situation || {},
 			targetUnit: config['unité par défaut'] || '€/mois',
-			foldedSteps: state?.foldedSteps || [],
+			foldedSteps: action.foldedSteps || state?.foldedSteps || [],
 			unfoldedStep: null,
 			persona: action.persona,
 		}

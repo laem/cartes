@@ -90,12 +90,14 @@ export const setDifferentSituation = ({
 	config,
 	url,
 	persona,
+	foldedSteps,
 }: Object) => ({
 	type: 'SET_SIMULATION',
 	situation,
 	config,
 	url,
 	persona,
+	foldedSteps,
 })
 
 export const setSimulationConfig = (config: Object): ThunkResult<void> => (

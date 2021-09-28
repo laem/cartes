@@ -75,6 +75,7 @@ export const PersonaGrid = ({ additionnalOnClick }) => {
 										url: '/simulateur/bilan',
 										situation: data,
 										persona: nom,
+										foldedSteps: Object.keys(data),
 									})
 								)
 								additionnalOnClick && additionnalOnClick()

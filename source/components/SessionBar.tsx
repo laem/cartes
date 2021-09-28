@@ -128,6 +128,20 @@ export default function SessionBar({
 			/>
 			Mes réponses
 		</Button>,
+		NODE_ENV === 'development' && (
+			<Button
+				key="personas"
+				className="simple small"
+				onClick={() => history.push('/personas')}
+				css={buttonStyle('personas')}
+			>
+				<img
+					src="https://openmoji.org/data/black/svg/1F465.svg"
+					css="width: 2rem"
+				/>
+				Personas
+			</Button>
+		),
 	]
 
 	return (

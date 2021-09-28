@@ -5,7 +5,7 @@
   data:
     alimentation . déchets . niveau d'engagement: '''affirmatif'''
     alimentation . petit déjeuner . type: '''lait céréales'''
-    alimentation . lait . lait végétal: oui
+    alimentation . lait . type: "'lait végétal'"
     alimentation . boisson . sucrées . litres:
       valeur: 1
       unité: l / semaine
@@ -55,9 +55,6 @@
       unité: kWh
     logement . fioul . chauffage au fioul: non
     logement . bois . chauffage au bois: non
-    divers . électroménager . montant:
-      valeur: 100
-      unité: an
     divers . autres produits . montant:
       valeur: 200
       unité: an
@@ -67,7 +64,6 @@
     numérique . internet . durée journalière:
       valeur: 8
       unité: heure
-    alimentation . lait . type: '''lait végétal'''
     logement . âge:
       valeur: 45
       unité: an
@@ -105,7 +101,7 @@
   data: 
     alimentation . déchets . niveau d'engagement: "'en partie'"
     alimentation . petit déjeuner . type: "'lait céréales'"
-    alimentation . lait . lait végétal: oui
+    alimentation . lait . type: "'lait végétal'"
     alimentation . boisson . sucrées . litres:
       valeur: 0
       unité: l / semaine
