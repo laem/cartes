@@ -94,6 +94,8 @@ export default function SessionBar({
 	const location = useLocation(),
 		path = location.pathname
 
+	const buttonStyle = (pathTarget) =>
+		path.includes(pathTarget) ? `font-weight: bold` : ''
 	let buttons = [
 		<Button
 			className="simple small"
@@ -101,6 +103,7 @@ export default function SessionBar({
 				dispatch(goToQuestion(last(answeredQuestions)))
 				history.push('/simulateur/bilan')
 			}}
+			css={buttonStyle('simulateur')}
 		>
 			<img
 				src="https://openmoji.org/data/black/svg/25B6.svg"
@@ -113,6 +116,7 @@ export default function SessionBar({
 			onClick={() => {
 				history.push('/actions')
 			}}
+			css={buttonStyle('/actions')}
 		>
 			<img
 				src="https://openmoji.org/data/black/svg/1F3AF.svg"
@@ -120,7 +124,11 @@ export default function SessionBar({
 			/>
 			Agir
 		</Button>,
-		<Button className="simple small" onClick={() => setShowAnswerModal(true)}>
+		<Button
+			className="simple small"
+			onClick={() => history.push('/profil')}
+			css={buttonStyle('profil')}
+		>
 			<img
 				src="https://openmoji.org/data/black/svg/1F464.svg"
 				css="width: 2rem"
