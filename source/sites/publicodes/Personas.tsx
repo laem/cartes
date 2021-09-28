@@ -73,9 +73,10 @@ export const PersonaGrid = ({ additionnalOnClick }) => {
 									setDifferentSituation({
 										config: { objectifs: [objectif] },
 										url: '/simulateur/bilan',
-										situation: data,
+										// the schema of peronas is not fixed yet
+										situation: data.situation || data,
 										persona: nom,
-										foldedSteps: Object.keys(data),
+										foldedSteps: data.foldedSteps || Object.keys(data),
 									})
 								)
 								additionnalOnClick && additionnalOnClick()

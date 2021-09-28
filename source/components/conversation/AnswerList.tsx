@@ -44,7 +44,11 @@ export default function AnswerList() {
 		const handleKeyDown = (e: KeyboardEvent) => {
 			if (!(e.ctrlKey && e.key === 'c')) return
 			console.log('VOILA VOTRE SITUATION')
-			console.log(JSON.stringify(situation))
+			console.log(
+				JSON.stringify({
+					data: { situation, foldedSteps: foldedQuestionNames },
+				})
+			)
 			/* MARCHE PAS : 
 			console.log(
 				Object.fromEntries(
@@ -72,22 +76,22 @@ export default function AnswerList() {
 				</div>
 			)}
 			{!!foldedStepsToDisplay.length && (
-				<>
+				<div className="ui__ card">
 					<h2>
 						{emoji('📋 ')}
 						<Trans>Mes réponses</Trans>
 					</h2>
 					<CategoryTable {...{ steps: foldedStepsToDisplay, categories }} />
-				</>
+				</div>
 			)}
 			{!!nextSteps.length && (
-				<>
+				<div className="ui__ card">
 					<h2>
 						{emoji('🔮 ')}
 						<Trans>Prochaines questions</Trans>
 					</h2>
 					<CategoryTable {...{ steps: nextSteps, categories }} />
-				</>
+				</div>
 			)}
 		</div>
 	)
