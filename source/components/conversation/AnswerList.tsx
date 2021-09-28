@@ -68,8 +68,7 @@ export default function AnswerList() {
 		<div className="answer-list">
 			{foldedStepsToDisplay.length === 0 && (
 				<div>
-					<p>{emoji('🤷')}</p>
-					<p>Vous n'avez pas encore fait le test.</p>
+					<p>{emoji('🤷')}&nbsp; Vous n'avez pas encore fait le test.</p>
 				</div>
 			)}
 			{!!foldedStepsToDisplay.length && (

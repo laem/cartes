@@ -1,14 +1,11 @@
+import { deletePreviousSimulation, resetSimulation } from 'Actions/actions'
 import emoji from 'react-easy-emoji'
-import { useDispatch, useSelector } from 'react-redux'
-import { Link } from 'react-router-dom'
-import { setDifferentSituation } from '../../actions/actions'
+import { useDispatch } from 'react-redux'
 import AnswerList from '../../components/conversation/AnswerList'
-import SessionBar from '../../components/SessionBar'
 import { ScrollToTop } from '../../components/utils/Scroll'
-import { CardGrid } from './ListeActionPlus'
-import personas from './personas.yaml'
 
 export default ({}) => {
+	const dispatch = useDispatch()
 	return (
 		<div>
 			<div className="ui__ container">
@@ -19,6 +16,17 @@ export default ({}) => {
 					Vos données sont stockées dans votre navigateur, vous avez donc le
 					contrôle total sur elles.
 				</details>
+				<button
+					className="ui__ button plain"
+					css="margin: 1rem 0"
+					onClick={() => {
+						dispatch(resetSimulation())
+						dispatch(deletePreviousSimulation())
+					}}
+				>
+					{emoji('♻️ ')}
+					Recommencer
+				</button>
 				<AnswerList />
 			</div>
 		</div>

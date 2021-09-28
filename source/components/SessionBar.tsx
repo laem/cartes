@@ -1,13 +1,8 @@
-import {
-	deletePreviousSimulation,
-	goToQuestion,
-	loadPreviousSimulation,
-	resetSimulation,
-} from 'Actions/actions'
+import { goToQuestion, loadPreviousSimulation } from 'Actions/actions'
+import { extractCategories } from 'Components/publicodesUtils'
 import { useEngine } from 'Components/utils/EngineContext'
 import { last } from 'ramda'
 import React, { useEffect, useState } from 'react'
-import emoji from 'react-easy-emoji'
 import { useDispatch, useSelector } from 'react-redux'
 import { useHistory, useLocation } from 'react-router-dom'
 import { RootState } from 'Reducers/rootReducer'
@@ -17,8 +12,6 @@ import {
 } from 'Selectors/simulationSelectors'
 import styled from 'styled-components'
 import CarbonImpact from '../sites/publicodes/CarbonImpact'
-import { extractCategories } from 'Components/publicodesUtils'
-import Answers from './conversation/AnswerList'
 
 const Button = styled.button`
 	margin: 0 0.2rem;
