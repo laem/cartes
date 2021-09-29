@@ -42,10 +42,12 @@ export const ActionListCard = ({ evaluation, total, rule, effort }) => {
 				h2 {
 					font-size: 110%;
 					font-weight: 500;
+					margin: 0.4rem 0;
+					min-height: 6rem;
 				}
 				display: flex;
 				flex-direction: column;
-				justify-content: space-between;
+				justify-content: start;
 				height: 100%;
 			`}
 			to={'/actions/' + encodeRuleName(dottedName)}
@@ -68,6 +70,7 @@ export const ActionListCard = ({ evaluation, total, rule, effort }) => {
 					button img {
 						font-size: 200%;
 					}
+					margin: 1.6rem 0 0.3rem;
 				`}
 			>
 				<button
@@ -145,7 +148,7 @@ const ActionValue = ({ total, disabled, noFormula, dottedName }) => {
 		<div
 			css={`
 				margin-top: 1.6rem;
-				font-size: 120%;
+				font-size: 100%;
 				strong {
 					background: var(--lightColor);
 					border-radius: 0.3rem;

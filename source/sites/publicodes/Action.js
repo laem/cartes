@@ -68,7 +68,7 @@ export default ({}) => {
 		>
 			<Meta title={title} description={description} />
 			<ScrollToTop />
-			<Link to="/actions">
+			<Link to="/actions/liste">
 				<button className="ui__ button simple small ">
 					{emoji('◀')} Retour à la liste
 				</button>
