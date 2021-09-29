@@ -5,7 +5,7 @@ import { useSelector } from 'react-redux'
 import styled from 'styled-components'
 import { Card } from './ActionCard'
 import ActionConversation from './ActionConversation'
-import ActionVignette from './ActionVignette'
+import { ActionGameCard } from './ActionVignette'
 
 // basic default styles for container
 const Frame = styled.div`
@@ -89,7 +89,7 @@ export default ({ onVote, actions, total }) => {
 										data-value={item.dottedName}
 										whileTap={{ scale: 1.15 }}
 									>
-										<ActionVignette
+										<ActionGameCard
 											key={item.dottedName}
 											rule={rules[item.dottedName]}
 											evaluation={item}

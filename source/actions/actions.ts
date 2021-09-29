@@ -168,8 +168,9 @@ export const explainVariable = (variableName: DottedName | null = null) =>
 		variableName,
 	} as const)
 
-export const setActionMode = (mode: 'guidé' | 'autonome') =>
+export const setActionChoice = (action: string, choice: boolean) =>
 	({
-		type: 'SET_ACTION_MODE',
-		mode,
+		type: 'SET_ACTION_CHOICE',
+		action,
+		choice,
 	} as const)

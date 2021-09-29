@@ -1,27 +1,30 @@
-import { Link } from 'react-router-dom'
-import { extractCategories, splitName } from 'Components/publicodesUtils'
+import { splitName } from 'Components/publicodesUtils'
 import { EngineContext } from 'Components/utils/EngineContext'
 import { utils } from 'publicodes'
-import { sortBy } from '../../utils'
+import { partition } from 'ramda'
 import React, { useContext } from 'react'
 import emoji from 'react-easy-emoji'
 import { useDispatch, useSelector } from 'react-redux'
 import { useLocation, useParams } from 'react-router'
+import { Link } from 'react-router-dom'
+import Overlay from '../../components/Overlay'
 import {
 	correctValue,
 	extractCategoriesNamespaces,
 } from '../../components/publicodesUtils'
-import SessionBar, { sessionBarMargin } from '../../components/SessionBar'
-import ActionStack from './ActionStack'
-import ActionVignette, { disabledAction } from './ActionVignette'
-import CategoryFilters from './CategoryFilters'
-import { partition } from 'ramda'
-import Overlay from '../../components/Overlay'
-import Personas, { PersonaGrid } from './Personas'
 import {
 	answeredQuestionsSelector,
 	situationSelector,
 } from '../../selectors/simulationSelectors'
+import { sortBy } from '../../utils'
+import ActionStack from './ActionStack'
+import CategoryFilters from './CategoryFilters'
+import { PersonaGrid } from './Personas'
+import {
+	ActionGameCard,
+	ActionListCard,
+	disabledAction,
+} from './ActionVignette'
 
 const { encodeRuleName, decodeRuleName } = utils
 
@@ -183,7 +186,7 @@ const AllActions = ({ actions, bilans, rules }) => {
 			>
 				{actions.map((evaluation) => (
 					<li className="ui__ card">
-						<ActionVignette
+						<ActionListCard
 							key={evaluation.dottedName}
 							rule={rules[evaluation.dottedName]}
 							evaluation={evaluation}

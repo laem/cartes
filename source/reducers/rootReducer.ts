@@ -163,9 +163,9 @@ function rules(state = null, { type, rules }) {
 	} else return state
 }
 
-function actionMode(state = null, { type, mode }) {
-	if (type === 'SET_ACTION_MODE') {
-		return mode
+function actionChoices(state = {}, { type, action, choice }) {
+	if (type === 'SET_ACTION_CHOICE') {
+		return { ...state, [action]: choice }
 	} else return state
 }
 
@@ -190,7 +190,7 @@ const mainReducer = (state: any, action: Action) =>
 		situationBranch,
 		activeTargetInput,
 		rules,
-		actionMode,
+		actionChoices,
 		conference,
 		iframeOptions: defaultTo(null),
 	})(state, action)
