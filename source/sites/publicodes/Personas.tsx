@@ -57,6 +57,8 @@ export default ({}) => {
 export const PersonaGrid = ({ additionnalOnClick }) => {
 	const dispatch = useDispatch(),
 		objectif = 'bilan'
+	const persona = useSelector((state) => state.simulation?.persona)
+	console.log(persona, personas)
 
 	return (
 		<CardGrid>
@@ -64,7 +66,11 @@ export const PersonaGrid = ({ additionnalOnClick }) => {
 				<li key={nom}>
 					<div
 						className="ui__ card"
-						css="width: 11rem !important; height: 14rem !important"
+						css={`
+							width: 11rem !important;
+							height: 14rem !important;
+							${nom === persona ? `border: 2px solid var(--color)` : ``}
+						`}
 					>
 						<Link
 							to={'#'}

@@ -156,9 +156,11 @@ const AllActions = ({ actions, bilans, rules }) => {
 
 	return (
 		<div>
-			<p>{actions.length} actions disponibles. </p>
 			<details>
-				<summary>{missingVariables.length} questions restantes.</summary>
+				<summary>
+					{actions.length} actions disponibles. {missingVariables.length}{' '}
+					questions restantes.
+				</summary>
 
 				<ul>
 					{sortBy(([, score]) => score)(Object.entries(scores))
