@@ -7,6 +7,7 @@ import { useTranslation } from 'react-i18next'
 import { useDispatch, useSelector } from 'react-redux'
 import { RootState } from 'Reducers/rootReducer'
 import './Notifications.css'
+import { parentName } from './publicodesUtils'
 import { Markdown } from './utils/markdown'
 import { ScrollToElement } from './utils/Scroll'
 
@@ -33,7 +34,7 @@ export function getNotifications(engine: Engine) {
 			description,
 		}))
 }
-export default function Notifications() {
+export default function Notifications({ currentQuestion }) {
 	const { t } = useTranslation()
 	const engine = useEngine()
 	const inversionFail = useInversionFail()
@@ -56,10 +57,17 @@ export default function Notifications() {
 		: (getNotifications(engine) as Array<Notification>)
 	if (!messages?.length) return null
 
+	// Here we filter notifications to not display them out of context
+	// but this supposes that notifications would be well placed in termes of namespaces
+	// for now we're using only one notifcation, so that's the behavior we want
+	const filteredMessages = messages.filter(({ dottedName }) =>
+		parentName(currentQuestion).includes(parentName(dottedName))
+	)
+
 	return (
 		<div id="notificationsBlock">
 			<ul style={{ margin: 0, padding: 0 }}>
-				{messages.map(({ sévérité, dottedName, description }) =>
+				{filteredMessages.map(({ sévérité, dottedName, description }) =>
 					hiddenNotifications?.includes(dottedName) ? null : (
 						<animate.fromTop key={dottedName}>
 							<li>

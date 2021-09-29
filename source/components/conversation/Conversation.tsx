@@ -244,7 +244,7 @@ export default function Conversation({
 						</button>
 					)}
 				</div>
-				<Notifications />
+				<Notifications currentQuestion={currentQuestion} />
 			</div>
 		</section>
 	)

@@ -10,7 +10,7 @@ export const FullName = ({ dottedName }) => (
 	<span>
 		{splitName(dottedName).map((fragment, index) => (
 			<span>
-				{index > 0 && ' > '}
+				{index > 0 && ' · '}
 				{capitalise0(fragment)}
 			</span>
 		))}
