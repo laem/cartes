@@ -107,7 +107,7 @@ export default function SessionBar({
 		<Button
 			className="simple small"
 			onClick={() => {
-				history.push('/actions')
+				history.push('/actions/liste')
 			}}
 			css={buttonStyle('/actions')}
 		>

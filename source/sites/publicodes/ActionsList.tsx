@@ -18,7 +18,10 @@ import CategoryFilters from './CategoryFilters'
 import { partition } from 'ramda'
 import Overlay from '../../components/Overlay'
 import Personas, { PersonaGrid } from './Personas'
-import { situationSelector } from '../../selectors/simulationSelectors'
+import {
+	answeredQuestionsSelector,
+	situationSelector,
+} from '../../selectors/simulationSelectors'
 
 const { encodeRuleName, decodeRuleName } = utils
 
@@ -27,7 +30,8 @@ export default ({ display }) => {
 	let { category } = useParams()
 
 	const rules = useSelector((state) => state.rules)
-	const situation = useSelector(situationSelector)
+	const situation = useSelector(situationSelector),
+		answeredQuestions = useSelector(answeredQuestionsSelector)
 	const flatActions = rules['actions']
 
 	const radical = true
@@ -66,9 +70,9 @@ export default ({ display }) => {
 		return { ...memo, [category]: (memo[category] || 0) + 1 }
 	}, {})
 
-	const situationLength = Object.entries(situation).length
+	const simulationWellStarted = answeredQuestions.length > 50
 
-	if (situationLength < 10) {
+	if (!simulationWellStarted) {
 		return (
 			<Overlay onClose={() => null}>
 				<div>
