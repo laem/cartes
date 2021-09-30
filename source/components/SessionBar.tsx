@@ -147,7 +147,7 @@ export default function SessionBar({
 	return (
 		<div
 			css={`
-				margin: 2rem;
+				margin: 1rem 0 2rem;
 
 				@media (max-width: 800px) {
 					margin: 0;
