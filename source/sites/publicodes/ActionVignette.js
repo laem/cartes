@@ -116,7 +116,7 @@ export const ActionListCard = ({ evaluation, total, rule, focusAction }) => {
 			>
 				<button
 					css={`
-						${remainingQuestions > 0 && 'filter: grayscale(1)'}
+						${hasRemainingQuestions && 'filter: grayscale(1)'}
 					`}
 					onClick={(e) => {
 						if (remainingQuestions > 0) return null

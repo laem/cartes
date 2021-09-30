@@ -58,6 +58,7 @@ export default ({ actions, bilans, rules }) => {
 					actionChoices,
 
 					focusAction,
+					focusedAction,
 				}}
 			/>
 			{rejected.length > 0 && (
@@ -70,6 +71,7 @@ export default ({ actions, bilans, rules }) => {
 							bilans,
 							actionChoices,
 							focusAction,
+							focusedAction,
 						}}
 					/>
 				</div>
@@ -78,7 +80,14 @@ export default ({ actions, bilans, rules }) => {
 	)
 }
 
-const List = ({ actions, rules, bilans, actionChoices, focusAction }) => (
+const List = ({
+	actions,
+	rules,
+	bilans,
+	actionChoices,
+	focusedAction,
+	focusAction,
+}) => (
 	<ul
 		css={`
 			display: flex;
@@ -97,19 +106,24 @@ const List = ({ actions, rules, bilans, actionChoices, focusAction }) => (
 			{actions.map((evaluation) => (
 				<motion.li
 					key={evaluation.dottedName}
+					layoutId={evaluation.dottedName}
 					animate={{ scale: 1 }}
 					initial={{ scale: 0.8 }}
 					exit={{ scale: 0.2 }}
 					transition={{ duration: 0.5 }}
 					className="ui__ interactive card light-border"
 					css={`
+						${focusedAction === evaluation.dottedName
+							? `border: 4px solid var(--color) !important;`
+							: ''}
 						${actionChoices[evaluation.dottedName]
-							? `border: 4px solid #77b255 !important`
+							? `border: 4px solid #77b255 !important;`
 							: ''}
 					`}
 				>
 					<ActionListCard
 						focusAction={focusAction}
+						focused={focusedAction === evaluation.dottedName}
 						key={evaluation.dottedName}
 						rule={rules[evaluation.dottedName]}
 						evaluation={evaluation}
