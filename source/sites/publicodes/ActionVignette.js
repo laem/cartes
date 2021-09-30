@@ -28,41 +28,87 @@ export const ActionListCard = ({ evaluation, total, rule, effort }) => {
 	const rules = useSelector((state) => state.rules),
 		{ nodeValue, dottedName, title, unit } = evaluation,
 		{ icônes: icons } = rule
+	const actionChoices = useSelector((state) => state.actionChoices)
 
 	const flatRule = rules[dottedName],
 		noFormula = flatRule.formule == null,
 		disabled = disabledAction(flatRule, nodeValue)
 
+	const remainingQuestions = ((x) => (x <= 0 ? 0 : x))(
+		Math.round(Math.random() * 6 - 2)
+	)
+
 	return (
-		<Link
+		<div
 			css={`
 				${disabled ? disabledStyle : ''}
-				text-decoration: none;
 				width: 100%;
-				h2 {
-					font-size: 110%;
-					font-weight: 500;
-					margin: 0.4rem 0;
-					min-height: 6rem;
-				}
 				display: flex;
 				flex-direction: column;
 				justify-content: start;
 				height: 100%;
 			`}
-			to={'/actions/' + encodeRuleName(dottedName)}
 		>
-			<h2>{title}</h2>
-			{icons && (
-				<div
-					css={`
-						font-size: 150%;
-					`}
-				>
-					{emoji(icons)}
+			<Link
+				css={`
+					display: block;
+					margin-top: 0.6rem;
+					h2 {
+						margin-left: 0.6rem;
+						display: inline;
+						font-size: 110%;
+						font-weight: 500;
+					}
+					text-decoration: none;
+					min-height: 4.5rem;
+				`}
+				to={'/actions/' + encodeRuleName(dottedName)}
+			>
+				{icons && (
+					<span
+						css={`
+							font-size: 150%;
+						`}
+					>
+						{emoji(icons)}
+					</span>
+				)}
+				<h2>{title}</h2>
+			</Link>
+
+			<div
+				css={`
+					position: relative;
+				`}
+			>
+				<div css={remainingQuestions > 0 ? `filter: blur(3px); ` : ''}>
+					<ActionValue {...{ dottedName, total, disabled, noFormula }} />
 				</div>
-			)}
-			<ActionValue {...{ dottedName, total, disabled, noFormula }} />
+				{remainingQuestions !== 0 && (
+					<div
+						css={`
+							position: absolute;
+							font-size: 95%;
+							font-weight: 600;
+							display: inline-block;
+							padding: 0.2rem 0.3rem 0;
+							text-transform: uppercase;
+							font-family: 'Courier';
+							mix-blend-mode: multiply;
+							color: rgb(117, 115, 115);
+							border: 0.2rem solid rgb(117, 115, 115);
+							mask-position: 13rem 6rem;
+							transform: rotate(-10deg);
+							border-radius: 4px;
+							top: 2rem;
+							right: 1em;
+							line-height: 1.1rem;
+						`}
+					>
+						{remainingQuestions} questions
+					</div>
+				)}
+			</div>
 			<div
 				css={`
 					display: flex;
@@ -70,12 +116,18 @@ export const ActionListCard = ({ evaluation, total, rule, effort }) => {
 					button img {
 						font-size: 200%;
 					}
-					margin: 1.6rem 0 0.3rem;
+					margin-bottom: 1rem;
+					margin-top: auto;
 				`}
 			>
 				<button
 					onClick={(e) => {
-						dispatch(setActionChoice(dottedName, true))
+						dispatch(
+							setActionChoice(
+								dottedName,
+								actionChoices[dottedName] === true ? null : true
+							)
+						)
 						e.stopPropagation()
 						e.preventDefault()
 					}}
@@ -84,7 +136,13 @@ export const ActionListCard = ({ evaluation, total, rule, effort }) => {
 				</button>
 				<button
 					onClick={(e) => {
-						dispatch(setActionChoice(dottedName, false))
+						dispatch(
+							setActionChoice(
+								dottedName,
+
+								actionChoices[dottedName] === false ? null : false
+							)
+						)
 						e.stopPropagation()
 						e.preventDefault()
 					}}
@@ -92,7 +150,7 @@ export const ActionListCard = ({ evaluation, total, rule, effort }) => {
 					{emoji('❌')}
 				</button>
 			</div>
-		</Link>
+		</div>
 	)
 }
 
