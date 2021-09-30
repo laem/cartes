@@ -65,7 +65,7 @@ export const PersonaGrid = ({ additionnalOnClick }) => {
 			{personas.map(({ nom, icônes, data, description }) => (
 				<li key={nom}>
 					<div
-						className="ui__ card"
+						className="ui__ card interactive light-border"
 						css={`
 							width: 11rem !important;
 							height: 14rem !important;

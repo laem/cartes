@@ -60,7 +60,7 @@ export const ActionListCard = ({ evaluation, total, rule, effort }) => {
 						font-weight: 500;
 					}
 					text-decoration: none;
-					min-height: 4.5rem;
+					height: 5.5rem;
 				`}
 				to={'/actions/' + encodeRuleName(dottedName)}
 			>
