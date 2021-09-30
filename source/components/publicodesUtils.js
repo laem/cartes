@@ -83,8 +83,9 @@ export const extractCategories = (
 			icons: icônes || rules[parent].icônes,
 			color: couleur || rules[parent].couleur,
 			nodeValue: valuesFromURL ? valuesFromURL[dottedName[0]] : node.nodeValue,
-			dottedName: parent || node.dottedName,
-			title: parent ? rules[parent].titre : node.title,
+			dottedName: (parentRule === 'bilan' && parent) || node.dottedName,
+			title:
+				parentRule === 'bilan' && parent ? rules[parent].titre : node.title,
 		}
 	})
 
