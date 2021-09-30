@@ -81,28 +81,28 @@ export const ActionListCard = ({ evaluation, total, rule, effort }) => {
 					position: relative;
 				`}
 			>
-				<div css={remainingQuestions > 0 ? `filter: blur(3px); ` : ''}>
+				<div css={remainingQuestions > 0 ? `filter: blur(2px); ` : ''}>
 					<ActionValue {...{ dottedName, total, disabled, noFormula }} />
 				</div>
 				{remainingQuestions !== 0 && (
 					<div
 						css={`
 							position: absolute;
-							font-size: 95%;
-							font-weight: 600;
+							font-size: 100%;
+							font-weight: bold;
 							display: inline-block;
-							padding: 0.2rem 0.3rem 0;
+							padding: 0.3rem 0.2rem 0;
 							text-transform: uppercase;
 							font-family: 'Courier';
 							mix-blend-mode: multiply;
+							border: 3px solid rgb(117, 115, 115);
 							color: rgb(117, 115, 115);
-							border: 0.2rem solid rgb(117, 115, 115);
 							mask-position: 13rem 6rem;
 							transform: rotate(-10deg);
 							border-radius: 4px;
-							top: 2rem;
-							right: 1em;
-							line-height: 1.1rem;
+							top: 2.5rem;
+							left: 1em;
+							line-height: 1rem;
 						`}
 					>
 						{remainingQuestions} questions
