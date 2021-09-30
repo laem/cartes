@@ -10,13 +10,17 @@ import {
 	useState,
 } from 'react'
 import emoji from 'react-easy-emoji'
+import { useDispatch, useSelector } from 'react-redux'
 import { useLocation } from 'react-router'
 import { Link } from 'react-router-dom'
 import { useSpring } from 'react-spring'
 import tinygradient from 'tinygradient'
+import { goToQuestion } from '../../actions/actions'
 import { sessionBarMargin } from '../../components/SessionBar'
 import { IframeOptionsContext } from '../../components/utils/IframeOptionsProvider'
 import Meta from '../../components/utils/Meta'
+import { answeredQuestionsSelector } from '../../selectors/simulationSelectors'
+import { last } from '../../utils'
 import Chart from './chart'
 import DefaultFootprint from './DefaultFootprint'
 import IframeDataShareModal from './IframeDataShareModal'
@@ -82,8 +86,22 @@ export default ({}) => {
 		return () => unsubscribe()
 	})
 
+	const dispatch = useDispatch(),
+		answeredQuestions = useSelector(answeredQuestionsSelector)
+
 	return (
 		<div>
+			<Link
+				to="/simulateur/bilan"
+				css="display: block; text-align: center"
+				onClick={() => {
+					dispatch(goToQuestion(last(answeredQuestions)))
+				}}
+			>
+				<button class="ui__ simple small push-left button">
+					← Revenir à la simulation
+				</button>
+			</Link>
 			<animate.appear>
 				<AnimatedDiv
 					value={value}

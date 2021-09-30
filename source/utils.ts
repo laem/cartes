@@ -87,3 +87,8 @@ export const sortBy = (f) => (list) =>
 			fb = f(b)
 		return fa < fb ? -1 : fa > fb ? 1 : 0
 	})
+
+export const last = (array) => {
+	const [lastItem] = array.slice(-1)
+	return lastItem
+}
