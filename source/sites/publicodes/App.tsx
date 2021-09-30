@@ -26,7 +26,7 @@ import Simulateur from './Simulateur'
 import sitePaths from './sitePaths'
 const ConferenceLazy = React.lazy(() => import('./conference/Conference'))
 import ConferenceBarLazy from './conference/ConferenceBarLazy'
-import SessionBar, { sessionBarMargin } from '../../components/SessionBar'
+import SessionBar, { sessionBarMargin } from 'Components/SessionBar'
 
 let tracker = devTracker
 if (NODE_ENV === 'production') {

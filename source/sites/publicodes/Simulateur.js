@@ -52,13 +52,14 @@ const Simulateur = (props) => {
 	if (!configSet) return null
 
 	return (
-		<div css={sessionBarMargin}>
+		<div>
 			<Helmet>
 				<title>{rule.title}</title>
 				{rule.description && (
 					<meta name="description" content={evaluation.title} />
 				)}
 			</Helmet>
+			<CarbonImpact />
 			{!isMainSimulation && (
 				<h1>
 					{evaluation.rawNode.title || (

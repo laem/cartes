@@ -39,27 +39,38 @@ export default ({}) => {
 
 	const endURL = buildEndURL(rules, engine)
 	return (
-		<Link to={endURL} css=":hover {opacity: 1 !important}">
-			<div
-				css={`
-					background: rgba(0, 0, 0, 0)
-						linear-gradient(
-							60deg,
-							${color ? color : 'var(--color)'} 0%,
-							${color ? lightenColor(color, -20) : 'var(--lightColor)'} 100%
-						)
-						repeat scroll 0% 0%;
-					color: var(--textColor);
-					a {
-						color: inherit;
-					}
-					text-align: center;
-					box-shadow: 2px 2px 10px #bbb;
+		<div
+			css={`
+				@media (max-width: 800px) {
+					margin: 0;
+					position: fixed;
+					bottom: 4rem;
+					left: 0;
+					z-index: 10;
+					width: 100%;
+				}
+				background: rgba(0, 0, 0, 0)
+					linear-gradient(
+						60deg,
+						${color ? color : 'var(--color)'} 0%,
+						${color ? lightenColor(color, -20) : 'var(--lightColor)'} 100%
+					)
+					repeat scroll 0% 0%;
+				color: var(--textColor);
+				a {
+					color: inherit;
+				}
+				text-align: center;
+				box-shadow: 2px 2px 10px #bbb;
 
-					.unitSuffix {
-						font-size: 90%;
-					}
-				`}
+				.unitSuffix {
+					font-size: 90%;
+				}
+			`}
+		>
+			<Link
+				to={endURL}
+				css=":hover {opacity: 1 !important}; text-decoration: none"
 			>
 				<div
 					css={`
@@ -118,7 +129,7 @@ export default ({}) => {
 				{progress < 1 && (
 					<Progress progress={progress} style={!progress ? 'height: 0' : ''} />
 				)}
-			</div>
-		</Link>
+			</Link>
+		</div>
 	)
 }

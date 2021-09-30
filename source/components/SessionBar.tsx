@@ -147,17 +147,18 @@ export default function SessionBar({
 	return (
 		<div
 			css={`
+				margin: 2rem;
+
 				@media (max-width: 800px) {
+					margin: 0;
 					position: fixed;
 					bottom: 0;
 					left: 0;
 					z-index: 10;
-
 					width: 100%;
 				}
 			`}
 		>
-			{objectifs.length > 0 && !noResults && <CarbonImpact />}
 			{buttons.filter(Boolean).length > 0 && (
 				<NavBar>
 					{buttons.filter(Boolean).map((Comp, i) => (
