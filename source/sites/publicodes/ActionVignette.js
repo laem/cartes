@@ -7,7 +7,11 @@ import { setActionChoice } from '../../actions/actions'
 import { correctValue } from '../../components/publicodesUtils'
 import Stamp from '../../components/Stamp'
 import { useEngine } from '../../components/utils/EngineContext'
-import { situationSelector } from '../../selectors/simulationSelectors'
+import { getNextQuestions } from '../../components/utils/useNextQuestion'
+import {
+	answeredQuestionsSelector,
+	situationSelector,
+} from '../../selectors/simulationSelectors'
 import { humanWeight } from './HumanWeight'
 const { encodeRuleName, decodeRuleName } = utils
 
@@ -29,15 +33,23 @@ export const ActionListCard = ({ evaluation, total, rule, focusAction }) => {
 	const rules = useSelector((state) => state.rules),
 		{ nodeValue, dottedName, title, unit } = evaluation,
 		{ icônes: icons } = rule
-	const actionChoices = useSelector((state) => state.actionChoices)
+	const actionChoices = useSelector((state) => state.actionChoices),
+		situation = useSelector(situationSelector),
+		answeredQuestions = useSelector(answeredQuestionsSelector)
 
 	const flatRule = rules[dottedName],
 		noFormula = flatRule.formule == null,
 		disabled = disabledAction(flatRule, nodeValue)
 
-	const remainingQuestions = ((x) => (x <= 0 ? 0 : x))(
-		Math.round(Math.random() * 6 - 2)
-	)
+	console.log('EVAL', evaluation)
+
+	const remainingQuestions = getNextQuestions(
+			[evaluation.missingVariables],
+			{},
+			answeredQuestions,
+			situation
+		),
+		hasRemainingQuestions = remainingQuestions.length > 0
 
 	return (
 		<div
@@ -82,12 +94,12 @@ export const ActionListCard = ({ evaluation, total, rule, focusAction }) => {
 					position: relative;
 				`}
 			>
-				<div css={remainingQuestions > 0 ? `filter: blur(2px); ` : ''}>
+				<div css={hasRemainingQuestions ? `filter: blur(2px); ` : ''}>
 					<ActionValue {...{ dottedName, total, disabled, noFormula }} />
 				</div>
-				{remainingQuestions !== 0 && (
+				{hasRemainingQuestions && (
 					<Stamp onClick={() => focusAction(dottedName)}>
-						{remainingQuestions} questions
+						{remainingQuestions.length} questions
 					</Stamp>
 				)}
 			</div>

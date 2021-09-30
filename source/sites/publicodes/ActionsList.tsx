@@ -126,7 +126,7 @@ export default ({ display }) => {
 				css=" text-align: center; display: block; margin: 1rem"
 			>
 				<button className="ui__ button">
-					{display === 'list' ? 'Vue jeu de cartes' : 'Vue liste'}
+					{display === 'list' ? 'Vue jeu de cartes (en dev)' : 'Vue liste'}
 				</button>
 			</Link>
 
