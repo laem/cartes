@@ -1,8 +1,9 @@
 import { EngineContext } from 'Components/utils/EngineContext'
 import { AnimatePresence, motion } from 'framer-motion'
-import React, { useContext } from 'react'
+import React, { useContext, useState } from 'react'
 import { useSelector } from 'react-redux'
 import { sortBy } from '../../utils'
+import ActionConversation from './ActionConversation'
 import { ActionListCard } from './ActionVignette'
 
 export default ({ actions, bilans, rules }) => {
@@ -22,6 +23,7 @@ export default ({ actions, bilans, rules }) => {
 			)
 
 	const actionChoices = useSelector((state) => state.actionChoices)
+	const [focusedAction, focusAction] = useState(null)
 	const rejected = actions.filter((a) => actionChoices[a.dottedName] === false)
 	const notRejected = actions.filter(
 		(a) => actionChoices[a.dottedName] !== false
@@ -29,6 +31,9 @@ export default ({ actions, bilans, rules }) => {
 
 	return (
 		<div>
+			{focusedAction && (
+				<ActionConversation key={focusedAction} dottedName={focusedAction} />
+			)}
 			<details>
 				<summary>
 					{actions.length} actions disponibles. {missingVariables.length}{' '}
@@ -45,18 +50,35 @@ export default ({ actions, bilans, rules }) => {
 						))}
 				</ul>
 			</details>
-			<List {...{ actions: notRejected, rules, bilans, actionChoices }} />
+			<List
+				{...{
+					actions: notRejected,
+					rules,
+					bilans,
+					actionChoices,
+
+					focusAction,
+				}}
+			/>
 			{rejected.length > 0 && (
 				<div>
 					<h2>Actions écartées</h2>
-					<List {...{ actions: rejected, rules, bilans, actionChoices }} />
+					<List
+						{...{
+							actions: rejected,
+							rules,
+							bilans,
+							actionChoices,
+							focusAction,
+						}}
+					/>
 				</div>
 			)}
 		</div>
 	)
 }
 
-const List = ({ actions, rules, bilans, actionChoices }) => (
+const List = ({ actions, rules, bilans, actionChoices, focusAction }) => (
 	<ul
 		css={`
 			display: flex;
@@ -87,6 +109,7 @@ const List = ({ actions, rules, bilans, actionChoices }) => (
 					`}
 				>
 					<ActionListCard
+						focusAction={focusAction}
 						key={evaluation.dottedName}
 						rule={rules[evaluation.dottedName]}
 						evaluation={evaluation}
