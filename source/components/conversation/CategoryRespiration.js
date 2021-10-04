@@ -94,7 +94,7 @@ export default ({ dismiss, questionCategory }) => {
 			>
 				<h2>{questionCategory.title}</h2>
 				{emoji(questionCategory.icons)}
-				<button className="ui__ plain button" onClick={dismiss}>
+				<button className="ui__ plain button attention" onClick={dismiss}>
 					C'est parti !
 				</button>
 			</motion.div>
