@@ -69,7 +69,9 @@ export const PersonaGrid = ({ additionnalOnClick }) => {
 						css={`
 							width: 11rem !important;
 							height: 14rem !important;
-							${nom === persona ? `border: 2px solid var(--color)` : ``}
+							${nom === persona
+								? `border: 2px solid var(--color) !important`
+								: ``}
 						`}
 					>
 						<Link
