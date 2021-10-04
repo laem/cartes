@@ -25,7 +25,9 @@ export default ({ actionMode = false }) => {
 		evaluation = engine.evaluate(objectif),
 		{ nodeValue: rawNodeValue, dottedName, unit, rawNode } = evaluation
 	const persona = useSelector((state) => state.simulation?.persona)
-	const actionChoices = useSelector((state) => state.actionChoices)
+	const actionChoices = useSelector((state) => state.actionChoices),
+		actionsChosen = Object.values(actionChoices).filter((a) => a === true)
+			.length
 
 	const nodeValue = correctValue({ nodeValue: rawNodeValue, unit })
 
@@ -109,9 +111,7 @@ export default ({ actionMode = false }) => {
 						</div>
 					</div>
 					{!actionMode && <DocumentationLink dottedName={dottedName} />}
-					{actionMode && (
-						<ActionCount count={Object.entries(actionChoices).length} />
-					)}
+					{actionMode && <ActionCount count={actionsChosen} />}
 				</div>
 				{progress < 1 && (
 					<Progress progress={progress} style={!progress ? 'height: 0' : ''} />
