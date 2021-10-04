@@ -385,7 +385,7 @@
 
 - nom: Ximun d'Arcangues 
   description: |
-    Au travail en bus mais voiture pour petits trajets quotidiens. Partage avec son frère une vieille ferme mal isolée chauffée au fioul. 
+    Au travail en bus mais voiture pour trajets quotidiens. Partage une vieille ferme au fioul mal isolée. 
   icônes: 🚗🏚️
   data:
     transport . voiture . km:
@@ -484,7 +484,7 @@
 
 - nom: Zoé de Damblain
   description: |
-    Rurale. Magasinière de nuit dans un entrepôt à 20 km. Pas de bus la nuit => voiture. Prend aussi sa voiture pour des trajets de -5km.
+    Rurale. Magasinière de nuit dans un entrepôt à 20 km. Pas de bus la nuit. Prend aussi sa voiture pour des trajets de -5km.
   icônes: 🚗🌙
   data:
     transport . voiture . km:

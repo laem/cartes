@@ -110,7 +110,7 @@ export default ({ display }) => {
 	return (
 		<div
 			css={`
-				padding: 0 0.3rem 1rem;
+				padding: 0 0 1rem;
 				${display !== 'list' && `max-width: 600px;`}
 				margin: 1rem auto;
 			`}

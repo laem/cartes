@@ -96,10 +96,16 @@ const List = ({
 			flex-wrap: wrap;
 			list-style-type: none;
 			li {
-				width: 12rem;
+				width: 11rem;
 				height: 16rem;
 				margin: 0.4rem;
 			}
+			@media (min-width: 800px) {
+				li {
+					width: 12rem;
+				}
+			}
+			padding-left: 0;
 		`}
 	>
 		<AnimatePresence>
