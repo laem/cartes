@@ -1,5 +1,7 @@
+import { useLocation } from 'react-router'
 import { Link } from 'react-router-dom'
 export default ({ categories, selected, countByCategory }) => {
+	const location = useLocation()
 	return (
 		<ul
 			css={`
@@ -44,8 +46,8 @@ export default ({ categories, selected, countByCategory }) => {
 					<Link
 						to={
 							selected === category.dottedName
-								? '/actions'
-								: '/actions/catégorie/' + category.dottedName
+								? location.pathname
+								: location.pathname + '?catégorie=' + category.dottedName
 						}
 					>
 						<button>

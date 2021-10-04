@@ -5,7 +5,7 @@ import { partition } from 'ramda'
 import React, { useContext } from 'react'
 import emoji from 'react-easy-emoji'
 import { useDispatch, useSelector } from 'react-redux'
-import { useLocation, useParams } from 'react-router'
+import { useParams } from 'react-router'
 import { Link } from 'react-router-dom'
 import Overlay from '../../components/Overlay'
 import {
@@ -16,23 +16,17 @@ import {
 	answeredQuestionsSelector,
 	situationSelector,
 } from '../../selectors/simulationSelectors'
-import { sortBy } from '../../utils'
+import { sortBy, useQuery } from '../../utils'
 import ActionStack from './ActionStack'
+import { disabledAction, supersededAction } from './ActionVignette'
+import AllActions from './AllActions'
 import CategoryFilters from './CategoryFilters'
 import { PersonaGrid } from './Personas'
-import {
-	ActionGameCard,
-	ActionListCard,
-	disabledAction,
-	supersededAction,
-} from './ActionVignette'
-import AllActions from './AllActions'
 
 const { encodeRuleName, decodeRuleName } = utils
 
 export default ({ display }) => {
-	const location = useLocation()
-	let { category } = useParams()
+	let category = useQuery().get('catégorie')
 
 	const rules = useSelector((state) => state.rules)
 	const situation = useSelector(situationSelector),

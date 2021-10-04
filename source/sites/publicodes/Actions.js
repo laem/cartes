@@ -26,9 +26,6 @@ export default ({}) => {
 				<Route exact path="/actions/plus">
 					<ListeActionPlus />
 				</Route>
-				<Route exact path="/actions/catégorie/:category">
-					<ActionsList />
-				</Route>
 				<Route path="/actions/plus/:encodedName+">
 					<ActionPlus />
 				</Route>

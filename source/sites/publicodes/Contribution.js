@@ -1,11 +1,11 @@
+import { Markdown } from 'Components/utils/markdown'
 import { toPairs } from 'ramda'
 import React, { useState } from 'react'
-import emoji from 'react-easy-emoji'
-import { Markdown } from 'Components/utils/markdown'
-import FAQ from './FAQ.yaml'
-import { useLocation } from 'react-router-dom'
 import { renderToString } from 'react-dom/server'
+import emoji from 'react-easy-emoji'
 import Meta from '../../components/utils/Meta'
+import { useQuery } from '../../utils'
+import FAQ from './FAQ.yaml'
 
 const formStyle = `
 label {
@@ -49,9 +49,6 @@ const createIssue = (title, body, setURL, disableButton) => {
 			setURL(json.url)
 			disableButton(false)
 		})
-}
-function useQuery() {
-	return new URLSearchParams(useLocation().search)
 }
 
 export default ({}) => {
