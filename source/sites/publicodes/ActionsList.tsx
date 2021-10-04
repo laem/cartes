@@ -24,6 +24,7 @@ import {
 	ActionGameCard,
 	ActionListCard,
 	disabledAction,
+	supersededAction,
 } from './ActionVignette'
 import AllActions from './AllActions'
 
@@ -57,12 +58,17 @@ export default ({ display }) => {
 			category ? splitName(action.dottedName)[0] === category : true
 		)
 
+	const actionChoices = useSelector((state) => state.actionChoices)
+
 	const sortedActionsByImpact = sortBy(
 			(a) => (radical ? 1 : -1) * correctValue(a)
 		)(actions),
 		interestingActions = sortedActionsByImpact.filter((action) => {
 			const flatRule = rules[action.dottedName]
-			return !disabledAction(flatRule, action.nodeValue)
+			return (
+				!disabledAction(flatRule, action.nodeValue) &&
+				!supersededAction(action.dottedName, rules, actionChoices)
+			)
 		})
 
 	const finalActions = filterByCategory(interestingActions)

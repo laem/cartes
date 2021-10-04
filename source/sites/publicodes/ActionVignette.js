@@ -18,6 +18,15 @@ const { encodeRuleName, decodeRuleName } = utils
 export const disabledAction = (flatRule, nodeValue) =>
 	flatRule.formule == null ? false : nodeValue === 0 || nodeValue === false
 
+export const supersededAction = (dottedName, rules, actionChoices) => {
+	console.log('SUPER', rules)
+	return (
+		Object.entries(rules).find(([key, r]) => {
+			const supersedes = r?.action?.dépasse
+			return supersedes && supersedes.includes(dottedName) && actionChoices[key]
+		}) != null
+	)
+}
 const disabledStyle = `
 img {
 filter: grayscale(1);
