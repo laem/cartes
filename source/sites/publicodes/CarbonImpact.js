@@ -25,6 +25,7 @@ export default ({ actionMode = false }) => {
 		evaluation = engine.evaluate(objectif),
 		{ nodeValue: rawNodeValue, dottedName, unit, rawNode } = evaluation
 	const persona = useSelector((state) => state.simulation?.persona)
+	const actionChoices = useSelector((state) => state.actionChoices)
 
 	const nodeValue = correctValue({ nodeValue: rawNodeValue, unit })
 
@@ -72,6 +73,7 @@ export default ({ actionMode = false }) => {
 					css={`
 						display: flex;
 						justify-content: space-evenly;
+						align-items: center;
 						> div {
 							display: flex;
 							justify-content: center;
@@ -100,27 +102,16 @@ export default ({ actionMode = false }) => {
 									overrideValue={actionMode && actionTotal !== 0 && actionTotal}
 								/>
 							) : (
-								<DiffHumanWeight {...{ nodeValue, engine, rules }} />
+								<DiffHumanWeight
+									{...{ nodeValue, engine, rules, actionChoices }}
+								/>
 							)}
 						</div>
 					</div>
-					<div>
-						<Link to={'/documentation/' + utils.encodeRuleName(dottedName)}>
-							<span css="font-size: 140%" alt="Comprendre le calcul">
-								{emoji('❔ ')}
-							</span>
-							<small
-								css={`
-									color: var(--textColor);
-									@media (max-width: 800px) {
-										display: none;
-									}
-								`}
-							>
-								Comprendre le calcul
-							</small>
-						</Link>
-					</div>
+					{!actionMode && <DocumentationLink dottedName={dottedName} />}
+					{actionMode && (
+						<ActionCount count={Object.entries(actionChoices).length} />
+					)}
 				</div>
 				{progress < 1 && (
 					<Progress progress={progress} style={!progress ? 'height: 0' : ''} />
@@ -130,12 +121,30 @@ export default ({ actionMode = false }) => {
 	)
 }
 
-const DiffHumanWeight = ({ nodeValue, engine, rules }) => {
+const ActionCount = ({ count }) => (
+	<div
+		css={`
+			border-radius: 0.3rem;
+			background: #77b255;
+			width: 2rem;
+			height: 3rem;
+			font-weight: bold;
+			display: flex;
+			flex-direction: column;
+			justify-content: center;
+			line-height: 1.1rem;
+		`}
+	>
+		<div>{count}</div>
+		<div>&#10004;</div>
+	</div>
+)
+
+const DiffHumanWeight = ({ nodeValue, engine, rules, actionChoices }) => {
 	// Here we compute the sum of all the actions the user has chosen
 	// we could also use publicode's 'actions' variable sum,
 	// but each action would need to have a "chosen" question,
 	// and disactivation rules
-	const actionChoices = useSelector((state) => state.actionChoices)
 
 	const actions = rules['actions'].formule.somme.map((dottedName) =>
 			engine.evaluate(dottedName)
@@ -163,3 +172,23 @@ const DiffHumanWeight = ({ nodeValue, engine, rules }) => {
 		/>
 	)
 }
+
+const DocumentationLink = ({ dottedName }) => (
+	<div>
+		<Link to={'/documentation/' + utils.encodeRuleName(dottedName)}>
+			<span css="font-size: 140%" alt="Comprendre le calcul">
+				{emoji('❔ ')}
+			</span>
+			<small
+				css={`
+					color: var(--textColor);
+					@media (max-width: 800px) {
+						display: none;
+					}
+				`}
+			>
+				Comprendre le calcul
+			</small>
+		</Link>
+	</div>
+)
