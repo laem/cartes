@@ -17,6 +17,7 @@ const Stamp = styled.div`
 	top: 2.5rem;
 	left: 1em;
 	line-height: 1rem;
+	${({ clickable }) => clickable && `cursor: pointer`}
 `
 
 export default Stamp

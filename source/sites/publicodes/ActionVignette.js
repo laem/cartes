@@ -98,7 +98,7 @@ export const ActionListCard = ({ evaluation, total, rule, focusAction }) => {
 					<ActionValue {...{ dottedName, total, disabled, noFormula }} />
 				</div>
 				{hasRemainingQuestions && (
-					<Stamp onClick={() => focusAction(dottedName)}>
+					<Stamp onClick={() => focusAction(dottedName)} clickable>
 						{remainingQuestions.length} questions
 					</Stamp>
 				)}
@@ -119,7 +119,11 @@ export const ActionListCard = ({ evaluation, total, rule, focusAction }) => {
 						${hasRemainingQuestions && 'filter: grayscale(1)'}
 					`}
 					onClick={(e) => {
-						if (remainingQuestions > 0) return null
+						if (remainingQuestions.length > 0) {
+							focusAction(dottedName)
+							return null
+						}
+
 						dispatch(
 							setActionChoice(
 								dottedName,
