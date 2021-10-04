@@ -14,6 +14,7 @@ import { lightenColor } from '../../components/utils/colors'
 import Progress from 'Components/ui/Progress'
 import { useSimulationProgress } from 'Components/utils/useNextQuestion'
 import { buildEndURL } from '../../components/SessionBar'
+import { disabledAction, supersededAction } from './ActionVignette'
 
 export default ({ actionMode = false }) => {
 	const objectif = actionMode ? 'bilan' : useSelector(objectifsSelector)[0],
@@ -144,7 +145,11 @@ const DiffHumanWeight = ({ nodeValue, engine, rules }) => {
 				nodeValue: action.nodeValue,
 				unit: action.unit,
 			})
-			if (actionChoices[action.dottedName]) {
+			if (
+				actionChoices[action.dottedName] &&
+				!supersededAction(action.dottedName, rules, actionChoices) &&
+				!disabledAction(rules[action.dottedName], action.nodeValue)
+			) {
 				return memo + correctedValue || 0
 			} else return memo
 		}, 0)
