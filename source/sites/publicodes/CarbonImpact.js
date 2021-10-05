@@ -122,22 +122,24 @@ export default ({ actionMode = false }) => {
 }
 
 const ActionCount = ({ count }) => (
-	<div
-		css={`
-			border-radius: 0.3rem;
-			background: #77b255;
-			width: 2rem;
-			height: 3rem;
-			font-weight: bold;
-			display: flex;
-			flex-direction: column;
-			justify-content: center;
-			line-height: 1.1rem;
-		`}
-	>
-		<div>{count}</div>
-		<div>&#10004;</div>
-	</div>
+	<Link to="/actions/liste" css="text-decoration: none">
+		<div
+			css={`
+				border-radius: 0.3rem;
+				background: #77b255;
+				width: 2rem;
+				height: 3rem;
+				font-weight: bold;
+				display: flex;
+				flex-direction: column;
+				justify-content: center;
+				line-height: 1.1rem;
+			`}
+		>
+			<div>{count}</div>
+			<div>&#10004;</div>
+		</div>
+	</Link>
 )
 
 const DiffHumanWeight = ({ nodeValue, engine, rules, actionChoices }) => {
