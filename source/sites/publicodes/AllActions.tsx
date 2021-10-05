@@ -52,22 +52,15 @@ export default ({ actions, bilans, rules }) => {
 			{focusedAction && (
 				<ActionConversation key={focusedAction} dottedName={focusedAction} />
 			)}
-			<details>
-				<summary>
-					{actions.length} actions disponibles. {missingVariables.length}{' '}
-					questions restantes.
-				</summary>
+			<small
+				css={`
+					display: block;
+					text-align: center;
+				`}
+			>
+				{actions.length} actions disponibles.
+			</small>
 
-				<ul>
-					{sortBy(([, score]) => score)(Object.entries(scores))
-						.reverse()
-						.map(([dottedName, score]) => (
-							<li>
-								{dottedName} {score}
-							</li>
-						))}
-				</ul>
-			</details>
 			{maxImpactAction.value < 100 && (
 				<fromTop>
 					<div
