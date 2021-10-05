@@ -51,6 +51,8 @@ export const ActionListCard = ({
 		situation = useSelector(situationSelector),
 		answeredQuestions = useSelector(answeredQuestionsSelector)
 
+	const engine = useEngine()
+
 	const flatRule = rules[dottedName],
 		noFormula = flatRule.formule == null,
 		disabled = disabledAction(flatRule, nodeValue)
@@ -59,7 +61,8 @@ export const ActionListCard = ({
 			[evaluation.missingVariables],
 			{},
 			answeredQuestions,
-			situation
+			situation,
+			engine
 		),
 		hasRemainingQuestions = remainingQuestions.length > 0
 
@@ -114,7 +117,9 @@ export const ActionListCard = ({
 				<div
 					css={hasRemainingQuestions ? `filter: blur(1px) grayscale(1)` : ''}
 				>
-					<ActionValue {...{ dottedName, total, disabled, noFormula }} />
+					<ActionValue
+						{...{ dottedName, total, disabled, noFormula, engine }}
+					/>
 				</div>
 				{hasRemainingQuestions && (
 					<Stamp onClick={() => focusAction(dottedName)} clickable>
@@ -212,9 +217,8 @@ export const ActionGameCard = ({ evaluation, total, rule, effort }) => {
 		</Link>
 	)
 }
-const ActionValue = ({ total, disabled, noFormula, dottedName }) => {
-	const engine = useEngine(),
-		situation = useSelector(situationSelector),
+const ActionValue = ({ total, disabled, noFormula, dottedName, engine }) => {
+	const situation = useSelector(situationSelector),
 		evaluation = engine.evaluate(dottedName),
 		rawValue = evaluation.nodeValue
 	const correctedValue = correctValue({
