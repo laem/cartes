@@ -154,6 +154,9 @@ function rules(state = null, { type, rules }) {
 function actionChoices(state = {}, { type, action, choice }) {
 	if (type === 'SET_ACTION_CHOICE') {
 		return { ...state, [action]: choice }
+	}
+	if (type === 'RESET_ACTION_CHOICES') {
+		return {}
 	} else return state
 }
 

@@ -1,4 +1,8 @@
-import { deletePreviousSimulation, resetSimulation } from 'Actions/actions'
+import {
+	deletePreviousSimulation,
+	resetSimulation,
+	resetActionChoices,
+} from 'Actions/actions'
 import emoji from 'react-easy-emoji'
 import { useDispatch, useSelector } from 'react-redux'
 import AnswerList from '../../components/conversation/AnswerList'
@@ -41,6 +45,7 @@ export default ({}) => {
 							css="margin: 1rem 0"
 							onClick={() => {
 								dispatch(resetSimulation())
+								dispatch(resetActionChoices())
 								dispatch(deletePreviousSimulation())
 							}}
 						>

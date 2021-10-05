@@ -61,7 +61,7 @@ export default function Root({}) {
 				//...retrievePersistedState(),
 				previousSimulation: persistedSimulation,
 				iframeOptions: { iframeShareData },
-				actionChoices: persistedSimulation.actionChoices || {},
+				actionChoices: persistedSimulation?.actionChoices || {},
 			}}
 			rulesURL={`https://${
 				branch
