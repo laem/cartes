@@ -38,10 +38,10 @@ export default ({ actions, bilans, rules }) => {
 			})
 
 			const memoValue = correctValue({
-				nodeValue: next.nodeValue,
-				unit: next.unit,
+				nodeValue: memo.nodeValue,
+				unit: memo.unit,
 			})
-			return nextValue > memoValue ? next : memo
+			return nextValue > memoValue ? { ...next, value: nextValue } : memo
 		},
 		{ nodeValue: 0 }
 	)
@@ -67,13 +67,13 @@ export default ({ actions, bilans, rules }) => {
 						))}
 				</ul>
 			</details>
-			{maxImpactAction.nodeValue < 100 && (
+			{maxImpactAction.value < 100 && (
 				<div className="ui__ card box" css="margin: 0 auto .6rem !important; ">
 					{emoji('🤷')}
 					<p>
 						Il semble que nous n'ayons plus d'actions très impactantes à vous
+						proposer.
 					</p>
-					proposer.
 				</div>
 			)}
 			<List
