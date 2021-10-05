@@ -50,7 +50,7 @@ export default function Conversation({
 	const rawRules = useSelector((state) => state.rules)
 	const previousSimulation = useSelector((state) => state.previousSimulation)
 
-	console.log('CAT', orderByCategories)
+	console.log('NEXT', nextQuestions)
 
 	const sortedQuestions = orderByCategories
 		? sortBy(

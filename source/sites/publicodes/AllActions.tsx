@@ -1,7 +1,9 @@
 import { EngineContext } from 'Components/utils/EngineContext'
 import { AnimatePresence, motion } from 'framer-motion'
 import React, { useContext, useState } from 'react'
+import emoji from 'react-easy-emoji'
 import { useSelector } from 'react-redux'
+import { correctValue } from '../../components/publicodesUtils'
 import { sortBy } from '../../utils'
 import ActionConversation from './ActionConversation'
 import { ActionListCard } from './ActionVignette'
@@ -28,6 +30,21 @@ export default ({ actions, bilans, rules }) => {
 	const notRejected = actions.filter(
 		(a) => actionChoices[a.dottedName] !== false
 	)
+	const maxImpactAction = notRejected.reduce(
+		(memo, next) => {
+			const nextValue = correctValue({
+				nodeValue: next.nodeValue,
+				unit: next.unit,
+			})
+
+			const memoValue = correctValue({
+				nodeValue: next.nodeValue,
+				unit: next.unit,
+			})
+			return nextValue > memoValue ? next : memo
+		},
+		{ nodeValue: 0 }
+	)
 
 	return (
 		<div>
@@ -50,6 +67,15 @@ export default ({ actions, bilans, rules }) => {
 						))}
 				</ul>
 			</details>
+			{maxImpactAction.nodeValue < 100 && (
+				<div className="ui__ card box" css="margin: 0 auto 1rem !important; ">
+					{emoji('🤷')}
+					<p>
+						Il semble que nous n'ayons plus d'actions très impactantes à vous
+					</p>
+					proposer.
+				</div>
+			)}
 			<List
 				{...{
 					actions: notRejected,

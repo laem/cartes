@@ -19,7 +19,6 @@ export const disabledAction = (flatRule, nodeValue) =>
 	flatRule.formule == null ? false : nodeValue === 0 || nodeValue === false
 
 export const supersededAction = (dottedName, rules, actionChoices) => {
-	console.log('SUPER', rules)
 	return (
 		Object.entries(rules).find(([key, r]) => {
 			const supersedes = r?.action?.dépasse
@@ -49,8 +48,6 @@ export const ActionListCard = ({ evaluation, total, rule, focusAction }) => {
 	const flatRule = rules[dottedName],
 		noFormula = flatRule.formule == null,
 		disabled = disabledAction(flatRule, nodeValue)
-
-	console.log('EVAL', evaluation)
 
 	const remainingQuestions = getNextQuestions(
 			[evaluation.missingVariables],
