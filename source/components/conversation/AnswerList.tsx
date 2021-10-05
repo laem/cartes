@@ -79,7 +79,7 @@ export default function AnswerList() {
 					<CategoryTable {...{ steps: foldedStepsToDisplay, categories }} />
 				</div>
 			)}
-			{!!nextSteps.length && (
+			{false && !!nextSteps.length && (
 				<div className="ui__ card">
 					<h2>
 						{emoji('🔮 ')}
