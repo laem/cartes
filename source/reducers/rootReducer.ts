@@ -30,17 +30,6 @@ function situationBranch(state: number | null = null, action: Action) {
 	}
 }
 
-function activeTargetInput(state: DottedName | null = null, action: Action) {
-	switch (action.type) {
-		case 'SET_ACTIVE_TARGET_INPUT':
-			return action.name
-		case 'RESET_SIMULATION':
-			return null
-		default:
-			return state
-	}
-}
-
 type QuestionsKind =
 	| "à l'affiche"
 	| 'non prioritaires'
@@ -187,7 +176,6 @@ const mainReducer = (state: any, action: Action) =>
 			simulation(a, b),
 		previousSimulation: defaultTo(null) as Reducer<SavedSimulation | null>,
 		situationBranch,
-		activeTargetInput,
 		rules,
 		actionChoices,
 		conference,

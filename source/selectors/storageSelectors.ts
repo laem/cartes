@@ -6,7 +6,6 @@ import { DottedName } from 'Rules'
 // circulary reference itself.
 export type SavedSimulation = {
 	situation: Simulation['situation']
-	activeTargetInput: RootState['activeTargetInput']
 	foldedSteps: Array<DottedName> | undefined
 	actionChoices: Object
 }
@@ -16,7 +15,6 @@ export const currentSimulationSelector = (
 ): SavedSimulation => {
 	return {
 		situation: state.simulation?.situation ?? {},
-		activeTargetInput: state.activeTargetInput,
 		foldedSteps: state.simulation?.foldedSteps,
 		actionChoices: state.actionChoices,
 	}
@@ -27,7 +25,6 @@ export const createStateFromSavedSimulation = (
 ): Partial<RootState> =>
 	state.previousSimulation
 		? {
-				activeTargetInput: state.previousSimulation.activeTargetInput,
 				simulation: {
 					...state.simulation,
 					situation: state.previousSimulation.situation || {},
