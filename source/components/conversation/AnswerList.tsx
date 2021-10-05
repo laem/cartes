@@ -70,11 +70,6 @@ export default function AnswerList() {
 
 	return (
 		<div className="answer-list">
-			{foldedStepsToDisplay.length === 0 && (
-				<div>
-					<p>{emoji('🤷')}&nbsp; Vous n'avez pas encore fait le test.</p>
-				</div>
-			)}
 			{!!foldedStepsToDisplay.length && (
 				<div className="ui__ card">
 					<h2>
