@@ -8,6 +8,7 @@ export type SavedSimulation = {
 	situation: Simulation['situation']
 	activeTargetInput: RootState['activeTargetInput']
 	foldedSteps: Array<DottedName> | undefined
+	actionChoices: Object
 }
 
 export const currentSimulationSelector = (
@@ -17,7 +18,7 @@ export const currentSimulationSelector = (
 		situation: state.simulation?.situation ?? {},
 		activeTargetInput: state.activeTargetInput,
 		foldedSteps: state.simulation?.foldedSteps,
-		actionMode: state.actionMode,
+		actionChoices: state.actionChoices,
 	}
 }
 
@@ -33,6 +34,5 @@ export const createStateFromSavedSimulation = (
 					foldedSteps: state.previousSimulation.foldedSteps,
 				} as Simulation,
 				previousSimulation: null,
-				actionMode: state.previousSimulation.actionMode,
 		  }
 		: {}

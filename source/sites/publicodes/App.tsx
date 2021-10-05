@@ -47,6 +47,7 @@ export default function Root({}) {
 		document?.location.search.substring(1)
 	).get('shareData')
 
+	const persistedSimulation = retrievePersistedSimulation()
 	return (
 		<Provider
 			tracker={tracker}
@@ -58,8 +59,9 @@ export default function Root({}) {
 			}}
 			initialStore={{
 				//...retrievePersistedState(),
-				previousSimulation: retrievePersistedSimulation(),
+				previousSimulation: persistedSimulation,
 				iframeOptions: { iframeShareData },
+				actionChoices: persistedSimulation.actionChoices || {},
 			}}
 			rulesURL={`https://${
 				branch
