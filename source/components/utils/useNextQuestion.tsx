@@ -103,8 +103,7 @@ export function getNextQuestions(
 
 	const nextQuestions = nextSteps.filter((name) => {
 		const rule = engine.getRule(name)
-		console.log('RULE', rule)
-		return rule.question != null
+		return rule.rawNode.question != null
 	})
 
 	const lastStep = last(answeredQuestions)
