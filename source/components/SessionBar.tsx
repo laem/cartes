@@ -136,7 +136,7 @@ border-radius: .6rem;
 			/>
 			Mon profil
 		</Button>,
-		NODE_ENV === 'development' && (
+		(true || NODE_ENV === 'development') && (
 			<Button
 				key="personas"
 				className="simple small"
