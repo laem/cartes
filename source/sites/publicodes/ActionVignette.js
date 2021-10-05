@@ -36,7 +36,13 @@ color: var(--grayColor);
 }
 opacity: 0.8;
 `
-export const ActionListCard = ({ evaluation, total, rule, focusAction }) => {
+export const ActionListCard = ({
+	evaluation,
+	total,
+	rule,
+	focusAction,
+	focused,
+}) => {
 	const dispatch = useDispatch()
 	const rules = useSelector((state) => state.rules),
 		{ nodeValue, dottedName, title, unit } = evaluation,
@@ -59,13 +65,18 @@ export const ActionListCard = ({ evaluation, total, rule, focusAction }) => {
 
 	return (
 		<div
+			className="ui__ interactive card light-border"
 			css={`
 				${disabled ? disabledStyle : ''}
+				${focused && `border: 4px solid var(--color) !important;`}
+				${actionChoices[evaluation.dottedName] &&
+				`border: 4px solid #77b255 !important;`}
 				width: 100%;
 				display: flex;
 				flex-direction: column;
 				justify-content: start;
 				height: 100%;
+				${hasRemainingQuestions && `background: #eee !important; `}
 			`}
 		>
 			<Link
@@ -100,12 +111,15 @@ export const ActionListCard = ({ evaluation, total, rule, focusAction }) => {
 					position: relative;
 				`}
 			>
-				<div css={hasRemainingQuestions ? `filter: blur(2px); ` : ''}>
+				<div
+					css={hasRemainingQuestions ? `filter: blur(1px) grayscale(1)` : ''}
+				>
 					<ActionValue {...{ dottedName, total, disabled, noFormula }} />
 				</div>
 				{hasRemainingQuestions && (
 					<Stamp onClick={() => focusAction(dottedName)} clickable>
-						{remainingQuestions.length} questions
+						{remainingQuestions.length} question
+						{remainingQuestions.length > 1 && 's'}
 					</Stamp>
 				)}
 			</div>
@@ -125,7 +139,7 @@ export const ActionListCard = ({ evaluation, total, rule, focusAction }) => {
 						${hasRemainingQuestions && 'filter: grayscale(1)'}
 					`}
 					onClick={(e) => {
-						if (remainingQuestions.length > 0) {
+						if (hasRemainingQuestions) {
 							focusAction(dottedName)
 							return null
 						}

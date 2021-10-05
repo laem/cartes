@@ -9,8 +9,8 @@ const Stamp = styled.div`
 	text-transform: uppercase;
 	font-family: 'Courier';
 	mix-blend-mode: multiply;
-	border: 3px solid rgb(117, 115, 115);
-	color: rgb(117, 115, 115);
+	border: 3px solid var(--color);
+	color: var(--color);
 	mask-position: 13rem 6rem;
 	transform: rotate(-10deg);
 	border-radius: 4px;

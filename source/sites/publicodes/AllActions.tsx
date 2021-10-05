@@ -143,15 +143,6 @@ const List = ({
 					initial={{ scale: 0.8 }}
 					exit={{ scale: 0.2 }}
 					transition={{ duration: 0.5 }}
-					className="ui__ interactive card light-border"
-					css={`
-						${focusedAction === evaluation.dottedName
-							? `border: 4px solid var(--color) !important;`
-							: ''}
-						${actionChoices[evaluation.dottedName]
-							? `border: 4px solid #77b255 !important;`
-							: ''}
-					`}
 				>
 					<ActionListCard
 						focusAction={focusAction}
