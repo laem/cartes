@@ -88,7 +88,15 @@ export default function SessionBar({
 		path = location.pathname
 
 	const buttonStyle = (pathTarget) =>
-		path.includes(pathTarget) ? `font-weight: bold` : ''
+		path.includes(pathTarget)
+			? `
+		font-weight: bold;
+		img {
+background: var(--lighterColor);
+border-radius: .6rem;
+}
+		`
+			: ''
 	let buttons = [
 		<Button
 			className="simple small"
@@ -112,7 +120,7 @@ export default function SessionBar({
 			css={buttonStyle('/actions')}
 		>
 			<img
-				src="https://openmoji.org/data/black/svg/1F3AF.svg"
+				src="https://openmoji.org/data/black/svg/E10C.svg"
 				css="width: 2rem"
 			/>
 			Agir
