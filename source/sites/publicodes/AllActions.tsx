@@ -7,6 +7,7 @@ import { correctValue } from '../../components/publicodesUtils'
 import { sortBy } from '../../utils'
 import ActionConversation from './ActionConversation'
 import { ActionListCard } from './ActionVignette'
+import { fromBottom } from 'Components/ui/animate'
 
 export default ({ actions, bilans, rules }) => {
 	const engine = useContext(EngineContext)
@@ -68,13 +69,21 @@ export default ({ actions, bilans, rules }) => {
 				</ul>
 			</details>
 			{maxImpactAction.value < 100 && (
-				<div className="ui__ card box" css="margin: 0 auto .6rem !important; ">
-					{emoji('🤷')}
-					<p>
-						Il semble que nous n'ayons plus d'actions très impactantes à vous
-						proposer.
-					</p>
-				</div>
+				<fromTop>
+					<div
+						className="ui__ card box"
+						css="margin: 0 auto .6rem !important; "
+					>
+						<p>
+							Nous n'avons plus d'actions chiffrées très impactantes à vous
+							proposer {emoji('🤷')}
+						</p>
+						<p>
+							Découvrez plus bas quelques pistes pour agir autrement{' '}
+							{emoji('⏬')}
+						</p>
+					</div>
+				</fromTop>
 			)}
 			<List
 				{...{
