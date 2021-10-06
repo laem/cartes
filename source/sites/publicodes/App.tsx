@@ -128,6 +128,7 @@ const Router = ({}) => {
 							<ConferenceLazy />
 						</Suspense>
 					</Route>
+					<Redirect from="/conference/:room" to="/conférence/:room" />
 					<Route component={Route404} />
 				</Switch>
 			</div>
