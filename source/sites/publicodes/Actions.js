@@ -2,6 +2,7 @@ import { utils } from 'publicodes'
 import React from 'react'
 import { Route, Switch } from 'react-router-dom'
 import tinygradient from 'tinygradient'
+import Title from '../../components/Title'
 import Meta from '../../components/utils/Meta'
 import Action from './Action'
 import ActionPlus from './ActionPlus'
@@ -21,6 +22,7 @@ export default ({}) => {
 				title="Passer à l'action"
 				title="Découvrez les gestes qui vous permettent de réduire votre empreinte climat"
 			/>
+			<Title>Agir</Title>
 			<CarbonImpact actionMode />
 			<Switch>
 				<Route exact path="/actions/plus">

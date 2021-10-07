@@ -1,11 +1,13 @@
 import {
 	deletePreviousSimulation,
-	resetSimulation,
 	resetActionChoices,
+	resetSimulation,
 } from 'Actions/actions'
 import emoji from 'react-easy-emoji'
 import { useDispatch, useSelector } from 'react-redux'
 import AnswerList from '../../components/conversation/AnswerList'
+import Title from '../../components/Title'
+import Meta from '../../components/utils/Meta'
 import { ScrollToTop } from '../../components/utils/Scroll'
 import { answeredQuestionsSelector } from '../../selectors/simulationSelectors'
 
@@ -18,9 +20,13 @@ export default ({}) => {
 	).length
 	return (
 		<div>
-			<div className="ui__ container">
+			<Meta
+				title="Mon profil"
+				title="Explorez et modifiez les informations que vous avez saisies dans le parcours nosgestesclimat."
+			/>
+			<Title>Mon profil</Title>
+			<div className="ui__ container" css="padding-top: 1rem">
 				<ScrollToTop />
-				<h1>Mon profil</h1>
 				{persona && (
 					<p>
 						<em>

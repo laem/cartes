@@ -24,6 +24,7 @@ import BandeauContribuer from './BandeauContribuer'
 import { sessionBarMargin } from '../../components/SessionBar'
 import { FullName, splitName } from '../../components/publicodesUtils'
 import Title from 'Components/Title'
+import Meta from '../../components/utils/Meta'
 
 const eqValues = compose(isEmpty, symmetricDifference)
 
@@ -54,12 +55,7 @@ const Simulateur = (props) => {
 
 	return (
 		<div>
-			<Helmet>
-				<title>{rule.title}</title>
-				{rule.description && (
-					<meta name="description" content={evaluation.title} />
-				)}
-			</Helmet>
+			<Meta title={rule.title} title={evaluation.title || ''} />
 			<Title>Le test</Title>
 			<CarbonImpact />
 			{!isMainSimulation && (
