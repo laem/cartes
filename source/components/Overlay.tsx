@@ -82,6 +82,12 @@ const StyledOverlayWrapper = styled.div<{ offsetTop: number | null }>`
 	right: 0;
 	bottom: 0;
 	max-height: 100vh;
+	width: 110vw;
+	@media (min-width: 1200px) {
+		transform: translateX(
+			-20vw
+		); /*For a reason I don't understand, it doesn't suffice to cancel the -4 vw of the parent*/
+	}
 	background: rgba(0, 0, 0, 0.5);
 	overflow: auto;
 	z-index: 30;

@@ -89,6 +89,9 @@ const Router = ({}) => {
 						min-height: 100vh;
 					}
 
+					@media (min-width: 1200px) {
+						transform: translateX(-4vw);
+					}
 					${sessionBarMargin}
 				`}
 			>

@@ -109,16 +109,13 @@ section {
 
 .ui__.container {
 	width: 100%;
-	max-width: calc(14rem + 850px);
+	max-width: calc(
+		14rem + 1rem + 850px
+	); /* accomodate for the left navigation bar and margin on desktop */
 	margin-right: auto;
 	margin-left: auto;
 	padding-right: 0.6rem;
 	padding-left: 0.6rem;
-}
-@media (min-width: 1200px) {
-	.ui__.container {
-		transform: translateX(-5%);
-	}
 }
 .ui__.container .ui__.full-width {
 	--margin: calc((850px - 100vw - 0.6rem) / 2);
