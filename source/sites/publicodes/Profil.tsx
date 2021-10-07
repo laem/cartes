@@ -7,6 +7,7 @@ import emoji from 'react-easy-emoji'
 import { useDispatch, useSelector } from 'react-redux'
 import AnswerList from '../../components/conversation/AnswerList'
 import Title from '../../components/Title'
+import IllustratedMessage from '../../components/ui/IllustratedMessage'
 import Meta from '../../components/utils/Meta'
 import { ScrollToTop } from '../../components/utils/Scroll'
 import { answeredQuestionsSelector } from '../../selectors/simulationSelectors'
@@ -60,7 +61,10 @@ export default ({}) => {
 						</button>
 					</div>
 				) : (
-					<p>{emoji('🕳️')} Vous n'avez pas encore fait le test.</p>
+					<IllustratedMessage
+						emoji="🕳️"
+						message={<p>Vous n'avez pas encore fait le test.</p>}
+					></IllustratedMessage>
 				)}
 				<AnswerList />
 			</div>
