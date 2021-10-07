@@ -101,7 +101,7 @@ const Router = ({}) => {
 
 						@media (min-width: 800px) {
 							flex-shrink: 0;
-							width: 14rem;
+							width: 12rem;
 							height: 100vh;
 							overflow: auto;
 							position: sticky;
