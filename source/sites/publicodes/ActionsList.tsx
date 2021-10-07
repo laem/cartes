@@ -22,6 +22,7 @@ import { disabledAction, supersededAction } from './ActionVignette'
 import AllActions from './AllActions'
 import CategoryFilters from './CategoryFilters'
 import { PersonaGrid } from './Personas'
+import SimulationMissing from './SimulationMissing'
 
 const { encodeRuleName, decodeRuleName } = utils
 
@@ -77,28 +78,7 @@ export default ({ display }) => {
 	const simulationWellStarted = answeredQuestions.length > 50
 
 	if (!simulationWellStarted) {
-		return (
-			<Overlay onClose={() => null}>
-				<div>
-					<h1>Simulation manquante</h1>
-					<p>
-						{emoji('⏳️ ')}Vous n'avez pas encore fait le test. Le parcours de
-						passage à l'action ne sera pas du tout personnalisé.
-					</p>
-					<div css="margin: 1rem 0 .6rem;">
-						<Link to="/simulateur/bilan" className="ui__ plain button">
-							Faire le test
-						</Link>
-					</div>
-					<p>
-						{emoji('💡 ')}
-						Vous pouvez aussi voir le parcours action comme si vous étiez l'un
-						de ces personas :
-					</p>
-					<PersonaGrid additionnalOnClick={() => null} />
-				</div>
-			</Overlay>
-		)
+		return <SimulationMissing />
 	}
 
 	return (
