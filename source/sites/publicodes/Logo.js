@@ -4,7 +4,10 @@ import { IframeOptionsContext } from 'Components/utils/IframeOptionsProvider'
 //This component is unfortunately repeated in index.html, where we can't yet use a component :-(
 
 export default () => (
-	<span css="margin-top: .6rem;font-weight: 400;color: black; position: relative; ">
+	<span
+		id="blockLogo"
+		css="margin-top: .6rem;font-weight: 400;color: black; position: relative; "
+	>
 		<span css="position: absolute; top: -.95rem; left: 0rem; font-size: 60%;">
 			nos
 		</span>
@@ -60,6 +63,7 @@ export const InlineLogo = () => {
 
 const NosGestesClimatInline = () => (
 	<span
+		id="inlineLogo"
 		css={`
 			display: flex;
 			align-items: center;
