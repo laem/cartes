@@ -9,6 +9,8 @@ export default () => {
 	return (
 		<div
 			css={`
+				max-width: 850px;
+				margin: 0 auto;
 				border-radius: 1rem;
 				padding: 0.4rem;
 				h1 {

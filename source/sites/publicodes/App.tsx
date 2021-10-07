@@ -113,6 +113,7 @@ const Router = ({}) => {
 							justify-content: start;
 							border-right: 1px solid #eee;
 						}
+						${location.pathname === '/' && `display: none`}
 					`}
 				>
 					<Link
@@ -153,6 +154,20 @@ const Router = ({}) => {
 						}
 					`}
 				>
+					{location.pathname === '/' && (
+						<nav
+							css={`
+								display: flex;
+								align-items: center;
+								justify-content: center;
+								text-decoration: none;
+								font-size: 170%;
+								margin-bottom: 1rem;
+							`}
+						>
+							<Logo />
+						</nav>
+					)}
 					<Switch>
 						<Route exact path="/" component={Landing} />
 						{/* Removes trailing slashes */}
