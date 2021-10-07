@@ -9,12 +9,13 @@ import { useEngine } from 'Components/utils/EngineContext'
 import { useNextQuestions } from 'Components/utils/useNextQuestion'
 import { DottedName } from 'modele-social'
 import { EvaluatedNode, formatValue } from 'publicodes'
-import { useEffect } from 'react'
+import { useEffect, useState } from 'react'
 import emoji from 'react-easy-emoji'
 import { Trans, useTranslation } from 'react-i18next'
 import { useDispatch, useSelector } from 'react-redux'
 import { situationSelector } from 'Selectors/simulationSelectors'
 import { answeredQuestionsSelector } from '../../selectors/simulationSelectors'
+import { splitName } from '../publicodesUtils'
 import './AnswerList.css'
 
 export default function AnswerList() {
@@ -71,12 +72,14 @@ export default function AnswerList() {
 	return (
 		<div className="answer-list">
 			{!!foldedStepsToDisplay.length && (
-				<div className="ui__ card">
+				<div>
 					<h2>
 						{emoji('📋 ')}
 						<Trans>Mes réponses</Trans>
 					</h2>
-					<CategoryTable {...{ steps: foldedStepsToDisplay, categories }} />
+					<CategoryTable
+						{...{ steps: foldedStepsToDisplay, categories, engine }}
+					/>
 				</div>
 			)}
 			{false && !!nextSteps.length && (
@@ -92,13 +95,25 @@ export default function AnswerList() {
 	)
 }
 
-const CategoryTable = ({ steps, categories }) =>
+const CategoryTable = ({ steps, categories, engine }) =>
 	categories.map((category) => {
 		const categoryRules = steps.filter((question) =>
 			question.dottedName.includes(category.dottedName)
 		)
 
 		if (!categoryRules.length) return null
+
+		const byParent = categoryRules.reduce((memo, next) => {
+			const split = splitName(next.dottedName),
+				parent = split.slice(0, 2).join(' . ')
+			return {
+				...memo,
+				[parent]: [...(memo[parent] || []), next],
+			}
+		}, {})
+		const lonelyRules = Object.values(byParent)
+			.map((els) => (els.length === 1 ? els : []))
+			.flat()
 
 		return (
 			<div>
@@ -125,15 +140,66 @@ const CategoryTable = ({ steps, categories }) =>
 					{emoji(category.icons)}
 					<h2>{category.title}</h2>
 				</div>
+
 				<StepsTable
 					{...{
-						rules: categoryRules,
-						categories,
+						rules: lonelyRules,
 					}}
 				/>
+				{Object.entries(byParent).map(
+					([key, values]) =>
+						values.length > 1 && (
+							<SubCategory rules={values} rule={engine.getRule(key)} />
+						)
+				)}
 			</div>
 		)
 	})
+const SubCategory = ({ rule, rules }) => {
+	const [open, setOpen] = useState(false)
+	return (
+		console.log('RULE', rule) || (
+			<div>
+				<div
+					onClick={() => setOpen(!open)}
+					className="ui__ card"
+					css={`
+						cursor: pointer;
+						display: inline-flex;
+						justify-content: start;
+						align-items: flex-end;
+						img {
+							font-size: 150%;
+						}
+						margin: 0.6rem 0;
+						padding: 0.4rem 0;
+						h3 {
+							margin: 0;
+							font-weight: 300;
+						}
+						> * {
+							margin: 0 0.4rem !important;
+						}
+					`}
+				>
+					{emoji(rule.rawNode.icônes || '')}
+					<h3>{rule.title}</h3>
+					<small>{rules.length} réponses</small>
+					<span>{!open ? '▶' : '▼'}</span>
+				</div>
+				{open && (
+					<div css="padding-left: 1rem">
+						<StepsTable
+							{...{
+								rules,
+							}}
+						/>
+					</div>
+				)}
+			</div>
+		)
+	)
+}
 function StepsTable({
 	rules,
 }: {
@@ -158,52 +224,57 @@ function StepsTable({
 	)
 }
 
-const Answer = ({ rule, dispatch, language }) => (
-	<tr
-		key={rule.dottedName}
-		css={`
-			background: var(--lightestColor);
-		`}
-	>
-		<td>
-			<div>
-				<small>{parentName(rule.dottedName, ' · ', 1)}</small>
-			</div>
-			<div css="font-size: 110%">{rule.title}</div>
-		</td>
-		<td>
-			<button
-				className="answer"
-				css={`
-					display: inline-block;
-					padding: 0.6rem;
-					color: inherit;
-					font-size: inherit;
-					width: 100%;
-					text-align: end;
-					font-weight: 500;
-					> span {
-						text-decoration: underline;
-						text-decoration-style: dashed;
-						text-underline-offset: 4px;
-						padding: 0.05em 0em;
-						display: inline-block;
-					}
-				`}
-				onClick={() => {
-					dispatch(goToQuestion(rule.dottedName))
-				}}
-			>
-				<span
-					className="answerContent"
+const Answer = ({ rule, dispatch, language }) => {
+	const path = parentName(rule.dottedName, ' · ', 1)
+	return (
+		<tr
+			key={rule.dottedName}
+			css={`
+				background: var(--lightestColor);
+			`}
+		>
+			<td>
+				{path && (
+					<div>
+						<small>{path}</small>
+					</div>
+				)}
+				<div css="font-size: 110%">{rule.title}</div>
+			</td>
+			<td>
+				<button
+					className="answer"
 					css={`
-						${rule.passedQuestion ? 'opacity: .5' : ''}
+						display: inline-block;
+						padding: 0.6rem;
+						color: inherit;
+						font-size: inherit;
+						width: 100%;
+						text-align: end;
+						font-weight: 500;
+						> span {
+							text-decoration: underline;
+							text-decoration-style: dashed;
+							text-underline-offset: 4px;
+							padding: 0.05em 0em;
+							display: inline-block;
+						}
 					`}
+					onClick={() => {
+						dispatch(goToQuestion(rule.dottedName))
+					}}
 				>
-					{formatValue(rule, { language })}
-					{rule.passedQuestion && emoji(' 🤷🏻')}
-				</span>
-			</button>
-		</td>
-	</tr>
-)
+					<span
+						className="answerContent"
+						css={`
+							${rule.passedQuestion ? 'opacity: .5' : ''}
+						`}
+					>
+						{formatValue(rule, { language })}
+						{rule.passedQuestion && emoji(' 🤷🏻')}
+					</span>
+				</button>
+			</td>
+		</tr>
+	)
+}
