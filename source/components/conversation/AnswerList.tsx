@@ -13,6 +13,7 @@ import { useEffect, useState } from 'react'
 import emoji from 'react-easy-emoji'
 import { Trans, useTranslation } from 'react-i18next'
 import { useDispatch, useSelector } from 'react-redux'
+import { useHistory } from 'react-router'
 import { situationSelector } from 'Selectors/simulationSelectors'
 import { answeredQuestionsSelector } from '../../selectors/simulationSelectors'
 import { splitName } from '../publicodesUtils'
@@ -225,6 +226,7 @@ function StepsTable({
 }
 
 const Answer = ({ rule, dispatch, language }) => {
+	const history = useHistory()
 	const path = parentName(rule.dottedName, ' · ', 1)
 	return (
 		<tr
@@ -262,6 +264,7 @@ const Answer = ({ rule, dispatch, language }) => {
 					`}
 					onClick={() => {
 						dispatch(goToQuestion(rule.dottedName))
+						history.push('/simulateur/bilan')
 					}}
 				>
 					<span
