@@ -81,9 +81,37 @@ const Router = ({}) => {
 	const location = useLocation()
 	return (
 		<>
-			<div className="ui__ container" css={sessionBarMargin}>
+			<div
+				className="ui__ container"
+				css={`
+					@media (min-width: 800px) {
+						display: flex;
+						min-height: 100vh;
+					}
+
+					${sessionBarMargin}
+				`}
+			>
 				<ConferenceBarLazy />
-				<nav css="display: flex; justify-content: center; margin: .6rem auto">
+				<nav
+					css={`
+						display: flex;
+						justify-content: center;
+						margin: 0.6rem auto;
+
+						@media (min-width: 800px) {
+							flex-shrink: 0;
+							width: 200px;
+							height: 100vh;
+							overflow: auto;
+							position: sticky;
+							top: 0;
+							flex-direction: column;
+							justify-content: start;
+							border-right: 1px solid #eee;
+						}
+					`}
+				>
 					<Link
 						to="/"
 						css={`
@@ -99,44 +127,52 @@ const Router = ({}) => {
 					>
 						{location.pathname === '/' ? <Logo /> : <InlineLogo />}
 					</Link>
+					{location.pathname !== '/' && <SessionBar />}
 				</nav>
-				{location.pathname !== '/' && <SessionBar />}
-				<Switch>
-					<Route exact path="/" component={Landing} />
-					{/* Removes trailing slashes */}
-					<Route
-						path={'/:url*(/+)'}
-						exact
-						strict
-						render={({ location }) => (
-							<Redirect
-								to={location.pathname.replace(/\/+$/, location.search)}
-							/>
-						)}
-					/>
+				<main
+					css={`
+						@media (min-width: 800px) {
+							flex-grow: 1;
+						}
+					`}
+				>
+					<Switch>
+						<Route exact path="/" component={Landing} />
+						{/* Removes trailing slashes */}
+						<Route
+							path={'/:url*(/+)'}
+							exact
+							strict
+							render={({ location }) => (
+								<Redirect
+									to={location.pathname.replace(/\/+$/, location.search)}
+								/>
+							)}
+						/>
 
-					<Route path="/documentation" component={Documentation} />
-					<Route path="/simulateur/:name+" component={Simulateur} />
-					{/* Lien de compatibilité, à retirer par exemple mi-juillet 2020*/}
-					<Route path="/fin/:score" component={Fin} />
-					<Route path="/fin" component={Fin} />
-					<Route path="/personas" component={Personas} />
-					<Route path="/actions" component={Actions} />
-					<Route path="/contribuer/:input?" component={Contribution} />
-					<Route path="/à-propos" component={About} />
-					<Route path="/partenaires" component={Diffuser} />
-					<Route path="/diffuser" component={Diffuser} />
-					<Route path="/vie-privée" component={Privacy} />
-					<Route path="/nouveautés" component={News} />
-					<Route path="/profil" component={Profil} />
-					<Route path="/conférence/:room?">
-						<Suspense fallback="Chargement">
-							<ConferenceLazy />
-						</Suspense>
-					</Route>
-					<Redirect from="/conference/:room" to="/conférence/:room" />
-					<Route component={Route404} />
-				</Switch>
+						<Route path="/documentation" component={Documentation} />
+						<Route path="/simulateur/:name+" component={Simulateur} />
+						{/* Lien de compatibilité, à retirer par exemple mi-juillet 2020*/}
+						<Route path="/fin/:score" component={Fin} />
+						<Route path="/fin" component={Fin} />
+						<Route path="/personas" component={Personas} />
+						<Route path="/actions" component={Actions} />
+						<Route path="/contribuer/:input?" component={Contribution} />
+						<Route path="/à-propos" component={About} />
+						<Route path="/partenaires" component={Diffuser} />
+						<Route path="/diffuser" component={Diffuser} />
+						<Route path="/vie-privée" component={Privacy} />
+						<Route path="/nouveautés" component={News} />
+						<Route path="/profil" component={Profil} />
+						<Route path="/conférence/:room?">
+							<Suspense fallback="Chargement">
+								<ConferenceLazy />
+							</Suspense>
+						</Route>
+						<Redirect from="/conference/:room" to="/conférence/:room" />
+						<Route component={Route404} />
+					</Switch>
+				</main>
 			</div>
 		</>
 	)

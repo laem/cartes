@@ -180,6 +180,7 @@ export default function Conversation({
 		/>
 	) : (
 		<section
+			className="ui__ container"
 			css={`
 				@media (max-width: 800px) {
 					padding: 0.4rem 0 0.4rem;

@@ -92,9 +92,9 @@ export default function SessionBar({
 			? `
 		font-weight: bold;
 		img {
-background: var(--lighterColor);
-border-radius: .6rem;
-}
+		  background: var(--lighterColor);
+		  border-radius: .6rem;
+		}
 		`
 			: ''
 	let buttons = [
@@ -185,16 +185,19 @@ const NavBar = styled.ul`
 	justify-content: space-evenly !important;
 	align-items: center;
 	height: 3.5rem;
-	margin: 0.6rem 0 0 0;
+	margin: 0;
+	width: 100%;
+	z-index: 10;
+	height: 4rem;
+	background: white;
+	justify-content: center;
 	padding: 0;
 
-	@media (max-width: 800px) {
-		margin: 0;
-		width: 100%;
-		z-index: 10;
-		height: 4rem;
-		background: white;
-		display: flex;
-		justify-content: center;
+	@media (min-width: 800px) {
+		flex-direction: column;
+		height: auto;
+		background: none;
+		justify-content: start;
+		box-shadow: none;
 	}
 `

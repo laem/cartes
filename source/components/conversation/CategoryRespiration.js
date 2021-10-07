@@ -47,7 +47,6 @@ export default ({ dismiss, questionCategory }) => {
 			animate={'open'}
 			custom={width}
 			ref={containerRef}
-			className="ui__ full-width "
 			css={`
 				text-align: center;
 				padding: 1rem;

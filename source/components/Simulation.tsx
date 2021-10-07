@@ -71,7 +71,7 @@ function Questions({
 	return (
 		<>
 			<div
-				className="ui__ full-width lighter-bg"
+				className="ui__ lighter-bg"
 				css={`
 					@media (min-width: 800px) {
 						margin-top: 0.6rem;
@@ -79,13 +79,11 @@ function Questions({
 					border-radius: 0.6rem;
 				`}
 			>
-				<div className="ui__ container">
-					<Conversation
-						orderByCategories={orderByCategories}
-						customEnd={customEnd}
-						customEndMessages={customEndMessages}
-					/>
-				</div>
+				<Conversation
+					orderByCategories={orderByCategories}
+					customEnd={customEnd}
+					customEndMessages={customEndMessages}
+				/>
 			</div>
 		</>
 	)
