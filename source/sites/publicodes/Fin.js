@@ -260,6 +260,7 @@ const AnimatedDiv = ({ score, value, details, headlessMode }) => {
 					<div css="padding: 1rem">
 						<Chart
 							details={details}
+							links
 							color={textColor}
 							noAnimation
 							noText
