@@ -1,3 +1,4 @@
+import { Link } from 'react-router-dom'
 import {
 	deletePreviousSimulation,
 	resetActionChoices,
@@ -38,14 +39,15 @@ export default ({}) => {
 				)}
 				{answeredQuestionsLength > 0 ? (
 					<div>
-						<p>
-							Vous avez répondu à {answeredQuestionsLength} questions et choisi{' '}
-							{actionChoicesLength} actions.
-						</p>
+						<p></p>
 						<details>
-							<summary>Où sont mes données ? </summary>
+							<summary>
+								Vous avez répondu à {answeredQuestionsLength} questions et
+								choisi {actionChoicesLength} actions. Où sont mes données ?{' '}
+							</summary>
 							Vos données sont stockées dans votre navigateur, vous avez donc le
-							contrôle total sur elles.
+							contrôle total sur elles. <br />
+							<Link to="/vie-privée">En savoir plus</Link>
 						</details>
 						<button
 							className="ui__ button plain"
