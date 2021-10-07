@@ -23,6 +23,8 @@ const Button = styled.button`
 	color: var(--darkColor);
 	@media (min-width: 800px) {
 		flex-direction: row;
+		justify-content: start;
+		padding: 0;
 		font-size: 100%;
 	}
 	> img {
@@ -197,10 +199,14 @@ const NavBar = styled.ul`
 	padding: 0;
 
 	@media (min-width: 800px) {
+		margin-top: 1rem;
 		flex-direction: column;
 		height: auto;
 		background: none;
 		justify-content: start;
 		box-shadow: none;
+		li {
+			width: 100%;
+		}
 	}
 `
