@@ -16,12 +16,15 @@ import CarbonImpact from '../sites/publicodes/CarbonImpact'
 const Button = styled.button`
 	margin: 0 0.2rem;
 	display: flex;
-	@media (max-width: 800px) {
-		flex-direction: column;
-	}
+	flex-direction: column;
 	align-items: center;
 	justify-content: center;
 	font-size: 80%;
+	color: var(--darkColor);
+	@media (min-width: 800px) {
+		flex-direction: row;
+		font-size: 100%;
+	}
 	> img {
 		display: block;
 		font-size: 200%;

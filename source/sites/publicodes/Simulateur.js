@@ -23,6 +23,7 @@ import { situationSelector } from '../../selectors/simulationSelectors'
 import BandeauContribuer from './BandeauContribuer'
 import { sessionBarMargin } from '../../components/SessionBar'
 import { FullName, splitName } from '../../components/publicodesUtils'
+import Title from 'Components/Title'
 
 const eqValues = compose(isEmpty, symmetricDifference)
 
@@ -59,6 +60,7 @@ const Simulateur = (props) => {
 					<meta name="description" content={evaluation.title} />
 				)}
 			</Helmet>
+			<Title>Le test</Title>
 			<CarbonImpact />
 			{!isMainSimulation && (
 				<h1>
