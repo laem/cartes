@@ -109,7 +109,7 @@ section {
 
 .ui__.container {
 	width: 100%;
-	max-width: 850px;
+	max-width: calc(14rem + 850px);
 	margin-right: auto;
 	margin-left: auto;
 	padding-right: 0.6rem;
