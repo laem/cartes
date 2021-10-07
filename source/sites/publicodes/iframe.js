@@ -5,19 +5,33 @@ const script =
 		document.getElementById('nosgestesclimat'),
 	integratorUrl = encodeURIComponent(window.location.href.toString())
 
-const shareData = script.dataset['partagedatafinsimulation'] != undefined,
-	couleur = script.dataset.couleur
+const couleur = script.dataset.couleur // not used yet
 
 const srcURL = new URL(script.src)
 const hostname = srcURL.hostname || 'nosgestesclimat.fr'
 
-const integratorLogo = script.dataset.integratorLogo,
-	integratorName = script.dataset.integratorName,
-	integratorActionUrl = script.dataset.integratorActionUrl,
-	integratorYoutubeVideo = script.dataset.integratorYoutubeVideo,
-	integratorActionText = script.dataset.integratorActionText
+const possibleOptionStrings = [
+	'integratorLogo',
+	'integratorName',
+	'integratorActionUrl',
+	'integratorYoutubeVideo',
+	'integratorActionText',
+]
+const possibleOptions = [
+	{ key: 'shareData', legacy: 'partagedatafinsimulation' },
+	,
+	...possibleOptionStrings.map((s) => ({ key: s })),
+]
 
-const src = `https://${hostname}/?iframe&integratorUrl=${integratorUrl}&integratorLogo=${integratorLogo}&integratorYoutubeVideo=${integratorYoutubeVideo}&integratorName=${integratorName}&integratorActionText=${integratorActionText}&integratorActionUrl=${integratorActionUrl}&shareData=${shareData}`
+const optionFragments = possibleOptions.map(({ key, legacy }) => {
+	const value = script.dataset[key] || script.dataset[legacy]
+
+	return value != null ? `&${key}=${value}` : ''
+})
+
+const src = `https://${hostname}/?iframe&integratorUrl=${integratorUrl}${optionFragments.join(
+	''
+)}`
 
 const iframe = document.createElement('iframe')
 
