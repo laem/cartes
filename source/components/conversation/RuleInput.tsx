@@ -66,8 +66,9 @@ export default function RuleInput<Name extends string = DottedName>({
 	autoFocus = false,
 	className,
 	onSubmit = () => null,
+	engine: givenEngine,
 }: RuleInputProps<Name>) {
-	const engine = useContext(EngineContext)
+	const engine = givenEngine || useContext(EngineContext)
 	const rule = engine.getRule(dottedName)
 	const evaluation = engine.evaluate(dottedName)
 	const rules = engine.getParsedRules()
