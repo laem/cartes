@@ -1,9 +1,29 @@
 import Engine from 'publicodes'
-import { useState } from 'react'
+import { Documentation } from 'publicodes-react'
+import { useMemo, useState } from 'react'
+import { Redirect, Route, Switch } from 'react-router'
 import RuleInput from '../../components/conversation/RuleInput'
 import rules from './ferry.yaml'
 
+const engine = new Engine(rules)
 export default ({}) => (
+	<>
+		<Main />
+		<br />
+		<br />
+		<br />
+		<div
+			css={`
+				small {
+					background: none !important;
+				}
+			`}
+		>
+			<Documentation engine={engine} documentationPath={''} />
+		</div>
+	</>
+)
+const Main = ({}) => (
 	<div className="ui__ container">
 		<h1>
 			Le <strong>ferry</strong>, c'est écolo ?
@@ -23,12 +43,12 @@ export default ({}) => (
 
 const Questions = ({}) => {
 	const questions = ['groupe', 'voiture', 'services accessoires']
-	const engine = new Engine(rules),
-		evaluation = engine.evaluate('ferry . charge par personne')
+	const evaluation = engine.evaluate('ferry . charge par personne')
 	const [situation, setSituation] = useState({}),
 		onChange = (dottedName) => (value) =>
 			setSituation({ ...situation, [dottedName]: value }),
 		onSubmit = () => null
+	console.log(evaluation)
 
 	return (
 		<div>
@@ -65,6 +85,7 @@ const Questions = ({}) => {
 					)
 				})}
 			</div>
+			<h2>Mon résultat</h2>
 			<div>{evaluation.nodeValue}</div>
 		</div>
 	)
