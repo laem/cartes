@@ -20,6 +20,7 @@ import Documentation from './pages/Documentation'
 import Privacy from './Privacy'
 import Simulateur from './Simulateur'
 import sitePaths from './sitePaths'
+import Ferry from './Ferry'
 
 let tracker = devTracker
 if (NODE_ENV === 'production') {
@@ -77,6 +78,7 @@ const Router = ({}) => (
 				<Route path="/à-propos" component={About} />
 				<Route path="/vie-privée" component={Privacy} />
 				<Route path="/nouveautés" component={News} />
+				<Route path="/ferry" component={Ferry} />
 
 				<Route component={Route404} />
 			</Switch>
