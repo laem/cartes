@@ -150,6 +150,7 @@ ferry . charge par personne . dortoir:
   formule: charge . dortoir . par personne 
 
 ferry . charge . services accessoires:
+  formule: 100000
 ferry . charge . dortoir: 
 ferry . charge . dortoir . par personne:
   note: Calculer ici le poids d'un dortoir par personne

@@ -1,6 +1,6 @@
 import Engine from 'publicodes'
 import { Documentation } from 'publicodes-react'
-import { useMemo, useState } from 'react'
+import { useEffect, useMemo, useState } from 'react'
 import { Redirect, Route, Switch } from 'react-router'
 import RuleInput from '../../components/conversation/RuleInput'
 import rules from './ferry.yaml'
@@ -46,9 +46,16 @@ const Questions = ({}) => {
 	const evaluation = engine.evaluate('ferry . charge par personne')
 	const [situation, setSituation] = useState({}),
 		onChange = (dottedName) => (value) =>
-			setSituation({ ...situation, [dottedName]: value }),
+			setSituation({
+				...situation,
+				[dottedName]: value?.nodeValue || value?.valeur || value,
+			}),
 		onSubmit = () => null
 	console.log(evaluation)
+	useEffect(() => {
+		console.log('situation', situation)
+		engine.setSituation(situation)
+	}, [situation])
 
 	return (
 		<div>
@@ -86,7 +93,10 @@ const Questions = ({}) => {
 				})}
 			</div>
 			<h2>Mon résultat</h2>
-			<div>{evaluation.nodeValue}</div>
+			<p>
+				C'est la part de poids qui vous est attribuée en fonction de vos choix.
+			</p>
+			<div>{Math.round(evaluation.nodeValue)} kg</div>
 		</div>
 	)
 }
