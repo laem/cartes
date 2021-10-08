@@ -26,12 +26,17 @@ const Questions = ({}) => {
 	const engine = new Engine(rules),
 		evaluation = engine.evaluate('ferry . charge par personne')
 	const [situation, setSituation] = useState({}),
-		onChange = (dottedName, value) =>
+		onChange = (dottedName) => (value) =>
 			setSituation({ ...situation, [dottedName]: value }),
 		onSubmit = () => null
 
 	return (
 		<div>
+			<ul>
+				{Object.entries(situation).map(
+					([k, v]) => console.log(v) || <li>{`${k} : ${v?.nodeValue || v}`}</li>
+				)}
+			</ul>
 			<div
 				css={`
 					margin: 1rem 0;
@@ -51,7 +56,7 @@ const Questions = ({}) => {
 									{...{
 										engine,
 										dottedName,
-										onChange,
+										onChange: onChange(dottedName),
 										onSubmit,
 									}}
 								/>
