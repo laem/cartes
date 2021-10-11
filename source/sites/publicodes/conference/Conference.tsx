@@ -44,7 +44,6 @@ export default () => {
 			const provider = new WebrtcProvider(room, ydoc, {})
 			dispatch({ type: 'SET_CONFERENCE', room, ydoc, provider })
 		} else {
-			console.log('yo')
 			const { room } = conference
 
 			const ydoc = conference.ydoc,
@@ -224,7 +223,7 @@ const InstructionBlock = ({ title, index, children }) => (
 const Instructions = ({ room, newRoom, setNewRoom }) => {
 	const { color } = useContext(ThemeColorsContext)
 	const shareURL =
-		'https://' + window.location.hostname + '/conférence/' + newRoom || room
+		'https://' + window.location.hostname + '/conférence/' + (room || newRoom)
 	return (
 		<div>
 			{!room && <p>Faites le test à plusieurs ! </p>}
