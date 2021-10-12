@@ -73,7 +73,7 @@ export const ActionListCard = ({
 				${disabled ? disabledStyle : ''}
 				${focused && `border: 4px solid var(--color) !important;`}
 				${actionChoices[evaluation.dottedName] &&
-				`border: 4px solid #77b255 !important;`}
+				`border: 4px solid #77b255 !important; background: #77b25529 !important;`}
 				width: 100%;
 				display: flex;
 				flex-direction: column;
