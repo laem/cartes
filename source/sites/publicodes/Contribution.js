@@ -61,6 +61,11 @@ export default ({}) => {
 
 	return (
 		<div className="ui__ container" css="padding-bottom: 1rem">
+			<Meta
+				title="Contribuer"
+				description="Découvrez les questions fréquentes sur Nos Gestes Climat, et comment en poser de nouvelles ou nous aider."
+				more={<script type="application/ld+json">{structuredJSON}</script>}
+			/>
 			<h1>Contribuer</h1>
 			<h2 css="font-size: 180%">{emoji('❔')}Questions fréquentes</h2>
 			<div className="ui__ card" css="padding-bottom: 1rem">
