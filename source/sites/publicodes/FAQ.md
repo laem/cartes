@@ -74,9 +74,9 @@ Ce poste représente l’empreinte carbone des services publics français ramen�
 
 Tout le monde prend donc en quelque sorte « sa part » et ce pour plusieurs raisons.
 
-Tout d’abord, il est extrêmement rare voire quasi impossible de vivre sans jamais utiliser un seul service public. Qu’il s’agisse de service santé, de routes aménagées, de déclaration aux impôts, etc. tout le monde bénéficie des services publics.
+Tout d’abord, il est extrêmement rare voire quasi impossible de vivre sans jamais utiliser un seul service public. Qu’il s’agisse de service santé, de routes aménagées, de l'éducation, et plus généralement de tout ce qui est financé par les impôts, tout le monde bénéficie des services publics.
 
-Deuxièmement, essayer de comptabiliser la part de service public qu’un individu utilise « pour de vrai » serait un travail titanesque et peu pertinent.
+Deuxièmement, essayer de comptabiliser la part de service public qu’un individu utilise « pour de vrai » n'est pas actuellement possible avec les données dont nous disposons sur l'empreinte de ce secteur.
 
 ### Oui mais quand même, ce poste représente parfois plus que certains de mes impacts…
 
@@ -86,7 +86,7 @@ En effet, il peut être frustrant de se voir comptabiliser des impacts pour lesq
 
 Cette transition ne peut se penser seulement à l’échelle individuelle. Elle est une condition nécessaire mais non suffisante d’une transition plus globale à l’échelle de notre société. Cela revient donc à jouer avec des leviers d’actions indirects (vote, engagement associatif, sensibilisation autour de soi, etc.).
 
-C’est d’ailleurs tout l’objet de NGC qui œuvre à sensibiliser et faire prendre conscience des enjeux !
+C’est d’ailleurs tout l’objet de Nos Gestes Climat ! œuvrer à sensibiliser et faire prendre conscience de ces enjeux !
 
 ## CONSOMMATION
 
