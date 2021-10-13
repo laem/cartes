@@ -59,12 +59,14 @@ export default ({}) => {
 	const [URL, setURL] = useState(null)
 	const [buttonDisabled, disableButton] = useState(false)
 
+	const structuredFAQ = {}
+
 	return (
 		<div className="ui__ container" css="padding-bottom: 1rem">
 			<Meta
 				title="Contribuer"
 				description="Découvrez les questions fréquentes sur Nos Gestes Climat, et comment en poser de nouvelles ou nous aider."
-				more={<script type="application/ld+json">{structuredJSON}</script>}
+				more={<script type="application/ld+json">{structuredFAQ}</script>}
 			/>
 			<h1>Contribuer</h1>
 			<h2 css="font-size: 180%">{emoji('❔')}Questions fréquentes</h2>
