@@ -62,9 +62,9 @@ Cet objectif de 2 tonnes est donc compliqué, mais c'est ce que nous devons atte
 
 <h3 id="déprime">J'ai compris l'objectif de 2 tonnes, mais j'ai beaucoup de mal à l'imaginer.</h3>
 
-L'exercice de bilan carbone peut aussi provoquer un découragement car nous comptons froidement les émissions du mode de vie qu'on connait, sans appréhender à ce stade toutes les possibilités d'une vie bas carbone.
+L'exercice du bilan carbone peut aussi provoquer un découragement car nous comptons froidement les émissions du mode de vie qu'on connait, sans appréhender à ce stade toutes les possibilités d'une vie bas carbone.
 
-Marcher dans la nature, jouer de la musique, faire du vélo, naviguer à la voile, passer du temps avec ses proches, faire la fête, lire, discuter, faire son potager, apprendre à cuisiner autrement... Une vie bas carbone, c'est plein d'expériences joyeuses, qui ne retrouvent pas forcément dans un bilan carbone individuel, mais qui seront au coeur des modes de vie que nous inventons en ce moment même.
+Marcher dans la nature, jouer de la musique, faire du vélo, naviguer à la voile, profiter du train sur tout le territoire, passer du temps avec ses proches, faire la fête, lire, discuter, faire son potager, apprendre à cuisiner autrement... Une vie bas carbone, c'est plein d'expériences joyeuses, qui ne retrouvent pas forcément dans un bilan carbone individuel, mais qui seront au coeur des modes de vie que nous inventons en ce moment même.
 
 ## SERVICES PUBLICS
 
