@@ -6,6 +6,18 @@ Bonne lecture !
 
 ## GENERAL
 
+<h3> Qu'est-ce que l'empreinte carbone ? Comment se fait-il que ce que je mange ou que ma poubelle émettent des gaz à effet de serre (GES) ?</h3>
+
+Tous ce que nous consommons, utilisons, jetons a nécessité de la matière (qui a du être extraite), de l'énergie pour être assemblé, mis en forme ou bien encore conditionné.
+
+Ces biens sont transportés, stockés et quand ils arrivent en fin de vie (ou qu'on décide tout simplement de les jeter), deviennent des déchets qui doivent encore être collectés puis traités, et parfois recyclés.
+
+C'est pourquoi, même si cela peut sembler contre intuitif tous nos gestes quotidiens participent à émettre des gaz à de serre. Certains énormément, d'autres très peu. Manger un kg de patates émet des gaz à effet de serre, rouler 10 000 km en voiture aussi, mais bien évidemment dans des proportions très différentes. Et nous n'avons naturellement pas ces chiffres en tête.
+
+Pour savoir combien émettent chacunes de nos actions, nous nous en remettons à la [Base Carbone](https://www.bilans-ges.ademe.fr/fr/accueil) de l'ADEME (l'agence française de l'environnement) qui pour différentes données (km roulé, kg de viande, kWh consommé, une TV, etc.) permettent d'estimer la quantité de gaz à effet de serre émise.
+
+Le but de nos Nos Gestes Climat est de manipuler ces chiffres pour questionner simplement notre mode de vie afin d'identifier ce qui contribue plus ou moins à notre empreinte carbone.
+
 <h3>Le calculateur est il destiné uniquement aux Français ?</h3>
 
 Pour l'instant oui. Certains paramètres du modèle, en particulier l'empreinte du mix électrique (en gCO2e/kWh) influence particulièrement le résultat final, qui ne sera donc pas valide en Belgique, au Congo, au Québec, en Algérie ou ailleurs.
@@ -14,21 +26,45 @@ Mais ce n'est que partie remise ! Si vous connaissez bien le sujet dans votre pa
 
 <h3 id="foyer">Je ne comprends pas si le calcul est fait par foyer ou par individu</h3>
 
-Le calculateur NGC est un calculateur **d’empreinte carbone individuelle.**
+Nos Gestes Climat est un calculateur **d’empreinte carbone individuelle.**
 
-Cependant, certaines questions peuvent prêter à confusion (comme le nombre de personnes vivant dans votre logement ou encore le nombre de passagers en moyenne dans votre voiture). Ces questions sont là pour que l’on puisse ramener un impact global à l’échelle individuelle.
+Cependant, certaines questions peuvent prêter à confusion (comme le nombre de personnes vivant dans votre logement ou encore le nombre de passagers en moyenne dans votre voiture). Ces questions sont là pour que l’on puisse ramener un impact plus large à l’échelle individuelle.
 
 Néanmoins, pour certains biens de consommation, cette distinction n’est pas toujours claire.
 
-En effet, au sein d’un foyer, il est très difficile d’arbitrer entre certains biens et services utilisés dans le cadre d’une consommation personnelle et d’autres pouvant être mutualisés (streaming vidéo, outils, etc.). Cependant, cela n’est pas très significatif car comme vous avez dû le découvrir (ou comme vous le découvrirez) ces postes sont rarement les plus importants de notre empreinte carbone.
+En effet, au sein d’un foyer, il est très difficile d’arbitrer entre certains biens et services utilisés dans le cadre d’une consommation personnelle et d’autres pouvant être mutualisés (streaming vidéo, outils, etc.).
 
-Vous pouvez donc répondre simplement aux questions sans vous préoccuper d’une estimation potentiellement fausse.
+Heureusement, ces éléments en "zone grise" ne sont pas les plus importants dans notre empreinte : vous pouvez répondre rapidement aux questions sans vous préoccuper d’une estimation potentiellement fausse.
 
-L’équipe de NGC travaille à développer une approche « foyer » du calculateur afin de pouvoir estimer l’empreinte carbone de sa famille.
+L’équipe travaille à développer un parcours [« foyer »](https://github.com/datagir/nosgestesclimat/issues/113) afin de pouvoir estimer l’empreinte carbone de sa famille.
 
 <h3 id="finance">Pourquoi ne pas prendre en compte l'épargne individuelle ?</h3>
 
-Les émissions des énergies fossiles financées par les banques sont comptabilisées pour ceux qui les utilisent. De façon illustrée, votre banque finance peut-être l'extraction du pétrole au large de la Sibérie, mais ce pétrole est extrait pour un usage précis : faire 10km de voiture, chauffer une maison ou produire du plastique. Ce sont les consommations voiture, logement et plastique qui dans le modèle se voient attribuer ces émissions. Il nous serait très difficile au vu des données actuelles d'inclure une part de responsabilité de l'empreinte des fortunes personnelles dans le modèle, sans faire un double comptage.
+Les émissions des énergies fossiles financées par les banques sont comptabilisées pour ceux qui les utilisent.
+
+> De façon illustrée, votre banque finance peut-être l'extraction du pétrole au large de la Sibérie, mais ce pétrole est extrait pour un usage précis : faire 10km de voiture, chauffer une maison ou produire du plastique.
+> Ce sont les consommations voiture, logement et plastique qui dans le modèle se voient attribuer ces émissions.
+
+Il nous serait très difficile au vu des données actuelles d'inclure une part de responsabilité de l'empreinte des fortunes personnelles dans le modèle, sans faire un double comptage.
+
+<h3 id="2tonnes">Pourquoi cet objectif de 2 tonnes ? C'est super ambitieux !</h3>
+
+Cette réaction est normale ! Et soyons honnête, à l'heure actuelle, très peu de gens émettent moins 2 tonnes. Sachez pourtant que si votre empreinte se situe autour de 4 ou 5 tonnes vous avez déjà fait une grande partie du chemin.
+
+Il s'agit de progresser individuellement vers des modes de vies moins émetteurs de gaz à effet de serre, mais il est essentiel que des changements s'opèrent à plus large échelle pour faciliter l'émergence de ces mode de vies.
+
+> Ainsi, une collectivité où les citoyens se mettent massivement au vélo (ou à un autre mode bas carbone) poussera ses élus à favoriser de nouvelles infrastructures et politiques adéquates, ce qui en retour aidera les prochains à se mettre au vélo, et ainsi de suite ♻️ !
+
+Cet objectif de 2 tonnes est donc compliqué, mais c'est ce que nous devons atteindre collectivement au plus vite, et au plus tard en 2050 avec une progression régulière chaque année, afin de contenir le réchauffement climatique à +2°, et donc respecter l'accord de Paris. Ce "budget climat" ne relève pas du fait politique, mais découle des limites planétaires identifiées par la science du climat. Il est factuel, non négociable, sauf à vouloir s'exposer aux conséquences désastreuses qui y sont associées et largement décrites dans les [rapports du GIEC](https://www.ipcc.ch/languages-2/francais/).
+
+> Pour en savoir plus, lisez notre article illustré sur ce sujet : <br/>
+> 📘 [Le budget et l'empreinte carbone, c'est quoi ? ](https://datagir.ademe.fr/blog/budget-empreinte-carbone-c-est-quoi)
+
+<h3 id="déprime">J'ai compris l'objectif de 2 tonnes, mais j'ai beaucoup de mal à l'imaginer.</h3>
+
+L'exercice de bilan carbone peut aussi provoquer un découragement car nous comptons froidement les émissions du mode de vie qu'on connait, sans appréhender à ce stade toutes les possibilités d'une vie bas carbone.
+
+Marcher dans la nature, jouer de la musique, faire du vélo, naviguer à la voile, passer du temps avec ses proches, faire la fête, lire, discuter, faire son potager, apprendre à cuisiner autrement... Une vie bas carbone, c'est plein d'expériences joyeuses, qui ne retrouvent pas forcément dans un bilan carbone individuel, mais qui seront au coeur des modes de vie que nous inventons en ce moment même.
 
 ## SERVICES PUBLICS
 
@@ -38,9 +74,9 @@ Ce poste représente l’empreinte carbone des services publics français ramen�
 
 Tout le monde prend donc en quelque sorte « sa part » et ce pour plusieurs raisons.
 
-Tout d’abord, il est extrêmement rare voire quasi impossible de vivre sans jamais utiliser un seul service public. Qu’il s’agisse de service santé, de routes aménagées, de déclaration aux impôts, etc. tout le monde bénéficie des services publics.
+Tout d’abord, il est extrêmement rare voire quasi impossible de vivre sans jamais utiliser un seul service public. Qu’il s’agisse de service santé, de routes aménagées, de l'éducation, et plus généralement de tout ce qui est financé par les impôts, tout le monde bénéficie des services publics.
 
-Deuxièmement, essayer de comptabiliser la part de service public qu’un individu utilise « pour de vrai » serait un travail titanesque et peu pertinent.
+Deuxièmement, essayer de comptabiliser la part de service public qu’un individu utilise « pour de vrai » n'est pas actuellement possible avec les données dont nous disposons sur l'empreinte de ce secteur.
 
 ### Oui mais quand même, ce poste représente parfois plus que certains de mes impacts…
 
@@ -50,7 +86,7 @@ En effet, il peut être frustrant de se voir comptabiliser des impacts pour lesq
 
 Cette transition ne peut se penser seulement à l’échelle individuelle. Elle est une condition nécessaire mais non suffisante d’une transition plus globale à l’échelle de notre société. Cela revient donc à jouer avec des leviers d’actions indirects (vote, engagement associatif, sensibilisation autour de soi, etc.).
 
-C’est d’ailleurs tout l’objet de NGC qui œuvre à sensibiliser et faire prendre conscience des enjeux !
+C’est d’ailleurs tout l’objet de Nos Gestes Climat ! œuvrer à sensibiliser et faire prendre conscience de ces enjeux !
 
 ## CONSOMMATION
 
