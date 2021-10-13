@@ -5,7 +5,7 @@ import { Markdown } from 'Components/utils/markdown'
 import FAQ from 'raw-loader!./FAQ.md'
 import { useLocation } from 'react-router-dom'
 
-let formStyle = `
+const formStyle = `
 label {
 	display: block;
 	margin-bottom: 1em;
@@ -25,7 +25,7 @@ label textarea {
 	height: 6em;
 }`
 
-let createIssue = (title, body, setURL, disableButton) => {
+const createIssue = (title, body, setURL, disableButton) => {
 	if (title == null || body == null || [title, body].includes('')) {
 		return null
 	}
@@ -53,11 +53,11 @@ function useQuery() {
 }
 
 export default ({}) => {
-	let fromLocation = useQuery().get('fromLocation')
-	let [sujet, setSujet] = useState('')
-	let [comment, setComment] = useState('')
-	let [URL, setURL] = useState(null)
-	let [buttonDisabled, disableButton] = useState(false)
+	const fromLocation = useQuery().get('fromLocation')
+	const [sujet, setSujet] = useState('')
+	const [comment, setComment] = useState('')
+	const [URL, setURL] = useState(null)
+	const [buttonDisabled, disableButton] = useState(false)
 
 	return (
 		<div className="ui__ container" css="padding-bottom: 1rem">
