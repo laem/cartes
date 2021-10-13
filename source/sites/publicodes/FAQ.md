@@ -26,17 +26,17 @@ Mais ce n'est que partie remise ! Si vous connaissez bien le sujet dans votre pa
 
 <h3 id="foyer">Je ne comprends pas si le calcul est fait par foyer ou par individu</h3>
 
-Le calculateur NGC est un calculateur **d’empreinte carbone individuelle.**
+Nos Gestes Climat est un calculateur **d’empreinte carbone individuelle.**
 
-Cependant, certaines questions peuvent prêter à confusion (comme le nombre de personnes vivant dans votre logement ou encore le nombre de passagers en moyenne dans votre voiture). Ces questions sont là pour que l’on puisse ramener un impact global à l’échelle individuelle.
+Cependant, certaines questions peuvent prêter à confusion (comme le nombre de personnes vivant dans votre logement ou encore le nombre de passagers en moyenne dans votre voiture). Ces questions sont là pour que l’on puisse ramener un impact plus large à l’échelle individuelle.
 
 Néanmoins, pour certains biens de consommation, cette distinction n’est pas toujours claire.
 
-En effet, au sein d’un foyer, il est très difficile d’arbitrer entre certains biens et services utilisés dans le cadre d’une consommation personnelle et d’autres pouvant être mutualisés (streaming vidéo, outils, etc.). Cependant, cela n’est pas très significatif car comme vous avez dû le découvrir (ou comme vous le découvrirez) ces postes sont rarement les plus importants de notre empreinte carbone.
+En effet, au sein d’un foyer, il est très difficile d’arbitrer entre certains biens et services utilisés dans le cadre d’une consommation personnelle et d’autres pouvant être mutualisés (streaming vidéo, outils, etc.).
 
-Vous pouvez donc répondre simplement aux questions sans vous préoccuper d’une estimation potentiellement fausse.
+Heureusement, ces éléments en "zone grise" ne sont pas les plus importants dans notre empreinte : vous pouvez répondre rapidement aux questions sans vous préoccuper d’une estimation potentiellement fausse.
 
-L’équipe de NGC travaille à développer une approche « foyer » du calculateur afin de pouvoir estimer l’empreinte carbone de sa famille.
+L’équipe travaille à développer un parcours [« foyer »](https://github.com/datagir/nosgestesclimat/issues/113) afin de pouvoir estimer l’empreinte carbone de sa famille.
 
 <h3 id="finance">Pourquoi ne pas prendre en compte l'épargne individuelle ?</h3>
 
