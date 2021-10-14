@@ -15,7 +15,8 @@ export function persistSimulation(store: Store<RootState, Action>) {
 		const state = store.getState()
 		if (
 			!state.simulation?.foldedSteps?.length &&
-			!Object.keys(state.actionChoices).length
+			!Object.keys(state.actionChoices).length &&
+			!Object.values(state.tutorials)
 		) {
 			return
 		}

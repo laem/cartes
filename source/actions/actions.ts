@@ -141,6 +141,8 @@ export const updateSituation = (fieldName: DottedName, value: unknown) =>
 		value,
 	} as const)
 
+export const skipTutorial = (id: string) => ({ type: 'SKIP_TUTORIAL', id })
+
 export const updateUnit = (targetUnit: string) =>
 	({
 		type: 'UPDATE_TARGET_UNIT',

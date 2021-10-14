@@ -170,6 +170,11 @@ function conference(state = null, { type, room, ydoc, provider }) {
 		}
 	} else return state
 }
+function tutorials(state = {}, { type, id }) {
+	if (type === 'SKIP_TUTORIAL') {
+		return { ...state, [id]: 'skip' }
+	}
+}
 
 const mainReducer = (state: any, action: Action) =>
 	combineReducers({
@@ -183,6 +188,7 @@ const mainReducer = (state: any, action: Action) =>
 		actionChoices,
 		conference,
 		iframeOptions: defaultTo(null),
+		tutorials,
 	})(state, action)
 
 export default reduceReducers<RootState>(

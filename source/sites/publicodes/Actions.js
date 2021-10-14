@@ -39,7 +39,7 @@ export default ({}) => {
 				</Route>
 
 				<Route path="/actions">
-					<ActionsList />
+					<ActionsList display="list" />
 				</Route>
 			</Switch>
 		</>
