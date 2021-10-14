@@ -64,25 +64,22 @@ export default ({}) => {
 	const structuredFAQ = {
 		'@context': 'https://schema.org',
 		'@type': 'FAQPage',
-		mainEntity: [
-			FAQ.map((element) => ({
-				'@type': 'Question',
-				name: element.question,
-				acceptedAnswer: {
-					'@type': 'Answer',
-					text: renderToString(
-						<Markdown escapeHtml={false} source={element.answer} />
-					),
-				},
-			})),
-		],
+		mainEntity: FAQ.map((element) => ({
+			'@type': 'Question',
+			name: element.question,
+			acceptedAnswer: {
+				'@type': 'Answer',
+				text: renderToString(
+					<Markdown escapeHtml={false} source={element.réponse} />
+				),
+			},
+		})),
 	}
 	const categories = FAQ.reduce(
 		(memo, next) =>
 			memo.includes(next.catégorie) ? memo : [...memo, next.catégorie],
 		[]
 	)
-	console.log(categories, FAQ)
 
 	return (
 		<div className="ui__ container" css="padding-bottom: 1rem">
@@ -91,7 +88,7 @@ export default ({}) => {
 				description="Découvrez les questions fréquentes sur Nos Gestes Climat, et comment en poser de nouvelles ou nous aider."
 			>
 				<script type="application/ld+json">
-					JSON.stringify(structuredFAQ)
+					{JSON.stringify(structuredFAQ)}
 				</script>
 			</Meta>
 			<h1>Contribuer</h1>
