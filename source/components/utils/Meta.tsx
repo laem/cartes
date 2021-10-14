@@ -15,7 +15,7 @@ export default function Meta({
 	description,
 	image,
 	url,
-	more = null,
+	children,
 }: PropType) {
 	const { pathname } = useLocation()
 	return (
@@ -28,7 +28,7 @@ export default function Meta({
 			<meta property="twitter:card" content="summary_large_image" />
 			{image && <meta property="og:image" content={image} />}
 			{url && <meta property="og:url" content={url} />}
-			{more}
+			{children}
 		</Helmet>
 	)
 }

@@ -2,8 +2,10 @@ import { toPairs } from 'ramda'
 import React, { useState } from 'react'
 import emoji from 'react-easy-emoji'
 import { Markdown } from 'Components/utils/markdown'
-import FAQ from 'raw-loader!./FAQ.md'
+import FAQ from './FAQ.yaml'
 import { useLocation } from 'react-router-dom'
+import { renderToString } from 'react-dom/server'
+import Meta from '../../components/utils/Meta'
 
 const formStyle = `
 label {
@@ -59,19 +61,40 @@ export default ({}) => {
 	const [URL, setURL] = useState(null)
 	const [buttonDisabled, disableButton] = useState(false)
 
-	const structuredFAQ = {}
+	const structuredFAQ = {
+		'@context': 'https://schema.org',
+		'@type': 'FAQPage',
+		mainEntity: [
+			FAQ.map((element) => ({
+				'@type': 'Question',
+				name: element.question,
+				acceptedAnswer: {
+					'@type': 'Answer',
+					text: renderToString(
+						<Markdown escapeHtml={false} source={element.answer} />
+					),
+				},
+			})),
+		],
+	}
+	console.log(structuredFAQ)
 
 	return (
 		<div className="ui__ container" css="padding-bottom: 1rem">
 			<Meta
 				title="Contribuer"
 				description="Découvrez les questions fréquentes sur Nos Gestes Climat, et comment en poser de nouvelles ou nous aider."
-				more={<script type="application/ld+json">{structuredFAQ}</script>}
-			/>
+			>
+				<script type="application/ld+json">
+					JSON.stringify(structuredFAQ)
+				</script>
+			</Meta>
 			<h1>Contribuer</h1>
 			<h2 css="font-size: 180%">{emoji('❔')}Questions fréquentes</h2>
 			<div className="ui__ card" css="padding-bottom: 1rem">
-				<Markdown escapeHtml={false} source={FAQ} />
+				{FAQ.map(({ category, question, réponse, id }) => (
+					<h1>{question}</h1>
+				))}
 			</div>
 			<h2 css="font-size: 180%">{emoji('🙋‍♀️')}J'ai une autre question</h2>
 			<p>
