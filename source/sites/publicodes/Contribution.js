@@ -77,7 +77,12 @@ export default ({}) => {
 			})),
 		],
 	}
-	console.log(structuredFAQ)
+	const categories = FAQ.reduce(
+		(memo, next) =>
+			memo.includes(next.catégorie) ? memo : [...memo, next.catégorie],
+		[]
+	)
+	console.log(categories, FAQ)
 
 	return (
 		<div className="ui__ container" css="padding-bottom: 1rem">
@@ -90,10 +95,49 @@ export default ({}) => {
 				</script>
 			</Meta>
 			<h1>Contribuer</h1>
-			<h2 css="font-size: 180%">{emoji('❔')}Questions fréquentes</h2>
-			<div className="ui__ card" css="padding-bottom: 1rem">
-				{FAQ.map(({ category, question, réponse, id }) => (
-					<h1>{question}</h1>
+			<p>
+				Vous trouverez ici les réponses aux questions les plus fréquentes. S’il
+				vous reste des interrogations ou si vous souhaitez nous proposer des
+				améliorations, rendez-vous tout en bas. Bonne lecture !
+			</p>
+			<div
+				css={`
+					padding-bottom: 1rem;
+					li {
+						list-style-type: none;
+					}
+					h3 {
+						display: inline;
+					}
+					h2 {
+						text-transform: uppercase;
+					}
+					details > div {
+						margin: 1rem;
+						padding: 0.6rem;
+					}
+				`}
+			>
+				{categories.map((category) => (
+					<li>
+						<h2>{category}</h2>
+						<ul>
+							{FAQ.filter((el) => el.catégorie === category).map(
+								({ category, question, réponse, id }) => (
+									<li>
+										<details id={id}>
+											<summary>
+												<h3>{question}</h3>
+											</summary>
+											<div className="ui__ card">
+												<Markdown escapeHtml={false} source={réponse} />
+											</div>
+										</details>
+									</li>
+								)
+							)}
+						</ul>
+					</li>
 				))}
 			</div>
 			<h2 css="font-size: 180%">{emoji('🙋‍♀️')}J'ai une autre question</h2>

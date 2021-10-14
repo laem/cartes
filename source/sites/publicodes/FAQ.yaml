@@ -1,5 +1,5 @@
 - question: Qu'est-ce que l'empreinte carbone ? Comment se fait-il que ce que je mange ou que ma poubelle émettent des gaz à effet de serre (GES) ?
-  catérogie: général
+  catégorie: général
   id: ges
   réponse: |
     Tous ce que nous consommons, utilisons, jetons a nécessité de la matière (qui a du être extraite), de l'énergie pour être assemblé, mis en forme ou bien encore conditionné.
@@ -12,9 +12,9 @@
 
     Le but de nos Nos Gestes Climat est de manipuler ces chiffres pour questionner simplement notre mode de vie afin d'identifier ce qui contribue plus ou moins à notre empreinte carbone.
 
-- question: le calculateur est il destiné uniquement aux français ?
+- question: Le calculateur est il destiné uniquement aux français ?
   id: international
-  catérogie: général
+  catégorie: général
   réponse: |
 
     Pour l'instant oui. Certains paramètres du modèle, en particulier l'empreinte du mix électrique (en gCO2e/kWh) influence particulièrement le résultat final, qui ne sera donc pas valide en Belgique, au Congo, au Québec, en Algérie ou ailleurs.
@@ -23,7 +23,7 @@
 
 - question: Je ne comprends pas si le calcul est fait par foyer ou par individu
   id: foyer
-  catérogie: général
+  catégorie: général
   réponse: |
     Nos Gestes Climat est un calculateur **d’empreinte carbone individuelle.**
 
@@ -39,7 +39,7 @@
 
 - question: Pourquoi ne pas prendre en compte l'épargne individuelle ?
   id: finance
-  catérogie: général
+  catégorie: général
   réponse: |
 
     Les émissions des énergies fossiles financées par les banques sont comptabilisées pour ceux qui les utilisent.
@@ -51,7 +51,7 @@
 
 - question: Pourquoi cet objectif de 2 tonnes ? C'est super ambitieux !
   id: 2tonnes
-  catérogie: général
+  catégorie: général
   réponse: |
     Cette réaction est normale ! Et soyons honnête, à l'heure actuelle, très peu de gens émettent moins 2 tonnes. Sachez pourtant que si votre empreinte se situe autour de 4 ou 5 tonnes vous avez déjà fait une grande partie du chemin.
 
@@ -66,7 +66,7 @@
 
 - question: J'ai compris l'objectif de 2 tonnes, mais j'ai beaucoup de mal à l'imaginer.
   id: déprime
-  catérogie: général
+  catégorie: général
   réponse: |
 
     L'exercice du bilan carbone peut aussi provoquer un découragement car nous comptons froidement les émissions du mode de vie qu'on connait, sans appréhender à ce stade toutes les possibilités d'une vie bas carbone.
@@ -75,7 +75,7 @@
 
 - question: À la fin de mon calcul il y a un poste « service public », qu’est-ce que c’est ?
   id: services-publics
-  catérogie: services publics
+  catégorie: services publics
   réponse: |
 
     Ce poste représente l’empreinte carbone des services publics français ramené à une échelle individuelle. C’est-à-dire que l’on répartit l’impact des services entre les 66 millions de français.
@@ -87,7 +87,7 @@
     Deuxièmement, essayer de comptabiliser la part de service public qu’un individu utilise « pour de vrai » n'est pas actuellement possible avec les données dont nous disposons sur l'empreinte de ce secteur.
 
 - question: Oui mais quand même, ce poste représente parfois plus que certains de mes impacts…
-  catérogie: services publics
+  catégorie: services publics
   id: services-publics-majoritaires
   réponse: |
 
