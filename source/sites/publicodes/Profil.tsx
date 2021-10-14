@@ -39,12 +39,12 @@ export default ({}) => {
 				)}
 				{answeredQuestionsLength > 0 ? (
 					<div>
-						<p></p>
+						<p>
+							Vous avez répondu à {answeredQuestionsLength} questions et choisi{' '}
+							{actionChoicesLength} actions.{' '}
+						</p>
 						<details>
-							<summary>
-								Vous avez répondu à {answeredQuestionsLength} questions et
-								choisi {actionChoicesLength} actions. Où sont mes données ?{' '}
-							</summary>
+							<summary>Où sont mes données ? </summary>
 							Vos données sont stockées dans votre navigateur, vous avez donc le
 							contrôle total sur elles. <br />
 							<Link to="/vie-privée">En savoir plus</Link>

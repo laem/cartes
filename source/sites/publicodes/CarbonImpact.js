@@ -82,6 +82,7 @@ export default ({ actionMode = false }) => {
 							align-items: center;
 						}
 						padding: 0.4rem;
+						min-height: 4rem;
 					`}
 				>
 					<div

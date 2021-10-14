@@ -41,6 +41,7 @@ const Simulateur = (props) => {
 		},
 		configSet = useSelector((state) => state.simulation?.config),
 		categories = decoded === 'bilan' && extractCategories(rules, engine)
+	const tutorials = useSelector((state) => state.tutorials)
 
 	useEffect(
 		() =>

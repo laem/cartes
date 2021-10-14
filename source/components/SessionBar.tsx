@@ -166,7 +166,7 @@ export default function SessionBar({
 					position: fixed;
 					bottom: 0;
 					left: 0;
-					z-index: 10;
+					z-index: 100;
 					width: 100%;
 				}
 			`}
@@ -191,7 +191,6 @@ const NavBar = styled.ul`
 	height: 3.5rem;
 	margin: 0;
 	width: 100%;
-	z-index: 10;
 	height: 4rem;
 	background: white;
 	justify-content: center;

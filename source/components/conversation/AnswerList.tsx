@@ -1,5 +1,4 @@
 import { goToQuestion } from 'Actions/actions'
-import Overlay from 'Components/Overlay'
 import {
 	extractCategoriesNamespaces,
 	parentName,

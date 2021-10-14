@@ -5,10 +5,8 @@ import { partition } from 'ramda'
 import React, { useContext } from 'react'
 import emoji from 'react-easy-emoji'
 import { useDispatch, useSelector } from 'react-redux'
-import { useParams } from 'react-router'
 import { Link } from 'react-router-dom'
 import { skipTutorial } from '../../actions/actions'
-import Overlay from '../../components/Overlay'
 import {
 	correctValue,
 	extractCategoriesNamespaces,
@@ -24,7 +22,6 @@ import { disabledAction, supersededAction } from './ActionVignette'
 import AllActions from './AllActions'
 import CategoryFilters from './CategoryFilters'
 import { humanWeight } from './HumanWeight'
-import { PersonaGrid } from './Personas'
 import SimulationMissing from './SimulationMissing'
 
 const { encodeRuleName, decodeRuleName } = utils
@@ -90,7 +87,7 @@ export default ({ display }) => {
 	if (tutorials.actions !== 'skip') {
 		const [value, unit] = humanWeight(bilans[0].nodeValue)
 		return (
-			<Overlay>
+			<div>
 				<h1 css="display: flex; align-items: center">
 					<img src={actionImg} css="width: 2rem" />
 					Passer à l'action !
@@ -122,7 +119,7 @@ export default ({ display }) => {
 				>
 					Allons-y
 				</button>
-			</Overlay>
+			</div>
 		)
 	}
 

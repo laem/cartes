@@ -10,21 +10,6 @@ type OverlayProps = React.HTMLAttributes<HTMLDivElement> & {
 	children: React.ReactNode
 }
 
-const useIFrameOffset = () => {
-	const [offsetTop, setOffset] = useState<number | null>(null)
-	useEffect(() => {
-		if (!('parentIFrame' in window)) {
-			setOffset(0)
-			return
-		}
-		window.parentIFrame.getPageInfo(({ scrollTop, offsetTop }: PageInfo) => {
-			setOffset(scrollTop - offsetTop)
-			window.parentIFrame.getPageInfo(false)
-		})
-	}, [])
-	return offsetTop
-}
-
 export default function Overlay({
 	onClose,
 	children,
@@ -38,12 +23,8 @@ export default function Overlay({
 			body.classList.remove('no-scroll')
 		}
 	}, [])
-	const offsetTop = useIFrameOffset()
-	if (offsetTop === null) {
-		return null
-	}
 	return (
-		<StyledOverlayWrapper offsetTop={offsetTop}>
+		<StyledOverlayWrapper>
 			<div className="overlayContent">
 				<animate.fromBottom>
 					<FocusTrap
@@ -75,34 +56,50 @@ export default function Overlay({
 	)
 }
 
-const StyledOverlayWrapper = styled.div<{ offsetTop: number | null }>`
+const StyledOverlayWrapper = styled.div`
 	position: fixed;
 	top: 0;
 	left: 0;
 	right: 0;
 	bottom: 0;
+	z-index: 30;
 	max-height: 100vh;
-	width: 110vw;
-	@media (min-width: 1200px) {
-		transform: translateX(
-			-20vw
-		); /*For a reason I don't understand, it doesn't suffice to cancel the -4 vw of the parent*/
+	width: 100vw;
+	@media (max-width: 800px) {
+		width: 100vw;
+		top: 0;
+		left: 0;
+		height: calc(100vh - 4rem);
+		.overlayContent {
+			transform: none;
+			max-height: calc(100vh - 4rem);
+			overflow: scroll;
+		}
+	}
+	@media (min-width: 800px) {
+		.overlayCloseButton {
+			top: 0;
+			bottom: auto;
+			font-size: 2rem;
+		}
+		.overlayContent {
+			position: absolute;
+			transform: translateX(-50%);
+			left: 50%;
+			width: 80%;
+			bottom: auto;
+			height: auto;
+			max-width: 40em;
+			min-height: 6em;
+			margin-top: 8rem;
+		}
+		.ui__.card[aria-modal='true'] {
+			padding-bottom: 2rem;
+			margin-bottom: 2rem;
+		}
 	}
 	background: rgba(0, 0, 0, 0.5);
 	overflow: auto;
-	z-index: 30;
-	.overlayContent {
-		${({ offsetTop }) =>
-			offsetTop
-				? css`
-						transform: translateY(${offsetTop}px);
-				  `
-				: css`
-						bottom: 0;
-						max-height: 80vh;
-				  `}
-		position: absolute;
-	}
 	.overlayCloseButton {
 		position: absolute;
 		top: 0rem;
@@ -117,27 +114,5 @@ const StyledOverlayWrapper = styled.div<{ offsetTop: number | null }>`
 		padding-bottom: 4rem;
 		display: flex;
 		flex-direction: column;
-	}
-
-	@media (min-width: 600px) {
-		.overlayCloseButton {
-			top: 0;
-			bottom: auto;
-			font-size: 2rem;
-		}
-		.overlayContent {
-			transform: translateX(-50%)
-				translateY(calc(${({ offsetTop }) => offsetTop}px + 10rem));
-			left: 50%;
-			width: 80%;
-			bottom: auto;
-			height: auto;
-			max-width: 40em;
-			min-height: 6em;
-		}
-		.ui__.card[aria-modal='true'] {
-			padding-bottom: 2rem;
-			margin-bottom: 2rem;
-		}
 	}
 `
