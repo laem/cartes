@@ -173,7 +173,7 @@ function conference(state = null, { type, room, ydoc, provider }) {
 function tutorials(state = {}, { type, id }) {
 	if (type === 'SKIP_TUTORIAL') {
 		return { ...state, [id]: 'skip' }
-	}
+	} else return state
 }
 
 const mainReducer = (state: any, action: Action) =>

@@ -13,6 +13,8 @@ import {
 import styled from 'styled-components'
 import CarbonImpact from '../sites/publicodes/CarbonImpact'
 
+export const actionImg = 'https://openmoji.org/data/black/svg/E10C.svg'
+
 const Button = styled.button`
 	margin: 0 0.2rem;
 	display: flex;
@@ -124,10 +126,7 @@ export default function SessionBar({
 			}}
 			css={buttonStyle('/actions')}
 		>
-			<img
-				src="https://openmoji.org/data/black/svg/E10C.svg"
-				css="width: 2rem"
-			/>
+			<img src={actionImg} css="width: 2rem" />
 			Agir
 		</Button>,
 		<Button

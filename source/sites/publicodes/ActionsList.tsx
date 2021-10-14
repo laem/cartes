@@ -7,11 +7,13 @@ import emoji from 'react-easy-emoji'
 import { useDispatch, useSelector } from 'react-redux'
 import { useParams } from 'react-router'
 import { Link } from 'react-router-dom'
+import { skipTutorial } from '../../actions/actions'
 import Overlay from '../../components/Overlay'
 import {
 	correctValue,
 	extractCategoriesNamespaces,
 } from '../../components/publicodesUtils'
+import { actionImg } from '../../components/SessionBar'
 import {
 	answeredQuestionsSelector,
 	situationSelector,
@@ -21,6 +23,7 @@ import ActionStack from './ActionStack'
 import { disabledAction, supersededAction } from './ActionVignette'
 import AllActions from './AllActions'
 import CategoryFilters from './CategoryFilters'
+import { humanWeight } from './HumanWeight'
 import { PersonaGrid } from './Personas'
 import SimulationMissing from './SimulationMissing'
 
@@ -37,6 +40,7 @@ export default ({ display }) => {
 	const radical = true
 
 	const simulation = useSelector((state) => state.simulation)
+	const tutorials = useSelector((state) => state.tutorials)
 
 	const objectifs = ['bilan', ...flatActions.formule.somme]
 
@@ -81,6 +85,45 @@ export default ({ display }) => {
 
 	if (!simulationWellStarted) {
 		return <SimulationMissing />
+	}
+
+	if (tutorials.actions !== 'skip') {
+		const [value, unit] = humanWeight(bilans[0].nodeValue)
+		return (
+			<Overlay>
+				<h1 css="display: flex; align-items: center">
+					<img src={actionImg} css="width: 2rem" />
+					Passer à l'action !
+				</h1>
+				<p>Vous avez terminé votre simulation, {emoji('👏')} bravo !</p>
+				<p>
+					Vous connaissez maintenant votre empreinte, estimée à {value} {unit},
+					et vous avez sûrement déjà quelques des idées pour la réduire...
+				</p>
+				<p>
+					Pour vous aider,{' '}
+					<strong>nous vous proposons une liste d'actions</strong> :
+					<ul css="li {list-style-type: none;}">
+						<li>{emoji('✅')} sélectionnez celles qui vous intéressent</li>
+						<li>
+							{' '}
+							{emoji('❌')} écartez celles qui vous semblent trop ambitieuses ou
+							déplacées.
+						</li>
+					</ul>
+				</p>
+				<p>
+					{emoji('💡')} Pour améliorer la précision, certaines actions vous
+					demanderont quelques réponses en plus.
+				</p>
+				<button
+					className="ui__ button plain"
+					onClick={() => dispatch(skipTutorial('actions'))}
+				>
+					Allons-y
+				</button>
+			</Overlay>
+		)
 	}
 
 	return (
