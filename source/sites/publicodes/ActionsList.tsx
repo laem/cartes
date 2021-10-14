@@ -89,6 +89,11 @@ export default ({ display }) => {
 				margin: 1rem auto;
 			`}
 		>
+			<CategoryFilters
+				categories={categories}
+				selected={category}
+				countByCategory={countByCategory}
+			/>
 			{display === 'list' ? (
 				<AllActions {...{ actions: finalActions.reverse(), bilans, rules }} />
 			) : finalActions.length ? (
@@ -101,20 +106,16 @@ export default ({ display }) => {
 			) : (
 				<p>{emoji('🤷')} Plus d'actions dans cette catégorie</p>
 			)}
-			<Link
-				to={display === 'list' ? '/actions' : '/actions/liste'}
-				css=" text-align: center; display: block; margin: 1rem"
-			>
-				<button className="ui__ button">
-					{display === 'list' ? 'Vue jeu de cartes (en dev)' : 'Vue liste'}
-				</button>
-			</Link>
-
-			<CategoryFilters
-				categories={categories}
-				selected={category}
-				countByCategory={countByCategory}
-			/>
+			{false /* Désactivation de cette fonctionnalité pas terminée */ && (
+				<Link
+					to={display === 'list' ? '/actions' : '/actions/liste'}
+					css=" text-align: center; display: block; margin: 1rem"
+				>
+					<button className="ui__ button">
+						{display === 'list' ? 'Vue jeu de cartes (en dev)' : 'Vue liste'}
+					</button>
+				</Link>
+			)}
 		</div>
 	)
 }
