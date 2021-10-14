@@ -65,7 +65,7 @@ export const PersonaGrid = ({ additionnalOnClick }) => {
 						className="ui__ card interactive light-border"
 						css={`
 							width: 11rem !important;
-							height: 14rem !important;
+							height: 15rem !important;
 							${nom === persona
 								? `border: 2px solid var(--color) !important`
 								: ``}

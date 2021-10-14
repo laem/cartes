@@ -60,10 +60,12 @@ export default ({ display }) => {
 		)(actions),
 		interestingActions = sortedActionsByImpact.filter((action) => {
 			const flatRule = rules[action.dottedName]
-			return (
-				!disabledAction(flatRule, action.nodeValue) &&
-				!supersededAction(action.dottedName, rules, actionChoices)
+			const superseded = supersededAction(
+				action.dottedName,
+				rules,
+				actionChoices
 			)
+			return !disabledAction(flatRule, action.nodeValue) && !superseded
 		})
 
 	const finalActions = filterByCategory(interestingActions)
