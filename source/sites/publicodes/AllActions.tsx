@@ -7,7 +7,7 @@ import { correctValue } from '../../components/publicodesUtils'
 import { sortBy } from '../../utils'
 import ActionConversation from './ActionConversation'
 import { ActionListCard } from './ActionVignette'
-import { fromBottom } from 'Components/ui/animate'
+import animate from 'Components/ui/animate'
 
 export default ({ actions, bilans, rules }) => {
 	const engine = useContext(EngineContext)
@@ -62,7 +62,7 @@ export default ({ actions, bilans, rules }) => {
 			</small>
 
 			{maxImpactAction.value < 100 && (
-				<fromTop>
+				<animate.fromTop>
 					<div
 						className="ui__ card box"
 						css="margin: 0 auto .6rem !important; "
@@ -76,7 +76,7 @@ export default ({ actions, bilans, rules }) => {
 							{emoji('⏬')}
 						</p>
 					</div>
-				</fromTop>
+				</animate.fromTop>
 			)}
 			<List
 				{...{
