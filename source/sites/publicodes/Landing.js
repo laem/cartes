@@ -1,7 +1,7 @@
 import DocumentationButton from './DocumentationButton'
 import { Link } from 'react-router-dom'
 import Illustration from './images/ecolab-climat-dessin.svg'
-import Marianne from './images/Marianne.png'
+import Marianne from './images/Marianne.svg'
 import emoji from 'react-easy-emoji'
 import NewsBanner from '../../components/NewsBanner'
 
