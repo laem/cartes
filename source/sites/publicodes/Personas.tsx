@@ -58,7 +58,7 @@ export const PersonaGrid = ({ additionnalOnClick }) => {
 	console.log(persona, personas)
 
 	return (
-		<CardGrid css="padding: 0">
+		<CardGrid css="padding: 0; justify-content: center">
 			{personas.map(({ nom, icônes, data, description }) => (
 				<li key={nom}>
 					<div
