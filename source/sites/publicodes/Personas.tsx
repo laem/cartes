@@ -10,6 +10,7 @@ import { setDifferentSituation } from '../../actions/actions'
 import CarbonImpact from './CarbonImpact'
 import { useEngine } from '../../components/utils/EngineContext'
 import SessionBar from '../../components/SessionBar'
+import personaSteps from './personaSteps.yaml'
 
 export default ({}) => {
 	const configSet = useSelector((state) => state.simulation?.config)
@@ -81,7 +82,7 @@ export const PersonaGrid = ({ additionnalOnClick }) => {
 										// the schema of peronas is not fixed yet
 										situation: data.situation || data,
 										persona: nom,
-										foldedSteps: data.foldedSteps || Object.keys(data),
+										foldedSteps: data.foldedSteps || personaSteps, // If not specified, act as if all questions were answered : all that is not in the situation object is a validated default value
 									})
 								)
 								additionnalOnClick && additionnalOnClick()
