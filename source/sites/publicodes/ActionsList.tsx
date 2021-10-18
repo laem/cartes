@@ -95,7 +95,7 @@ export default ({ display }) => {
 				<p>Vous avez terminé votre simulation, {emoji('👏')} bravo !</p>
 				<p>
 					Vous connaissez maintenant votre empreinte, estimée à {value} {unit},
-					et vous avez sûrement déjà quelques des idées pour la réduire...
+					et vous avez sûrement déjà des idées pour la réduire...
 				</p>
 				<p>
 					Pour vous aider,{' '}

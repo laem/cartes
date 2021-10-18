@@ -11,7 +11,7 @@ export default ({}) => {
 			<h1>Simulation manquante</h1>
 			<IllustratedMessage
 				inline
-				emoji="⏳️"
+				emoji="⏳"
 				message={
 					<p>
 						Vous n'avez pas encore fait le test. Pour débloquer ce parcours,
