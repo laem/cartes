@@ -284,8 +284,8 @@
       unité: kWh
     logement . fioul . chauffage au fioul: oui
     logement . fioul . consommation:
-      valeur: 15000
-      unité: kWh
+      valeur: 600
+      unité: litre
     logement . bois . chauffage au bois: non
     
     
