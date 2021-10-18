@@ -1,10 +1,91 @@
-- nom: Madame moyenne
+- nom: Moyenne
   description: |
     Monsieur ou madame moyenne consomme tout simplement comme la moyenne française.
-  icônes: 📍
+  icônes: 🇫🇷
   data:
     situation: {}
 
+- nom: 2 tonnes
+  description: |
+    Madame ou monsieur 2 tonnes a déjà atteint l'objectif d'une empreinte climat durable.
+  icônes: ✅
+  data:
+    situation:
+      alimentation . déchets . niveau d'engagement: '''affirmatif'''
+      alimentation . petit déjeuner . type: '''lait céréales'''
+      alimentation . lait . type: '''lait végétal'''
+      alimentation . boisson . sucrées . litres:
+        valeur: 0.3
+        unité: l / semaine
+      alimentation . boisson . alcool . litres:
+        valeur: 1
+        unité: l / semaine
+      alimentation . boisson . eau en bouteille . affirmatif: non
+      alimentation . plats . végétalien . nombre: 7
+      alimentation . plats . viande 2 . nombre: 0
+      alimentation . plats . viande 1 . nombre: 0
+      alimentation . plats . végétarien . nombre: 7
+      transport . voiture . km:
+        valeur: 0
+        unité: km / an
+      transport . deux roues thermique . usager: non
+      transport . avion . usager: non
+      transport . bus . heures par semaine:
+        valeur: 0
+        unité: heure / semaine
+      transport . train . km:
+        valeur: 10000
+        unité: km / an
+      transport . métro ou tram . heures par semaine:
+        valeur: 0
+        unité: heure / semaine
+      transport . vélo . km:
+        valeur: 70
+        unité: km
+      logement . âge:
+        valeur: 100
+        unité: an
+      logement . habitants:
+        valeur: 2
+        unité: personnes
+      logement . gaz . chauffage au gaz: non
+      logement . électricité . consommation:
+        valeur: 800
+        unité: kWh
+      logement . fioul . chauffage au fioul: non
+      logement . bois . chauffage au bois: non
+      divers . électroménager . préservation: '''maximum'''
+      divers . électroménager . mini réfrigérateur . présent: oui
+      divers . électroménager . réfrigérateur . présent: non
+      divers . électroménager . lave-linge . présent: non
+      divers . électroménager . sèche-linge . présent: non
+      divers . électroménager . lave-vaisselle . présent: non
+      divers . électroménager . micro-ondes . présent: non
+      divers . électroménager . cafetière . présent: non
+      divers . électroménager . aspirateur . présent: oui
+      divers . autres produits . montant:
+        valeur: 30
+        unité: € / an
+      divers . textile . t-shirt . nombre: 0
+      divers . textile . pantalon . nombre: 0
+      divers . textile . short . nombre: 0
+      divers . textile . chemise . nombre: 0
+      divers . textile . robe . nombre: 0
+      divers . textile . sweat . nombre: 0
+      divers . textile . chaussure . nombre: 0
+      divers . textile . manteau . nombre: 0
+      divers . textile . pull . nombre: 0
+      numérique . ordinateur fixe . présent: non
+      numérique . TV . présent: non
+      numérique . home cinéma . présent: non
+      numérique . ordinateur portable . présent: non
+      numérique . téléphone . type: '''téléphone basique'''
+      numérique . téléphone . durée:
+        valeur: 4
+        unité: an
+      numérique . internet . durée journalière:
+        valeur: 2
+        unité: heure
 
 
 - nom: Corentin de Paris
