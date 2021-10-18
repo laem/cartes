@@ -7,7 +7,7 @@ import { PersonaGrid } from './Personas'
 export default ({}) => {
 	const history = useHistory()
 	return (
-		<div>
+		<div className="ui__ card light colored content" css="margin-top: 1.6rem">
 			<h1>Simulation manquante</h1>
 			<IllustratedMessage
 				inline

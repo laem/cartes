@@ -87,7 +87,7 @@ export default ({ display }) => {
 	if (tutorials.actions !== 'skip') {
 		const [value, unit] = humanWeight(bilans[0].nodeValue)
 		return (
-			<div>
+			<div className="ui__ card light colored content" css="margin-top: 1.6rem">
 				<h1 css="display: flex; align-items: center">
 					<img src={actionImg} css="width: 2rem" />
 					Passer à l'action !
