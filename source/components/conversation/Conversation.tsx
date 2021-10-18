@@ -50,8 +50,6 @@ export default function Conversation({
 	const rawRules = useSelector((state) => state.rules)
 	const previousSimulation = useSelector((state) => state.previousSimulation)
 
-	console.log('NEXT', nextQuestions)
-
 	const sortedQuestions = orderByCategories
 		? sortBy(
 				(question) =>
@@ -97,7 +95,6 @@ export default function Conversation({
 		) {
 			console.log('dispatch', currentQuestion)
 			dispatch(goToQuestion(currentQuestion))
-			window.scrollTo(0, 0)
 		}
 	}, [dispatch, currentQuestion, previousAnswers, unfoldedStep, objectifs])
 

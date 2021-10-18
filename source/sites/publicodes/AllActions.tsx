@@ -1,6 +1,6 @@
 import { EngineContext } from 'Components/utils/EngineContext'
 import { AnimatePresence, motion } from 'framer-motion'
-import React, { useContext, useState } from 'react'
+import React, { useContext, useEffect, useState } from 'react'
 import emoji from 'react-easy-emoji'
 import { useSelector } from 'react-redux'
 import { correctValue } from '../../components/publicodesUtils'
@@ -8,22 +8,11 @@ import { sortBy } from '../../utils'
 import ActionConversation from './ActionConversation'
 import { ActionListCard } from './ActionVignette'
 import animate from 'Components/ui/animate'
+import { ScrollToElement } from '../../components/utils/Scroll'
+import DisableScroll from '../../components/utils/DisableScroll'
 
 export default ({ actions, bilans, rules }) => {
 	const engine = useContext(EngineContext)
-	const missingVariables = actions.map(
-			(action) => engine.evaluate(action.dottedName).missingVariables ?? {}
-		),
-		scores = missingVariables
-			.map((part) => Object.entries(part))
-			.flat()
-			.reduce(
-				(scores, [dottedName, score]) => ({
-					...scores,
-					[dottedName]: (scores[dottedName] ?? 0) + score,
-				}),
-				{}
-			)
 
 	const actionChoices = useSelector((state) => state.actionChoices)
 	const [focusedAction, focusAction] = useState(null)
@@ -47,11 +36,16 @@ export default ({ actions, bilans, rules }) => {
 		{ nodeValue: 0 }
 	)
 
+	const focusedIndex = notRejected.findIndex(
+			(el) => el.dottedName === focusedAction
+		),
+		beforeFocused =
+			focusedIndex === 0 ? [] : notRejected.slice(0, focusedIndex - 1),
+		afterFocused =
+			focusedIndex === 0 ? notRejected : notRejected.slice(focusedIndex)
+
 	return (
 		<div>
-			{focusedAction && (
-				<ActionConversation key={focusedAction} dottedName={focusedAction} />
-			)}
 			<small
 				css={`
 					display: block;
@@ -78,17 +72,39 @@ export default ({ actions, bilans, rules }) => {
 					</div>
 				</animate.fromTop>
 			)}
-			<List
-				{...{
-					actions: notRejected,
-					rules,
-					bilans,
-					actionChoices,
+			<>
+				<List
+					{...{
+						actions: !focusedAction ? notRejected : beforeFocused,
+						rules,
+						bilans,
+						actionChoices,
 
-					focusAction,
-					focusedAction,
-				}}
-			/>
+						focusAction,
+						focusedAction,
+					}}
+				/>
+				{focusedAction && (
+					<div css="margin-top: 1rem">
+						<ScrollToElement />
+						<ActionConversation
+							key={focusedAction}
+							dottedName={focusedAction}
+						/>
+					</div>
+				)}
+				<List
+					{...{
+						actions: afterFocused,
+						rules,
+						bilans,
+						actionChoices,
+
+						focusAction,
+						focusedAction,
+					}}
+				/>
+			</>
 			{rejected.length > 0 && (
 				<div>
 					<h2>Actions écartées</h2>
@@ -144,7 +160,7 @@ const List = ({
 					animate={{ scale: 1 }}
 					initial={{ scale: 0.8 }}
 					exit={{ scale: 0.2 }}
-					transition={{ duration: 0.5 }}
+					transition={{ duration: 2 }}
 				>
 					<ActionListCard
 						focusAction={focusAction}
