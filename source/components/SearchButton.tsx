@@ -1,8 +1,7 @@
 import { useEffect, useState } from 'react'
 import emoji from 'react-easy-emoji'
 import { Trans } from 'react-i18next'
-import Overlay from './Overlay'
-import SearchBar from './SearchBar'
+import { Redirect } from 'react-router'
 
 type SearchButtonProps = {
 	invisibleButton?: boolean
@@ -28,13 +27,8 @@ export default function SearchButton({ invisibleButton }: SearchButtonProps) {
 	const close = () => setVisible(false)
 
 	return visible ? (
-		<Overlay onClose={close}>
-			<h1>
-				<Trans>Chercher dans la documentation</Trans>
-			</h1>
-			<SearchBar />
-		</Overlay>
-	) : invisibleButton ? null : (
+		<Redirect to="/documentation" />
+	) : (
 		<button
 			className="ui__ simple small button"
 			onClick={() => setVisible(true)}
