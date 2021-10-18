@@ -1,15 +1,12 @@
 import { explainVariable } from 'Actions/actions'
-import Overlay from 'Components/Overlay'
+import animate from 'Components/ui/animate'
 import { Markdown } from 'Components/utils/markdown'
-import { useContext } from 'react'
-import { useDispatch, useSelector } from 'react-redux'
-import { RootState } from 'Reducers/rootReducer'
 import { References } from 'publicodes-react'
 import { Trans } from 'react-i18next'
+import { useDispatch, useSelector } from 'react-redux'
+import { RootState } from 'Reducers/rootReducer'
 import './Aide.css'
-import { EngineContext } from 'Components/utils/EngineContext'
 import mosaicQuestions from './mosaicQuestions'
-import animate from 'Components/ui/animate'
 
 export default function Aide() {
 	const explained = useSelector((state: RootState) => state.explainedVariable)

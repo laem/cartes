@@ -8,6 +8,7 @@ import emoji from 'react-easy-emoji'
 import { Trans } from 'react-i18next'
 import { Explicable } from './Explicable'
 import { binaryQuestion, InputCommonProps, RuleInputProps } from './RuleInput'
+import animate from 'Components/ui/animate'
 
 /* Ceci est une saisie de type "radio" : l'utilisateur choisit une réponse dans
 	une liste, ou une liste de listes. Les données @choices sont un arbre de type:
@@ -179,25 +180,45 @@ type RadioLabelProps = RadioLabelContentProps & {
 	références?: Rule['références']
 }
 
-export const RadioLabel = (props: RadioLabelProps) => (
-	<>
-		<RadioLabelContent {...props} />
-		{props.description && (
-			<Explicable>
-				<h2>{props.label}</h2>
-				<Markdown source={props.description} />
-				{props.références && (
-					<>
-						<h3>
-							<Trans>En savoir plus</Trans>
-						</h3>
-						<References refs={props.références} />
-					</>
-				)}
-			</Explicable>
-		)}
-	</>
-)
+export const RadioLabel = (props: RadioLabelProps) => {
+	const [isOpen, setIsOpen] = useState(false)
+	return (
+		<div>
+			<RadioLabelContent {...props} />
+			{props.description && (
+				<>
+					<button
+						className="ui__ link-button"
+						onClick={() => setIsOpen(!isOpen)}
+						css={`
+							margin-left: 0.3rem !important;
+							vertical-align: middle;
+							font-size: 110% !important;
+						`}
+					>
+						{emoji('ℹ️')}
+					</button>
+					{isOpen && (
+						<animate.appear>
+							<div className="ui__ card box">
+								<h2>{props.label}</h2>
+								<Markdown source={props.description} />
+								{props.références && (
+									<>
+										<h3>
+											<Trans>En savoir plus</Trans>
+										</h3>
+										<References refs={props.références} />
+									</>
+								)}
+							</div>
+						</animate.appear>
+					)}
+				</>
+			)}
+		</div>
+	)
+}
 
 type RadioLabelContentProps = {
 	value: string
