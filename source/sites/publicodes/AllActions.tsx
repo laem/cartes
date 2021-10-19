@@ -12,11 +12,10 @@ import { ScrollToElement } from '../../components/utils/Scroll'
 import DisableScroll from '../../components/utils/DisableScroll'
 import IllustratedButton from '../../components/IllustratedButton'
 
-export default ({ actions, bilans, rules }) => {
+export default ({ actions, bilans, rules, focusedAction, focusAction }) => {
 	const engine = useContext(EngineContext)
 
 	const actionChoices = useSelector((state) => state.actionChoices)
-	const [focusedAction, focusAction] = useState(null)
 	const rejected = actions.filter((a) => actionChoices[a.dottedName] === false)
 	const notRejected = actions.filter(
 		(a) => actionChoices[a.dottedName] !== false

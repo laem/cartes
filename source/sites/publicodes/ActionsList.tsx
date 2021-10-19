@@ -55,6 +55,7 @@ export default ({ display }) => {
 		)
 
 	const actionChoices = useSelector((state) => state.actionChoices)
+	const [focusedAction, focusAction] = useState(null)
 
 	const sortedActionsByImpact = sortBy(
 			(a) => (radical ? 1 : -1) * correctValue(a)
@@ -66,7 +67,8 @@ export default ({ display }) => {
 				rules,
 				actionChoices
 			)
-			return !disabledAction(flatRule, action.nodeValue) && !superseded
+			const disabled = disabledAction(flatRule, action.nodeValue)
+			return !superseded && (action.dottedName === focusedAction || !disabled)
 		})
 
 	const finalActions = filterByCategory(interestingActions)
@@ -159,7 +161,15 @@ export default ({ display }) => {
 				</button>
 			</div>
 			{display === 'list' ? (
-				<AllActions {...{ actions: finalActions.reverse(), bilans, rules }} />
+				<AllActions
+					{...{
+						actions: finalActions.reverse(),
+						bilans,
+						rules,
+						focusedAction,
+						focusAction,
+					}}
+				/>
 			) : finalActions.length ? (
 				<ActionStack
 					key={category}
