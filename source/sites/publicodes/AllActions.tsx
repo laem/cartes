@@ -10,6 +10,7 @@ import { ActionListCard } from './ActionVignette'
 import animate from 'Components/ui/animate'
 import { ScrollToElement } from '../../components/utils/Scroll'
 import DisableScroll from '../../components/utils/DisableScroll'
+import IllustratedButton from '../../components/IllustratedButton'
 
 export default ({ actions, bilans, rules }) => {
 	const engine = useContext(EngineContext)
@@ -81,6 +82,17 @@ export default ({ actions, bilans, rules }) => {
 					/>
 				</div>
 			)}
+			<IllustratedButton icon="📚" to="/actions/plus">
+				<div>
+					<h3>Aller plus loin</h3>
+					<p>
+						<small>
+							Au-delà d'un simple chiffre, découvrez les enjeux qui se cachent
+							derrière chaque action.
+						</small>
+					</p>
+				</div>
+			</IllustratedButton>
 		</div>
 	)
 }
