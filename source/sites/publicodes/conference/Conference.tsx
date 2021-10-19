@@ -23,6 +23,7 @@ import Checkbox from '../../../components/ui/Checkbox'
 import ShareButton from '../../../components/ShareButton'
 import { ScrollToTop } from '../../../components/utils/Scroll'
 import { ThemeColorsContext } from '../../../components/utils/colors'
+import ConferenceBarLazy from './ConferenceBarLazy'
 
 export default () => {
 	const [rawElements, setElements] = useState([])
@@ -80,6 +81,7 @@ export default () => {
 
 	return (
 		<div>
+			<ConferenceBarLazy />
 			{room && <ScrollToTop />}
 			<h1>
 				{emoji('🏟️ ')} Conférence

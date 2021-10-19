@@ -12,6 +12,7 @@ import {
 } from 'Selectors/simulationSelectors'
 import styled from 'styled-components'
 import CarbonImpact from '../sites/publicodes/CarbonImpact'
+import ConferenceBarLazy from '../sites/publicodes/conference/ConferenceBarLazy'
 import { backgroundConferenceAnimation } from '../sites/publicodes/conference/conferenceStyle'
 
 export const actionImg = 'https://openmoji.org/data/black/svg/E10C.svg'
@@ -157,33 +158,35 @@ export default function SessionBar({
 			</Button>
 		),
 		conference?.room && (
-			<Button
-				className="simple small"
-				onClick={() => history.push('/conférence/' + conference.room)}
-				css={`
-					${buttonStyle('conf')}
-					${backgroundConferenceAnimation}
+			<div>
+				<Button
+					className="simple small"
+					onClick={() => history.push('/conférence/' + conference.room)}
+					css={`
+						${buttonStyle('conf')}
+						${backgroundConferenceAnimation}
 					color: white;
-					border-radius: 0.4rem;
-					padding: 0.4rem;
-					img {
-						filter: invert(1);
-						background: none;
-						margin: 0 0.6rem 0 0 !important;
-					}
-					@media (max-width: 800px) {
+						border-radius: 0.4rem;
+						padding: 0.4rem;
 						img {
-							margin: 0 !important;
+							filter: invert(1);
+							background: none;
+							margin: 0 0.6rem 0 0 !important;
 						}
-					}
-				`}
-			>
-				<img
-					src="https://openmoji.org/data/black/svg/1F3DF.svg"
-					css="width: 2rem"
-				/>
-				Conférence
-			</Button>
+						@media (max-width: 800px) {
+							img {
+								margin: 0 !important;
+							}
+						}
+					`}
+				>
+					<img
+						src="https://openmoji.org/data/black/svg/1F3DF.svg"
+						css="width: 2rem"
+					/>
+					Conférence
+				</Button>
+			</div>
 		),
 	]
 
