@@ -1,4 +1,3 @@
-import SessionBar from 'Components/SessionBar'
 import ShareButton from 'Components/ShareButton'
 import { findContrastedTextColor } from 'Components/utils/colors'
 import { AnimatePresence, motion } from 'framer-motion'
@@ -16,7 +15,6 @@ import { Link } from 'react-router-dom'
 import { useSpring } from 'react-spring'
 import tinygradient from 'tinygradient'
 import { goToQuestion } from '../../actions/actions'
-import { sessionBarMargin } from '../../components/SessionBar'
 import { IframeOptionsContext } from '../../components/utils/IframeOptionsProvider'
 import Meta from '../../components/utils/Meta'
 import { answeredQuestionsSelector } from '../../selectors/simulationSelectors'
@@ -319,8 +317,8 @@ const ActionButton = ({ text }) => (
 			width: 90%;
 
 			img {
-				transform: scaleX(-1);
-				height: 2rem;
+				height: 2.6rem;
+				filter: invert(100%);
 				margin: 0 0.6rem;
 				display: inline-block;
 			}
@@ -338,7 +336,15 @@ const ActionButton = ({ text }) => (
 				width: 100%;
 			`}
 		>
-			<img src={StartingBlock} />
+			<motion.div
+				animate={{
+					rotate: [0, 15, -15, 0],
+					y: [0, 0, 0, -3, 8, 3],
+				}}
+				transition={{ duration: 2, delay: 4 }}
+			>
+				<img src={actionImg} />
+			</motion.div>
 			{text}
 		</div>
 	</Link>
