@@ -16,6 +16,7 @@ import ConferenceBarLazy from '../sites/publicodes/conference/ConferenceBarLazy'
 import { backgroundConferenceAnimation } from '../sites/publicodes/conference/conferenceStyle'
 
 export const actionImg = 'https://openmoji.org/data/black/svg/E10C.svg'
+export const conferenceImg = 'https://openmoji.org/data/black/svg/1F3DF.svg'
 
 const Button = styled.button`
 	margin: 0 0.2rem;
@@ -185,13 +186,18 @@ export default function SessionBar({
 						}
 					`}
 				>
-					<img
-						src="https://openmoji.org/data/black/svg/1F3DF.svg"
-						css="width: 2rem"
-					/>
+					<img src={conferenceImg} css="width: 2rem" />
 					Conférence
 				</Button>
-				<ConferenceBarLazy />
+				<div
+					css={`
+						@media (max-width: 800px) {
+							display: none;
+						}
+					`}
+				>
+					<ConferenceBarLazy />
+				</div>
 			</div>
 		),
 	]

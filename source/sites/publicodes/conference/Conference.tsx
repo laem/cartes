@@ -1,29 +1,27 @@
-import { useContext, useEffect, useRef, useState } from 'react'
+import { usePersistingState } from 'Components/utils/persistState'
 import QRCode from 'qrcode.react'
+import { useContext, useEffect, useRef, useState } from 'react'
 import emoji from 'react-easy-emoji'
 import { useDispatch, useSelector } from 'react-redux'
 import { useParams } from 'react-router'
 import { Link } from 'react-router-dom'
 import { WebrtcProvider } from 'y-webrtc'
 import * as Y from 'yjs'
-import { usePersistingState } from 'Components/utils/persistState'
-import fruits from './fruits.json'
-import UserList from './UserList'
-import { mean } from 'ramda'
-import Stats from './Stats'
-import {
-	stringToColour,
-	getRandomInt,
-	generateRoomName,
-	filterExtremes,
-	extremeThreshold,
-	getExtremes,
-} from './utils'
-import Checkbox from '../../../components/ui/Checkbox'
+import { conferenceImg } from '../../../components/SessionBar'
 import ShareButton from '../../../components/ShareButton'
-import { ScrollToTop } from '../../../components/utils/Scroll'
 import { ThemeColorsContext } from '../../../components/utils/colors'
-import ConferenceBarLazy from './ConferenceBarLazy'
+import { ScrollToTop } from '../../../components/utils/Scroll'
+import fruits from './fruits.json'
+import Stats from './Stats'
+import UserList from './UserList'
+import {
+	extremeThreshold,
+	filterExtremes,
+	generateRoomName,
+	getExtremes,
+	getRandomInt,
+	stringToColour,
+} from './utils'
 
 export default () => {
 	const [rawElements, setElements] = useState([])
@@ -83,7 +81,7 @@ export default () => {
 		<div>
 			{room && <ScrollToTop />}
 			<h1>
-				{emoji('🏟️ ')} Conférence
+				Conférence
 				<span
 					css={`
 						margin-left: 1rem;
@@ -96,6 +94,23 @@ export default () => {
 					beta
 				</span>
 			</h1>
+			<h2
+				css={`
+					margin-top: 0.6rem;
+					@media (min-width: 800px) {
+						display: none;
+					}
+					> img {
+						width: 4rem;
+					}
+					display: flex;
+					align-items: center;
+					font-size: 120%;
+				`}
+			>
+				<img src={conferenceImg} />
+				<span css="text-transform: uppercase">«&nbsp;{room}&nbsp;»</span>
+			</h2>
 			<Stats {...{ elements, users, username }} />
 
 			{room && (
