@@ -36,14 +36,6 @@ export default ({ actions, bilans, rules }) => {
 		{ nodeValue: 0 }
 	)
 
-	const focusedIndex = notRejected.findIndex(
-			(el) => el.dottedName === focusedAction
-		),
-		beforeFocused =
-			focusedIndex === 0 ? [] : notRejected.slice(0, focusedIndex - 1),
-		afterFocused =
-			focusedIndex === 0 ? notRejected : notRejected.slice(focusedIndex)
-
 	return (
 		<div>
 			<small
@@ -72,39 +64,17 @@ export default ({ actions, bilans, rules }) => {
 					</div>
 				</animate.fromTop>
 			)}
-			<>
-				<List
-					{...{
-						actions: !focusedAction ? notRejected : beforeFocused,
-						rules,
-						bilans,
-						actionChoices,
+			<List
+				{...{
+					actions: notRejected,
+					rules,
+					bilans,
+					actionChoices,
 
-						focusAction,
-						focusedAction,
-					}}
-				/>
-				{focusedAction && (
-					<div css="margin-top: 1rem">
-						<ScrollToElement />
-						<ActionConversation
-							key={focusedAction}
-							dottedName={focusedAction}
-						/>
-					</div>
-				)}
-				<List
-					{...{
-						actions: afterFocused,
-						rules,
-						bilans,
-						actionChoices,
-
-						focusAction,
-						focusedAction,
-					}}
-				/>
-			</>
+					focusAction,
+					focusedAction,
+				}}
+			/>
 			{rejected.length > 0 && (
 				<div>
 					<h2>Actions écartées</h2>
@@ -153,25 +123,72 @@ const List = ({
 		`}
 	>
 		<AnimatePresence>
-			{actions.map((evaluation) => (
-				<motion.li
-					key={evaluation.dottedName}
-					layoutId={evaluation.dottedName}
-					animate={{ scale: 1 }}
-					initial={{ scale: 0.8 }}
-					exit={{ scale: 0.2 }}
-					transition={{ duration: 2 }}
-				>
-					<ActionListCard
-						focusAction={focusAction}
-						focused={focusedAction === evaluation.dottedName}
+			{actions.map((evaluation) => {
+				const cardComponent = (
+					<motion.li
 						key={evaluation.dottedName}
-						rule={rules[evaluation.dottedName]}
-						evaluation={evaluation}
-						total={bilans.length ? bilans[0].nodeValue : null}
-					/>
-				</motion.li>
-			))}
+						layoutId={evaluation.dottedName}
+						animate={{ scale: 1 }}
+						initial={{ scale: 0.8 }}
+						exit={{ scale: 0.2 }}
+						transition={{ duration: 1 }}
+					>
+						<ActionListCard
+							focusAction={focusAction}
+							focused={focusedAction === evaluation.dottedName}
+							key={evaluation.dottedName}
+							rule={rules[evaluation.dottedName]}
+							evaluation={evaluation}
+							total={bilans.length ? bilans[0].nodeValue : null}
+						/>
+					</motion.li>
+				)
+				if (focusedAction === evaluation.dottedName) {
+					const convId = 'conv'
+					return (
+						<>
+							<motion.li
+								key={convId}
+								layoutId={convId}
+								animate={{ scale: 1 }}
+								initial={{ scale: 0.8 }}
+								exit={{ scale: 0.2 }}
+								transition={{ duration: 0.5 }}
+								css={`
+									margin-top: 1.6rem 1rem 1rem;
+									width: 100% !important;
+									height: auto !important;
+								`}
+							>
+								<ScrollToElement>
+									<ActionConversation
+										key={focusedAction}
+										dottedName={focusedAction}
+									/>
+								</ScrollToElement>
+							</motion.li>
+							<motion.li
+								key={evaluation.dottedName}
+								layoutId={evaluation.dottedName}
+								animate={{ scale: 1 }}
+								initial={{ scale: 0.8 }}
+								exit={{ scale: 0.2 }}
+								transition={{ duration: 0.5 }}
+							>
+								<ActionListCard
+									focusAction={focusAction}
+									focused={focusedAction === evaluation.dottedName}
+									key={evaluation.dottedName}
+									rule={rules[evaluation.dottedName]}
+									evaluation={evaluation}
+									total={bilans.length ? bilans[0].nodeValue : null}
+								/>
+							</motion.li>
+						</>
+					)
+				}
+				return cardComponent
+			})}
 		</AnimatePresence>
 	</ul>
 )
