@@ -1,12 +1,11 @@
 import ShareButton from 'Components/ShareButton'
 import { findContrastedTextColor } from 'Components/utils/colors'
-import { AnimatePresence, motion } from 'framer-motion'
+import { AnimatePresence, motion, useSpring } from 'framer-motion'
 import { default as React, useContext, useEffect, useState } from 'react'
 import emoji from 'react-easy-emoji'
 import { useDispatch, useSelector } from 'react-redux'
 import { useLocation } from 'react-router'
 import { Link } from 'react-router-dom'
-import { useSpring } from 'react-spring'
 import tinygradient from 'tinygradient'
 import { goToQuestion } from '../../actions/actions'
 import { IframeOptionsContext } from '../../components/utils/IframeOptionsProvider'
@@ -17,6 +16,8 @@ import Chart from './chart'
 import DefaultFootprint from './DefaultFootprint'
 import IframeDataShareModal from './IframeDataShareModal'
 import BallonGES from './images/ballonGES.svg'
+import animate from 'Components/ui/animate'
+import { actionImg } from '../../components/SessionBar'
 
 const gradient = tinygradient([
 		'#78e08f',

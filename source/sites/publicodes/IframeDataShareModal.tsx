@@ -54,27 +54,23 @@ export default ({ data }) => {
 
 	if (!isOpen) return null
 	return (
-		<Overlay onClose={onClose}>
-			<div className="">
-				<div className="">
-					<h2>Partage de vos résultats à {parent} ?</h2>
-					<p>{text}</p>
-					<div
-						css={`
-							display: flex;
-							justify-content: space-evenly;
-							padding: 1rem;
-						`}
-					>
-						<button onClick={onAccept} className="ui__ plain button">
-							{emoji('👍')} Accepter
-						</button>
-						<button onClick={onReject} className="ui__ button ">
-							{emoji('👎')} refuser
-						</button>
-					</div>
-				</div>
+		<div>
+			<h2>Partage de vos résultats à {parent} ?</h2>
+			<p>{text}</p>
+			<div
+				css={`
+					display: flex;
+					justify-content: space-evenly;
+					padding: 1rem;
+				`}
+			>
+				<button onClick={onAccept} className="ui__ plain button">
+					{emoji('👍')} Accepter
+				</button>
+				<button onClick={onReject} className="ui__ button ">
+					{emoji('👎')} refuser
+				</button>
 			</div>
-		</Overlay>
+		</div>
 	)
 }
