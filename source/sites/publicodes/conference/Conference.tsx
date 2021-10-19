@@ -81,7 +81,6 @@ export default () => {
 
 	return (
 		<div>
-			<ConferenceBarLazy />
 			{room && <ScrollToTop />}
 			<h1>
 				{emoji('🏟️ ')} Conférence
@@ -310,7 +309,7 @@ const Instructions = ({ room, newRoom, setNewRoom }) => {
 				<InstructionBlock index="5" title="Prêt à démarrer ?">
 					<p>
 						<Link to={'/conférence/' + newRoom}>
-							<button type="submit" className="ui__ button small plain">
+							<button type="submit" className="ui__ button plain">
 								C'est parti !{' '}
 							</button>
 						</Link>

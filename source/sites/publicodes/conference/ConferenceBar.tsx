@@ -92,11 +92,16 @@ export default () => {
 						font-size: 150%;
 						margin-right: 0.4rem !important;
 					}
+					@media (min-width: 800px) {
+						flex-direction: column;
+						align-items: start;
+						> * {
+							margin: 0.3rem 0;
+						}
+					}
 				`}
 			>
-				<span css="text-transform: uppercase">
-					{emoji('🏟️')}« {room} »
-				</span>
+				<span css="text-transform: uppercase">«&nbsp;{room}&nbsp;»</span>
 				<span>
 					{emoji('🧮')} {result}
 				</span>

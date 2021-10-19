@@ -158,16 +158,21 @@ export default function SessionBar({
 			</Button>
 		),
 		conference?.room && (
-			<div>
+			<div
+				css={`
+					${backgroundConferenceAnimation}
+					color: white;
+					border-radius: 0.4rem;
+					margin-right: 0.6rem;
+				`}
+			>
 				<Button
 					className="simple small"
 					onClick={() => history.push('/conférence/' + conference.room)}
 					css={`
 						${buttonStyle('conf')}
-						${backgroundConferenceAnimation}
-					color: white;
-						border-radius: 0.4rem;
 						padding: 0.4rem;
+						color: white;
 						img {
 							filter: invert(1);
 							background: none;
@@ -186,6 +191,7 @@ export default function SessionBar({
 					/>
 					Conférence
 				</Button>
+				<ConferenceBarLazy />
 			</div>
 		),
 	]
