@@ -1,11 +1,9 @@
 import { Link } from 'react-router-dom'
 import SessionBar from 'Components/SessionBar'
-import ConferenceBarLazy from './conference/ConferenceBarLazy'
 import Logo, { InlineLogo } from './Logo'
 
 export default ({ isHomePage }) => (
 	<>
-		<ConferenceBarLazy />
 		<nav
 			css={`
 				display: flex;
