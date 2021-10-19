@@ -160,12 +160,11 @@ const List = ({
 									height: auto !important;
 								`}
 							>
-								<ScrollToElement>
-									<ActionConversation
-										key={focusedAction}
-										dottedName={focusedAction}
-									/>
-								</ScrollToElement>
+								<ActionConversation
+									key={focusedAction}
+									dottedName={focusedAction}
+								/>
+								<ScrollToElement delay={1000} center />
 							</motion.li>
 							<motion.li
 								key={evaluation.dottedName}

@@ -45,6 +45,8 @@ export function ScrollToElement({
 	behavior = 'smooth',
 	children,
 	style,
+	delay = 0,
+	center,
 	...otherProps
 }: ScrollToElementProps) {
 	const ref = useRef<HTMLDivElement>(null)
@@ -61,7 +63,7 @@ export function ScrollToElement({
 		try {
 			ref.current?.scrollIntoView({
 				behavior,
-				block: 'nearest',
+				block: center ? 'center' : 'nearest',
 				inline: 'nearest',
 			})
 		} catch (error) {
@@ -70,7 +72,7 @@ export function ScrollToElement({
 			})
 		}
 	}
-	useEffect(scrollIfNeeded)
+	useEffect(() => setTimeout(scrollIfNeeded, delay))
 
 	return (
 		<div
