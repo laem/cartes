@@ -83,6 +83,7 @@ export default ({}) => {
 
 	return (
 		<div>
+			<IframeDataShareModal data={rehydratedDetails} />
 			<Link
 				to="/simulateur/bilan"
 				css="display: block; text-align: center"
@@ -102,7 +103,6 @@ export default ({}) => {
 					headlessMode={headlessMode}
 				/>
 			</animate.appear>
-			<IframeDataShareModal data={rehydratedDetails} />
 		</div>
 	)
 }

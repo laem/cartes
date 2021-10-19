@@ -36,7 +36,9 @@ export default ({ data }) => {
 	}
 	if (!inIframe() || !document.referrer || !iframeOptions?.iframeShareData)
 		return null
-	const parent = new URL(document.referrer).hostname
+	const parent = document.referrer
+		? new URL(document.referrer).hostname
+		: 'parent'
 	const text = (
 		<div>
 			<p>
