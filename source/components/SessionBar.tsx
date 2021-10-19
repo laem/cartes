@@ -140,7 +140,7 @@ export default function SessionBar({
 			/>
 			Mon profil
 		</Button>,
-		(true || NODE_ENV === 'development') && (
+		NODE_ENV === 'development' && (
 			<Button
 				key="personas"
 				className="simple small"
