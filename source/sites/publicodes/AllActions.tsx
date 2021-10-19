@@ -38,15 +38,6 @@ export default ({ actions, bilans, rules }) => {
 
 	return (
 		<div>
-			<small
-				css={`
-					display: block;
-					text-align: center;
-				`}
-			>
-				{actions.length} actions disponibles.
-			</small>
-
 			{maxImpactAction.value < 100 && (
 				<animate.fromTop>
 					<div

@@ -2,7 +2,7 @@ import { splitName } from 'Components/publicodesUtils'
 import { EngineContext } from 'Components/utils/EngineContext'
 import { utils } from 'publicodes'
 import { partition } from 'ramda'
-import React, { useContext } from 'react'
+import React, { useContext, useState } from 'react'
 import emoji from 'react-easy-emoji'
 import { useDispatch, useSelector } from 'react-redux'
 import { Link } from 'react-router-dom'
@@ -34,7 +34,7 @@ export default ({ display }) => {
 		answeredQuestions = useSelector(answeredQuestionsSelector)
 	const flatActions = rules['actions']
 
-	const radical = true
+	const [radical, setRadical] = useState(true)
 
 	const simulation = useSelector((state) => state.simulation)
 	const tutorials = useSelector((state) => state.tutorials)
@@ -136,6 +136,28 @@ export default ({ display }) => {
 				selected={category}
 				countByCategory={countByCategory}
 			/>
+
+			<div
+				css={`
+					display: block;
+					text-align: center;
+				`}
+			>
+				<small>{actions.length} actions disponibles.</small>{' '}
+				<small>Triées par :</small>{' '}
+				<button
+					onClick={() => setRadical(!radical)}
+					className="ui__ dashed-button"
+					css="color: var(--lighterTextColor); font-size: 85% !important"
+				>
+					{radical ? (
+						<span>le plus d'impact </span>
+					) : (
+						<span>le moins d'impact</span>
+					)}
+					.
+				</button>
+			</div>
 			{display === 'list' ? (
 				<AllActions {...{ actions: finalActions.reverse(), bilans, rules }} />
 			) : finalActions.length ? (
