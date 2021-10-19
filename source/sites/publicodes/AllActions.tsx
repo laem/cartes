@@ -109,16 +109,6 @@ const List = ({
 			align-items: center;
 			flex-wrap: wrap;
 			list-style-type: none;
-			li {
-				width: 11rem;
-				height: 16rem;
-				margin: 0.4rem;
-			}
-			@media (min-width: 800px) {
-				li {
-					width: 12rem;
-				}
-			}
 			padding-left: 0;
 		`}
 	>
@@ -132,6 +122,15 @@ const List = ({
 						initial={{ scale: 0.8 }}
 						exit={{ scale: 0.2 }}
 						transition={{ duration: 1 }}
+						css={`
+							width: 11rem;
+							height: 16rem;
+							margin: 0.4rem;
+
+							@media (min-width: 800px) {
+								width: 12rem;
+							}
+						`}
 					>
 						<ActionListCard
 							focusAction={focusAction}
@@ -156,8 +155,8 @@ const List = ({
 								transition={{ duration: 0.5 }}
 								css={`
 									margin-top: 1.6rem 1rem 1rem;
-									width: 100% !important;
-									height: auto !important;
+									width: 100%;
+									height: auto;
 								`}
 							>
 								<ActionConversation
@@ -166,23 +165,7 @@ const List = ({
 								/>
 								<ScrollToElement delay={1000} center />
 							</motion.li>
-							<motion.li
-								key={evaluation.dottedName}
-								layoutId={evaluation.dottedName}
-								animate={{ scale: 1 }}
-								initial={{ scale: 0.8 }}
-								exit={{ scale: 0.2 }}
-								transition={{ duration: 0.5 }}
-							>
-								<ActionListCard
-									focusAction={focusAction}
-									focused={focusedAction === evaluation.dottedName}
-									key={evaluation.dottedName}
-									rule={rules[evaluation.dottedName]}
-									evaluation={evaluation}
-									total={bilans.length ? bilans[0].nodeValue : null}
-								/>
-							</motion.li>
+							{cardComponent}
 						</>
 					)
 				}
