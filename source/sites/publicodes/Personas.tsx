@@ -59,7 +59,6 @@ export const PersonaGrid = ({ additionnalOnClick }) => {
 	const dispatch = useDispatch(),
 		objectif = 'bilan'
 	const persona = useSelector((state) => state.simulation?.persona)
-	console.log(persona, personas)
 	const situation = useSelector(situationSelector)
 
 	const [warning, setWarning] = useState(false)
@@ -77,7 +76,8 @@ export const PersonaGrid = ({ additionnalOnClick }) => {
 			})
 		)
 	}
-	if (Object.keys(situation).length > 0 && warning)
+	const hasSituation = Object.keys(situation).length
+	if (warning)
 		return (
 			<IllustratedMessage
 				emoji="⚠️"
@@ -120,7 +120,12 @@ export const PersonaGrid = ({ additionnalOnClick }) => {
 									: ``}
 							`}
 						>
-							<Link to={'#'} onClick={() => setWarning(persona)}>
+							<Link
+								to={'#'}
+								onClick={() =>
+									hasSituation ? setWarning(persona) : setPersona(persona)
+								}
+							>
 								<div>{emoji(icônes || '👥')}</div>
 								<div>{nom}</div>
 							</Link>
