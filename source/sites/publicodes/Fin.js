@@ -1,21 +1,23 @@
-import SessionBar from 'Components/SessionBar'
 import ShareButton from 'Components/ShareButton'
 import { findContrastedTextColor } from 'Components/utils/colors'
-import { AnimatePresence, motion } from 'framer-motion'
-import React, { useContext } from 'react'
+import { AnimatePresence, motion, useSpring } from 'framer-motion'
+import { default as React, useContext, useEffect, useState } from 'react'
 import emoji from 'react-easy-emoji'
+import { useDispatch, useSelector } from 'react-redux'
 import { useLocation } from 'react-router'
 import { Link } from 'react-router-dom'
-import { animated, useSpring } from 'react-spring'
 import tinygradient from 'tinygradient'
-import { sessionBarMargin } from '../../components/SessionBar'
+import { goToQuestion } from '../../actions/actions'
 import { IframeOptionsContext } from '../../components/utils/IframeOptionsProvider'
 import Meta from '../../components/utils/Meta'
+import { answeredQuestionsSelector } from '../../selectors/simulationSelectors'
+import { last } from '../../utils'
 import Chart from './chart'
 import DefaultFootprint from './DefaultFootprint'
 import IframeDataShareModal from './IframeDataShareModal'
 import BallonGES from './images/ballonGES.svg'
-import StartingBlock from './images/starting block.svg'
+import animate from 'Components/ui/animate'
+import { actionImg } from '../../components/SessionBar'
 
 const gradient = tinygradient([
 		'#78e08f',
@@ -55,28 +57,57 @@ export default ({}) => {
 	const headlessMode =
 		!window || window.navigator.userAgent.includes('HeadlessChrome')
 
-	const { value } = headlessMode
-		? { value: score }
-		: useSpring({
-				config: { mass: 1, tension: 150, friction: 150, precision: 1000 },
-				value: score,
-				from: { value: 0 },
-		  })
+	//	Configuration is try and test, feeling, really
+	const valueSpring = useSpring(0, {
+		mass: 10,
+		tension: 10,
+		stiffness: 50,
+		friction: 500,
+		damping: 60,
+	})
+
+	const [value, setValue] = useState(0)
+
+	useEffect(() => {
+		const unsubscribe = valueSpring.onChange((v) => {
+			setValue(v)
+		})
+
+		headlessMode ? setValue(score) : valueSpring.set(score)
+
+		return () => unsubscribe()
+	})
+
+	const dispatch = useDispatch(),
+		answeredQuestions = useSelector(answeredQuestionsSelector)
 
 	return (
 		<div>
-			<AnimatedDiv
-				value={value}
-				score={score}
-				details={Object.fromEntries(rehydratedDetails)}
-				headlessMode={headlessMode}
-			/>
 			<IframeDataShareModal data={rehydratedDetails} />
+			<Link
+				to="/simulateur/bilan"
+				css="display: block; text-align: center"
+				onClick={() => {
+					dispatch(goToQuestion(last(answeredQuestions)))
+				}}
+			>
+				<button class="ui__ simple small push-left button">
+					← Revenir à la simulation
+				</button>
+			</Link>
+			<animate.appear>
+				<AnimatedDiv
+					value={value}
+					score={score}
+					details={Object.fromEntries(rehydratedDetails)}
+					headlessMode={headlessMode}
+				/>
+			</animate.appear>
 		</div>
 	)
 }
 
-const AnimatedDiv = animated(({ score, value, details, headlessMode }) => {
+const AnimatedDiv = ({ score, value, details, headlessMode }) => {
 	const backgroundColor = getBackgroundColor(value).toHexString(),
 		backgroundColor2 = getBackgroundColor(value + 2000).toHexString(),
 		textColor = findContrastedTextColor(backgroundColor, true),
@@ -103,7 +134,6 @@ const AnimatedDiv = animated(({ score, value, details, headlessMode }) => {
 				padding: 0 0.3rem 1rem;
 				max-width: 600px;
 				margin: 0 auto;
-				${sessionBarMargin}
 			`}
 		>
 			<Meta
@@ -112,7 +142,6 @@ const AnimatedDiv = animated(({ score, value, details, headlessMode }) => {
 				image={shareImage}
 				url={window.location}
 			/>
-			<SessionBar noResults />
 			<motion.div
 				animate={{ scale: [0.9, 1] }}
 				transition={{ duration: headlessMode ? 0 : 0.6 }}
@@ -223,6 +252,7 @@ const AnimatedDiv = animated(({ score, value, details, headlessMode }) => {
 					<div css="padding: 1rem">
 						<Chart
 							details={details}
+							links
 							color={textColor}
 							noAnimation
 							noText
@@ -270,7 +300,7 @@ const AnimatedDiv = animated(({ score, value, details, headlessMode }) => {
 			</motion.div>
 		</div>
 	)
-})
+}
 
 const ActionButton = ({ text }) => (
 	<Link
@@ -281,8 +311,8 @@ const ActionButton = ({ text }) => (
 			width: 90%;
 
 			img {
-				transform: scaleX(-1);
-				height: 2rem;
+				height: 2.6rem;
+				filter: invert(100%);
 				margin: 0 0.6rem;
 				display: inline-block;
 			}
@@ -300,7 +330,15 @@ const ActionButton = ({ text }) => (
 				width: 100%;
 			`}
 		>
-			<img src={StartingBlock} />
+			<motion.div
+				animate={{
+					rotate: [0, 15, -15, 0],
+					y: [0, 0, 0, -3, 8, 3],
+				}}
+				transition={{ duration: 2, delay: 4 }}
+			>
+				<img src={actionImg} />
+			</motion.div>
 			{text}
 		</div>
 	</Link>

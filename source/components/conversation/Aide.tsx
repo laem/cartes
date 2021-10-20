@@ -1,13 +1,11 @@
 import { explainVariable } from 'Actions/actions'
-import Overlay from 'Components/Overlay'
+import animate from 'Components/ui/animate'
 import { Markdown } from 'Components/utils/markdown'
-import { useContext } from 'react'
-import { useDispatch, useSelector } from 'react-redux'
-import { RootState } from 'Reducers/rootReducer'
 import { References } from 'publicodes-react'
 import { Trans } from 'react-i18next'
+import { useDispatch, useSelector } from 'react-redux'
+import { RootState } from 'Reducers/rootReducer'
 import './Aide.css'
-import { EngineContext } from 'Components/utils/EngineContext'
 import mosaicQuestions from './mosaicQuestions'
 
 export default function Aide() {
@@ -27,13 +25,17 @@ export default function Aide() {
 		refs = rule.références
 
 	return (
-		<Overlay onClose={stopExplaining}>
+		<animate.fromTop>
 			<div
 				css={`
 					padding: 0.6rem;
+					position: relative;
+					> button {
+						text-align: right;
+					}
 				`}
 			>
-				<h2>{rule.title}</h2>
+				{rule.title && <h2>{rule.title}</h2>}
 				<Markdown source={text} />
 				{refs && (
 					<>
@@ -43,7 +45,10 @@ export default function Aide() {
 						<References refs={refs} />
 					</>
 				)}
+				<button onClick={stopExplaining} className="ui__ button simple">
+					Refermer
+				</button>
 			</div>
-		</Overlay>
+		</animate.fromTop>
 	)
 }

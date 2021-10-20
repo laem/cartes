@@ -6,14 +6,18 @@ import { debounce } from '../utils'
 import safeLocalStorage from './safeLocalStorage'
 import { deserialize, serialize } from './serializeSimulation'
 
-const VERSION = 1.1
+const VERSION = 2
 
 const LOCAL_STORAGE_KEY = 'ecolab-climat::persisted-simulation::v' + VERSION
 
 export function persistSimulation(store: Store<RootState, Action>) {
 	const listener = () => {
 		const state = store.getState()
-		if (!state.simulation?.foldedSteps.length) {
+		if (
+			!state.simulation?.foldedSteps?.length &&
+			!Object.keys(state.actionChoices).length &&
+			!Object.values(state.tutorials)
+		) {
 			return
 		}
 		safeLocalStorage.setItem(LOCAL_STORAGE_KEY, serialize(state))

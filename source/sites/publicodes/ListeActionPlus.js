@@ -61,6 +61,9 @@ export const CardGrid = styled.ul`
 	flex-wrap: wrap;
 	li {
 		margin: 0.6rem;
+		@media (max-width: 800px) {
+			margin: 0.4rem;
+		}
 		text-align: center;
 	}
 	li > a {

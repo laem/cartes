@@ -109,7 +109,9 @@ section {
 
 .ui__.container {
 	width: 100%;
-	max-width: 850px;
+	max-width: calc(
+		14rem + 1rem + 850px
+	); /* accomodate for the left navigation bar and margin on desktop */
 	margin-right: auto;
 	margin-left: auto;
 	padding-right: 0.6rem;

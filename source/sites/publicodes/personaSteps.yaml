@@ -1,0 +1,77 @@
+- alimentation . déchets . niveau d'engagement
+- alimentation . petit déjeuner . type
+- alimentation . boisson . sucrées . litres
+- alimentation . boisson . alcool . litres
+- alimentation . boisson . eau en bouteille . affirmatif
+- alimentation . plats . végétalien . nombre
+- alimentation . plats . végétarien . nombre
+- alimentation . plats . viande 1 . nombre
+- alimentation . plats . viande 2 . nombre
+- transport . voiture . km
+- transport . voiture . gabarit
+- transport . voiture . propriétaire
+- transport . voiture . âge
+- transport . voiture . motorisation
+- transport . voiture . voyageurs
+- transport . voiture . thermique . consommation aux 100
+- transport . deux roues thermique . usager
+- transport . deux roues thermique . type
+- transport . deux roues thermique . km
+- transport . avion . usager
+- transport . avion . court courrier . heures de vol
+- transport . avion . moyen courrier . heures de vol
+- transport . avion . long courrier . heures de vol
+- transport . bus . heures par semaine
+- transport . train . km
+- transport . métro ou tram . heures par semaine
+- transport . vélo . km
+- logement . âge
+- logement . éco-construit
+- logement . appartement
+- logement . surface
+- logement . habitants
+- logement . gaz . chauffage au gaz
+- logement . gaz . consommation
+- logement . électricité . consommation
+- logement . fioul . chauffage au fioul
+- logement . bois . chauffage au bois
+- divers . électroménager . préservation
+- divers . électroménager . réfrigérateur . présent
+- divers . électroménager . mini réfrigérateur . présent
+- divers . électroménager . lave-linge . présent
+- divers . électroménager . sèche-linge . présent
+- divers . électroménager . lave-vaisselle . présent
+- divers . électroménager . four . présent
+- divers . électroménager . micro-ondes . présent
+- divers . électroménager . plaques . présent
+- divers . électroménager . bouilloire . présent
+- divers . électroménager . cafetière . présent
+- divers . électroménager . aspirateur . présent
+- divers . électroménager . robot cuisine . présent
+- divers . électroménager . tondeuse électrique . présent
+- divers . autres produits . montant
+- divers . textile . t-shirt . nombre
+- divers . textile . pantalon . nombre
+- divers . textile . short . nombre
+- divers . textile . sweat . nombre
+- divers . textile . robe . nombre
+- divers . textile . chemise . nombre
+- divers . textile . pull . nombre
+- divers . textile . chaussure . nombre
+- divers . textile . manteau . nombre
+- divers . textile . petit article . nombre
+- divers . textile . gros article . nombre
+- numérique . appareil photo . présent
+- numérique . home cinéma . présent
+- numérique . ordinateur portable . présent
+- numérique . ordinateur fixe . présent
+- numérique . téléphone . présent
+- numérique . tablette . présent
+- numérique . TV . présent
+- numérique . vidéoprojecteur . présent
+- numérique . téléphone . type
+- numérique . téléphone . durée
+- numérique . ordinateur fixe . durée
+- numérique . internet . durée journalière
+- numérique . TV . durée
+- numérique . ordinateur portable . durée

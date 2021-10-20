@@ -1,10 +1,11 @@
 import Route404 from 'Components/Route404'
+import { sessionBarMargin } from 'Components/SessionBar'
 import 'Components/ui/index.css'
 import News from 'Pages/News'
 import React, { Suspense } from 'react'
 import { useTranslation } from 'react-i18next'
 import { Redirect, useLocation } from 'react-router'
-import { Link, Route, Switch } from 'react-router-dom'
+import { Route, Switch } from 'react-router-dom'
 import Provider from '../../Provider'
 import {
 	persistSimulation,
@@ -12,19 +13,20 @@ import {
 } from '../../storage/persistSimulation'
 import Tracker, { devTracker } from '../../Tracker'
 import About from './About'
-import Diffuser from './Diffuser'
 import Actions from './Actions'
 import Contribution from './Contribution'
+import Diffuser from './Diffuser'
 import Fin from './Fin'
 import Landing from './Landing'
-import Logo, { InlineLogo } from './Logo'
+import Logo from './Logo'
+import Navigation from './Navigation'
 import Documentation from './pages/Documentation'
 import Personas from './Personas.tsx'
 import Privacy from './Privacy'
+import Profil from './Profil.tsx'
 import Simulateur from './Simulateur'
 import sitePaths from './sitePaths'
 const ConferenceLazy = React.lazy(() => import('./conference/Conference'))
-import ConferenceBarLazy from './conference/ConferenceBarLazy'
 
 let tracker = devTracker
 if (NODE_ENV === 'production') {
@@ -45,6 +47,7 @@ export default function Root({}) {
 		document?.location.search.substring(1)
 	).get('shareData')
 
+	const persistedSimulation = retrievePersistedSimulation()
 	return (
 		<Provider
 			tracker={tracker}
@@ -56,8 +59,10 @@ export default function Root({}) {
 			}}
 			initialStore={{
 				//...retrievePersistedState(),
-				previousSimulation: retrievePersistedSimulation(),
+				previousSimulation: persistedSimulation,
 				iframeOptions: { iframeShareData },
+				actionChoices: persistedSimulation?.actionChoices || {},
+				tutorials: persistedSimulation?.tutorials || {},
 			}}
 			rulesURL={`https://${
 				branch
@@ -68,70 +73,95 @@ export default function Root({}) {
 			}ecolab-data.netlify.app/co2.json`}
 			dataBranch={branch || pullRequestNumber}
 		>
-			<Router />
+			<Main />
 		</Provider>
 	)
 }
-
-const Router = ({}) => {
+const Main = ({}) => {
 	const location = useLocation()
+	const isHomePage = location.pathname === '/'
 	return (
-		<>
-			<div className="ui__ container">
-				<ConferenceBarLazy />
-				<nav css="display: flex; justify-content: center; margin: .6rem auto">
-					<Link
-						to="/"
+		<div
+			className="ui__ container"
+			css={`
+				@media (min-width: 800px) {
+					display: flex;
+					min-height: 100vh;
+				}
+
+				@media (min-width: 1200px) {
+					${!isHomePage &&
+					`
+						transform: translateX(-4vw);
+						`}
+				}
+				${sessionBarMargin}
+			`}
+		>
+			<Navigation isHomePage={isHomePage} />
+			<main
+				css={`
+					@media (min-width: 800px) {
+						flex-grow: 1;
+						padding: 1rem;
+					}
+				`}
+			>
+				{isHomePage && (
+					<nav
 						css={`
 							display: flex;
 							align-items: center;
+							justify-content: center;
 							text-decoration: none;
 							font-size: 170%;
-							margin-bottom: 0.4rem;
-							@media (max-width: 800px) {
-								margin-bottom: 0;
-							}
+							margin-bottom: 1rem;
 						`}
 					>
-						{location.pathname === '/' ? <Logo /> : <InlineLogo />}
-					</Link>
-				</nav>
-				<Switch>
-					<Route exact path="/" component={Landing} />
-					{/* Removes trailing slashes */}
-					<Route
-						path={'/:url*(/+)'}
-						exact
-						strict
-						render={({ location }) => (
-							<Redirect
-								to={location.pathname.replace(/\/+$/, location.search)}
-							/>
-						)}
-					/>
+						<Logo />
+					</nav>
+				)}
+				<Routes />
+			</main>
+		</div>
+	)
+}
 
-					<Route path="/documentation" component={Documentation} />
-					<Route path="/simulateur/:name+" component={Simulateur} />
-					{/* Lien de compatibilité, à retirer par exemple mi-juillet 2020*/}
-					<Route path="/fin/:score" component={Fin} />
-					<Route path="/fin" component={Fin} />
-					<Route path="/personas" component={Personas} />
-					<Route path="/actions" component={Actions} />
-					<Route path="/contribuer/:input?" component={Contribution} />
-					<Route path="/à-propos" component={About} />
-					<Route path="/partenaires" component={Diffuser} />
-					<Route path="/diffuser" component={Diffuser} />
-					<Route path="/vie-privée" component={Privacy} />
-					<Route path="/nouveautés" component={News} />
-					<Route path="/conférence/:room?">
-						<Suspense fallback="Chargement">
-							<ConferenceLazy />
-						</Suspense>
-					</Route>
-					<Redirect from="/conference/:room" to="/conférence/:room" />
-					<Route component={Route404} />
-				</Switch>
-			</div>
-		</>
+const Routes = ({}) => {
+	return (
+		<Switch>
+			<Route exact path="/" component={Landing} />
+			{/* Removes trailing slashes */}
+			<Route
+				path={'/:url*(/+)'}
+				exact
+				strict
+				render={({ location }) => (
+					<Redirect to={location.pathname.replace(/\/+$/, location.search)} />
+				)}
+			/>
+
+			<Route path="/documentation" component={Documentation} />
+			<Route path="/simulateur/:name+" component={Simulateur} />
+			{/* Lien de compatibilité, à retirer par exemple mi-juillet 2020*/}
+			<Route path="/fin/:score" component={Fin} />
+			<Route path="/fin" component={Fin} />
+			<Route path="/personas" component={Personas} />
+			<Route path="/actions" component={Actions} />
+			<Route path="/contribuer/:input?" component={Contribution} />
+			<Route path="/à-propos" component={About} />
+			<Route path="/partenaires" component={Diffuser} />
+			<Route path="/diffuser" component={Diffuser} />
+			<Route path="/vie-privée" component={Privacy} />
+			<Route path="/nouveautés" component={News} />
+			<Route path="/profil" component={Profil} />
+			<Route path="/conférence/:room?">
+				<Suspense fallback="Chargement">
+					<ConferenceLazy />
+				</Suspense>
+			</Route>
+			<Redirect from="/conference/:room" to="/conférence/:room" />
+			<Route component={Route404} />
+		</Switch>
 	)
 }

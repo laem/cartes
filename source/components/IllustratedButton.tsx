@@ -31,6 +31,13 @@ export default ({ children, icon, to, onClick }) => (
 						color: var(--textColor);
 					}
 				}
+				h1,
+				h2,
+				h3,
+				h4,
+				h5 {
+					color: white;
+				}
 			`}
 		>
 			{emoji(icon)}

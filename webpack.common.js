@@ -41,6 +41,7 @@ module.exports.default = {
 			'./iframeResizer.contentWindow.min.js',
 			'./source/images/nosgestesclimat.png',
 			'./source/images/dessin-nosgestesclimat.png',
+			'./source/images/transparent.png',
 			{
 				from: './source/data',
 				to: 'data',

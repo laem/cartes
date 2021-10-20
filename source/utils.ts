@@ -1,4 +1,5 @@
 import { formatValue } from 'publicodes'
+import { useLocation } from 'react-router'
 
 export function capitalise0(name: undefined): undefined
 export function capitalise0(name: string): string
@@ -79,4 +80,19 @@ export function hash(str: string): number {
 		hash |= 0 // Convert to 32bit integer
 	}
 	return hash
+}
+
+export const sortBy = (f) => (list) =>
+	list.sort((a, b) => {
+		const fa = f(a),
+			fb = f(b)
+		return fa < fb ? -1 : fa > fb ? 1 : 0
+	})
+
+export const last = (array) => {
+	const [lastItem] = array.slice(-1)
+	return lastItem
+}
+export function useQuery() {
+	return new URLSearchParams(useLocation().search)
 }

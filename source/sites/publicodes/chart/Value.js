@@ -1,7 +1,6 @@
-import emoji from 'react-easy-emoji'
 import { humanWeight } from '../HumanWeight'
 
-export default ({ nodeValue, color, completed }) => {
+export default ({ nodeValue, color }) => {
 	const [value, unit] = humanWeight(nodeValue, true)
 	return (
 		<span
@@ -12,9 +11,6 @@ export default ({ nodeValue, color, completed }) => {
 			`}
 		>
 			{value}&nbsp;{unit}
-			{completed && <Check />}
 		</span>
 	)
 }
-
-const Check = ({}) => <span css="margin-left: .3rem">{emoji(' ✅')}</span>

@@ -1,10 +1,9 @@
 import Conversation, {
 	ConversationProps,
 } from 'Components/conversation/Conversation'
-import SeeAnswersButton from 'Components/conversation/SeeAnswersButton'
 import PageFeedback from 'Components/Feedback/PageFeedback'
 import SearchButton from 'Components/SearchButton'
-import * as Animate from 'Components/ui/animate'
+import * as animate from 'Components/ui/animate'
 import React from 'react'
 import { Trans } from 'react-i18next'
 import LinkToForm from './Feedback/LinkToForm'
@@ -27,18 +26,19 @@ export default function Simulation({
 	showLinkToForm,
 	showPeriodSwitch,
 	noFeedback,
+	animation = 'appear',
 }: SimulationProps) {
+	const Animation = animate[animation]
 	return (
 		<>
 			<SearchButton invisibleButton />
-			<Animate.fromTop>
+			<Animation delay={0.3}>
 				{results}
 				<Questions
 					customEnd={customEnd}
 					orderByCategories={orderByCategories}
 					customEndMessages={customEndMessages}
 				/>
-				<br />
 				{!noFeedback && (
 					<>
 						{showLinkToForm && <LinkToForm />}
@@ -55,7 +55,7 @@ export default function Simulation({
 					</>
 				)}{' '}
 				{explanations}
-			</Animate.fromTop>
+			</Animation>
 		</>
 	)
 }
@@ -71,20 +71,19 @@ function Questions({
 	return (
 		<>
 			<div
-				className="ui__ full-width lighter-bg"
+				className="ui__ lighter-bg"
 				css={`
 					@media (min-width: 800px) {
 						margin-top: 0.6rem;
 					}
+					border-radius: 0.6rem;
 				`}
 			>
-				<div className="ui__ container">
-					<Conversation
-						orderByCategories={orderByCategories}
-						customEnd={customEnd}
-						customEndMessages={customEndMessages}
-					/>
-				</div>
+				<Conversation
+					orderByCategories={orderByCategories}
+					customEnd={customEnd}
+					customEndMessages={customEndMessages}
+				/>
 			</div>
 		</>
 	)

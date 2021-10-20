@@ -1,7 +1,7 @@
 import DocumentationButton from './DocumentationButton'
 import { Link } from 'react-router-dom'
 import Illustration from './images/ecolab-climat-dessin.svg'
-import Marianne from './images/Marianne.png'
+import Marianne from './images/Marianne.svg'
 import emoji from 'react-easy-emoji'
 import NewsBanner from '../../components/NewsBanner'
 
@@ -9,6 +9,8 @@ export default () => {
 	return (
 		<div
 			css={`
+				max-width: 850px;
+				margin: 0 auto;
 				border-radius: 1rem;
 				padding: 0.4rem;
 				h1 {
@@ -31,7 +33,10 @@ export default () => {
 			`}
 		>
 			<h1>Connaissez-vous votre empreinte sur le climat ?</h1>
-			<img src={Illustration} />
+			<img
+				src={Illustration}
+				alt="Illustration sur fond mauve d'une scène mélant grande ville, péri-urbain et rural, où on peut voir quelques éléments d'une vie quotidienne, chaque élément étant émetteur d'une certaine empreinte sur le climat."
+			/>
 			<div css="margin-bottom: 1rem">
 				<div css="margin: 1rem 0 .6rem;">
 					<Link to="/simulateur/bilan" className="ui__ plain button">
@@ -58,17 +63,23 @@ export default () => {
 						}
 					`}
 				>
-					<img css="height: 6rem; margin-right: .6rem" src={Marianne} />
+					<img
+						css="height: 6rem; margin-right: .6rem"
+						src={Marianne}
+						alt="Logo Marianne de la République Française"
+					/>
 					<a href="https://ademe.fr">
 						<img
 							css="height: 5rem; margin-right: .6rem"
 							src="https://www.ademe.fr/sites/all/themes/ademe/logo.png"
+							alt="Logo de l'ADEME"
 						/>
 					</a>
 					<a href="https://www.associationbilancarbone.fr/">
 						<img
 							css="height: 2.5rem"
 							src="https://www.associationbilancarbone.fr/wp-content/themes/abc/assets/images/brand/abc_main_logo.svg"
+							alt="Logo de l'Association Bilan Carbone"
 						/>
 					</a>
 				</div>

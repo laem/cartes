@@ -22,6 +22,9 @@ import emoji from 'react-easy-emoji'
 import { situationSelector } from '../../selectors/simulationSelectors'
 import BandeauContribuer from './BandeauContribuer'
 import { sessionBarMargin } from '../../components/SessionBar'
+import { FullName, splitName } from '../../components/publicodesUtils'
+import Title from 'Components/Title'
+import Meta from '../../components/utils/Meta'
 
 const eqValues = compose(isEmpty, symmetricDifference)
 
@@ -35,10 +38,10 @@ const Simulateur = (props) => {
 		dispatch = useDispatch(),
 		config = {
 			objectifs: [decoded],
-			narrow: decoded !== 'bilan',
 		},
 		configSet = useSelector((state) => state.simulation?.config),
 		categories = decoded === 'bilan' && extractCategories(rules, engine)
+	const tutorials = useSelector((state) => state.tutorials)
 
 	useEffect(
 		() =>
@@ -52,15 +55,17 @@ const Simulateur = (props) => {
 	if (!configSet) return null
 
 	return (
-		<div css={sessionBarMargin}>
-			<Helmet>
-				<title>{rule.title}</title>
-				{rule.description && (
-					<meta name="description" content={evaluation.title} />
-				)}
-			</Helmet>
-			{!isMainSimulation && <h1>{evaluation.title}</h1>}
-			<SessionBar evaluation={evaluation} />
+		<div>
+			<Meta title={rule.title} title={evaluation.title || ''} />
+			<Title>Le test</Title>
+			<CarbonImpact />
+			{!isMainSimulation && (
+				<h1>
+					{evaluation.rawNode.title || (
+						<FullName dottedName={evaluation.dottedName} />
+					)}
+				</h1>
+			)}
 			<Simulation
 				noFeedback
 				orderByCategories={categories}
