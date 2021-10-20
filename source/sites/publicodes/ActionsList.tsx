@@ -80,6 +80,9 @@ export default ({ display }) => {
 		return { ...memo, [category]: (memo[category] || 0) + 1 }
 	}, {})
 
+	//TODO this is quite a bad design
+	// we're better check if the test is finished
+	// but is it too restrictive ?
 	const simulationWellStarted = answeredQuestions.length > 50
 
 	if (!simulationWellStarted) {
@@ -119,7 +122,7 @@ export default ({ display }) => {
 					className="ui__ button plain"
 					onClick={() => dispatch(skipTutorial('actions'))}
 				>
-					Allons-y
+					Démarrer
 				</button>
 			</div>
 		)
