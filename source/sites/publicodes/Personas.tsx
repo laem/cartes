@@ -11,6 +11,9 @@ import CarbonImpact from './CarbonImpact'
 import { useEngine } from '../../components/utils/EngineContext'
 import SessionBar from '../../components/SessionBar'
 import personaSteps from './personaSteps.yaml'
+import { useState } from 'react'
+import IllustratedMessage from '../../components/ui/IllustratedMessage'
+import { situationSelector } from '../../selectors/simulationSelectors'
 
 export default ({}) => {
 	const configSet = useSelector((state) => state.simulation?.config)
@@ -57,46 +60,77 @@ export const PersonaGrid = ({ additionnalOnClick }) => {
 		objectif = 'bilan'
 	const persona = useSelector((state) => state.simulation?.persona)
 	console.log(persona, personas)
+	const situation = useSelector(situationSelector)
+
+	const [warning, setWarning] = useState(false)
+
+	const setPersona = (persona) => {
+		const { nom, icônes, data, description } = persona
+		dispatch(
+			setDifferentSituation({
+				config: { objectifs: [objectif] },
+				url: '/simulateur/bilan',
+				// the schema of peronas is not fixed yet
+				situation: data.situation || data,
+				persona: nom,
+				foldedSteps: data.foldedSteps || personaSteps, // If not specified, act as if all questions were answered : all that is not in the situation object is a validated default value
+			})
+		)
+	}
+	if (Object.keys(situation).length > 0 && warning)
+		return (
+			<IllustratedMessage
+				emoji="⚠️"
+				message={
+					<div>
+						<p>
+							Attention, vous avez une simulation en cours : sélectionner un
+							persona écrasera votre simulation.{' '}
+						</p>{' '}
+						<button
+							className="ui__ button simple"
+							onClick={() => setPersona(warning)}
+						>
+							Continuer
+						</button>
+						<button
+							className="ui__ button simple"
+							onClick={() => setWarning(false)}
+						>
+							Annuler
+						</button>
+					</div>
+				}
+			/>
+		)
 
 	return (
 		<CardGrid css="padding: 0; justify-content: center">
-			{personas.map(({ nom, icônes, data, description }) => (
-				<li key={nom}>
-					<div
-						className="ui__ card interactive light-border"
-						css={`
-							width: 11rem !important;
-							height: 15rem !important;
-							${nom === persona
-								? `border: 2px solid var(--color) !important`
-								: ``}
-						`}
-					>
-						<Link
-							to={'#'}
-							onClick={() => {
-								dispatch(
-									setDifferentSituation({
-										config: { objectifs: [objectif] },
-										url: '/simulateur/bilan',
-										// the schema of peronas is not fixed yet
-										situation: data.situation || data,
-										persona: nom,
-										foldedSteps: data.foldedSteps || personaSteps, // If not specified, act as if all questions were answered : all that is not in the situation object is a validated default value
-									})
-								)
-								additionnalOnClick && additionnalOnClick()
-							}}
+			{personas.map((persona) => {
+				const { nom, icônes, data, description } = persona
+				return (
+					<li key={nom}>
+						<div
+							className="ui__ card interactive light-border"
+							css={`
+								width: 11rem !important;
+								height: 15rem !important;
+								${nom === persona
+									? `border: 2px solid var(--color) !important`
+									: ``}
+							`}
 						>
-							<div>{emoji(icônes || '👥')}</div>
-							<div>{nom}</div>
-						</Link>
-						<p css=" overflow-x: scroll">
-							<small>{description}</small>
-						</p>
-					</div>
-				</li>
-			))}
+							<Link to={'#'} onClick={() => setWarning(persona)}>
+								<div>{emoji(icônes || '👥')}</div>
+								<div>{nom}</div>
+							</Link>
+							<p css=" overflow-x: scroll">
+								<small>{description}</small>
+							</p>
+						</div>
+					</li>
+				)
+			})}
 		</CardGrid>
 	)
 }

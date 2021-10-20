@@ -6,7 +6,6 @@ import React, { useContext, useState } from 'react'
 import emoji from 'react-easy-emoji'
 import { useDispatch, useSelector } from 'react-redux'
 import { Link } from 'react-router-dom'
-import { skipTutorial } from '../../actions/actions'
 import {
 	correctValue,
 	extractCategoriesNamespaces,
@@ -18,6 +17,7 @@ import {
 } from '../../selectors/simulationSelectors'
 import { sortBy, useQuery } from '../../utils'
 import ActionStack from './ActionStack'
+import ActionTutorial from './ActionTutorial'
 import { disabledAction, supersededAction } from './ActionVignette'
 import AllActions from './AllActions'
 import CategoryFilters from './CategoryFilters'
@@ -44,8 +44,6 @@ export default ({ display }) => {
 	const engine = useContext(EngineContext)
 
 	const targets = objectifs.map((o) => engine.evaluate(o))
-
-	const dispatch = useDispatch()
 
 	const [bilans, actions] = partition((t) => t.dottedName === 'bilan', targets)
 
@@ -91,41 +89,7 @@ export default ({ display }) => {
 
 	if (tutorials.actions !== 'skip') {
 		const [value, unit] = humanWeight(bilans[0].nodeValue)
-		return (
-			<div className="ui__ card light colored content" css="margin-top: 1.6rem">
-				<h1 css="display: flex; align-items: center">
-					<img src={actionImg} css="width: 2rem" />
-					Passer à l'action !
-				</h1>
-				<p>Vous avez terminé votre simulation, {emoji('👏')} bravo !</p>
-				<p>
-					Vous connaissez maintenant votre empreinte, estimée à {value} {unit},
-					et vous avez sûrement déjà des idées pour la réduire...
-				</p>
-				<p>
-					Pour vous aider, nous vous présenterons{' '}
-					<strong>une liste d'actions</strong> :
-					<ul css="li {list-style-type: none;}">
-						<li>{emoji('✅')} sélectionnez celles qui vous intéressent</li>
-						<li>
-							{' '}
-							{emoji('❌')} écartez celles qui vous semblent trop ambitieuses ou
-							déplacées.
-						</li>
-					</ul>
-				</p>
-				<p>
-					{emoji('💡')} Pour améliorer la précision, certaines actions vous
-					poseront quelques questions en plus.
-				</p>
-				<button
-					className="ui__ button plain cta"
-					onClick={() => dispatch(skipTutorial('actions'))}
-				>
-					Démarrer
-				</button>
-			</div>
-		)
+		return <ActionTutorial {...{ value, unit }} />
 	}
 
 	return (
