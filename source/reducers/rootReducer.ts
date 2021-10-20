@@ -173,6 +173,8 @@ function conference(state = null, { type, room, ydoc, provider }) {
 function tutorials(state = {}, { type, id }) {
 	if (type === 'SKIP_TUTORIAL') {
 		return { ...state, [id]: 'skip' }
+	} else if (type === 'RESET_TUTORIALS') {
+		return {}
 	} else return state
 }
 

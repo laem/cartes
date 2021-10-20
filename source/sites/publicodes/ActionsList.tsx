@@ -103,8 +103,8 @@ export default ({ display }) => {
 					et vous avez sûrement déjà des idées pour la réduire...
 				</p>
 				<p>
-					Pour vous aider,{' '}
-					<strong>nous vous proposons une liste d'actions</strong> :
+					Pour vous aider, nous vous présenterons{' '}
+					<strong>une liste d'actions</strong> :
 					<ul css="li {list-style-type: none;}">
 						<li>{emoji('✅')} sélectionnez celles qui vous intéressent</li>
 						<li>
@@ -116,10 +116,10 @@ export default ({ display }) => {
 				</p>
 				<p>
 					{emoji('💡')} Pour améliorer la précision, certaines actions vous
-					demanderont quelques réponses en plus.
+					poseront quelques questions en plus.
 				</p>
 				<button
-					className="ui__ button plain"
+					className="ui__ button plain cta"
 					onClick={() => dispatch(skipTutorial('actions'))}
 				>
 					Démarrer

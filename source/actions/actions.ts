@@ -63,6 +63,10 @@ export const resetActionChoices = () =>
 	({
 		type: 'RESET_ACTION_CHOICES',
 	} as const)
+export const resetTutorials = () =>
+	({
+		type: 'RESET_TUTORIALS',
+	} as const)
 
 export const goToQuestion = (question: DottedName) =>
 	({

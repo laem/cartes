@@ -3,6 +3,7 @@ import {
 	deletePreviousSimulation,
 	resetActionChoices,
 	resetSimulation,
+	resetTutorials,
 } from 'Actions/actions'
 import emoji from 'react-easy-emoji'
 import { useDispatch, useSelector } from 'react-redux'
@@ -56,6 +57,7 @@ export default ({}) => {
 								dispatch(resetSimulation())
 								dispatch(resetActionChoices())
 								dispatch(deletePreviousSimulation())
+								dispatch(resetTutorials())
 							}}
 						>
 							{emoji('♻️ ')}
