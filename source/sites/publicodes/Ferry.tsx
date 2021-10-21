@@ -1,28 +1,35 @@
 import Engine from 'publicodes'
 import { Documentation } from 'publicodes-react'
-import { useEffect, useMemo, useState } from 'react'
+import { createContext, useContext, useEffect, useMemo, useState } from 'react'
 import { Redirect, Route, Switch } from 'react-router'
 import RuleInput from '../../components/conversation/RuleInput'
 import rules from './ferry.yaml'
 
 const engine = new Engine(rules)
-export default ({}) => (
-	<>
-		<Main />
-		<br />
-		<br />
-		<br />
-		<div
-			css={`
-				small {
-					background: none !important;
-				}
-			`}
-		>
-			<Documentation engine={engine} documentationPath={''} />
-		</div>
-	</>
-)
+const SituationContext = createContext({})
+export default ({}) => {
+	const [situation, setSituation] = useState({
+		'ferry . voiture': { valeur: 'oui' },
+	})
+	return (
+		<SituationContext.Provider value={[situation, setSituation]}>
+			<Main />
+			<br />
+			<br />
+			<br />
+			<div
+				css={`
+					small {
+						background: none !important;
+					}
+				`}
+				className="ui__ container"
+			>
+				<Documentation engine={engine} documentationPath={''} />
+			</div>
+		</SituationContext.Provider>
+	)
+}
 const Main = ({}) => (
 	<div className="ui__ container">
 		<h1>Le ferry, c'est écolo ?</h1>
@@ -40,19 +47,24 @@ const Main = ({}) => (
 )
 
 const Questions = ({}) => {
-	const questions = ['groupe', 'voiture', 'services accessoires']
-	const evaluation = engine.evaluate('ferry . charge par personne')
-	const [situation, setSituation] = useState({}),
-		onChange = (dottedName) => (value) => {
+	const questions = ['groupe']
+	const [situation, setSituation] = useContext(SituationContext)
+	engine.setSituation(situation)
+	const onChange = (dottedName) => (event) => {
 			console.log('onchange', value)
-			setSituation({
+			const value = event.target.value
+			const newSituation = {
 				...situation,
-				[dottedName]: value?.nodeValue || value?.valeur || value,
-			})
+				[dottedName]: value,
+			}
+			setSituation(newSituation)
 
-			engine.setSituation(situation)
+			engine.setSituation(newSituation)
 		},
 		onSubmit = () => null
+	const evaluation = engine.evaluate('ferry . charge par personne')
+	console.log('SITU', situation)
+	console.log('ferry . groupe', engine.evaluate('ferry . groupe'))
 
 	return (
 		<div>
@@ -74,18 +86,11 @@ const Questions = ({}) => {
 						question = engine.getRule(dottedName).rawNode.question
 					return (
 						<div>
-							<label>
-								{question}
-								<RuleInput
-									{...{
-										engine,
-										dottedName,
-										onChange: onChange(dottedName),
-										onSubmit,
-										noSuggestions: true,
-									}}
-								/>
-							</label>
+							<label>{question}</label>
+							<input
+								onChange={onChange('ferry . groupe')}
+								value={situation['ferry . groupe']}
+							/>
 						</div>
 					)
 				})}
