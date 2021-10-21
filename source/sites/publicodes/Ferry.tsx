@@ -8,9 +8,7 @@ import rules from './ferry.yaml'
 const engine = new Engine(rules)
 const SituationContext = createContext({})
 export default ({}) => {
-	const [situation, setSituation] = useState({
-		'ferry . voiture': { valeur: 'oui' },
-	})
+	const [situation, setSituation] = useState({})
 	return (
 		<SituationContext.Provider value={[situation, setSituation]}>
 			<Main />
@@ -47,12 +45,12 @@ const Main = ({}) => (
 )
 
 const Questions = ({}) => {
-	const questions = ['groupe']
+	const questions = ['groupe', 'voiture', 'services accessoires']
 	const [situation, setSituation] = useContext(SituationContext)
 	engine.setSituation(situation)
-	const onChange = (dottedName) => (event) => {
-			console.log('onchange', value)
-			const value = event.target.value
+	const onChange = (dottedName) => (raw) => {
+			console.log('RAW', raw)
+			const value = raw.valeur || raw
 			const newSituation = {
 				...situation,
 				[dottedName]: value,
@@ -87,9 +85,14 @@ const Questions = ({}) => {
 					return (
 						<div>
 							<label>{question}</label>
-							<input
-								onChange={onChange('ferry . groupe')}
-								value={situation['ferry . groupe']}
+							<RuleInput
+								{...{
+									engine,
+									dottedName,
+									onChange: onChange(dottedName),
+									onSubmit,
+									noSuggestions: true,
+								}}
 							/>
 						</div>
 					)
