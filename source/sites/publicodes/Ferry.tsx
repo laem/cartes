@@ -66,11 +66,16 @@ const Questions = ({}) => {
 
 	return (
 		<div>
-			<ul>
-				{Object.entries(situation).map(
-					([k, v]) => console.log(v) || <li>{`${k} : ${v?.nodeValue || v}`}</li>
-				)}
-			</ul>
+			<details>
+				<summary>Ma situation</summary>
+
+				<ul>
+					{Object.entries(situation).map(
+						([k, v]) =>
+							console.log(v) || <li>{`${k} : ${v?.nodeValue || v}`}</li>
+					)}
+				</ul>
+			</details>
 			<div
 				css={`
 					margin: 1rem 0;
