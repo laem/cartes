@@ -23,6 +23,7 @@ export default ({}) => {
 				`}
 				className="ui__ container"
 			>
+				<h2>Explications</h2>
 				<Documentation engine={engine} documentationPath={''} />
 			</div>
 		</SituationContext.Provider>
@@ -61,8 +62,6 @@ const Questions = ({}) => {
 		},
 		onSubmit = () => null
 	const evaluation = engine.evaluate('ferry . charge par personne')
-	console.log('SITU', situation)
-	console.log('ferry . groupe', engine.evaluate('ferry . groupe'))
 
 	return (
 		<div>
@@ -107,7 +106,10 @@ const Questions = ({}) => {
 			<p>
 				C'est la part de poids qui vous est attribuée en fonction de vos choix.
 			</p>
-			<div>{Math.round(evaluation.nodeValue)} kg</div>
+			<div className="ui__ card box">
+				<h3>{evaluation.title}</h3>
+				<strong> {Math.round(evaluation.nodeValue)} kg</strong>
+			</div>
 		</div>
 	)
 }
