@@ -46,7 +46,7 @@ const Main = ({}) => (
 )
 
 const Questions = ({}) => {
-	const questions = ['groupe', 'voiture', 'services accessoires']
+	const questions = ['groupe', 'voiture', 'services accessoires', 'cabine']
 	const [situation, setSituation] = useContext(SituationContext)
 	engine.setSituation(situation)
 	const onChange = (dottedName) => (raw) => {

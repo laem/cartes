@@ -127,6 +127,7 @@ ferry . charge par personne:
       - dortoir
       - voiture
       - charge . canots de sauvetage / passagers
+      - charge . eau
 
 ferry . charge par personne . voiture:
   applicable si: voiture
@@ -165,9 +166,20 @@ ferry . charge . services accessoires:
   formule: 100000
 ferry . charge . dortoir: 
 ferry . charge . dortoir . par personne:
-  note: Calculer ici le poids d'un dortoir par personne
-  formule: 666
+  description: Calculer ici le poids d'un dortoir par personne
+  note: Comment estimer le nombre de personnes par salle de bain ?
+  formule: 
+    somme: 
+      - siège
+      - salle de bain / 10
 
+ferry . charge . dortoir . siège:
+  formule: 25
+  note: | 
+    Il semble exister des sièges super légers pour l'aviation, de 4kg, [source](https://fr.wikipedia.org/wiki/Expliseat).
+  unité: kg
+  références: 
+    - https://www.kirstein.de/fr/Home-Living/Meubles-et-accessoires-de-maison/Sieges-de-cinema/Stagecaptain-CS-600R-Movieking-fauteuil-de-cinema-rouge.html
 
 ferry . charge . canots de sauvetage:
   formule: 0
@@ -216,7 +228,17 @@ ferry . charge . armoire:
   unité: kg
 
 ferry . charge . salle de bain: 
-  formule: lavabo + douche + eau
+  formule: 
+    somme:
+      - lavabo
+      - douche 
+      - wc
+
+ferry . charge . wc: 
+  formule: 50
+  unité: kg
+  références:
+    - https://www.leroymerlin.fr/produits/salle-de-bains/wc/wc-suspendu/pack-wc-suspendu-bati-universel-horizontale-saphir-2-siamp-82898125.html
 
 ferry . charge . lavabo: 
   formule: 50
@@ -225,7 +247,7 @@ ferry . charge . douche:
   formule: 100
   unité: kg
 ferry . charge . eau: 
-  formule: 50 * 4
+  formule: 50
   note: Une douche par personne, 50l par douche.
   référnces: 
     - https://www.m-habitat.fr/plomberie-et-eau/consommation-d-eau/quelle-est-la-consommation-en-eau-d-une-douche-902_A
