@@ -19,6 +19,7 @@ export default function Input({
 	unit,
 	autoFocus,
 	inputEstimation,
+	noSuggestions,
 }: InputCommonProps & {
 	onSubmit: (source: string) => void
 	unit: Unit | undefined
@@ -34,13 +35,15 @@ export default function Input({
 		<>
 			<div className="step input">
 				<div>
-					<InputSuggestions
-						suggestions={suggestions}
-						onFirstClick={(value) => {
-							onChange(value)
-						}}
-						onSecondClick={() => onSubmit?.('suggestion')}
-					/>
+					{!noSuggestions && (
+						<InputSuggestions
+							suggestions={suggestions}
+							onFirstClick={(value) => {
+								onChange(value)
+							}}
+							onSecondClick={() => onSubmit?.('suggestion')}
+						/>
+					)}
 					<NumberFormat
 						autoFocus={autoFocus}
 						className="suffixed ui__"

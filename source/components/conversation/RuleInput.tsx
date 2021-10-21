@@ -67,6 +67,7 @@ export default function RuleInput<Name extends string = DottedName>({
 	className,
 	onSubmit = () => null,
 	engine: givenEngine,
+	noSuggestions = false,
 }: RuleInputProps<Name>) {
 	const engine = givenEngine || useContext(EngineContext)
 	const rule = engine.getRule(dottedName)
@@ -209,6 +210,7 @@ export default function RuleInput<Name extends string = DottedName>({
 			onSubmit={onSubmit}
 			unit={evaluation.unit}
 			value={value as Evaluation<number>}
+			noSuggestions={noSuggestions}
 			inputEstimation={
 				rule.rawNode.aide &&
 				rules[

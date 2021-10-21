@@ -25,9 +25,7 @@ export default ({}) => (
 )
 const Main = ({}) => (
 	<div className="ui__ container">
-		<h1>
-			Le <strong>ferry</strong>, c'est écolo ?
-		</h1>
+		<h1>Le ferry, c'est écolo ?</h1>
 		<p>
 			Le ferry est une alternative sérieuse à l'avion moyen courrier, en
 			complément du train de jour ou de nuit pour traverser les mers.
@@ -45,17 +43,16 @@ const Questions = ({}) => {
 	const questions = ['groupe', 'voiture', 'services accessoires']
 	const evaluation = engine.evaluate('ferry . charge par personne')
 	const [situation, setSituation] = useState({}),
-		onChange = (dottedName) => (value) =>
+		onChange = (dottedName) => (value) => {
+			console.log('onchange', value)
 			setSituation({
 				...situation,
 				[dottedName]: value?.nodeValue || value?.valeur || value,
-			}),
+			})
+
+			engine.setSituation(situation)
+		},
 		onSubmit = () => null
-	console.log(evaluation)
-	useEffect(() => {
-		console.log('situation', situation)
-		engine.setSituation(situation)
-	}, [situation])
 
 	return (
 		<div>
@@ -85,6 +82,7 @@ const Questions = ({}) => {
 										dottedName,
 										onChange: onChange(dottedName),
 										onSubmit,
+										noSuggestions: true,
 									}}
 								/>
 							</label>
