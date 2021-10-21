@@ -134,7 +134,24 @@ ferry . charge par personne . voiture:
 
 ferry . charge par personne . cabine:
   applicable si: cabine
-  formule: charge . cabine pour quatre / 4
+  formule: (nombre nécessaire * charge . cabine pour quatre) / groupe
+
+ferry . charge par personne . cabine . nombre nécessaire:
+  description: On part pour l'instant du principe qu'il n'y a que des cabines 4 places. 
+  note: |
+    Ici on aimerait utiliser un mécanisme de modulo, qui n'existe pas dans publi.codes.
+  formule:
+     grille:
+      assiette: groupe
+      tranches:
+        - montant: 1
+          plafond: 5
+        - montant: 2
+          plafond: 9
+        - montant: 3
+          plafond: 13
+        - montant: groupe / 4
+
 
 ferry . charge par personne . services accessoires:
   applicable si: services accessoires
