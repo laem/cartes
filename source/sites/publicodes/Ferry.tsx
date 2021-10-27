@@ -95,7 +95,7 @@ const Questions = ({}) => {
 									dottedName,
 									onChange: onChange(dottedName),
 									onSubmit,
-									noSuggestions: true,
+									noSuggestions: false,
 								}}
 							/>
 						</div>

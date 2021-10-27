@@ -56,8 +56,9 @@ ferry . cabine:
   par défaut: oui
 
 ferry . taille cabine: 
+  applicable si: cabine
   question: Quelle est la taille de la cabine ?
-  note: En 1ère approximation, nous allons considérer que la cabine fait toujours 4 places et allouer une part de cabine à chacun, donc ne pas utiliser cette variable.
+  note: En 1ère approximation, nous considérons deux tailles de cabines : 2 places ou 4 places. Notons 
   par défaut: 2
   unité: personnes
   suggestions: 
@@ -66,16 +67,17 @@ ferry . taille cabine:
 
 ferry . voiture: 
   question: Transportez-vous votre voiture ?
+  description: Le calcul est limité à une voiture, on considère qu'elle est partagée par le groupe.
   par défaut: oui
 
 ferry . groupe:
   question: Dans un groupe de combien de personnes voyagez-vous ?
   par défaut: 2
   suggestions: 
-    2: 2
-    3: 3
-    4: 4
-    5: 5
+    seul: 1
+    en couple: 2
+    à 3: 3
+    à 4: 4
 
 ferry . services accessoires:
   question: Allez-vous profiter des restaurants, bars et divers loisirs ?
