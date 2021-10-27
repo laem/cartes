@@ -20,7 +20,7 @@ import Documentation from './pages/Documentation'
 import Privacy from './Privacy'
 import Simulateur from './Simulateur'
 import sitePaths from './sitePaths'
-import Ferry from './Ferry'
+import Ferry from './ferry/Ferry'
 
 let tracker = devTracker
 if (NODE_ENV === 'production') {

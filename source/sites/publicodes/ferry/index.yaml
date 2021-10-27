@@ -65,8 +65,7 @@ ferry . taille cabine:
     Variable pas intégrée encore.
 
     En 1ère approximation, nous considérons deux tailles de cabines : 2 places ou 4 places. 
-  par défaut: 2
-  par défaut: '"quatre lits"'
+  par défaut: "'quatre lits'"
 
 ferry . taille cabine . deux lits: 
 ferry . taille cabine . quatre lits: 
@@ -85,21 +84,6 @@ ferry . groupe:
     en couple: 2
     à 3: 3
     à 4: 4
-
-ferry . services accessoires:
-  question: Allez-vous profiter des restaurants, bars et divers loisirs ?
-  description: |
-    Par exemple, la piscine, le jacuzzi, les machines à jeu, les magasins de souvenir style "duty-free", etc.
-
-    Nous considérons ici que si vous ne profitez pas de ces services accessoires, leur empreinte ne vous est pas attribuée.
-
-    Notons que ces services peuvent être jugés "nécessaires" par certains, mais que ça dépend énormément de la personne. 
-
-    Pour une traversée d'une nuit de plus de 350km (Marseille-Ajaccio), on peut tout à fait se passer de restaurant. On trouvera souvent à quai des boulangeries ou restaurants, et il est tout à fait possible de manger sur le pont au moins l'été. C'est clairement une question de confort, dont certains ne veulent pas se passer.
-  note: |
-    Il s'agira dans un second temps de faire la part des choses entre toutes ces possibilités aux implications bien différentes : on peut craindre qu'une piscine pèse très lourd.
-  icônes: 🍽🍺
-  par défaut: oui
 
 
 # Infra nécessaire aux pax mais pas au fret

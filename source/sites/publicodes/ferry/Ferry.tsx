@@ -2,8 +2,13 @@ import Engine from 'publicodes'
 import { Documentation } from 'publicodes-react'
 import { createContext, useContext, useEffect, useMemo, useState } from 'react'
 import { Redirect, Route, Switch } from 'react-router'
-import RuleInput from '../../components/conversation/RuleInput'
-import rules from './ferry.yaml'
+import RuleInput from 'Components/conversation/RuleInput'
+
+const req = require.context('./', true, /\.(yaml)$/)
+const rules = req.keys().reduce((memo, key) => {
+	const jsonRuleSet = req(key) || {}
+	return { ...memo, ...jsonRuleSet }
+}, {})
 
 const engine = new Engine(rules)
 const SituationContext = createContext({})
