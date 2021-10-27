@@ -36,6 +36,10 @@ export default ({}) => {
 					small {
 						background: none !important;
 					}
+
+					div[name='somme'] > div > div:nth-child(2n) {
+						background: var(--darkerColor);
+					}
 				`}
 				className="ui__ container"
 			>
