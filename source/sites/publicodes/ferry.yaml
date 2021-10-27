@@ -171,7 +171,23 @@ ferry . charge . dortoir . par personne:
   formule: 
     somme: 
       - siège
-      - salle de bain / 10
+      - salle de bain partagée
+
+ferry . charge . salle de bain partagée:
+  note: |
+    Nous partons du principe que les douches sont les plus critiques, car il y a une heure de pointe le matin, et que le temps dans la douche est plus important. 
+
+    Idem pour le lavabo dans une moindre mesure. 
+
+    Les WC eux peuvent être bien davantage partagés.
+
+    Ces chiffres sont de premières estimations assez grossières.
+  formule: 
+    somme:
+      - douche / 4
+      - lavabo / 6
+      - wc / 10
+
 
 ferry . charge . dortoir . siège:
   formule: 25
@@ -233,6 +249,20 @@ ferry . charge . salle de bain:
       - lavabo
       - douche 
       - wc
+      - carrelage sol
+
+ferry . charge . salle de bain . carrelage sol: 
+  formule: surface * poids carrelage
+ferry . charge . salle de bain . surface: 
+  formule: 2 * 3
+  unité: m2
+ferry . charge . salle de bain . poids carrelage: 
+  formule: 15 
+  unité: kg/m2
+  références:
+    un blog: http://posersoncarrelage.over-blog.com/article-combien-pese-du-carrelage-quel-est-le-poids-du-carrelage-39382743.html
+
+
 
 ferry . charge . wc: 
   formule: 50
@@ -241,9 +271,12 @@ ferry . charge . wc:
     - https://www.leroymerlin.fr/produits/salle-de-bains/wc/wc-suspendu/pack-wc-suspendu-bati-universel-horizontale-saphir-2-siamp-82898125.html
 
 ferry . charge . lavabo: 
+  description: On peut compter ici un lavabo en porcelaine sanitaire, un miroir, une planche pour reposer les affaires.
   formule: 50
   unité: kg
 ferry . charge . douche:
+  description: On peut compter ici la cabine, le groupe pommeau+socle réglable+tuyau+mitigeur
+  note: Estimation très grossière.
   formule: 100
   unité: kg
 ferry . charge . eau: 
