@@ -116,7 +116,7 @@ ferry . charge par personne:
   formule: 
     somme: 
       - cabine
-      - services accessoires
+      - services
       - dortoir
       - voiture
       - charge . canots de sauvetage / passagers
@@ -147,16 +147,18 @@ ferry . charge par personne . cabine . nombre nécessaire:
         - montant: groupe / 4
 
 
-ferry . charge par personne . services accessoires:
-  applicable si: services accessoires
-  formule: charge . services accessoires / passagers
+ferry . consommation de services: 
+  question: Utilisez vous les services accessoires du ferry (restaurant, piscine, etc.) ?
+  par défaut: oui
+          
+ferry . charge par personne . services:
+  applicable si: consommation de services
+  formule: charge . services / passagers
 
 ferry . charge par personne . dortoir:
   non applicable si: cabine
   formule: charge . dortoir . par personne 
 
-ferry . charge . services accessoires:
-  formule: 100000
 ferry . charge . dortoir: 
 ferry . charge . dortoir . par personne:
   description: Calculer ici le poids d'un dortoir par personne
@@ -293,4 +295,20 @@ ferry . charge . matelas:
     - https://www.conforama.fr/chambre-literie/literie/literie-de-relaxation/matelas-mousse-90x190-cm-dunlopillo-precious-moment/p/561951
 
 
+ferry . charge . chaise: 
+  formule: 7
+  références:
+    la redoute: https://www.laredoute.fr/ppdp/prod-528978563.aspx#searchkeyword=chaise&shoppingtool=search
 
+ferry . charge . canapé: 
+  description:  Canapé 2 ou 3 places
+  formule: 50
+  unité: kg
+  références:
+    la redoute: https://www.laredoute.fr/ppdp/prod-533200832.aspx#shoppingtool=search
+
+ferry . charge . table: 
+  formule: 34
+  unité: kg
+  références:
+    la redoute: https://www.laredoute.fr/ppdp/prod-502719638.aspx#searchkeyword=table&shoppingtool=search

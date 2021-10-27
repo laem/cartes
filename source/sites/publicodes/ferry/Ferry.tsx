@@ -7,7 +7,18 @@ import RuleInput from 'Components/conversation/RuleInput'
 const req = require.context('./', true, /\.(yaml)$/)
 const rules = req.keys().reduce((memo, key) => {
 	const jsonRuleSet = req(key) || {}
-	return { ...memo, ...jsonRuleSet }
+	const splitName = key.replace('./', '').split('>.yaml')
+	const prefixedRuleSet =
+		splitName.length > 1
+			? Object.fromEntries(
+					Object.entries(jsonRuleSet).map(([k, v]) => [
+						k === 'index' ? splitName[0] : splitName[0] + ' . ' + k,
+						v,
+					])
+			  )
+			: jsonRuleSet
+	console.log(prefixedRuleSet)
+	return { ...memo, ...prefixedRuleSet }
 }, {})
 
 const engine = new Engine(rules)
@@ -51,7 +62,7 @@ const Main = ({}) => (
 )
 
 const Questions = ({}) => {
-	const questions = ['groupe', 'voiture', 'services accessoires', 'cabine']
+	const questions = ['groupe', 'voiture', 'consommation de services', 'cabine']
 	const [situation, setSituation] = useContext(SituationContext)
 	engine.setSituation(situation)
 	const onChange = (dottedName) => (raw) => {

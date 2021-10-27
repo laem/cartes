@@ -1,4 +1,4 @@
-ferry . services accessoires:
+index:
   question: Allez-vous profiter des restaurants, bars et divers loisirs ?
   description: |
     Par exemple, la piscine, le jacuzzi, les machines à jeu, les magasins de souvenir style "duty-free", etc.
@@ -12,4 +12,22 @@ ferry . services accessoires:
     Il s'agira dans un second temps de faire la part des choses entre toutes ces possibilités aux implications bien différentes : on peut craindre qu'une piscine pèse très lourd.
   icônes: 🍽🍺
   par défaut: oui
+
+  formule: 
+    somme: 
+      - restaurant
+      - nom: bar
+        description: On duplique le restaurant, le bar étant très proche dans l'idée.
+        valeur: restaurant
+      - piscine
+      - magasin * 2
+      - salle de jeu
+
+restaurant:
+  formule: 100 * (ferry . charge . chaise + ferry . charge . table)
+piscine:
+magasin:
+salle de jeu:
+
+
 
