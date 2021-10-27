@@ -24,10 +24,23 @@ index:
       - salle de jeu
 
 restaurant:
-  formule: 100 * (ferry . charge . chaise + ferry . charge . table)
-piscine:
-magasin:
-salle de jeu:
+  note: On est vraiment dans de l'estimation à la super louche.
+  formule: 
+    somme: 
+      - 100 * ferry . charge . chaise
+      - 100 * ferry . charge . canapé
+      - 100 * ferry . charge . table
+
+piscine: 
+  formule: volume * 1000
+  unité: kg
+
+piscine . volume: 
+  note: On prend les dimensions d'une petite piscine. Si grosse influence, le paramétrer ! 
+  formule: 10 * 1.5 * 4
+  unité: m3
+magasin: 10000 kg
+salle de jeu: 10000 kg
 
 
 

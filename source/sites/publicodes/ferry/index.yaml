@@ -93,8 +93,12 @@ ferry . groupe:
 #
 
 ferry . passagers: 
-  formule: 666
-  note: On prend les passagers des exemples de décomposition de poids ? Ou du Jean Nicoli rempli à 50% ?
+  formule: 1000
+
+  note: |
+    On prend les passagers des exemples de décomposition de poids ? 
+
+    Ou du Jean Nicoli rempli aux 2/3 ? Soit [1000 passagers](https://fr.wikipedia.org/wiki/Jean_Nicoli_(navire)).
 
 
 # le raisonnement est le suivant. À poids constant du ferry, consommation constante, qu'on quppose connue. Plutot que de mettre un jacuzzi de 5 tonnes, on pourrait mettre n cabines ou dortoirs, et ainsi plus de personnes, divisant l'empreinte totale du bateau par p personnes en plus (ou du fret). Ces p personnes auraient autrement emprunté un deuxième bateau, ou un avion (par volonté de voyager plus écolo, mais aussi tout simplement par effet de prix). 
@@ -113,7 +117,7 @@ ferry . passagers:
 ferry . charge: 
   description: Les éléments de modélisation du poids embarqué sur un ferry
 ferry . charge par personne:
-  formule: 
+  formule:
     somme: 
       - cabine
       - services
