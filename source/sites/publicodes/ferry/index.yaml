@@ -231,6 +231,22 @@ ferry . charge . cabine pour quatre:
       - lits
       - meubles
       - salle de bain
+      - murs
+
+ferry . charge . murs:
+  description: Nous partons sur des murs similaires aux cloisons amovibles isolées utilisées dans les bureaux. Elles semblent composées d'aluminium (75mm) comme matériel principal.
+  formule: poids linéaire * linéaire
+  références:
+    cloison hoyez de bureau: https://www.bimobject.com/fr/hoyez/product/h7b
+ferry . charge . murs . linéaire:
+  formule: (4 + 4) * 2
+  unité: m
+ferry . charge . murs . poids linéaire:
+  formule: 17 / (1.25 * ajustement hauteur)
+  unité: kg/m
+ferry . charge . murs . ajustement hauteur:
+  description: La spécification donne un poids pour 3,3m de hauteur de cloison, nous partons plutôt sur une hypothèse de 2,5m.
+  formule: 2.5 / 3.3
 
 ferry . charge . meubles: 
   description: Il y a souvent une table de nuit entre les deux rangées de lit, et une armoire pour stocker les affaires.
