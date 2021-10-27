@@ -53,17 +53,24 @@ ferry . empreinte par km:
 
 ferry . cabine: 
   question: Avez-vous pris une place en cabine (plutôt qu'un siège) ?
+  note: Il existe aussi des cabines partagées (comme dans les trains de nuit), nous pourrons les ajouter par la suite comme une option possible.
+  références:
+    corsica-ferries: https://www.corsica-ferries.fr/ferries/traversee-ferry.html
   par défaut: oui
 
 ferry . taille cabine: 
   applicable si: cabine
   question: Quelle est la taille de la cabine ?
-  note: En 1ère approximation, nous considérons deux tailles de cabines : 2 places ou 4 places. Notons 
+  note: |
+    Variable pas intégrée encore.
+
+    En 1ère approximation, nous considérons deux tailles de cabines : 2 places ou 4 places. 
   par défaut: 2
-  unité: personnes
-  suggestions: 
-    2: 2
-    4: 4
+  par défaut: '"quatre lits"'
+
+ferry . taille cabine . deux lits: 
+ferry . taille cabine . quatre lits: 
+
 
 ferry . voiture: 
   question: Transportez-vous votre voiture ?
@@ -236,6 +243,7 @@ ferry . charge . cabine pour quatre:
       - salle de bain
 
 ferry . charge . meubles: 
+  description: Il y a souvent une table de nuit entre les deux rangées de lit, et une armoire pour stocker les affaires.
   formule: table de nuit + armoire
 
 ferry . charge . table de nuit:
