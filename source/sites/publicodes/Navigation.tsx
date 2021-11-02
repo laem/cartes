@@ -52,7 +52,10 @@ export default ({ isHomePage }) => (
 				<Logo />
 				<InlineLogo />
 			</Link>
-			{location.pathname !== '/' && <SessionBar />}
+			{location.pathname !== '/' &&
+				!decodeURIComponent(location.pathname).includes('nouveautés') && (
+					<SessionBar />
+				)}
 		</nav>
 	</>
 )
