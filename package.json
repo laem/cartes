@@ -1,7 +1,7 @@
 {
 	"name": "nosgestesclimat-site",
 	"license": "MIT",
-	"version": "1.2.0",
+	"version": "1.4.0",
 	"description": "The leading open source climate footprint calculator",
 	"repository": {
 		"type": "git",
