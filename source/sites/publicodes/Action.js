@@ -93,18 +93,20 @@ export default ({}) => {
 				</header>
 				<div css="margin: 1.6rem 0">
 					<Markdown source={description} />
-					<Link to={'/documentation/' + encodedName}>
-						<button className="ui__ button simple">
-							{emoji('⚙️')} Comprendre le calcul
-						</button>
-					</Link>
-					{plus && (
-						<Link to={'/actions/plus/' + encodedName}>
-							<button className="ui__ button simple">
-								{emoji('📘')} En savoir plus
+					<div css="display: flex; flex-wrap: wrap; justify-content: space-evenly; margin-top: 1rem">
+						<Link to={'/documentation/' + encodedName}>
+							<button className="ui__ button small">
+								{emoji('⚙️')} Comprendre le calcul
 							</button>
 						</Link>
-					)}
+						{plus && (
+							<Link to={'/actions/plus/' + encodedName}>
+								<button className="ui__ button small">
+									{emoji('📘')} En savoir plus
+								</button>
+							</Link>
+						)}
+					</div>
 				</div>
 			</div>
 			{nextQuestions.length > 0 && (
