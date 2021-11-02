@@ -7,6 +7,8 @@
 - alimentation . plats . végétarien . nombre
 - alimentation . plats . viande 1 . nombre
 - alimentation . plats . viande 2 . nombre
+- alimentation . plats . poisson 2 . nombre
+- alimentation . plats . poisson 1 . nombre
 - transport . voiture . km
 - transport . voiture . gabarit
 - transport . voiture . propriétaire
