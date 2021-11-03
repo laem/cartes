@@ -196,3 +196,8 @@
 .ui__.card .ui__.notice {
 	flex: 1;
 }
+
+.ui__.card.interactive.selected {
+	border: 4px solid #2da44e;
+	background: #2da44e0f;
+}

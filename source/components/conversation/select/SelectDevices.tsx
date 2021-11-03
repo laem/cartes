@@ -36,7 +36,9 @@ export default function SelectDevices({
 						return (
 							<li
 								css="padding: 2rem"
-								className="ui__ card interactive"
+								className={`ui__ card interactive light-border ${
+									value === 'oui' ? `selected` : ''
+								}`}
 								key={name}
 								onMouseDown={() =>
 									dispatch(

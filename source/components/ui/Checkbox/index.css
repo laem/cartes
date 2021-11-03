@@ -51,7 +51,7 @@
 	stroke: var(--color);
 }
 .ui__.checkbox-input:checked + label .ui__.checkbox svg {
-	stroke: var(--color);
+	stroke: var(--darkColor);
 }
 .ui__.checkbox-input:checked + label .ui__.checkbox svg polyline {
 	stroke-dashoffset: 42;
