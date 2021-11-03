@@ -8,7 +8,7 @@ import { useSelector } from 'react-redux'
 export default ({ questionCategory }) => {
 	const rules = useSelector((state) => state.rules)
 	const engine = useEngine()
-	const category = questionCategory.dottedName
+	const category = questionCategory.name
 	const evaluated = engine.evaluate(category),
 		total = evaluated.nodeValue,
 		rule = engine.getRule(category),
