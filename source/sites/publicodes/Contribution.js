@@ -135,86 +135,88 @@ export default ({}) => {
 				))}
 			</div>
 			<h2 css="font-size: 180%">{emoji('🙋‍♀️')}J'ai une autre question</h2>
-			<p>
-				{emoji('➡ ')}Vous connaissez Github ? Dans ce cas, venez contribuer
-				directement sur le projet{' '}
-				<a
-					href="https://github.com/betagouv/ecolab-data/blob/master/CONTRIBUTING.md"
-					target="_blank"
-				>
-					en suivant ce guide
-				</a>
-				.
-			</p>
-			<p>
-				{emoji('➡ ')}Sinon, laissez-nous un message via le formulaire suivant.
-			</p>
-			<br />
-			<div className="ui__ card">
-				<p>{emoji('✉️🐦')}</p>
-				{!URL ? (
-					<form css={formStyle}>
-						<label css="color: var(--color)">
-							Le titre bref de votre question, remarque, correction
-							<input
-								value={sujet}
-								onChange={(e) => setSujet(e.target.value)}
-								type="text"
-								name="sujet"
-								required
-							/>
-						</label>
-						<label css="color: var(--color)">
-							<p>La description complète de votre remarque</p>
-							<p>
-								<em>
-									N'hésitez pas à inclure des chiffres, des sources, des
-									articles de presse, une ébauche de calcul par vos soins etc.
-								</em>
-							</p>
-							<textarea
-								value={comment}
-								onChange={(e) => setComment(e.target.value)}
-								name="comment"
-								required
-							/>
-						</label>
-						<p>
-							<em>
-								Cette contribution sera publique : n'y mettez pas d'informations
-								sensibles
-							</em>
-						</p>
-						<button
-							className="ui__ button"
-							type="submit"
-							disabled={buttonDisabled}
-							onClick={(e) => {
-								if (buttonDisabled) return null
+			<div className="ui__ card" css="padding: 1rem 0">
+				<p>
+					Pour toute remarque ou question, nous vous invitons à{' '}
+					<a href="https://github.com/datagir/nosgestesclimat/issues/new?assignees=&labels=contribution&template=retour-utilisateur.md&title=">
+						ouvrir un ticket directement sur Github
+					</a>
+					.
+				</p>
+				<details>
+					<summary>
+						{emoji('🐛')} Vous avez un bug qui vous empêche d'utiliser Nos
+						Gestes Climat ?{' '}
+					</summary>
 
-								e.preventDefault()
-								disableButton(true)
-								const augmentedComment =
-									comment +
-									`
+					<div className="ui__ card" css="padding: 1rem 0">
+						{!URL ? (
+							<form css={formStyle}>
+								<label css="color: var(--color)">
+									Le titre bref de votre problème
+									<input
+										value={sujet}
+										onChange={(e) => setSujet(e.target.value)}
+										type="text"
+										name="sujet"
+										required
+									/>
+								</label>
+								<label css="color: var(--color)">
+									<p>La description complète de votre problème</p>
+									<p>
+										<small>
+											En indiquant le navigateur que vous utilisez (par exemple
+											Firefox version 93, Chrome version 95, Safari, etc.), et
+											la plateforme (iPhone, Android, ordinateur Windows, etc.),
+											vous nous aiderez à résoudre le bug plus rapidement.
+										</small>
+									</p>
+									<textarea
+										value={comment}
+										onChange={(e) => setComment(e.target.value)}
+										name="comment"
+										required
+									/>
+								</label>
+								<p>
+									<em>
+										Cette contribution sera publique : n'y mettez pas
+										d'informations sensibles
+									</em>
+								</p>
+								<button
+									className="ui__ button"
+									type="submit"
+									disabled={buttonDisabled}
+									onClick={(e) => {
+										if (buttonDisabled) return null
+
+										e.preventDefault()
+										disableButton(true)
+										const augmentedComment =
+											comment +
+											`
 
 ${fromLocation ? `Depuis la page : \`${fromLocation}\`` : ''}
 
 > Ce ticket a été créé automatiquement par notre robot depuis notre [page de contribution](https://nosgestesclimat.fr/contribuer).
 
 									`
-								createIssue(sujet, augmentedComment, setURL, disableButton)
-							}}
-						>
-							Valider
-						</button>
-					</form>
-				) : (
-					<p>
-						Merci {emoji('😍')} ! Suivez l'avancement de votre suggestion en
-						cliquant sur <a href={URL}>ce lien</a>.
-					</p>
-				)}
+										createIssue(sujet, augmentedComment, setURL, disableButton)
+									}}
+								>
+									Valider
+								</button>
+							</form>
+						) : (
+							<p>
+								Merci {emoji('😍')} ! Suivez l'avancement de votre suggestion en
+								cliquant sur <a href={URL}>ce lien</a>.
+							</p>
+						)}
+					</div>
+				</details>
 			</div>
 		</div>
 	)
