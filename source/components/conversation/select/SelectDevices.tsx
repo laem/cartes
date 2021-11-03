@@ -12,6 +12,7 @@ export default function SelectDevices({
 	selectedRules,
 	value: currentValue,
 	question,
+	options: { defaultsToFalse },
 }) {
 	const dispatch = useDispatch()
 	const situation = useSelector(situationSelector)
@@ -32,7 +33,12 @@ export default function SelectDevices({
 							value =
 								situationValue != null
 									? situationValue
+									: // unlike the NumberedMosaic, we don't preselect cards choices here
+									// user tests showed us it is now well received
+									defaultsToFalse
+									? 'non'
 									: question.rawNode['par défaut']
+
 						return (
 							<li
 								css="padding: 2rem"

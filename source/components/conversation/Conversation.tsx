@@ -117,6 +117,12 @@ export default function Conversation({
 				.map(([dottedName]) => dottedName)
 		: [currentQuestion]
 	const submit = (source: string) => {
+		if (mosaicQuestion?.options?.defaultsToFalse) {
+			questionsToSubmit.map((question) =>
+				dispatch(updateSituation(question, situation[question] || 'non'))
+			)
+		}
+
 		questionsToSubmit.map((question) =>
 			dispatch({
 				type: 'STEP_ACTION',
