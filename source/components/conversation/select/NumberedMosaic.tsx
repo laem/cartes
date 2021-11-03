@@ -36,10 +36,13 @@ export default function NumberedMosaic({
 						question,
 					]) => {
 						const situationValue = situation[question.dottedName],
+							evaluation = engine.evaluate(question.dottedName),
+							nodeValue = evaluation.nodeValue,
 							value =
 								situationValue != null
 									? situationValue
-									: question.rawNode['par défaut']
+									: Math.round(Math.random() * 10) |
+									  question.rawNode['par défaut']
 						return (
 							<li className="ui__ card interactive" key={name}>
 								<h4>{title}</h4>
@@ -57,17 +60,44 @@ export default function NumberedMosaic({
 											!value ? 'disabled' : ''
 										}`}
 										onClick={() =>
-											value > 0 &&
-											dispatch(updateSituation(question.dottedName, value - 1))
+											nodeValue > 0 &&
+											dispatch(
+												updateSituation(question.dottedName, nodeValue - 1)
+											)
 										}
 									>
 										-
 									</button>
-									<span>{value}</span>
+									<input
+										type="number"
+										css={`
+											width: 1.5rem;
+											height: 1.5rem;
+											font-size: 100%;
+											color: var(--darkColor);
+											margin: 0 0.6rem;
+											text-align: center;
+											border: none;
+											border-bottom: 2px dotted var(--color);
+										`}
+										value={
+											situation[question.dottedName] == null
+												? undefined
+												: nodeValue
+										}
+										placeholder={nodeValue}
+										onChange={(e) =>
+											dispatch(
+												updateSituation(question.dottedName, +e.target.value)
+											)
+										}
+									></input>
 									<button
 										className="ui__ button small plain"
 										onClick={() =>
-											dispatch(updateSituation(question.dottedName, value + 1))
+											dispatch(
+												updateSituation(question.dottedName, nodeValue + 1)
+											)
 										}
 									>
 										+
