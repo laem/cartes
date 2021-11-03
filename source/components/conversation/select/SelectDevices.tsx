@@ -15,7 +15,6 @@ export default function SelectDevices({
 }) {
 	const dispatch = useDispatch()
 	const situation = useSelector(situationSelector)
-	console.log({ selectedRules })
 
 	const choiceElements = (
 		<div>
