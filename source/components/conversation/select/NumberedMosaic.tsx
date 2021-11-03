@@ -3,10 +3,8 @@ import React from 'react'
 import emoji from 'react-easy-emoji'
 import { useDispatch, useSelector } from 'react-redux'
 import { situationSelector } from 'Selectors/simulationSelectors'
+import { useEngine } from '../../utils/EngineContext'
 import { Mosaic } from './UI'
-
-// This is the number of possible answers in this very custom input component
-const chipsTotal = 14
 
 export default function NumberedMosaic({
 	name,
@@ -18,25 +16,12 @@ export default function NumberedMosaic({
 }) {
 	const dispatch = useDispatch()
 	const situation = useSelector(situationSelector)
+	const engine = useEngine()
 
-	const chipsCount = selectedRules.reduce(
-		(
-			memo,
-			[
-				_,
-				{
-					dottedName,
-					rawNode: { 'par défaut': defaultValue },
-				},
-			]
-		) =>
-			memo +
-			(situation[dottedName] != undefined
-				? situation[dottedName]
-				: defaultValue),
-		0
-	)
-	console.log(chipsCount)
+	const chipsCount = selectedRules.reduce((memo, [_, { dottedName }]) => {
+		const evaluated = engine.evaluate(dottedName)
+		return memo + evaluated.nodeValue
+	}, 0)
 
 	const choiceElements = (
 		<div>
@@ -55,7 +40,6 @@ export default function NumberedMosaic({
 								situationValue != null
 									? situationValue
 									: question.rawNode['par défaut']
-						console.log(title, icônes, description, value)
 						return (
 							<li className="ui__ card interactive" key={name}>
 								<h4>{title}</h4>
