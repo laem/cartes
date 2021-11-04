@@ -21,19 +21,25 @@ export default () => {
 				> div > a {
 				}
 				text-align: center;
-				> img {
-					width: 60%;
-					border-radius: 0.8rem;
-				}
-				@media (max-width: 800px) {
-					> img {
-						width: 95%;
-					}
+				display: flex;
+				flex-direction: column;
+				justify-content: space-evenly;
+				align-items: center;
+				min-height: 85vh;
+				footer {
+					margin-top: auto;
 				}
 			`}
 		>
 			<h1>Connaissez-vous votre empreinte sur le climat ?</h1>
 			<img
+				css={`
+					width: 60%;
+					border-radius: 0.8rem;
+					@media (max-width: 800px) {
+						width: 95%;
+					}
+				`}
 				src={Illustration}
 				alt="Illustration sur fond mauve d'une scène mélant grande ville, péri-urbain et rural, où on peut voir quelques éléments d'une vie quotidienne, chaque élément étant émetteur d'une certaine empreinte sur le climat."
 			/>
