@@ -22,7 +22,7 @@ export default () => {
 				}
 				text-align: center;
 				> img {
-					width: 70%;
+					width: 60%;
 					border-radius: 0.8rem;
 				}
 				@media (max-width: 800px) {
