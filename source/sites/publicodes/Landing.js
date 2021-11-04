@@ -43,13 +43,13 @@ export default () => {
 				src={Illustration}
 				alt="Illustration sur fond mauve d'une scène mélant grande ville, péri-urbain et rural, où on peut voir quelques éléments d'une vie quotidienne, chaque élément étant émetteur d'une certaine empreinte sur le climat."
 			/>
-			<div css="margin-bottom: 1rem">
-				<div css="margin: 1rem 0 .6rem;">
-					<Link to="/simulateur/bilan" className="ui__ plain button">
+			<div css="margin: 1rem 0">
+				<div>
+					<Link to="/simulateur/bilan" className="ui__ plain button cta">
 						Faire le test
 					</Link>
 				</div>
-				<div css="margin: .6rem 0 1rem;">
+				<div>
 					<Link to="/conférence" className="ui__ button small">
 						{emoji('👥')} Faire le test à plusieurs
 					</Link>
