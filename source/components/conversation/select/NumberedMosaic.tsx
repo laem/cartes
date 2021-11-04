@@ -3,10 +3,8 @@ import React from 'react'
 import emoji from 'react-easy-emoji'
 import { useDispatch, useSelector } from 'react-redux'
 import { situationSelector } from 'Selectors/simulationSelectors'
+import { useEngine } from '../../utils/EngineContext'
 import { Mosaic } from './UI'
-
-// This is the number of possible answers in this very custom input component
-const chipsTotal = 14
 
 export default function NumberedMosaic({
 	name,
@@ -18,25 +16,12 @@ export default function NumberedMosaic({
 }) {
 	const dispatch = useDispatch()
 	const situation = useSelector(situationSelector)
+	const engine = useEngine()
 
-	const chipsCount = selectedRules.reduce(
-		(
-			memo,
-			[
-				_,
-				{
-					dottedName,
-					rawNode: { 'par défaut': defaultValue },
-				},
-			]
-		) =>
-			memo +
-			(situation[dottedName] != undefined
-				? situation[dottedName]
-				: defaultValue),
-		0
-	)
-	console.log(chipsCount)
+	const chipsCount = selectedRules.reduce((memo, [_, { dottedName }]) => {
+		const evaluated = engine.evaluate(dottedName)
+		return memo + evaluated.nodeValue
+	}, 0)
 
 	const choiceElements = (
 		<div>
@@ -51,11 +36,13 @@ export default function NumberedMosaic({
 						question,
 					]) => {
 						const situationValue = situation[question.dottedName],
+							evaluation = engine.evaluate(question.dottedName),
+							nodeValue = evaluation.nodeValue,
 							value =
 								situationValue != null
 									? situationValue
-									: question.rawNode['par défaut']
-						console.log(title, icônes, description, value)
+									: Math.round(Math.random() * 10) |
+									  question.rawNode['par défaut']
 						return (
 							<li className="ui__ card interactive" key={name}>
 								<h4>{title}</h4>
@@ -73,17 +60,44 @@ export default function NumberedMosaic({
 											!value ? 'disabled' : ''
 										}`}
 										onClick={() =>
-											value > 0 &&
-											dispatch(updateSituation(question.dottedName, value - 1))
+											nodeValue > 0 &&
+											dispatch(
+												updateSituation(question.dottedName, nodeValue - 1)
+											)
 										}
 									>
 										-
 									</button>
-									<span>{value}</span>
+									<input
+										type="number"
+										css={`
+											width: 1.5rem;
+											height: 1.5rem;
+											font-size: 100%;
+											color: var(--darkColor);
+											margin: 0 0.6rem;
+											text-align: center;
+											border: none;
+											border-bottom: 2px dotted var(--color);
+										`}
+										value={
+											situation[question.dottedName] == null
+												? undefined
+												: nodeValue
+										}
+										placeholder={nodeValue}
+										onChange={(e) =>
+											dispatch(
+												updateSituation(question.dottedName, +e.target.value)
+											)
+										}
+									></input>
 									<button
 										className="ui__ button small plain"
 										onClick={() =>
-											dispatch(updateSituation(question.dottedName, value + 1))
+											dispatch(
+												updateSituation(question.dottedName, nodeValue + 1)
+											)
 										}
 									>
 										+

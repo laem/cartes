@@ -11,6 +11,7 @@ const mosaicQuestions: Array<{
 }> = [
 	{
 		dottedName: "numérique . liste d'appareils",
+		options: { defaultsToFalse: true },
 		question: 'Quels appareils numériques de moins de 10 ans possédez-vous ?',
 		description: `
 L'essentiel de l'empreinte du numérique réside dans les appareils que nous achetons. Renseignez ici vos appareils.
@@ -27,6 +28,7 @@ L'essentiel de l'empreinte du numérique réside dans les appareils que nous ach
 	},
 	{
 		dottedName: "divers . électroménager . liste d'appareils",
+		options: { defaultsToFalse: true },
 		question:
 			'Quels appareils électroménagers de moins de 10 ans possédez-vous ?',
 		description: `
