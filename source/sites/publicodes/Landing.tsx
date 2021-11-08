@@ -16,8 +16,8 @@ export default () => {
 				> div > a {
 				}
 				text-align: center;
-				img {
-					height: 60%;
+				> img {
+					height: 50%;
 					object-fit: cover;
 					width: 100vw;
 					-webkit-mask-image: -webkit-gradient(
@@ -27,21 +27,8 @@ export default () => {
 						from(rgba(0, 0, 0, 1)),
 						to(rgba(0, 0, 0, 0))
 					);
-				}
-				h1 {
-					font-size: 300%;
-					margin-bottom: 0.6rem;
-					line-height: 2.4rem;
-					margin-top: -6rem;
-				}
-				h1 + p {
-					margin-bottom: 1rem;
-				}
-				@media (min-width: 800px) {
-					h1 {
-						font-size: 400%;
-						line-height: 4rem;
-					}
+					z-index: -10;
+					position: relative;
 				}
 				strong {
 				}
@@ -67,6 +54,24 @@ export default () => {
 					strong {
 						background: var(--color);
 					}
+
+					header {
+						h1 {
+							font-size: 300%;
+							margin-bottom: 0.6rem;
+							line-height: 2.4rem;
+							margin-top: -12rem;
+						}
+						h1 + p {
+							margin-bottom: 1rem;
+						}
+						@media (min-width: 800px) {
+							h1 {
+								font-size: 400%;
+								line-height: 4rem;
+							}
+						}
+					}
 				`}
 			>
 				<header>
@@ -84,6 +89,28 @@ export default () => {
 				<p>
 					<Emoji e="⏱️" /> 2 minutes chrono
 				</p>
+
+				<h1>Mini-calculateurs</h1>
+				<ul className="ui__ box-container">
+					<li className="ui__ interactive card light-border box">
+						<div class="ui__ big box-icon">
+							<Emoji e="26F4" />
+						</div>
+						<h3>Ferry</h3>
+					</li>
+					<li className="ui__ interactive card light-border box">
+						<div class="ui__ big box-icon">
+							<Emoji e="✈️" />
+						</div>
+						<h3>Avion</h3>
+					</li>
+					<li className="ui__ interactive card light-border box">
+						<div class="ui__ big box-icon">
+							<Emoji e="➕" />
+						</div>
+						<h3>Tout le reste</h3>
+					</li>
+				</ul>
 
 				<footer css="display: flex; justify-content: center; align-items: center; height: 3rem">
 					<div
