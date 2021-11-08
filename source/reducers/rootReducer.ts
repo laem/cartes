@@ -30,17 +30,6 @@ function situationBranch(state: number | null = null, action: Action) {
 	}
 }
 
-function activeTargetInput(state: DottedName | null = null, action: Action) {
-	switch (action.type) {
-		case 'SET_ACTIVE_TARGET_INPUT':
-			return action.name
-		case 'RESET_SIMULATION':
-			return null
-		default:
-			return state
-	}
-}
-
 type QuestionsKind =
 	| "à l'affiche"
 	| 'non prioritaires'
@@ -48,7 +37,6 @@ type QuestionsKind =
 	| 'liste noire'
 
 export type SimulationConfig = {
-	narrow: Boolean
 	objectifs:
 		| Array<DottedName>
 		| Array<{ icône: string; nom: string; objectifs: Array<DottedName> }>
@@ -94,7 +82,7 @@ function simulation(
 			hiddenNotifications: state?.hiddenControls || [],
 			situation: action.situation || state?.situation || {},
 			targetUnit: config['unité par défaut'] || '€/mois',
-			foldedSteps: state?.foldedSteps || [],
+			foldedSteps: action.foldedSteps || state?.foldedSteps || [],
 			unfoldedStep: null,
 			persona: action.persona,
 			messages: state?.messages || {},
@@ -172,9 +160,12 @@ function rules(state = null, { type, rules }) {
 	} else return state
 }
 
-function actionMode(state = null, { type, mode }) {
-	if (type === 'SET_ACTION_MODE') {
-		return mode
+function actionChoices(state = {}, { type, action, choice }) {
+	if (type === 'SET_ACTION_CHOICE') {
+		return { ...state, [action]: choice }
+	}
+	if (type === 'RESET_ACTION_CHOICES') {
+		return {}
 	} else return state
 }
 
@@ -188,6 +179,13 @@ function conference(state = null, { type, room, ydoc, provider }) {
 		}
 	} else return state
 }
+function tutorials(state = {}, { type, id }) {
+	if (type === 'SKIP_TUTORIAL') {
+		return { ...state, [id]: 'skip' }
+	} else if (type === 'RESET_TUTORIALS') {
+		return {}
+	} else return state
+}
 
 const mainReducer = (state: any, action: Action) =>
 	combineReducers({
@@ -197,10 +195,11 @@ const mainReducer = (state: any, action: Action) =>
 			simulation(a, b),
 		previousSimulation: defaultTo(null) as Reducer<SavedSimulation | null>,
 		situationBranch,
-		activeTargetInput,
 		rules,
-		actionMode,
+		actionChoices,
 		conference,
+		iframeOptions: defaultTo(null),
+		tutorials,
 	})(state, action)
 
 export default reduceReducers<RootState>(

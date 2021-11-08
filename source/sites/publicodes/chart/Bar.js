@@ -17,6 +17,7 @@ export default ({
 		{!noText && (
 			<div css="color: var(--textColorOnWhite)">
 				<span>{title}</span>
+				{completed && <Check />}
 			</div>
 		)}
 		<div
@@ -46,7 +47,6 @@ export default ({
 					border-radius: 0.4rem;
 					width: ${(nodeValue / empreinteMaximum) * 100 * 0.85}%;
 					color: white;
-					${shadowStyle}
 				`}
 			></span>
 			<Value {...{ nodeValue, completed, color: valueColor }} />
@@ -55,3 +55,5 @@ export default ({
 )
 export const capitalizeFirst = (text) =>
 	text[0].toUpperCase() + text.slice(1, text.length)
+
+const Check = ({}) => <span css="margin-left: .3rem">{emoji(' ✅')}</span>

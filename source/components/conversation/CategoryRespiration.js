@@ -47,7 +47,6 @@ export default ({ dismiss, questionCategory }) => {
 			animate={'open'}
 			custom={width}
 			ref={containerRef}
-			className="ui__ full-width "
 			css={`
 				text-align: center;
 				padding: 1rem;
@@ -94,7 +93,7 @@ export default ({ dismiss, questionCategory }) => {
 			>
 				<h2>{questionCategory.title}</h2>
 				{emoji(questionCategory.icons)}
-				<button className="ui__ plain button" onClick={dismiss}>
+				<button className="ui__ plain button attention" onClick={dismiss}>
 					C'est parti !
 				</button>
 			</motion.div>

@@ -1,20 +1,23 @@
-import React from 'react'
-import { useLocation, useParams } from 'react-router'
-import emoji from 'react-easy-emoji'
-import tinygradient from 'tinygradient'
-import { animated, useSpring } from 'react-spring'
 import ShareButton from 'Components/ShareButton'
 import { findContrastedTextColor } from 'Components/utils/colors'
-import { AnimatePresence, motion } from 'framer-motion'
-
-import BallonGES from './images/ballonGES.svg'
-import StartingBlock from './images/starting block.svg'
-import SessionBar from 'Components/SessionBar'
-import Chart from './chart'
+import { AnimatePresence, motion, useSpring } from 'framer-motion'
+import { default as React, useContext, useEffect, useState } from 'react'
+import emoji from 'react-easy-emoji'
+import { useDispatch, useSelector } from 'react-redux'
+import { useLocation } from 'react-router'
 import { Link } from 'react-router-dom'
+import tinygradient from 'tinygradient'
+import { goToQuestion } from '../../actions/actions'
+import { IframeOptionsContext } from '../../components/utils/IframeOptionsProvider'
 import Meta from '../../components/utils/Meta'
+import { answeredQuestionsSelector } from '../../selectors/simulationSelectors'
+import { last } from '../../utils'
+import Chart from './chart'
 import DefaultFootprint from './DefaultFootprint'
-import { sessionBarMargin } from '../../components/SessionBar'
+import IframeDataShareModal from './IframeDataShareModal'
+import BallonGES from './images/ballonGES.svg'
+import animate from 'Components/ui/animate'
+import { actionImg } from '../../components/SessionBar'
 
 const gradient = tinygradient([
 		'#78e08f',
@@ -54,25 +57,57 @@ export default ({}) => {
 	const headlessMode =
 		!window || window.navigator.userAgent.includes('HeadlessChrome')
 
-	const { value } = headlessMode
-		? { value: score }
-		: useSpring({
-				config: { mass: 1, tension: 150, friction: 150, precision: 1000 },
-				value: score,
-				from: { value: 0 },
-		  })
+	//	Configuration is try and test, feeling, really
+	const valueSpring = useSpring(0, {
+		mass: 10,
+		tension: 10,
+		stiffness: 50,
+		friction: 500,
+		damping: 60,
+	})
+
+	const [value, setValue] = useState(0)
+
+	useEffect(() => {
+		const unsubscribe = valueSpring.onChange((v) => {
+			setValue(v)
+		})
+
+		headlessMode ? setValue(score) : valueSpring.set(score)
+
+		return () => unsubscribe()
+	})
+
+	const dispatch = useDispatch(),
+		answeredQuestions = useSelector(answeredQuestionsSelector)
 
 	return (
-		<AnimatedDiv
-			value={value}
-			score={score}
-			details={Object.fromEntries(rehydratedDetails)}
-			headlessMode={headlessMode}
-		/>
+		<div>
+			<IframeDataShareModal data={rehydratedDetails} />
+			<Link
+				to="/simulateur/bilan"
+				css="display: block; text-align: center"
+				onClick={() => {
+					dispatch(goToQuestion(last(answeredQuestions)))
+				}}
+			>
+				<button class="ui__ simple small push-left button">
+					← Revenir à la simulation
+				</button>
+			</Link>
+			<animate.appear>
+				<AnimatedDiv
+					value={value}
+					score={score}
+					details={Object.fromEntries(rehydratedDetails)}
+					headlessMode={headlessMode}
+				/>
+			</animate.appear>
+		</div>
 	)
 }
 
-const AnimatedDiv = animated(({ score, value, details, headlessMode }) => {
+const AnimatedDiv = ({ score, value, details, headlessMode }) => {
 	const backgroundColor = getBackgroundColor(value).toHexString(),
 		backgroundColor2 = getBackgroundColor(value + 2000).toHexString(),
 		textColor = findContrastedTextColor(backgroundColor, true),
@@ -87,13 +122,18 @@ const AnimatedDiv = animated(({ score, value, details, headlessMode }) => {
 			window.location.origin +
 			'/.netlify/functions/ending-screenshot?pageToScreenshot=' +
 			window.location
+	const {
+		integratorYoutubeVideo,
+		integratorActionText,
+		integratorActionUrl,
+	} = useContext(IframeOptionsContext)
+
 	return (
 		<div
 			css={`
 				padding: 0 0.3rem 1rem;
 				max-width: 600px;
 				margin: 0 auto;
-				${sessionBarMargin}
 			`}
 		>
 			<Meta
@@ -102,7 +142,6 @@ const AnimatedDiv = animated(({ score, value, details, headlessMode }) => {
 				image={shareImage}
 				url={window.location}
 			/>
-			<SessionBar noResults />
 			<motion.div
 				animate={{ scale: [0.9, 1] }}
 				transition={{ duration: headlessMode ? 0 : 0.6 }}
@@ -209,10 +248,11 @@ const AnimatedDiv = animated(({ score, value, details, headlessMode }) => {
 							</div>
 						</div>
 					</div>
-					<ActionButton />
+					{!integratorActionText && <ActionButton text="Passer à l'action" />}
 					<div css="padding: 1rem">
 						<Chart
 							details={details}
+							links
 							color={textColor}
 							noAnimation
 							noText
@@ -221,7 +261,6 @@ const AnimatedDiv = animated(({ score, value, details, headlessMode }) => {
 						/>
 					</div>
 				</div>
-
 				<div css="display: flex; flex-direction: column; margin: 1rem 0">
 					<ShareButton
 						text="Voilà mon empreinte climat. Mesure la tienne !"
@@ -231,21 +270,49 @@ const AnimatedDiv = animated(({ score, value, details, headlessMode }) => {
 						label="Partager mes résultats"
 					/>
 				</div>
+
+				{integratorActionText && integratorActionUrl && (
+					<IntegratorActionButton />
+				)}
+
+				{integratorYoutubeVideo && (
+					<div
+						class="videoWrapper"
+						css={`
+							iframe {
+								width: 100%;
+							}
+						`}
+					>
+						<iframe
+							width="560"
+							height="315"
+							src={integratorYoutubeVideo}
+							title="YouTube video player"
+							frameborder="0"
+							allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+							allowfullscreen
+						></iframe>
+					</div>
+				)}
+
+				{integratorActionText && <ActionButton text="Réduire mon empreinte" />}
 			</motion.div>
 		</div>
 	)
-})
+}
 
-const ActionButton = () => (
+const ActionButton = ({ text }) => (
 	<Link
 		to="/actions"
 		className="ui__ button plain"
 		css={`
-			margin: 0.6rem 0;
-			width: 100%;
+			margin: 0.6rem auto;
+			width: 90%;
+
 			img {
-				transform: scaleX(-1);
-				height: 2rem;
+				height: 2.6rem;
+				filter: invert(100%);
 				margin: 0 0.6rem;
 				display: inline-block;
 			}
@@ -263,8 +330,63 @@ const ActionButton = () => (
 				width: 100%;
 			`}
 		>
-			<img src={StartingBlock} />
-			Passer à l'action
+			<motion.div
+				animate={{
+					rotate: [0, 15, -15, 0],
+					y: [0, 0, 0, -3, 8, 3],
+				}}
+				transition={{ duration: 2, delay: 4 }}
+			>
+				<img src={actionImg} />
+			</motion.div>
+			{text}
 		</div>
 	</Link>
 )
+
+const IntegratorActionButton = () => {
+	const {
+		integratorLogo,
+		integratorActionUrl,
+		integratorActionText,
+	} = useContext(IframeOptionsContext)
+
+	return (
+		<a
+			href={integratorActionUrl}
+			className="ui__ button plain"
+			target="_blank"
+			css={`
+				margin: 0.6rem auto 1rem;
+				width: 90%;
+				img {
+					transform: scaleX(-1);
+					height: 2rem;
+					margin: 0 0.6rem;
+					display: inline-block;
+				}
+				a {
+					color: var(--textColor);
+					text-decoration: none;
+				}
+			`}
+		>
+			<div
+				css={`
+					display: flex;
+					justify-content: center;
+					align-items: center;
+					@media (max-width: 800px) {
+						flex-direction: column-reverse;
+						img {
+							display: none;
+						}
+					}
+				`}
+			>
+				{integratorActionText}
+				<img src={integratorLogo} />
+			</div>
+		</a>
+	)
+}

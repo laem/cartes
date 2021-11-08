@@ -1,6 +1,6 @@
 import { goBackToSimulation } from 'Actions/actions'
+import SearchBar from 'Components/SearchBar'
 import SearchButton from 'Components/SearchButton'
-import * as Animate from 'Components/ui/animate'
 import { EngineContext } from 'Components/utils/EngineContext'
 import { ScrollToTop } from 'Components/utils/Scroll'
 import { Documentation, getDocumentationSiteMap } from 'publicodes-react'
@@ -9,10 +9,9 @@ import { Trans, useTranslation } from 'react-i18next'
 import { useDispatch, useSelector } from 'react-redux'
 import { Redirect, useLocation } from 'react-router-dom'
 import { RootState } from 'Reducers/rootReducer'
-import SearchBar from 'Components/SearchBar'
-import Méthode from './Méthode'
-import BandeauContribuer from '../BandeauContribuer'
 import Meta from '../../../components/utils/Meta'
+import BandeauContribuer from '../BandeauContribuer'
+import Méthode from './Méthode'
 
 export default function RulePage() {
 	const currentSimulation = useSelector(
@@ -35,7 +34,7 @@ export default function RulePage() {
 		return <Redirect to="/404" />
 	}
 	return (
-		<Animate.fromBottom>
+		<div>
 			<ScrollToTop key={pathname} />
 			<div
 				css={`
@@ -54,7 +53,7 @@ export default function RulePage() {
 			/>
 			{/* <button>Voir l</button> */}
 			<BandeauContribuer />
-		</Animate.fromBottom>
+		</div>
 	)
 }
 function BackToSimulation() {

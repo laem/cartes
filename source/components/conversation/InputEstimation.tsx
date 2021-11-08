@@ -14,16 +14,14 @@ export default function InputEstimation({ inputEstimation, setFinalValue }) {
 		evaluation = engine.evaluate(inputEstimation),
 		nodeValue = evaluation.nodeValue || 1000
 
-	console.log('YYI', evaluation)
-
 	const [value, setValue] = useState('')
 
 	return (
 		<div
 			css={`
-				margin-top: 1rem;
+				margin: 0.6rem 0;
 				input {
-					margin: 0.4rem 0.6rem 0 0;
+					margin: 0.4rem 0.6rem 0 0.6rem;
 					border: 1px dashed var(--color) !important;
 					border-radius: 0.3rem;
 					font-size: 100%;
@@ -40,8 +38,8 @@ export default function InputEstimation({ inputEstimation, setFinalValue }) {
 		>
 			<span>{emoji('🧮')} </span>
 			<span>
-				<div>{inputEstimation.rawNode.question}</div>
 				<div>
+					{inputEstimation.rawNode.question}
 					<input
 						type="number"
 						min="0"

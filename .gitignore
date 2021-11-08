@@ -2,7 +2,7 @@
 .tmp
 dist/*
 !dist/_redirects
-!/dist/images/
+!/dist/demo-iframe.html
 .DS_Store
 yarn-error.log
 cypress/videos

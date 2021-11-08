@@ -20,8 +20,6 @@ import Meta from '../../components/utils/Meta'
 
 const { decodeRuleName, encodeRuleName } = utils
 
-export const Footprint = ({ value }) => <div>Lala {value}</div>
-
 export default ({}) => {
 	const { encodedName } = useParams()
 	const rules = useSelector((state) => state.rules)
@@ -50,7 +48,6 @@ export default ({}) => {
 		{ nodeValue, title } = evaluation
 
 	const { description, icônes: icons, plus } = rules[dottedName]
-	console.log('EVAL', plus)
 
 	const flatActions = rules['actions']
 	const relatedActions = flatActions.formule.somme
@@ -67,12 +64,11 @@ export default ({}) => {
 				padding: 0 0.3rem 1rem;
 				max-width: 600px;
 				margin: 1rem auto;
-				${sessionBarMargin}
 			`}
 		>
 			<Meta title={title} description={description} />
 			<ScrollToTop />
-			<Link to="/actions">
+			<Link to="/actions/liste">
 				<button className="ui__ button simple small ">
 					{emoji('◀')} Retour à la liste
 				</button>
@@ -97,14 +93,22 @@ export default ({}) => {
 				</header>
 				<div css="margin: 1.6rem 0">
 					<Markdown source={description} />
-					{plus && (
-						<Link to={'/actions/plus/' + encodedName}>
-							<button className="ui__ button simple">En savoir plus</button>
+					<div css="display: flex; flex-wrap: wrap; justify-content: space-evenly; margin-top: 1rem">
+						<Link to={'/documentation/' + encodedName}>
+							<button className="ui__ button small">
+								{emoji('⚙️')} Comprendre le calcul
+							</button>
 						</Link>
-					)}
+						{plus && (
+							<Link to={'/actions/plus/' + encodedName}>
+								<button className="ui__ button small">
+									{emoji('📘')} En savoir plus
+								</button>
+							</Link>
+						)}
+					</div>
 				</div>
 			</div>
-			<SessionBar answerButtonOnly />
 			{nextQuestions.length > 0 && (
 				<>
 					<p>Personnalisez cette estimation</p>

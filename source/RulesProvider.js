@@ -61,7 +61,7 @@ export default ({ children, rulesURL, dataBranch }) => {
 
 			// Bigger rule explanations are stored in nested .md files
 			const reqPlus = require.context(
-				'raw-loader!../../nosgestesclimat/data/actions/plus/',
+				'raw-loader!../../nosgestesclimat/data/actions-plus/',
 				true,
 				/\.(md)$/
 			)

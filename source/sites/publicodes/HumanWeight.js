@@ -21,16 +21,19 @@ export const humanWeight = (possiblyNegativeValue, concise = false) => {
 
 	return [value, unit]
 }
-export default ({ nodeValue }) => {
-	return <HumanWeight nodeValue={nodeValue} />
-}
-
-export const HumanWeight = ({ nodeValue }) => {
+export default ({ nodeValue, overrideValue }) => {
 	const [value, unit] = humanWeight(nodeValue)
 	return (
-		<span>
+		<span
+			css={`
+				display: flex;
+				flex-wrap: wrap;
+				justify-content: center;
+				align-items: baseline;
+			`}
+		>
 			<strong
-				className="humanValue"
+				classname="humanvalue"
 				css={`
 					font-size: 160%;
 					font-weight: 600;
@@ -38,7 +41,28 @@ export const HumanWeight = ({ nodeValue }) => {
 			>
 				{value}&nbsp;{unit}
 			</strong>{' '}
-			<UnitSuffix />
+			{overrideValue && <OverrideBlock value={nodeValue - overrideValue} />}
+			<span css="margin: 0 .6rem">
+				<UnitSuffix />
+			</span>
+		</span>
+	)
+}
+
+const OverrideBlock = ({ value: rawValue }) => {
+	const [value, unit] = humanWeight(rawValue)
+	return (
+		<span>
+			<span css="font-size: 180%; margin: 0 1rem">{emoji('➡️ ')}</span>
+			<strong
+				classname="humanvalue"
+				css={`
+					font-size: 160%;
+					font-weight: 600;
+				`}
+			>
+				{value}&nbsp;{unit}
+			</strong>
 		</span>
 	)
 }

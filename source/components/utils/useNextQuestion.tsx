@@ -34,6 +34,7 @@ import {
 	situationSelector,
 } from 'Selectors/simulationSelectors'
 import { EngineContext } from './EngineContext'
+import Engine from 'publicodes'
 
 type MissingVariables = Partial<Record<DottedName, number>>
 export function getNextSteps(
@@ -84,7 +85,8 @@ export function getNextQuestions(
 	missingVariables: Array<MissingVariables>,
 	questionConfig: SimulationConfig['questions'] = {},
 	answeredQuestions: Array<DottedName> = [],
-	situation: Simulation['situation'] = {}
+	situation: Simulation['situation'] = {},
+	engine: Engine
 ): Array<DottedName> {
 	const {
 		'non prioritaires': notPriority = [],
@@ -98,6 +100,11 @@ export function getNextQuestions(
 			(!whitelist.length || whitelist.some((name) => step.startsWith(name))) &&
 			(!blacklist.length || !blacklist.some((name) => step.startsWith(name)))
 	)
+
+	const nextQuestions = nextSteps.filter((name) => {
+		const rule = engine.getRule(name)
+		return rule.rawNode.question != null
+	})
 
 	const lastStep = last(answeredQuestions)
 	// L'ajout de la réponse permet de traiter les questions dont la réponse est
@@ -117,12 +124,11 @@ export function getNextQuestions(
 			notPriority.findIndex((name) => question.startsWith(name)) + 1
 		const differenceCoeff = questionDifference(question, lastStepWithAnswer)
 		return indexList + indexNotPriority + differenceCoeff
-	}, nextSteps)
+	}, nextQuestions)
 }
 
 export const useNextQuestions = function (): Array<DottedName> {
 	const objectifs = useSelector(objectifsSelector)
-	const narrow = useSelector(configSelector).narrow
 	const answeredQuestions = useSelector(answeredQuestionsSelector)
 	const currentQuestion = useSelector(currentQuestionSelector)
 	const questionsConfig = useSelector(configSelector).questions ?? {}
@@ -136,14 +142,10 @@ export const useNextQuestions = function (): Array<DottedName> {
 			missingVariables,
 			questionsConfig,
 			answeredQuestions,
-			situation
+			situation,
+			engine
 		)
-	}, [
-		missingVariables,
-		questionsConfig,
-		answeredQuestions,
-		situation,
-	]).filter((q) => (!narrow ? true : q.includes(objectifs[0])))
+	}, [missingVariables, questionsConfig, answeredQuestions, situation])
 	if (currentQuestion && currentQuestion !== nextQuestions[0]) {
 		return [currentQuestion, ...nextQuestions]
 	}
@@ -152,10 +154,7 @@ export const useNextQuestions = function (): Array<DottedName> {
 
 export function useSimulationProgress(): number {
 	const objectifs = useSelector(objectifsSelector)
-	const narrow = useSelector(configSelector).narrow
-	const numberQuestionAnswered = useSelector(
-		answeredQuestionsSelector
-	).filter((q) => (!narrow ? true : q.includes(objectifs[0]))).length
+	const numberQuestionAnswered = useSelector(answeredQuestionsSelector).length
 	const numberQuestionLeft = useNextQuestions().length
 
 	return numberQuestionAnswered / (numberQuestionAnswered + numberQuestionLeft)

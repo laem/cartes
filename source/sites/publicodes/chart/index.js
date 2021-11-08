@@ -21,7 +21,14 @@ const // Rough estimate of the 2050 budget per person to stay under 2° by 2100
 	transportShare = 1 / 4,
 	transportClimateBudget = climateBudgetPerDay * transportShare
 
-export default ({ details, noText, noAnimation, noCompletion, valueColor }) => {
+export default ({
+	details,
+	noText,
+	noAnimation,
+	noCompletion,
+	valueColor,
+	links,
+}) => {
 	// needed for this component to refresh on situation change :
 	const situation = useSelector(situationSelector)
 	const objectifs = useSelector(objectifsSelector)
@@ -83,49 +90,57 @@ export default ({ details, noText, noAnimation, noCompletion, valueColor }) => {
 						}
 					`}
 				>
-					{categories.map((category) => (
-						<motion.li
-							layoutTransition={
-								noAnimation
-									? null
-									: {
-											type: 'spring',
-											damping: 100,
-											stiffness: 100,
-									  }
-							}
-							key={category.title}
-							css={`
-								margin: 0.4rem 0;
-								list-style-type: none;
-								> a {
-									display: block;
-									text-decoration: none;
-									line-height: inherit;
+					{categories.map((category) => {
+						const bar = (
+							<Bar
+								{...{
+									...category,
+									noText,
+									empreinteMaximum,
+									completed:
+										!noCompletion &&
+										completedCategories.find((c) => c === category.dottedName),
+									valueColor,
+								}}
+							/>
+						)
+						return (
+							<motion.li
+								layoutTransition={
+									noAnimation
+										? null
+										: {
+												type: 'spring',
+												damping: 100,
+												stiffness: 100,
+										  }
 								}
-							`}
-						>
-							<Link
-								to={
-									'/documentation/' + utils.encodeRuleName(category.dottedName)
-								}
+								key={category.title}
+								css={`
+									margin: 0.4rem 0;
+									list-style-type: none;
+									> a {
+										display: block;
+										text-decoration: none;
+										line-height: inherit;
+									}
+								`}
 							>
-								<Bar
-									{...{
-										...category,
-										noText,
-										empreinteMaximum,
-										completed:
-											!noCompletion &&
-											completedCategories.find(
-												(c) => c === category.dottedName
-											),
-										valueColor,
-									}}
-								/>
-							</Link>
-						</motion.li>
-					))}
+								{links ? (
+									<Link
+										to={
+											'/documentation/' +
+											utils.encodeRuleName(category.dottedName)
+										}
+									>
+										{bar}
+									</Link>
+								) : (
+									bar
+								)}
+							</motion.li>
+						)
+					})}
 				</ul>
 			</div>
 			{showBudget && (

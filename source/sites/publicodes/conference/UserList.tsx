@@ -1,6 +1,6 @@
 import emoji from 'react-easy-emoji'
 import { findContrastedTextColor } from '../../../components/utils/colors'
-export default ({ users, username }) => (
+export default ({ users, username, extremes }) => (
 	<ul
 		css={`
 			display: flex;
@@ -21,6 +21,9 @@ export default ({ users, username }) => (
 					border-radius: 0.6rem;
 				`}
 			>
+				{extremes.find(([key, value]) => key === u.name) && (
+					<span>{emoji('⚠️ ')}</span>
+				)}
 				{u.name}
 				{u.name === username && ' (toi)'}
 			</li>

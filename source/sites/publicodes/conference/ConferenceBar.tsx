@@ -11,6 +11,8 @@ import * as Y from 'yjs'
 import { useSimulationProgress } from '../../../components/utils/useNextQuestion'
 import { extractCategories } from 'Components/publicodesUtils'
 import { computeHumanMean } from './Stats'
+import { filterExtremes } from './utils'
+import { backgroundConferenceAnimation } from './conferenceStyle'
 
 export default () => {
 	const conference = useSelector((state) => state.conference)
@@ -32,7 +34,8 @@ export default () => {
 	const nodeValue = correctValue({ nodeValue: rawNodeValue, unit })
 	const [username, setUsername] = usePersistingState('pseudo')
 
-	const [elements, setElements] = useState([])
+	const [rawElements, setElements] = useState([])
+	const elements = filterExtremes(rawElements)
 	const dispatch = useDispatch()
 
 	const simulations = ydoc.get('simulations', Y.Map)
@@ -75,26 +78,7 @@ export default () => {
 		<Link to={'/conférence/' + room} css="text-decoration: none;">
 			<div
 				css={`
-					@keyframes gradient {
-						0% {
-							background-position: 0% 50%;
-						}
-						50% {
-							background-position: 100% 50%;
-						}
-						100% {
-							background-position: 0% 50%;
-						}
-					}
-					background: linear-gradient(
-						90deg,
-						white -10%,
-						var(--color) 10%,
-						#b71540 90%,
-						white 110%
-					);
-					background-size: 400% 400%;
-					animation: gradient 15s ease infinite;
+					${backgroundConferenceAnimation}
 					color: white;
 					padding: 0.3rem 1rem;
 					display: flex;
@@ -108,11 +92,16 @@ export default () => {
 						font-size: 150%;
 						margin-right: 0.4rem !important;
 					}
+					@media (min-width: 800px) {
+						flex-direction: column;
+						align-items: start;
+						> * {
+							margin: 0.3rem 0;
+						}
+					}
 				`}
 			>
-				<span css="text-transform: uppercase">
-					{emoji('🏟️')}« {room} »
-				</span>
+				<span css="text-transform: uppercase">«&nbsp;{room}&nbsp;»</span>
 				<span>
 					{emoji('🧮')} {result}
 				</span>

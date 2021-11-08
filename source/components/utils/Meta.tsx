@@ -1,3 +1,4 @@
+import { ReactNode } from 'react'
 import { Helmet } from 'react-helmet'
 import { useLocation } from 'react-router'
 
@@ -6,9 +7,16 @@ type PropType = {
 	description: string
 	image?: string
 	url?: string
+	more?: ReactNode | null
 }
 
-export default function Meta({ title, description, image, url }: PropType) {
+export default function Meta({
+	title,
+	description,
+	image,
+	url,
+	children,
+}: PropType) {
 	const { pathname } = useLocation()
 	return (
 		<Helmet>
@@ -20,6 +28,7 @@ export default function Meta({ title, description, image, url }: PropType) {
 			<meta property="twitter:card" content="summary_large_image" />
 			{image && <meta property="og:image" content={image} />}
 			{url && <meta property="og:url" content={url} />}
+			{children}
 		</Helmet>
 	)
 }

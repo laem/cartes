@@ -15,6 +15,10 @@ import { useDispatch, useSelector } from 'react-redux'
 import { Redirect } from 'react-router'
 import tinygradient from 'tinygradient'
 import {
+	deletePreviousSimulation,
+	resetSimulation,
+} from '../../actions/actions'
+import {
 	sessionBarMargin,
 	useSafePreviousSimulation,
 } from '../../components/SessionBar'
@@ -24,11 +28,7 @@ import {
 	answeredQuestionsSelector,
 	situationSelector,
 } from '../../selectors/simulationSelectors'
-import {
-	deletePreviousSimulation,
-	resetSimulation,
-} from '../../actions/actions'
-import { NotBad, QuiteGood, Half, Almost, Done } from './Congratulations'
+import { Almost, Done, Half, NotBad, QuiteGood } from './Congratulations'
 
 const eqValues = compose(isEmpty, symmetricDifference)
 export const colorScale = [
@@ -68,12 +68,10 @@ const Simulateur = (props) => {
 		dispatch = useDispatch(),
 		config = {
 			objectifs: [decoded],
-			narrow: decoded !== 'bilan',
 		},
 		configSet = useSelector((state) => state.simulation?.config),
-		categories =
-			decoded === 'bilan' &&
-			extractCategories(rules, engine, null, 'bilan', false)
+		categories = decoded === 'bilan' && extractCategories(rules, engine)
+	const tutorials = useSelector((state) => state.tutorials)
 
 	useEffect(
 		() =>

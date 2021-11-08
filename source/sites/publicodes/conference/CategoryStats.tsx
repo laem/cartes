@@ -13,6 +13,7 @@ export default ({ categories, maxCategory, spotlight }) => {
 		<div>
 			<ul
 				css={`
+					padding-left: 0;
 					> li:nth-child(2n + 1) {
 						background: var(--lightestColor);
 					}

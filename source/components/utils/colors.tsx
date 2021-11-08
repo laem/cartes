@@ -72,10 +72,12 @@ const generateTheme = (themeColor?: string) => {
 		lighterTextColor = darkColor + 'cc',
 		lighterInverseTextColor = lightenTextColor(inverseTextColor),
 		textColorOnWhite = textColor === '#ffffff' ? color : '#333',
-		palettes = deriveAnalogousPalettes(color)
+		palettes = deriveAnalogousPalettes(color),
+		rgbColor = `${hexToR(color)},${hexToG(color)},${hexToB(color)}`
 
 	return {
 		color,
+		rgbColor,
 		textColor,
 		inverseTextColor,
 		lighterTextColor,

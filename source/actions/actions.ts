@@ -59,6 +59,14 @@ export const resetSimulation = () =>
 	({
 		type: 'RESET_SIMULATION',
 	} as const)
+export const resetActionChoices = () =>
+	({
+		type: 'RESET_ACTION_CHOICES',
+	} as const)
+export const resetTutorials = () =>
+	({
+		type: 'RESET_TUTORIALS',
+	} as const)
 
 export const goToQuestion = (question: DottedName) =>
 	({
@@ -90,12 +98,14 @@ export const setDifferentSituation = ({
 	config,
 	url,
 	persona,
+	foldedSteps,
 }: Object) => ({
 	type: 'SET_SIMULATION',
 	situation,
 	config,
 	url,
 	persona,
+	foldedSteps,
 })
 
 export const setSimulationConfig = (config: Object): ThunkResult<void> => (
@@ -135,6 +145,8 @@ export const updateSituation = (fieldName: DottedName, value: unknown) =>
 		value,
 	} as const)
 
+export const skipTutorial = (id: string) => ({ type: 'SKIP_TUTORIAL', id })
+
 export const updateUnit = (targetUnit: string) =>
 	({
 		type: 'UPDATE_TARGET_UNIT',
@@ -166,8 +178,9 @@ export const explainVariable = (variableName: DottedName | null = null) =>
 		variableName,
 	} as const)
 
-export const setActionMode = (mode: 'guidé' | 'autonome') =>
+export const setActionChoice = (action: string, choice: boolean) =>
 	({
-		type: 'SET_ACTION_MODE',
-		mode,
+		type: 'SET_ACTION_CHOICE',
+		action,
+		choice,
 	} as const)

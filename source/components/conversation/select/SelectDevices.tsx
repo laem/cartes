@@ -1,13 +1,10 @@
-import classnames from 'classnames'
-import { ThemeColorsContext } from 'Components/utils/colors'
-import React, { useCallback, useContext, useState } from 'react'
-import { Explicable } from 'Components/conversation/Explicable'
+import { updateSituation } from 'Actions/actions'
+import Checkbox from 'Components/ui/Checkbox'
+import React from 'react'
 import emoji from 'react-easy-emoji'
 import { useDispatch, useSelector } from 'react-redux'
 import { situationSelector } from 'Selectors/simulationSelectors'
-import { updateSituation } from 'Actions/actions'
 import { Mosaic } from './UI'
-import Checkbox from 'Components/ui/Checkbox'
 
 export default function SelectDevices({
 	name,
@@ -15,10 +12,10 @@ export default function SelectDevices({
 	selectedRules,
 	value: currentValue,
 	question,
+	options: { defaultsToFalse },
 }) {
 	const dispatch = useDispatch()
 	const situation = useSelector(situationSelector)
-	console.log({ selectedRules })
 
 	const choiceElements = (
 		<div>
@@ -36,11 +33,18 @@ export default function SelectDevices({
 							value =
 								situationValue != null
 									? situationValue
+									: // unlike the NumberedMosaic, we don't preselect cards choices here
+									// user tests showed us it is now well received
+									defaultsToFalse
+									? 'non'
 									: question.rawNode['par défaut']
+
 						return (
 							<li
 								css="padding: 2rem"
-								className="ui__ card interactive"
+								className={`ui__ card interactive light-border ${
+									value === 'oui' ? `selected` : ''
+								}`}
 								key={name}
 								onMouseDown={() =>
 									dispatch(

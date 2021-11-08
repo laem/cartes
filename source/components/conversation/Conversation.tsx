@@ -8,7 +8,6 @@ import RuleInput, {
 	RuleInputProps,
 } from 'Components/conversation/RuleInput'
 import Notifications from 'Components/Notifications'
-import * as Animate from 'Components/ui/animate'
 import { EngineContext } from 'Components/utils/EngineContext'
 import { useNextQuestions } from 'Components/utils/useNextQuestion'
 import { TrackerContext } from 'Components/utils/withTracker'
@@ -21,6 +20,7 @@ import {
 	situationSelector,
 } from 'Selectors/simulationSelectors'
 import { objectifsSelector } from '../../selectors/simulationSelectors'
+import CategoryVisualisation from '../../sites/publicodes/CategoryVisualisation'
 import { splitName } from '../publicodesUtils'
 import useKeypress from '../utils/useKeyPress'
 import Aide from './Aide'
@@ -28,7 +28,6 @@ import CategoryRespiration from './CategoryRespiration'
 import './conversation.css'
 import { ExplicableRule } from './Explicable'
 import SimulationEnding from './SimulationEnding'
-import CategoryVisualisation from '../../sites/publicodes/CategoryVisualisation'
 
 export type ConversationProps = {
 	customEndMessages?: React.ReactNode
@@ -88,15 +87,16 @@ export default function Conversation({
 
 	useEffect(() => {
 		// It is important to test for "previousSimulation" : if it exists, it's not loadedYet. Then currentQuestion could be the wrong one, already answered, don't put it as the unfoldedStep
+		// TODO this is really unclear
 		if (
 			currentQuestion &&
 			!previousSimulation &&
 			currentQuestion !== unfoldedStep
 		) {
+			console.log('dispatch', currentQuestion)
 			dispatch(goToQuestion(currentQuestion))
-			window.scrollTo(0, 0)
 		}
-	}, [dispatch, currentQuestion, previousAnswers, unfoldedStep])
+	}, [dispatch, currentQuestion, previousAnswers, unfoldedStep, objectifs])
 
 	const goToPrevious = () => {
 		return dispatch(goToQuestion(previousQuestion))
@@ -117,6 +117,12 @@ export default function Conversation({
 				.map(([dottedName]) => dottedName)
 		: [currentQuestion]
 	const submit = (source: string) => {
+		if (mosaicQuestion?.options?.defaultsToFalse) {
+			questionsToSubmit.map((question) =>
+				dispatch(updateSituation(question, situation[question] || 'non'))
+			)
+		}
+
 		questionsToSubmit.map((question) =>
 			dispatch({
 				type: 'STEP_ACTION',
@@ -178,45 +184,44 @@ export default function Conversation({
 		/>
 	) : (
 		<section
+			className="ui__ container"
 			css={`
 				@media (max-width: 800px) {
-					padding: 0.8rem 0 0.4rem;
+					padding: 0.4rem 0 0.4rem;
 				}
 			`}
 		>
-			<Aide />
 			<div style={{ outline: 'none' }}>
 				{false && orderByCategories && questionCategory && (
 					<CategoryVisualisation questionCategory={questionCategory} />
 				)}
-				<Animate.fadeIn>
-					<div className="step">
-						<h3
-							css={`
-								@media (max-width: 800px) {
-									margin: 0.4rem 0;
+				<div className="step">
+					<h3
+						css={`
+							@media (max-width: 800px) {
+								margin: 0.4rem 0;
+							}
+						`}
+					>
+						{questionText}{' '}
+						{hasDescription && (
+							<ExplicableRule
+								dottedName={
+									(mosaicQuestion && mosaicQuestion.dottedName) ||
+									currentQuestion
 								}
-							`}
-						>
-							{questionText}{' '}
-							{hasDescription && (
-								<ExplicableRule
-									dottedName={
-										(mosaicQuestion && mosaicQuestion.dottedName) ||
-										currentQuestion
-									}
-								/>
-							)}
-						</h3>
-						<fieldset>
-							<RuleInput
-								dottedName={currentQuestion}
-								onChange={onChange}
-								onSubmit={submit}
 							/>
-						</fieldset>
-					</div>
-				</Animate.fadeIn>
+						)}
+					</h3>
+					<Aide />
+					<fieldset>
+						<RuleInput
+							dottedName={currentQuestion}
+							onChange={onChange}
+							onSubmit={submit}
+						/>
+					</fieldset>
+				</div>
 				<div className="ui__ answer-group">
 					{previousAnswers.length > 0 && currentQuestionIndex !== 0 && (
 						<>
@@ -239,7 +244,7 @@ export default function Conversation({
 						</button>
 					) : null}
 				</div>
-				<Notifications />
+				<Notifications currentQuestion={currentQuestion} />
 			</div>
 		</section>
 	)

@@ -35,6 +35,13 @@ input[type='number'] {
 	appearance: textfield;
 }
 
+/* Remove spinner controls from Chrome, Safari, Edge, Opera */
+input[type=number]::-webkit-inner-spin-button, 
+input[type=number]::-webkit-outer-spin-button { 
+  -webkit-appearance: none; 
+  margin: 0; 
+}
+
 select {
 	width: auto;
 	height: auto;

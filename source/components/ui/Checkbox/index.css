@@ -39,6 +39,7 @@
 	stroke-dashoffset: 0;
 }
 .ui__.checkbox svg polyline {
+	stroke-width: 3px;
 	stroke-dasharray: 22;
 	stroke-dashoffset: 66;
 }
@@ -50,11 +51,7 @@
 	stroke: var(--color);
 }
 .ui__.checkbox-input:checked + label .ui__.checkbox svg {
-	stroke: var(--color);
-}
-.ui__.checkbox-input:checked + label .ui__.checkbox svg path {
-	stroke-dashoffset: 60;
-	transition: all 0.15s linear;
+	stroke: var(--darkColor);
 }
 .ui__.checkbox-input:checked + label .ui__.checkbox svg polyline {
 	stroke-dashoffset: 42;
