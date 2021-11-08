@@ -94,7 +94,28 @@ export default () => {
 				</p>
 
 				<h2>Mini-calculateurs</h2>
-				<ul className="ui__ box-container">
+				<ul
+					css={`
+						display: flex;
+						justif-content: center;
+						li {
+							min-width: 12rem;
+						}
+						@media (max-width: 800px) {
+							li {
+								min-width: 8rem;
+							}
+							width: 100%;
+							flex-wrap: nowrap;
+							overflow-x: auto;
+							white-space: nowrap;
+							justify-content: normal;
+							height: 12rem;
+							scrollbar-width: none;
+							display: flex;
+						}
+					`}
+				>
 					<li className="ui__ interactive card light-border box">
 						<div class="ui__ big box-icon">
 							<Emoji e="26F4" />
