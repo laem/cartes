@@ -72,6 +72,9 @@ export default () => {
 							}
 						}
 					}
+					h2 {
+						font-size: 200%;
+					}
 				`}
 			>
 				<header>
@@ -90,7 +93,7 @@ export default () => {
 					<Emoji e="⏱️" /> 2 minutes chrono
 				</p>
 
-				<h1>Mini-calculateurs</h1>
+				<h2>Mini-calculateurs</h2>
 				<ul className="ui__ box-container">
 					<li className="ui__ interactive card light-border box">
 						<div class="ui__ big box-icon">
