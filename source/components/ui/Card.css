@@ -3,7 +3,7 @@
 		0 1px 2px rgba(var(--rgbColor), 0.24);
 	padding-left: 1rem;
 	padding-right: 1rem;
-	background: white;
+	background: var(--darkerColor);
 	will-change: box-shadow;
 	user-select: text;
 	transition: box-shadow 0.15s, border-color 0.15s;
@@ -24,7 +24,7 @@
 	}
 
 	.ui__.card.plain {
-		color: white;
+		color: var(--darkerColor);
 		color: var(--textColor);
 		background: linear-gradient(60deg, #215da6 0%, #297da1 100%);
 		background: linear-gradient(60deg, var(--darkColor) 0%, var(--color) 100%);

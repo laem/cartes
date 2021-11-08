@@ -71,7 +71,6 @@ function Questions({
 	return (
 		<>
 			<div
-				className="ui__ lighter-bg"
 				css={`
 					@media (min-width: 800px) {
 						margin-top: 0.6rem;
