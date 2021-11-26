@@ -1,5 +1,7 @@
 # À propos
 
+> La catastrophe climatique n'est plus une menace lointaine, c'est une actualité. En savoir plus.
+
 Ce petit questionnaire vous permet de savoir, en moins de 5 minutes, si vous avez une chance de pouvoir vous dire écolo.
 
 N'ayez crainte, faites le test. Tout vous sera expliqué ensuite.

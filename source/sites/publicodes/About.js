@@ -3,13 +3,15 @@ import about from 'raw-loader!./about.md'
 import React from 'react'
 import { Link } from 'react-router-dom'
 import Meta from '../../components/utils/Meta'
+import FuturecoMonochrome from '../../images/FuturecoMonochrome'
 
 export default () => (
 	<section className="ui__ container" id="about">
+		<Link to="/"></Link>
 		<Meta
-			title="À propos de Nos Gestes Climat"
+			title="À propos de futur.eco"
 			description={`
-Ce simulateur vous permet d'évaluer votre empreinte carbone individuelle annuelle totale et par grandes catégories (alimentation, transport, logement, divers, services publics, numérique), de la situer par rapport aux objectifs climatiques et surtout de passer à l’action à votre niveau avec des gestes personnalisés en fonction de vos réponses.
+La catastrophe climatique n'est plus une menace lointaine, c'est une actualité. En savoir plus. Testez si vous êtes écolo. Découvrez l'impact de vos consommations quotidiennes.
 
 		`}
 		/>
