@@ -116,24 +116,34 @@ export default () => {
 						}
 					`}
 				>
-					<li className="ui__ interactive card light-border box">
-						<div class="ui__ big box-icon">
-							<Emoji e="26F4" />
-						</div>
-						<h3>Ferry</h3>
-					</li>
+					<Link to="/ferry">
+						<li className="ui__ interactive card light-border box">
+							<div class="ui__ big box-icon">
+								<Emoji e="26F4" />
+							</div>
+							<h3>Ferry</h3>
+						</li>
+					</Link>
 					<li className="ui__ interactive card light-border box">
 						<div class="ui__ big box-icon">
 							<Emoji e="✈️" />
 						</div>
-						<h3>Avion</h3>
+						<h3>
+							Avion
+							<small>
+								<Emoji e="🏗️" />
+								Bientôt !
+							</small>
+						</h3>
 					</li>
-					<li className="ui__ interactive card light-border box">
-						<div class="ui__ big box-icon">
-							<Emoji e="➕" />
-						</div>
-						<h3>Tout le reste</h3>
-					</li>
+					<Link to="/wiki">
+						<li className="ui__ interactive card light-border box">
+							<div class="ui__ big box-icon">
+								<Emoji e="➕" />
+							</div>
+							<h3>Tout le reste</h3>
+						</li>
+					</Link>
 				</ul>
 
 				<footer css="display: flex; justify-content: center; align-items: center; height: 3rem">
