@@ -29,6 +29,7 @@ import {
 	situationSelector,
 } from '../../selectors/simulationSelectors'
 import { Almost, Done, Half, NotBad, QuiteGood } from './Congratulations'
+import { Link } from 'react-router-dom'
 
 const eqValues = compose(isEmpty, symmetricDifference)
 export const colorScale = [
@@ -126,18 +127,20 @@ const Simulateur = (props) => {
 
 	return (
 		<>
-			<div
-				css={`
-					display: flex;
-					justify-content: center;
-					height: 10%;
-					svg {
-						height: 4rem;
-					}
-				`}
-			>
-				<FuturecoMonochrome color={doomColor} />
-			</div>
+			<Link to="/">
+				<div
+					css={`
+						display: flex;
+						justify-content: center;
+						height: 10%;
+						svg {
+							height: 4rem;
+						}
+					`}
+				>
+					<FuturecoMonochrome color={doomColor} />
+				</div>
+			</Link>
 			<div
 				css={`
 					height: 90%;
