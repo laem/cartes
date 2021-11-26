@@ -7,7 +7,12 @@ import FuturecoMonochrome from '../../images/FuturecoMonochrome'
 
 export default () => (
 	<section className="ui__ container" id="about">
-		<Link to="/"></Link>
+		<Link to="/">
+			<img
+				src="/logo.svg"
+				css="width: 4rem !important; margin: 0 auto;display: block"
+			/>
+		</Link>
 		<Meta
 			title="À propos de futur.eco"
 			description={`
@@ -15,7 +20,7 @@ La catastrophe climatique n'est plus une menace lointaine, c'est une actualité.
 
 		`}
 		/>
-		<p>
+		<p className="ui__ container">
 			<Markdown source={about} />
 			Le code de ce site{' '}
 			<a href="https://github.com/laem/futureco"> est libre</a>. Plongez-vous

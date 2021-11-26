@@ -40,12 +40,12 @@ button {
 }
 
 blockquote {
-	background: var(--lighterColor);
+	background: var(--darkerColor);
 	border-radius: 0.3rem;
 	padding: 1rem;
 	padding-bottom: 0.6rem;
 	margin: 1rem 0;
-	color: var(--darkerColor);
+	color: var(--lighterColor);
 }
 
 .ui__.answer-group {
