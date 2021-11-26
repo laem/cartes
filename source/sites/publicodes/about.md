@@ -14,7 +14,7 @@ Le dérèglement climatique actuel est une conséquence de nos émissions import
 
 > Par exemple, 1k g de méthane équivaut à 28 kg de CO2. Si j'achète un pack de 6 briques de lait, et que la production du lait émet 1kg de méthane (derrière le lait il y a tous les besoins des vaches) et 2 kg de CO2 (le transport en camion), alors l'impact est de 30 kg d'_équivalent_ CO2. [1]
 
-Aujourd'hui, un français en émet en moyenne [12 tonnes](http://ravijen.fr/?p=440) par an. Pour éviter la catastrophe climatique [qui nous met tous en danger](https://www.theguardian.com/environment/2019/feb/02/the-devastation-of-human-life-is-in-view-what-a-burning-world-tells-us-about-climate-change-global-warming), **il faut diviser cet impact au moins par 6 et peut-être même par 20**.
+Aujourd'hui, un français en émet en moyenne [environ 10 tonnes](http://ravijen.fr/?p=440) par an. Pour éviter la catastrophe climatique [qui nous met tous en danger](https://www.theguardian.com/environment/2019/feb/02/the-devastation-of-human-life-is-in-view-what-a-burning-world-tells-us-about-climate-change-global-warming), **il nous faut viser entre 2 et zéro tonnes de CO2e** par an et par personne, **le plus vite possible**. Pourquoi cette fourchette ? C'est selon votre tolérances à la destruction de nos conditions de vie sur cette planète.
 
 ### Le drame
 
