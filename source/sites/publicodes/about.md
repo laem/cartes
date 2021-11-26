@@ -24,13 +24,13 @@ Mais d'où vient cet impact ? Quels gestes et achats de mon quotidien en sont re
 
 L'ampleur de la tâche est telle que le problème ne sera en pratique pas résolu seulement par nos initiatives individuelles : des changements législatifs accompagneront cette prise de conscience : étiquettage obligatoire, taxe carbone, droits de douane sur les importations, etc.
 
-Mais quelle que soit la direction politique empruntée, **la première étape est d'informer ceux qui veulent savoir**. Comment « être écolo » sans savoir qu'un vol aller-retour Paris New-York c'est dépasser d'un coup son crédit carbone annuel ?
+Mais quelle que soit la direction politique empruntée, **la première étape est d'informer ceux qui veulent savoir**, et [lancer le mouvement](https://kont.me/éloge-décroissance-individuelle). Comment « être écolo » sans savoir qu'un vol aller-retour Paris New-York c'est dépasser d'un coup son crédit carbone annuel ?
 
 > Notons aussi que la stratégie nationale bas carbone, en cours d'élaboration à l'été 2019, ne couvre pas les importations (par exemple l'achat d'un smartphone) ni les transports internationaux (un vol Paris New-York). [3]
 
 ### La solution numérique
 
-Il s'agit donc d'exposer les chiffres comme **une réponse simple, parlante, fiable à une recherche faite à l'improviste sur un mobile**.
+Il s'agit donc d'exposer les chiffres comme **une réponse simple, parlante, fiable à une recherche faite à l'improviste sur un mobile**, au café après avoir entendu un truc à la radio, ou autour d'un verre dans un bar avec des potes.
 
 La première étape, c'est une approximation (40kg CO₂e) associé à un achat (nouveau smartphone). Ensuite, il faut toujours _affiner_ ce chiffre avec des questions simples : est-ce un écran 4 pouces (30kg CO₂e) ou 6 pouces (60kg CO₂e). Impossible de donner un impact réaliste d'une douche, sans savoir le type de chauffage et le temps passé. C'est aussi l'occasion d'informer sur l'existence de pommeaux de douche économes.
 
@@ -41,7 +41,7 @@ Finalement, il faut trouver _la bonne unité_. Un steak de 150gr en France, c'es
 -   trouver un produit équivalent : telle alternative est plus écolo (poulet, steak de soja). C'est l'approche retenue par la startup d'Etat [Ecoscore](https://beta.gouv.fr/startups/ecoscore.html).
 -   mettre les ordres de grandeur en tête : un steak, c'est une journée de mon crédit carbone pour limiter le réchauffement à 2°. Un vol international, c'est un quart de mon crédit annuel consommé en quelques heures.
 
-C'est cette deuxième piste que nous explorons aujourd'hui.
+C'est cette deuxième piste que nous explorons aujourd'hui. [Rejoignez-nous !](https://matrix.to/#/#futureco:matrix.org).
 
 [1] L'impact carbone en équivalent CO₂e n'est bien sûr pas le seul critère permettant de juger qu'une consommation est durable. Occupation des sols, utilisation de l'eau, utilisation des métaux rares... tous ces critères sont bien sûr pertinents. Réduire notre impact carbone n'en reste pas moins une condition nécessaire à un futur heureux.
 
