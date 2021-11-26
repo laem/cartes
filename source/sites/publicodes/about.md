@@ -10,11 +10,11 @@ Sur ce site, vous pouvez aussi parcourir un wiki de l'empreinte climat des conso
 
 ### Contexte
 
-Le dérèglement climatique actuel est une conséquence de nos émissions importantes de gaz à effet de serre. Nous avons la chance de pouvoir mesurer ces émissions avec un indice simple : les kilogrammes d'équivalent CO2.
+Le dérèglement climatique actuel est une conséquence de nos émissions importantes de gaz à effet de serre. Nous avons la chance de pouvoir mesurer ces émissions avec un indice simple : les kilogrammes d'équivalent CO₂.
 
-> Par exemple, 1k g de méthane équivaut à 28 kg de CO2. Si j'achète un pack de 6 briques de lait, et que la production du lait émet 1kg de méthane (derrière le lait il y a tous les besoins des vaches) et 2 kg de CO2 (le transport en camion), alors l'impact est de 30 kg d'_équivalent_ CO2. [1]
+> Par exemple, 1k g de méthane équivaut à 28 kg de CO₂. Si j'achète un pack de 6 briques de lait, et que la production du lait émet 1kg de méthane (derrière le lait il y a tous les besoins des vaches) et 2 kg de CO₂ (le transport en camion), alors l'impact est de 30 kg d'_équivalent_ CO₂. [1]
 
-Aujourd'hui, un français en émet en moyenne [environ 10 tonnes](http://ravijen.fr/?p=440) par an. Pour éviter la catastrophe climatique [qui nous met tous en danger](https://www.theguardian.com/environment/2019/feb/02/the-devastation-of-human-life-is-in-view-what-a-burning-world-tells-us-about-climate-change-global-warming), **il nous faut viser entre 2 et zéro tonnes de CO2e** par an et par personne, **le plus vite possible**. Pourquoi cette fourchette ? C'est selon votre tolérances à la destruction de nos conditions de vie sur cette planète.
+Aujourd'hui, un français en émet en moyenne [environ 10 tonnes](http://ravijen.fr/?p=440) par an. Pour éviter la catastrophe climatique [qui nous met tous en danger](https://www.theguardian.com/environment/2019/feb/02/the-devastation-of-human-life-is-in-view-what-a-burning-world-tells-us-about-climate-change-global-warming), **il nous faut viser entre 2 et zéro tonnes de CO₂e** par an et par personne, **le plus vite possible**. Pourquoi cette fourchette ? C'est selon votre tolérances à la destruction de nos conditions de vie sur cette planète.
 
 ### Le drame
 
@@ -32,18 +32,18 @@ Mais quelle que soit la direction politique empruntée, **la première étape es
 
 Il s'agit donc d'exposer les chiffres comme **une réponse simple, parlante, fiable à une recherche faite à l'improviste sur un mobile**.
 
-La première étape, c'est une approximation (40kg CO2e) associé à un achat (nouveau smartphone). Ensuite, il faut toujours _affiner_ ce chiffre avec des questions simples : est-ce un écran 4 pouces (30kg CO2e) ou 6 pouces (60kg CO2e). Impossible de donner un impact réaliste d'une douche, sans savoir le type de chauffage et le temps passé. C'est aussi l'occasion d'informer sur l'existence de pommeaux de douche économes.
+La première étape, c'est une approximation (40kg CO₂e) associé à un achat (nouveau smartphone). Ensuite, il faut toujours _affiner_ ce chiffre avec des questions simples : est-ce un écran 4 pouces (30kg CO₂e) ou 6 pouces (60kg CO₂e). Impossible de donner un impact réaliste d'une douche, sans savoir le type de chauffage et le temps passé. C'est aussi l'occasion d'informer sur l'existence de pommeaux de douche économes.
 
 Le périmètre, qui est en fait tout ce qu'on peut acheter depuis la France, est tellement large que cette base doit etre _collaborative_, à la Wikipedia : que ce soit pour poser les bonnes questions, y répondre ou seulement comprendre et améliorer légèrement une réponse. A la clef, **des mini-modèles libres de l'impact carbone des gestes quotidiens**.
 
-Finalement, il faut trouver _la bonne unité_. Un steak de 150gr en France, c'est 2kg de CO2. Super, et alors ? C'est beaucoup, dois-je m'en inquiéter ? Voici quelques pistes :
+Finalement, il faut trouver _la bonne unité_. Un steak de 150gr en France, c'est 2kg de CO₂e. Super, et alors ? C'est beaucoup, dois-je m'en inquiéter ? Voici quelques pistes :
 
 -   trouver un produit équivalent : telle alternative est plus écolo (poulet, steak de soja). C'est l'approche retenue par la startup d'Etat [Ecoscore](https://beta.gouv.fr/startups/ecoscore.html).
 -   mettre les ordres de grandeur en tête : un steak, c'est une journée de mon crédit carbone pour limiter le réchauffement à 2°. Un vol international, c'est un quart de mon crédit annuel consommé en quelques heures.
 
 C'est cette deuxième piste que nous explorons aujourd'hui.
 
-[1] L'impact carbone en équivalent CO2 n'est bien sûr pas le seul critère permettant de juger qu'une consommation est durable. Occupation des sols, utilisation de l'eau, utilisation des métaux rares... tous ces critères sont bien sûr pertinents. Réduire notre impact carbone n'en reste pas moins une condition nécessaire à un futur heureux.
+[1] L'impact carbone en équivalent CO₂e n'est bien sûr pas le seul critère permettant de juger qu'une consommation est durable. Occupation des sols, utilisation de l'eau, utilisation des métaux rares... tous ces critères sont bien sûr pertinents. Réduire notre impact carbone n'en reste pas moins une condition nécessaire à un futur heureux.
 
 [2] La base carbone de l'ADEME existe, mais s'adresse uniquement aux experts. On ne peut pas demander à un citoyen de créer un compte sur _bilans-ges.ademe.fr_, alors qu'il est avec ses amis à table et qu'il a besoin d'une réponse immédiate. Elle se concentre d'ailleurs sur les données primaires, par exemple le bilan de la combustion d'un kg de gaz naturel du réseau.
 
