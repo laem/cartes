@@ -16,8 +16,8 @@ export const humanWeight = (possiblyNegativeValue, concise = false) => {
 	const signedValue = raw * (possiblyNegativeValue < 0 ? -1 : 1),
 		value =
 			raw < 10
-				? raw.toLocaleString('fr-FR', { maximumSignificantDigits: 2 })
-				: Math.round(raw).toLocaleString('fr-FR')
+				? signedValue.toLocaleString('fr-FR', { maximumSignificantDigits: 2 })
+				: Math.round(signedValue).toLocaleString('fr-FR')
 
 	return [value, unit]
 }

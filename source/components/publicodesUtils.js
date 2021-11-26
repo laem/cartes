@@ -93,3 +93,12 @@ export const extractCategories = (
 }
 
 export const sortCategories = sortBy(({ nodeValue }) => -nodeValue)
+
+export const safeGetRule = (engine, dottedName) => {
+	try {
+		const rule = engine.evaluate(engine.getRule(dottedName))
+		return rule
+	} catch (e) {
+		console.log(e)
+	}
+}

@@ -15,7 +15,7 @@ import { useDispatch, useSelector } from 'react-redux'
 import { useHistory } from 'react-router'
 import { situationSelector } from 'Selectors/simulationSelectors'
 import { answeredQuestionsSelector } from '../../selectors/simulationSelectors'
-import { splitName } from '../publicodesUtils'
+import { splitName, safeGetRule } from '../publicodesUtils'
 import './AnswerList.css'
 
 export default function AnswerList() {
@@ -24,9 +24,13 @@ export default function AnswerList() {
 	const situation = useSelector(situationSelector)
 	const foldedQuestionNames = useSelector(answeredQuestionsSelector)
 	const answeredQuestionNames = Object.keys(situation)
-	const foldedQuestions = foldedQuestionNames.map((dottedName) =>
-		engine.evaluate(engine.getRule(dottedName))
-	)
+	const foldedQuestions = foldedQuestionNames
+		.map((dottedName) => {
+			const rule = safeGetRule(engine, dottedName)
+
+			return rule && engine.evaluate(rule)
+		})
+		.filter(Boolean)
 	const foldedStepsToDisplay = foldedQuestions.map((node) => ({
 		...node,
 		passedQuestion:

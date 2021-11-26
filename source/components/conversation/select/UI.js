@@ -27,13 +27,13 @@ export const Mosaic = styled.ul`
 
 	@media (max-width: 800px) {
 		> li {
-			width: 9rem;
+			width: 10rem;
 		}
 	}
 
 	> li h4 {
 		text-align: center;
-		margin: 0;
+		line-height: 1.2rem;
 	}
 	> li p {
 		font-style: italic;

@@ -44,6 +44,23 @@ Si tous vos appareils ne sont pas proposés dans cette liste, ce n'est pas grave
 		component: SelectDevices,
 	},
 	{
+		dottedName: 'logement . modes de chauffage',
+		options: { defaultsToFalse: true },
+		question: 'Comment est chauffé votre logement ?',
+		description: `
+Certains logements sont chauffés entièrement à l'électricité, d'autres sont entièrement chauffés av  ec du gaz, et plus rarement du bois ou du fioul.·
+      
+Dans d'autres situations encore, un logement peut être chauffé principalement à l'électricité, mais   avec un appoint bois, par exemple.
+
+Cochez tous les modes que vous utilisez.
+
+			`,
+		isApplicable: (dottedName: DottedName) =>
+			dottedName.includes('logement . chauffage') &&
+			dottedName.includes(' . présent'),
+		component: SelectDevices,
+	},
+	{
 		dottedName: 'alimentation . régime',
 		question:
 			'Choisissez les plats de vos midis et dîners pour une semaine type',
