@@ -12,6 +12,7 @@ import Engine from 'publicodes'
 import React, { useEffect, useMemo } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import zeros from './zeroDefaults.yaml'
+import { useLocation } from 'react-router'
 
 // This is a difficult task : categories must equal to zero, in order to not make the test fail without having answered to a non-zero per default category
 // but some categories are conditionned by one variable, like the housing which is divided by the number of inhabitants.
@@ -51,6 +52,12 @@ export default ({ children }) => {
 	const setRules = (rules) => dispatch({ type: 'SET_RULES', rules })
 
 	const urlParams = new URLSearchParams(window.location.search)
+	const location = useLocation()
+	const rulesDomain =
+		location.pathname.indexOf('/wiki') === 0
+			? 'futureco-data.netlify.app/co2.json'
+			: 'ecolab-data.netlify.app/co2.json'
+
 	/* This enables loading the rules of a branch,
 	 * to showcase the app as it would be once this branch of -data  has been merged*/
 	const branch = urlParams.get('branch')
@@ -61,11 +68,15 @@ export default ({ children }) => {
 			: pullRequestNumber
 			? `deploy-preview-${pullRequestNumber}--`
 			: ''
-	}ecolab-data.netlify.app/co2.json`
+	}${rulesDomain}`
 	const dataBranch = branch || pullRequestNumber
 
 	useEffect(() => {
-		if (NODE_ENV === 'development' && !dataBranch) {
+		if (
+			NODE_ENV === 'development' &&
+			!dataBranch &&
+			rulesDomain.includes('ecolab-data')
+		) {
 			// Rules are stored in nested yaml files
 			const req = require.context(
 				'../../nosgestesclimat/data/',
