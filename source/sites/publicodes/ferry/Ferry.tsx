@@ -17,7 +17,6 @@ const rules = req.keys().reduce((memo, key) => {
 					])
 			  )
 			: jsonRuleSet
-	console.log(prefixedRuleSet)
 	return { ...memo, ...prefixedRuleSet }
 }, {})
 
@@ -70,7 +69,6 @@ const Questions = ({}) => {
 	const [situation, setSituation] = useContext(SituationContext)
 	engine.setSituation(situation)
 	const onChange = (dottedName) => (raw) => {
-			console.log('RAW', raw)
 			const value = raw.valeur || raw
 			const newSituation = {
 				...situation,
@@ -89,10 +87,9 @@ const Questions = ({}) => {
 				<summary>Ma situation</summary>
 
 				<ul>
-					{Object.entries(situation).map(
-						([k, v]) =>
-							console.log(v) || <li>{`${k} : ${v?.nodeValue || v}`}</li>
-					)}
+					{Object.entries(situation).map(([k, v]) => (
+						<li>{`${k} : ${v?.nodeValue || v}`}</li>
+					))}
 				</ul>
 			</details>
 			<div

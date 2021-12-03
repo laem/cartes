@@ -14,6 +14,8 @@ import { useDispatch, useSelector } from 'react-redux'
 import zeros from './zeroDefaults.yaml'
 import { useLocation } from 'react-router'
 
+import transformRules from './transformRules'
+
 // This is a difficult task : categories must equal to zero, in order to not make the test fail without having answered to a non-zero per default category
 // but some categories are conditionned by one variable, like the housing which is divided by the number of inhabitants.
 // Or, should the number of inhabitants be the first question asked ?
@@ -130,13 +132,17 @@ export default ({ children }) => {
 				return { ...memo, ...jsonRuleSet }
 			}, {})
 
-			setRules(rules)
+			setRules(transformRules(rules))
 			removeLoader()
 		} else {
 			fetch(rulesURL, { mode: 'cors' })
 				.then((response) => response.json())
 				.then((json) => {
-					setRules(setDefaultsToZero(json))
+					setRules(
+						rulesURL.includes('futureco')
+							? transformRules(rules)
+							: setDefaultsToZero(json)
+					)
 					removeLoader()
 				})
 		}
@@ -147,10 +153,10 @@ export default ({ children }) => {
 }
 
 const EngineWrapper = ({ rules, children }) => {
-	const engine = useMemo(() => new Engine(rules, engineOptions), [
-			rules,
-			engineOptions,
-		]),
+	const engine = useMemo(
+			() => new Engine(rules, engineOptions),
+			[rules, engineOptions]
+		),
 		userSituation = useSelector(situationSelector),
 		configSituation = useSelector(configSituationSelector),
 		situation = useMemo(
