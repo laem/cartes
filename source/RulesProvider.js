@@ -43,12 +43,26 @@ const removeLoader = () => {
 	document.body.appendChild(css)
 }
 
-export default ({ children, rulesURL, dataBranch }) => {
+export default ({ children }) => {
 	const rules = useSelector((state) => state.rules)
 
 	const dispatch = useDispatch()
 
 	const setRules = (rules) => dispatch({ type: 'SET_RULES', rules })
+
+	const urlParams = new URLSearchParams(window.location.search)
+	/* This enables loading the rules of a branch,
+	 * to showcase the app as it would be once this branch of -data  has been merged*/
+	const branch = urlParams.get('branch')
+	const pullRequestNumber = urlParams.get('PR')
+	const rulesURL = `https://${
+		branch
+			? `${branch}--`
+			: pullRequestNumber
+			? `deploy-preview-${pullRequestNumber}--`
+			: ''
+	}ecolab-data.netlify.app/co2.json`
+	const dataBranch = branch || pullRequestNumber
 
 	useEffect(() => {
 		if (NODE_ENV === 'development' && !dataBranch) {

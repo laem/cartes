@@ -58,6 +58,7 @@ export default function Suggestions() {
 
 const CategoryView = ({ exposedRules }) => {
 	const categories = byCategory(exposedRules)
+	console.log(categories)
 	return (
 		<ul
 			css={`
