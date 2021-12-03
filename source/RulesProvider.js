@@ -114,6 +114,24 @@ export default ({ children }) => {
 
 			setRules(setDefaultsToZero(rules))
 			removeLoader()
+		} else if (
+			NODE_ENV === 'development' &&
+			!dataBranch &&
+			rulesDomain.includes('futureco-data')
+		) {
+			// Rules are stored in nested yaml files
+			const req = require.context(
+				'../../futureco-data/data/',
+				true,
+				/\.(yaml)$/
+			)
+			const rules = req.keys().reduce((memo, key) => {
+				const jsonRuleSet = req(key) || {}
+				return { ...memo, ...jsonRuleSet }
+			}, {})
+
+			setRules(rules)
+			removeLoader()
 		} else {
 			fetch(rulesURL, { mode: 'cors' })
 				.then((response) => response.json())
