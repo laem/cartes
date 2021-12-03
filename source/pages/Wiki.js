@@ -112,7 +112,7 @@ const CategoryView = ({ exposedRules }) => {
 								}
 							`}
 						>
-							<Emoji e="E108" />
+							<Emoji e="E105" />
 						</div>
 					)}
 				</li>
