@@ -3,7 +3,6 @@ import Search from 'Components/Search'
 import { utils } from 'publicodes'
 import { pick } from 'ramda'
 import React, { useEffect, useState } from 'react'
-import emoji from 'react-easy-emoji'
 import { useSelector } from 'react-redux'
 import { Link } from 'react-router-dom'
 import Worker from 'worker-loader!Components/WikiSearchWorker.js'
@@ -49,7 +48,9 @@ export default function Suggestions() {
 							<RuleList {...{ rules: results, exposedRules }} />
 						</>
 					) : (
-						<p>Rien trouvé {emoji('😶')}</p>
+						<p>
+							Rien trouvé <Emoji e="😶" />
+						</p>
 					)
 				) : (
 					<CategoryView exposedRules={exposedRules} />
