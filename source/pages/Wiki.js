@@ -31,6 +31,9 @@ export default function Suggestions() {
 
 	return (
 		<section>
+			<h1 css="font-size: 150%">
+				Découvre l'impact de chaque geste du quotidien !
+			</h1>
 			<Search
 				setInput={(input) => {
 					setInput(input)
@@ -66,7 +69,7 @@ const CategoryView = ({ exposedRules }) => {
 				list-style: none;
 				li {
 				}
-				> li > div {
+				> li > h2 {
 					text-transform: uppercase;
 					font-size: 85%;
 					width: auto;
@@ -99,9 +102,9 @@ const CategoryView = ({ exposedRules }) => {
 		>
 			{categories.map(([category, rules], i) => (
 				<li>
-					<div>{category}</div>
+					<h2>{category}</h2>
 					<RuleList {...{ rules, exposedRules: rules }} />
-					{i === 0 && (
+					{false && i === 0 && (
 						<div
 							css={`
 								display: none;
@@ -112,7 +115,7 @@ const CategoryView = ({ exposedRules }) => {
 								}
 							`}
 						>
-							<Emoji e="E105" />
+							<Emoji extra="E105" alt="glisser horizontalement" />
 						</div>
 					)}
 				</li>

@@ -3,8 +3,8 @@ const openmoji = require('openmoji')
 
 const regex = emojiRegex()
 
+const url = `https://unpkg.com/openmoji@12.1.0`
 const findOpenmoji = (e, black) => {
-	const url = `https://unpkg.com/openmoji@12.1.0`
 	const unicode = e.codePointAt(0).toString(16).toUpperCase()
 
 	const directFound = openmoji.openmojis.find((el) => el.emoji === e)
@@ -17,28 +17,36 @@ const findOpenmoji = (e, black) => {
 
 const sizeEm = '2'
 
-export default ({ e, black }) => {
-	//svgMojiURL.includes('1F44D.svg')
-	console.log('<EMOJI', e)
-
+export default ({ e, black, extra, alt }) => {
+	if (extra)
+		return (
+			<Image
+				{...{
+					src: `${url}/${black ? 'black' : 'color'}/svg/${extra}.svg`,
+					alt,
+				}}
+			/>
+		)
 	const images = [...e.matchAll(regex)].map((match) => {
 		const emoji = match[0]
 
 		console.log(emoji, [...emoji])
 
 		const src = findOpenmoji(emoji, black)
-		return (
-			<img
-				css={`
-					width: ${sizeEm}em !important;
-					height: ${sizeEm}em !important;
-					vertical-align: middle !important;
-				`}
-				src={src}
-				alt={emoji}
-			/>
-		)
+		return <Image {...{ src, emoji }} />
 	})
 
 	return <span css="display: flex; align-items: center;">{images}</span>
 }
+
+const Image = ({ src, alt }) => (
+	<img
+		css={`
+			width: ${sizeEm}em !important;
+			height: ${sizeEm}em !important;
+			vertical-align: middle !important;
+		`}
+		src={src}
+		alt={alt}
+	/>
+)
