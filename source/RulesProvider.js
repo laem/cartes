@@ -55,6 +55,7 @@ export default ({ children }) => {
 
 	const urlParams = new URLSearchParams(window.location.search)
 	const location = useLocation()
+	console.log(location)
 	const rulesDomain =
 		location.pathname.indexOf('/wiki') === 0
 			? 'futureco-data.netlify.app/co2.json'
@@ -133,6 +134,7 @@ export default ({ children }) => {
 			}, {})
 
 			setRules(transformRules(rules))
+			console.log('didsetlocalfurules')
 			removeLoader()
 		} else {
 			fetch(rulesURL, { mode: 'cors' })
@@ -146,7 +148,7 @@ export default ({ children }) => {
 					removeLoader()
 				})
 		}
-	}, [])
+	}, [location])
 
 	if (!rules) return null
 	return <EngineWrapper rules={rules}>{children}</EngineWrapper>

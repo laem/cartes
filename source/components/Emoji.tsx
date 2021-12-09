@@ -9,7 +9,6 @@ const findOpenmoji = (e, black) => {
 
 	const directFound = openmoji.openmojis.find((el) => el.emoji === e)
 	const hexFound = openmoji.openmojis.find((el) => el.hexcode === unicode)
-	console.log('DF', directFound, hexFound)
 	const found = directFound || hexFound
 
 	return found && url + found.openmoji_images[black ? 'black' : 'color'].svg
@@ -35,8 +34,6 @@ export default ({ e, black, extra, alt }) => {
 
 	const images = items.map((match) => {
 		const emoji = match[0]
-
-		console.log(emoji, [...emoji])
 
 		const src = findOpenmoji(emoji, black)
 		return <Image {...{ src, emoji, imageSize }} />
