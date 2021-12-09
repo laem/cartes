@@ -21,15 +21,6 @@ function explainedVariable(
 	}
 }
 
-function situationBranch(state: number | null = null, action: Action) {
-	switch (action.type) {
-		case 'SET_SITUATION_BRANCH':
-			return action.id
-		default:
-			return state
-	}
-}
-
 type QuestionsKind =
 	| "à l'affiche"
 	| 'non prioritaires'
@@ -160,25 +151,6 @@ function rules(state = null, { type, rules }) {
 	} else return state
 }
 
-function actionChoices(state = {}, { type, action, choice }) {
-	if (type === 'SET_ACTION_CHOICE') {
-		return { ...state, [action]: choice }
-	}
-	if (type === 'RESET_ACTION_CHOICES') {
-		return {}
-	} else return state
-}
-
-function conference(state = null, { type, room, ydoc, provider }) {
-	if (type === 'SET_CONFERENCE') {
-		if (state?.room === room) return state
-		return {
-			room,
-			ydoc,
-			provider,
-		}
-	} else return state
-}
 function tutorials(state = {}, { type, id }) {
 	if (type === 'SKIP_TUTORIAL') {
 		return { ...state, [id]: 'skip' }
@@ -200,10 +172,7 @@ const mainReducer = (state: any, action: Action) =>
 		simulation: (a: Simulation | null = null, b: Action): Simulation | null =>
 			simulation(a, b),
 		previousSimulation: defaultTo(null) as Reducer<SavedSimulation | null>,
-		situationBranch,
 		rules,
-		actionChoices,
-		conference,
 		iframeOptions: defaultTo(null),
 		tutorials,
 		scenario,

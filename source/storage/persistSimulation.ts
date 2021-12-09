@@ -8,14 +8,13 @@ import { deserialize, serialize } from './serializeSimulation'
 
 const VERSION = 2
 
-const LOCAL_STORAGE_KEY = 'ecolab-climat::persisted-simulation::v' + VERSION
+const LOCAL_STORAGE_KEY = 'futureco::persisted-simulation::v' + VERSION
 
 export function persistSimulation(store: Store<RootState, Action>) {
 	const listener = () => {
 		const state = store.getState()
 		if (
 			!state.simulation?.foldedSteps?.length &&
-			!Object.keys(state.actionChoices).length &&
 			!Object.values(state.tutorials)
 		) {
 			return
