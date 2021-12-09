@@ -128,13 +128,7 @@ export default () => {
 						<div class="ui__ big box-icon">
 							<Emoji e="✈️" />
 						</div>
-						<h3>
-							Avion
-							<small>
-								<Emoji e="🏗️" />
-								Bientôt !
-							</small>
-						</h3>
+						<h3>Avion</h3>
 					</li>
 					<Link to="/wiki">
 						<li className="ui__ interactive card light-border box">
