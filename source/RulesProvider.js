@@ -56,25 +56,26 @@ export default ({ children }) => {
 	const urlParams = new URLSearchParams(window.location.search)
 	const location = useLocation()
 	console.log(location)
-	const rulesDomain =
-		location.pathname.indexOf('/wiki') === 0
-			? 'futureco-data.netlify.app/co2.json'
-			: 'ecolab-data.netlify.app/co2.json'
-
-	/* This enables loading the rules of a branch,
-	 * to showcase the app as it would be once this branch of -data  has been merged*/
-	const branch = urlParams.get('branch')
-	const pullRequestNumber = urlParams.get('PR')
-	const rulesURL = `https://${
-		branch
-			? `${branch}--`
-			: pullRequestNumber
-			? `deploy-preview-${pullRequestNumber}--`
-			: ''
-	}${rulesDomain}`
-	const dataBranch = branch || pullRequestNumber
 
 	useEffect(() => {
+		const rulesDomain = ['/simulateur/bilan', '/instructions', '/fin'].find(
+			(url) => location.pathname.indexOf(url) === 0
+		)
+			? 'ecolab-data.netlify.app/co2.json'
+			: 'futureco-data.netlify.app/co2.json'
+
+		/* This enables loading the rules of a branch,
+		 * to showcase the app as it would be once this branch of -data  has been merged*/
+		const branch = urlParams.get('branch')
+		const pullRequestNumber = urlParams.get('PR')
+		const rulesURL = `https://${
+			branch
+				? `${branch}--`
+				: pullRequestNumber
+				? `deploy-preview-${pullRequestNumber}--`
+				: ''
+		}${rulesDomain}`
+		const dataBranch = branch || pullRequestNumber
 		if (
 			NODE_ENV === 'development' &&
 			!dataBranch &&

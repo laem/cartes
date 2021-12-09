@@ -1,6 +1,7 @@
 import Route404 from 'Components/Route404'
 import 'Components/ui/index.css'
 import News from 'Pages/News'
+import Wiki from 'Pages/Wiki'
 import React from 'react'
 import { useTranslation } from 'react-i18next'
 import { Route, Switch } from 'react-router-dom'
@@ -11,18 +12,15 @@ import {
 } from '../../storage/persistSimulation'
 import Tracker, { devTracker } from '../../Tracker'
 import About from './About'
-import Actions from './Actions'
 import Contribution from './Contribution'
-import GameOver from './GameOver'
+import Ferry from './ferry/Ferry'
 import Instructions from './Instructions'
 import Landing from './Landing'
 import Documentation from './pages/Documentation'
 import Privacy from './Privacy'
+import Scenarios from './Scenarios'
 import Simulateur from './Simulateur'
 import sitePaths from './sitePaths'
-import Ferry from './ferry/Ferry'
-import Wiki from 'Pages/Wiki'
-import Scenarios from './Scenarios'
 
 let tracker = devTracker
 if (NODE_ENV === 'production') {
