@@ -119,7 +119,7 @@ export default () => {
 					<Link to="/ferry">
 						<li className="ui__ interactive card light-border box">
 							<div class="ui__ big box-icon">
-								<Emoji e="26F4" />
+								<Emoji e="⛴️" />
 							</div>
 							<h3>Ferry</h3>
 						</li>

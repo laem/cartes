@@ -3980,6 +3980,11 @@ emoji-regex@^8.0.0:
   resolved "https://registry.yarnpkg.com/emoji-regex/-/emoji-regex-8.0.0.tgz"
   integrity sha512-MSjYzcWNOA0ewAHpz0MxpYFvwg6yjy1NG3xteoqz644VCo/RPgnr1/GGt+ic3iJTzQ8Eu3TdM14SawnVUmGE6A==
 
+emoji-regexp@^1.0.0:
+  version "1.0.0"
+  resolved "https://registry.yarnpkg.com/emoji-regexp/-/emoji-regexp-1.0.0.tgz#44b5f3271dc3a66bf9522879fa74b8ca8f721b0c"
+  integrity sha1-RLXzJx3Dpmv5Uih5+nS4yo9yGww=
+
 emojibase-regex@^5.1.1:
   version "5.1.2"
   resolved "https://registry.yarnpkg.com/emojibase-regex/-/emojibase-regex-5.1.2.tgz#96cc95e26b186866de1c42a16782d3242cc29c11"
@@ -6433,6 +6438,11 @@ opener@^1.5.1:
   resolved "https://registry.yarnpkg.com/opener/-/opener-1.5.2.tgz"
   integrity sha512-ur5UIdyw5Y7yEj9wLzhqXiy6GZ3Mwx0yGI+5sMn2r0N0v3cKJvUmFH5yPP+WXh9e0xfyzyJX95D8l088DNFj7A==
 
+openmoji@^13.1.0:
+  version "13.1.0"
+  resolved "https://registry.yarnpkg.com/openmoji/-/openmoji-13.1.0.tgz#ef69730f1efcc65d70871aa518e1517c6a7232c7"
+  integrity sha512-rOY6DKqnCPCU9D8lu/SK1cMVQjiBsiJRT4be+GV+WXPcd1os6AKWKtfGWhz0oIWhTrUB8WbLG72IkTt7l3h6Qw==
+
 ordered-read-streams@^1.0.0:
   version "1.0.1"
   resolved "https://registry.yarnpkg.com/ordered-read-streams/-/ordered-read-streams-1.0.1.tgz"
@@ -6982,24 +6992,6 @@ puppeteer-core@^8.0.0:
   version "8.0.0"
   resolved "https://registry.npmjs.org/puppeteer-core/-/puppeteer-core-8.0.0.tgz"
   integrity sha512-kRTiGh42+4eiw9tl489p//8Zpg3LWmz0K3mOpv0qj5PsCV7jE43SLIi0E50suLh8OghXsFhJFoE98vEmXUnDew==
-  dependencies:
-    debug "^4.1.0"
-    devtools-protocol "0.0.854822"
-    extract-zip "^2.0.0"
-    https-proxy-agent "^5.0.0"
-    node-fetch "^2.6.1"
-    pkg-dir "^4.2.0"
-    progress "^2.0.1"
-    proxy-from-env "^1.1.0"
-    rimraf "^3.0.2"
-    tar-fs "^2.0.0"
-    unbzip2-stream "^1.3.3"
-    ws "^7.2.3"
-
-puppeteer@^8.0.0:
-  version "8.0.0"
-  resolved "https://registry.npmjs.org/puppeteer/-/puppeteer-8.0.0.tgz"
-  integrity sha512-D0RzSWlepeWkxPPdK3xhTcefj8rjah1791GE82Pdjsri49sy11ci/JQsAO8K2NRukqvwEtcI+ImP5F4ZiMvtIQ==
   dependencies:
     debug "^4.1.0"
     devtools-protocol "0.0.854822"

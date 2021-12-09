@@ -138,7 +138,7 @@ const RuleList = ({ rules }) => (
 							className="ui__ card box"
 							css={`
 								img {
-									font-size: 200%;
+									font-size: 120%;
 								}
 							`}
 						>
