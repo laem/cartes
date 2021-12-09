@@ -40,8 +40,6 @@ module.exports.default = {
 			'./source/sites/publicodes/sitemap.txt',
 			'./iframeResizer.contentWindow.min.js',
 			'./source/images/logo.svg',
-			'./source/images/dessin-nosgestesclimat.png',
-			'./source/images/transparent.png',
 			{
 				from: './source/data',
 				to: 'data',
@@ -162,7 +160,7 @@ module.exports.commonLoaders = (mode = 'production') => {
 module.exports.HTMLPlugins = ({ injectTrackingScript = false } = {}) => [
 	new HTMLPlugin({
 		template: 'index.html',
-		logo: 'https://nosgestesclimat.fr/images/logo.svg',
+		logo: '/logo.svg',
 		chunks: ['publicodes'],
 		title: 'Futureco',
 		description: 'Êtes-vous écolo ? Faites le test en 2 minutes.',
