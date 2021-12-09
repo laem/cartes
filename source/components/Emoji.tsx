@@ -18,13 +18,14 @@ const findOpenmoji = (e, black) => {
 const sizeEm = 2
 
 export default ({ e, black, extra, alt }) => {
-	if (e == null) return null
+	if (e == null && extra == null) return null
 	if (extra)
 		return (
 			<Image
 				{...{
 					src: `${url}/${black ? 'black' : 'color'}/svg/${extra}.svg`,
 					alt,
+					imageSize: sizeEm,
 				}}
 			/>
 		)

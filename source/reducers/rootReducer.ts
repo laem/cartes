@@ -187,6 +187,12 @@ function tutorials(state = {}, { type, id }) {
 	} else return state
 }
 
+function scenario(state = 'B', action) {
+	if (action.type === 'SET_SCENARIO') {
+		return action.scenario
+	} else return state
+}
+
 const mainReducer = (state: any, action: Action) =>
 	combineReducers({
 		explainedVariable,
@@ -200,6 +206,7 @@ const mainReducer = (state: any, action: Action) =>
 		conference,
 		iframeOptions: defaultTo(null),
 		tutorials,
+		scenario,
 	})(state, action)
 
 export default reduceReducers<RootState>(

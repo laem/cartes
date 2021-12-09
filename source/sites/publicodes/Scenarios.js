@@ -3,13 +3,14 @@ import { Link } from 'react-router-dom'
 import scenarios from './scenarios.yaml'
 import { StoreContext } from './StoreContext'
 import emoji from 'react-easy-emoji'
-import ScrollImage from './images/horizontal-scroll.png'
+import { useDispatch, useSelector } from 'react-redux'
+import Emoji from 'Components/Emoji'
 
 export default () => {
-	let { state, dispatch } = useContext(StoreContext)
-
+	const dispatch = useDispatch()
+	const scenario = useSelector((state) => state.scenario)
 	return (
-		<section id="scenarios">
+		<section id="scenarios" className="ui__ container">
 			<h1>Le crédit carbone personnel</h1>
 			<p>
 				Le jeu est simple : plus on émet de gaz à effet de serre, plus on se
@@ -75,7 +76,7 @@ export default () => {
 								visibility: visible;
 							}
 
-							${state.scenario === nom
+							${scenario === nom
 								? `
 								border: 4px solid var(--color)
 								
@@ -111,7 +112,7 @@ export default () => {
 								}
 							`}
 						>
-							{state.scenario === nom ? (
+							{scenario === nom ? (
 								<div>{emoji('☑️ ')}</div>
 							) : (
 								<button
@@ -128,10 +129,20 @@ export default () => {
 					</li>
 				))}
 			</ul>
-			<img
-				css="height: 3em; display: block; margin: 1em auto"
-				src={ScrollImage}
-			/>
+			<div
+				css={`
+					display: none;
+					margin: 0.6em auto;
+					@media (max-width: 600px) {
+						display: block;
+						text-align: center;
+					}
+					font-size: 200%;
+					filter: invert(1);
+				`}
+			>
+				<Emoji extra="E105" alt="glisser horizontalement" black />
+			</div>
 			<p>
 				Les conséquences de ces scénarios sont bien évidemment très compliquées
 				à prévoir : ces descriptions sont indicatives et évolueront notamment

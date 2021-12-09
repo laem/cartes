@@ -22,6 +22,7 @@ import Simulateur from './Simulateur'
 import sitePaths from './sitePaths'
 import Ferry from './ferry/Ferry'
 import Wiki from 'Pages/Wiki'
+import Scenarios from './Scenarios'
 
 let tracker = devTracker
 if (NODE_ENV === 'production') {
@@ -60,14 +61,13 @@ const Router = ({}) => (
 				<Route path="/instructions" component={Instructions} />
 				<Route path="/simulateur/:name+" component={Simulateur} />
 				{/* Lien de compatibilité, à retirer par exemple mi-juillet 2020*/}
-				<Route path="/fin" component={GameOver} />
-				<Route path="/actions" component={Actions} />
 				<Route path="/contribuer/:input?" component={Contribution} />
 				<Route path="/à-propos" component={About} />
 				<Route path="/vie-privée" component={Privacy} />
 				<Route path="/nouveautés" component={News} />
 				<Route path="/ferry" component={Ferry} />
 				<Route path="/wiki" component={Wiki} />
+				<Route path="/scénarios" component={Scenarios} />
 
 				<Route component={Route404} />
 			</Switch>
