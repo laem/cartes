@@ -151,7 +151,7 @@ const RuleList = ({ rules }) => (
 						`}
 					>
 						<div
-							className="ui__ card box"
+							className="ui__ card box interactive"
 							css={`
 								width: 9rem;
 								margin: 0.6rem 0.6rem 0.6rem 0rem !important;
