@@ -124,12 +124,14 @@ export default () => {
 							<h3>Ferry</h3>
 						</li>
 					</Link>
-					<li className="ui__ interactive card light-border box">
-						<div class="ui__ big box-icon">
-							<Emoji e="✈️" />
-						</div>
-						<h3>Avion</h3>
-					</li>
+					<Link to="/avion">
+						<li className="ui__ interactive card light-border box">
+							<div class="ui__ big box-icon">
+								<Emoji e="✈️" />
+							</div>
+							<h3>Avion</h3>
+						</li>
+					</Link>
 					<Link to="/wiki">
 						<li className="ui__ interactive card light-border box">
 							<div class="ui__ big box-icon">
