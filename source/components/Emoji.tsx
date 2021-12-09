@@ -23,3 +23,36 @@ export default ({ e }) => {
 		/>
 	)
 }
+
+var emojiRegex = require('emoji-regex')
+const openmoji = require('openmoji')
+
+const om = (e) => {
+	const unicode = e.codePointAt(0).toString(16).toUpperCase()
+	console.log(unicode)
+
+	const found = openmoji.openmojis.find(
+		(el) => el.emoji === e || el.hexcode === unicode
+	)
+
+	return found && found.openmoji_images.black.svg
+}
+
+const text = `
+ 	👪
+   ⌚ 
+\u{231A}: ⌚ default emoji presentation character (Emoji_Presentation)
+\u{2194}\u{FE0F}: ↔️ default text presentation character rendered as emoji
+\u{1F469}: 👩 emoji modifier base (Emoji_Modifier_Base)
+\u{1F469}\u{1F3FF}: 👩🏿 emoji modifier base followed by a modifier
+`
+
+const regex = emojiRegex()
+for (const match of text.matchAll(regex)) {
+	const emoji = match[0]
+	console.log(
+		`Matched sequence ${emoji} — code points: ${[...emoji]}`,
+		om(emoji),
+		[...emoji].map(om)
+	)
+}
