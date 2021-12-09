@@ -18,6 +18,7 @@ const findOpenmoji = (e, black) => {
 const sizeEm = 2
 
 export default ({ e, black, extra, alt }) => {
+	if (e == null) return null
 	if (extra)
 		return (
 			<Image
