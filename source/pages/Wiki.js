@@ -122,7 +122,7 @@ const CategoryView = ({ exposedRules }) => {
 }
 const RuleList = ({ rules }) => (
 	<ul css="display: flex; flex-wrap: wrap; justify-content: space-evenly;     ">
-		{rules.map(({ dottedName }) => {
+		{rules.map(({ dottedName, icônes, titre }) => {
 			return (
 				<li css="list-style-type: none" key={dottedName}>
 					<Link
@@ -134,7 +134,17 @@ const RuleList = ({ rules }) => (
 							}
 						`}
 					>
-						{dottedName}
+						<div
+							className="ui__ card box"
+							css={`
+								img {
+									font-size: 200%;
+								}
+							`}
+						>
+							<Emoji e={icônes} />
+							<h3>{titre}</h3>
+						</div>
 					</Link>
 				</li>
 			)
