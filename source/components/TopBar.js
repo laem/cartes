@@ -1,17 +1,15 @@
-import React, { useContext } from 'react'
+import React from 'react'
 import emoji from 'react-easy-emoji'
-import { withRouter } from 'react-router'
+import { useSelector } from 'react-redux'
+import { useLocation, withRouter } from 'react-router'
 import { Link } from 'react-router-dom'
-import scenarios from './scenarios.yaml'
-import { StoreContext } from './StoreContext'
-import Logo from './logo.svg'
+import scenarios from '../sites/publicodes/scenarios.yaml'
 
-export default withRouter(({ location }) => {
-	let {
-			state: { scenario: scenarioName },
-		} = useContext(StoreContext),
+export default withRouter(({}) => {
+	const location = useLocation()
+	const scenarioName = useSelector((state) => state.scenario),
 		scenario = scenarios[scenarioName],
-		displayIntro = ['/', '/contribuer/', '/à-propos'].includes(
+		displayIntro = ['/wiki', '/contribuer/', '/à-propos'].includes(
 			location.pathname
 		)
 
@@ -21,7 +19,7 @@ export default withRouter(({ location }) => {
 				display: flex;
 				align-items: center;
 				justify-content: space-between;
-				padding-top: ${displayIntro ? 3 : 1}rem;
+				margin-top: 1rem;
 			`}
 		>
 			<Link to="/" title="Revenir à l'accueil">
@@ -34,7 +32,7 @@ export default withRouter(({ location }) => {
 						}
 						margin-right: 1em;
 					`}
-					src={Logo}
+					src={'/logo.svg'}
 					alt=""
 				/>
 			</Link>

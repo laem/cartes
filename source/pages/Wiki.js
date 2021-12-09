@@ -10,6 +10,7 @@ import Emoji from '../components/Emoji'
 import { useEngine } from '../components/utils/EngineContext'
 const worker = new Worker()
 const { encodeRuleName } = utils
+import TopBar from 'Components/TopBar'
 
 export default function Suggestions() {
 	const rules = useSelector((state) => state.rules)
@@ -31,7 +32,8 @@ export default function Suggestions() {
 
 	return (
 		<section className="ui__ container">
-			<h1 css="font-size: 150%; line-height: 1.6rem">
+			<TopBar />
+			<h1 css="font-size: 150%; line-height: 1.6rem; margin: 1rem">
 				Découvre l'impact de chaque geste du quotidien !
 			</h1>
 			<Search
@@ -40,7 +42,7 @@ export default function Suggestions() {
 					if (input.length > 2) worker.postMessage({ input })
 				}}
 			/>
-			<section style={{ marginTop: '1.3rem' }}>
+			<section css="margin-top: .6rem">
 				{input ? (
 					results.length ? (
 						<>
