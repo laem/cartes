@@ -43,7 +43,8 @@ export default ({ e, black, extra, alt }) => {
 	return (
 		<span
 			css={`
-				display: flex;
+				display: inline-flex;
+				vertical-align: middle;
 				align-items: center;
 			`}
 		>
