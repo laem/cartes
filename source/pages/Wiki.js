@@ -7,6 +7,7 @@ import { useSelector } from 'react-redux'
 import { Link } from 'react-router-dom'
 import Worker from 'worker-loader!Components/WikiSearchWorker.js'
 import Emoji from '../components/Emoji'
+import { useEngine } from '../components/utils/EngineContext'
 const worker = new Worker()
 const { encodeRuleName } = utils
 
@@ -29,8 +30,8 @@ export default function Suggestions() {
 	}, [])
 
 	return (
-		<section>
-			<h1 css="font-size: 150%">
+		<section className="ui__ container">
+			<h1 css="font-size: 150%; line-height: 1.6rem">
 				Découvre l'impact de chaque geste du quotidien !
 			</h1>
 			<Search
@@ -125,8 +126,17 @@ const CategoryView = ({ exposedRules }) => {
 	)
 }
 const RuleList = ({ rules }) => (
-	<ul css="display: flex; flex-wrap: wrap; justify-content: space-evenly;     ">
-		{rules.map(({ dottedName, icônes, titre }) => {
+	<ul
+		css={`
+			display: flex;
+			flex-wrap: wrap;
+			justify-content: space-evenly;
+			align-items: center;
+		`}
+	>
+		{rules.map(({ dottedName, icônes }) => {
+			const engine = useEngine(),
+				{ title } = engine.getRule(dottedName)
 			return (
 				<li css="list-style-type: none" key={dottedName}>
 					<Link
@@ -141,13 +151,20 @@ const RuleList = ({ rules }) => (
 						<div
 							className="ui__ card box"
 							css={`
+								width: 9rem;
+								margin: 0.6rem 0 !important;
+								min-height: 6.5rem;
 								img {
 									font-size: 150%;
+								}
+								h3 {
+									margin: 0;
+									font-size: 110%;
 								}
 							`}
 						>
 							<Emoji e={icônes} />
-							<h3>{titre}</h3>
+							<h3>{title}</h3>
 						</div>
 					</Link>
 				</li>
