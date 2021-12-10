@@ -1,5 +1,6 @@
 import emoji from 'react-easy-emoji'
 import HumanCarbonImpact from '../sites/publicodes/HumanCarbonImpact'
+import Emoji from './Emoji'
 
 export default ({ dottedName, formule, title, icônes, nodeValue }) => {
 	return (
@@ -34,7 +35,7 @@ export default ({ dottedName, formule, title, icônes, nodeValue }) => {
 			`}
 		>
 			<div css="width: 100%; img { font-size: 150%}}">
-				{icônes && emoji(icônes + ' ')}
+				{icônes && <Emoji e={icônes} />}
 			</div>
 			<span css="width: 100%">{title}</span>
 			<>

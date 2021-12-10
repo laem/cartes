@@ -9,6 +9,7 @@ import { Trans } from 'react-i18next'
 import { Explicable } from './Explicable'
 import { binaryQuestion, InputCommonProps, RuleInputProps } from './RuleInput'
 import animate from 'Components/ui/animate'
+import Emoji from 'Components/Emoji'
 
 /* Ceci est une saisie de type "radio" : l'utilisateur choisit une réponse dans
 	une liste, ou une liste de listes. Les données @choices sont un arbre de type:
@@ -261,7 +262,7 @@ function RadioLabelContent({
 				checked={selected}
 			/>
 			<span>
-				{icônes && <>{emoji(icônes)}&nbsp;</>}
+				{icônes && <Emoji e={icônes} />}&nbsp;
 				<Trans>{label}</Trans>
 			</span>
 		</label>
