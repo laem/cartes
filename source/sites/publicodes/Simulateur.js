@@ -30,6 +30,8 @@ import {
 } from '../../selectors/simulationSelectors'
 import { Almost, Done, Half, NotBad, QuiteGood } from './Congratulations'
 import { Link } from 'react-router-dom'
+import TopBar from 'Components/TopBar'
+import SimulationResults from 'Components/SimulationResults'
 
 const eqValues = compose(isEmpty, symmetricDifference)
 export const colorScale = [
@@ -127,25 +129,30 @@ const Simulateur = ({ objective }) => {
 	}
 	return (
 		<>
-			<Link to="/">
-				<div
-					css={`
-						display: flex;
-						justify-content: center;
-						height: 10%;
-						svg {
-							height: 4rem;
-						}
-					`}
-				>
-					<FuturecoMonochrome color={doomColor} />
-				</div>
-			</Link>
+			{isMainSimulation && (
+				<Link to="/">
+					<div
+						css={`
+							display: flex;
+							justify-content: center;
+							height: 10%;
+							svg {
+								height: 4rem;
+							}
+						`}
+					>
+						<FuturecoMonochrome color={doomColor} />
+					</div>
+				</Link>
+			)}
+			{!isMainSimulation && <TopBar />}
 			<div
 				css={`
 					height: 90%;
+					${isMainSimulation &&
+					`
 					border: 1.4rem solid ${doomColor};
-					${false && sessionBarMargin}
+					`}
 					overflow: auto; /* Some questions are very high, the mosaic ones*/
 				`}
 			>
@@ -155,6 +162,8 @@ const Simulateur = ({ objective }) => {
 						<meta name="description" content={rule.description} />
 					)}
 				</Helmet>
+
+				{!isMainSimulation && <SimulationResults {...evaluation} />}
 
 				{isMainSimulation && gameOver ? (
 					<Redirect to="/fin" />
@@ -171,7 +180,6 @@ const Simulateur = ({ objective }) => {
 								<EndingCongratulations />
 							)
 						}
-						targets={<>{rule.period === 'flexible' && <PeriodBlock />}</>}
 						explanations={null}
 					/>
 				)}
@@ -179,12 +187,6 @@ const Simulateur = ({ objective }) => {
 		</>
 	)
 }
-
-let PeriodBlock = () => (
-	<div css="display: flex; justify-content: center">
-		<PeriodSwitch />
-	</div>
-)
 
 const RedirectionToEndPage = ({ rules, engine }) => {
 	// Necessary to call 'buildEndURL' with the latest situation

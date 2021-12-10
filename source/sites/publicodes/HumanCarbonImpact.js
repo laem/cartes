@@ -1,16 +1,18 @@
 import { mapObjIndexed, toPairs } from 'ramda'
 import React from 'react'
 import emoji from 'react-easy-emoji'
+import { useSelector } from 'react-redux'
 import { Link } from 'react-router-dom'
 import * as chrono from './chrono'
 import scenarios from './scenarios.yaml'
+import { useNextQuestions } from 'Components/utils/useNextQuestion'
 
-let limitPerPeriod = scenario =>
+let limitPerPeriod = (scenario) =>
 	mapObjIndexed(
-		v => v * scenarios[scenario]['crédit carbone par personne'] * 1000,
+		(v) => v * scenarios[scenario]['crédit carbone par personne'] * 1000,
 		{
 			...chrono,
-			négligeable: 0
+			négligeable: 0,
 		}
 	)
 
@@ -29,14 +31,10 @@ let humanCarbonImpactData = (scenario, nodeValue) => {
 	return { closestPeriod, closestPeriodValue, closestPeriodLabel, factor }
 }
 
-export default ({
-	scenario,
-	nodeValue,
-	formule,
-	dottedName,
-	nextSteps,
-	foldedSteps
-}) => {
+export default ({ nodeValue, formule, dottedName }) => {
+	const scenario = useSelector((state) => state.scenario)
+	const nextSteps = useNextQuestions()
+	const foldedSteps = useSelector((state) => state.simulation?.foldedSteps)
 	let { closestPeriodLabel, closestPeriod, factor } = humanCarbonImpactData(
 		scenario,
 		nodeValue
