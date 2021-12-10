@@ -58,29 +58,34 @@ const getBackgroundColor = (score) => {
 	return colors[Math.round(cursor)]
 }
 
-const Simulateur = (props) => {
-	const objectif = props.match.params.name,
-		decoded = utils.decodeRuleName(objectif),
-		rules = useSelector((state) => state.rules),
-		rule = rules[decoded],
-		engine = useEngine(),
-		situation = useSelector(situationSelector),
-		evaluation = engine.evaluate(decoded),
-		dispatch = useDispatch(),
+export default ({ match }) => {
+	const dispatch = useDispatch()
+	const rawObjective = match.params.name,
+		decoded = utils.decodeRuleName(rawObjective),
 		config = {
 			objectifs: [decoded],
 		},
-		configSet = useSelector((state) => state.simulation?.config),
-		categories = decoded === 'bilan' && extractCategories(rules, engine)
-	const tutorials = useSelector((state) => state.tutorials)
-
+		configSet = useSelector((state) => state.simulation?.config)
+	const wrongConfig = !eqValues(config.objectifs, configSet?.objectifs || [])
 	useEffect(
-		() =>
-			!eqValues(config.objectifs, configSet?.objectifs || [])
-				? dispatch(setSimulationConfig(config))
-				: () => null,
+		() => (wrongConfig ? dispatch(setSimulationConfig(config)) : () => null),
 		[]
 	)
+
+	if (!configSet || wrongConfig) return null
+
+	return <Simulateur objective={decoded} />
+}
+
+const Simulateur = ({ objective }) => {
+	const rules = useSelector((state) => state.rules),
+		rule = rules[objective],
+		engine = useEngine(),
+		situation = useSelector(situationSelector),
+		evaluation = engine.evaluate(objective),
+		dispatch = useDispatch(),
+		categories = objective === 'bilan' && extractCategories(rules, engine)
+	const tutorials = useSelector((state) => state.tutorials)
 
 	useEffect(() => {
 		const handleKeyDown = (e) => {
@@ -101,8 +106,7 @@ const Simulateur = (props) => {
 		answeredQuestions = useSelector(answeredQuestionsSelector)
 	const messages = useSelector((state) => state.simulation?.messages)
 
-	const isMainSimulation = decoded === 'bilan'
-	if (!configSet) return null
+	const isMainSimulation = objective === 'bilan'
 
 	const gameOver = evaluation.nodeValue > limit
 	const answeredRatio =
@@ -159,7 +163,7 @@ const Simulateur = (props) => {
 						noFeedback
 						orderByCategories={categories}
 						customEnd={
-							decoded === 'bilan' ? (
+							objective === 'bilan' ? (
 								<RedirectionToEndPage {...{ rules, engine }} />
 							) : rule.description ? (
 								<Markdown source={rule.description} />
@@ -199,8 +203,6 @@ const RedirectionToEndPage = ({ rules, engine }) => {
 
 	return <Redirect to={buildEndURL(rules, engine)} />
 }
-
-export default Simulateur
 
 const EndingCongratulations = () => (
 	<h3>{emoji('🌟')} Vous avez complété cette simulation</h3>
