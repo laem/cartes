@@ -128,7 +128,7 @@ const Simulateur = ({ objective }) => {
 		if (!nextQuestions.length) return <Done />
 	}
 	return (
-		<>
+		<div className="ui__ container">
 			{isMainSimulation && (
 				<Link to="/">
 					<div
@@ -163,7 +163,9 @@ const Simulateur = ({ objective }) => {
 					)}
 				</Helmet>
 
-				{!isMainSimulation && <SimulationResults {...evaluation} />}
+				{!isMainSimulation && (
+					<SimulationResults {...{ ...rule, ...evaluation }} />
+				)}
 
 				{isMainSimulation && gameOver ? (
 					<Redirect to="/fin" />
@@ -184,7 +186,7 @@ const Simulateur = ({ objective }) => {
 					/>
 				)}
 			</div>
-		</>
+		</div>
 	)
 }
 

@@ -19,7 +19,8 @@ export default withRouter(({}) => {
 				display: flex;
 				align-items: center;
 				justify-content: space-between;
-				margin-top: 1rem;
+				margin: 1rem;
+				margin-bottom: 0;
 			`}
 		>
 			<Link to="/" title="Revenir à l'accueil">

@@ -6,6 +6,7 @@ import { Link } from 'react-router-dom'
 import * as chrono from './chrono'
 import scenarios from './scenarios.yaml'
 import { useNextQuestions } from 'Components/utils/useNextQuestion'
+import styled from 'styled-components'
 
 let limitPerPeriod = (scenario) =>
 	mapObjIndexed(
@@ -75,36 +76,31 @@ export default ({ nodeValue, formule, dottedName }) => {
 			)}
 
 			{nextSteps?.length > 0 && (
-				<FirstEstimationStamp foldedSteps={foldedSteps} />
+				<FirstEstimationStamp>
+					{!foldedSteps.length ? '1ère estimation' : 'estimation'}
+				</FirstEstimationStamp>
 			)}
 		</div>
 	)
 }
 
-let FirstEstimationStamp = ({ foldedSteps }) => (
-	<div
-		css={`
-			position: absolute;
-			color: #555;
-			font-size: 100%;
-			font-weight: 600;
-			display: inline-block;
-			padding: 0rem 1rem;
-			text-transform: uppercase;
-			border-radius: 1rem;
-			font-family: 'Courier';
-			mix-blend-mode: multiply;
-			color: #757373;
-			border: 0.15rem solid #757373;
-			-webkit-mask-position: 13rem 6rem;
-			-webkit-transform: rotate(-16deg);
-			-ms-transform: rotate(-16deg);
-			transform: rotate(-7deg);
-			border-radius: 4px;
-			top: 11.2em;
-			right: -2em;
-		`}
-	>
-		{!foldedSteps.length ? '1ère estimation' : 'estimation'}
-	</div>
-)
+let FirstEstimationStamp = styled.div`
+	position: absolute;
+	font-size: 100%;
+	font-weight: 600;
+	display: inline-block;
+	padding: 0rem 1rem;
+	text-transform: uppercase;
+	border-radius: 1rem;
+	font-family: 'Courier';
+	mix-blend-mode: lighten;
+	color: lightgrey;
+	border: 0.15rem solid lightgrey;
+	-webkit-mask-position: 13rem 6rem;
+	-webkit-transform: rotate(-16deg);
+	-ms-transform: rotate(-16deg);
+	transform: rotate(-7deg);
+	border-radius: 4px;
+	top: 11.2em;
+	right: -2em;
+`

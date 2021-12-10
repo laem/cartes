@@ -7,15 +7,9 @@ export default ({ dottedName, formule, title, icônes, nodeValue }) => {
 			key={dottedName}
 			css={`
 				font-size: 120%;
-				padding: '1rem 0 0';
-				width: '18rem';
+				padding: 1rem 0 0;
+				width: 18rem;
 				min-height: 7em;
-				@media (max-width: 600px) {
-					padding: 0.6rem;
-					width: 9rem;
-					font-size: 110%;
-					min-height: 6.5rem;
-				}
 				position: relative;
 				display: flex;
 				align-items: center;
@@ -26,7 +20,7 @@ export default ({ dottedName, formule, title, icônes, nodeValue }) => {
 				${formule != null ? '' : 'filter: grayscale(70%); opacity: 0.6;'}
 				background-color: var(--lightestColor);
 				color: var(--darkColor);
-				margin: 1rem 0;
+				margin: 1rem auto;
 				border-radius: 0.3rem;
 				box-shadow: 0 1px 3px rgba(41, 117, 209, 0.12),
 					0 1px 2px rgba(41, 117, 209, 0.24);
