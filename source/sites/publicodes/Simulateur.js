@@ -107,24 +107,20 @@ const Simulateur = (props) => {
 	const gameOver = evaluation.nodeValue > limit
 	const answeredRatio =
 		answeredQuestions.length / (answeredQuestions.length + nextQuestions.length)
-	const notBad = console.log(
-		'AR',
-		answeredRatio,
-		answeredQuestions.length,
-		nextQuestions.length + answeredQuestions.length
-	)
 
 	const doomColor = getBackgroundColor(evaluation.nodeValue).toHexString()
-	if (answeredRatio >= 0.1 && !messages['notBad'])
-		return <NotBad answeredRatio={answeredRatio} />
-	if (answeredRatio >= 0.3 && !messages['quiteGood'])
-		return <QuiteGood answeredRatio={answeredRatio} />
-	if (answeredRatio >= 0.5 && !messages['half'])
-		return <Half answeredRatio={answeredRatio} />
-	if (answeredRatio >= 0.75 && !messages['almost'])
-		return <Almost answeredRatio={answeredRatio} />
-	if (!nextQuestions.length) return <Done />
 
+	if (isMainSimulation) {
+		if (answeredRatio >= 0.1 && !messages['notBad'])
+			return <NotBad answeredRatio={answeredRatio} />
+		if (answeredRatio >= 0.3 && !messages['quiteGood'])
+			return <QuiteGood answeredRatio={answeredRatio} />
+		if (answeredRatio >= 0.5 && !messages['half'])
+			return <Half answeredRatio={answeredRatio} />
+		if (answeredRatio >= 0.75 && !messages['almost'])
+			return <Almost answeredRatio={answeredRatio} />
+		if (!nextQuestions.length) return <Done />
+	}
 	return (
 		<>
 			<Link to="/">
@@ -156,7 +152,7 @@ const Simulateur = (props) => {
 					)}
 				</Helmet>
 
-				{gameOver ? (
+				{isMainSimulation && gameOver ? (
 					<Redirect to="/fin" />
 				) : (
 					<Simulation

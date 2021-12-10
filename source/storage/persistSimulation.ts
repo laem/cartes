@@ -13,8 +13,11 @@ const LOCAL_STORAGE_KEY = 'futureco::persisted-simulation::v' + VERSION
 export function persistSimulation(store: Store<RootState, Action>) {
 	const listener = () => {
 		const state = store.getState()
+		const objectifs = state.simulation?.config?.objectifs
+		if (objectifs?.length != 1 || objectifs[0] !== 'bilan') return null
 		if (
 			!state.simulation?.foldedSteps?.length &&
+			state.tutorials &&
 			!Object.values(state.tutorials)
 		) {
 			return
