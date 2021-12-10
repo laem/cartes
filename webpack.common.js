@@ -2,7 +2,7 @@
 const HTMLPlugin = require('html-webpack-plugin')
 const CopyPlugin = require('copy-webpack-plugin')
 const path = require('path')
-const { EnvironmentPlugin } = require('webpack')
+const { NormalModuleReplacementPlugin } = require('webpack')
 
 module.exports.default = {
 	watchOptions: {
@@ -45,6 +45,10 @@ module.exports.default = {
 				to: 'data',
 			},
 		]),
+		new NormalModuleReplacementPlugin(
+			/react-easy-emoji/,
+			'Components/emoji.js'
+		),
 	],
 }
 
