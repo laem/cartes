@@ -1,5 +1,6 @@
 import React from 'react'
 import emoji from 'react-easy-emoji'
+import Emoji from 'Components/Emoji'
 import { useSelector } from 'react-redux'
 import { useLocation, withRouter } from 'react-router'
 import { Link } from 'react-router-dom'
@@ -67,7 +68,7 @@ export default withRouter(({}) => {
 							}
 						`}
 					>
-						{emoji(scenario.icône)}
+						<Emoji e={scenario.icône} />
 					</div>
 					<Link to="/scénarios">changer</Link>
 				</div>

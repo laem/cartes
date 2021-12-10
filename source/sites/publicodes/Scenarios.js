@@ -15,19 +15,19 @@ export default () => {
 			<p>
 				Le jeu est simple : plus on émet de gaz à effet de serre, plus on se
 				dirige vers une catastrophe climatique. Ces émissions se mesurent en{' '}
-				<Link to="/à-propos">kilos équivalent CO₂</Link>. Pour mieux comprendre
+				<Link to="/à-propos">kg équivalent CO₂</Link>. Pour mieux comprendre
 				l'impact de notre quotidien sur le climat,{' '}
 				<strong>nous l'avons converti en temps</strong>.
 			</p>
-			<p>
+			<blockquote>
 				<em>
-					Si un voyage en avion en émet 500 kg et que la limite acceptable par
+					Si un voyage en avion en émet 500 kg et que la limite d'émission par
 					personne et par an est de 6 tonnes, alors ce vol consomme un douzième
 					de crédit annuel : en 2 heures de vol, j'ai grillé un mois de mon
 					crédit carbone !
 				</em>
-			</p>
-			<h2 css="display: inline-block;background: var(--color); padding: .1rem .4rem; margin-right: .4rem;  color: white">
+			</blockquote>
+			<h2 css="display: inline-block;background: var(--color); padding: .1rem .4rem; margin-right: .4rem;  color: white; margin-top: 1rem">
 				Quel futur souhaitez vous ?
 			</h2>
 			<p>

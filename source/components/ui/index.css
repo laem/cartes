@@ -46,6 +46,7 @@ blockquote {
 	padding-bottom: 0.6rem;
 	margin: 1rem 0;
 	color: var(--lighterColor);
+	line-height: 1.4rem;
 }
 
 .ui__.answer-group {
