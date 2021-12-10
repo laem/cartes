@@ -101,6 +101,6 @@ let FirstEstimationStamp = styled.div`
 	-ms-transform: rotate(-16deg);
 	transform: rotate(-7deg);
 	border-radius: 4px;
-	top: 11.2em;
-	right: -2em;
+	top: 9em;
+	right: -1em;
 `
