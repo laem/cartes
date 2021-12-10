@@ -19,7 +19,7 @@ export default withRouter(({}) => {
 				display: flex;
 				align-items: center;
 				justify-content: space-between;
-				margin: 1rem;
+				margin: 0.6rem;
 				margin-bottom: 0;
 			`}
 		>
@@ -52,7 +52,6 @@ export default withRouter(({}) => {
 					css={`
 						text-align: center;
 						padding: 0.6rem 1rem !important;
-						margin-right: 0.6rem;
 						background: var(--color) !important;
 						color: white;
 						a {
@@ -60,7 +59,7 @@ export default withRouter(({}) => {
 						}
 					`}
 				>
-					Votre futur&nbsp;:
+					Votre&nbsp;futur&nbsp;:
 					<div
 						css={`
 							img {

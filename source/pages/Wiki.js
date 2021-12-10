@@ -163,6 +163,13 @@ const RuleList = ({ rules }) => (
 									margin: 0;
 									font-size: 110%;
 								}
+								padding: 0.6rem !important;
+								@media (max-width: 600px) {
+									padding: 0.6rem;
+									width: 9rem;
+									font-size: 110%;
+									min-height: 6.5rem;
+								}
 							`}
 						>
 							<Emoji e={icônes} />
