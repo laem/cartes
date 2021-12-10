@@ -37,9 +37,10 @@ export default ({ dottedName, formule, title, icônes, nodeValue }) => {
 			<div css="width: 100%; img { font-size: 150%}}">
 				{icônes && <Emoji e={icônes} />}
 			</div>
-			<span css="width: 100%">{title}</span>
+			<h1 css="width: 100%; font-size: 120%; color: var(--darkerColor); margin: 0">
+				{title}
+			</h1>
 			<>
-				<div css="visibility: hidden">placeholder</div>
 				<div
 					css={`
 						border-bottom-left-radius: 0.3rem;
