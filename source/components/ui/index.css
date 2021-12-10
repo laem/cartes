@@ -85,7 +85,7 @@ blockquote {
 }
 
 .ui__.light-border {
-	border: 4px solid var(--lighterColor);
+	border: 4px solid var(--darkerColor);
 	border-radius: 0.3rem;
 }
 
