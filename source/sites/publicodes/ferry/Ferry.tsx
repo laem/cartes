@@ -105,19 +105,33 @@ const Questions = ({}) => {
 			>
 				{questions.map((name) => {
 					const dottedName = 'ferry . ' + name,
-						question = engine.getRule(dottedName).rawNode.question
+						{ question, icônes } = engine.getRule(dottedName).rawNode
 					return (
-						<div>
-							<label>{question}</label>
-							<RuleInput
-								{...{
-									engine,
-									dottedName,
-									onChange: onChange(dottedName),
-									onSubmit,
-									noSuggestions: false,
-								}}
-							/>
+						<div
+							css={`
+								display: flex;
+								justify-content: start;
+								align-items: center;
+								img {
+									font-size: 300%;
+									margin-right: 1rem;
+								}
+							`}
+						>
+							{icônes && <Emoji e={icônes} />}
+
+							<label>
+								{question}
+								<RuleInput
+									{...{
+										engine,
+										dottedName,
+										onChange: onChange(dottedName),
+										onSubmit,
+										noSuggestions: false,
+									}}
+								/>
+							</label>
 						</div>
 					)
 				})}

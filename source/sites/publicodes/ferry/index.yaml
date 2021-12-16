@@ -1,4 +1,4 @@
-ferry: 
+ferry:
   icônes: ⛴
   exposé: oui
   formule: 666
@@ -20,7 +20,7 @@ ferry:
 
     > Often, ship power is roughly proportional to the cube of the speed, so doubling (2x) the speed of a destroyer from 15 knots to 30 knots will require 23 = 8 times as much power!
     ![https://www.usna.edu/NAOE/_files/documents/Courses/EN400/02.07 Chapter 7.pdf page 9](https://imgur.com/gvRR7PT)
-    
+
     Cette information de nous intéresse pas pour la répartition des poids, mais elle reste fondamentale pour l'utilisateur qui aurait le loisir de choisir entre deux bâteaux navigant à une vitesse différente. On pense en particulier à l'heure du voyage : comme pour le train, on peut s'attendre à ce qu'un voyage de nuit permette de baisser radicalement la vitesse, les passagers ayant une grande tolérance au temps passé sur le bateau. Cependant, le voyage de nuit peut multiplier l'espace en cabine nécessaire. Il faut donc jongler entre ces deux points contradictoires, et voir lequel l'emporte.
 
 
@@ -50,41 +50,41 @@ ferry . empreinte par km:
     Une autre piste est constituée par [les calculs du gouvernement brittanique](https://hackmd.io/@laem/empreinte-ferry#Les-facteurs-d’émission-britanniques).
   unité: kgCO2e/km
 
-
-ferry . cabine: 
+ferry . cabine:
+  icônes: 🛌
   question: Avez-vous pris une place en cabine (plutôt qu'un siège) ?
   note: Il existe aussi des cabines partagées (comme dans les trains de nuit), nous pourrons les ajouter par la suite comme une option possible.
   références:
     corsica-ferries: https://www.corsica-ferries.fr/ferries/traversee-ferry.html
   par défaut: oui
 
-ferry . taille cabine: 
+ferry . taille cabine:
   applicable si: cabine
   question: Quelle est la taille de la cabine ?
   note: |
     Variable pas intégrée encore.
 
-    En 1ère approximation, nous considérons deux tailles de cabines : 2 places ou 4 places. 
+    En 1ère approximation, nous considérons deux tailles de cabines : 2 places ou 4 places.
   par défaut: "'quatre lits'"
 
-ferry . taille cabine . deux lits: 
-ferry . taille cabine . quatre lits: 
+ferry . taille cabine . deux lits:
+ferry . taille cabine . quatre lits:
 
-
-ferry . voiture: 
+ferry . voiture:
+  icônes: 🚗
   question: Transportez-vous votre voiture ?
   description: Le calcul est limité à une voiture, on considère qu'elle est partagée par le groupe.
   par défaut: oui
 
 ferry . groupe:
+  icônes: 👥
   question: Dans un groupe de combien de personnes voyagez-vous ?
   par défaut: 2
-  suggestions: 
+  suggestions:
     seul: 1
     en couple: 2
     à 3: 3
     à 4: 4
-
 
 # Infra nécessaire aux pax mais pas au fret
 # WC, escaliers, canots de sauvetage
@@ -92,7 +92,7 @@ ferry . groupe:
 #
 #
 
-ferry . passagers: 
+ferry . passagers:
   formule: 1000
 
   note: |
@@ -100,25 +100,24 @@ ferry . passagers:
 
     Ou du Jean Nicoli rempli aux 2/3 ? Soit [1000 passagers](https://fr.wikipedia.org/wiki/Jean_Nicoli_(navire)).
 
-
-# le raisonnement est le suivant. À poids constant du ferry, consommation constante, qu'on quppose connue. Plutot que de mettre un jacuzzi de 5 tonnes, on pourrait mettre n cabines ou dortoirs, et ainsi plus de personnes, divisant l'empreinte totale du bateau par p personnes en plus (ou du fret). Ces p personnes auraient autrement emprunté un deuxième bateau, ou un avion (par volonté de voyager plus écolo, mais aussi tout simplement par effet de prix). 
+# le raisonnement est le suivant. À poids constant du ferry, consommation constante, qu'on quppose connue. Plutot que de mettre un jacuzzi de 5 tonnes, on pourrait mettre n cabines ou dortoirs, et ainsi plus de personnes, divisant l'empreinte totale du bateau par p personnes en plus (ou du fret). Ces p personnes auraient autrement emprunté un deuxième bateau, ou un avion (par volonté de voyager plus écolo, mais aussi tout simplement par effet de prix).
 #
-# Notre objectif : 
+# Notre objectif :
 # - attribuer un poids à un pax (abbréviation courant de "passager") en fonction de ses choix (cabine, voiture, usage des loisirs). On le nomme A et c'est donc une fonction d'autres questions.
-# - le diviser par le poids disponible qu'on nomme B. C'est le poids qu'on ajoute en pratique au bateau à tout ce qui est strictement nécessaire pour faire la navigation s'il n'y avait rien à transporter sur le ferry, ni passagers ni fret : la carcasse, essence, moteur, matériel de sécurité (mais pas les canaux dédiés aux pax), équipage de navigation (mais pas l'équipe dédié aux pax), etc.. 
+# - le diviser par le poids disponible qu'on nomme B. C'est le poids qu'on ajoute en pratique au bateau à tout ce qui est strictement nécessaire pour faire la navigation s'il n'y avait rien à transporter sur le ferry, ni passagers ni fret : la carcasse, essence, moteur, matériel de sécurité (mais pas les canaux dédiés aux pax), équipage de navigation (mais pas l'équipe dédié aux pax), etc..
 #
 # Il semble que la notion de poids lège (ou déplacement lège) ne soit pas utile pour nous ici, notamment car elle est donnée sans consommables dont le carburant, la différence entre poids max et lège ne correspond donc pas à ce poids B qu'on recherche. A moins d'y ajouter une par une les charges de navigation manquantes.
 #
-# On a donc fait le choix de calculer notre propre estimation de ce "poids disponible" B. On peut le comprendre ainsi : supposons que je lève quelques millions d'€ pour faire du transport maritime. Je m'achète un bateau équipé pour naviguer. J'ai alors le choix de l'utilité que je veux lui donner : je pourrais le remplir de fret, ou à l'inverse le remplir de pax. Pour ces derniers, je pourrais faire le choix du super "low cost", avec des dortoirs et rien d'autres que les services de nécessité (toilettes communes, sièges inclinables, etc.), ou à l'inverse le super luxe avec un jacuzzi privatif par cabine. Toutes ces possibilités impliquent une consommation d'essence *par tête* probablement d'un ordre de grandeur différent. 
+# On a donc fait le choix de calculer notre propre estimation de ce "poids disponible" B. On peut le comprendre ainsi : supposons que je lève quelques millions d'€ pour faire du transport maritime. Je m'achète un bateau équipé pour naviguer. J'ai alors le choix de l'utilité que je veux lui donner : je pourrais le remplir de fret, ou à l'inverse le remplir de pax. Pour ces derniers, je pourrais faire le choix du super "low cost", avec des dortoirs et rien d'autres que les services de nécessité (toilettes communes, sièges inclinables, etc.), ou à l'inverse le super luxe avec un jacuzzi privatif par cabine. Toutes ces possibilités impliquent une consommation d'essence *par tête* probablement d'un ordre de grandeur différent.
 #
 # Nous ignorons le poids du sol des ponts, qui sont nécessaires quel que soit l'usage fait du bateau (fret, passagers et luxe des passagers).
 # Nous allons, au moins dans un 1er temps par simplicité, ignorer les murs (des cabines, des dortoirs, des restaurants).
-  
-ferry . charge: 
+
+ferry . charge:
   description: Les éléments de modélisation du poids embarqué sur un ferry
 ferry . charge par personne:
   formule:
-    somme: 
+    somme:
       - cabine
       - services
       - dortoir
@@ -135,11 +134,11 @@ ferry . charge par personne . cabine:
   formule: (nombre nécessaire * charge . cabine pour quatre) / groupe
 
 ferry . charge par personne . cabine . nombre nécessaire:
-  description: On part pour l'instant du principe qu'il n'y a que des cabines 4 places. 
+  description: On part pour l'instant du principe qu'il n'y a que des cabines 4 places.
   note: |
     Ici on aimerait utiliser un mécanisme de modulo, qui n'existe pas dans publi.codes.
   formule:
-     grille:
+    grille:
       assiette: groupe
       tranches:
         - montant: 1
@@ -150,25 +149,25 @@ ferry . charge par personne . cabine . nombre nécessaire:
           plafond: 13
         - montant: groupe / 4
 
-
-ferry . consommation de services: 
+ferry . consommation de services:
+  icônes: 🍽️
   question: Utilisez vous les services accessoires du ferry (restaurant, piscine, etc.) ?
   par défaut: oui
-          
+
 ferry . charge par personne . services:
   applicable si: consommation de services
   formule: charge . services / passagers
 
 ferry . charge par personne . dortoir:
   non applicable si: cabine
-  formule: charge . dortoir . par personne 
+  formule: charge . dortoir . par personne
 
-ferry . charge . dortoir: 
+ferry . charge . dortoir:
 ferry . charge . dortoir . par personne:
   description: Calculer ici le poids d'un dortoir par personne
   note: Comment estimer le nombre de personnes par salle de bain ?
-  formule: 
-    somme: 
+  formule:
+    somme:
       - siège
       - salle de bain partagée
 
@@ -181,19 +180,18 @@ ferry . charge . salle de bain partagée:
     Les WC eux peuvent être bien davantage partagés.
 
     Ces chiffres sont de premières estimations assez grossières.
-  formule: 
+  formule:
     somme:
       - douche / 4
       - lavabo / 6
       - wc / 10
 
-
 ferry . charge . dortoir . siège:
   formule: 25
-  note: | 
+  note: |
     Il semble exister des sièges super légers pour l'aviation, de 4kg, [source](https://fr.wikipedia.org/wiki/Expliseat).
   unité: kg
-  références: 
+  références:
     - https://www.kirstein.de/fr/Home-Living/Meubles-et-accessoires-de-maison/Sieges-de-cinema/Stagecaptain-CS-600R-Movieking-fauteuil-de-cinema-rouge.html
 
 ferry . charge . canots de sauvetage:
@@ -212,7 +210,7 @@ ferry . charge . fret:
     ![](https://i.imgur.com/NS3QgIx.png)
   unité: kg
 
-ferry . charge . cabine pour quatre: 
+ferry . charge . cabine pour quatre:
   note: |
     Ceci est une estimation, basée aux mieux sur les références commerciales que l'on trouve, ou sur des ordres de grandeur. 
 
@@ -226,7 +224,7 @@ ferry . charge . cabine pour quatre:
 
     🟧 Attention, pour une cabine de 10m² (lits 90cm*2m, espace entre lits de 1m, espace entrée / salle de bain de 1.5m) on obtient un poids / m² presque 2 fois inférieur à l'estimation de Deltamarin de [ce document](https://i.imgur.com/4o64Po9.png). A confirmer donc.
 
-  formule: 
+  formule:
     somme:
       - lits
       - meubles
@@ -248,7 +246,7 @@ ferry . charge . murs . ajustement hauteur:
   description: La spécification donne un poids pour 3,3m de hauteur de cloison, nous partons plutôt sur une hypothèse de 2,5m.
   formule: 2.5 / 3.3
 
-ferry . charge . meubles: 
+ferry . charge . meubles:
   description: Il y a souvent une table de nuit entre les deux rangées de lit, et une armoire pour stocker les affaires.
   formule: table de nuit + armoire
 
@@ -259,34 +257,32 @@ ferry . charge . armoire:
   formule: 80
   unité: kg
 
-ferry . charge . salle de bain: 
-  formule: 
+ferry . charge . salle de bain:
+  formule:
     somme:
       - lavabo
-      - douche 
+      - douche
       - wc
       - carrelage sol
 
-ferry . charge . salle de bain . carrelage sol: 
+ferry . charge . salle de bain . carrelage sol:
   formule: surface * poids carrelage
-ferry . charge . salle de bain . surface: 
+ferry . charge . salle de bain . surface:
   formule: 2 * 3
   unité: m2
-ferry . charge . salle de bain . poids carrelage: 
-  formule: 15 
+ferry . charge . salle de bain . poids carrelage:
+  formule: 15
   unité: kg/m2
   références:
     un blog: http://posersoncarrelage.over-blog.com/article-combien-pese-du-carrelage-quel-est-le-poids-du-carrelage-39382743.html
 
-
-
-ferry . charge . wc: 
+ferry . charge . wc:
   formule: 50
   unité: kg
   références:
     - https://www.leroymerlin.fr/produits/salle-de-bains/wc/wc-suspendu/pack-wc-suspendu-bati-universel-horizontale-saphir-2-siamp-82898125.html
 
-ferry . charge . lavabo: 
+ferry . charge . lavabo:
   description: On peut compter ici un lavabo en porcelaine sanitaire, un miroir, une planche pour reposer les affaires.
   formule: 50
   unité: kg
@@ -295,10 +291,10 @@ ferry . charge . douche:
   note: Estimation très grossière.
   formule: 100
   unité: kg
-ferry . charge . eau: 
+ferry . charge . eau:
   formule: 50
   note: Une douche par personne, 50l par douche.
-  référnces: 
+  référnces:
     - https://www.m-habitat.fr/plomberie-et-eau/consommation-d-eau/quelle-est-la-consommation-en-eau-d-une-douche-902_A
 
 ferry . charge . lits:
@@ -306,28 +302,27 @@ ferry . charge . lits:
 ferry . charge . lits superposés:
   formule: 50
   note: On retient un ordre de grandeur de 50kg, basé sur le 1er trouvé sur Google, un lit en bois conforama qui donne 55,7kg.
-  références: 
+  références:
     - https://www.conforama.fr/enfant-bebe/chambre-enfant/lit-enfant/lits-superposes-90x190-cm-andy-coloris-gris/p/655558
 ferry . charge . matelas:
   formule: 15 * 2
   note: Matelas en mousse, le 1er trouvé sur Google.
-  références: 
+  références:
     - https://www.conforama.fr/chambre-literie/literie/literie-de-relaxation/matelas-mousse-90x190-cm-dunlopillo-precious-moment/p/561951
 
-
-ferry . charge . chaise: 
+ferry . charge . chaise:
   formule: 7
   références:
     la redoute: https://www.laredoute.fr/ppdp/prod-528978563.aspx#searchkeyword=chaise&shoppingtool=search
 
-ferry . charge . canapé: 
-  description:  Canapé 2 ou 3 places
+ferry . charge . canapé:
+  description: Canapé 2 ou 3 places
   formule: 50
   unité: kg
   références:
     la redoute: https://www.laredoute.fr/ppdp/prod-533200832.aspx#shoppingtool=search
 
-ferry . charge . table: 
+ferry . charge . table:
   formule: 34
   unité: kg
   références:
