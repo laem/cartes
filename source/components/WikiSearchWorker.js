@@ -2,11 +2,11 @@ import Fuse from 'fuse.js'
 
 const searchWeights = [
 	{
-		name: 'name',
+		name: 'dottedName',
 		weight: 0.3,
 	},
 	{
-		name: 'title',
+		name: 'titre',
 		weight: 0.3,
 	},
 	{ name: 'description', weight: 0.2 },

@@ -20,10 +20,12 @@ export default function Suggestions() {
 	let [results, setResults] = useState(exposedRules)
 	let [input, setInput] = useState(null)
 
+	console.log({ exposedRules })
+
 	useEffect(() => {
 		worker.postMessage({
 			rules: Object.values(exposedRules).map(
-				pick(['title', 'description', 'name', 'dottedName'])
+				pick(['titre', 'description', , 'dottedName'])
 			),
 		})
 

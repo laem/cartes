@@ -84,7 +84,7 @@
 		"emoji-regexp": "^1.0.0",
 		"focus-trap-react": "^3.1.2",
 		"framer-motion": "^4.1.17",
-		"fuse.js": "5.2.1",
+		"fuse.js": "6.4.6",
 		"html-webpack-plugin": "^5.3.1",
 		"i18next": "^19.8.4",
 		"iframe-resizer": "^4.1.1",
