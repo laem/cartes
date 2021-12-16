@@ -47,7 +47,8 @@ export default function InputSuggestions({
 						}}
 						title={t('cliquez pour insérer cette suggestion')}
 					>
-						{emoji(text)}
+						{text}
+						{/* emoji(text) */}
 					</button>
 				)
 			})}

@@ -112,7 +112,7 @@ export const Markdown = ({
 		renderers={{
 			...renderers,
 			link: LinkRenderer,
-			text: TextRenderer,
+			//text: TextRenderer,
 			code: CodeBlock,
 			footnoteReference: ({ identifier, label }) => (
 				<sup id={'ref' + identifier}>
