@@ -27,8 +27,11 @@ export default function Suggestions() {
 			),
 		})
 
-		worker.onmessage = ({ data: results }) => setResults(results)
+		worker.onmessage = ({ data: results }) =>
+			setResults(results.map((el) => el.item))
 	}, [])
+
+	console.log('results', results)
 
 	return (
 		<section className="ui__ container">
@@ -65,7 +68,7 @@ export default function Suggestions() {
 
 const CategoryView = ({ exposedRules }) => {
 	const categories = byCategory(exposedRules)
-	console.log(categories)
+	console.log('CAT', categories)
 	return (
 		<ul
 			css={`
@@ -127,57 +130,58 @@ const CategoryView = ({ exposedRules }) => {
 		</ul>
 	)
 }
-const RuleList = ({ rules }) => (
-	<ul
-		css={`
-			display: flex;
-			flex-wrap: wrap;
-			justify-content: space-evenly;
-			align-items: center;
-		`}
-	>
-		{rules.map(({ dottedName, icônes }) => {
-			const engine = useEngine(),
-				{ title } = engine.getRule(dottedName)
-			return (
-				<li css="list-style-type: none" key={dottedName}>
-					<Link
-						to={'/simulateur/' + encodeRuleName(dottedName)}
-						css={`
-							text-decoration: none !important;
-							:hover {
-								opacity: 1 !important;
-							}
-						`}
-					>
-						<div
-							className="ui__ card box interactive light-border"
+const RuleList = ({ rules }) =>
+	console.log('RU', rules) || (
+		<ul
+			css={`
+				display: flex;
+				flex-wrap: wrap;
+				justify-content: space-evenly;
+				align-items: center;
+			`}
+		>
+			{rules.map(({ dottedName, icônes }) => {
+				const engine = useEngine(),
+					{ title } = engine.getRule(dottedName)
+				return (
+					<li css="list-style-type: none" key={dottedName}>
+						<Link
+							to={'/simulateur/' + encodeRuleName(dottedName)}
 							css={`
-								width: 9rem;
-								margin: 0.6rem 0.6rem 0.6rem 0rem !important;
-								min-height: 6.5rem;
-								img {
-									font-size: 150%;
-								}
-								h3 {
-									margin: 0;
-									font-size: 110%;
-								}
-								padding: 0.6rem !important;
-								@media (max-width: 600px) {
-									padding: 0.6rem;
-									width: 9rem;
-									font-size: 110%;
-									min-height: 6.5rem;
+								text-decoration: none !important;
+								:hover {
+									opacity: 1 !important;
 								}
 							`}
 						>
-							<Emoji e={icônes} />
-							<h3>{title}</h3>
-						</div>
-					</Link>
-				</li>
-			)
-		})}
-	</ul>
-)
+							<div
+								className="ui__ card box interactive light-border"
+								css={`
+									width: 9rem;
+									margin: 0.6rem 0.6rem 0.6rem 0rem !important;
+									min-height: 6.5rem;
+									img {
+										font-size: 150%;
+									}
+									h3 {
+										margin: 0;
+										font-size: 110%;
+									}
+									padding: 0.6rem !important;
+									@media (max-width: 600px) {
+										padding: 0.6rem;
+										width: 9rem;
+										font-size: 110%;
+										min-height: 6.5rem;
+									}
+								`}
+							>
+								<Emoji e={icônes} />
+								<h3>{title}</h3>
+							</div>
+						</Link>
+					</li>
+				)
+			})}
+		</ul>
+	)

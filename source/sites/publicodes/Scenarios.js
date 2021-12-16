@@ -113,7 +113,7 @@ export default () => {
 							`}
 						>
 							{scenario === nom ? (
-								<div>{emoji('☑️ ')}</div>
+								<div>{emoji('✅')}</div>
 							) : (
 								<button
 									className="ui__ button"

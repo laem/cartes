@@ -88,6 +88,7 @@ const Simulateur = ({ objective }) => {
 		dispatch = useDispatch(),
 		categories = objective === 'bilan' && extractCategories(rules, engine)
 	const tutorials = useSelector((state) => state.tutorials)
+	console.log(evaluation)
 
 	useEffect(() => {
 		const handleKeyDown = (e) => {
