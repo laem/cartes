@@ -1,5 +1,6 @@
 var emojiRegex = require('emoji-regex')
 const openmoji = require('openmoji')
+import replace from 'string-replace-to-array'
 
 const regex = emojiRegex()
 
@@ -16,7 +17,7 @@ const findOpenmoji = (e, black) => {
 
 const sizeEm = 2
 
-export default ({ e, black, extra, alt }) => {
+export default ({ e, black, extra, alt, hasText }) => {
 	if (e == null && extra == null) return null
 	if (extra)
 		return (
@@ -29,16 +30,14 @@ export default ({ e, black, extra, alt }) => {
 			/>
 		)
 
-	const items = [...e.matchAll(regex)]
-	const imageSize = sizeEm * (1 - (items.length - 1) / 10)
+	const matches = [...e.matchAll(regex)]
+	const imageSize = sizeEm * (1 - (matches.length - 1) / 10)
 
-	const images = items.map((match) => {
-		const emoji = match[0]
-
+	const items = replace(e, regex, function (emoji) {
 		const src = findOpenmoji(emoji, black)
-		return <Image {...{ src, emoji, imageSize }} />
+		return <Image {...{ src, alt: emoji, imageSize }} />
 	})
-
+	if (hasText) return items
 	return (
 		<span
 			css={`
@@ -47,7 +46,7 @@ export default ({ e, black, extra, alt }) => {
 				align-items: center;
 			`}
 		>
-			{images}
+			{items}
 		</span>
 	)
 }

@@ -124,6 +124,7 @@
 		"regenerator-runtime": "^0.13.3",
 		"remark-footnotes": "^3.0.0",
 		"reselect": "^4.0.0",
+		"string-replace-to-array": "^2.1.0",
 		"styled-components": "^5.3.1",
 		"svgmoji": "^3.2.0",
 		"swr": "^0.1.16",

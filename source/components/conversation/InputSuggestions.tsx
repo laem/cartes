@@ -1,8 +1,8 @@
 import { ASTNode } from 'publicodes'
 import { toPairs } from 'ramda'
 import { useState } from 'react'
-import emoji from 'react-easy-emoji'
 import { useTranslation } from 'react-i18next'
+import Emoji from '../Emoji'
 
 type InputSuggestionsProps = {
 	suggestions?: Record<string, ASTNode>
@@ -47,8 +47,7 @@ export default function InputSuggestions({
 						}}
 						title={t('cliquez pour insérer cette suggestion')}
 					>
-						{text}
-						{/* emoji(text) */}
+						<Emoji e={text} hasText />
 					</button>
 				)
 			})}
