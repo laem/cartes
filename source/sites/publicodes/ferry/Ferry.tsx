@@ -3,6 +3,7 @@ import { Documentation } from 'publicodes-react'
 import { createContext, useContext, useEffect, useMemo, useState } from 'react'
 import { Redirect, Route, Switch } from 'react-router'
 import RuleInput from 'Components/conversation/RuleInput'
+import Emoji from '../../../components/Emoji'
 
 const req = require.context('./', true, /\.(yaml)$/)
 const rules = req.keys().reduce((memo, key) => {
@@ -50,14 +51,16 @@ export default ({}) => {
 }
 const Main = ({}) => (
 	<div className="ui__ container">
-		<h1>Le ferry, c'est écolo ?</h1>
+		<h1 css="img {background: white;}">
+			<Emoji e="⛴️" /> Le ferry, c'est écolo ?
+		</h1>
 		<p>
-			Le ferry est une alternative sérieuse à l'avion moyen courrier, en
-			complément du train de jour ou de nuit pour traverser les mers.
+			Alternative sérieuse à l'avion moyen courrier très polluant, le ferry
+			complète train de jour ou de nuit pour traverser les mers.
 		</p>
 		<p>
 			Découvrez ici une estimation de l'empreinte climat d'un voyage en ferry,
-			en fonction de choix simples que vous faites en achetant le billet et à
+			en fonction de choix simples que vous faites en achetant le billet puis à
 			bord.
 		</p>
 		<Questions />
