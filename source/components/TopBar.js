@@ -65,6 +65,7 @@ export default withRouter(({}) => {
 						css={`
 							img {
 								font-size: 250%;
+								margin: -10px 0;
 							}
 						`}
 					>
