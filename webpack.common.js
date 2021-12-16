@@ -166,8 +166,9 @@ module.exports.HTMLPlugins = ({ injectTrackingScript = false } = {}) => [
 		template: 'index.html',
 		logo: '/logo.svg',
 		chunks: ['publicodes'],
-		title: 'Futureco',
-		description: 'Êtes-vous écolo ? Faites le test en 2 minutes.',
+		title: 'Futureco 🔥',
+		description:
+			"Êtes-vous écolo ? Faites le test en 2 minutes. Découvrez l'impact climat de votre quotidien.",
 		filename: 'index.html',
 		injectTrackingScript,
 		base: '/',
