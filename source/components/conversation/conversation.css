@@ -19,9 +19,9 @@
 }
 
 .step.question .variant > ul {
-	border-right: 1px dashed #333;
+	border-right: 1px dashed #aaa;
 	text-align: right;
-	padding-right: 0.6em;
+	padding-right: 1.6em;
 	padding-top: 0.6em;
 	padding-left: 2em;
 	margin-left: 1rem;
@@ -42,6 +42,9 @@
 .step.question .variant .variantLeaf {
 	display: inline-flex;
 	align-items: center;
+}
+.step.question .variantLeaf img {
+	margin: -10px 0;
 }
 
 .step.question .variant .variantLeaf:not(:first-child) {
