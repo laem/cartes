@@ -19,12 +19,12 @@
 }
 
 .step.question .variant > ul {
-	border-right: 1px dashed #aaa;
+	border-right: 2px dashed #aaa;
 	text-align: right;
-	padding-right: 1.6em;
+	padding-right: 1em;
 	padding-top: 0.6em;
-	padding-left: 2em;
-	margin-left: 1rem;
+	padding-left: 0em;
+	margin-left: 0rem;
 }
 .step.question .variant > div {
 	padding-right: 0.6em;
