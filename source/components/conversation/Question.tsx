@@ -104,7 +104,20 @@ export default function Question({
 		const relativeDottedName = (radioDottedName: string) =>
 			radioDottedName.split(questionDottedName + ' . ')[1]
 		return (
-			<ul css="width: 100%; padding: 0; margin:0" className="ui__ radio">
+			<ul
+				css={`
+					width: 100%;
+					padding: 0;
+					margin: 0;
+					display: flex;
+					justify-content: flex-end;
+					flex-wrap: wrap;
+					li {
+						margin: 0 0.4rem;
+					}
+				`}
+				className="ui__ radio"
+			>
 				{choices.canGiveUp && (
 					<li key="aucun" className="variantLeaf aucun">
 						<RadioLabel
