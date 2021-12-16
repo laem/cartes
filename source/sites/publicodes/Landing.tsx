@@ -124,7 +124,7 @@ export default () => {
 							<h3>Ferry</h3>
 						</li>
 					</Link>
-					<Link to="/avion">
+					<Link to="/simulateur/transport/avion/impact">
 						<li className="ui__ interactive card light-border box">
 							<div class="ui__ big box-icon">
 								<Emoji e="✈️" />
