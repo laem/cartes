@@ -7,6 +7,9 @@ import * as chrono from './chrono'
 import scenarios from './scenarios.yaml'
 import { useNextQuestions } from 'Components/utils/useNextQuestion'
 import styled from 'styled-components'
+import { humanWeight } from './HumanWeight'
+import { utils } from 'publicodes'
+const { encodeRuleName } = utils
 
 let limitPerPeriod = (scenario) =>
 	mapObjIndexed(
@@ -40,6 +43,7 @@ export default ({ nodeValue, formule, dottedName }) => {
 		scenario,
 		nodeValue
 	)
+	const [value, unit] = humanWeight(nodeValue)
 	return (
 		<div
 			css={`
@@ -72,6 +76,24 @@ export default ({ nodeValue, formule, dottedName }) => {
 					<Link css="color: inherit" to="/scénarios">
 						crédit carbone personnel
 					</Link>
+					<Link
+						css="color: inherit"
+						to={'/documentation/' + encodeRuleName(dottedName)}
+					>
+						<p
+							css={`
+								margin: 0.6rem 0 0;
+								font-style: italic;
+								background: var(--lighterColor);
+								color: var(--darkColor);
+								display: inline-block;
+								padding: 0 0.4rem;
+								border-radius: 0.4rem;
+							`}
+						>
+							Soit {value} {unit} de CO₂e
+						</p>
+					</Link>
 				</>
 			)}
 
@@ -101,6 +123,6 @@ let FirstEstimationStamp = styled.div`
 	-ms-transform: rotate(-16deg);
 	transform: rotate(-7deg);
 	border-radius: 4px;
-	top: 9em;
-	right: -1em;
+	top: 13em;
+	right: -3em;
 `

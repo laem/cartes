@@ -1,6 +1,7 @@
 import byCategory from 'Components/categories'
 import Search from 'Components/Search'
 import { utils } from 'publicodes'
+const { encodeRuleName } = utils
 import { pick } from 'ramda'
 import React, { useEffect, useState } from 'react'
 import { useSelector } from 'react-redux'
@@ -9,7 +10,6 @@ import Worker from 'worker-loader!Components/WikiSearchWorker.js'
 import Emoji from '../components/Emoji'
 import { useEngine } from '../components/utils/EngineContext'
 const worker = new Worker()
-const { encodeRuleName } = utils
 import TopBar from 'Components/TopBar'
 
 export default function Suggestions() {
