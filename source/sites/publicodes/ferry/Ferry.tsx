@@ -21,6 +21,8 @@ const rules = req.keys().reduce((memo, key) => {
 	return { ...memo, ...prefixedRuleSet }
 }, {})
 
+console.log(rules)
+
 const engine = new Engine(rules)
 const SituationContext = createContext({})
 export default ({}) => {
@@ -82,7 +84,7 @@ const Questions = ({}) => {
 			engine.setSituation(newSituation)
 		},
 		onSubmit = () => null
-	const evaluation = engine.evaluate('ferry . charge par personne')
+	const evaluation = engine.evaluate('ferry . charge . par personne')
 
 	return (
 		<div>
