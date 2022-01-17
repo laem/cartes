@@ -40,6 +40,7 @@ ferry . empreinte marginale:
   unité: kgCO2e/kg
 
 ferry . empreinte par km:
+  titre: Empreinte par km et passager
   formule: empreinte marginale * charge . par personne
   note: |
 
@@ -55,7 +56,7 @@ ferry . empreinte par km:
 
 ferry . cabine:
   icônes: 🛌
-  question: Avez-vous pris une place en cabine (plutôt qu'un siège) ?
+  question: Place cabine (plutôt que siège) ?
   note: Il existe aussi des cabines partagées (comme dans les trains de nuit), nous pourrons les ajouter par la suite comme une option possible.
   références:
     corsica-ferries: https://www.corsica-ferries.fr/ferries/traversee-ferry.html
@@ -81,7 +82,7 @@ ferry . voiture:
 
 ferry . groupe:
   icônes: 👥
-  question: Dans un groupe de combien de personnes voyagez-vous ?
+  question: À combien voyagez-vous ?
   par défaut: 2
   suggestions:
     seul: 1

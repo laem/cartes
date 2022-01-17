@@ -53,9 +53,24 @@ export default ({}) => {
 }
 const Main = ({}) => (
 	<div className="ui__ container">
-		<h1 css="img {background: white;}">
-			<Emoji e="⛴️" /> Le ferry, c'est écolo ?
-		</h1>
+		<p
+			css={`
+				display: flex;
+				align-items: center;
+				justify-content: space-evenly;
+				img {
+					font-size: 200%;
+					background: white;
+				}
+				h1 {
+					margin-top: 1rem;
+					max-width: 60%;
+				}
+			`}
+		>
+			<Emoji e="⛴️" />
+			<h1 css="">Le ferry, c'est écolo ?</h1>
+		</p>
 		<p>
 			Alternative sérieuse à l'avion moyen courrier très polluant, le ferry
 			complète train de jour ou de nuit pour traverser les mers.
@@ -87,16 +102,14 @@ const Questions = ({}) => {
 	const evaluation = engine.evaluate('ferry . empreinte par km')
 
 	return (
-		<div>
-			<details>
-				<summary>Ma situation</summary>
-
-				<ul>
-					{Object.entries(situation).map(([k, v]) => (
-						<li>{`${k} : ${v?.nodeValue || v}`}</li>
-					))}
-				</ul>
-			</details>
+		<div
+			css={`
+				@media (min-width: 800px) {
+					display: flex;
+					align-items: center;
+				}
+			`}
+		>
 			<div
 				css={`
 					margin: 1rem 0;
@@ -118,12 +131,21 @@ const Questions = ({}) => {
 									font-size: 300%;
 									margin-right: 1rem;
 								}
+								@media (max-width: 800px) {
+									img {
+										font-size: 200%;
+										margin-right: 0.4rem;
+									}
+								}
+								p {
+									max-width: 20rem;
+								}
 							`}
 						>
 							{icônes && <Emoji e={icônes} />}
 
 							<label>
-								{question}
+								<p>{question}</p>
 								<RuleInput
 									{...{
 										engine,
@@ -138,13 +160,24 @@ const Questions = ({}) => {
 					)
 				})}
 			</div>
-			<h2>Mon résultat</h2>
-			<p>
-				C'est la part de poids qui vous est attribuée en fonction de vos choix.
-			</p>
-			<div className="ui__ card box">
-				<h3>{evaluation.title}</h3>
-				<strong> {evaluation.nodeValue.toLocaleString('fr-FR')} kgCO2e</strong>
+			<div>
+				<div className="ui__ card box">
+					<h2 css="margin: .4rem; font-size: 125%">{evaluation.title}</h2>
+					<strong>
+						{' '}
+						{evaluation.nodeValue.toLocaleString('fr-FR')} kgCO2e
+					</strong>
+				</div>
+
+				<details css="text-align: center">
+					<summary>Ma situation</summary>
+
+					<ul>
+						{Object.entries(situation).map(([k, v]) => (
+							<li>{`${k} : ${v?.nodeValue || v}`}</li>
+						))}
+					</ul>
+				</details>
 			</div>
 		</div>
 	)
