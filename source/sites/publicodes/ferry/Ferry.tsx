@@ -72,13 +72,9 @@ const Main = ({}) => (
 			<h1 css="">Le ferry, c'est écolo ?</h1>
 		</p>
 		<p>
-			Alternative sérieuse à l'avion moyen courrier très polluant, le ferry
-			complète train de jour ou de nuit pour traverser les mers.
-		</p>
-		<p>
-			Découvrez ici une estimation de l'empreinte climat d'un voyage en ferry,
-			en fonction de choix simples que vous faites en achetant le billet puis à
-			bord.
+			Alternative à l'avion, le ferry complète train pour traverser les mers.
+			Découvrez une estimation de son empreinte climat, en fonction de votre
+			billet.
 		</p>
 		<Questions />
 	</div>
