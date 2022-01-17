@@ -112,6 +112,9 @@ const Questions = ({}) => {
 					.step.input {
 						max-width: 12rem;
 					}
+					.step label {
+						padding: 0.2rem 0.6rem 0.2rem 0.4rem;
+					}
 				`}
 			>
 				{questions.map((name) => {
