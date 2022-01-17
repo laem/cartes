@@ -84,7 +84,7 @@ const Questions = ({}) => {
 			engine.setSituation(newSituation)
 		},
 		onSubmit = () => null
-	const evaluation = engine.evaluate('ferry . charge . par personne')
+	const evaluation = engine.evaluate('ferry . empreinte par km')
 
 	return (
 		<div>
@@ -144,7 +144,7 @@ const Questions = ({}) => {
 			</p>
 			<div className="ui__ card box">
 				<h3>{evaluation.title}</h3>
-				<strong> {Math.round(evaluation.nodeValue)} kg</strong>
+				<strong> {evaluation.nodeValue.toLocaleString('fr-FR')} kgCO2e</strong>
 			</div>
 		</div>
 	)

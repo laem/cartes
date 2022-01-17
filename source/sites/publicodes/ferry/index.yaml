@@ -1,7 +1,5 @@
 ferry:
   icônes: ⛴
-  exposé: oui
-  formule: 666
   note: |
     Pour faire ce calcul, nous partons de l'hypothèse que la consommation de carburant d'un bateau est proportionnelle au poids qu'il transporte.
 
@@ -35,10 +33,15 @@ ferry:
 
     Ceci est un extrait d'un [document de travail plus complet](https://hackmd.io/@laem/empreinte-ferry) rempli de références diverses.
 
+ferry . empreinte marginale . grammes:
+  formule: 0.1874 gCO2e/kg
+ferry . empreinte marginale:
+  formule: grammes / 1000
+  unité: kgCO2e/kg
+
 ferry . empreinte par km:
-  formule: 666
+  formule: empreinte marginale * charge . par personne
   note: |
-    Chiffre factice pour l'instant.
 
     Nous allons privilégier dans un premier temps l'option de ne pas modéliser la consommation théorique du bateau, ni modéliser la capacité de transport de fret vs celle des passagers, mais nous baser sur des données existantes et rendre plus sophistiqué le modèle d'attribution *au sein* de la catégorie passagers. 
 
