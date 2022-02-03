@@ -1,10 +1,23 @@
 ferry:
   icônes: ⛴
   note: |
+
+    Voici notre objectif : estimer l'empreinte d'un passager sur les ferries de voyage comme ceux qui relient la métropole à la Corse et à l'Angleterre.
+
+      Le Ferry est une alternative sérieuse à l’avion, mais il n’existe aujourd’hui aucun facteur d’émission en CO2e (ni ADEME en France, ni à l’international, ni dans la littérature scientifique) qui prenne en compte non pas un passager moyen, mais la diversité des options d'un billet. 
+
+      
+    - passager en voiture ou non
+    - passager en cabine, en siège, ou au sol
+    - équipement loisir du bateau : restaurant, bar, piscine, grand couloirs, etc.
+    - tonnage fret
+    - % de remplissage du bateau
+
     Pour faire ce calcul, nous partons de l'hypothèse que la consommation de carburant d'un bateau est proportionnelle au poids qu'il transporte.
 
-    Attention, cette hypothèse est criticable sur bien des points. Qu'est-ce qui nous permet cependant de penser que ce sera une bonne première approximation de la réalité ?
+    Qu'est-ce qui nous permet de faire cette hypothèse ? Voici [une introduction](/ferry/méthode/introduction) qui déroule le raisonnement justifiant cette méthode.
 
+    Attention, cette hypothèse est criticable sur bien des points. Qu'est-ce qui nous permet cependant de penser que ce sera une bonne première approximation de la réalité ?
 
     Dans ce document commercial intitulé [Basic Principles of Ship Propulsion](https://spain.mandieselturbo.com/docs/librariesprovider10/sistemas-propulsivos-marinos/basic-principles-of-ship-propulsion.pdf?sfvrsn=2), on peut constater que pour des navires voyageant à vitesse réduite, ce qui est le cas des ferries, c'est la force de frottement de l'eau sur le bateau, notée Rf, qui représente 90% de la force à battre pour avancer.
 

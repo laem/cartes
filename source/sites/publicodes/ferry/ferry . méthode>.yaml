@@ -1,0 +1,59 @@
+index:
+
+introduction:
+  description: |
+    ## Le problème
+
+    Nous connaissons la consommation d'essences d'un Ferry, nous pouvons donc en déduire les tonnes de CO2e émises pour un trajet donné en km.
+
+    Mais ce qu'on entend par Ferry, c'est souvent un bateau qui transporte beaucoup de fret.
+
+    Pire : la gamme de services de transport disponibles pour un passager est très large : cela va du passager qui dort au sol dans le couloir à celui qui embarque avec son SUV+caravane et qui profite du Jacuzzi dans l'un des 3 bars du bateau avant de rentrer dans sa cabine XXL.
+
+    Ainsi, même si l'on savait que l'empreinte moyenne d'un passager était de 300gCO2e/km (~ comme une voiture sur route), il est intolérable que le passager sobre se voie attribuer la même emprunte que notre passager de luxe.
+
+    Nous devons donc *calculer* l'attribution de l'empreinte en fonction des caractéristiques du billet. Cela peut se faire selon au moins 2 méthodes : par poids, ou par surface.
+
+    ## La solution retenue
+
+    Nous avons déterminé que la meilleure méthode est un calcul de répartition par poids.
+
+    L'ADEME avait privilégié en 2008 une méthode par surface, mais elle a été archivée dans la base carbone, donc invalidée. Elle semblait basée sur une méthode par surface.
+
+    Le ministère britannique de l'environnement a choisi une méthode par poids.
+
+    La norme EN 16258, déjà datée, autorise les deux méthodes, mais note l'extrême divergence des deux méthodes. 
+
+    La future norme ISO 14083, en cours de publication, devrait retenir la méthode par poids. 
+
+    D'autres publications d'armateurs privilégient la méthode par poids.
+
+    ## Pourquoi ?
+
+    Mais pourquoi privilégier la méthode par poids ? 
+
+    Tu prends un passager qui va dormir en fauteuil. Son fauteuil + toilettes pèsent 100kg. Il n'utilise pas les restaurants, etc, il reste dormir dans l'espace cinéma qui leur est alloué, tout simplement. 
+
+    Tu prends une voiture, elle pèse 1500kg. Pour le même poids tu pourrais donc y mettre 15 passagers ! Donc diminuer d'autant l'empreinte du trajet *par personne*.
+
+
+    ### Mais quid de la surface ? 
+
+    Tu me diras alors, oui mais ces passagers ils prennent plus de surface que la voiture. 
+
+    D'une, ce n'est pas certain du tout (par exemple, les ponts de chargement des voitures ne font en général pas 2m de haut mais plutôt 4, pour accomoder les camions ?), et c'est difficile à calculer
+
+    De deux, ce n'est pas la surface qui coûte des kg de pétrole brulés, mais le poids du bateau : le poids fait s'enfoncer le bateau, et c'est la force de frottement de l'eau sur la partie immergée contre laquelle il faut lutter.
+
+    La surface ne semble pas manquer sur le bateau : les parties *strictement nécessaires* que sont les salles d'habitation (cabines ou sièges) ne représentent qu'une faible partie de la surface souvent utilisée par des zones vides, des loisirs, des commerces, qui pourrait donc être utilisée pour densifier en passagers (jusqu'à une certaine limite, certes, à définir ?).
+
+
+    ### Mais quid du poids de l'infrastructure du bateau lui-même ?
+
+    Vous me direz, oui mais le poids des passagers / fret, bref ce qu'on met dedans pour l'opérer commercialement n'est qu'une partie du poids total : le ferry de base a sa coque, son lestage pour l'équilibrer, etc.
+
+    Eh bien si l'on peut remplacer une voiture par 15 personnes, c'est qu'on peut mieux amortir *par personne* tout ce matériel de base pour diminuer l'empreinte par passager transporté !  
+
+    On attribue donc aux passagers leur part de poids, donc aussi leur part de la consommation du matos lui-même qui fait avancer le bateau
+
+    À titre d'exemple, quel que soit le rapport voitures / passagers, le linéaire de barrière sur les ponts est le même. D'autres éléments de poids eux dépendent du nombre de passager, il faut donc les prendre en compte dans le calcul (quantité d'eau embarquée, canots de sauvetage, etc.).
