@@ -142,7 +142,6 @@ const Questions = ({}) => {
 							`}
 						>
 							{icônes && <Emoji e={icônes} />}
-
 							<label>
 								<p>{question}</p>
 								<RuleInput
@@ -167,6 +166,23 @@ const Questions = ({}) => {
 						{evaluation.nodeValue.toLocaleString('fr-FR')} kgCO2e
 					</strong>
 				</div>
+				<p
+					css={`
+						max-width: 18rem;
+						padding: 0 0rem 0 2rem;
+					`}
+				>
+					<Emoji e="🗺️" /> Soit environ :{' '}
+					<ul>
+						<li>
+							{Math.round(evaluation.nodeValue * 350)} kg pour Marseille-Ajaccio{' '}
+						</li>
+						<li>
+							{Math.round(evaluation.nodeValue * 150)} kg pour
+							Cherbourg-Portsmouth
+						</li>
+					</ul>
+				</p>
 
 				<details css="text-align: center">
 					<summary>Ma situation</summary>
