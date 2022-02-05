@@ -69,7 +69,7 @@
 	background: none;
 	border: 1px solid var(--color) !important;
 	text-transform: none !important;
-	background-color: var(--color);
+	background-color: var(--darkColor);
 	color: var(--textColor) !important;
 	font-weight: 500 !important;
 	border-radius: 0.3rem;
