@@ -66,7 +66,7 @@ export default ({ children }) => {
 
 		/* This enables loading the rules of a branch,
 		 * to showcase the app as it would be once this branch of -data  has been merged*/
-		const branch = urlParams.get('branch')
+		const branch = 'fv2' || urlParams.get('branch')
 		const pullRequestNumber = urlParams.get('PR')
 		const rulesURL = `https://${
 			branch
