@@ -143,7 +143,7 @@ export default ({ children }) => {
 				.then((json) => {
 					setRules(
 						rulesURL.includes('futureco')
-							? transformRules(rules)
+							? transformRules(json)
 							: setDefaultsToZero(json)
 					)
 					removeLoader()
