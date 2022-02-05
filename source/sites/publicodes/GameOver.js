@@ -247,7 +247,7 @@ const Trajectoire = () => (
 			tonnes.
 		</p>
 
-		<LoudButton to="/fin/quand">À partir de quand ?</LoudButton>
+		<LoudButton to="/fin/quand">Mais quand ça ?</LoudButton>
 	</Dialog>
 )
 const Quand = () => (
@@ -255,7 +255,7 @@ const Quand = () => (
 		<h1>C'est urgent</h1>
 		<p>
 			Oubliez les échéances en 2030, les trajectoires à 2050. C'est la plus
-			belle <strong>procrastination</strong> de l'histoire humaine.
+			scandaleuse <strong>procrastination</strong> de l'histoire humaine.
 		</p>
 		<p>
 			Chaque année passée au-dessus de <strong>3 tonnes</strong> nous met tous
@@ -385,8 +385,8 @@ const Action = () => (
 		<h1>Où est le GPS&nbsp;?</h1>
 		<p>
 			La 1ère étape vers la solution, c'est de{' '}
-			<strong>comprendre l'ampleur du problème</strong>. C'était le but de ce
-			test.
+			<strong>comprendre l'ampleur du problème</strong>. De notre point de vue
+			français, elle est immense. C'était le but de ce test.
 		</p>
 		<p>
 			De nombreux autres guides sont en train de sortir pour nous aider tous à

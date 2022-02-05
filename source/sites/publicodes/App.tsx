@@ -14,6 +14,7 @@ import Tracker, { devTracker } from '../../Tracker'
 import About from './About'
 import Contribution from './Contribution'
 import Ferry from './ferry/Ferry'
+import GameOver from './GameOver'
 import Instructions from './Instructions'
 import Landing from './Landing'
 import Documentation from './pages/Documentation'
@@ -58,6 +59,7 @@ const Router = ({}) => (
 				<Route path="/documentation" component={Documentation} />
 				<Route path="/instructions" component={Instructions} />
 				<Route path="/simulateur/:name+" component={Simulateur} />
+				<Route path="/fin" component={GameOver} />
 				{/* Lien de compatibilité, à retirer par exemple mi-juillet 2020*/}
 				<Route path="/contribuer/:input?" component={Contribution} />
 				<Route path="/à-propos" component={About} />
