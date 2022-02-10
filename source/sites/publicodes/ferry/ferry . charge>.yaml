@@ -110,13 +110,7 @@ cabine pour quatre:
 
     Ce n'est donc évidemment pas fidèle au matériel que l'on trouve réellement sur les navires, mais on pourra s'en rapprocher en sophistiquant le modèle.
 
-    Ce que nous savons avoir ignoré : 
-      - moquette (3kg/m²)
-      - télé
-      - mirroirs (salle de bain et entrée)
-      - les revêtements souvent en bois, par exemple des têtes de lit, pas facile à estimer
-
-    🟧 Attention, pour une cabine de 10m² (lits 90cm*2m, espace entre lits de 1m, espace entrée / salle de bain de 1.5m) on obtient un poids / m² presque 2 fois inférieur à l'estimation de Deltamarin de [ce document](https://i.imgur.com/4o64Po9.png). A confirmer donc.
+    🟧 Attention, pour une cabine de 12m² (voir variable surface) on obtient un poids / m² presque 2 fois inférieur à l'estimation de Deltamarin de [ce document](https://i.imgur.com/4o64Po9.png). A confirmer donc.
 
   formule:
     somme:
@@ -124,14 +118,35 @@ cabine pour quatre:
       - meubles
       - salle de bain
       - murs
+      - moquette
+      - TV
+      - miroirs
+
+miroirs:
+  formule: 5 * 2
+  description: Un miroir 1m*50cm dans la salle de bain, un miroir 50cm*1m sur l'armoire de rangement ou la porte dans l'entrée.
+
+TV: 5 kg
+moquette: surface * densité
+moquette . densité: 3 kg/m2
+
+surface:
+  formule: 12m2
+  description: |
+    On considère 2 x 2 lits superposés de 90cm*2m, espace entre lits de 1m20, espace entrée / salle de bain de 2m de long, soit 4m x 3m.
 
 murs:
   description: Nous partons sur des murs similaires aux cloisons amovibles isolées utilisées dans les bureaux. Elles semblent composées d'aluminium (75mm) comme matériel principal.
   formule: poids linéaire * linéaire
+  note: Nous ne considérons pas la porte, remplacée par l'équivalent en mur.
   références:
     cloison hoyez de bureau: https://www.bimobject.com/fr/hoyez/product/h7b
-murs . linéaire:
-  formule: (4 + 4) * 2
+
+murs . linéaire: salle de bain + extérieur
+murs . linéaire . salle de bain:
+  formule: 1 + 2
+murs . linéaire . extérieur:
+  formule: (4 + 3) * 2
   unité: m
 murs . poids linéaire:
   formule: 17 / (1.25 * ajustement hauteur)
