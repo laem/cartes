@@ -43,7 +43,7 @@ ferry . empreinte marginale:
 
 ferry . empreinte par km:
   titre: Empreinte par km et passager
-  formule: empreinte marginale * charge . par personne
+  formule: empreinte marginale * charge . par personne majorée
   description: |
 
     Comme expliqué dans notre note de méthode, le principe de calcul est simple : nous attribuons une empreinte selon le poids que le billet acheté par le voyageur implique d'embarquer sur le bateau. 

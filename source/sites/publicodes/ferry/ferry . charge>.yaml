@@ -19,6 +19,11 @@ index:
 
     Voir la [variable principale du calcul](/ferry/charge/par-personne).
 
+par personne majorée:
+  formule: par personne * 1.1
+  description: |
+    Nous ajoutons un facteur de 1/10ème pour prendre en compte le besoin en personnel du bateau. L'idée est simple : pour 10 passagers, 1 employé correspondant au poids des services fournis au billet.
+    10%, c'est environ le poids de la ligne "crew facilities" du [tableau Deltamarin](https://i.imgur.com/4o64Po9.png).
 par personne:
   titre: poids embarqué par personne
   formule:
@@ -40,7 +45,8 @@ par personne . passager:
 
 par personne . bagages:
   formule: 15kg
-  description: On retient souvent un chiffre de 20kg pour les bagages par passager, mais 10-15kg semble bien plus réaliste en moyenne : une valise de 20kg semble plutôt la borne haute. 
+  description: |
+    On retient souvent un chiffre de 20kg pour les bagages par passager, mais 10-15kg semble bien plus réaliste en moyenne : une valise de 20kg semble plutôt la borne haute.
 
 par personne . voiture:
   applicable si: ferry . voiture
@@ -122,6 +128,12 @@ voiture:
   unité: kg
 
 cabine pour quatre:
+  description: |
+    La plupart des voyages en ferries se font en cabine, tout du moins dès que la traversée implique une nuit évidemment. 
+
+    Voilà à quoi elles ressemblent: 
+
+    ![](https://upload.wikimedia.org/wikipedia/commons/thumb/c/c9/JNICOLI_11.jpg/1280px-JNICOLI_11.jpg)
   note: |
     Ceci est une estimation, basée aux mieux sur les références commerciales que l'on trouve, ou sur des ordres de grandeur. 
 
