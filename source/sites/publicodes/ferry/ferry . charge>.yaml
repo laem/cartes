@@ -1,18 +1,23 @@
 index:
-  description: Les éléments de modélisation du poids embarqué sur un ferry
+  description: |
 
-# le raisonnement est le suivant. À poids constant du ferry, consommation constante, qu'on quppose connue. Plutot que de mettre un jacuzzi de 5 tonnes, on pourrait mettre n cabines ou dortoirs, et ainsi plus de personnes, divisant l'empreinte totale du bateau par p personnes en plus (ou du fret). Ces p personnes auraient autrement emprunté un deuxième bateau, ou un avion (par volonté de voyager plus écolo, mais aussi tout simplement par effet de prix).
-#
-# Notre objectif :
-# - attribuer un poids à un pax (abbréviation courant de "passager") en fonction de ses choix (cabine, voiture, usage des loisirs). On le nomme A et c'est donc une fonction d'autres questions.
-# - le diviser par le poids disponible qu'on nomme B. C'est le poids qu'on ajoute en pratique au bateau à tout ce qui est strictement nécessaire pour faire la navigation s'il n'y avait rien à transporter sur le ferry, ni passagers ni fret : la carcasse, essence, moteur, matériel de sécurité (mais pas les canaux dédiés aux pax), équipage de navigation (mais pas l'équipe dédié aux pax), etc..
-#
-# Il semble que la notion de poids lège (ou déplacement lège) ne soit pas utile pour nous ici, notamment car elle est donnée sans consommables dont le carburant, la différence entre poids max et lège ne correspond donc pas à ce poids B qu'on recherche. A moins d'y ajouter une par une les charges de navigation manquantes.
-#
-# On a donc fait le choix de calculer notre propre estimation de ce "poids disponible" B. On peut le comprendre ainsi : supposons que je lève quelques millions d'€ pour faire du transport maritime. Je m'achète un bateau équipé pour naviguer. J'ai alors le choix de l'utilité que je veux lui donner : je pourrais le remplir de fret, ou à l'inverse le remplir de pax. Pour ces derniers, je pourrais faire le choix du super "low cost", avec des dortoirs et rien d'autres que les services de nécessité (toilettes communes, sièges inclinables, etc.), ou à l'inverse le super luxe avec un jacuzzi privatif par cabine. Toutes ces possibilités impliquent une consommation d'essence *par tête* probablement d'un ordre de grandeur différent.
-#
-# Nous ignorons le poids du sol des ponts, qui sont nécessaires quel que soit l'usage fait du bateau (fret, passagers et luxe des passagers).
-# Nous allons, au moins dans un 1er temps par simplicité, ignorer les murs (des cabines, des dortoirs, des restaurants).
+    Les éléments de modélisation du poids embarqué sur un ferry.
+
+    ## Rappel du pourquoi 
+
+    Le raisonnement est le suivant. À poids constant du ferry, consommation constante, qu'on quppose connue. Plutot que de mettre un jacuzzi de 5 tonnes, on pourrait mettre n cabines ou dortoirs, et ainsi plus de personnes, divisant l'empreinte totale du bateau par p personnes en plus (ou du fret). Ces p personnes auraient autrement emprunté un deuxième bateau, ou un avion (par volonté de voyager plus écolo, mais aussi tout simplement par effet de prix).
+
+    Notre objectif :
+     - attribuer un poids à un pax (abbréviation courant de "passager") en fonction de ses choix (cabine, voiture, usage des loisirs). On le nomme A et c'est donc une fonction d'autres questions.
+     - le diviser par le poids disponible qu'on nomme B. C'est le poids qu'on ajoute en pratique au bateau à tout ce qui est strictement nécessaire pour faire la navigation s'il n'y avait rien à transporter sur le ferry, ni passagers ni fret : la carcasse, essence, moteur, matériel de sécurité (mais pas les canaux dédiés aux pax), équipage de navigation (mais pas l'équipe dédié aux pax), etc..
+
+    Il semble que la notion de poids lège (ou déplacement lège) ne soit pas utile pour nous ici, notamment car elle est donnée sans consommables dont le carburant, la différence entre poids max et lège ne correspond donc pas à ce poids B qu'on recherche. A moins d'y ajouter une par une les charges de navigation manquantes.
+
+    On a donc fait le choix de calculer notre propre estimation de ce "poids disponible" B. On peut le comprendre ainsi : supposons que je lève quelques millions d'€ pour faire du transport maritime. Je m'achète un bateau équipé pour naviguer. J'ai alors le choix de l'utilité que je veux lui donner : je pourrais le remplir de fret, ou à l'inverse le remplir de pax. Pour ces derniers, je pourrais faire le choix du super "low cost", avec des dortoirs et rien d'autres que les services de nécessité (toilettes communes, sièges inclinables, etc.), ou à l'inverse le super luxe avec un jacuzzi privatif par cabine. Toutes ces possibilités impliquent une consommation d'essence *par tête* probablement d'un ordre de grandeur différent.
+
+    Nous ignorons le poids du sol des ponts, qui sont nécessaires quel que soit l'usage fait du bateau (fret, passagers et luxe des passagers).
+
+    Voir la [variable principale du calcul](/ferry/charge/par-personne).
 
 par personne:
   titre: poids embarqué par personne
@@ -22,7 +27,6 @@ par personne:
       - services
       - dortoir
       - voiture
-      - charge . canots de sauvetage / passagers
       - charge . eau
 
 par personne . voiture:
