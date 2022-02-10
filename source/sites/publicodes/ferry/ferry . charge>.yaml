@@ -23,11 +23,24 @@ par personne:
   titre: poids embarqué par personne
   formule:
     somme:
+      - passager
+      - bagages
       - cabine
       - services
       - dortoir
       - voiture
       - charge . eau
+
+par personne . passager:
+  formule: 75 kg
+  description: |
+    Nous retenons un poids moyen en ordre de grandeur. 
+
+    Selon [cette source](https://liguecontrelobesite.org/actualite/taille-poids-et-tour-de-taille-photographie-2020-des-francais), l'homme fait 81 kg, la femme 67kg, nous coupons la poire en deux en 75.
+
+par personne . bagages:
+  formule: 15kg
+  description: On retient souvent un chiffre de 20kg pour les bagages par passager, mais 10-15kg semble bien plus réaliste en moyenne : une valise de 20kg semble plutôt la borne haute. 
 
 par personne . voiture:
   applicable si: ferry . voiture
