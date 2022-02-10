@@ -13,8 +13,8 @@ index:
   icônes: 🍽🍺
   par défaut: oui
 
-  formule: 
-    somme: 
+  formule:
+    somme:
       - restaurant
       - nom: bar
         description: On duplique le restaurant, le bar étant très proche dans l'idée.
@@ -22,25 +22,32 @@ index:
       - piscine
       - magasin * 2
       - salle de jeu
+      - espaces publics
+
+espaces publics:
+  formule: 330 * passagers
+  description: |
+    Cette ligne correspond à la ligne "Public & stairs" dans la [publication Deltamarin](https://i.imgur.com/4o64Po9.png).
+
+    Nous comprenons avec beaucoup d'incertitudes qu'elle inclut tous les espaces publics de type couloirs, espaces d'accueil avec ses nombreux sièges, etc.
+
+    Il faudra clarifier ce point.
 
 restaurant:
   note: On est vraiment dans de l'estimation à la super louche.
-  formule: 
-    somme: 
+  formule:
+    somme:
       - 100 * ferry . charge . chaise
       - 100 * ferry . charge . canapé
       - 100 * ferry . charge . table
 
-piscine: 
+piscine:
   formule: volume * 1000
   unité: kg
 
-piscine . volume: 
-  note: On prend les dimensions d'une petite piscine. Si grosse influence, le paramétrer ! 
+piscine . volume:
+  note: On prend les dimensions d'une petite piscine. Si grosse influence, le paramétrer !
   formule: 10 * 1.5 * 4
   unité: m3
 magasin: 10000 kg
 salle de jeu: 10000 kg
-
-
-

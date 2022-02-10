@@ -102,6 +102,8 @@ ferry . passagers:
   formule: 1000
 
   note: |
-    On prend les passagers des exemples de décomposition de poids ? 
+    Pour certaines services en commun, nous avons besoin de répartir le poids par passager. Nous utilisons donc par convention la valeur de 1000 passagers. 
 
-    Ou du Jean Nicoli rempli aux 2/3 ? Soit [1000 passagers](https://fr.wikipedia.org/wiki/Jean_Nicoli_(navire)).
+    Pourquoi 1000 ? C'est le Jean Nicoli (Marseille-Corse) rempli aux 2/3 [source](https://fr.wikipedia.org/wiki/Jean_Nicoli_(navire)).
+
+    Bien sûr, personnaliser cela par bateau serait un gros plus.
