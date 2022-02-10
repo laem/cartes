@@ -25,8 +25,17 @@ ferry:
     Enfin, une fois cette méthode du poids acceptée, vous pouvez parcourir [le calcul intégral](/ferry/empreinte-par-km) et intéractif du facteur d'émission.
 
 ferry . empreinte marginale . grammes:
-  formule: 0.1874 gCO2e/kg
-  note: Dire d'où ça vient.
+  formule: 0.2 gCO2e/kg
+  description: |
+    Notre calcul est basé sur l'hypothèse que l'embarquement de poids marginal sur le bateau implique une consommation supplémentaire de carburant, qui a son tour induit l'émission de gaz à effet de serre supplémentaire, par km.
+
+    Le chiffre est un *ordre de grandeur* issu d'une analyse de la "base carbone" du Royaume-Uni. Il est déterminé par une répartition par poids sur un échantillon de bateaux représentatifs. 
+    Tous les détails sur notre [note méthodologique](https://hackmd.io/@laem/empreinte-ferry#À-partir-des-chiffres-de-la-“base-carbone”-britannique).
+
+  note: |
+    L'hypothèse, en plus du chiffre unique et donc incertain, est donc que cette surconsommation marginale est linéaire. C'est probablement la critique la plus facile de ce modèle : nous serions ravis de l'améliorer avec une fonction plus nuancée.
+
+    L'autre grand problème du modèle est la non-prise en compte de la vitesse du bateau, pourtant fondamentale dans la consommation. Il serait pourtant possible de poser directement à l'utilisateur la question de la vitesse via la ligne qu'il empreinte combinée aux donnés de greenferries. Ou encore plus simplement, l'estimation grossièrement via l'information de nuit / de jour ?
 
 ferry . empreinte marginale:
   formule: grammes / 1000
@@ -35,21 +44,18 @@ ferry . empreinte marginale:
 ferry . empreinte par km:
   titre: Empreinte par km et passager
   formule: empreinte marginale * charge . par personne
-  note: |
+  description: |
 
-    Nous allons privilégier dans un premier temps l'option de ne pas modéliser la consommation théorique du bateau, ni modéliser la capacité de transport de fret vs celle des passagers, mais nous baser sur des données existantes et rendre plus sophistiqué le modèle d'attribution *au sein* de la catégorie passagers. 
+    Comme expliqué dans notre note de méthode, le principe de calcul est simple : nous attribuons une empreinte selon le poids que le billet acheté par le voyageur implique d'embarquer sur le bateau. 
 
-    Une piste serait d'utiliser les données de THETIS. La loi oblige les bateaux à attribuer une quantité de CO2e aux passagers et une autre au fret. 
-    Voir [cette documentation](https://www.greenferries.org/doc/computed_stats/). Nous n'aurions alors qu'à appliquer des facteurs de répartition entre les différents types de passagers, sans s'occuper du fret. 
+    La [note méthodologique](https://hackmd.io/@laem/empreinte-ferry#À-partir-des-chiffres-de-la-“base-carbone”-britannique).
 
-    Nous pouvons aussi utiliser [le modèle basique de Deltamarin](https://hackmd.io/@laem/empreinte-ferry#Publication-de-Deltamarin).
-
-    Une autre piste est constituée par [les calculs du gouvernement brittanique](https://hackmd.io/@laem/empreinte-ferry#Les-facteurs-d’émission-britanniques).
   unité: kgCO2e/km
 
 ferry . cabine:
   icônes: 🛌
   question: Place cabine (plutôt que siège) ?
+  description: Sans surprise, voyager en cabine apporte du confort mais en contrepartie du poids embarqué.
   note: Il existe aussi des cabines partagées (comme dans les trains de nuit), nous pourrons les ajouter par la suite comme une option possible.
   références:
     corsica-ferries: https://www.corsica-ferries.fr/ferries/traversee-ferry.html
@@ -60,8 +66,6 @@ ferry . taille cabine:
   question: Quelle est la taille de la cabine ?
   note: |
     Variable pas intégrée encore.
-
-    En 1ère approximation, nous considérons deux tailles de cabines : 2 places ou 4 places.
   par défaut: "'quatre lits'"
 
 ferry . taille cabine . deux lits:

@@ -15,6 +15,7 @@ index:
 # Nous allons, au moins dans un 1er temps par simplicité, ignorer les murs (des cabines, des dortoirs, des restaurants).
 
 par personne:
+  titre: poids embarqué par personne
   formule:
     somme:
       - cabine
@@ -93,14 +94,13 @@ canots de sauvetage:
   note: Nous considérons que le poids du canot *par passager* est négligeable par rapport au reste des équipements.
 
 voiture:
+  description: Le poids moyen d'une voiture embarquée sur le ferry.
   formule: 1500
   note: |
-    ![](https://i.imgur.com/NS3QgIx.png)
-  unité: kg
+    Le [site carlabelling](https://carlabelling.ademe.fr/chiffrescles/r/evolutionMasseMoyenne) donne un poids moyen en France en 2020 de 1233kg.
 
-fret:
-  formule: 8000
-  note: |
+    La norme norme EN 16258 retient 1500kg. C'est ce que nous retenons à notre tour, en considérant notamment qu'une voiture est rarement à son "poids d'achat", mais embarque équipement, affaires, bagages supplémentaires, etc.
+
     ![](https://i.imgur.com/NS3QgIx.png)
   unité: kg
 
@@ -108,7 +108,7 @@ cabine pour quatre:
   note: |
     Ceci est une estimation, basée aux mieux sur les références commerciales que l'on trouve, ou sur des ordres de grandeur. 
 
-    Ce n'est donc évidemment pas fidèle au matériel que l'on trouve réellement sur les navires, mais on pourra s'en rapprocher si on le trouve.
+    Ce n'est donc évidemment pas fidèle au matériel que l'on trouve réellement sur les navires, mais on pourra s'en rapprocher en sophistiquant le modèle.
 
     Ce que nous savons avoir ignoré : 
       - moquette (3kg/m²)
@@ -162,7 +162,7 @@ salle de bain:
 salle de bain . carrelage sol:
   formule: surface * poids carrelage
 salle de bain . surface:
-  formule: 2 * 3
+  formule: 2 * 2
   unité: m2
 salle de bain . poids carrelage:
   formule: 15
