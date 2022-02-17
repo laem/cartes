@@ -10,7 +10,7 @@ export default ({}) => {
 	const location = useLocation()
 	const scenarioName = useSelector((state) => state.scenario),
 		scenario = scenarios[scenarioName],
-		displayIntro = ['/wiki', '/contribuer/', '/à-propos'].includes(
+		displayIntro = ['/', '/wiki', '/contribuer/', '/à-propos'].includes(
 			location.pathname
 		)
 
