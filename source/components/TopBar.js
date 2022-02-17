@@ -2,11 +2,11 @@ import React from 'react'
 import emoji from 'react-easy-emoji'
 import Emoji from 'Components/Emoji'
 import { useSelector } from 'react-redux'
-import { useLocation, withRouter } from 'react-router'
+import { useLocation } from 'react-router'
 import { Link } from 'react-router-dom'
 import scenarios from '../sites/publicodes/scenarios.yaml'
 
-export default withRouter(({}) => {
+export default ({}) => {
 	const location = useLocation()
 	const scenarioName = useSelector((state) => state.scenario),
 		scenario = scenarios[scenarioName],
@@ -49,31 +49,18 @@ export default withRouter(({}) => {
 			)}
 			{!location.pathname.includes('/scénarios') && (
 				<div
-					className="ui__ card"
 					css={`
-						text-align: center;
-						padding: 0.6rem 1rem !important;
-						background: var(--color) !important;
-						color: white;
-						a {
-							color: inherit;
+						img {
+							width: 2rem;
+							height: auto;
 						}
 					`}
 				>
-					Votre&nbsp;futur&nbsp;:
-					<div
-						css={`
-							img {
-								font-size: 250%;
-								margin: -10px 0;
-							}
-						`}
-					>
-						<Emoji e={scenario.icône} />
-					</div>
-					<Link to="/scénarios">changer</Link>
+					<Link to="/scénarios" title="Paramètres">
+						<Emoji e="⚙️" />
+					</Link>
 				</div>
 			)}
 		</section>
 	)
-})
+}

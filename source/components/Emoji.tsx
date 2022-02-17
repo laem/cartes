@@ -17,13 +17,14 @@ const findOpenmoji = (e, black) => {
 
 const sizeEm = 2
 
-export default ({ e, black, extra, alt, hasText }) => {
+export default ({ e, black, extra, alt, hasText, white }) => {
+	const useBlack = black || white
 	if (e == null && extra == null) return null
 	if (extra)
 		return (
 			<Image
 				{...{
-					src: `${url}/${black ? 'black' : 'color'}/svg/${extra}.svg`,
+					src: `${url}/${useBlack ? 'black' : 'color'}/svg/${extra}.svg`,
 					alt,
 					imageSize: sizeEm,
 				}}
@@ -34,8 +35,8 @@ export default ({ e, black, extra, alt, hasText }) => {
 	const imageSize = sizeEm * (1 - (matches.length - 1) / 10)
 
 	const items = replace(e, regex, function (emoji) {
-		const src = findOpenmoji(emoji, black)
-		return <Image {...{ src, alt: emoji, imageSize }} />
+		const src = findOpenmoji(emoji, useBlack)
+		return <Image {...{ src, alt: emoji, imageSize, white }} />
 	})
 	if (hasText) return items
 	return (
@@ -51,12 +52,13 @@ export default ({ e, black, extra, alt, hasText }) => {
 	)
 }
 
-const Image = ({ src, alt, imageSize }) => (
+const Image = ({ src, alt, imageSize, white }) => (
 	<img
 		css={`
 			width: ${imageSize}em;
 			height: ${imageSize}em;
 			vertical-align: middle !important;
+			${white && 'filter: invert(1)'}
 		`}
 		src={src}
 		alt={alt}

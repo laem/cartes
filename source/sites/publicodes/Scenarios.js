@@ -11,7 +11,7 @@ export default () => {
 	const scenario = useSelector((state) => state.scenario)
 	return (
 		<section id="scenarios" className="ui__ container">
-			<h1>Le crédit carbone personnel</h1>
+			<h1>Votre scénario climat</h1>
 			<p>
 				Le jeu est simple : plus on émet de gaz à effet de serre, plus on se
 				dirige vers une catastrophe climatique. Ces émissions se mesurent en{' '}
