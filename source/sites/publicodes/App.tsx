@@ -55,7 +55,7 @@ const Router = ({}) => (
 	<>
 		<div css="height: 100%">
 			<Switch>
-				<Route exact path="/" component={Landing} />
+				<Route exact path="/" component={Wiki} />
 				<Route path="/documentation" component={Documentation} />
 				<Route path="/instructions" component={Instructions} />
 				<Route path="/simulateur/:name+" component={Simulateur} />
