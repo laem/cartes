@@ -4,7 +4,7 @@ const catégories = [
 	'numérique',
 	'vêtements',
 	'divers',
-	'nourriture',
+	'alimentation',
 ]
 const catégorie = ({ catégorie, dottedName }) => {
 	if (catégorie && catégories.includes(catégorie)) return catégorie
@@ -22,6 +22,6 @@ export default (rules) => {
 		}, {})
 	)
 	return raw.sort(([c1], [c2]) =>
-		c1 === 'nourriture' ? 1 : catégories.indexOf(c1) - catégories.indexOf(c2)
+		c1 === 'alimentation' ? 1 : catégories.indexOf(c1) - catégories.indexOf(c2)
 	)
 }

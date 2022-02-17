@@ -55,7 +55,6 @@ export default ({ children }) => {
 
 	const urlParams = new URLSearchParams(window.location.search)
 	const location = useLocation()
-	console.log(location)
 
 	useEffect(() => {
 		const rulesDomain = ['/simulateur/bilan', '/instructions', '/fin'].find(
@@ -66,7 +65,7 @@ export default ({ children }) => {
 
 		/* This enables loading the rules of a branch,
 		 * to showcase the app as it would be once this branch of -data  has been merged*/
-		const branch = 'fv2' || urlParams.get('branch')
+		const branch = urlParams.get('branch')
 		const pullRequestNumber = urlParams.get('PR')
 		const rulesURL = `https://${
 			branch

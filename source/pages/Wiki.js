@@ -14,6 +14,8 @@ import TopBar from 'Components/TopBar'
 
 export default function Suggestions() {
 	const rules = useSelector((state) => state.rules)
+
+	console.log(rules)
 	let exposedRules = Object.entries(rules)
 		.map(([dottedName, v]) => ({ ...v, dottedName }))
 		.filter((rule) => rule?.exposé === 'oui')
@@ -70,7 +72,7 @@ export default function Suggestions() {
 
 const CategoryView = ({ exposedRules }) => {
 	const categories = byCategory(exposedRules)
-	console.log('CAT', categories)
+	console.log('CAT', exposedRules, categories)
 	return (
 		<ul
 			css={`
