@@ -32,8 +32,13 @@ export default () => {
 			</h2>
 			<p>
 				L'évolution du climat, et donc notre futur, est directement lié à la
-				somme de toutes nos émissions de carbone individuelles. Voici trois
-				scénarios, à vous de choisir ! &nbsp;{emoji('👇')}
+				somme de toutes nos émissions de carbone individuelles de consommation.
+			</p>
+			<p>
+				Par défaut, le crédit carbone <strong>est fixé à 2 tonnes</strong>, car
+				c'est l'objectif le plus connu du grand public aujourd'hui. Mais libre à
+				vous de choisir votre objectif parmi ces trois scénarios. &nbsp;
+				{emoji('👇')}
 			</p>
 			<ul
 				css={`
