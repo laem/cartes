@@ -32,6 +32,7 @@ import { Almost, Done, Half, NotBad, QuiteGood } from './Congratulations'
 import { Link } from 'react-router-dom'
 import TopBar from 'Components/TopBar'
 import SimulationResults from 'Components/SimulationResults'
+import { capitalizeFirst } from './chart/Bar'
 
 const eqValues = compose(isEmpty, symmetricDifference)
 export const colorScale = [
@@ -178,7 +179,7 @@ const Simulateur = ({ objective }) => {
 							objective === 'bilan' ? (
 								<RedirectionToEndPage {...{ rules, engine }} />
 							) : rule.description ? (
-								<Markdown source={rule.description} />
+								<CustomDescription rule={rule} />
 							) : (
 								<EndingCongratulations />
 							)
@@ -212,3 +213,23 @@ const RedirectionToEndPage = ({ rules, engine }) => {
 const EndingCongratulations = () => (
 	<h3>{emoji('🌟')} Vous avez complété cette simulation</h3>
 )
+
+const ADEMELogoURL =
+	'https://www.ademe.fr/sites/default/files/logoademe2020_rvb.png'
+
+const CustomDescription = ({ rule }) => {
+	const ref = rule.références,
+		baseCarbone = ref.find((el) => el.includes('bilans-ges.ademe.fr'))
+	return (
+		<div css="margin: 1rem 0">
+			{baseCarbone && (
+				<div css="img {vertical-align: middle}">
+					Une donnée{' '}
+					<img css="height: 2rem; margin-right: .2rem" src={ADEMELogoURL} />
+					<a href="https://bilans-ges.ademe.fr"> base carbone ADEME</a>
+				</div>
+			)}
+			<Markdown source={capitalizeFirst(rule.description)} />{' '}
+		</div>
+	)
+}

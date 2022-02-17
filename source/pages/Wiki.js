@@ -87,7 +87,7 @@ const CategoryView = ({ exposedRules }) => {
 					margin: 0 auto;
 					text-align: center;
 					border-radius: 0.3rem;
-					width: 6.5rem;
+					width: 7rem;
 					color: var(--textColor);
 					background: var(--color);
 				}
