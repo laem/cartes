@@ -96,7 +96,19 @@ export default function SelectTwoAirports({ setFormValue }) {
 	const distance = computeDistance(state)
 
 	return (
-		<>
+		<div
+			css={`
+				margin-top: 0.6rem;
+				display: flex;
+				justify-content: end;
+				flex-wrap: wrap;
+				width: 100%;
+				> img {
+					margin-right: 1rem;
+				}
+			`}
+		>
+			{versImageURL && <CityImage src={versImageURL} />}
 			<div
 				css={`
 					label {
@@ -116,6 +128,8 @@ export default function SelectTwoAirports({ setFormValue }) {
 					ul {
 						border-left: 1px solid #333;
 						max-width: 30em;
+						margin-left: 1rem;
+						padding: 0;
 					}
 					@media (min-width: 800px) {
 						width: 30rem;
@@ -165,7 +179,6 @@ export default function SelectTwoAirports({ setFormValue }) {
 						/>
 					</label>
 					{vers.results && renderOptions('vers', vers)}
-					{versImageURL && <CityImage src={versImageURL} />}
 				</div>
 			</div>
 			{distance && (
@@ -182,7 +195,7 @@ export default function SelectTwoAirports({ setFormValue }) {
 					àimplementer
 				</button>
 			)}
-		</>
+		</div>
 	)
 }
 
@@ -203,11 +216,8 @@ function computeDistance({ depuis, vers }) {
 }
 
 const CityImage = styled.img`
-	width: 100%;
-	position: absolute;
 	object-fit: cover;
-	max-height: 10rem;
-	@media (max-width: 800px) {
-		max-height: 6rem;
-	}
+	border-radius: 6rem;
+	max-width: 14rem;
+	height: auto;
 `
