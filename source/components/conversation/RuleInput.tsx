@@ -14,12 +14,15 @@ import {
 	utils,
 } from 'publicodes'
 import { Evaluation } from 'publicodes/dist/types/AST/types'
-import React, { useContext } from 'react'
+import React, { Suspense, useContext } from 'react'
 import { useTranslation } from 'react-i18next'
 import DateInput from './DateInput'
 import mosaicQuestions from './mosaicQuestions'
 import ParagrapheInput from './ParagrapheInput'
 import TextInput from './TextInput'
+let SelectTwoAirports = React.lazy(
+	() => import('Components/conversation/select/SelectTwoAirports')
+)
 
 type Value = any
 export type RuleInputProps<Name extends string = DottedName> = {
@@ -134,6 +137,13 @@ export default function RuleInput<Name extends string = DottedName>({
 	return <SelectAtmp {...commonProps} onSubmit={onSubmit} />
 *
 */
+
+	if (rule.dottedName === 'transport . avion . distance de vol aller')
+		return (
+			<Suspense fallback={<div>Chargement des aéroports ...</div>}>
+				<SelectTwoAirports {...{ ...commonProps }} />
+			</Suspense>
+		)
 
 	if (rule.rawNode.type === 'date') {
 		return (
@@ -251,9 +261,11 @@ export const buildVariantTree = <Name extends string>(
 		variant
 			? {
 					canGiveUp,
-					children: (variant.explanation as (ASTNode & {
-						nodeKind: 'reference'
-					})[]).map(({ dottedName }) =>
+					children: (
+						variant.explanation as (ASTNode & {
+							nodeKind: 'reference'
+						})[]
+					).map(({ dottedName }) =>
 						buildVariantTree(engine, dottedName as Name)
 					),
 			  }
