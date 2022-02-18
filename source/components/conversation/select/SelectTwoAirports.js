@@ -41,26 +41,38 @@ export default function SelectTwoAirports({ setFormValue }) {
 					${choice && choice.nom === nom
 						? 'background: var(--color); color: var(--textColor)'
 						: ''};
+					button {
+						color: white;
+						font-size: 100%;
+					}
+
+					button:hover {
+						background: var(--darkerColor2);
+						border-radius: 0.3rem;
+					}
 				`}
-				onClick={() => {
-					const newState = {
-						...state,
-						[whichInput]: { ...state[whichInput], choice: option },
-					}
-					const distance = computeDistance(state)
-					if (distance) {
-						setFormValue(distance)
-					}
-					setState(newState)
-				}}
 			>
-				<Highlighter searchWords={[inputValue]} textToHighlight={nom} />
-				<span style={{ opacity: 0.6, fontSize: '75%', marginLeft: '.6em' }}>
-					<Highlighter
-						searchWords={[inputValue]}
-						textToHighlight={ville + ' - ' + pays}
-					/>
-				</span>
+				<button
+					onClick={() => {
+						const newState = {
+							...state,
+							[whichInput]: { ...state[whichInput], choice: option },
+						}
+						const distance = computeDistance(state)
+						if (distance) {
+							setFormValue(distance)
+						}
+						setState(newState)
+					}}
+				>
+					<Highlighter searchWords={[inputValue]} textToHighlight={nom} />
+					<span style={{ opacity: 0.6, fontSize: '75%', marginLeft: '.6em' }}>
+						<Highlighter
+							searchWords={[inputValue]}
+							textToHighlight={ville + ' - ' + pays}
+						/>
+					</span>
+				</button>
 			</li>
 		)
 	}
@@ -75,7 +87,7 @@ export default function SelectTwoAirports({ setFormValue }) {
 				css={`
 					label {
 						display: flex;
-						justify-content: space-around;
+						justify-content: space-evenly;
 						align-items: center;
 						margin: 1em;
 					}
@@ -101,6 +113,7 @@ export default function SelectTwoAirports({ setFormValue }) {
 						<span>Départ {emoji('🛫')}</span>
 						<input
 							type="text"
+							className="ui__"
 							value={depuis.inputValue}
 							placeholder={placeholder}
 							onChange={(e) => {
@@ -121,6 +134,7 @@ export default function SelectTwoAirports({ setFormValue }) {
 					<label>
 						<span>Arrivée {emoji('🛬')}</span>
 						<input
+							className="ui__"
 							type="text"
 							value={vers.inputValue}
 							placeholder={placeholder}
