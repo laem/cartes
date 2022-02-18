@@ -33,6 +33,8 @@ import { Link } from 'react-router-dom'
 import TopBar from 'Components/TopBar'
 import SimulationResults from 'Components/SimulationResults'
 import { capitalizeFirst } from './chart/Bar'
+import Meta from '../../components/utils/Meta'
+import { getEmojiImageUrls } from '../../components/Emoji'
 
 const eqValues = compose(isEmpty, symmetricDifference)
 export const colorScale = [
@@ -158,12 +160,11 @@ const Simulateur = ({ objective }) => {
 					overflow: auto; /* Some questions are very high, the mosaic ones*/
 				`}
 			>
-				<Helmet>
-					<title>{rule.title}</title>
-					{rule.description && (
-						<meta name="description" content={rule.description} />
-					)}
-				</Helmet>
+				<Meta
+					title={rule.title}
+					description={rule.description}
+					//image={getEmojiImageUrls(rule.icônes)[0]} .svg images don't work in og tags, we'll have to convert them
+				/>
 
 				{!isMainSimulation && (
 					<SimulationResults {...{ ...rule, ...evaluation }} />
