@@ -3,6 +3,8 @@ import React, { useEffect, useState } from 'react'
 import emoji from 'react-easy-emoji'
 import Highlighter from 'react-highlight-words'
 import Worker from 'worker-loader!./SearchAirports.js'
+import getCityData, { toThumb } from 'Components/wikidata'
+import styled from 'styled-components'
 
 const worker = new Worker()
 
@@ -12,13 +14,25 @@ export default function SelectTwoAirports({ setFormValue }) {
 		vers: { inputValue: '' },
 		validated: false,
 	})
+
 	useEffect(() => {
 		worker.onmessage = ({ data: { results, which } }) =>
 			console.log(results, which) ||
 			setState((state) => ({ ...state, [which]: { ...state[which], results } }))
 	}, [])
 
-	console.log(state)
+	const [wikidata, setWikidata] = useState(null)
+
+	useEffect(() => {
+		if (!state.vers.choice) return null
+
+		getCityData(state.vers.choice.item.ville).then((json) =>
+			setWikidata(json?.results?.bindings[0])
+		)
+	}, [state.vers])
+
+	console.log('WD', wikidata, wikidata && toThumb(wikidata?.pic.value))
+	const versImageURL = wikidata?.pic && toThumb(wikidata?.pic.value)
 
 	const renderOptions = (whichInput, { results = [], inputValue }) =>
 		!state.validated && (
@@ -151,6 +165,7 @@ export default function SelectTwoAirports({ setFormValue }) {
 						/>
 					</label>
 					{vers.results && renderOptions('vers', vers)}
+					{versImageURL && <CityImage src={versImageURL} />}
 				</div>
 			</div>
 			{distance && (
@@ -186,3 +201,13 @@ function computeDistance({ depuis, vers }) {
 		)
 	)
 }
+
+const CityImage = styled.img`
+	width: 100%;
+	position: absolute;
+	object-fit: cover;
+	max-height: 10rem;
+	@media (max-width: 800px) {
+		max-height: 6rem;
+	}
+`
