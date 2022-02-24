@@ -5,6 +5,7 @@ import Highlighter from 'react-highlight-words'
 import Worker from 'worker-loader!./SearchAirports.js'
 import getCityData, { toThumb } from 'Components/wikidata'
 import styled from 'styled-components'
+import Emoji from '../../Emoji'
 
 const worker = new Worker()
 
@@ -17,7 +18,6 @@ export default function SelectTwoAirports({ setFormValue }) {
 
 	useEffect(() => {
 		worker.onmessage = ({ data: { results, which } }) =>
-			console.log(results, which) ||
 			setState((state) => ({ ...state, [which]: { ...state[which], results } }))
 	}, [])
 
@@ -31,14 +31,12 @@ export default function SelectTwoAirports({ setFormValue }) {
 		)
 	}, [state.vers])
 
-	console.log('WD', wikidata, wikidata && toThumb(wikidata?.pic.value))
+	console.log(state)
 	const versImageURL = wikidata?.pic && toThumb(wikidata?.pic.value)
 
 	const renderOptions = (whichInput, { results = [], inputValue }) =>
 		!state.validated && (
-			<ul>
-				{(5, results.map(renderOption(whichInput)(inputValue))).slice(0, 5)}
-			</ul>
+			<ul>{results.slice(0, 5).map(renderOption(whichInput)(inputValue))}</ul>
 		)
 
 	const renderOption = (whichInput) => (inputValue) => (option) => {
@@ -46,9 +44,17 @@ export default function SelectTwoAirports({ setFormValue }) {
 			inputState = state[whichInput],
 			choice = inputState && inputState.choice
 
+		const nameIncludes = (what) =>
+			nom.toLowerCase().includes((what || '').toLowerCase())
+		const displayCity = !nameIncludes(ville),
+			displayCountry = !nameIncludes(pays)
+		const locationText =
+			(displayCity ? ville + (displayCountry ? ' - ' : '') : '') +
+			(displayCountry ? pays : '')
+
 		return (
 			<li
-				key={nom}
+				key={nom + ville + pays}
 				css={`
 					padding: 0.2rem 0.6rem;
 					border-radius: 0.3rem;
@@ -58,6 +64,10 @@ export default function SelectTwoAirports({ setFormValue }) {
 					button {
 						color: white;
 						font-size: 100%;
+						display: flex;
+						justify-content: start;
+						flex-wrap: wrap;
+						align-items: center;
 					}
 
 					button:hover {
@@ -83,7 +93,7 @@ export default function SelectTwoAirports({ setFormValue }) {
 					<span style={{ opacity: 0.6, fontSize: '75%', marginLeft: '.6em' }}>
 						<Highlighter
 							searchWords={[inputValue]}
-							textToHighlight={ville + ' - ' + pays}
+							textToHighlight={locationText}
 						/>
 					</span>
 				</button>
@@ -156,7 +166,19 @@ export default function SelectTwoAirports({ setFormValue }) {
 							}}
 						/>
 					</label>
-					{depuis.results && renderOptions('depuis', depuis)}
+					{!depuis.choice && depuis.results && renderOptions('depuis', depuis)}
+					{depuis.choice && (
+						<div>
+							<Emoji e="✅" />
+							{depuis.choice.item.nom}
+							<button
+								type="button"
+								onClick={() => setState({ ...state, depuis: {} })}
+							>
+								<Emoji e="✏️" />{' '}
+							</button>
+						</div>
+					)}
 				</div>
 				<div>
 					<label>
