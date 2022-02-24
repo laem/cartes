@@ -18,7 +18,7 @@ export default function Suggestions() {
 	console.log(rules)
 	let exposedRules = Object.entries(rules)
 		.map(([dottedName, v]) => ({ ...v, dottedName }))
-		.filter((rule) => rule?.exposé === 'oui')
+		.filter((rule) => rule?.exposé)
 	let [results, setResults] = useState(exposedRules)
 	let [input, setInput] = useState(null)
 

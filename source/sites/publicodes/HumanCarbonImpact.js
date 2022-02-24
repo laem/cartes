@@ -10,6 +10,7 @@ import styled from 'styled-components'
 import { humanWeight } from './HumanWeight'
 import { utils } from 'publicodes'
 import Emoji from '../../components/Emoji'
+import { useEngine } from '../../components/utils/EngineContext'
 const { encodeRuleName } = utils
 
 let limitPerPeriod = (scenario) =>
@@ -37,14 +38,40 @@ let humanCarbonImpactData = (scenario, nodeValue) => {
 }
 
 export default ({ nodeValue, formule, dottedName }) => {
-	const scenario = useSelector((state) => state.scenario)
+	const rules = useSelector((state) => state.rules),
+		rule = rules[dottedName],
+		examplesSource = rule.exposé?.['exemples via suggestions']
+
+	console.log(rule.exposé)
+
+	const engine = useEngine()
+
+	if (!examplesSource) return <ImpactCard {...{ nodeValue, dottedName }} />
+
+	const suggestions = rules[examplesSource].suggestions
+
+	const evaluations = Object.entries(suggestions).map(([k, v]) => {
+		const situation = { [examplesSource]: v }
+		engine.setSituation(situation)
+		const evaluation = engine.evaluate(dottedName)
+		return evaluation
+	})
+
+	return evaluations.map(({ nodeValue, dottedName }) => (
+		<ImpactCard {...{ nodeValue, dottedName }} />
+	))
+}
+
+const ImpactCard = ({ nodeValue, dottedName }) => {
 	const nextSteps = useNextQuestions()
 	const foldedSteps = useSelector((state) => state.simulation?.foldedSteps)
+	const scenario = useSelector((state) => state.scenario)
+	const [value, unit] = humanWeight(nodeValue)
 	let { closestPeriodLabel, closestPeriod, factor } = humanCarbonImpactData(
 		scenario,
 		nodeValue
 	)
-	const [value, unit] = humanWeight(nodeValue)
+
 	return (
 		<div
 			css={`
