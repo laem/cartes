@@ -31,10 +31,14 @@ Ceci est un document de méthode. Ce n'est pas _le calcul_ lui-même. Seul le ca
 
 #### Le problème
 
-Nous connaissons la consommation d'essences d'un Ferry, nous pouvons donc en déduire les tonnes de CO2e émises pour un trajet donné en km.
+Nous connaissons la consommation de carburant d'un ferry, nous pouvons donc en déduire l'empreinte climat en tonnes de CO2e émises pour un trajet donné en km.
 Mais ce qu'on entend par Ferry, c'est souvent un bateau qui transporte beaucoup de fret.
+
+> Note : les ferries consomment du gazole et du fuel lourd (beaucoup plus polluant). Nous limitons ici notre travail à l'étude des GES, pas aux SOx et de NOx. Ni pour l'instant à l'utilisation de gaz fossile liquéfié en remplacement du pétrole.
+
 Pire : la gamme de services de transport disponibles pour un passager est très large : cela va du passager qui dort au sol dans le couloir à celui qui embarque avec son SUV+caravane et qui profite du Jacuzzi dans l'un des 3 bars du bateau avant de rentrer dans sa cabine XXL.
-Ainsi, même si l'on savait que l'empreinte moyenne d'un passager était de 300gCO2e/km (~ comme une voiture sur route), il est intolérable que le passager sobre se voie attribuer la même emprunte que notre passager de luxe.
+
+Ainsi, même si l'on savait que l'empreinte moyenne d'un passager était de 300gCO2e/km (~ comme une voiture sur route), il est intolérable que le passager sobre se voie attribuer la même empreinte que notre passager de luxe.
 Nous devons donc _calculer_ l'attribution de l'empreinte en fonction des caractéristiques du billet. Cela peut se faire selon au moins 2 méthodes : par poids, ou par surface.
 
 #### La solution retenue
@@ -69,17 +73,25 @@ On attribue donc aux passagers leur part de poids, donc aussi leur part de la co
 
 À titre d'exemple, quel que soit le rapport voitures / passagers, le linéaire de barrière sur les ponts est le même. D'autres éléments de poids eux dépendent du nombre de passager, il faut donc les prendre en compte dans le calcul (quantité d'eau embarquée, canots de sauvetage, etc.).
 
-#### N'y a-t-il pas d'autres limitations à ce modèle ?
+##### N'y a-t-il pas d'autres limitations à ce modèle ?
+
+###### La répartition du poids
 
 Si bien sûr. On peut voir notamment la problématique du centre de gravité du bateau, qui doit être assez bas (cf [cette vidéo très pédagogique](https://youtu.be/Y_c1UNEdEsk?t=1367)). Ces contraintes de répartition du poids sont-elles à même de mettre en cause ce modèle ? Surtout, à partir de quel seuil de densité ? Les ponts supérieurs dédiés aux passagers sont-ils volontairement peu denses ? Peut-être, seuls les armateurs ou opérateurs pourront nous répondre.
 
 Toujours est-il que les ponts actuellement utilisés pour le fret et les véhicules passager, pourraient être convertis en "habitations" sans problème, et le poids des ponts passagers dédiés à des services accessoires et des cabines ou cabines peu remplies, pourrait être troqué pour des "habitations" plus sobres. À ce titre, voir la diversité de cabines de ce ferry japonais, de la cabine luxe au dortoir commun, dans [cette vidéo](https://youtu.be/xnXrOiG21H0?t=401).
 
+###### La sécurité des passagers
+
+Un autre exemple de limitation, c'est la sécurité sur le bateau : un ferry qui va en Corse et accueille 1500 passagers max, peut-il en acceillir 3000 tout en respectant les lois et les principes de sécurité, en supposant évidemment des changements de configuration à bord ? Il faudrait analyser ces seuils.
+
+En regardant la ligne Marseille-Ajaccio sur [le précieux greenferries.org](https://www.greenferries.org/routes/marseille-fr-ajaccio-fr/), on peut remarquer que le nombre de passagers max varie entre 544 (pour 120 véhicules passager) et 2000 (pour 560 véhicules passager) !
+
 ### La base : trouver l'équation physique
 
 La façon la plus rigoureuse pour avancer serait de modéliser la formule de consommation de carburant du bâteau. Ses paramètres, et leur poids (facteur, carré, cube) nous donneraient alors les clefs de la méthode de répartition du bateau.
 
-Dans ce document, très bien illustré et très fourni en formule mathématiques, j'ai l'impression qu'il y a tout pour construire la formule de calcul physique.
+Dans ce document, très bien illustré et très fourni en formules mathématiques, j'ai l'impression qu'il y a tout pour construire la formule de calcul physique.
 
 > The total fuel power, Pfuel (power deliv-
 > ered through the fuel), required for pro-
@@ -114,7 +126,7 @@ Note importante : la 🐇 vitesse du bateau est clairement une information capit
 
 [source page 9](https://www.usna.edu/NAOE/_files/documents/Courses/EN400/02.07%20Chapter%207.pdf&page=9)
 
-Cette information ne nous intéresse pas pour la répartition des poids, mais elle reste fondamentale pour l'utilisateur qui aurait le loisir de choisir entre deux bâteaux navigant à une vitesse différente. On pense en particulier à l'heure du voyage : comme pour le train, on peut s'attendre à ce qu'un voyage de nuit permette de baisser radicalement la vitesse, les passager s ayant une grande tolérance au temps passé sur le bateau. Cependant, le voyage de nuit peut multiplier l'espace en cabine nécessaire. Il faut donc jongler entre ces deux points contradicto ires, et voir lequel l'emporte.
+Cette information ne nous intéresse pas pour la répartition des poids, mais elle reste fondamentale pour l'utilisateur qui aurait le loisir de choisir entre deux bâteaux navigant à une vitesse différente. On pense en particulier à l'heure du voyage : comme pour le train, on peut s'attendre à ce qu'un voyage de nuit permette de baisser radicalement la vitesse, les passagers ayant une grande tolérance au temps passé sur le bateau. Cependant, le voyage de nuit peut multiplier l'espace en cabine nécessaire. Il faut donc jongler entre ces deux points contradictoires, et voir lequel l'emporte.
 
 #### Autres paramètres
 
@@ -122,9 +134,9 @@ Finalement, n'oublions pas qu'un bateau en condition réelles fait aussi face au
 
 > For a ship steaming into a 20-knot wind, ship’s resistance may be increased by up to 25-30%.
 
-Pourtant, il est intéressant de noter que pour un aller-retour, on peut supposer a priori que ces forces sont en partie compensés dans le sens inverse. Il faudrait cependant le confirmer. On peut imaginer par exemple que les bateaux prennent consciencieusement en compte ces courants et vents, notamment en changean t de trajectoire pour optimiser la consommation de carburant.
+Pourtant, il est intéressant de noter que pour un aller-retour, on peut supposer a priori que ces forces sont en partie compensées dans le sens inverse. Il faudrait cependant le confirmer. On peut imaginer par exemple que les bateaux prennent consciencieusement en compte ces courants et vents, notamment en changeant de trajectoire pour optimiser la consommation de carburant.
 
-Le taux de remplissage est aussi un paramètre super important, mais comment l'obtenir ? THETHIS nous donne les taux moyens, mais que peut-on en faire ? Aller dans un bateau au taux faible, c'est améliorer ce taux. Privilégier un bateau au taux fort, c'est envoyer un message à la compagnie dans le bon sens. A noter le taux influence forcément le prix (à choix voiture cabine constants), mais dans quel sens ? Si le bateau est plein, donc rentabilisé, l'entreprise pourrait brader les places restants. Elle pourrait aussi considérer qu'il y a bcp de demande, donc multiplier les prix...
+Le taux de remplissage est aussi un paramètre super important, mais comment l'obtenir ? THETIS nous donne les taux moyens, mais que peut-on en faire ? Aller dans un bateau au taux faible, c'est améliorer ce taux. Privilégier un bateau au taux fort, c'est envoyer un message à la compagnie dans le bon sens. A noter le taux influence forcément le prix (à choix voiture cabine constants), mais dans quel sens ? Si le bateau est plein, donc rentabilisé, l'entreprise pourrait brader les places restantes. Elle pourrait aussi considérer qu'il y a bcp de demande, donc multiplier les prix...
 
 Le plus simple est probablement de ne pas prendre en compte cette donnée pour une 1ère version du calcul.
 
@@ -153,7 +165,7 @@ On arrive donc à la norme NF EN 16258 Décembre 2012.
 
 Malheureusement, cette norme n'est pas disponible sur internet et coûte... 350€ !
 
-On y apprends cependant l'existence de 2 méthodes d'allocation : par poids et par surface, et l'incohérence totale entre les résultats de ces 2 méthodes ^^
+On y apprend cependant l'existence de 2 méthodes d'allocation : par poids et par surface, et l'incohérence totale entre les résultats de ces 2 méthodes ^^
 
 ![](https://i.imgur.com/NS3QgIx.png)
 
@@ -161,7 +173,7 @@ On y apprends cependant l'existence de 2 méthodes d'allocation : par poids et p
 
 ![](https://i.imgur.com/ZV1XILe.png)
 
-Question donc : peut-on avoir l'information de la méthode utilisée (masse ou surface) pour les différents bateaux de Theti-MRV ? Non, elle me semble inaccessible. On a posé la question aux responsables... on verra la réponse.
+Question donc : peut-on avoir l'information de la méthode utilisée (masse ou surface) pour les différents bateaux de Thetis-MRV ? Non, elle me semble inaccessible. On a posé la question aux responsables... on verra la réponse.
 
 On lira encore une fois ici que les deux méthodes sont complètement contradictoires 😥.
 
@@ -288,7 +300,7 @@ Mais quel est donc de "profil optimisé" qui divise par ~5 l'empreinte !!?
 
 Cela laisse entendre donc que ce sont des résultats théoriques, mais qui pourraient rendre le transport maritime incroyablement moins polluant.
 
-p.49 on obtient le détail des profils pour les ferries, c'est intéressant, car ça parle de l'ectrême saisonnalité du transport de passagers.
+p.49 on obtient le détail des profils pour les ferries, c'est intéressant, car ça parle de l'extrême saisonnalité du transport de passagers.
 
 ![](https://i.imgur.com/WXoEuRe.png)
 
@@ -403,9 +415,9 @@ Il semble y avoir une corrélation vitesse - kg·CO₂/n.mile.
 
 Voir les mega express qui vont plus vite que d'autres, ou encore le [Lota](https://www.greenferries.org/ships/pascal-lota-9365398) qui va à 38 km/h.
 
-**La vitesse** est un paramètre important qu'on dispose via greenferries pour chaque bateau ** mais qui n'explique pas l'immense variabilité** de l'attribution fret / passagers.
+**La vitesse** est un paramètre important dont on dispose via greenferries pour chaque bateau ** mais qui n'explique pas l'immense variabilité** de l'attribution fret / passagers.
 
-Qui est donc probablement due à l'application du calcul par masse vs surface. Ce serait dingue... mais possible, la loi semble, comme on l'a vu dans la section "Répartition", l'autoriser voir cadrer la possibilité d'utiliser deux méthodes contradictoires.
+Qui est donc probablement due à l'application du calcul par masse vs surface. Ce serait dingue... mais possible, la loi semble, comme on l'a vu dans la section "Répartition", l'autoriser voire cadrer la possibilité d'utiliser deux méthodes contradictoires.
 
 🔭 Peut-on récupérer l'info de la méthode utilisée ? Non, ça semble pas possible : c'est la réponse des responsables Européens : "Nous n'avons pas accès aux calculs"... et je suspecte qu'elle soit la surface. Hypothèse : peut-être pour avantager le fret, car il est plus sensible politiquement et économiquement à son empreinte, que celle des passagers ?
 
@@ -476,6 +488,8 @@ Maintenant la méthode définie, place au calcul du poids des différents billet
 
 C'est ici, et dans les autres fichiers yaml du même dossier.
 
-C'est iné v0 du calcul, qui évoluera.
+[Les sources du calcul](https://github.com/laem/futureco/blob/fv2/source/sites/publicodes/ferry/index.yaml).
 
-https://github.com/laem/futureco/blob/fv2/source/sites/publicodes/ferry/index.yaml
+C'est une v0 du calcul, qui évoluera.
+
+Le calcul est exposé dans une version alpha d'un [site destiné au grand public](https://fv2--futureco.netlify.app/ferry).
