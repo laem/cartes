@@ -9,6 +9,7 @@ import { useNextQuestions } from 'Components/utils/useNextQuestion'
 import styled from 'styled-components'
 import { humanWeight } from './HumanWeight'
 import { utils } from 'publicodes'
+import Emoji from '../../components/Emoji'
 const { encodeRuleName } = utils
 
 let limitPerPeriod = (scenario) =>
@@ -60,40 +61,56 @@ export default ({ nodeValue, formule, dottedName }) => {
 				<>
 					<div
 						css={`
-							font-size: 220%;
+							padding: 0.6rem 1rem 0.25rem;
 							margin-bottom: 0.25rem;
+							color: var(--textColor);
+							display: flex;
+							flex-direction: column;
+							justify-content: space-evenly;
 						`}
 					>
-						{factor +
-							' ' +
-							closestPeriodLabel +
-							(closestPeriod[closestPeriod.length - 1] !== 's' &&
-							Math.abs(factor) > 1
-								? 's'
-								: '')}
-					</div>
-					de&nbsp;
-					<Link css="color: inherit" to="/scénarios">
-						crédit carbone personnel
-					</Link>
-					<Link
-						css="color: inherit"
-						to={'/documentation/' + encodeRuleName(dottedName)}
-					>
-						<p
+						<div
 							css={`
-								margin: 0.6rem 0 0;
-								font-style: italic;
-								background: var(--lighterColor);
-								color: var(--darkColor);
-								display: inline-block;
-								padding: 0 0.4rem;
-								border-radius: 0.4rem;
+								display: flex;
+								justify-content: center;
+								align-items: center;
+								font-size: 220%;
+								img {
+									width: 1.6rem;
+									margin-left: 0.4rem;
+									vertical-align: bottom;
+								}
 							`}
 						>
-							Soit {value} {unit} de CO₂e
-						</p>
-					</Link>
+							<div>
+								{factor +
+									' ' +
+									closestPeriodLabel +
+									(closestPeriod[closestPeriod.length - 1] !== 's' &&
+									Math.abs(factor) > 1
+										? 's'
+										: '')}
+							</div>
+							<Link css="" to="/scénarios">
+								<img src={require('Images/yellow-info.svg').default} />
+							</Link>
+						</div>
+						<Link
+							css="color: inherit; text-decoration: none"
+							to={'/documentation/' + encodeRuleName(dottedName)}
+						>
+							<p
+								css={`
+									font-size: 100%;
+									margin: 0.3rem 0 0;
+									font-style: italic;
+									border-radius: 0.4rem;
+								`}
+							>
+								{value} {unit} CO₂e
+							</p>
+						</Link>
+					</div>
 				</>
 			)}
 
