@@ -220,7 +220,7 @@ const ADEMELogoURL =
 
 const CustomDescription = ({ rule }) => {
 	const ref = rule.références,
-		baseCarbone = ref.find((el) => el.includes('bilans-ges.ademe.fr'))
+		baseCarbone = ref?.find((el) => el.includes('bilans-ges.ademe.fr'))
 	return (
 		<div css="margin: 1rem 0">
 			{baseCarbone && (
