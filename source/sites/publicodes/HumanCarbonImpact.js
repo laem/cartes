@@ -8,9 +8,10 @@ import scenarios from './scenarios.yaml'
 import { useNextQuestions } from 'Components/utils/useNextQuestion'
 import styled from 'styled-components'
 import { humanWeight } from './HumanWeight'
-import { utils } from 'publicodes'
+import { capitalise0, utils } from 'publicodes'
 import Emoji from '../../components/Emoji'
 import { useEngine } from '../../components/utils/EngineContext'
+import { capitalizeFirst } from './chart/Bar'
 const { encodeRuleName } = utils
 
 let limitPerPeriod = (scenario) =>
@@ -54,7 +55,7 @@ export default ({ nodeValue, formule, dottedName }) => {
 		const situation = { [examplesSource]: v }
 		engine.setSituation(situation)
 		const evaluation = engine.evaluate(dottedName)
-		return evaluation
+		return { ...evaluation, exampleName: k }
 	})
 
 	return (
@@ -77,16 +78,16 @@ export default ({ nodeValue, formule, dottedName }) => {
 				}
 			`}
 		>
-			{evaluations.map(({ nodeValue, dottedName }) => (
+			{evaluations.map(({ nodeValue, dottedName, exampleName }) => (
 				<li>
-					<ImpactCard {...{ nodeValue, dottedName }} />
+					<ImpactCard {...{ nodeValue, dottedName, exampleName }} />
 				</li>
 			))}
 		</ul>
 	)
 }
 
-const ImpactCard = ({ nodeValue, dottedName }) => {
+const ImpactCard = ({ nodeValue, dottedName, exampleName }) => {
 	const nextSteps = useNextQuestions()
 	const foldedSteps = useSelector((state) => state.simulation?.foldedSteps)
 	const scenario = useSelector((state) => state.scenario)
@@ -120,12 +121,13 @@ const ImpactCard = ({ nodeValue, dottedName }) => {
 							justify-content: space-evenly;
 						`}
 					>
+						<div>{capitalizeFirst(exampleName)}</div>
 						<div
 							css={`
 								display: flex;
 								justify-content: center;
 								align-items: center;
-								font-size: 220%;
+								font-size: ${exampleName ? '140%' : '220%'};
 								img {
 									width: 1.6rem;
 									margin-left: 0.4rem;
