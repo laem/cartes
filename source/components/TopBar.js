@@ -22,6 +22,9 @@ export default ({}) => {
 				justify-content: space-between;
 				margin: 0.6rem;
 				margin-bottom: 0;
+				@media (max-width: 800px) {
+					padding: 0;
+				}
 			`}
 		>
 			<Link to="/" title="Revenir à l'accueil">
