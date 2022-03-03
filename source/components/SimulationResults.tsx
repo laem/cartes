@@ -37,7 +37,7 @@ export default ({ dottedName, formule, title, icônes, nodeValue }) => {
 			<div css="width: 100%; img { font-size: 150%}}">
 				{icônes && <Emoji e={icônes} />}
 			</div>
-			<h1 css="width: 100%; font-size: 120%; color: var(--darkerColor); margin: 0">
+			<h1 css="width: 100%; font-size: 120%; color: var(--darkerColor); margin: 0; margin-bottom: 1rem">
 				{title}
 			</h1>
 			<>

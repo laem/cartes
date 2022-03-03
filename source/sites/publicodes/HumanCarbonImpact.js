@@ -12,6 +12,7 @@ import { capitalise0, utils } from 'publicodes'
 import Emoji from '../../components/Emoji'
 import { useEngine } from '../../components/utils/EngineContext'
 import { capitalizeFirst } from './chart/Bar'
+
 const { encodeRuleName } = utils
 
 let limitPerPeriod = (scenario) =>
@@ -69,12 +70,18 @@ export default ({ nodeValue, formule, dottedName }) => {
 				display: flex;
 				list-style-type: none;
 				justify-content: start;
-				padding-left: 0px;
+				padding: 0;
 				height: auto;
 				margin-bottom: 0;
+				width: calc(100vw - 1.5rem);
+				transform: translateX(-1.5rem);
+				@media (min-width: 800px) {
+					/* TODO */
+				}
+				background: white;
+				border-radius: 0.3rem;
 				li {
-					border: 3px solid white;
-					border-bottom: 4px solid white;
+					margin-left: 0.2rem;
 				}
 			`}
 		>
@@ -121,7 +128,7 @@ const ImpactCard = ({ nodeValue, dottedName, exampleName }) => {
 							justify-content: space-evenly;
 						`}
 					>
-						<div>{capitalizeFirst(exampleName)}</div>
+						{exampleName && <div>{<Emoji e={exampleName} hasText />}</div>}
 						<div
 							css={`
 								display: flex;
