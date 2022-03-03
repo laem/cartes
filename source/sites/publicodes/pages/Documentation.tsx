@@ -12,6 +12,7 @@ import { RootState } from 'Reducers/rootReducer'
 import Meta from '../../../components/utils/Meta'
 import BandeauContribuer from '../BandeauContribuer'
 import Méthode from './Méthode'
+import styled from 'styled-components'
 
 export default function RulePage() {
 	const currentSimulation = useSelector(
@@ -34,7 +35,7 @@ export default function RulePage() {
 		return <Redirect to="/404" />
 	}
 	return (
-		<div>
+		<DocumentationStyle>
 			<ScrollToTop key={pathname} />
 			<div
 				css={`
@@ -53,7 +54,7 @@ export default function RulePage() {
 			/>
 			{/* <button>Voir l</button> */}
 			<BandeauContribuer />
-		</div>
+		</DocumentationStyle>
 	)
 }
 function BackToSimulation() {
@@ -84,3 +85,15 @@ function DocumentationLanding() {
 		</>
 	)
 }
+
+export const DocumentationStyle = styled.div`
+	max-width: 850px;
+	margin: 0 auto;
+	small {
+		background: none !important;
+	}
+
+	div[name='somme'] > div > div:nth-child(2n) {
+		background: var(--darkerColor);
+	}
+`

@@ -4,6 +4,7 @@ import { createContext, useContext, useEffect, useMemo, useState } from 'react'
 import { Redirect, Route, Switch } from 'react-router'
 import RuleInput from 'Components/conversation/RuleInput'
 import Emoji from '../../../components/Emoji'
+import { DocumentationStyle } from '../pages/Documentation'
 
 const req = require.context('./', true, /\.(yaml)$/)
 const rules = req.keys().reduce((memo, key) => {
@@ -33,21 +34,10 @@ export default ({}) => {
 			<br />
 			<br />
 			<br />
-			<div
-				css={`
-					small {
-						background: none !important;
-					}
-
-					div[name='somme'] > div > div:nth-child(2n) {
-						background: var(--darkerColor);
-					}
-				`}
-				className="ui__ container"
-			>
+			<DocumentationStyle>
 				<h2>Explications</h2>
 				<Documentation engine={engine} documentationPath={''} />
-			</div>
+			</DocumentationStyle>
 		</SituationContext.Provider>
 	)
 }
