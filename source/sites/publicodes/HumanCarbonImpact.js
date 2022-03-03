@@ -57,9 +57,33 @@ export default ({ nodeValue, formule, dottedName }) => {
 		return evaluation
 	})
 
-	return evaluations.map(({ nodeValue, dottedName }) => (
-		<ImpactCard {...{ nodeValue, dottedName }} />
-	))
+	return (
+		<ul
+			css={`
+				flex-wrap: nowrap;
+				overflow-x: auto;
+				white-space: nowrap;
+				justify-content: normal;
+				scrollbar-width: none;
+				display: flex;
+				list-style-type: none;
+				justify-content: start;
+				padding-left: 0px;
+				height: auto;
+				margin-bottom: 0;
+				li {
+					border: 3px solid white;
+					border-bottom: 4px solid white;
+				}
+			`}
+		>
+			{evaluations.map(({ nodeValue, dottedName }) => (
+				<li>
+					<ImpactCard {...{ nodeValue, dottedName }} />
+				</li>
+			))}
+		</ul>
+	)
 }
 
 const ImpactCard = ({ nodeValue, dottedName }) => {
@@ -77,7 +101,7 @@ const ImpactCard = ({ nodeValue, dottedName }) => {
 			css={`
 				border-radius: 6px;
 				background: var(--color);
-				padding: 1em;
+				padding: 0.4em;
 				margin: 0 auto;
 				color: var(--textColor);
 			`}
