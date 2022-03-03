@@ -10,7 +10,7 @@ import { motion } from 'framer-motion'
 
 const worker = new Worker()
 
-export default function SelectTwoAirports({ setFormValue }) {
+export default function SelectTwoAirports({ onChange }) {
 	const [state, setState] = useState({
 		depuis: { inputValue: '' },
 		vers: { inputValue: '' },
@@ -32,8 +32,10 @@ export default function SelectTwoAirports({ setFormValue }) {
 		)
 	}, [state.vers])
 
-	console.log(state)
 	const versImageURL = wikidata?.pic && toThumb(wikidata?.pic.value)
+	const { depuis, vers } = state
+	const placeholder = 'Aéroport ou ville '
+	const distance = computeDistance(state)
 
 	const renderOptions = (whichInput, { results = [], inputValue }) =>
 		!state.validated && (
@@ -78,16 +80,16 @@ export default function SelectTwoAirports({ setFormValue }) {
 				`}
 			>
 				<button
-					onClick={() => {
+					onClick={(e) => {
 						const newState = {
 							...state,
 							[whichInput]: { ...state[whichInput], choice: option },
 						}
-						const distance = computeDistance(state)
-						if (distance) {
-							setFormValue(distance)
-						}
 						setState(newState)
+						const distance = computeDistance(newState)
+						if (distance) {
+							onChange(distance)
+						}
 					}}
 				>
 					<Highlighter searchWords={[inputValue]} textToHighlight={nom} />
@@ -101,11 +103,6 @@ export default function SelectTwoAirports({ setFormValue }) {
 			</li>
 		)
 	}
-
-	const { depuis, vers } = state
-	const placeholder = 'Aéroport ou ville '
-	console.log('D', state)
-	const distance = computeDistance(state)
 
 	return (
 		<div

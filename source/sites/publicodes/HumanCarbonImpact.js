@@ -12,6 +12,7 @@ import { capitalise0, utils } from 'publicodes'
 import Emoji from '../../components/Emoji'
 import { useEngine } from '../../components/utils/EngineContext'
 import { capitalizeFirst } from './chart/Bar'
+import { situationSelector } from '../../selectors/simulationSelectors'
 
 const { encodeRuleName } = utils
 
@@ -44,11 +45,15 @@ export default ({ nodeValue, formule, dottedName }) => {
 		rule = rules[dottedName],
 		examplesSource = rule.exposé?.['exemples via suggestions']
 
-	console.log(rule.exposé)
+	const engine = useEngine(),
+		nextQuestions = useNextQuestions(),
+		situation = useSelector(situationSelector),
+		dirtySituation = Object.keys(situation).find((question) =>
+			nextQuestions.includes(question)
+		)
 
-	const engine = useEngine()
-
-	if (!examplesSource) return <ImpactCard {...{ nodeValue, dottedName }} />
+	if (!examplesSource || dirtySituation)
+		return <ImpactCard {...{ nodeValue, dottedName }} />
 
 	const suggestions = rules[examplesSource].suggestions
 
