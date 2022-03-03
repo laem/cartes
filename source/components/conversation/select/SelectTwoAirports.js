@@ -6,6 +6,7 @@ import Worker from 'worker-loader!./SearchAirports.js'
 import getCityData, { toThumb } from 'Components/wikidata'
 import styled from 'styled-components'
 import Emoji from '../../Emoji'
+import { motion } from 'framer-motion'
 
 const worker = new Worker()
 
@@ -103,6 +104,7 @@ export default function SelectTwoAirports({ setFormValue }) {
 
 	const { depuis, vers } = state
 	const placeholder = 'Aéroport ou ville '
+	console.log('D', state)
 	const distance = computeDistance(state)
 
 	return (
@@ -113,19 +115,52 @@ export default function SelectTwoAirports({ setFormValue }) {
 				justify-content: end;
 				flex-wrap: wrap;
 				width: 100%;
-				> img {
-					margin-right: 1rem;
+				@media (min-width: 800px) {
+					flex-wrap: nowrap;
+					justify-content: space-evenly;
 				}
 			`}
 		>
-			{versImageURL && <CityImage src={versImageURL} />}
+			<div
+				css={`
+					display: flex;
+					justify-content: space-evenly;
+					align-items: center;
+					@media (min-width: 800px) {
+						flex-direction: column;
+					}
+					img {
+						margin-right: 1rem;
+					}
+				`}
+			>
+				{versImageURL && (
+					<motion.div
+						initial={{ opacity: 0, scale: 0.8 }}
+						animate={{ opacity: 1, scale: 1 }}
+						transition={{}}
+						exit={{ opacity: 0, scale: 0.5, transition: { duration: 0.2 } }}
+					>
+						<CityImage src={versImageURL} />
+					</motion.div>
+				)}
+				{distance && (
+					<div
+						css={`
+							margin: 1rem 0;
+						`}
+					>
+						Distance : <strong>{distance + ' km'}</strong>
+					</div>
+				)}
+			</div>
 			<div
 				css={`
 					label {
 						display: flex;
 						justify-content: space-evenly;
 						align-items: center;
-						margin: 1em;
+						margin: 1em 1rem 0rem;
 					}
 					input {
 						width: 9em !important;
@@ -166,9 +201,12 @@ export default function SelectTwoAirports({ setFormValue }) {
 							}}
 						/>
 					</label>
-					{!depuis.choice && depuis.results && renderOptions('depuis', depuis)}
+					{!depuis.choice &&
+						depuis.results &&
+						depuis.inputValue !== '' &&
+						renderOptions('depuis', depuis)}
 					{depuis.choice && (
-						<div>
+						<div css="text-align: right">
 							<Emoji e="✅" />
 							{depuis.choice.item.nom}
 							<button
@@ -200,19 +238,25 @@ export default function SelectTwoAirports({ setFormValue }) {
 							}}
 						/>
 					</label>
-					{vers.results && renderOptions('vers', vers)}
+					{!vers.choice &&
+						vers.results &&
+						vers.inputValue !== '' &&
+						renderOptions('vers', vers)}
+					{vers.choice && (
+						<div css="text-align: right">
+							<Emoji e="✅" />
+							{vers.choice.item.nom}
+							<button
+								type="button"
+								onClick={() => setState({ ...state, vers: {} })}
+							>
+								<Emoji e="✏️" />{' '}
+							</button>
+						</div>
+					)}
 				</div>
 			</div>
-			{distance && (
-				<div
-					css={`
-						margin: 1rem 0;
-					`}
-				>
-					Distance {emoji('📏')} : &nbsp;<strong>{distance + ' km'}</strong>
-				</div>
-			)}
-			{distance && !state.validated && (
+			{false && distance && !state.validated && (
 				<button {...{ submit: () => setState({ ...state, validated: true }) }}>
 					àimplementer
 				</button>
@@ -227,10 +271,10 @@ function computeDistance({ depuis, vers }) {
 		vers.choice &&
 		Math.round(
 			GreatCircle.distance(
-				depuis.choice.latitude,
-				depuis.choice.longitude,
-				vers.choice.latitude,
-				vers.choice.longitude,
+				depuis.choice.item.latitude,
+				depuis.choice.item.longitude,
+				vers.choice.item.latitude,
+				vers.choice.item.longitude,
 				'KM'
 			)
 		)
@@ -240,6 +284,6 @@ function computeDistance({ depuis, vers }) {
 const CityImage = styled.img`
 	object-fit: cover;
 	border-radius: 6rem;
-	max-width: 14rem;
+	max-height: calc(6rem + 6vw);
 	height: auto;
 `

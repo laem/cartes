@@ -56,6 +56,7 @@ export default ({ nodeValue, formule, dottedName }) => {
 		const situation = { [examplesSource]: v }
 		engine.setSituation(situation)
 		const evaluation = engine.evaluate(dottedName)
+		engine.setSituation({})
 		return { ...evaluation, exampleName: k }
 	})
 
