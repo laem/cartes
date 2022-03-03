@@ -20,6 +20,7 @@ import Landing from './Landing'
 import Documentation from './pages/Documentation'
 import Privacy from './Privacy'
 import Scenarios from './Scenarios'
+import CreditExplanation from './CreditExplanation'
 import Simulateur from './Simulateur'
 import sitePaths from './sitePaths'
 
@@ -68,6 +69,7 @@ const Router = ({}) => (
 				<Route path="/ferry" component={Ferry} />
 				<Route path="/wiki" component={Wiki} />
 				<Route path="/scénarios" component={Scenarios} />
+				<Route path="/crédit-climat-personnel" component={CreditExplanation} />
 
 				<Route component={Route404} />
 			</Switch>

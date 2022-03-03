@@ -12,21 +12,6 @@ export default () => {
 	return (
 		<section id="scenarios" className="ui__ container">
 			<h1>Votre scénario climat</h1>
-			<p>
-				Le jeu est simple : plus on émet de gaz à effet de serre, plus on se
-				dirige vers une catastrophe climatique. Ces émissions se mesurent en{' '}
-				<Link to="/à-propos">kg équivalent CO₂</Link>. Pour mieux comprendre
-				l'impact de notre quotidien sur le climat,{' '}
-				<strong>nous l'avons converti en temps</strong>.
-			</p>
-			<blockquote>
-				<em>
-					Si un voyage en avion en émet 500 kg et que la limite d'émission par
-					personne et par an est de 6 tonnes, alors ce vol consomme un douzième
-					de crédit annuel : en 2 heures de vol, j'ai grillé un mois de mon
-					crédit carbone !
-				</em>
-			</blockquote>
 			<h2 css="display: inline-block;background: var(--color); padding: .1rem .4rem; margin-right: .4rem;  color: white; margin-top: 1rem">
 				Quel futur souhaitez vous ?
 			</h2>
