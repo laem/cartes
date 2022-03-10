@@ -32,10 +32,10 @@ export default ({}) => {
 	return (
 		<SituationContext.Provider value={[situation, setSituation]}>
 			<Main />
-			<br />
-			<br />
-			<br />
 			<DocumentationStyle>
+				<div css="height: 10vh; text-align: center">
+					Comprendre le calcul <Emoji e="⬇️" />
+				</div>
 				<h2>Explications</h2>
 				<Documentation engine={engine} documentationPath={'/carburants'} />
 			</DocumentationStyle>
@@ -43,7 +43,12 @@ export default ({}) => {
 	)
 }
 const Main = ({}) => (
-	<div className="ui__ container">
+	<main
+		className="ui__ container"
+		css={`
+			height: 90vh;
+		`}
+	>
 		<p
 			css={`
 				display: flex;
@@ -67,7 +72,7 @@ const Main = ({}) => (
 		</p>
 
 		<Questions />
-	</div>
+	</main>
 )
 
 const Questions = ({}) => {
