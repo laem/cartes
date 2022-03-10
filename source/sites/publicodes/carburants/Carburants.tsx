@@ -167,6 +167,9 @@ const Questions = ({}) => {
 			</div>
 			<div
 				css={`
+					border: 2px solid var(--color);
+					padding: 0.2rem 0.6rem;
+					border-radius: 0.4rem;
 					input {
 						width: 12rem;
 					}
@@ -175,6 +178,13 @@ const Questions = ({}) => {
 					}
 				`}
 			>
+				<label for="slider">
+					Faites{' '}
+					<strong css="color: var(--lightColor); font-weight: normal">
+						varier
+					</strong>{' '}
+					le baril de Brent en $.
+				</label>
 				<div
 					css={`
 						display: flex;
@@ -196,6 +206,24 @@ const Questions = ({}) => {
 						value={brentValue}
 						onChange={(e) => onChange(brentName)(e.target.value)}
 						step="5"
+						css={`
+							background: var(--darkerColor);
+							appearance: none;
+							height: 0.6rem;
+
+							border-radius: 0.2rem;
+
+							::-webkit-slider-thumb {
+								-webkit-appearance: none; /* Override default look */
+								appearance: none;
+								${sliderHandleStyle}
+							}
+
+							::-moz-range-thumb {
+								${sliderHandleStyle}
+								content: ${brentValue}
+							}
+						`}
 					/>
 					<span>{max} $</span>
 					<span
@@ -208,7 +236,6 @@ const Questions = ({}) => {
 						{Math.round(brentValue)} $
 					</span>
 				</div>
-				<label for="slider">Faites varier le baril de Brent en $.</label>
 				<p>
 					Par défaut : prix du baril{' '}
 					{!brentPrice
@@ -247,3 +274,14 @@ const Questions = ({}) => {
 		</div>
 	)
 }
+
+const sliderHandleStyle = `
+
+
+border: none;
+border-radius: 2rem;
+  width: 25px; /* Set a specific slider handle width */
+  height: 25px; /* Slider handle height */
+  background: var(--color); /* Green background */
+  cursor: pointer; /* Cursor on hover */
+`
