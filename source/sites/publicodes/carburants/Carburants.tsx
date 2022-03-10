@@ -5,6 +5,7 @@ import { Redirect, Route, Switch } from 'react-router'
 import RuleInput from 'Components/conversation/RuleInput'
 import Emoji from '../../../components/Emoji'
 import { DocumentationStyle } from '../pages/Documentation'
+import fetchBrentPrice from './fetchBrentPrice'
 
 const req = require.context('./', true, /\.(yaml)$/)
 const rules = req.keys().reduce((memo, key) => {
@@ -70,7 +71,7 @@ const Main = ({}) => (
 )
 
 const Questions = ({}) => {
-	const questions = ['groupe', 'voiture', 'consommation de services', 'cabine']
+	const questions = ['type']
 	const [situation, setSituation] = useContext(SituationContext)
 	engine.setSituation(situation) // I don't understand why putting this in a useeffect produces a loop when the input components, due to Input's debounce function I guess.
 	const onChange = (dottedName) => (value) => {
@@ -83,23 +84,82 @@ const Questions = ({}) => {
 		},
 		onSubmit = () => null
 	const evaluation = engine.evaluate('prix à la pompe')
+	const [brentPrice, setBrentPrice] = useState(null)
+	useEffect(() => fetchBrentPrice().then((res) => setBrentPrice(res)), [])
 
 	if (!evaluation.nodeValue) return <p>Problème de calcul.</p>
 
 	const min = 0,
 		max = 400,
 		brentName = 'baril de brent . dollars',
-		brentValue = situation[brentName] || engine.evaluate(brentName).nodeValue
+		brentValue =
+			situation[brentName] ||
+			brentPrice?.[1] ||
+			engine.evaluate(brentName).nodeValue
 
 	return (
 		<div
 			css={`
-				@media (min-width: 800px) {
-					display: flex;
-					align-items: center;
+				display: flex;
+				flex-direction: column;
+				align-items: center;
+				flex-wrap: wrap;
+				> div {
+					margin-top: 1rem;
 				}
 			`}
 		>
+			<div
+				css={`
+					margin: 1rem 0;
+					.step.input {
+						max-width: 12rem;
+					}
+					.step label {
+						padding: 0.2rem 0.6rem 0.2rem 0.4rem;
+					}
+				`}
+			>
+				{questions.map((dottedName) => {
+					const { question, icônes } = engine.getRule(dottedName).rawNode
+					return (
+						<div
+							css={`
+								display: flex;
+								justify-content: start;
+								align-items: center;
+								img {
+									font-size: 300%;
+									margin-right: 1rem;
+								}
+								@media (max-width: 800px) {
+									img {
+										font-size: 200%;
+										margin-right: 0.4rem;
+									}
+								}
+								p {
+									max-width: 20rem;
+								}
+							`}
+						>
+							{icônes && <Emoji e={icônes} />}
+							<label>
+								<p>{question}</p>
+								<RuleInput
+									{...{
+										engine,
+										dottedName,
+										onChange: onChange(dottedName),
+										onSubmit,
+										noSuggestions: false,
+									}}
+								/>
+							</label>
+						</div>
+					)
+				})}
+			</div>
 			<div
 				css={`
 					input {
@@ -140,10 +200,21 @@ const Questions = ({}) => {
 							left: ${(brentValue / max) * 11 + 1}rem;
 						`}
 					>
-						{brentValue} $
+						{Math.round(brentValue)} $
 					</span>
 				</div>
 				<label for="slider">Faites varier le baril de Brent en $.</label>
+				<p>
+					Par défaut : prix du baril{' '}
+					{!brentPrice
+						? 'en février 2022 '
+						: 'le ' +
+						  brentPrice[0].toLocaleString('fr-FR', {
+								year: 'numeric',
+								month: 'long',
+								day: 'numeric',
+						  })}{' '}
+				</p>
 			</div>
 			<div>
 				<div className="ui__ card box">
@@ -156,8 +227,10 @@ const Questions = ({}) => {
 					</strong>
 				</div>
 
-				<details css="text-align: center">
-					<summary>Ma situation</summary>
+				<details css="text-align: center; color: grey; display: none">
+					<summary>
+						<small>Ma situation</small>
+					</summary>
 
 					<ul>
 						{Object.entries(situation).map(([k, v]) => (

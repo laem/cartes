@@ -68,7 +68,7 @@ const Router = ({}) => (
 				<Route path="/vie-privée" component={Privacy} />
 				<Route path="/nouveautés" component={News} />
 				<Route path="/ferry" component={Ferry} />
-				<Route path="/carburants/prix-à-la-pompe" component={Carburants} />
+				<Route path="/carburants" component={Carburants} />
 				<Route path="/wiki" component={Wiki} />
 				<Route path="/scénarios" component={Scenarios} />
 				<Route path="/crédit-climat-personnel" component={CreditExplanation} />
