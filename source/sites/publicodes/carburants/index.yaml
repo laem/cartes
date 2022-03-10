@@ -78,7 +78,9 @@ baril de brent . dollars:
     Le Brent est le le pétrole brut de la mer du Nord, il est traité à l’ICE (InterContinental Exchange) de la bourse de Londres. 
     C'est surtout le brut de référence sur le marché européen. 
     Le marché étant largement mondialisé, le prix du pétrole de la mer du Nord dépendant des autres pétroles.
-  formule: 97.13 $/baril
+  question: Quel est le prix en dollars du baril de Brent ?
+  par défaut: 97.13
+  unité: $/baril
   note: |
     Source pour le prix https://www.ecologie.gouv.fr/prix-des-produits-petroliers
 
