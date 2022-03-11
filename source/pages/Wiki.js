@@ -19,6 +19,14 @@ export default function Suggestions() {
 	let exposedRules = Object.entries(rules)
 		.map(([dottedName, v]) => ({ ...v, dottedName }))
 		.filter((rule) => rule?.exposé)
+	const withCustomSimulators = [
+		...exposedRules,
+		{
+			titre: 'Prix à la pompe',
+			description:
+				'Décomposition du prix des carburants à la pompe (essence, gazole)',
+		},
+	]
 	let [results, setResults] = useState(exposedRules)
 	let [input, setInput] = useState(null)
 
