@@ -89,6 +89,7 @@ function DocumentationLanding() {
 export const DocumentationStyle = styled.div`
 	max-width: 850px;
 	margin: 0 auto;
+	padding: 0 0.6rem;
 	small {
 		background: none !important;
 	}
