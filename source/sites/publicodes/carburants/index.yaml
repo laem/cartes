@@ -12,6 +12,8 @@ prix à la pompe:
 
     La page d'explication officielle du gouvernement, très claire sauf sur la fiscalité : https://www.ecologie.gouv.fr/prix-des-produits-petroliers
 
+raffinage et distribution: raffinage + distribution
+
 taxes:
   formule:
     somme:
@@ -20,7 +22,7 @@ taxes:
       - TVA
 
 TVA sur TICPE:
-  formule: 20% * TICPE
+  formule: 0.2 * TICPE
 
 TICPE:
   formule: par hectolitre / 100
@@ -45,7 +47,7 @@ TICPE . par hectolitre:
 
 TVA:
   titre: TVA sur le pétrole à la pompe
-  formule: 20% * base
+  formule: 0.2 * base
   note: Exception en Corse à 13%.
 
 TVA . base: pétrole brut + raffinage + distribution

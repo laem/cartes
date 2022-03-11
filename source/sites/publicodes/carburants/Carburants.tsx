@@ -6,6 +6,8 @@ import RuleInput from 'Components/conversation/RuleInput'
 import Emoji from '../../../components/Emoji'
 import { DocumentationStyle } from '../pages/Documentation'
 import fetchBrentPrice from './fetchBrentPrice'
+import Meta from '../../../components/utils/Meta'
+import StackedBarChart from '../../../components/StackedBarChart'
 
 const req = require.context('./', true, /\.(yaml)$/)
 const rules = req.keys().reduce((memo, key) => {
@@ -31,6 +33,10 @@ export default ({}) => {
 	const [situation, setSituation] = useState({})
 	return (
 		<SituationContext.Provider value={[situation, setSituation]}>
+			<Meta
+				title="Comprendre le prix à la pompe"
+				description="Comprendre comment le prix de l'essence et du gazole à la pompe est calculé."
+			/>
 			<Main />
 			<DocumentationStyle>
 				<div css="height: 10vh; text-align: center">
@@ -65,10 +71,6 @@ const Main = ({}) => (
 		>
 			<Emoji e="⛽️" />
 			<h1 css="">Prix à la pompe 2022</h1>
-		</p>
-		<p>
-			Comprendre comment le prix de l'essence et du gazole à la pompe est
-			calculé.
 		</p>
 
 		<Questions />
@@ -271,6 +273,26 @@ const Questions = ({}) => {
 					</ul>
 				</details>
 			</div>
+			<StackedBarChart
+				engine={engine}
+				data={[
+					{
+						dottedName: 'taxes',
+						title: 'Taxes 🇫🇷',
+						color: '#6a89cc',
+					},
+					{
+						dottedName: 'pétrole brut',
+						title: 'Pétrole brut',
+						color: '#cf6a87',
+					},
+					{
+						dottedName: 'raffinage et distribution',
+						title: 'Raffinage et distribution',
+						color: '#f8c291',
+					},
+				]}
+			/>
 		</div>
 	)
 }
