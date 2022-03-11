@@ -29,9 +29,9 @@ let limitPerPeriod = (scenario) =>
 	)
 
 let findPeriod = (scenario, nodeValue) =>
-	toPairs(limitPerPeriod(scenario)).find(
-		([, limit]) => limit <= Math.abs(nodeValue)
-	)
+	toPairs(limitPerPeriod(scenario))
+		.sort(([, a], [, b]) => b - a)
+		.find(([, limit]) => limit <= Math.abs(nodeValue))
 
 let humanCarbonImpactData = (scenario, nodeValue) => {
 	let [closestPeriod, closestPeriodValue] = findPeriod(scenario, nodeValue),
