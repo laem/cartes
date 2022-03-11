@@ -8,6 +8,7 @@ import { DocumentationStyle } from '../pages/Documentation'
 import fetchBrentPrice from './fetchBrentPrice'
 import Meta from '../../../components/utils/Meta'
 import StackedBarChart from '../../../components/StackedBarChart'
+import pays from './pays.yaml'
 
 const req = require.context('./', true, /\.(yaml)$/)
 const rules = req.keys().reduce((memo, key) => {
@@ -39,7 +40,7 @@ export default ({}) => {
 			/>
 			<Main />
 			<DocumentationStyle>
-				<div css="height: 10vh; text-align: center">
+				<div css=" text-align: center">
 					Comprendre le calcul <Emoji e="⬇️" />
 				</div>
 				<h2>Explications</h2>
@@ -49,12 +50,7 @@ export default ({}) => {
 	)
 }
 const Main = ({}) => (
-	<main
-		className="ui__ container"
-		css={`
-			height: 90vh;
-		`}
-	>
+	<main className="ui__ container" css={``}>
 		<p
 			css={`
 				display: flex;
@@ -295,6 +291,7 @@ const Questions = ({}) => {
 					},
 				]}
 			/>
+			<CountriesGraph />
 		</div>
 	)
 }
@@ -309,3 +306,48 @@ border-radius: 2rem;
   background: var(--color); /* Green background */
   cursor: pointer; /* Cursor on hover */
 `
+
+const CountriesGraph = ({}) => {
+	const max = Math.max(...Object.values(pays))
+
+	return (
+		<ul
+			css={`
+				padding-left: 0;
+				margin-top: 1rem;
+				width: 95vw;
+				max-width: 30rem;
+				li {
+					display: flex;
+					line-height: 1.2rem;
+					align-items: center;
+				}
+			`}
+		>
+			{Object.entries(pays)
+				.sort(([, a], [, b]) => -a + b)
+				.map(([nom, valeur]) => (
+					<li key={nom}>
+						<span css="width: 6rem">{nom}</span>
+						<span
+							css={`
+								width: calc(${(valeur / max) * 100}% - 6rem);
+								height: 1.2rem;
+								background: #cf6a87;
+								border-radius: 0.2rem;
+								color: black;
+								display: inline;
+								line-height: 1.4rem;
+								vertical-align: middle;
+								font-weight: bold;
+								padding-left: 0.2rem;
+								font-size: 90%;
+							`}
+						>
+							{valeur.toLocaleString('fr-FR', { maximumFractionDigits: 0 })}%
+						</span>
+					</li>
+				))}
+		</ul>
+	)
+}
