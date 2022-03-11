@@ -87,11 +87,17 @@ export default ({ nodeValue, formule, dottedName }) => {
 				transform: translateX(-1.5rem);
 				@media (min-width: 800px) {
 					/* TODO */
+					width: fit-content;
+					position: relative;
+					left: calc(50%);
+					transform: translateX(-50%);
+					overflow: initial;
+					justify-content: space-evenly;
 				}
 				background: white;
 				border-radius: 0.3rem;
 				li {
-					margin-left: 0.2rem;
+					margin: 0 0.1rem;
 				}
 			`}
 		>

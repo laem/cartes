@@ -157,7 +157,6 @@ const Simulateur = ({ objective }) => {
 					`
 					border: 1.4rem solid ${doomColor};
 					`}
-					overflow: auto; /* Some questions are very high, the mosaic ones*/
 				`}
 			>
 				<Meta
