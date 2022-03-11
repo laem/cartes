@@ -40,7 +40,7 @@ export default ({}) => {
 			/>
 			<Main />
 			<DocumentationStyle>
-				<div css=" text-align: center">
+				<div css=" text-align: center; margin-top: 3rem">
 					Comprendre le calcul <Emoji e="⬇️" />
 				</div>
 				<h2>Explications</h2>
@@ -280,14 +280,14 @@ const Questions = ({}) => {
 						color: '#6a89cc',
 					},
 					{
-						dottedName: 'pétrole brut',
-						title: 'Pétrole brut',
-						color: '#cf6a87',
-					},
-					{
 						dottedName: 'raffinage et distribution',
 						title: 'Raffinage et distribution',
 						color: '#f8c291',
+					},
+					{
+						dottedName: 'pétrole brut',
+						title: 'Pétrole brut',
+						color: '#cf6a87',
 					},
 				]}
 			/>
@@ -328,10 +328,18 @@ const CountriesGraph = ({}) => {
 				.sort(([, a], [, b]) => -a + b)
 				.map(([nom, valeur]) => (
 					<li key={nom}>
-						<span css="width: 6rem">{nom}</span>
 						<span
 							css={`
-								width: calc(${(valeur / max) * 100}% - 6rem);
+								width: 40%;
+								text-align: right;
+								padding-right: 0.6rem;
+							`}
+						>
+							{nom}
+						</span>
+						<span
+							css={`
+								width: ${(valeur / max) * 60}%;
 								height: 1.2rem;
 								background: #cf6a87;
 								border-radius: 0.2rem;

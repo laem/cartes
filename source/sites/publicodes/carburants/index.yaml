@@ -66,7 +66,10 @@ taux de change dollars par euro:
   unité: $/€
   note: janvier 2022, source https://www.banque-france.fr/statistiques/taux-et-cours/les-taux-de-change-salle-des-marches/parites-moyenne-mensuelle
 
-pétrole brut: brent
+pétrole brut:
+  description: |
+    Pour voir la provenance de notre pétrole brut : https://www.insee.fr/fr/statistiques/2119697
+  formule: brent
 
 brent: baril de brent / volume baril
 volume baril:
