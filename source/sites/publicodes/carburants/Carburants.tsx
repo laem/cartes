@@ -174,9 +174,11 @@ const Questions = ({}) => {
 					border-radius: 0.4rem;
 					input {
 						width: 12rem;
+						margin: 0 auto;
 					}
 					label {
 						display: block;
+						text-align: center;
 					}
 				`}
 			>
@@ -253,7 +255,7 @@ const Questions = ({}) => {
 			<div>
 				<div className="ui__ card box">
 					<h2 css="margin: .4rem; font-size: 125%">{evaluation.title}</h2>
-					<strong>
+					<strong css="font-size: 150%">
 						{evaluation.nodeValue.toLocaleString('fr-FR', {
 							maximumFractionDigits: 2,
 						})}{' '}
