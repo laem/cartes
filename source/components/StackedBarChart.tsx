@@ -51,8 +51,8 @@ const BarStackLegendItem = styled.div`
 
 const SmallCircle = styled.span`
 	display: inline-block;
-	height: 11px;
-	width: 11px;
+	height: 1rem;
+	width: 1rem;
 	margin-right: 10px;
 	border-radius: 100%;
 `
