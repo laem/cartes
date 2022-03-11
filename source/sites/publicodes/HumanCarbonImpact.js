@@ -12,7 +12,10 @@ import { capitalise0, utils } from 'publicodes'
 import Emoji from '../../components/Emoji'
 import { useEngine } from '../../components/utils/EngineContext'
 import { capitalizeFirst } from './chart/Bar'
-import { situationSelector } from '../../selectors/simulationSelectors'
+import {
+	answeredQuestionsSelector,
+	situationSelector,
+} from '../../selectors/simulationSelectors'
 
 const { encodeRuleName } = utils
 
@@ -47,9 +50,10 @@ export default ({ nodeValue, formule, dottedName }) => {
 
 	const engine = useEngine(),
 		nextQuestions = useNextQuestions(),
+		foldedSteps = useSelector(answeredQuestionsSelector),
 		situation = useSelector(situationSelector),
 		dirtySituation = Object.keys(situation).find((question) =>
-			nextQuestions.includes(question)
+			[...nextQuestions, ...foldedSteps].includes(question)
 		)
 
 	if (!examplesSource || dirtySituation)
