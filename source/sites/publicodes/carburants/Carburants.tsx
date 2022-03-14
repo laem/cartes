@@ -88,13 +88,21 @@ const Questions = ({}) => {
 		onSubmit = () => null
 	const evaluation = engine.evaluate('prix à la pompe')
 	const [brentPrice, setBrentPrice] = useState(null)
-	useEffect(() => fetchBrentPrice().then((res) => setBrentPrice(res)), [])
+	const brentName = 'baril de brent . dollars'
+	useEffect(
+		() =>
+			fetchBrentPrice().then((res) => {
+				setBrentPrice(res)
+
+				onChange(brentName)(res[1])
+			}),
+		[]
+	)
 
 	if (!evaluation.nodeValue) return <p>Problème de calcul.</p>
 
 	const min = 0,
 		max = 400,
-		brentName = 'baril de brent . dollars',
 		brentValue =
 			situation[brentName] ||
 			brentPrice?.[1] ||
