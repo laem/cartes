@@ -43,7 +43,6 @@ export default function AnswerList() {
 		engine.evaluate(engine.getRule(dottedName))
 	)
 	const rules = useSelector((state) => state.rules)
-	const categories = sortCategories(extractCategoriesNamespaces(rules, engine))
 
 	useEffect(() => {
 		const handleKeyDown = (e: KeyboardEvent) => {
@@ -77,13 +76,25 @@ export default function AnswerList() {
 		<div className="answer-list">
 			{!!foldedStepsToDisplay.length && (
 				<div>
-					<h2>
+					<h2
+						css={`
+							font-size: 120%;
+							margin-bottom: 0.2rem;
+							display: flex;
+							align-items: center;
+
+							img {
+								margin-right: 0.2rem;
+								vertical-align: bottom;
+								width: 2rem;
+								height: auto;
+							}
+						`}
+					>
 						{emoji('📋 ')}
 						<Trans>Mes réponses</Trans>
 					</h2>
-					<CategoryTable
-						{...{ steps: foldedStepsToDisplay, categories, engine }}
-					/>
+					<StepsTable {...{ rules: foldedStepsToDisplay }} />
 				</div>
 			)}
 			{false && !!nextSteps.length && (
@@ -99,111 +110,6 @@ export default function AnswerList() {
 	)
 }
 
-const CategoryTable = ({ steps, categories, engine }) =>
-	categories.map((category) => {
-		const categoryRules = steps.filter((question) =>
-			question.dottedName.includes(category.dottedName)
-		)
-
-		if (!categoryRules.length) return null
-
-		const byParent = categoryRules.reduce((memo, next) => {
-			const split = splitName(next.dottedName),
-				parent = split.slice(0, 2).join(' . ')
-			return {
-				...memo,
-				[parent]: [...(memo[parent] || []), next],
-			}
-		}, {})
-		const lonelyRules = Object.values(byParent)
-			.map((els) => (els.length === 1 ? els : []))
-			.flat()
-
-		return (
-			<div>
-				<div
-					className="ui__ card"
-					css={`
-						background: ${category.color} !important;
-						display: flex;
-						justify-content: start;
-						align-items: center;
-						img {
-							font-size: 300%;
-						}
-						max-width: 20rem;
-						margin: 1rem 0;
-						h2 {
-							color: white;
-							margin: 1rem;
-							font-weight: 300;
-							text-transform: uppercase;
-						}
-					`}
-				>
-					{emoji(category.icons)}
-					<h2>{category.title}</h2>
-				</div>
-
-				<StepsTable
-					{...{
-						rules: lonelyRules,
-					}}
-				/>
-				{Object.entries(byParent).map(
-					([key, values]) =>
-						values.length > 1 && (
-							<SubCategory rules={values} rule={engine.getRule(key)} />
-						)
-				)}
-			</div>
-		)
-	})
-const SubCategory = ({ rule, rules }) => {
-	const [open, setOpen] = useState(false)
-	return (
-		console.log('RULE', rule) || (
-			<div>
-				<div
-					onClick={() => setOpen(!open)}
-					className="ui__ card"
-					css={`
-						cursor: pointer;
-						display: inline-flex;
-						justify-content: start;
-						align-items: flex-end;
-						img {
-							font-size: 150%;
-						}
-						margin: 0.6rem 0;
-						padding: 0.4rem 0;
-						h3 {
-							margin: 0;
-							font-weight: 300;
-						}
-						> * {
-							margin: 0 0.4rem !important;
-						}
-					`}
-				>
-					{emoji(rule.rawNode.icônes || '')}
-					<h3>{rule.title}</h3>
-					<small>{rules.length} réponses</small>
-					<span>{!open ? '▶' : '▼'}</span>
-				</div>
-				{open && (
-					<div css="padding-left: 1rem">
-						<StepsTable
-							{...{
-								rules,
-							}}
-						/>
-					</div>
-				)}
-			</div>
-		)
-	)
-}
 function StepsTable({
 	rules,
 }: {
@@ -212,7 +118,11 @@ function StepsTable({
 	const dispatch = useDispatch()
 	const language = useTranslation().i18n.language
 	return (
-		<table>
+		<table
+			css={`
+				border: 2px solid var(--darkerColor2);
+			`}
+		>
 			<tbody>
 				{rules.map((rule) => (
 					<Answer
@@ -235,7 +145,7 @@ const Answer = ({ rule, dispatch, language }) => {
 		<tr
 			key={rule.dottedName}
 			css={`
-				background: var(--lightestColor);
+				background: var(--darkestColor);
 			`}
 		>
 			<td>
@@ -267,7 +177,6 @@ const Answer = ({ rule, dispatch, language }) => {
 					`}
 					onClick={() => {
 						dispatch(goToQuestion(rule.dottedName))
-						history.push('/simulateur/bilan')
 					}}
 				>
 					<span

@@ -1,22 +1,22 @@
 .answer-list table {
 	border-collapse: collapse;
 	width: 100%;
+	font-size: 90%;
 }
 .answer-list tr:nth-child(2n + 1) {
 	background: none !important;
 }
 
 .answer-list td {
-	padding: 0.3rem 0.8rem;
+	padding: 0.4rem 0.6rem;
 }
 
 .answer-list td:last-of-type {
 	text-align: start;
 }
 
-.answer-list button.answer {
-}
-.answer-list .answerContent {
+.answer-list button {
+	padding: 0;
 }
 
 .answer-list button.answer:hover {

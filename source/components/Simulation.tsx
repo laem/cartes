@@ -6,6 +6,7 @@ import SearchButton from 'Components/SearchButton'
 import * as animate from 'Components/ui/animate'
 import React from 'react'
 import { Trans } from 'react-i18next'
+import AnswerList from './conversation/AnswerList'
 import LinkToForm from './Feedback/LinkToForm'
 
 type SimulationProps = {
@@ -31,6 +32,7 @@ export default function Simulation({
 	const Animation = animate[animation]
 	return (
 		<>
+			<AnswerList />
 			<SearchButton invisibleButton />
 			<Animation delay={0.3}>
 				{results}

@@ -62,7 +62,7 @@ const generateTheme = (themeColor?: string) => {
 		darkColor = '#185abd' || lightenColor(color, -20),
 		lighterColor = lightenColor(color, 45),
 		lightestColor = lightenColor(color, 100),
-		darkestColor = lightenColor(color, -100),
+		darkestColor = lightenColor(color, -45),
 		darkerColor = lightenColor(color, -35),
 		darkerColor2 = lightenColor(color, -40),
 		grayColor = '#00000099',
