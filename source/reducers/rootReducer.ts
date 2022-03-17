@@ -64,6 +64,7 @@ function simulation(
 	}
 	if (action.type === 'SET_SIMULATION') {
 		const { config, url } = action
+		const newTargets = config.objectifs
 		if (state && state.config && !action.situation === config) {
 			return state
 		}
@@ -71,9 +72,9 @@ function simulation(
 			config,
 			url,
 			hiddenNotifications: state?.hiddenControls || [],
-			situation: action.situation || state?.situation || {},
+			situation: action.situation || {},
 			targetUnit: config['unité par défaut'] || '€/mois',
-			foldedSteps: action.foldedSteps || state?.foldedSteps || [],
+			foldedSteps: action.foldedSteps || [],
 			unfoldedStep: null,
 			persona: action.persona,
 			messages: state?.messages || {},

@@ -1,3 +1,7 @@
+.answer-list {
+	max-width: 30rem;
+	margin: 0 auto;
+}
 .answer-list table {
 	border-collapse: collapse;
 	width: 100%;
