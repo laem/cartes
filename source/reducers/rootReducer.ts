@@ -166,6 +166,21 @@ function scenario(state = 'B', action) {
 	} else return state
 }
 
+function batchUpdateSituationReducer(state: RootState, action: Action) {
+	if (action.type !== 'BATCH_UPDATE_SITUATION') {
+		return state
+	}
+	return Object.entries(action.situation).reduce<RootState | null>(
+		(newState, [fieldName, value]) =>
+			mainReducer(newState ?? undefined, {
+				type: 'UPDATE_SITUATION',
+				fieldName,
+				value,
+			}),
+		state
+	)
+}
+
 const mainReducer = (state: any, action: Action) =>
 	combineReducers({
 		explainedVariable,
@@ -181,7 +196,8 @@ const mainReducer = (state: any, action: Action) =>
 
 export default reduceReducers<RootState>(
 	mainReducer as any,
-	storageRootReducer as any
+	storageRootReducer as any,
+	batchUpdateSituationReducer as Reducer<RootState>
 ) as Reducer<RootState>
 
 export type RootState = ReturnType<typeof mainReducer>

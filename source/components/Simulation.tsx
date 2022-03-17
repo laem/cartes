@@ -6,8 +6,13 @@ import SearchButton from 'Components/SearchButton'
 import * as animate from 'Components/ui/animate'
 import React from 'react'
 import { Trans } from 'react-i18next'
+import { useSelector } from 'react-redux'
+import { situationSelector } from '../selectors/simulationSelectors'
 import AnswerList from './conversation/AnswerList'
 import LinkToForm from './Feedback/LinkToForm'
+import useSearchParamsSimulationSharing, {
+	useParamsFromSituation,
+} from './utils/useSearchParamsSimulationSharing'
 
 type SimulationProps = {
 	explanations?: React.ReactNode
@@ -30,6 +35,10 @@ export default function Simulation({
 	animation = 'appear',
 }: SimulationProps) {
 	const Animation = animate[animation]
+	//useSearchParamsSimulationSharing()
+	const situation = useSelector(situationSelector)
+	const searchParams = useParamsFromSituation(situation)
+	console.log(searchParams)
 	return (
 		<>
 			<AnswerList />

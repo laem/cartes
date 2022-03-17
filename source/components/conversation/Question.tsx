@@ -1,7 +1,6 @@
 import classnames from 'classnames'
 import { Markdown } from 'Components/utils/markdown'
 import { ASTNode } from 'publicodes'
-import { References } from 'publicodes-react'
 import { Rule } from 'publicodes/dist/types/rule'
 import { useCallback, useEffect, useState } from 'react'
 import emoji from 'react-easy-emoji'
@@ -10,6 +9,7 @@ import { Explicable } from './Explicable'
 import { binaryQuestion, InputCommonProps, RuleInputProps } from './RuleInput'
 import animate from 'Components/ui/animate'
 import Emoji from 'Components/Emoji'
+import { References } from '../../sites/publicodes/pages/Documentation'
 
 /* Ceci est une saisie de type "radio" : l'utilisateur choisit une réponse dans
 	une liste, ou une liste de listes. Les données @choices sont un arbre de type:
