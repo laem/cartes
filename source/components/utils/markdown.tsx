@@ -7,9 +7,7 @@ import { useLocation } from 'react-router-dom'
 import Emoji from 'Components/Emoji'
 
 const internalURLs = {
-	'mon-entreprise.fr': 'mon-entreprise',
-	'mycompanyinfrance.fr': 'infrance',
-	'publi.codes': 'publicodes',
+	'nosgestesclimat.fr': 'nosgestesclimat',
 } as const
 
 export function LinkRenderer({
@@ -39,7 +37,7 @@ export function LinkRenderer({
 		if (
 			href &&
 			href.startsWith(`https://${domain}`) &&
-			internalURLs[domain] === 'nosgestesclimat.fr'
+			internalURLs[domain] === 'nosgestesclimat'
 		) {
 			return (
 				<Link to={href.replace(`https://${domain}`, '')} {...otherProps}>

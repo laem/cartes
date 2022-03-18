@@ -44,6 +44,7 @@ export default function () {
 				css={`
 					display: flex;
 					margin-top: 2rem;
+					margin-right: 1rem;
 					justify-content: space-between;
 				`}
 			>
@@ -110,6 +111,23 @@ export const DocumentationStyle = styled.div`
 	margin: 0 auto;
 	padding: 0 0.6rem;
 	header {
+		color: var(--textColor);
+		a {
+			color: var(--textColor);
+		}
+
+		h1 {
+			margin-top: 0.6rem;
+			margin-bottom: 0.6rem;
+			a {
+				text-decoration: none;
+			}
+		}
+		background: linear-gradient(60deg, var(--darkColor) 0%, var(--color) 100%);
+		padding: 0.6rem 1rem;
+		box-shadow: 0 1px 3px rgba(var(--rgbColor), 0.12),
+			0 1px 2px rgba(var(--rgbColor), 0.24);
+		border-radius: 0.4rem;
 	}
 	span {
 		background: inherit;
