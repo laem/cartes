@@ -110,6 +110,11 @@ export const DocumentationStyle = styled.div`
 	max-width: 850px;
 	margin: 0 auto;
 	padding: 0 0.6rem;
+	#documentationRuleRoot > p:first-of-type {
+		display: inline-block;
+		background: var(--darkerColor);
+		padding: 0.4rem 0.6rem 0.2rem;
+	}
 	header {
 		color: var(--textColor);
 		a {
