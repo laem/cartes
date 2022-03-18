@@ -1,6 +1,8 @@
 import { formatValue } from 'publicodes'
 import { useLocation } from 'react-router'
-
+export function isIterable<T>(obj: unknown): obj is Iterable<T> {
+	return Symbol.iterator in Object(obj)
+}
 export function capitalise0(name: undefined): undefined
 export function capitalise0(name: string): string
 export function capitalise0(name?: string) {
