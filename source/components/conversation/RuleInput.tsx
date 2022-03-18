@@ -20,6 +20,12 @@ import DateInput from './DateInput'
 import mosaicQuestions from './mosaicQuestions'
 import ParagrapheInput from './ParagrapheInput'
 import TextInput from './TextInput'
+
+export const airportsQuestions = [
+	'transport . avion . distance de vol aller',
+	'transport . avion . départ',
+	'transport . avion . arrivée',
+]
 let SelectTwoAirports = React.lazy(
 	() => import('Components/conversation/select/SelectTwoAirports')
 )
@@ -138,7 +144,7 @@ export default function RuleInput<Name extends string = DottedName>({
 *
 */
 
-	if (rule.dottedName === 'transport . avion . distance de vol aller')
+	if (airportsQuestions.includes(rule.dottedName))
 		return (
 			<Suspense fallback={<div>Chargement des aéroports ...</div>}>
 				<SelectTwoAirports {...{ ...commonProps }} />

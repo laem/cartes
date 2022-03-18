@@ -28,6 +28,7 @@ import CategoryRespiration from './CategoryRespiration'
 import './conversation.css'
 import { ExplicableRule } from './Explicable'
 import SimulationEnding from './SimulationEnding'
+import { airportsQuestions } from 'Components/conversation/RuleInput'
 
 export type ConversationProps = {
 	customEndMessages?: React.ReactNode
@@ -109,13 +110,17 @@ export default function Conversation({
 	const questionText = mosaicQuestion
 		? mosaicQuestion.question
 		: rules[currentQuestion]?.rawNode?.question
-	const questionsToSubmit = mosaicQuestion
+
+	const questionsToSubmit = airportsQuestions.includes(currentQuestion)
+		? airportsQuestions
+		: mosaicQuestion
 		? Object.entries(rules)
 				.filter(([dottedName, value]) =>
 					mosaicQuestion.isApplicable(dottedName)
 				)
 				.map(([dottedName]) => dottedName)
 		: [currentQuestion]
+
 	const submit = (source: string) => {
 		if (mosaicQuestion?.options?.defaultsToFalse) {
 			questionsToSubmit.map((question) =>

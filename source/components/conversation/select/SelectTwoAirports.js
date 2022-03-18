@@ -7,6 +7,8 @@ import getCityData, { toThumb } from 'Components/wikidata'
 import styled from 'styled-components'
 import Emoji from '../../Emoji'
 import { motion } from 'framer-motion'
+import { useDispatch } from 'react-redux'
+import { updateSituation } from '../../../actions/actions'
 
 const worker = new Worker()
 
@@ -16,6 +18,8 @@ export default function SelectTwoAirports({ onChange }) {
 		vers: { inputValue: '' },
 		validated: false,
 	})
+
+	const dispatch = useDispatch()
 
 	useEffect(() => {
 		worker.onmessage = ({ data: { results, which } }) =>
@@ -85,6 +89,14 @@ export default function SelectTwoAirports({ onChange }) {
 							...state,
 							[whichInput]: { ...state[whichInput], choice: option },
 						}
+
+						dispatch(
+							updateSituation(
+								'transport . avion . ' +
+									{ depuis: 'départ', vers: 'arrivée' }[whichInput],
+								`'${option.item.nom}'`
+							)
+						)
 						setState(newState)
 						const distance = computeDistance(newState)
 						if (distance) {
