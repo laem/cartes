@@ -4,7 +4,7 @@ import { Markdown } from 'Components/utils/markdown'
 import { Trans } from 'react-i18next'
 import { useDispatch, useSelector } from 'react-redux'
 import { RootState } from 'Reducers/rootReducer'
-import { References } from '../../sites/publicodes/pages/Documentation'
+import References from '../../sites/publicodes/pages/DocumentationReferences'
 import './Aide.css'
 import mosaicQuestions from './mosaicQuestions'
 

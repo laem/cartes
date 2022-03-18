@@ -9,7 +9,7 @@ import { Explicable } from './Explicable'
 import { binaryQuestion, InputCommonProps, RuleInputProps } from './RuleInput'
 import animate from 'Components/ui/animate'
 import Emoji from 'Components/Emoji'
-import { References } from '../../sites/publicodes/pages/Documentation'
+import References from '../../sites/publicodes/pages/DocumentationReferences'
 
 /* Ceci est une saisie de type "radio" : l'utilisateur choisit une réponse dans
 	une liste, ou une liste de listes. Les données @choices sont un arbre de type:
