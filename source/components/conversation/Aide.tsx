@@ -36,7 +36,7 @@ export default function Aide() {
 				`}
 			>
 				{rule.title && <h2>{rule.title}</h2>}
-				<Markdown source={text} />
+				<Markdown> {text}</Markdown>
 				{refs && (
 					<>
 						<h3>

@@ -67,7 +67,7 @@ export default ({}) => {
 			acceptedAnswer: {
 				'@type': 'Answer',
 				text: renderToString(
-					<Markdown escapeHtml={false} source={element.réponse} />
+					<Markdown escapeHtml={false}> {element.réponse} </Markdown>
 				),
 			},
 		})),

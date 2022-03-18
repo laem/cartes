@@ -9,6 +9,7 @@ import styled from 'styled-components'
 import useSWR from 'swr'
 import { determinant, hideNewsBanner } from 'Components/NewsBanner'
 import Meta from '../components/utils/Meta'
+import Emoji from '../components/utils/Emoji'
 
 const dateCool = (date) =>
 	date.toLocaleString(undefined, {
@@ -95,10 +96,11 @@ export default function News() {
 				</Sidebar>
 				<MainBlock>
 					<MarkdownWithAnchorLinks
-						source={body}
 						escapeHtml={false}
 						renderers={{ text: TextRenderer }}
-					/>
+					>
+						{body}
+					</MarkdownWithAnchorLinks>
 					<NavigationButtons>
 						{selectedRelease + 1 < data.length ? (
 							<Link to={getPath(selectedRelease + 1)}>
@@ -123,7 +125,7 @@ const removeGithubIssuesReferences = (text: string) =>
 	text.replace(/#[0-9]{1,5}/g, '')
 
 const TextRenderer = ({ children }: { children: string }) => (
-	<>{emoji(removeGithubIssuesReferences(children))}</>
+	<Emoji e={emoji(removeGithubIssuesReferences(children))} />
 )
 
 const NewsSection = styled.section`
