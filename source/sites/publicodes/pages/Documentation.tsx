@@ -17,6 +17,7 @@ import Helmet from 'react-helmet'
 import { Markdown } from 'Components/utils/markdown'
 import { Route } from 'react-router'
 import References from './DocumentationReferences'
+import TopBar from '../../../components/TopBar'
 
 export default function () {
 	const currentSimulation = useSelector(
@@ -40,10 +41,10 @@ export default function () {
 	}
 	return (
 		<>
+			<TopBar />
 			<div
 				css={`
 					display: flex;
-					margin-top: 2rem;
 					margin-right: 1rem;
 					justify-content: space-between;
 				`}
