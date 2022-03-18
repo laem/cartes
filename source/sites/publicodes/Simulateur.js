@@ -95,6 +95,7 @@ const Simulateur = ({ objective }) => {
 
 	useEffect(() => {
 		const handleKeyDown = (e) => {
+			return null
 			if (!(e.ctrlKey && e.key === 'c')) return
 			dispatch(resetSimulation())
 			dispatch(deletePreviousSimulation())
