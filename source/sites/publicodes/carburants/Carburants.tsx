@@ -34,23 +34,29 @@ const SituationContext = createContext({})
 export default ({}) => {
 	const [situation, setSituation] = useState({})
 	return (
-		<SituationContext.Provider value={[situation, setSituation]}>
-			<Meta
-				title="Comprendre le prix à la pompe"
-				description="Comprendre comment le prix de l'essence et du gazole à la pompe est calculé."
-			/>
-			<Main />
+		<div className="ui__ container" css={``}>
+			<SituationContext.Provider value={[situation, setSituation]}>
+				<Meta
+					title="Comprendre le prix à la pompe"
+					description="Comprendre comment le prix de l'essence et du gazole à la pompe est calculé."
+				/>
+				<Main />
 
-			<div css=" text-align: center; margin-top: 3rem">
-				Comprendre le calcul <Emoji e="⬇️" />
-			</div>
-			<h2>Explications</h2>
-			<Documentation documentationPath="/carburants" engine={engine} embedded />
-		</SituationContext.Provider>
+				<div css=" text-align: center; margin-top: 3rem">
+					Comprendre le calcul <Emoji e="⬇️" />
+				</div>
+				<h2>Explications</h2>
+				<Documentation
+					documentationPath="/carburants"
+					engine={engine}
+					embedded
+				/>
+			</SituationContext.Provider>
+		</div>
 	)
 }
 const Main = ({}) => (
-	<main className="ui__ container" css={``}>
+	<main>
 		<p
 			css={`
 				display: flex;

@@ -1,10 +1,9 @@
 import Engine from 'publicodes'
-import { Documentation } from 'publicodes-react'
 import { createContext, useContext, useEffect, useMemo, useState } from 'react'
 import { Redirect, Route, Switch } from 'react-router'
 import RuleInput from 'Components/conversation/RuleInput'
 import Emoji from '../../../components/Emoji'
-import { DocumentationStyle } from '../pages/Documentation'
+import Documentation from '../pages/Documentation'
 
 const req = require.context('./', true, /\.(yaml)$/)
 const rules = req.keys().reduce((memo, key) => {
@@ -29,16 +28,16 @@ const SituationContext = createContext({})
 export default ({}) => {
 	const [situation, setSituation] = useState({})
 	return (
-		<SituationContext.Provider value={[situation, setSituation]}>
-			<Main />
-			<br />
-			<br />
-			<br />
-			<DocumentationStyle>
+		<div className="ui__ container" css={``}>
+			<SituationContext.Provider value={[situation, setSituation]}>
+				<Main />
+				<div css=" text-align: center; margin-top: 3rem">
+					Comprendre le calcul <Emoji e="⬇️" />
+				</div>
 				<h2>Explications</h2>
-				<Documentation engine={engine} documentationPath={''} />
-			</DocumentationStyle>
-		</SituationContext.Provider>
+				<Documentation documentationPath="" engine={engine} embedded />
+			</SituationContext.Provider>
+		</div>
 	)
 }
 const Main = ({}) => (
