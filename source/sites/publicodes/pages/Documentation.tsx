@@ -19,43 +19,50 @@ import { Route } from 'react-router'
 import References from './DocumentationReferences'
 import TopBar from '../../../components/TopBar'
 
-export default function () {
+export default function ({
+	documentationPath = '/documentation',
+	engine: givenEngine,
+	embedded,
+}) {
 	const currentSimulation = useSelector(
 		(state: RootState) => !!state.simulation?.url
 	)
-	const engine = useContext(EngineContext)
-	const documentationPath = '/documentation'
+	const engine = givenEngine || useContext(EngineContext)
 	const { pathname } = useLocation()
 	const documentationSitePaths = useMemo(
 		() => getDocumentationSiteMap({ engine, documentationPath }),
 		[engine, documentationPath]
 	)
-	console.log(documentationSitePaths)
 	const { i18n } = useTranslation()
 
 	if (pathname === '/documentation') {
 		return <DocumentationLanding />
 	}
-	if (!documentationSitePaths[pathname]) {
+	if (false && !documentationSitePaths[pathname]) {
 		return <Redirect to="/404" />
 	}
 	return (
 		<>
-			<TopBar />
-			<div
-				css={`
-					display: flex;
-					margin-right: 1rem;
-					justify-content: space-between;
-				`}
-			>
-				{currentSimulation ? <BackToSimulation /> : <span />}
-				<SearchButton key={pathname} />
-			</div>
+			{!embedded && (
+				<>
+					<TopBar />
+					<div
+						css={`
+							display: flex;
+							margin-right: 1rem;
+							justify-content: space-between;
+						`}
+					>
+						{currentSimulation ? <BackToSimulation /> : <span />}
+						<SearchButton key={pathname} />
+					</div>
+				</>
+			)}
 			<Route
 				path={documentationPath + '/:name+'}
 				render={({ match }) =>
-					match.params.name && (
+					console.log('BOB', match.params.name) ||
+					(match.params.name && (
 						<DocumentationStyle>
 							<RulePage
 								language={i18n.language as 'fr' | 'en'}
@@ -70,7 +77,7 @@ export default function () {
 								}}
 							/>
 						</DocumentationStyle>
-					)
+					))
 				}
 			/>
 

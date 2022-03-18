@@ -1,14 +1,15 @@
 import Engine from 'publicodes'
-import { Documentation } from 'publicodes-react'
+import { RulePage } from 'publicodes-react'
 import { createContext, useContext, useEffect, useMemo, useState } from 'react'
 import { Redirect, Route, Switch } from 'react-router'
 import RuleInput from 'Components/conversation/RuleInput'
 import Emoji from '../../../components/Emoji'
-import { DocumentationStyle } from '../pages/Documentation'
+import Documentation, { DocumentationStyle } from '../pages/Documentation'
 import fetchBrentPrice from './fetchBrentPrice'
 import Meta from '../../../components/utils/Meta'
 import StackedBarChart from '../../../components/StackedBarChart'
 import pays from './pays.yaml'
+import Markdown from 'markdown-to-jsx'
 
 const req = require.context('./', true, /\.(yaml)$/)
 const rules = req.keys().reduce((memo, key) => {
@@ -39,13 +40,12 @@ export default ({}) => {
 				description="Comprendre comment le prix de l'essence et du gazole à la pompe est calculé."
 			/>
 			<Main />
-			<DocumentationStyle>
-				<div css=" text-align: center; margin-top: 3rem">
-					Comprendre le calcul <Emoji e="⬇️" />
-				</div>
-				<h2>Explications</h2>
-				<Documentation engine={engine} documentationPath={'/carburants'} />
-			</DocumentationStyle>
+
+			<div css=" text-align: center; margin-top: 3rem">
+				Comprendre le calcul <Emoji e="⬇️" />
+			</div>
+			<h2>Explications</h2>
+			<Documentation documentationPath="/carburants" engine={engine} embedded />
 		</SituationContext.Provider>
 	)
 }

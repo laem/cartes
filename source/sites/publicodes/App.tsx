@@ -14,7 +14,7 @@ import Tracker, { devTracker } from '../../Tracker'
 import About from './About'
 import Contribution from './Contribution'
 //import Ferry from './ferry/Ferry'
-//import Carburants from './carburants/Carburants'
+import Carburants from './carburants/Carburants'
 import GameOver from './GameOver'
 import Instructions from './Instructions'
 import Landing from './Landing'
@@ -69,8 +69,8 @@ const Router = ({}) => (
 				<Route path="/nouveautés" component={News} />
 				{/*
 				<Route path="/ferry" component={Ferry} />
-				<Route path="/carburants" component={Carburants} />
 				*/}
+				<Route path="/carburants" component={Carburants} />
 				<Route path="/wiki" component={Wiki} />
 				<Route path="/scénarios" component={Scenarios} />
 				<Route path="/crédit-climat-personnel" component={CreditExplanation} />
