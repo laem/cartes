@@ -54,13 +54,6 @@ export default function useSearchParamsSimulationSharing() {
 
 			dispatch(batchUpdateSituation(newSituation as Situation))
 
-			const newActiveTarget = Object.keys(newSituation).filter((dottedName) =>
-				objectifs.includes(dottedName)
-			)[0]
-			if (newActiveTarget) {
-				dispatch(setActiveTarget(newActiveTarget as DottedName))
-			}
-
 			cleanSearchParams(
 				searchParams,
 				setSearchParams,

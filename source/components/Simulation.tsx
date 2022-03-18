@@ -35,10 +35,9 @@ export default function Simulation({
 	animation = 'appear',
 }: SimulationProps) {
 	const Animation = animate[animation]
-	//useSearchParamsSimulationSharing()
 	const situation = useSelector(situationSelector)
 	const searchParams = useParamsFromSituation(situation)
-	console.log(searchParams)
+	console.log(searchParams.toString())
 	return (
 		<>
 			<AnswerList />
