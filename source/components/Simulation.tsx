@@ -12,6 +12,7 @@ import AnswerList from './conversation/AnswerList'
 import LinkToForm from './Feedback/LinkToForm'
 import useSearchParamsSimulationSharing, {
 	useParamsFromSituation,
+	syncSearchParams,
 } from './utils/useSearchParamsSimulationSharing'
 
 type SimulationProps = {
@@ -35,9 +36,9 @@ export default function Simulation({
 	animation = 'appear',
 }: SimulationProps) {
 	const Animation = animate[animation]
-	const situation = useSelector(situationSelector)
-	const searchParams = useParamsFromSituation(situation)
-	console.log(searchParams.toString())
+	//const situation = useSelector(situationSelector)
+	//const searchParams = useParamsFromSituation(situation)
+	syncSearchParams()
 	return (
 		<>
 			<AnswerList />

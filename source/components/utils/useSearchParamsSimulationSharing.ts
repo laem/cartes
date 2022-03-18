@@ -15,11 +15,35 @@ import {
 	setActiveTarget,
 	batchUpdateSituation,
 } from '../../actions/actions'
+import { situationSelector } from '../../selectors/simulationSelectors'
 
 type Objectifs = (string | { objectifs: string[] })[]
 type ShortName = string
 type DottedName = string
 type ParamName = DottedName | ShortName
+
+export function syncSearchParams() {
+	const [searchParams, setSearchParams] = useSearchParams()
+	const dispatch = useDispatch()
+	const situation = useSelector(situationSelector)
+	const situationSearchParams = useParamsFromSituation(situation)
+	const engine = useEngine()
+
+	const dottedNameParamName = useMemo(
+		() => getRulesParamNames(engine.getParsedRules()),
+		[engine]
+	)
+	useEffect(() => {
+		const newSituation = getSituationFromSearchParams(
+			searchParams,
+			dottedNameParamName
+		)
+		dispatch(batchUpdateSituation(newSituation as Situation))
+	}, [])
+	useEffect(() => {
+		setSearchParams(situationSearchParams)
+	}, [situationSearchParams.toString()])
+}
 
 export default function useSearchParamsSimulationSharing() {
 	const [urlSituationIsExtracted, setUrlSituationIsExtracted] = useState(false)

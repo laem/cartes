@@ -229,7 +229,7 @@ const CustomDescription = ({ rule }) => {
 					<a href="https://bilans-ges.ademe.fr"> base carbone ADEME</a>
 				</div>
 			)}
-			<Markdown source={capitalizeFirst(rule.description)} />{' '}
+			<Markdown>{capitalizeFirst(rule.description)}</Markdown>
 		</div>
 	)
 }

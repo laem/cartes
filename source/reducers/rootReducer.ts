@@ -171,12 +171,18 @@ function batchUpdateSituationReducer(state: RootState, action: Action) {
 		return state
 	}
 	return Object.entries(action.situation).reduce<RootState | null>(
-		(newState, [fieldName, value]) =>
-			mainReducer(newState ?? undefined, {
+		(newState, [fieldName, value]) => {
+			const withSituationUpdate = mainReducer(newState ?? undefined, {
 				type: 'UPDATE_SITUATION',
 				fieldName,
 				value,
-			}),
+			})
+			return mainReducer(withSituationUpdate ?? undefined, {
+				type: 'STEP_ACTION',
+				name: 'fold',
+				step: fieldName,
+			})
+		},
 		state
 	)
 }
