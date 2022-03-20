@@ -16,7 +16,9 @@ import { useHistory } from 'react-router'
 import { situationSelector } from 'Selectors/simulationSelectors'
 import { answeredQuestionsSelector } from '../../selectors/simulationSelectors'
 import { splitName, safeGetRule } from '../publicodesUtils'
+import Emoji from 'Components/Emoji'
 import './AnswerList.css'
+import { resetSimulation } from '../../actions/actions'
 
 export default function AnswerList() {
 	const dispatch = useDispatch()
@@ -89,10 +91,22 @@ export default function AnswerList() {
 								width: 2rem;
 								height: auto;
 							}
+							button {
+								color: white;
+							}
 						`}
 					>
-						{emoji('📋 ')}
-						<Trans>Mes réponses</Trans>
+						<span css="flex-grow:1">
+							{emoji('📋 ')}
+							<Trans>Mes réponses</Trans>
+						</span>
+						<button
+							onClick={() => dispatch(resetSimulation())}
+							title="Effacer mes réponses"
+						>
+							<Emoji e="♻️" />
+							Effacer
+						</button>
 					</h2>
 					<StepsTable {...{ rules: foldedStepsToDisplay }} />
 				</div>
