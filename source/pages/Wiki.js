@@ -169,7 +169,10 @@ const RuleList = ({ rules }) => (
 							css={`
 								width: 9rem;
 								margin: 0.6rem 0.6rem 0.6rem 0rem !important;
-								min-height: 6.5rem;
+								min-height: 7.5rem;
+								display: flex;
+								flex-direction: column;
+								justify-content: center;
 								img {
 									font-size: 150%;
 								}
@@ -182,7 +185,6 @@ const RuleList = ({ rules }) => (
 									padding: 0.6rem;
 									width: 9rem;
 									font-size: 110%;
-									min-height: 6.5rem;
 								}
 							`}
 						>
