@@ -10,6 +10,7 @@ import Meta from '../../../components/utils/Meta'
 import StackedBarChart from '../../../components/StackedBarChart'
 import pays from './pays.yaml'
 import Markdown from 'markdown-to-jsx'
+import TopBar from '../../../components/TopBar'
 
 const req = require.context('./', true, /\.(yaml)$/)
 const rules = req.keys().reduce((memo, key) => {
@@ -35,6 +36,7 @@ export default ({}) => {
 	const [situation, setSituation] = useState({})
 	return (
 		<div className="ui__ container" css={``}>
+			<TopBar />
 			<SituationContext.Provider value={[situation, setSituation]}>
 				<Meta
 					title="Comprendre le prix à la pompe"

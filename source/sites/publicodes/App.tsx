@@ -2,7 +2,7 @@ import Route404 from 'Components/Route404'
 import 'Components/ui/index.css'
 import News from 'Pages/News'
 import Wiki from 'Pages/Wiki'
-import React from 'react'
+import React, { Suspense } from 'react'
 import { useTranslation } from 'react-i18next'
 import { Route, Switch } from 'react-router-dom'
 import Provider from '../../Provider'
@@ -13,8 +13,8 @@ import {
 import Tracker, { devTracker } from '../../Tracker'
 import About from './About'
 import Contribution from './Contribution'
-import Ferry from './ferry/Ferry'
-import Carburants from './carburants/Carburants'
+const Ferry = React.lazy(() => import('./ferry/Ferry'))
+const Carburants = React.lazy(() => import('./carburants/Carburants'))
 import GameOver from './GameOver'
 import Instructions from './Instructions'
 import Landing from './Landing'
@@ -67,8 +67,16 @@ const Router = ({}) => (
 				<Route path="/à-propos" component={About} />
 				<Route path="/vie-privée" component={Privacy} />
 				<Route path="/nouveautés" component={News} />
-				<Route path="/ferry" component={Ferry} />
-				<Route path="/carburants" component={Carburants} />
+				<Route path="/ferry">
+					<Suspense fallback="Chargement">
+						<Ferry />
+					</Suspense>
+				</Route>
+				<Route path="/carburants">
+					<Suspense fallback="Chargement">
+						<Carburants />
+					</Suspense>
+				</Route>
 				<Route path="/wiki" component={Wiki} />
 				<Route path="/scénarios" component={Scenarios} />
 				<Route path="/crédit-climat-personnel" component={CreditExplanation} />

@@ -142,6 +142,9 @@ export const DocumentationStyle = styled.div`
 			0 1px 2px rgba(var(--rgbColor), 0.24);
 		border-radius: 0.4rem;
 	}
+	button {
+		color: inherit;
+	}
 	span {
 		background: inherit;
 	}

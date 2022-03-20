@@ -15,7 +15,6 @@ import TopBar from 'Components/TopBar'
 export default function Suggestions() {
 	const rules = useSelector((state) => state.rules)
 
-	console.log(rules)
 	let exposedRules = Object.entries(rules)
 		.map(([dottedName, v]) => ({ ...v, dottedName }))
 		.filter((rule) => rule?.exposé)
@@ -30,8 +29,6 @@ export default function Suggestions() {
 	let [results, setResults] = useState(exposedRules)
 	let [input, setInput] = useState(null)
 
-	console.log({ exposedRules })
-
 	useEffect(() => {
 		worker.postMessage({
 			rules: Object.values(exposedRules).map(
@@ -42,8 +39,6 @@ export default function Suggestions() {
 		worker.onmessage = ({ data: results }) =>
 			setResults(results.map((el) => el.item))
 	}, [])
-
-	console.log('results', results)
 
 	return (
 		<section className="ui__ container">
@@ -80,7 +75,6 @@ export default function Suggestions() {
 
 const CategoryView = ({ exposedRules }) => {
 	const categories = byCategory(exposedRules)
-	console.log('CAT', exposedRules, categories)
 	return (
 		<ul
 			css={`

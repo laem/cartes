@@ -4,6 +4,7 @@ import { Redirect, Route, Switch } from 'react-router'
 import RuleInput from 'Components/conversation/RuleInput'
 import Emoji from '../../../components/Emoji'
 import Documentation from '../pages/Documentation'
+import TopBar from '../../../components/TopBar'
 
 const req = require.context('./', true, /\.(yaml)$/)
 const rules = req.keys().reduce((memo, key) => {
@@ -29,6 +30,7 @@ export default ({}) => {
 	const [situation, setSituation] = useState({})
 	return (
 		<div className="ui__ container" css={``}>
+			<TopBar />
 			<SituationContext.Provider value={[situation, setSituation]}>
 				<Main />
 				<div css=" text-align: center; margin-top: 3rem">
