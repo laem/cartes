@@ -41,7 +41,7 @@ export function syncSearchParams() {
 		dispatch(batchUpdateSituation(newSituation as Situation))
 	}, [])
 	useEffect(() => {
-		setSearchParams(situationSearchParams)
+		setSearchParams(situationSearchParams, { replace: true })
 	}, [situationSearchParams.toString()])
 }
 
