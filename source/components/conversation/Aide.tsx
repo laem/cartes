@@ -24,6 +24,8 @@ export default function Aide() {
 		text = rule.description,
 		refs = rule.références
 
+	console.log(text)
+
 	return (
 		<animate.fromTop>
 			<div
