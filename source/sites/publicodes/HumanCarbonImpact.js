@@ -1,8 +1,15 @@
 import animate from 'Components/ui/animate'
 import { useNextQuestions } from 'Components/utils/useNextQuestion'
+import {
+	motion,
+	motionValue,
+	useMotionValue,
+	useSpring,
+	useTransform,
+} from 'framer-motion'
 import { utils } from 'publicodes'
 import { mapObjIndexed, toPairs } from 'ramda'
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import emoji from 'react-easy-emoji'
 import { useSelector } from 'react-redux'
 import { Link } from 'react-router-dom'
@@ -111,8 +118,6 @@ export default ({ nodeValue, formule, dottedName }) => {
 }
 
 const ImpactCard = ({ nodeValue, dottedName, exampleName }) => {
-	const nextSteps = useNextQuestions()
-	const foldedSteps = useSelector((state) => state.simulation?.foldedSteps)
 	const scenario = useSelector((state) => state.scenario)
 	const [value, unit] = humanWeight(nodeValue)
 	let { closestPeriodLabel, closestPeriod, factor } = humanCarbonImpactData(
@@ -190,14 +195,52 @@ const ImpactCard = ({ nodeValue, dottedName, exampleName }) => {
 						</div>
 					</>
 				)}
-
-				{nextSteps?.length > 0 && (
-					<FirstEstimationStamp>
-						{!foldedSteps.length ? '1ère estimation' : 'estimation'}
-					</FirstEstimationStamp>
-				)}
 			</div>
 		</animate.appear>
+	)
+}
+
+export const ProgressCircle = ({}) => {
+	const nextSteps = useNextQuestions()
+	const foldedSteps = useSelector((state) => state.simulation?.foldedSteps)
+	const progress = foldedSteps.length / (nextSteps.length + foldedSteps.length)
+	const motionProgress = useMotionValue(0)
+	const pathLength = useSpring(motionProgress, { stiffness: 400, damping: 90 })
+
+	useEffect(() => {
+		motionProgress.set(progress)
+	}, [progress])
+
+	return (
+		<svg
+			className="progress-icon"
+			viewBox="0 0 60 60"
+			css="width: 3rem; position: absolute; right: 0; top: .4rem"
+		>
+			<motion.path
+				fill="none"
+				strokeWidth="5"
+				stroke="var(--color)"
+				strokeDasharray="0 1"
+				d="M 0, 20 a 20, 20 0 1,0 40,0 a 20, 20 0 1,0 -40,0"
+				style={{
+					pathLength,
+					rotate: 90,
+					translateX: 5,
+					translateY: 5,
+					scaleX: -1, // Reverse direction of line animation
+				}}
+			/>
+			<motion.path
+				fill="none"
+				strokeWidth="5"
+				stroke="var(--color)"
+				d="M14,26 L 22,33 L 35,16"
+				initial={false}
+				strokeDasharray="0 1"
+				animate={{ pathLength: progress === 1 ? 1 : 0 }}
+			/>
+		</svg>
 	)
 }
 

@@ -1,5 +1,7 @@
 import emoji from 'react-easy-emoji'
-import HumanCarbonImpact from '../sites/publicodes/HumanCarbonImpact'
+import HumanCarbonImpact, {
+	ProgressCircle,
+} from '../sites/publicodes/HumanCarbonImpact'
 import Emoji from './Emoji'
 
 export default ({ dottedName, formule, title, icônes, nodeValue }) => {
@@ -34,6 +36,7 @@ export default ({ dottedName, formule, title, icônes, nodeValue }) => {
 				}
 			`}
 		>
+			<ProgressCircle />
 			<div css="width: 100%; img { font-size: 150%}}">
 				{icônes && <Emoji e={icônes} />}
 			</div>
