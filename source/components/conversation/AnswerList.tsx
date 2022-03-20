@@ -14,7 +14,10 @@ import { Trans, useTranslation } from 'react-i18next'
 import { useDispatch, useSelector } from 'react-redux'
 import { useHistory } from 'react-router'
 import { situationSelector } from 'Selectors/simulationSelectors'
-import { answeredQuestionsSelector } from '../../selectors/simulationSelectors'
+import {
+	answeredQuestionsSelector,
+	objectifsSelector,
+} from '../../selectors/simulationSelectors'
 import { splitName, safeGetRule } from '../publicodesUtils'
 import Emoji from 'Components/Emoji'
 import './AnswerList.css'
@@ -155,6 +158,9 @@ function StepsTable({
 const Answer = ({ rule, dispatch, language }) => {
 	const history = useHistory()
 	const path = parentName(rule.dottedName, ' · ', 1)
+	const simulationDottedName = useSelector(objectifsSelector)[0]
+	const uselessPrefix = simulationDottedName.includes(path)
+
 	return (
 		<tr
 			key={rule.dottedName}
@@ -163,7 +169,7 @@ const Answer = ({ rule, dispatch, language }) => {
 			`}
 		>
 			<td>
-				{path && (
+				{path && !uselessPrefix && (
 					<div>
 						<small>{path}</small>
 					</div>
