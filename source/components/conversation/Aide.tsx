@@ -38,13 +38,13 @@ export default function Aide() {
 				`}
 			>
 				{rule.title && <h2>{rule.title}</h2>}
-				<Markdown> {text}</Markdown>
+				<Markdown>{text}</Markdown>
 				{refs && (
 					<>
 						<h3>
 							<Trans>En savoir plus</Trans>
 						</h3>
-						<References refs={refs} />
+						<References references={refs} />
 					</>
 				)}
 				<button onClick={stopExplaining} className="ui__ button simple">

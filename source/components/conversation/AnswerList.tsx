@@ -22,6 +22,7 @@ import { splitName, safeGetRule } from '../publicodesUtils'
 import Emoji from 'Components/Emoji'
 import './AnswerList.css'
 import { resetSimulation } from '../../actions/actions'
+import { motion } from 'framer-motion'
 
 export default function AnswerList() {
 	const dispatch = useDispatch()
@@ -162,7 +163,11 @@ const Answer = ({ rule, dispatch, language }) => {
 	const uselessPrefix = simulationDottedName.includes(path)
 
 	return (
-		<tr
+		<motion.tr
+			initial={{ opacity: 0, y: -50, scale: 0.3 }}
+			animate={{ opacity: 1, y: 0, scale: 1 }}
+			transition={{ duration: 0.3 }}
+			exit={{ opacity: 0, scale: 0.5, transition: { duration: 0.3 } }}
 			key={rule.dottedName}
 			css={`
 				background: var(--darkestColor);
@@ -210,6 +215,6 @@ const Answer = ({ rule, dispatch, language }) => {
 					</span>
 				</button>
 			</td>
-		</tr>
+		</motion.tr>
 	)
 }
