@@ -159,7 +159,7 @@ const Simulateur = ({ objective }) => {
 			>
 				<Meta
 					title={rule.title}
-					description={rule.description}
+					description={rule.exposé?.description || rule.description}
 					//image={getEmojiImageUrls(rule.icônes)[0]} .svg images don't work in og tags, we'll have to convert them
 				/>
 
