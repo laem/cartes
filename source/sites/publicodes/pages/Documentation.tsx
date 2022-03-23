@@ -42,7 +42,7 @@ export default function ({
 		return <Redirect to="/404" />
 	}
 	return (
-		<>
+		<div className="ui__ container">
 			{!embedded && (
 				<>
 					<TopBar />
@@ -82,7 +82,7 @@ export default function ({
 			/>
 
 			<BandeauContribuer />
-		</>
+		</div>
 	)
 }
 function BackToSimulation() {

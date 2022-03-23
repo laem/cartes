@@ -36,8 +36,11 @@ export default () => {
 			</p>
 			<p>
 				Concrètement, avec notre budget annuel de 2 tonnes, nous disposons
-				d'environ 5 kg par jour (2000 kg / 365 jours), donc un peu plus de 2O0g
+				d'environ 5 kg par jour (2000 kg / 365 jours), donc un peu plus de 200g
 				par heure (5 kg / 24 h).{' '}
+			</p>
+			<p>
+				Illustrations <Emoji e="⬇️" />
 			</p>
 			<blockquote>
 				<p>
@@ -48,11 +51,12 @@ export default () => {
 				</p>
 				<p>
 					Ainsi, pour un épisode de 40 minutes posé dans mon canapé, j'ai
-					consommé un crédit climat d'une demi-heure. Pas dégueu !
+					consommé un crédit climat d'une demi-heure. C'est parfait, on est à
+					l'équilibre !
 				</p>
 			</blockquote>
 			<blockquote>
-				<Emoji e="✈️" /> Autre exemple radicalement différent : si mon voyage en
+				<Emoji e="✈️" /> Autre exemple radicalement différent. Si mon voyage en
 				avion émet 500 kg, alors ce vol consomme un quart de crédit annuel : en
 				2 heures de vol, j'ai grillé un trimestre de mon crédit carbone ! Aïe.
 			</blockquote>
