@@ -44,7 +44,7 @@ export default ({}) => {
 			{displayIntro && (
 				<p
 					id="intro"
-					css="max-width: 60%; line-height: 1.4rem; margin-right: 1em; "
+					css="max-width: 25rem; line-height: 1.4rem; margin-right: 1em; "
 				>
 					La catastrophe climatique n'est plus une menace lointaine, c'est une
 					actualité.&nbsp;<Link to="/à-propos">En savoir plus</Link>.
