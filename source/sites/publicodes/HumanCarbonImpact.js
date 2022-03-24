@@ -143,6 +143,9 @@ const ImpactCard = ({ nodeValue, dottedName, exampleName }) => {
 						<div
 							css={`
 								padding: 0.6rem 1rem 0.25rem;
+								@media (max-width: 1000px) {
+									padding: 0.6rem 0.3rem 0.25rem;
+								}
 								margin-bottom: 0.25rem;
 								color: var(--textColor);
 								display: flex;
