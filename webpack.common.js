@@ -168,7 +168,8 @@ module.exports.HTMLPlugins = ({ injectTrackingScript = false } = {}) => [
 		chunks: ['publicodes'],
 		title: 'Futureco 🔥',
 		description:
-			"Êtes-vous écolo ? Faites le test en 2 minutes. Découvrez l'impact climat de votre quotidien.",
+			//"Êtes-vous écolo ? Faites le test en 2 minutes. Découvrez l'impact climat de votre quotidien.",
+			"Découvrez l'empreinte climat des choses de votre quotidien",
 		filename: 'index.html',
 		injectTrackingScript,
 		base: '/',
