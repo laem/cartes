@@ -31,6 +31,7 @@ export default ({}) => {
 				<img
 					width="5em"
 					css={`
+						aspect-ratio: 1 / 1;
 						width: ${displayIntro ? '8em' : '5em'};
 						@media (max-width: 800px) {
 							${displayIntro ? 'display: none;' : ''}

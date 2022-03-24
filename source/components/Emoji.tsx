@@ -55,6 +55,7 @@ export default ({ e, black, extra, alt, hasText, white }) => {
 const Image = ({ src, alt, imageSize, white }) => (
 	<img
 		css={`
+			aspect-ratio: 1 / 1;
 			width: ${imageSize}em;
 			height: ${imageSize}em;
 			vertical-align: middle !important;
