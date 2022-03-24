@@ -87,7 +87,7 @@
 		"great-circle": "^0.2.8",
 		"html-webpack-plugin": "^5.3.1",
 		"i18next": "^19.8.4",
-		"iframe-resizer": "^4.1.1",
+		"iframe-resizer": "^4.3.1",
 		"imports-loader": "^2.0.0",
 		"isomorphic-fetch": "^3.0.0",
 		"markdown-to-jsx": "^7.1.7",
