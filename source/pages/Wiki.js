@@ -52,7 +52,7 @@ export default function Suggestions() {
 					if (input.length > 2) worker.postMessage({ input })
 				}}
 			/>
-			<section css="margin-top: .6rem">
+			<section css="@media (min-width: 800px){margin-top: .6rem}">
 				{input ? (
 					results.length ? (
 						<>

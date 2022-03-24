@@ -47,6 +47,22 @@ export default ({}) => {
 					id="intro"
 					css="max-width: 25rem; line-height: 1.4rem; margin-right: 1em; "
 				>
+					{displayIntro && (
+						<img
+							css={`
+								aspect-ratio: 1 / 1;
+								width: 1.4rem;
+								vertical-align: text-bottom;
+								display: inline;
+								@media (min-width: 800px) {
+									display: none;
+								}
+								margin-right: 0.4em;
+							`}
+							src={'/logo.svg'}
+							alt=""
+						/>
+					)}
 					La catastrophe climatique n'est plus une menace lointaine, c'est une
 					actualité.&nbsp;<Link to="/à-propos">En savoir plus</Link>.
 				</p>
