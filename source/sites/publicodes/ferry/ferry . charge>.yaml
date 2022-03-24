@@ -1,0 +1,267 @@
+index:
+  description: |
+
+    Les éléments de modélisation du poids embarqué sur un ferry.
+
+    ## Rappel du pourquoi 
+
+    Le raisonnement est le suivant. À poids constant du ferry, consommation constante, qu'on quppose connue. Plutot que de mettre un jacuzzi de 5 tonnes, on pourrait mettre n cabines ou dortoirs, et ainsi plus de personnes, divisant l'empreinte totale du bateau par p personnes en plus (ou du fret). Ces p personnes auraient autrement emprunté un deuxième bateau, ou un avion (par volonté de voyager plus écolo, mais aussi tout simplement par effet de prix).
+
+    Notre objectif :
+     - attribuer un poids à un pax (abbréviation courant de "passager") en fonction de ses choix (cabine, voiture, usage des loisirs). On le nomme A et c'est donc une fonction d'autres questions.
+     - le diviser par le poids disponible qu'on nomme B. C'est le poids qu'on ajoute en pratique au bateau à tout ce qui est strictement nécessaire pour faire la navigation s'il n'y avait rien à transporter sur le ferry, ni passagers ni fret : la carcasse, essence, moteur, matériel de sécurité (mais pas les canaux dédiés aux pax), équipage de navigation (mais pas l'équipe dédié aux pax), etc..
+
+    Il semble que la notion de poids lège (ou déplacement lège) ne soit pas utile pour nous ici, notamment car elle est donnée sans consommables dont le carburant, la différence entre poids max et lège ne correspond donc pas à ce poids B qu'on recherche. A moins d'y ajouter une par une les charges de navigation manquantes.
+
+    On a donc fait le choix de calculer notre propre estimation de ce "poids disponible" B. On peut le comprendre ainsi : supposons que je lève quelques millions d'€ pour faire du transport maritime. Je m'achète un bateau équipé pour naviguer. J'ai alors le choix de l'utilité que je veux lui donner : je pourrais le remplir de fret, ou à l'inverse le remplir de pax. Pour ces derniers, je pourrais faire le choix du super "low cost", avec des dortoirs et rien d'autres que les services de nécessité (toilettes communes, sièges inclinables, etc.), ou à l'inverse le super luxe avec un jacuzzi privatif par cabine. Toutes ces possibilités impliquent une consommation d'essence *par tête* probablement d'un ordre de grandeur différent.
+
+    Nous ignorons le poids du sol des ponts, qui sont nécessaires quel que soit l'usage fait du bateau (fret, passagers et luxe des passagers).
+
+    Voir la [variable principale du calcul](/ferry/charge/par-personne).
+
+par personne majorée:
+  formule: par personne * 1.1
+  description: |
+    Nous ajoutons un facteur de 1/10ème pour prendre en compte le besoin en personnel du bateau. L'idée est simple : pour 10 passagers, 1 employé correspondant au poids des services fournis au billet.
+    10%, c'est environ le poids de la ligne "crew facilities" du [tableau Deltamarin](https://i.imgur.com/4o64Po9.png).
+par personne:
+  titre: poids embarqué par personne
+  formule:
+    somme:
+      - passager
+      - bagages
+      - cabine
+      - services
+      - dortoir
+      - voiture
+      - charge . eau
+
+par personne . passager:
+  formule: 75 kg
+  description: |
+    Nous retenons un poids moyen en ordre de grandeur. 
+
+    Selon [cette source](https://liguecontrelobesite.org/actualite/taille-poids-et-tour-de-taille-photographie-2020-des-francais), l'homme fait 81 kg, la femme 67kg, nous coupons la poire en deux en 75.
+
+par personne . bagages:
+  formule: 15kg
+  description: |
+    On retient souvent un chiffre de 20kg pour les bagages par passager, mais 10-15kg semble bien plus réaliste en moyenne : une valise de 20kg semble plutôt la borne haute.
+
+par personne . voiture:
+  applicable si: ferry . voiture
+  formule: charge . voiture / groupe
+
+par personne . cabine:
+  applicable si: cabine
+  formule: (nombre nécessaire * charge . cabine pour quatre) / groupe
+
+par personne . cabine . nombre nécessaire:
+  description: On part pour l'instant du principe qu'il n'y a que des cabines 4 places.
+  note: |
+    Ici on aimerait utiliser un mécanisme de modulo, qui n'existe pas dans publi.codes.
+  formule:
+    grille:
+      assiette: groupe
+      tranches:
+        - montant: 1
+          plafond: 5
+        - montant: 2
+          plafond: 9
+        - montant: 3
+          plafond: 13
+        - montant: groupe / 4
+
+par personne . services:
+  applicable si: consommation de services
+  formule: charge . services / passagers
+
+par personne . dortoir:
+  non applicable si: cabine
+  formule: charge . dortoir . par personne
+
+dortoir:
+dortoir . par personne:
+  description: Calculer ici le poids d'un dortoir par personne
+  note: Comment estimer le nombre de personnes par salle de bain ?
+  formule:
+    somme:
+      - siège
+      - salle de bain partagée
+
+salle de bain partagée:
+  note: |
+    Nous partons du principe que les douches sont les plus critiques, car il y a une heure de pointe le matin, et que le temps dans la douche est plus important. 
+
+    Idem pour le lavabo dans une moindre mesure. 
+
+    Les WC eux peuvent être bien davantage partagés.
+
+    Ces chiffres sont de premières estimations assez grossières.
+  formule:
+    somme:
+      - douche / 4
+      - lavabo / 6
+      - wc / 10
+
+dortoir . siège:
+  formule: 25
+  note: |
+    Il semble exister des sièges super légers pour l'aviation, de 4kg, [source](https://fr.wikipedia.org/wiki/Expliseat).
+  unité: kg
+  références:
+    - https://www.kirstein.de/fr/Home-Living/Meubles-et-accessoires-de-maison/Sieges-de-cinema/Stagecaptain-CS-600R-Movieking-fauteuil-de-cinema-rouge.html
+
+canots de sauvetage:
+  formule: 0
+  note: Nous considérons que le poids du canot *par passager* est négligeable par rapport au reste des équipements.
+
+voiture:
+  description: Le poids moyen d'une voiture embarquée sur le ferry.
+  formule: 1500
+  note: |
+    Le [site carlabelling](https://carlabelling.ademe.fr/chiffrescles/r/evolutionMasseMoyenne) donne un poids moyen en France en 2020 de 1233kg.
+
+    La norme norme EN 16258 retient 1500kg. C'est ce que nous retenons à notre tour, en considérant notamment qu'une voiture est rarement à son "poids d'achat", mais embarque équipement, affaires, bagages supplémentaires, etc.
+
+    ![](https://i.imgur.com/NS3QgIx.png)
+  unité: kg
+
+cabine pour quatre:
+  description: |
+    La plupart des voyages en ferries se font en cabine, tout du moins dès que la traversée implique une nuit évidemment. 
+
+    Voilà à quoi elles ressemblent: 
+
+    ![](https://upload.wikimedia.org/wikipedia/commons/thumb/c/c9/JNICOLI_11.jpg/1280px-JNICOLI_11.jpg)
+  note: |
+    Ceci est une estimation, basée aux mieux sur les références commerciales que l'on trouve, ou sur des ordres de grandeur. 
+
+    Ce n'est donc évidemment pas fidèle au matériel que l'on trouve réellement sur les navires, mais on pourra s'en rapprocher en sophistiquant le modèle.
+
+    🟧 Attention, pour une cabine de 12m² (voir variable surface) on obtient un poids / m² presque 2 fois inférieur à l'estimation de Deltamarin de [ce document](https://i.imgur.com/4o64Po9.png). A confirmer donc.
+
+  formule:
+    somme:
+      - lits
+      - meubles
+      - salle de bain
+      - murs
+      - moquette
+      - TV
+      - miroirs
+
+miroirs:
+  formule: 5 * 2
+  description: Un miroir 1m*50cm dans la salle de bain, un miroir 50cm*1m sur l'armoire de rangement ou la porte dans l'entrée.
+
+TV: 5 kg
+moquette: surface * densité
+moquette . densité: 3 kg/m2
+
+surface:
+  formule: 12m2
+  description: |
+    On considère 2 x 2 lits superposés de 90cm*2m, espace entre lits de 1m20, espace entrée / salle de bain de 2m de long, soit 4m x 3m.
+
+murs:
+  description: Nous partons sur des murs similaires aux cloisons amovibles isolées utilisées dans les bureaux. Elles semblent composées d'aluminium (75mm) comme matériel principal.
+  formule: poids linéaire * linéaire
+  note: Nous ne considérons pas la porte, remplacée par l'équivalent en mur.
+  références:
+    cloison hoyez de bureau: https://www.bimobject.com/fr/hoyez/product/h7b
+
+murs . linéaire: salle de bain + extérieur
+murs . linéaire . salle de bain:
+  formule: 1 + 2
+murs . linéaire . extérieur:
+  formule: (4 + 3) * 2
+  unité: m
+murs . poids linéaire:
+  formule: 17 / (1.25 * ajustement hauteur)
+  unité: kg/m
+murs . ajustement hauteur:
+  description: La spécification donne un poids pour 3,3m de hauteur de cloison, nous partons plutôt sur une hypothèse de 2,5m.
+  formule: 2.5 / 3.3
+
+meubles:
+  description: Il y a souvent une table de nuit entre les deux rangées de lit, et une armoire pour stocker les affaires.
+  formule: table de nuit + armoire
+
+table de nuit:
+  formule: 10
+  unité: kg
+armoire:
+  formule: 80
+  unité: kg
+
+salle de bain:
+  formule:
+    somme:
+      - lavabo
+      - douche
+      - wc
+      - carrelage sol
+
+salle de bain . carrelage sol:
+  formule: surface * poids carrelage
+salle de bain . surface:
+  formule: 2 * 2
+  unité: m2
+salle de bain . poids carrelage:
+  formule: 15
+  unité: kg/m2
+  références:
+    un blog: http://posersoncarrelage.over-blog.com/article-combien-pese-du-carrelage-quel-est-le-poids-du-carrelage-39382743.html
+
+wc:
+  formule: 50
+  unité: kg
+  références:
+    - https://www.leroymerlin.fr/produits/salle-de-bains/wc/wc-suspendu/pack-wc-suspendu-bati-universel-horizontale-saphir-2-siamp-82898125.html
+
+lavabo:
+  description: On peut compter ici un lavabo en porcelaine sanitaire, un miroir, une planche pour reposer les affaires.
+  formule: 50
+  unité: kg
+douche:
+  description: On peut compter ici la cabine, le groupe pommeau+socle réglable+tuyau+mitigeur
+  note: Estimation très grossière.
+  formule: 100
+  unité: kg
+eau:
+  formule: 50
+  note: Une douche par personne, 50l par douche.
+  référnces:
+    - https://www.m-habitat.fr/plomberie-et-eau/consommation-d-eau/quelle-est-la-consommation-en-eau-d-une-douche-902_A
+
+lits:
+  formule: (lits superposés + matelas) * 2
+lits superposés:
+  formule: 50
+  note: On retient un ordre de grandeur de 50kg, basé sur le 1er trouvé sur Google, un lit en bois conforama qui donne 55,7kg.
+  références:
+    - https://www.conforama.fr/enfant-bebe/chambre-enfant/lit-enfant/lits-superposes-90x190-cm-andy-coloris-gris/p/655558
+matelas:
+  formule: 15 * 2
+  note: Matelas en mousse, le 1er trouvé sur Google.
+  références:
+    - https://www.conforama.fr/chambre-literie/literie/literie-de-relaxation/matelas-mousse-90x190-cm-dunlopillo-precious-moment/p/561951
+
+chaise:
+  formule: 7
+  références:
+    la redoute: https://www.laredoute.fr/ppdp/prod-528978563.aspx#searchkeyword=chaise&shoppingtool=search
+
+canapé:
+  description: Canapé 2 ou 3 places
+  formule: 50
+  unité: kg
+  références:
+    la redoute: https://www.laredoute.fr/ppdp/prod-533200832.aspx#shoppingtool=search
+
+table:
+  formule: 34
+  unité: kg
+  références:
+    la redoute: https://www.laredoute.fr/ppdp/prod-502719638.aspx#searchkeyword=table&shoppingtool=search

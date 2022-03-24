@@ -1,5 +1,5 @@
-const isSIREN = (input: string) => input.match(/^[\s]*([\d][\s]*){9}$/)
-const isSIRET = (input: string) => input.match(/^[\s]*([\d][\s]*){14}$/)
+const isSIREN = (input: string) => /^[\s]*([\d][\s]*){9}$/.exec(input)
+const isSIRET = (input: string) => /^[\s]*([\d][\s]*){14}$/.exec(input)
 
 export async function fetchCompanyDetails(siren: string) {
 	const response = await fetch(
@@ -25,6 +25,16 @@ export async function searchDenominationOrSiren(value: string) {
 	return searchFullText(value)
 }
 
+type SireneData = {
+	etablissement: Array<{
+		siren: string
+		is_siege: string
+		categorie_entreprise: string
+		activite_principale: string
+		l1_normalisee: string
+	}>
+}
+
 export type Etablissement = {
 	siren: string
 	denomination?: string
@@ -39,7 +49,7 @@ async function searchFullText(
 	if (!response.ok) {
 		return null
 	}
-	const json = await response.json()
+	const json: SireneData = await response.json()
 	const etablissements = json.etablissement
 		.filter(
 			({ is_siege, categorie_entreprise, activite_principale }) =>

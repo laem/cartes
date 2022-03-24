@@ -1,61 +1,56 @@
 import { explainVariable } from 'Actions/actions'
-import Animate from 'Components/ui/animate'
+import animate from 'Components/ui/animate'
 import { Markdown } from 'Components/utils/markdown'
-import { findRuleByDottedName } from 'Engine/rules'
-import React from 'react'
-import emoji from 'react-easy-emoji'
+import { Trans } from 'react-i18next'
 import { useDispatch, useSelector } from 'react-redux'
 import { RootState } from 'Reducers/rootReducer'
-import { flatRulesSelector } from 'Selectors/analyseSelectors'
-import References from '../rule/References'
+import References from '../../sites/publicodes/pages/DocumentationReferences'
 import './Aide.css'
+import mosaicQuestions from './mosaicQuestions'
 
 export default function Aide() {
 	const explained = useSelector((state: RootState) => state.explainedVariable)
-	const flatRules = useSelector(flatRulesSelector)
+	const rules = useSelector((state) => state.rules)
+
 	const dispatch = useDispatch()
 
 	const stopExplaining = () => dispatch(explainVariable())
 
-	if (!explained) return <section id="helpWrapper" />
+	if (!explained) return null
 
-	let rule = findRuleByDottedName(flatRules, explained),
+	const rule =
+			rules[explained] ||
+			mosaicQuestions.find((question) => question.dottedName === explained),
 		text = rule.description,
 		refs = rule.références
 
+	console.log(text)
+
 	return (
-		<Animate.fromTop>
+		<animate.fromTop>
 			<div
 				css={`
-					display: flex;
-					align-items: center;
-					img {
-						margin: 0 1em 0 !important;
-						width: 1.6em !important;
-						height: 1.6em !important;
+					padding: 0.6rem;
+					position: relative;
+					> button {
+						text-align: right;
 					}
 				`}
 			>
-				{emoji('ℹ️')}
-
-				<div
-					className="controlText ui__ card"
-					css="padding: 0.6rem 0; flex: 1;"
-				>
-					<h4>{rule.title}</h4>
-					<p>
-						<Markdown source={text} />
-					</p>
-					{refs && (
-						<div>
-							<References refs={refs} />
-						</div>
-					)}
-					<button className="hide" aria-label="close" onClick={stopExplaining}>
-						×
-					</button>
-				</div>
+				{rule.title && <h2>{rule.title}</h2>}
+				<Markdown>{text}</Markdown>
+				{refs && (
+					<>
+						<h3>
+							<Trans>En savoir plus</Trans>
+						</h3>
+						<References references={refs} />
+					</>
+				)}
+				<button onClick={stopExplaining} className="ui__ button simple">
+					Refermer
+				</button>
 			</div>
-		</Animate.fromTop>
+		</animate.fromTop>
 	)
 }

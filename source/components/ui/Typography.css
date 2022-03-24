@@ -1,9 +1,10 @@
 html {
 	transition: none !important;
+	line-height: 1.7rem;
 }
 @media (max-width: 500px) {
 	html {
-		font-size: 0.9em;
+		font-size: 1em;
 	}
 }
 @media (min-width: 500px) and (max-width: 1920px) {
@@ -22,41 +23,54 @@ html {
 		font-size: 1em;
 	}
 }
+
 body {
 	font-weight: 400;
-	color: #040e19;
-	color: var(--darkColor);
-	font-family: Arial, Helvetica, sans-serif;
+	font-family: Helvetica, Arial, sans-serif;
+	color: white;
 }
 
 h1 {
 	margin-top: 2rem;
 	margin-bottom: 1rem;
 	font-size: 1.9rem;
-	line-height: 2.6rem;
+	line-height: 3rem;
+	font-size: 300%;
+}
+@media (max-width: 800px) {
+	h1 {
+		font-size: 230%;
+		line-height: 2.2rem;
+	}
 }
 h2 {
 	margin-top: 2rem;
 	margin-bottom: 1rem;
-	font-size: 1.3rem;
+	font-size: 1.4rem;
+	font-size: 160%;
 }
 h3 {
 	margin-top: 1rem;
 	margin-bottom: 0.6rem;
-	font-size: 1.1rem;
+	font-size: 1.2rem;
+	font-size: 130%;
 }
 h4 {
 	margin-top: 0.6rem;
 	margin-bottom: 0.4rem;
 	font-size: 1rem;
+	font-size: 110%;
 }
 h5 {
-	font-size: 1rem;
-	font-weight: normal;
+	margin-top: 0.4rem;
+	margin-bottom: 0.2rem;
+	font-size: 0.9rem;
 }
 h6 {
-	font-size: 1rem;
-	font-weight: bold;
+	margin-top: 0.4rem;
+	margin-bottom: 0.2rem;
+	font-size: 0.9rem;
+	color: var(--lighterTextColor);
 }
 
 h1,
@@ -65,24 +79,18 @@ h3,
 h4,
 h5,
 h6 {
-	color: var(--darkColor);
+	color: white;
 	font-family: Arial, Helvetica, sans-serif;
-	font-weight: 600;
+	font-weight: 300;
+	scroll-margin-top: 1rem; /* Add a margin for anchor links */
 }
 
 button {
 	font-weight: normal;
 }
-
-p,
-a,
-ul {
-	line-height: 1.7rem;
-}
-
 p,
 ul {
-	margin: 0 0 0.6rem;
+	margin: 0 0 0.4rem;
 }
 
 p.ui__.lead {
@@ -103,12 +111,11 @@ li {
 }
 a {
 	border: none;
-	display: inline-block;
 	font-size: inherit;
 	padding: none;
 	text-decoration: underline;
-	color: rgb(41, 117, 209);
-	color: var(--color);
+	text-underline-offset: 4px;
+	color: var(--lightColor);
 }
 
 p img {
@@ -121,7 +128,7 @@ a:not(:disabled):not(.button):not(.button-choice):hover {
 
 strong,
 b {
-	font-weight: 500;
+	font-weight: bold;
 }
 
 textarea {
@@ -130,8 +137,10 @@ textarea {
 
 small,
 .ui__.notice {
-	color: rgba(0, 0, 0, 0.6);
-	color: var(--lighterTextColor);
 	font-size: 85%;
-	line-height: 1.2rem;
+	line-height: 1.5rem;
+}
+
+small {
+	display: inline-block;
 }

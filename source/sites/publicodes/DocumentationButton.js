@@ -1,20 +1,22 @@
-import { SitePathsContext } from 'Components/utils/withSitePaths'
-import React, { useContext } from 'react'
+import React from 'react'
+import emoji from 'react-easy-emoji'
 import { Link } from 'react-router-dom'
 
-const DocumentationButton = props => {
-	const sitePaths = useContext(SitePathsContext)
-
+const DocumentationButton = (props) => {
 	return (
 		<div
 			css={`
 				display: flex;
 				align-items: center;
 				justify-content: center;
+				img {
+					margin-right: 0.4rem !important;
+				}
 			`}
 		>
-			<Link {...props} to={sitePaths.documentation.index}>
-				Voir toute la documentation
+			{emoji('📄')}
+			<Link {...props} to={'/documentation'}>
+				Documentation
 			</Link>
 		</div>
 	)

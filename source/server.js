@@ -3,11 +3,11 @@ const webpack = require('webpack')
 const webpackDevMiddleware = require('webpack-dev-middleware')
 
 const app = express()
-const config = require('./webpack.dev.js')
+const config = require('../webpack.dev.js')
 const compiler = webpack(config)
 const history = require('connect-history-api-fallback')
 
-const { watchDottedNames } = require('./scripts/dottednames')
+const { watchDottedNames } = require('../scripts/dottednames')
 watchDottedNames()
 
 const rewrite = basename => ({
@@ -16,7 +16,9 @@ const rewrite = basename => ({
 })
 
 app.get('/', function(req, res) {
-	res.send(`<a href="/publicodes">publicodes</a>`)
+	res.send(`<ul><li><a href="/mon-entreprise">mon-entreprise [fr]</a></li>
+	<li><a href="/infrance">infrance [en]</a></li>
+	<li><a href="/mon-entreprise/dev/integration-test">intégration du simulateur sur site tiers [iframe fr]</a></li><li><a href="/publicodes">publicodes</a></li></ul>`)
 })
 
 app.use(

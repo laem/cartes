@@ -1,0 +1,79 @@
+finance . actifs classiques: 0
+finance . actifs responsables: 0
+transport . boulot . distance: 0
+alimentation . boisson . eau en bouteille . affirmatif: non
+alimentation . boisson . sucrées . litres: 0 l/semaine
+alimentation . boisson . alcool . litres: 0
+alimentation . plats . végétalien . nombre: 0
+alimentation . plats . végétarien . nombre: 0
+alimentation . plats . viande 1 . nombre: 0
+alimentation . plats . viande 2 . nombre: 0
+alimentation . petit déjeuner . type: "'aucun'"
+alimentation . lait . lait végétal: oui
+alimentation . déchets . niveau d'engagement: "'affirmatif'"
+divers . textile . t-shirt . nombre: 0
+divers . textile . pantalon . nombre: 0
+divers . textile . short . nombre: 0
+divers . textile . sweat . nombre: 0
+divers . textile . robe . nombre: 0
+divers . textile . chemise . nombre: 0
+divers . textile . pull . nombre: 0
+divers . textile . chaussure . nombre: 0
+divers . textile . manteau . nombre: 0
+divers . textile . petit article . nombre: 0
+divers . textile . gros article . nombre: 0
+divers . électroménager . réfrigérateur . présent: non
+divers . électroménager . mini réfrigérateur . présent: non
+divers . électroménager . lave-linge . présent: non
+divers . électroménager . sèche-linge . présent: non
+divers . électroménager . lave-vaisselle . présent: non
+divers . électroménager . four . présent: non
+divers . électroménager . micro-ondes . présent: non
+divers . électroménager . plaques . présent: non
+divers . électroménager . bouilloire . présent: non
+divers . électroménager . cafetière . présent: non
+divers . électroménager . aspirateur . présent: non
+divers . électroménager . robot cuisine . présent: non
+divers . électroménager . tondeuse électrique . présent: non
+divers . autres produits . montant: 0
+logement . habitants: 99
+logement . surface: 0
+logement . âge: 999
+logement . électricité . consommation: 0
+logement . bois . chauffage au bois: non
+logement . bois . consommation . granulés: 0
+logement . bois . consommation . bûche: 0
+logement . bois . type: "'bûche'"
+logement . gaz . chauffage au gaz: non
+logement . gaz . consommation: 0
+logement . fioul . chauffage au fioul: non
+logement . fioul . consommation: 0
+numérique . internet . durée journalière: 0
+numérique . appareil photo . présent: non
+numérique . appareil photo . durée: 4
+numérique . home cinéma . présent: non
+numérique . home cinéma . durée: 4
+numérique . ordinateur . présent: non
+numérique . ordinateur . durée: 4
+numérique . ordinateur . fixe: non
+numérique . téléphone . type: "'smartphone moins de 5 pouces'"
+numérique . téléphone . durée: 2
+numérique . tablette . présent: non
+numérique . tablette . durée: 4
+numérique . TV . présent: non
+numérique . TV . durée: 4
+numérique . vidéoprojecteur . présent: non
+numérique . vidéoprojecteur . durée: 4
+transport . voiture . voyageurs: 2
+transport . voiture . km: 0 km/an
+transport . voiture . motorisation: "'électrique'"
+transport . voiture . âge: 99
+transport . voiture . propriétaire: non
+transport . avion . usager: non
+transport . avion . court courrier . heures de vol: 0
+transport . avion . moyen courrier . heures de vol: 0
+transport . avion . long courrier . heures de vol: 0
+transport . train . km: 0
+transport . métro ou tram . heures par semaine: 0
+transport . bus . heures par semaine: 0
+

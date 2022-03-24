@@ -1,8 +1,7 @@
 <!DOCTYPE html>
-<html>
+<html lang="fr">
 	<head>
 		<meta charset="utf-8" />
-		<base href="/" />
 		<meta name="viewport" content="initial-scale=1" />
 
 		<link
@@ -19,18 +18,24 @@
 		<meta property="og:type" content="website" />
 		<meta
 			property="og:title"
+			data-react-helmet="true"
 			content="<%= htmlWebpackPlugin.options.title %>"
 		/>
 		<meta
 			property="og:description"
+			data-react-helmet="true"
 			content="<%= htmlWebpackPlugin.options.description %>"
 		/>
 
-		<meta property="og:image" content="<%= htmlWebpackPlugin.options.logo %>" />
+		<meta property="og:image" content="<%= htmlWebpackPlugin.options.logo %>" data-react-helmet="true"	/>
+
 		<meta
 			name="google-site-verification"
 			content="oQ9gPKS4kocrCJP6CoguSkdIKKZ6ilZz0aQw_ZIgtVc"
 		/>
+
+
+		<meta property="twitter:card" content="summary_large_image" />
 
 		<link rel="manifest" href="/manifest.webmanifest" />
 		<title>
@@ -41,35 +46,13 @@
 		<link href="<%= htmlWebpackPlugin.files.css[css] %>" rel="stylesheet" />
 		<% } %>
 		<style>
-			html[data-useragent*='MSIE'] #outdated-browser,
-			html[data-useragent*='Safari'][data-useragent*='Version/8']
-				#outdated-browser,
-			html[data-useragent*='Safari'][data-useragent*='Version/7']
-				#outdated-browser,
-			html[data-useragent*='Trident'] #outdated-browser {
-				display: block !important;
-			}
 
-			html[data-useragent*='MSIE'] #loading,
-			html[data-useragent*='Safari'][data-useragent*='Version/8'] #loading,
-			html[data-useragent*='Safari'][data-useragent*='Version/7'] #loading,
-			html[data-useragent*='Trident'] #loading {
-				display: none !important;
-			}
-
-			html[data-useragent*='MSIE'] #js,
-			html[data-useragent*='Safari'][data-useragent*='Version/8'] #js,
-			html[data-useragent*='Safari'][data-useragent*='Version/7'] #js,
-			html[data-useragent*='Trident'] #js {
-				display: none !important;
-			}
+			body {background: black}
 
 			/* Prevent FOUC effect */
 			#js {
 				opacity: 0;
 			}
-
-			/* CSS Loader */
 
 			#loading {
 				animation: appear 0.6s;
@@ -252,12 +235,14 @@
 					transform: translate(-250px, 0);
 				}
 			}
+
 		</style>
 		<meta name="theme-color" content="#3742fa" />
 	</head>
 
 	<body>
 		<div id="loading">
+				<div id="loading">
 			<div id="EarthLoader">
 				<div class="earth">
 					<div class="earth--shadow"></div>
@@ -266,64 +251,16 @@
 				<div class="stars"></div>
 			</div>
 		</div>
+		</div>
 
 		<!-- USER AGENT DATA ATTRIBUTE  -->
 
-		<script>
-			var b = document.documentElement
-			b.setAttribute('data-useragent', navigator.userAgent)
-		</script>
 
 		<!-- APP  -->
 		<div id="js"></div>
-				<script src="iframeResizer.contentWindow.min.js"></script>
 
-		<!-- OUTDATED BROWSER WARNING -->
-		<div
-			id="outdated-browser"
-			style="position: fixed; top: 0; left: 0; bottom: 0; right: 0; display: none; background-color: white"
-		>
-			<div
-				style="margin: 100px auto; max-width: 800px; text-align: center; font-family: sans-serif; font-weight: 300;"
-			>
-				<img
-					src="images/marianne.svg"
-					alt="Un service de l'État français"
-					style="width: 200px; margin-bottom: 2rem;"
-				/>
-				<h1>
-					Votre navigateur n'est plus supporté.
-				</h1>
-				<h2>
-					Nous vous invitons à réessayer avec un autre, ou depuis un mobile
-					récent.
-				</h2>
-				<br />
-				<br />
-				<h3>
-					Si besoin, vous pouvez en installer un nouveau depuis
-					<a style="color: #2975d1" href="http://outdatedbrowser.com/fr"
-						>cette page</a
-					>
-				</h3>
-				<h3>
-					<a
-						href="javascript:void(0);"
-						onclick="
-					var b = document.documentElement;
-					b.setAttribute('data-useragent',  'force-navigation-anyway');
-				"
-						>Continuer quand même vers le site</a
-					>
-				</h3>
-			</div>
-		</div>
+		<script src="iframeResizer.contentWindow.min.js"></script>
 
-		<!-- Polyfill and source for old browser -->
-		<!-- Add polyfill.io for a very narrow web feature
-			IntersectionObserver : SAFARI 11 & 12.0  https://caniuse.com/#search=intersectionobserver
-			Intl : SAFARI 9 & 10.0  https://caniuse.com/#search=Intl
-		-->
-		<script src="https://polyfill.io/v3/polyfill.min.js?features=Intl.~locale.en%2CIntl.~locale.fr%2CIntersectionObserver"></script>
+
 	</body>
 </html>

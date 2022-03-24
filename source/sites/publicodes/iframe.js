@@ -4,7 +4,11 @@ const script = document.getElementById('futureco'),
 	path = script?.getAttribute('path') || '',
 	integratorUrl = encodeURIComponent(window.location.href.toString())
 
-const hostname = 'futur.eco/'
+const couleur = script.dataset.couleur // not used yet
+
+const srcURL = new URL(script.src)
+const hostname = srcURL.hostname || 'futur.eco'
+
 const src = `https://${hostname}${path}?iframe&integratorUrl=${integratorUrl}`
 
 const iframe = document.createElement('iframe')
@@ -22,4 +26,4 @@ for (var key in iframeAttributes) {
 }
 iframeResize({}, iframe)
 
-script?.parentNode.insertBefore(iframe, script)
+script.parentNode.insertBefore(iframe, script)

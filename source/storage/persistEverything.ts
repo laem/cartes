@@ -5,9 +5,10 @@ import { Store } from 'redux'
 import { debounce } from '../utils'
 import safeLocalStorage from './safeLocalStorage'
 
-const VERSION = 3
+const VERSION = 1
 
-const LOCAL_STORAGE_KEY = 'mycompanyinfrance::persisted-everything:v' + VERSION
+const LOCAL_STORAGE_KEY = 'ecolab-climat::global-state:v' + VERSION
+
 
 type OptionsType = {
 	except?: Array<string>

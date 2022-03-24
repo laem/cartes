@@ -1,89 +1,100 @@
-import { T } from 'Components'
-import Controls from 'Components/Controls'
 import Conversation, {
-	ConversationProps
+	ConversationProps,
 } from 'Components/conversation/Conversation'
-import SeeAnswersButton from 'Components/conversation/SeeAnswersButton'
 import PageFeedback from 'Components/Feedback/PageFeedback'
 import SearchButton from 'Components/SearchButton'
-import TargetSelection from 'Components/TargetSelection'
+import * as animate from 'Components/ui/animate'
 import React from 'react'
+import { Trans } from 'react-i18next'
 import { useSelector } from 'react-redux'
-import { firstStepCompletedSelector } from 'Selectors/analyseSelectors'
-import { simulationProgressSelector } from 'Selectors/progressSelectors'
-import * as Animate from 'Ui/animate'
-import Progress from 'Ui/Progress'
+import { situationSelector } from '../selectors/simulationSelectors'
+import AnswerList from './conversation/AnswerList'
+import LinkToForm from './Feedback/LinkToForm'
+import useSearchParamsSimulationSharing, {
+	useParamsFromSituation,
+	syncSearchParams,
+} from './utils/useSearchParamsSimulationSharing'
 
 type SimulationProps = {
-	explanations: React.ReactNode
+	explanations?: React.ReactNode
+	results?: React.ReactNode
 	customEndMessages?: ConversationProps['customEndMessages']
+	showPeriodSwitch?: boolean
+	showLinkToForm?: boolean
+	orderByCategories: Array<Object>
 }
 
 export default function Simulation({
 	explanations,
+	results,
 	customEndMessages,
 	customEnd,
-	targets,
-	showConversation,
+	orderByCategories,
+	showLinkToForm,
+	showPeriodSwitch,
 	noFeedback,
-	noProgressMessage
+	animation = 'appear',
 }: SimulationProps) {
-	const firstStepCompleted = useSelector(firstStepCompletedSelector)
-	const progress = useSelector(simulationProgressSelector)
+	const Animation = animate[animation]
+	//const situation = useSelector(situationSelector)
+	//const searchParams = useParamsFromSituation(situation)
+	syncSearchParams()
 	return (
 		<>
-			{targets || <TargetSelection />}
+			<AnswerList />
 			<SearchButton invisibleButton />
-			{(showConversation || firstStepCompleted) && (
-				<>
-					<Animate.fromTop>
-						<div
-							style={{
-								display: 'flex',
-								justifyContent: 'space-between',
-								marginTop: '1.2rem',
-								marginBottom: '0.6rem',
-								alignItems: 'baseline'
-							}}
-						>
-							{progress < 1 && !noProgressMessage ? (
-								<small css="padding: 0.4rem 0">
-									<T k="simulateurs.précision.défaut">
-										Affinez la simulation en répondant aux questions :
-									</T>
-								</small>
-							) : (
-								<span />
-							)}
-							<SeeAnswersButton />
-						</div>
-						<section className="ui__ full-width lighter-bg">
-							<div className="ui__ container">
-								<Controls />
-								<Conversation
-									customEnd={customEnd}
-									customEndMessages={customEndMessages}
-								/>
-							</div>
-						</section>
-						{progress < 1 && (
-							<Progress progress={progress} className="ui__ full-width" />
-						)}
-						<br />
-						{!noFeedback && (
+			<Animation delay={0.3}>
+				{results}
+				<Questions
+					customEnd={customEnd}
+					orderByCategories={orderByCategories}
+					customEndMessages={customEndMessages}
+				/>
+				{!noFeedback && (
+					<>
+						{showLinkToForm && <LinkToForm />}
+						{!showLinkToForm && (
 							<PageFeedback
 								customMessage={
-									<T k="feedback.simulator">
+									<Trans i18nKey="feedback.simulator">
 										Êtes-vous satisfait de ce simulateur ?
-									</T>
+									</Trans>
 								}
 								customEventName="rate simulator"
 							/>
 						)}
-						{explanations}
-					</Animate.fromTop>
-				</>
-			)}
+					</>
+				)}{' '}
+				{explanations}
+			</Animation>
+		</>
+	)
+}
+
+function Questions({
+	customEndMessages,
+	customEnd,
+	orderByCategories,
+}: {
+	customEndMessages?: ConversationProps['customEndMessages']
+	orderByCategories: Array<Object>
+}) {
+	return (
+		<>
+			<div
+				css={`
+					@media (min-width: 800px) {
+						margin-top: 0.6rem;
+					}
+					border-radius: 0.6rem;
+				`}
+			>
+				<Conversation
+					orderByCategories={orderByCategories}
+					customEnd={customEnd}
+					customEndMessages={customEndMessages}
+				/>
+			</div>
 		</>
 	)
 }

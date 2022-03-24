@@ -33,6 +33,14 @@ fieldset {
 /* Remove spinner controls from Firefox */
 input[type='number'] {
 	appearance: textfield;
+	background: none;
+}
+
+/* Remove spinner controls from Chrome, Safari, Edge, Opera */
+input[type='number']::-webkit-inner-spin-button,
+input[type='number']::-webkit-outer-spin-button {
+	-webkit-appearance: none;
+	margin: 0;
 }
 
 select {

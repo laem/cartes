@@ -6,14 +6,20 @@ import { debounce } from '../utils'
 import safeLocalStorage from './safeLocalStorage'
 import { deserialize, serialize } from './serializeSimulation'
 
-const VERSION = 3
+const VERSION = 2
 
-const LOCAL_STORAGE_KEY = 'embauche.gouv.fr::persisted-simulation::v' + VERSION
+const LOCAL_STORAGE_KEY = 'futureco::persisted-simulation::v' + VERSION
 
 export function persistSimulation(store: Store<RootState, Action>) {
 	const listener = () => {
 		const state = store.getState()
-		if (!state.conversationSteps.foldedSteps.length) {
+		const objectifs = state.simulation?.config?.objectifs
+		if (objectifs?.length != 1 || objectifs[0] !== 'bilan') return null
+		if (
+			!state.simulation?.foldedSteps?.length &&
+			state.tutorials &&
+			!Object.values(state.tutorials)
+		) {
 			return
 		}
 		safeLocalStorage.setItem(LOCAL_STORAGE_KEY, serialize(state))

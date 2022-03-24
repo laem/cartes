@@ -1,9 +1,18 @@
 .tags*
 .tmp
-node_modules/
-dist/
+dist/*
+!dist/_redirects
+!/dist/demo-iframe.html
 .DS_Store
-package-lock.json
 yarn-error.log
 cypress/videos
 cypress/screenshots
+
+package-lock.json
+node_modules/
+.env
+
+# Local Netlify folder
+.netlify
+
+source/data

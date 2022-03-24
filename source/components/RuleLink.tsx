@@ -1,37 +1,22 @@
-import { ThemeColorsContext } from 'Components/utils/colors'
-import { SitePathsContext } from 'Components/utils/withSitePaths'
-import { encodeRuleName, nameLeaf } from 'Engine/rules'
+import { RuleLink as EngineRuleLink } from 'publicodes-react'
 import React, { useContext } from 'react'
 import { Link } from 'react-router-dom'
-import { Rule } from 'Types/rule'
-import './RuleLink.css'
+import { EngineContext } from './utils/EngineContext'
+import { SitePathsContext } from './utils/SitePathsContext'
 
-type RuleLinkProps = {
-	dottedName: Rule['dottedName']
-	title?: Rule['title']
-	style?: React.CSSProperties
-	children?: React.ReactNode
-}
-
-export default function RuleLink({
-	dottedName,
-	title,
-	style,
-	children
-}: RuleLinkProps) {
+export default function RuleLink(
+	props: {
+		dottedName: Object
+		displayIcon?: boolean
+	} & Omit<React.ComponentProps<Link>, 'to'>
+) {
 	const sitePaths = useContext(SitePathsContext)
-	const { color } = useContext(ThemeColorsContext)
-	const newPath =
-		sitePaths.documentation.index + '/' + encodeRuleName(dottedName)
-
+	const engine = useContext(EngineContext)
 	return (
-		<Link
-			to={newPath}
-			className="rule-link"
-			title={title}
-			style={{ color, ...style }}
-		>
-			{children || title || nameLeaf(dottedName)}
-		</Link>
+		<EngineRuleLink
+			{...props}
+			engine={engine}
+			documentationPath={sitePaths.documentation.index}
+		/>
 	)
 }

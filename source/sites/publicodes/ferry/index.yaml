@@ -1,0 +1,109 @@
+ferry:
+  icônes: ⛴
+  description: |
+
+    Voici notre objectif : estimer l'empreinte d'un passager sur les ferries de voyage comme ceux qui relient la métropole à la Corse et à l'Angleterre.
+
+      Le Ferry est une alternative sérieuse à l’avion, mais il n’existe aujourd’hui aucun facteur d’émission en CO2e (ni ADEME en France, ni à l’international, ni dans la littérature scientifique) qui prenne en compte non pas un passager moyen, mais la diversité des options d'un billet. 
+
+      
+    - passager en voiture ou non
+    - passager en cabine, en siège, ou au sol
+    - équipement loisir du bateau : restaurant, bar, piscine, grand couloirs, etc.
+    - tonnage fret
+    - % de remplissage du bateau
+
+    Pour faire ce calcul, nous partons de l'hypothèse que la consommation de carburant d'un bateau est proportionnelle au poids qu'il transporte.
+
+
+    Attention, cette hypothèse est criticable sur bien des points. Qu'est-ce qui nous permet cependant de penser que ce sera une bonne première approximation de la réalité ?
+
+    Voici [une introduction](/ferry/méthode/introduction) (1 page) qui déroule le raisonnement justifiant cette méthode.
+
+    Vous pouvez ensuite enchaîner avec la lecture complète de la [note de méthode](https://hackmd.io/@laem/empreinte-ferry) (~20 pages).
+
+    Enfin, une fois cette méthode du poids acceptée, vous pouvez parcourir [le calcul intégral](/ferry/empreinte-par-km) et intéractif du facteur d'émission.
+
+ferry . empreinte marginale . grammes:
+  formule: 0.2 gCO2e/kg
+  description: |
+    Notre calcul est basé sur l'hypothèse que l'embarquement de poids marginal sur le bateau implique une consommation supplémentaire de carburant, qui a son tour induit l'émission de gaz à effet de serre supplémentaire, par km.
+
+    Le chiffre est un *ordre de grandeur* issu d'une analyse de la "base carbone" du Royaume-Uni. Il est déterminé par une répartition par poids sur un échantillon de bateaux représentatifs. 
+    Tous les détails sur notre [note méthodologique](https://hackmd.io/@laem/empreinte-ferry#À-partir-des-chiffres-de-la-“base-carbone”-britannique).
+
+  note: |
+    L'hypothèse, en plus du chiffre unique et donc incertain, est donc que cette surconsommation marginale est linéaire. C'est probablement la critique la plus facile de ce modèle : nous serions ravis de l'améliorer avec une fonction plus nuancée.
+
+    L'autre grand problème du modèle est la non-prise en compte de la vitesse du bateau, pourtant fondamentale dans la consommation. Il serait pourtant possible de poser directement à l'utilisateur la question de la vitesse via la ligne qu'il empreinte combinée aux donnés de greenferries. Ou encore plus simplement, l'estimation grossièrement via l'information de nuit / de jour ?
+
+ferry . empreinte marginale:
+  formule: grammes / 1000
+  unité: kgCO2e/kg
+
+ferry . empreinte par km:
+  titre: Empreinte par km et passager
+  formule: empreinte marginale * charge . par personne majorée
+  description: |
+
+    Comme expliqué dans notre note de méthode, le principe de calcul est simple : nous attribuons une empreinte selon le poids que le billet acheté par le voyageur implique d'embarquer sur le bateau. 
+
+    La [note méthodologique](https://hackmd.io/@laem/empreinte-ferry#À-partir-des-chiffres-de-la-“base-carbone”-britannique).
+
+  unité: kgCO2e/km
+
+ferry . cabine:
+  icônes: 🛌
+  question: Place cabine (plutôt que siège) ?
+  description: Sans surprise, voyager en cabine apporte du confort mais en contrepartie du poids embarqué.
+  note: Il existe aussi des cabines partagées (comme dans les trains de nuit), nous pourrons les ajouter par la suite comme une option possible.
+  références:
+    corsica-ferries: https://www.corsica-ferries.fr/ferries/traversee-ferry.html
+  par défaut: oui
+
+ferry . taille cabine:
+  applicable si: cabine
+  question: Quelle est la taille de la cabine ?
+  note: |
+    Variable pas intégrée encore.
+  par défaut: "'quatre lits'"
+
+ferry . taille cabine . deux lits:
+ferry . taille cabine . quatre lits:
+
+ferry . voiture:
+  icônes: 🚗
+  question: Transportez-vous votre voiture ?
+  description: Le calcul est limité à une voiture, on considère qu'elle est partagée par le groupe.
+  par défaut: oui
+
+ferry . groupe:
+  icônes: 👥
+  question: À combien voyagez-vous ?
+  par défaut: 2
+  suggestions:
+    seul: 1
+    en couple: 2
+    à 3: 3
+    à 4: 4
+
+# Infra nécessaire aux pax mais pas au fret
+# WC, escaliers, canots de sauvetage
+# ces derniers peuvent-ils être négligés / personne, vu que leur but est de flotter ?
+#
+#
+
+ferry . consommation de services:
+  icônes: 🍽️
+  question: Utilisez vous les services accessoires du ferry (restaurant, piscine, etc.) ?
+  par défaut: oui
+
+ferry . passagers:
+  formule: 1000
+
+  note: |
+    Pour certaines services en commun, nous avons besoin de répartir le poids par passager. Nous utilisons donc par convention la valeur de 1000 passagers. 
+
+    Pourquoi 1000 ? C'est le Jean Nicoli (Marseille-Corse) rempli aux 2/3 [source](https://fr.wikipedia.org/wiki/Jean_Nicoli_(navire)).
+
+    Bien sûr, personnaliser cela par bateau serait un gros plus.

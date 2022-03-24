@@ -1,5 +1,13 @@
-export let capitalise0 = (name: string | undefined) =>
-	name && name[0].toUpperCase() + name.slice(1)
+import { formatValue } from 'publicodes'
+import { useLocation } from 'react-router'
+export function isIterable<T>(obj: unknown): obj is Iterable<T> {
+	return Symbol.iterator in Object(obj)
+}
+export function capitalise0(name: undefined): undefined
+export function capitalise0(name: string): string
+export function capitalise0(name?: string) {
+	return name && name[0].toUpperCase() + name.slice(1)
+}
 
 export const debounce = <F extends (...args: any[]) => void>(
 	waitFor: number,
@@ -12,15 +20,7 @@ export const debounce = <F extends (...args: any[]) => void>(
 	}
 }
 
-export function isIE(): boolean {
-	return (
-		navigator.appName == 'Microsoft Internet Explorer' ||
-		(navigator.appName == 'Netscape' &&
-			new RegExp('Trident/.*rv:([0-9]{1,}[.0-9]{0,})').exec(
-				navigator.userAgent
-			) != null)
-	)
-}
+export const fetcher = (url: RequestInfo) => fetch(url).then((r) => r.json())
 
 export function inIframe(): boolean {
 	try {
@@ -33,7 +33,7 @@ export function inIframe(): boolean {
 export function softCatch<ArgType, ReturnType>(
 	fn: (arg: ArgType) => ReturnType
 ): (arg: ArgType) => ReturnType | null {
-	return function(...args) {
+	return function (...args) {
 		try {
 			return fn(...args)
 		} catch (e) {
@@ -46,7 +46,7 @@ export function softCatch<ArgType, ReturnType>(
 
 export function mapOrApply<A, B>(fn: (a: A) => B, x: A): B
 export function mapOrApply<A, B>(fn: (a: A) => B, x: Array<A>): Array<B>
-export function mapOrApply(fn, x) {
+export function mapOrApply<A, B>(fn: (a: A) => B, x: A | Array<A>) {
 	return Array.isArray(x) ? x.map(fn) : fn(x)
 }
 
@@ -63,4 +63,38 @@ export function getSessionStorage() {
 	} catch (e) {
 		return undefined
 	}
+}
+
+export const currencyFormat = (language: string) => ({
+	isCurrencyPrefixed: !!formatValue(12, { language, displayedUnit: '€' }).match(
+		/^€/
+	),
+	thousandSeparator: formatValue(1000, { language }).charAt(1),
+	decimalSeparator: formatValue(0.1, { language }).charAt(1),
+})
+
+export function hash(str: string): number {
+	let hash = 0
+	let chr
+	for (let i = 0; i < str.length; i++) {
+		chr = str.charCodeAt(i)
+		hash = (hash << 5) - hash + chr
+		hash |= 0 // Convert to 32bit integer
+	}
+	return hash
+}
+
+export const sortBy = (f) => (list) =>
+	list.sort((a, b) => {
+		const fa = f(a),
+			fb = f(b)
+		return fa < fb ? -1 : fa > fb ? 1 : 0
+	})
+
+export const last = (array) => {
+	const [lastItem] = array.slice(-1)
+	return lastItem
+}
+export function useQuery() {
+	return new URLSearchParams(useLocation().search)
 }

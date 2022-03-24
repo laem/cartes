@@ -3,36 +3,27 @@ import { Link } from 'react-router-dom'
 import scenarios from './scenarios.yaml'
 import { StoreContext } from './StoreContext'
 import emoji from 'react-easy-emoji'
-import ScrollImage from './images/horizontal-scroll.png'
+import { useDispatch, useSelector } from 'react-redux'
+import Emoji from 'Components/Emoji'
 
 export default () => {
-	let { state, dispatch } = useContext(StoreContext)
-
+	const dispatch = useDispatch()
+	const scenario = useSelector((state) => state.scenario)
 	return (
-		<section id="scenarios">
-			<h1>Le crédit carbone personnel</h1>
-			<p>
-				Le jeu est simple : plus on émet de gaz à effet de serre, plus on se
-				dirige vers une catastrophe climatique. Ces émissions se mesurent en{' '}
-				<Link to="/à-propos">kilos équivalent CO₂</Link>. Pour mieux comprendre
-				l'impact de notre quotidien sur le climat,{' '}
-				<strong>nous l'avons converti en temps</strong>.
-			</p>
-			<p>
-				<em>
-					Si un voyage en avion en émet 500 kg et que la limite acceptable par
-					personne et par an est de 6 tonnes, alors ce vol consomme un douzième
-					de crédit annuel : en 2 heures de vol, j'ai grillé un mois de mon
-					crédit carbone !
-				</em>
-			</p>
-			<h2 css="display: inline-block;background: var(--color); padding: .1rem .4rem; margin-right: .4rem;  color: white">
+		<section id="scenarios" className="ui__ container">
+			<h1>Votre scénario climat</h1>
+			<h2 css="display: inline-block;background: var(--color); padding: .1rem .4rem; margin-right: .4rem;  color: white; margin-top: 1rem">
 				Quel futur souhaitez vous ?
 			</h2>
 			<p>
 				L'évolution du climat, et donc notre futur, est directement lié à la
-				somme de toutes nos émissions de carbone individuelles. Voici trois
-				scénarios, à vous de choisir ! &nbsp;{emoji('👇')}
+				somme de toutes nos émissions de carbone individuelles de consommation.
+			</p>
+			<p>
+				Par défaut, le crédit carbone <strong>est fixé à 2 tonnes</strong>, car
+				c'est l'objectif le plus connu du grand public aujourd'hui. Mais libre à
+				vous de choisir votre objectif parmi ces trois scénarios. &nbsp;
+				{emoji('👇')}
 			</p>
 			<ul
 				css={`
@@ -75,7 +66,7 @@ export default () => {
 								visibility: visible;
 							}
 
-							${state.scenario === nom
+							${scenario === nom
 								? `
 								border: 4px solid var(--color)
 								
@@ -111,8 +102,8 @@ export default () => {
 								}
 							`}
 						>
-							{state.scenario === nom ? (
-								<div>{emoji('☑️ ')}</div>
+							{scenario === nom ? (
+								<div>{emoji('✅')}</div>
 							) : (
 								<button
 									className="ui__ button"
@@ -128,10 +119,20 @@ export default () => {
 					</li>
 				))}
 			</ul>
-			<img
-				css="height: 3em; display: block; margin: 1em auto"
-				src={ScrollImage}
-			/>
+			<div
+				css={`
+					display: none;
+					margin: 0.6em auto;
+					@media (max-width: 600px) {
+						display: block;
+						text-align: center;
+					}
+					font-size: 200%;
+					filter: invert(1);
+				`}
+			>
+				<Emoji extra="E105" alt="glisser horizontalement" black />
+			</div>
 			<p>
 				Les conséquences de ces scénarios sont bien évidemment très compliquées
 				à prévoir : ces descriptions sont indicatives et évolueront notamment
