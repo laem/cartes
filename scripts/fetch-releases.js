@@ -15,8 +15,8 @@ var { createDataDir, writeInDataDir } = require('./utils.js')
 // explorer can be found here : https://developer.github.com/v4/explorer/
 const githubAuthToken = process.env.GITHUB_API_SECRET
 const cursorOfV1Release = 'Y3Vyc29yOnYyOpHOARHb8g=='
-const repository = 'ecolab-data',
-	organization = 'betagouv'
+const repository = 'futureco',
+	organization = 'laem'
 
 // In case we cannot fetch the release (the API is down or the Authorization
 // token isn't valid) we fallback to some fake data -- it would be better to
