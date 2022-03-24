@@ -255,8 +255,8 @@ input.ui__::-ms-clear {
 }
 
 input.ui__::placeholder {
-	opacity: 0.6;
-	color: grey;
+	opacity: 0.75;
+	color: var(--lighterColor);
 }
 
 img[src="http://twemoji.maxcdn.com/2/72x72/.png"]
