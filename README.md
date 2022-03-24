@@ -1,25 +1,23 @@
-## Nosgestesclimat-site
+## Futureco
 
 ## C'est quoi ?
 
-Un simulateur d'empreinte carbone personnelle à l'année, utilisant le modèle climat de [nosgestesclimat](https://github.com/datagir/nosgestesclimat).
+La catastrophe climatique n'est plus une menace lointaine et incertaine, c'est une actualité. Comment éviter le pire ? Chaque aspect de notre vie moderne a un impact.
 
-Pour contribuer au modèle et données sous-jacentes (calculs, textes, questions, suggestions de saisie), rendez-vous [ici](https://github.com/datagir/nosgestesclimat/blob/master/CONTRIBUTING.md).
+Or, aujourd'hui, c'est très difficile de le connaître : les données sont éparpillées, souvent dans des articles de presse sans source. Des simulateurs et modèles d'impact carbone existent, mais aucun ne répond à ces priorités :
 
-Pour tout ce qui touche à l'interface (style d'un bouton, graphique de résultat, code javascript, etc.) c'est ici dans les [_issues_](https://github.com/datagir/nosgestesclimat-site/issues).
+-   l'interface doit s'adresser au grand public. Balancer des kgCO2e sans explication n'est pas compréhensible
+-   le code doit être ouvert
+-   le code doit être lisible, critiquable, modifiable.
 
-> 🌐 Most of the documentation (including issues and the wiki) is written in french, please raise an [issue](https://github.com/datagir/nosgestesclimat-site/issues/new) if you are interested and do not speak French.
+Sur ce dépôt, c'est le code du site en Javascript. Tout le contenu et les discussions autour des contribution s sur un autre dépot : [futureco-data](https://github.com/laem/futureco-data).
+
+[Plus d'infos sur le projet](https://futur.eco/à-propos).
+
+> 🇬🇧 Most of the documentation (including issues and the wiki) is written in french, please raise an [issue](https://github.com/betagouv/mon-entreprise/issues/new) if you are interested and do not speak French.
 
 ## Et techniquement ?
 
-C'est pour l'instant un _fork_ d'un simulateur de cotisations sociales, mon-entreprise.fr, lui-même forké pour futur.eco, qui permet de coder en français des règles de calculs, dans un langage (qui se veut) simple et extensible. De ces règles de calcul, des simulateurs (pour l'utilisateur lambda) et des pages de documentation qui expliquent le calcul (pour l'expert ou le curieux) sont générés automatiquement.
+C'est un _fork_ d'un site de l'État, mon-entreprise.fr, qui permet de coder en français des règles de calculs, dans un langage simple et extensible, [publi.codes](https://publi.codes). De ces règles de calcul, des simulateurs (pour l'utilisateur lambda) et des pages de documentation qui expliquent le calcul (pour l'expert ou le curieux) sont générés automatiquement.
 
-La bibliothèque de calcul publicodes, qui fournit le langage du modèle, vient d'être publiée comme un [paquet NPM](https://www.npmjs.com/package/publicodes), qui sera bientôt intégré ici pour simplifier énormément la base de code et se concentrer sur le domaine métier.
-
-### Installation
-
-You need to clone another repo, https://github.com/datagir/nosgestesclimat, in the same directory than this one. The model YAML files will then be loaded locally (no installation needed, they are loaded by webpack), and your changes to these files will refresh the UI instantly.
-
-Then run this command in this repo :
-
-`yarn && yarn start`
+Au-delà de ça, nous sommes sur une appli traditionnelle Webpack - React - styled-components - Typescript à la marge.
