@@ -5,7 +5,7 @@ import { Link, useLocation } from 'react-router-dom'
 import { isIterable } from '../../utils'
 
 const internalURLs = {
-	'nosgestesclimat.fr': 'nosgestesclimat',
+	'futur.eco': 'futureco',
 } as const
 
 export function LinkRenderer({
@@ -16,7 +16,7 @@ export function LinkRenderer({
 	href?: string
 	children: React.ReactNode
 }) {
-	const siteName = 'nosgestesclimat'
+	const siteName = 'futureco'
 
 	if (href && !href.startsWith('http')) {
 		return (
@@ -41,11 +41,12 @@ export function LinkRenderer({
 			)
 		}
 	}
+	console.log(href, children)
 
 	return (
-		<Link target="_blank" rel="noreferrer" href={href} {...otherProps}>
+		<a target="_blank" rel="noreferrer" href={href} {...otherProps}>
 			{children}
-		</Link>
+		</a>
 	)
 }
 const TextRenderer = ({ children }: { children: string }) => (
