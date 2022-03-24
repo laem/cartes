@@ -94,7 +94,6 @@ export default function Conversation({
 			!previousSimulation &&
 			currentQuestion !== unfoldedStep
 		) {
-			console.log('dispatch', currentQuestion)
 			dispatch(goToQuestion(currentQuestion))
 		}
 	}, [dispatch, currentQuestion, previousAnswers, unfoldedStep, objectifs])
