@@ -1,37 +1,15 @@
 import { iframeResize } from 'iframe-resizer'
 
-const script =
-		document.getElementById('ecolab-climat') ||
-		document.getElementById('nosgestesclimat'),
+const script = document.getElementById('futureco'),
+	path = script?.getAttribute('path') || '',
 	integratorUrl = encodeURIComponent(window.location.href.toString())
 
 const couleur = script.dataset.couleur // not used yet
 
 const srcURL = new URL(script.src)
-const hostname = srcURL.hostname || 'nosgestesclimat.fr'
+const hostname = srcURL.hostname || 'futur.eco'
 
-const possibleOptionStrings = [
-	'integratorLogo',
-	'integratorName',
-	'integratorActionUrl',
-	'integratorYoutubeVideo',
-	'integratorActionText',
-]
-const possibleOptions = [
-	{ key: 'shareData', legacy: 'partagedatafinsimulation' },
-	,
-	...possibleOptionStrings.map((s) => ({ key: s })),
-]
-
-const optionFragments = possibleOptions.map(({ key, legacy }) => {
-	const value = script.dataset[key] || script.dataset[legacy]
-
-	return value != null ? `&${key}=${value}` : ''
-})
-
-const src = `https://${hostname}/?iframe&integratorUrl=${integratorUrl}${optionFragments.join(
-	''
-)}`
+const src = `https://${hostname}${path}?iframe&integratorUrl=${integratorUrl}`
 
 const iframe = document.createElement('iframe')
 
