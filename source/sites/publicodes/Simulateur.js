@@ -158,9 +158,9 @@ const Simulateur = ({ objective }) => {
 				`}
 			>
 				<Meta
-					title={rule.title}
+					title={rule.titre}
 					description={rule.exposé?.description || rule.description}
-					//image={getEmojiImageUrls(rule.icônes)[0]} .svg images don't work in og tags, we'll have to convert them
+					image={`/.netlify/functions/ending-screenshot?pageToScreenshot=${window.location}`} // we could simply render SVG emojis, but SVG images don't work in og tags, we'll have to convert them
 				/>
 
 				{!isMainSimulation && (
