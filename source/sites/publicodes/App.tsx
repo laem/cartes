@@ -58,16 +58,16 @@ const Router = ({}) => (
 		<div css="height: 100%">
 			<Routes>
 				<Route path="/" element={<Wiki />} />
-				<Route path="/documentation/*" element={<Documentation />} />
-				<Route path="/instructions" element={<Instructions />} />
-				<Route path="/simulateur/*" element={<Simulateur />} />
-				<Route path="/fin/*" element={<GameOver />} />
-				<Route path="/contribuer/:input" element={<Contribution />} />
-				<Route path="/à-propos" element={<About />} />
-				<Route path="/vie-privée" element={<Privacy />} />
-				<Route path="/nouveautés" element={<News />} />
+				<Route path="documentation/*" element={<Documentation />} />
+				<Route path="instructions" element={<Instructions />} />
+				<Route path="simulateur/*" element={<Simulateur />} />
+				<Route path="fin/*" element={<GameOver />} />
+				<Route path="contribuer/:input" element={<Contribution />} />
+				<Route path={encodeURIComponent('à-propos')} element={<About />} />
+				<Route path={encodeURIComponent('vie-privée')} element={<Privacy />} />
+				<Route path={encodeURIComponent('nouveautés')} element={<News />} />
 				<Route
-					path="/ferry/*"
+					path="ferry/*"
 					element={
 						<Suspense fallback={<div>Chargement</div>}>
 							<Ferry />
@@ -75,20 +75,19 @@ const Router = ({}) => (
 					}
 				/>
 				<Route
-					path="/carburants/*"
+					path="carburants/*"
 					element={
 						<Suspense fallback={<div>Chargement</div>}>
 							<Carburants />
 						</Suspense>
 					}
 				/>
-				<Route path="/wiki" element={<Wiki />} />
-				<Route path="/scénarios" element={<Scenarios />} />
+				<Route path="wiki" element={<Wiki />} />
+				<Route path={encodeURIComponent('scénarios')} element={<Scenarios />} />
 				<Route
-					path="/crédit-climat-personnel"
+					path={encodeURIComponent('crédit-climat-personnel')}
 					element={<CreditExplanation />}
 				/>
-				<Route element={<Route404 />} />
 			</Routes>
 		</div>
 	</>
