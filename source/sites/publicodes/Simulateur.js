@@ -57,7 +57,6 @@ const getBackgroundColor = (score) => {
 export default ({}) => {
 	const dispatch = useDispatch()
 	const urlParams = useParams()
-	console.log(urlParams)
 	const rawObjective = urlParams['*'],
 		decoded = utils.decodeRuleName(rawObjective),
 		config = {

@@ -1,4 +1,3 @@
-import Route404 from 'Components/Route404'
 import 'Components/ui/index.css'
 import News from 'Pages/News'
 import Wiki from 'Pages/Wiki'
@@ -13,17 +12,16 @@ import {
 import Tracker, { devTracker } from '../../Tracker'
 import About from './About'
 import Contribution from './Contribution'
-const Ferry = React.lazy(() => import('./ferry/Ferry'))
-const Carburants = React.lazy(() => import('./carburants/Carburants'))
+import CreditExplanation from './CreditExplanation'
 import GameOver from './GameOver'
 import Instructions from './Instructions'
-import Landing from './Landing'
-import Documentation from './pages/Documentation'
 import Privacy from './Privacy'
 import Scenarios from './Scenarios'
-import CreditExplanation from './CreditExplanation'
 import Simulateur from './Simulateur'
 import sitePaths from './sitePaths'
+const Ferry = React.lazy(() => import('./ferry/Ferry'))
+const Carburants = React.lazy(() => import('./carburants/Carburants'))
+const Documentation = React.lazy(() => import('./pages/Documentation'))
 
 let tracker = devTracker
 if (NODE_ENV === 'production') {
@@ -58,7 +56,14 @@ const Router = ({}) => (
 		<div css="height: 100%">
 			<Routes>
 				<Route path="/" element={<Wiki />} />
-				<Route path="documentation/*" element={<Documentation />} />
+				<Route
+					path="documentation/*"
+					element={
+						<Suspense fallback={<div>Chargement</div>}>
+							<Documentation />
+						</Suspense>
+					}
+				/>
 				<Route path="instructions" element={<Instructions />} />
 				<Route path="simulateur/*" element={<Simulateur />} />
 				<Route path="fin/*" element={<GameOver />} />
