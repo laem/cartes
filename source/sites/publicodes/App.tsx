@@ -68,12 +68,12 @@ const Router = ({}) => (
 				<Route path="/vie-privée" element={<Privacy />} />
 				<Route path="/nouveautés" element={<News />} />
 				<Route path="/ferry">
-					<Suspense fallback="Chargement">
+					<Suspense fallback={<div>Chargement</div>}>
 						<Ferry />
 					</Suspense>
 				</Route>
 				<Route path="/carburants">
-					<Suspense fallback="Chargement">
+					<Suspense fallback={<div>Chargement</div>}>
 						<Carburants />
 					</Suspense>
 				</Route>
