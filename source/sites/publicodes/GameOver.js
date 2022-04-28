@@ -60,24 +60,24 @@ export const Dialog = ({ children, noEraser = false, neutralColor }) => (
 )
 export default () => {
 	return (
-		<Switch>
-			<Route exact path="/fin" component={Perdu} />
-			<Route exact path="/fin/perdu" component={Perdu} />
-			<Route exact path="/fin/définition" component={Définition} />
-			<Route exact path="/fin/suffisant" component={Suffisant} />
-			<Route exact path="/fin/changer" component={Changer} />
-			<Route exact path="/fin/chemin" component={Chemin} />
-			<Route exact path="/fin/sources" component={Sources} />
-			<Route exact path="/fin/action" component={Action} />
-			<Route exact path="/fin/quand" component={Quand} />
-			<Route exact path="/fin/danger" component={Danger} />
-			<Route exact path="/fin/culpabilisation" component={Culpabilisation} />
-			<Route exact path="/fin/le-système" component={LeSystème} />
-			<Route exact path="/fin/pourquoi-trois" component={PourquoiTrois} />
-			<Route exact path="/fin/claque" component={Claque} />
-			<Route exact path="/fin/trajectoire" component={Trajectoire} />
-			<Route exact path="/fin/ensemble" component={Ensemble} />
-		</Switch>
+		<Routes>
+			<Route path="" element={<Perdu />} />
+			<Route path="perdu" element={<Perdu />} />
+			<Route path="définition" element={<Définition />} />
+			<Route path="suffisant" element={<Suffisant />} />
+			<Route path="changer" element={<Changer />} />
+			<Route path="chemin" element={<Chemin />} />
+			<Route path="sources" element={<Sources />} />
+			<Route path="action" element={<Action />} />
+			<Route path="quand" element={<Quand />} />
+			<Route path="danger" element={<Danger />} />
+			<Route path="culpabilisation" element={<Culpabilisation />} />
+			<Route path="le-système" element={<LeSystème />} />
+			<Route path="pourquoi-trois" element={<PourquoiTrois />} />
+			<Route path="claque" element={<Claque />} />
+			<Route path="trajectoire" element={<Trajectoire />} />
+			<Route path="ensemble" element={<Ensemble />} />
+		</Routes>
 	)
 }
 

@@ -3,7 +3,7 @@ import { ScrollToTop } from 'Components/utils/Scroll'
 import { SitePathsContext } from 'Components/utils/SitePathsContext'
 import { useContext, useEffect } from 'react'
 import emoji from 'react-easy-emoji'
-import { Redirect, useHistory, useRouteMatch } from 'react-router-dom'
+import { Redirect, useNavigate, useMatch } from 'react-router-dom'
 import { Link, NavLink } from 'react-router-dom'
 import styled from 'styled-components'
 import useSWR from 'swr'
@@ -30,8 +30,8 @@ export default function News() {
 	// bundle, that's why we only fetch it on this page. Alternatively we could
 	// use import("data/release.json") and configure code splitting with Webpack.
 	const { data } = useSWR<ReleasesData>('/data/releases.json', fetcher)
-	const history = useHistory()
-	const slug = useRouteMatch<{ slug: string }>(`${'/nouveautés'}/:slug`)?.params
+	const navigate = useNavigate()
+	const slug = useMatch<{ slug: string }>(`${'/nouveautés'}/:slug`)?.params
 		?.slug
 	useEffect(hideNewsBanner, [])
 
@@ -72,7 +72,7 @@ export default function News() {
 			<SmallScreenSelect
 				value={selectedRelease}
 				onChange={(evt) => {
-					history.push(getPath(Number(evt.target.value)))
+					navigate(getPath(Number(evt.target.value)))
 				}}
 			>
 				{data.map(({ name }, index) => (

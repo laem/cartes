@@ -4,7 +4,7 @@ import News from 'Pages/News'
 import Wiki from 'Pages/Wiki'
 import React, { Suspense } from 'react'
 import { useTranslation } from 'react-i18next'
-import { Route, Switch } from 'react-router-dom'
+import { Route, Routes } from 'react-router-dom'
 import Provider from '../../Provider'
 import {
 	persistSimulation,
@@ -56,17 +56,17 @@ export default function Root({}) {
 const Router = ({}) => (
 	<>
 		<div css="height: 100%">
-			<Switch>
-				<Route exact path="/" component={Wiki} />
-				<Route path="/documentation" component={Documentation} />
-				<Route path="/instructions" component={Instructions} />
-				<Route path="/simulateur/:name+" component={Simulateur} />
-				<Route path="/fin" component={GameOver} />
+			<Routes>
+				<Route exact path="/" element={<Wiki />} />
+				<Route path="/documentation" element={<Documentation />} />
+				<Route path="/instructions" element={<Instructions />} />
+				<Route path="/simulateur/:name+" element={<Simulateur />} />
+				<Route path="/fin/*" element={<GameOver />} />
 				{/* Lien de compatibilité, à retirer par exemple mi-juillet 2020*/}
-				<Route path="/contribuer/:input?" component={Contribution} />
-				<Route path="/à-propos" component={About} />
-				<Route path="/vie-privée" component={Privacy} />
-				<Route path="/nouveautés" component={News} />
+				<Route path="/contribuer/:input?" element={<Contribution />} />
+				<Route path="/à-propos" element={<About />} />
+				<Route path="/vie-privée" element={<Privacy />} />
+				<Route path="/nouveautés" element={<News />} />
 				<Route path="/ferry">
 					<Suspense fallback="Chargement">
 						<Ferry />
@@ -77,12 +77,15 @@ const Router = ({}) => (
 						<Carburants />
 					</Suspense>
 				</Route>
-				<Route path="/wiki" component={Wiki} />
-				<Route path="/scénarios" component={Scenarios} />
-				<Route path="/crédit-climat-personnel" component={CreditExplanation} />
+				<Route path="/wiki" element={<Wiki />} />
+				<Route path="/scénarios" element={<Scenarios />} />
+				<Route
+					path="/crédit-climat-personnel"
+					element={<CreditExplanation />}
+				/>
 
-				<Route component={Route404} />
-			</Switch>
+				<Route element={<Route404 />} />
+			</Routes>
 		</div>
 	</>
 )

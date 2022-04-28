@@ -1,28 +1,23 @@
 import { goToQuestion } from 'Actions/actions'
-import {
-	extractCategoriesNamespaces,
-	parentName,
-	sortCategories,
-} from 'Components/publicodesUtils'
+import Emoji from 'Components/Emoji'
+import { parentName } from 'Components/publicodesUtils'
 import { useEngine } from 'Components/utils/EngineContext'
 import { useNextQuestions } from 'Components/utils/useNextQuestion'
+import { motion } from 'framer-motion'
 import { DottedName } from 'modele-social'
 import { EvaluatedNode, formatValue } from 'publicodes'
-import { useEffect, useState } from 'react'
+import { useEffect } from 'react'
 import emoji from 'react-easy-emoji'
 import { Trans, useTranslation } from 'react-i18next'
 import { useDispatch, useSelector } from 'react-redux'
-import { useHistory } from 'react-router'
 import { situationSelector } from 'Selectors/simulationSelectors'
+import { resetSimulation } from '../../actions/actions'
 import {
 	answeredQuestionsSelector,
 	objectifsSelector,
 } from '../../selectors/simulationSelectors'
-import { splitName, safeGetRule } from '../publicodesUtils'
-import Emoji from 'Components/Emoji'
+import { safeGetRule } from '../publicodesUtils'
 import './AnswerList.css'
-import { resetSimulation } from '../../actions/actions'
-import { motion } from 'framer-motion'
 
 export default function AnswerList() {
 	const dispatch = useDispatch()
@@ -157,7 +152,6 @@ function StepsTable({
 }
 
 const Answer = ({ rule, dispatch, language }) => {
-	const history = useHistory()
 	const path = parentName(rule.dottedName, ' · ', 1)
 	const simulationDottedName = useSelector(objectifsSelector)[0]
 	const uselessPrefix = simulationDottedName.includes(path)

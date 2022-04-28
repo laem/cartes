@@ -1,20 +1,16 @@
+import { useEngine } from 'Components/utils/EngineContext'
+import Engine, { ParsedRules, serializeEvaluation } from 'publicodes'
 import { useEffect, useMemo, useState } from 'react'
-import { useSelector, useDispatch } from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux'
+import { useLocation } from 'react-router'
+import { useSearchParams } from 'react-router-dom'
+import { configSelector } from 'Selectors/simulationSelectors'
+import { batchUpdateSituation } from '../../actions/actions'
 import {
 	RootState,
 	SimulationConfig,
 	Situation,
 } from '../../reducers/rootReducer'
-import { useHistory } from 'react-router'
-import { useSearchParams } from 'Components/utils/useSearchParams'
-import { useEngine } from 'Components/utils/EngineContext'
-import { configSelector } from 'Selectors/simulationSelectors'
-import Engine, { ParsedRules, serializeEvaluation } from 'publicodes'
-import {
-	updateSituation,
-	setActiveTarget,
-	batchUpdateSituation,
-} from '../../actions/actions'
 import { situationSelector } from '../../selectors/simulationSelectors'
 
 type Objectifs = (string | { objectifs: string[] })[]
@@ -50,7 +46,7 @@ export default function useSearchParamsSimulationSharing() {
 	const [searchParams, setSearchParams] = useSearchParams()
 	const config = useSelector(configSelector)
 	const simulationUrl = useSelector((state: RootState) => state.simulation?.url)
-	const currentUrl = useHistory().location.pathname
+	const currentUrl = useLocation().pathname
 	const dispatch = useDispatch()
 	const engine = useEngine()
 
