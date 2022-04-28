@@ -1,8 +1,7 @@
 import { useState } from 'react'
 import emoji from 'react-easy-emoji'
 import { useDispatch, useSelector } from 'react-redux'
-import { Redirect } from 'react-router'
-import { Switch, Link, Route } from 'react-router-dom'
+import { Link, Navigate, Route } from 'react-router-dom'
 import {
 	deletePreviousSimulation,
 	resetSimulation,
@@ -19,7 +18,7 @@ const Eraser = ({}) => {
 	const dispatch = useDispatch()
 	const [erased, setErased] = useState(false)
 
-	if (erased) return <Redirect to="/simulateur/bilan" />
+	if (erased) return <Navigate to="/simulateur/bilan" />
 	return (
 		<button
 			className="ui__ button simple small"

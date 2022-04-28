@@ -3,7 +3,7 @@ import { ScrollToTop } from 'Components/utils/Scroll'
 import { SitePathsContext } from 'Components/utils/SitePathsContext'
 import { useContext, useEffect } from 'react'
 import emoji from 'react-easy-emoji'
-import { Redirect, useNavigate, useMatch } from 'react-router-dom'
+import { Navigate, useNavigate, useMatch } from 'react-router-dom'
 import { Link, NavLink } from 'react-router-dom'
 import styled from 'styled-components'
 import useSWR from 'swr'
@@ -45,7 +45,7 @@ export default function News() {
 		`${'/nouveautés'}/${slugify(data[index].name)}`
 
 	if (!slug || selectedRelease === -1) {
-		return <Redirect to={getPath(0)} />
+		return <Navigate to={getPath(0)} />
 	}
 
 	const releaseName = data[selectedRelease].name.toLowerCase()

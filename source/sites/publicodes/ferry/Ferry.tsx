@@ -1,10 +1,9 @@
-import Engine from 'publicodes'
-import { createContext, useContext, useEffect, useMemo, useState } from 'react'
-import { Redirect, Route, Switch } from 'react-router'
 import RuleInput from 'Components/conversation/RuleInput'
+import Engine from 'publicodes'
+import { createContext, useContext, useState } from 'react'
 import Emoji from '../../../components/Emoji'
-import Documentation from '../pages/Documentation'
 import TopBar from '../../../components/TopBar'
+import Documentation from '../pages/Documentation'
 
 const req = require.context('./', true, /\.(yaml)$/)
 const rules = req.keys().reduce((memo, key) => {
