@@ -12,7 +12,7 @@ import { compose, isEmpty, symmetricDifference } from 'ramda'
 import React, { useContext, useEffect } from 'react'
 import emoji from 'react-easy-emoji'
 import { useDispatch, useSelector } from 'react-redux'
-import { Link, Navigate } from 'react-router-dom'
+import { Link, Navigate, useLocation, useParams } from 'react-router-dom'
 import tinygradient from 'tinygradient'
 import {
 	deletePreviousSimulation,
@@ -54,17 +54,21 @@ const getBackgroundColor = (score) => {
 	return colors[Math.round(cursor)]
 }
 
-export default ({ match }) => {
+export default ({}) => {
 	const dispatch = useDispatch()
-	const rawObjective = match.params.name,
+	const urlParams = useParams()
+	console.log(urlParams)
+	const rawObjective = urlParams['*'],
 		decoded = utils.decodeRuleName(rawObjective),
 		config = {
 			objectifs: [decoded],
 		},
 		configSet = useSelector((state) => state.simulation?.config)
 	const wrongConfig = !eqValues(config.objectifs, configSet?.objectifs || [])
+	const url = useLocation().pathname
 	useEffect(
-		() => (wrongConfig ? dispatch(setSimulationConfig(config)) : () => null),
+		() =>
+			wrongConfig ? dispatch(setSimulationConfig(config, url)) : () => null,
 		[]
 	)
 

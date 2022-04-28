@@ -15,9 +15,11 @@ import Méthode from './Méthode'
 import styled from 'styled-components'
 import Helmet from 'react-helmet'
 import { Markdown } from 'Components/utils/markdown'
-import { Route } from 'react-router'
+import { Route, Routes, useNavigate, useParams } from 'react-router'
 import References from './DocumentationReferences'
 import TopBar from '../../../components/TopBar'
+import { configSelector } from '../../../selectors/simulationSelectors'
+import { currentSimulationSelector } from '../../../selectors/storageSelectors'
 
 export default function ({
 	documentationPath = '/documentation',
@@ -33,7 +35,6 @@ export default function ({
 		() => getDocumentationSiteMap({ engine, documentationPath }),
 		[engine, documentationPath]
 	)
-	const { i18n } = useTranslation()
 
 	if (pathname === '/documentation') {
 		return <DocumentationLanding />
@@ -58,42 +59,47 @@ export default function ({
 					</div>
 				</>
 			)}
-			<Route
-				path={documentationPath + '/:name+'}
-				render={({ match }) =>
-					console.log('BOB', match.params.name) ||
-					(match.params.name && (
-						<DocumentationStyle>
-							<RulePage
-								language={i18n.language as 'fr' | 'en'}
-								rulePath={match.params.name}
-								engine={engine}
-								documentationPath={documentationPath}
-								renderers={{
-									Head: Helmet,
-									Link: Link,
-									Text: Markdown,
-									References,
-								}}
-							/>
-						</DocumentationStyle>
-					))
-				}
-			/>
+			<Routes>
+				<Route
+					path="*"
+					element={<DocPage {...{ documentationPath, engine }} />}
+				/>
+			</Routes>
 
 			<BandeauContribuer />
 		</div>
 	)
 }
+const DocPage = ({ documentationPath, engine }) => {
+	const url = useParams()['*']
+	const { i18n } = useTranslation()
+	return (
+		<DocumentationStyle>
+			<RulePage
+				language={i18n.language as 'fr' | 'en'}
+				rulePath={url}
+				engine={engine}
+				documentationPath={documentationPath}
+				renderers={{
+					Head: Helmet,
+					Link: Link,
+					Text: Markdown,
+					References,
+				}}
+			/>
+		</DocumentationStyle>
+	)
+}
 function BackToSimulation() {
-	const dispatch = useDispatch()
-	const handleClick = useCallback(() => {
-		dispatch(goBackToSimulation())
-	}, [])
+	const url = useSelector(currentSimulationSelector)?.url
+	const navigate = useNavigate()
+
 	return (
 		<button
 			className="ui__ simple small push-left button"
-			onClick={handleClick}
+			onClick={() => {
+				navigate(url)
+			}}
 		>
 			← <Trans i18nKey="back">Reprendre la simulation</Trans>
 		</button>

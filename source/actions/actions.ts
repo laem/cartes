@@ -1,5 +1,5 @@
 import { SitePaths } from 'Components/utils/SitePathsContext'
-import { History } from 'history'
+import { useLocation } from 'react-router'
 import { RootState, SimulationConfig } from 'Reducers/rootReducer'
 import { ThunkAction } from 'redux-thunk'
 import { DottedName } from 'Rules'
@@ -21,12 +21,7 @@ export type Action =
 	| SetActiveTargetAction
 	| CompanyStatusAction
 
-export type ThunkResult<R = void> = ThunkAction<
-	R,
-	RootState,
-	{ history: History; sitePaths: SitePaths },
-	Action
->
+export type ThunkResult<R = void> = ThunkAction<R, RootState, {}, Action>
 
 type StepAction = {
 	type: 'STEP_ACTION'
@@ -108,13 +103,12 @@ export const setDifferentSituation = ({
 })
 
 export const setSimulationConfig =
-	(config: Object): ThunkResult<void> =>
-	(dispatch, getState, { history }): void => {
+	(config: Object, url): ThunkResult<void> =>
+	(dispatch, getState): void => {
 		const pastSimulationConfig = getState().simulation?.config
 		if (pastSimulationConfig === config) {
 			return
 		}
-		const url = history.location.pathname
 		dispatch({
 			type: 'SET_SIMULATION',
 			url,
@@ -157,13 +151,6 @@ export const updateUnit = (targetUnit: string) =>
 		type: 'UPDATE_TARGET_UNIT',
 		targetUnit,
 	} as const)
-
-export const goBackToSimulation =
-	(): ThunkResult<void> =>
-	(_, getState, { history }) => {
-		const url = getState().simulation?.url
-		url && history.push(url)
-	}
 
 export function loadPreviousSimulation() {
 	return {

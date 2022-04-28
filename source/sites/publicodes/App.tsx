@@ -57,33 +57,37 @@ const Router = ({}) => (
 	<>
 		<div css="height: 100%">
 			<Routes>
-				<Route exact path="/" element={<Wiki />} />
-				<Route path="/documentation" element={<Documentation />} />
+				<Route path="/" element={<Wiki />} />
+				<Route path="/documentation/*" element={<Documentation />} />
 				<Route path="/instructions" element={<Instructions />} />
-				<Route path="/simulateur/:name+" element={<Simulateur />} />
+				<Route path="/simulateur/*" element={<Simulateur />} />
 				<Route path="/fin/*" element={<GameOver />} />
-				{/* Lien de compatibilité, à retirer par exemple mi-juillet 2020*/}
-				<Route path="/contribuer/:input?" element={<Contribution />} />
+				<Route path="/contribuer/:input" element={<Contribution />} />
 				<Route path="/à-propos" element={<About />} />
 				<Route path="/vie-privée" element={<Privacy />} />
 				<Route path="/nouveautés" element={<News />} />
-				<Route path="/ferry">
-					<Suspense fallback={<div>Chargement</div>}>
-						<Ferry />
-					</Suspense>
-				</Route>
-				<Route path="/carburants">
-					<Suspense fallback={<div>Chargement</div>}>
-						<Carburants />
-					</Suspense>
-				</Route>
+				<Route
+					path="/ferry/*"
+					element={
+						<Suspense fallback={<div>Chargement</div>}>
+							<Ferry />
+						</Suspense>
+					}
+				/>
+				<Route
+					path="/carburants/*"
+					element={
+						<Suspense fallback={<div>Chargement</div>}>
+							<Carburants />
+						</Suspense>
+					}
+				/>
 				<Route path="/wiki" element={<Wiki />} />
 				<Route path="/scénarios" element={<Scenarios />} />
 				<Route
 					path="/crédit-climat-personnel"
 					element={<CreditExplanation />}
 				/>
-
 				<Route element={<Route404 />} />
 			</Routes>
 		</div>
