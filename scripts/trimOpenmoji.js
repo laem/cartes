@@ -6,4 +6,4 @@ const data = openmoji.openmojis.reduce(
 	{}
 )
 
-fs.writeFileSync('source/data/openmojis.json', JSON.stringify(data))
+fs.writeFileSync('source/openmojis.json', JSON.stringify(data))

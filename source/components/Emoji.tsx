@@ -1,5 +1,5 @@
 var emojiRegex = require('emoji-regex')
-import openmojis from '../data/openmojis.json'
+import openmojis from '../openmojis.json'
 import replace from 'string-replace-to-array'
 
 const regex = emojiRegex()
