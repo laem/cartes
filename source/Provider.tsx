@@ -2,12 +2,11 @@ import { ThemeColorsProvider } from 'Components/utils/colors'
 import IframeOptionsProvider from 'Components/utils/IframeOptionsProvider'
 import { SitePathProvider, SitePaths } from 'Components/utils/SitePathsContext'
 import { TrackerProvider } from 'Components/utils/withTracker'
-import { createBrowserHistory } from 'history'
 import i18next from 'i18next'
 import React, { useEffect, useMemo } from 'react'
 import { I18nextProvider } from 'react-i18next'
 import { Provider as ReduxProvider } from 'react-redux'
-import { Router } from 'react-router-dom'
+import { BrowserRouter as Router } from 'react-router-dom'
 import reducers, { RootState } from 'Reducers/rootReducer'
 import { applyMiddleware, compose, createStore, Middleware, Store } from 'redux'
 import thunk from 'redux-thunk'
@@ -40,7 +39,6 @@ if (NODE_ENV === 'production' && 'serviceWorker' in navigator && !inIframe()) {
 
 export type ProviderProps = {
 	children: React.ReactNode
-	tracker?: Tracker
 	sitePaths?: SitePaths
 	initialStore?: RootState
 	onStoreCreated?: (store: Store) => void
@@ -48,7 +46,6 @@ export type ProviderProps = {
 }
 
 export default function Provider({
-	tracker = new Tracker(),
 	reduxMiddlewares,
 	initialStore,
 	onStoreCreated,
@@ -57,23 +54,8 @@ export default function Provider({
 	dataBranch,
 	rulesURL,
 }: ProviderProps) {
-	const history = useMemo(() => createBrowserHistory(), [])
-	useEffect(() => {
-		tracker?.connectToHistory(history)
-		return () => {
-			tracker?.disconnectFromHistory()
-		}
-	})
-
 	const storeEnhancer = composeEnhancers(
-		applyMiddleware(
-			// Allows us to painlessly do route transition in action creators
-			thunk.withExtraArgument({
-				history,
-				sitePaths,
-			}),
-			...(reduxMiddlewares ?? [])
-		)
+		applyMiddleware(thunk.withExtraArgument({}), ...(reduxMiddlewares ?? []))
 	)
 
 	// Hack: useMemo is used to persist the store across hot reloads.
@@ -94,17 +76,15 @@ export default function Provider({
 				color={iframeCouleur && decodeURIComponent(iframeCouleur)}
 			>
 				<IframeOptionsProvider>
-					<TrackerProvider value={tracker}>
-						<SitePathProvider value={sitePaths}>
-							<I18nextProvider i18n={i18next}>
-								<Router history={history}>
-									<RulesProvider>
-										<>{children}</>
-									</RulesProvider>
-								</Router>
-							</I18nextProvider>
-						</SitePathProvider>
-					</TrackerProvider>
+					<SitePathProvider value={sitePaths}>
+						<I18nextProvider i18n={i18next}>
+							<Router>
+								<RulesProvider>
+									<>{children}</>
+								</RulesProvider>
+							</Router>
+						</I18nextProvider>
+					</SitePathProvider>
 				</IframeOptionsProvider>
 			</ThemeColorsProvider>
 		</ReduxProvider>

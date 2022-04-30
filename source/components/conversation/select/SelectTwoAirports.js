@@ -29,7 +29,7 @@ export default function SelectTwoAirports({ onChange }) {
 	const [wikidata, setWikidata] = useState(null)
 
 	useEffect(() => {
-		if (!state.vers.choice) return null
+		if (!state.vers.choice) return undefined
 
 		getCityData(state.vers.choice.item.ville).then((json) =>
 			setWikidata(json?.results?.bindings[0])

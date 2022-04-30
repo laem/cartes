@@ -1,16 +1,13 @@
-import Engine from 'publicodes'
-import { RulePage } from 'publicodes-react'
-import { createContext, useContext, useEffect, useMemo, useState } from 'react'
-import { Redirect, Route, Switch } from 'react-router'
 import RuleInput from 'Components/conversation/RuleInput'
+import Engine from 'publicodes'
+import { createContext, useContext, useEffect, useState } from 'react'
 import Emoji from '../../../components/Emoji'
-import Documentation, { DocumentationStyle } from '../pages/Documentation'
-import fetchBrentPrice from './fetchBrentPrice'
-import Meta from '../../../components/utils/Meta'
 import StackedBarChart from '../../../components/StackedBarChart'
-import pays from './pays.yaml'
-import Markdown from 'markdown-to-jsx'
 import TopBar from '../../../components/TopBar'
+import Meta from '../../../components/utils/Meta'
+import Documentation from '../pages/Documentation'
+import fetchBrentPrice from './fetchBrentPrice'
+import pays from './pays.yaml'
 
 const req = require.context('./', true, /\.(yaml)$/)
 const rules = req.keys().reduce((memo, key) => {

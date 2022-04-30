@@ -1,8 +1,9 @@
 import { setSimulationConfig } from 'Actions/actions'
-import PeriodSwitch from 'Components/PeriodSwitch'
 import { extractCategories } from 'Components/publicodesUtils'
 import { buildEndURL } from 'Components/SessionBar'
 import Simulation from 'Components/Simulation'
+import SimulationResults from 'Components/SimulationResults'
+import TopBar from 'Components/TopBar'
 import { useEngine } from 'Components/utils/EngineContext'
 import { Markdown } from 'Components/utils/markdown'
 import { TrackerContext } from 'Components/utils/withTracker'
@@ -10,31 +11,23 @@ import { utils } from 'publicodes'
 import { compose, isEmpty, symmetricDifference } from 'ramda'
 import React, { useContext, useEffect } from 'react'
 import emoji from 'react-easy-emoji'
-import { Helmet } from 'react-helmet'
 import { useDispatch, useSelector } from 'react-redux'
-import { Redirect } from 'react-router'
+import { Link, Navigate, useLocation, useParams } from 'react-router-dom'
 import tinygradient from 'tinygradient'
 import {
 	deletePreviousSimulation,
 	resetSimulation,
 } from '../../actions/actions'
-import {
-	sessionBarMargin,
-	useSafePreviousSimulation,
-} from '../../components/SessionBar'
+import { useSafePreviousSimulation } from '../../components/SessionBar'
+import Meta from '../../components/utils/Meta'
 import { useNextQuestions } from '../../components/utils/useNextQuestion'
 import FuturecoMonochrome from '../../images/FuturecoMonochrome'
 import {
 	answeredQuestionsSelector,
 	situationSelector,
 } from '../../selectors/simulationSelectors'
-import { Almost, Done, Half, NotBad, QuiteGood } from './Congratulations'
-import { Link } from 'react-router-dom'
-import TopBar from 'Components/TopBar'
-import SimulationResults from 'Components/SimulationResults'
 import { capitalizeFirst } from './chart/Bar'
-import Meta from '../../components/utils/Meta'
-import { getEmojiImageUrls } from '../../components/Emoji'
+import { Almost, Done, Half, NotBad, QuiteGood } from './Congratulations'
 
 const eqValues = compose(isEmpty, symmetricDifference)
 export const colorScale = [
@@ -61,17 +54,20 @@ const getBackgroundColor = (score) => {
 	return colors[Math.round(cursor)]
 }
 
-export default ({ match }) => {
+export default ({}) => {
 	const dispatch = useDispatch()
-	const rawObjective = match.params.name,
+	const urlParams = useParams()
+	const rawObjective = urlParams['*'],
 		decoded = utils.decodeRuleName(rawObjective),
 		config = {
 			objectifs: [decoded],
 		},
 		configSet = useSelector((state) => state.simulation?.config)
 	const wrongConfig = !eqValues(config.objectifs, configSet?.objectifs || [])
+	const url = useLocation().pathname
 	useEffect(
-		() => (wrongConfig ? dispatch(setSimulationConfig(config)) : () => null),
+		() =>
+			wrongConfig ? dispatch(setSimulationConfig(config, url)) : () => null,
 		[]
 	)
 
@@ -168,7 +164,7 @@ const Simulateur = ({ objective }) => {
 				)}
 
 				{isMainSimulation && gameOver ? (
-					<Redirect to="/fin" />
+					<Navigate to="/fin" />
 				) : (
 					<Simulation
 						noFeedback
@@ -205,7 +201,7 @@ const RedirectionToEndPage = ({ rules, engine }) => {
 		])
 	}, [tracker])
 
-	return <Redirect to={buildEndURL(rules, engine)} />
+	return <Navigate to={buildEndURL(rules, engine)} />
 }
 
 const EndingCongratulations = () => (
