@@ -35,16 +35,18 @@ module.exports.default = {
 		globalObject: 'self',
 	},
 	plugins: [
-		new CopyPlugin([
-			'./manifest.webmanifest',
-			'./source/sites/publicodes/sitemap.txt',
-			'./iframeResizer.contentWindow.min.js',
-			'./source/images/logo.svg',
-			{
-				from: './source/data',
-				to: 'data',
-			},
-		]),
+		new CopyPlugin({
+			patterns: [
+				'./manifest.webmanifest',
+				'./source/sites/publicodes/sitemap.txt',
+				'./iframeResizer.contentWindow.min.js',
+				'./source/images/logo.svg',
+				{
+					from: './source/data',
+					to: 'data',
+				},
+			],
+		}),
 		new NormalModuleReplacementPlugin(
 			/react-easy-emoji/,
 			'Components/emoji.js'
@@ -111,22 +113,13 @@ module.exports.commonLoaders = (mode = 'production') => {
 			exclude: /node_modules|dist/,
 		},
 		{
-			test: /\.mp3$/,
-			loader: 'file-loader',
+			test: /\.(jpe?g|png|svg)$/,
+			type: 'asset/resource',
 		},
 
 		{
-			test: /\.(jpe?g|png|svg)$/,
-			use: {
-				loader: 'file-loader',
-				options: {
-					name: 'images/[name].[ext]',
-				},
-			},
-		},
-		{
 			test: /\.yaml$/,
-			use: ['json-loader', 'yaml-loader'],
+			use: ['yaml-loader'],
 		},
 		{
 			test: /\.csv$/,
@@ -139,17 +132,10 @@ module.exports.commonLoaders = (mode = 'production') => {
 		},
 		{
 			test: /\.(ttf|woff2?)$/,
-			use: [
-				{
-					loader: 'file-loader',
-					options: {
-						name: '[name].[ext]',
-						outputPath: 'fonts',
-						publicPath: '/fonts',
-					},
-				},
-			],
+			type: 'asset/resource',
 		},
+
+		{ test: /\.mp3$/, type: 'asset/resource' },
 	]
 }
 
