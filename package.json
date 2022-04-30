@@ -7,7 +7,7 @@
 		"url": "https://github.com/laem/futureco.git"
 	},
 	"engines": {
-		"node": ">=15"
+		"node": ">=16"
 	},
 	"browserslist": [
 		"> 1% in FR",
