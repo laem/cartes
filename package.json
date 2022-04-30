@@ -82,7 +82,7 @@
 		"dotenv": "^8.2.0",
 		"emoji-regexp": "^1.0.0",
 		"focus-trap-react": "^3.1.2",
-		"framer-motion": "^4.1.17",
+		"framer-motion": "^6.3.3",
 		"fuse.js": "6.5.3",
 		"great-circle": "^0.2.8",
 		"html-webpack-plugin": "^5.3.1",
