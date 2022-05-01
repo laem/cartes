@@ -1,10 +1,7 @@
-import { SitePaths } from 'Components/utils/SitePathsContext'
-import { useLocation } from 'react-router'
 import { RootState, SimulationConfig } from 'Reducers/rootReducer'
 import { ThunkAction } from 'redux-thunk'
 import { DottedName } from 'Rules'
 import { deletePersistedSimulation } from '../storage/persistSimulation'
-import { CompanyStatusAction } from './companyStatusActions'
 
 export type Action =
 	| ResetSimulationAction
