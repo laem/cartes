@@ -10,8 +10,7 @@
 		"node": ">=16"
 	},
 	"browserslist": [
-		"> 1% in FR",
-		"not ie < 11"
+		"> 1% in FR"
 	],
 	"devDependencies": {
 		"@babel/core": "^7.9.0",
