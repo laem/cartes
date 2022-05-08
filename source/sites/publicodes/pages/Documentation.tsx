@@ -19,7 +19,6 @@ import { Route, Routes, useNavigate, useParams } from 'react-router'
 import References from './DocumentationReferences'
 import TopBar from '../../../components/TopBar'
 import { configSelector } from '../../../selectors/simulationSelectors'
-import { currentSimulationSelector } from '../../../selectors/storageSelectors'
 
 export default function ({
 	documentationPath = '/documentation',
@@ -91,7 +90,8 @@ const DocPage = ({ documentationPath, engine }) => {
 	)
 }
 function BackToSimulation() {
-	const url = useSelector(currentSimulationSelector)?.url
+	const simulation = useSelector((state) => state.simulation),
+		url = simulation?.url
 	const navigate = useNavigate()
 
 	return (

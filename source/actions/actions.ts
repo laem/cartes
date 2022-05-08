@@ -103,7 +103,7 @@ export const setDifferentSituation = ({
 })
 
 export const setSimulationConfig =
-	(config: Object, url): ThunkResult<void> =>
+	(config: Object, url: string): ThunkResult<void> =>
 	(dispatch, getState): void => {
 		const pastSimulationConfig = getState().simulation?.config
 		if (pastSimulationConfig === config) {
