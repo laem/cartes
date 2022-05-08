@@ -25,6 +25,7 @@ import { humanWeight } from './HumanWeight'
 import scenarios from './scenarios.yaml'
 
 const { encodeRuleName } = utils
+import BudgetBar from './BudgetBar'
 
 let limitPerPeriod = (scenario) =>
 	mapObjIndexed(
@@ -119,6 +120,8 @@ export default ({ nodeValue, formule, dottedName }) => {
 
 const ImpactCard = ({ nodeValue, dottedName, exampleName }) => {
 	const scenario = useSelector((state) => state.scenario)
+	const budget = scenarios[scenario]['crédit carbone par personne'] * 1000
+
 	const [value, unit] = humanWeight(nodeValue)
 	let { closestPeriodLabel, closestPeriod, factor } = humanCarbonImpactData(
 		scenario,
@@ -154,32 +157,45 @@ const ImpactCard = ({ nodeValue, dottedName, exampleName }) => {
 							`}
 						>
 							{exampleName && <div>{<Emoji e={exampleName} hasText />}</div>}
-							<div
-								css={`
-									display: flex;
-									justify-content: center;
-									align-items: center;
-									font-size: ${exampleName ? '140%' : '220%'};
-									img {
-										width: 1.6rem;
-										margin-left: 0.4rem;
-										vertical-align: bottom;
-									}
-								`}
-							>
-								<div>
-									{factor +
-										' ' +
-										closestPeriodLabel +
-										(closestPeriod[closestPeriod.length - 1] !== 's' &&
-										Math.abs(factor) > 1
-											? 's'
-											: '')}
+							{dottedName === 'transport . avion . impact' ? (
+								<BudgetBar
+									{...{
+										budget,
+										nodeValue,
+										exampleName,
+										factor,
+										closestPeriodLabel,
+										closestPeriod,
+									}}
+								/>
+							) : (
+								<div
+									css={`
+										display: flex;
+										justify-content: center;
+										align-items: center;
+										font-size: ${exampleName ? '140%' : '220%'};
+										img {
+											width: 1.6rem;
+											margin-left: 0.4rem;
+											vertical-align: bottom;
+										}
+									`}
+								>
+									<div>
+										{factor +
+											' ' +
+											closestPeriodLabel +
+											(closestPeriod[closestPeriod.length - 1] !== 's' &&
+											Math.abs(factor) > 1
+												? 's'
+												: '')}
+									</div>
+									<Link css="" to="/crédit-climat-personnel">
+										<img src={'/images/yellow-info.svg'} />
+									</Link>
 								</div>
-								<Link css="" to="/crédit-climat-personnel">
-									<img src={'/images/yellow-info.svg'} />
-								</Link>
-							</div>
+							)}
 							<Link
 								css="color: inherit; text-decoration: none"
 								to={'/documentation/' + encodeRuleName(dottedName)}
