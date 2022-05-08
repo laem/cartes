@@ -64,7 +64,7 @@ export default ({ children }) => {
 			(url) => location.pathname.indexOf(url) === 0
 		)
 			? 'ecolab-data.netlify.app/co2.json'
-			: 'fv2--futureco-data.netlify.app/co2.json'
+			: 'futureco-data.netlify.app/co2.json'
 
 		/* This enables loading the rules of a branch,
 		 * to showcase the app as it would be once this branch of -data  has been merged*/
