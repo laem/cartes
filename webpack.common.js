@@ -42,6 +42,10 @@ module.exports.default = {
 				'./iframeResizer.contentWindow.min.js',
 				'./source/images/logo.svg',
 				{
+					from: './source/images',
+					to: 'images',
+				},
+				{
 					from: './source/data',
 					to: 'data',
 				},

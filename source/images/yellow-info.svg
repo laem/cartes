@@ -21,10 +21,10 @@
      inkscape:pagecheckerboard="0"
      showgrid="false"
      inkscape:zoom="8.43825"
-     inkscape:cx="47.462448"
+     inkscape:cx="47.580956"
      inkscape:cy="34.959855"
      inkscape:window-width="1920"
-     inkscape:window-height="1080"
+     inkscape:window-height="1200"
      inkscape:window-x="0"
      inkscape:window-y="0"
      inkscape:window-maximized="1"
@@ -35,11 +35,11 @@
        id="color"
        transform="matrix(1.9664,0,0,1.9664,-53.714467,-7.805469)" />
     <circle
-       style="fill:#fcea2b;fill-opacity:1;fill-rule:evenodd;stroke:#000000;stroke-width:4;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
+       style="fill:#fcea2b;fill-opacity:1;fill-rule:evenodd;stroke:#000000;stroke-width:4.2462;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
        id="path2372"
-       cx="37.212349"
-       cy="32.658627"
-       r="27.573122" />
+       cx="35.804276"
+       cy="36.179077"
+       r="29.270275" />
     <polyline
        fill="none"
        stroke="#000000"
@@ -48,23 +48,23 @@
        stroke-width="2.5"
        points="46.892 26.339 46.892 20.594 43.989 20.594"
        id="polyline17"
-       transform="matrix(1.9664,0,0,1.9664,-53.714467,-7.805469)" />
+       transform="matrix(2.0874338,0,0,2.0874338,-60.719175,-6.775623)" />
     <line
-       x1="43.920441"
-       x2="32.655327"
-       y1="43.98735"
-       y2="43.98735"
+       x1="42.925259"
+       x2="30.966764"
+       y1="48.205093"
+       y2="48.205093"
        fill="none"
        stroke="#000000"
        stroke-linecap="round"
        stroke-linejoin="round"
-       stroke-width="4.916"
+       stroke-width="5.21858"
        id="line19" />
     <circle
-       cx="37.897552"
-       cy="22.874306"
-       r="3.7544475"
+       cx="36.531654"
+       cy="25.792521"
+       r="3.9855373"
        id="circle21"
-       style="stroke-width:1.9664" />
+       style="stroke-width:2.08743" />
   </g>
 </svg>
