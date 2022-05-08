@@ -8,7 +8,8 @@ const url = `https://unpkg.com/openmoji@13.1.0`
 const findOpenmoji = (e, black) => {
 	const unicode = e.codePointAt(0).toString(16).toUpperCase()
 
-	const found = openmojis[e]
+	const found = openmojis[e] || openmojis[e + '️']
+	// for a reason I don't understand, openmoji JSON file contains the variation 16 emoji somtimes... U+FE0F
 
 	return (
 		found && `${url}/${black ? 'black' : 'color'}/svg/${found || unicode}.svg`
