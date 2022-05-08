@@ -177,7 +177,7 @@ const ImpactCard = ({ nodeValue, dottedName, exampleName }) => {
 											: '')}
 								</div>
 								<Link css="" to="/crédit-climat-personnel">
-									<img src={require('Images/yellow-info.svg').default} />
+									<img src={'/images/yellow-info.svg'} />
 								</Link>
 							</div>
 							<Link
