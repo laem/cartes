@@ -21,7 +21,7 @@ import {
 import { useSafePreviousSimulation } from '../../components/SessionBar'
 import Meta from '../../components/utils/Meta'
 import { useNextQuestions } from '../../components/utils/useNextQuestion'
-import FuturecoMonochrome from '../../images/FuturecoMonochrome'
+import FuturecoMonochrome from 'Components/FuturecoMonochrome'
 import {
 	answeredQuestionsSelector,
 	situationSelector,

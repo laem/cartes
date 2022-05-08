@@ -3,7 +3,6 @@ import about from 'raw-loader!./about.md'
 import React from 'react'
 import { Link } from 'react-router-dom'
 import Meta from '../../components/utils/Meta'
-import FuturecoMonochrome from '../../images/FuturecoMonochrome'
 
 export default () => (
 	<section className="ui__ container" id="about">

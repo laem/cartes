@@ -9,7 +9,7 @@ import {
 import Emoji from '../../components/Emoji'
 import ShareButton from '../../components/ShareButton'
 import { useNextQuestions } from '../../components/utils/useNextQuestion'
-import FuturecoMonochrome from '../../images/FuturecoMonochrome'
+import FuturecoMonochrome from 'Components/FuturecoMonochrome'
 import { answeredQuestionsSelector } from '../../selectors/simulationSelectors'
 import { colorScale } from './Simulateur'
 import { GameDialog, LoudButton } from './UI'
