@@ -61,6 +61,12 @@ export default ({}) => {
 		decoded = utils.decodeRuleName(rawObjective),
 		config = {
 			objectifs: [decoded],
+			questions: {
+				'non prioritaires':
+					decoded === 'transport . avion . impact'
+						? ['transport . avion . tolérance au risque']
+						: null,
+			},
 		},
 		configSet = useSelector((state) => state.simulation?.config)
 	const wrongConfig = !eqValues(config.objectifs, configSet?.objectifs || [])
