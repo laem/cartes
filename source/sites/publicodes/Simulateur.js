@@ -223,7 +223,6 @@ const CustomDescription = ({ dottedName, rule }) => {
 		baseCarbone = ref?.find((el) => el.includes('bilans-ges.ademe.fr'))
 	return (
 		<div css="margin: 1rem 0">
-			{dottedName === 'transport . avion . impact' && <AvionExplanation />}
 			{baseCarbone && (
 				<div css="img {vertical-align: middle}">
 					Une donnée{' '}
@@ -232,6 +231,7 @@ const CustomDescription = ({ dottedName, rule }) => {
 				</div>
 			)}
 			<Markdown>{capitalizeFirst(rule.description)}</Markdown>
+			{dottedName === 'transport . avion . impact' && <AvionExplanation />}
 		</div>
 	)
 }

@@ -44,7 +44,7 @@ export default () => {
 			>
 				<motion.div
 					initial={{ width: '0%' }}
-					animate={{ width: 100 * (co2Only / impact) + '%' }}
+					whileInView={{ width: 100 * (co2Only / impact) + '%' }}
 					transition={{ duration: 1 }}
 					css={`
 						background: var(--color);
@@ -59,7 +59,7 @@ export default () => {
 				</motion.div>
 				<motion.div
 					initial={{ width: '0rem', opacity: 0 }}
-					animate={{
+					whileInView={{
 						width: 100 * (nonCo2 / impact) + '%',
 						opacity: 1,
 						color: 'white',
