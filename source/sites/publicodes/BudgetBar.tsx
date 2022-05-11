@@ -19,7 +19,6 @@ export default ({
 }) => {
 	const percent = Math.round((nodeValue / budget) * 100),
 		color = colors[Math.round(percent / 10)] || colors[9]
-	console.log('PERCENT', percent)
 	const threshold = percent > 140,
 		multiplicator = (percent / 100).toLocaleString('fr-FR', {
 			maximumFractionDigits: 2,
@@ -41,10 +40,11 @@ export default ({
 					color: ${findContrastedTextColor(color.toHex())};
 					padding-top: 0.3rem;
 					small {
-						font-size: 50%;
-						max-width: 40%;
+						font-size: 60%;
+						max-width: 45%;
 						white-space: normal;
-						line-height: 1rem;
+						line-height: 0.85rem;
+						margin-left: 0.4rem;
 					}
 					--shadow-color: 210deg 75% 31%;
 					box-shadow: 0.3px 0.5px 0.7px hsl(var(--shadow-color) / 0.36),
