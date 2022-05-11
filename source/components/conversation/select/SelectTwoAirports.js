@@ -94,7 +94,7 @@ export default function SelectTwoAirports({ onChange }) {
 							updateSituation(
 								'transport . avion . ' +
 									{ depuis: 'départ', vers: 'arrivée' }[whichInput],
-								`'${option.item.nom}'`
+								`'${ville}'`
 							)
 						)
 						setState(newState)
