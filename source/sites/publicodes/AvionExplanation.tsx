@@ -82,13 +82,23 @@ export default () => {
 				</motion.div>
 			</div>
 			<p>
-				<strong>CO₂</strong> : continue de réchauffer la planète longtemps après
-				le vol
+				<strong>CO₂</strong> : continue de réchauffer la planète très longtemps
+				après le vol
 			</p>
 			<p>
-				<strong>Hors CO₂</strong> : réchauffe à court-terme, disparaît si le
-				trafic aérien baisse
+				<strong>Hors CO₂</strong> : réchauffe principalement à court-terme
 			</p>
+			<blockquote>
+				<p>
+					Concrètement, le CO₂ émis s'accumule d'année en année pour très
+					longtemps. À l'inverse, si le trafic aérien se mettait à baisser, les
+					effets hors CO₂ des vols passés s'estomperaient rapidement.
+				</p>
+				<p>
+					Ces deux composantes du réchauffement sont pondérées pour donner un
+					seul chiffre en CO₂<strong>e</strong>quivalent.
+				</p>
+			</blockquote>
 		</div>
 	)
 }
