@@ -21,7 +21,7 @@ export default ({
 		color = colors[Math.round(percent / 10)] || colors[9]
 	const threshold = percent > 140,
 		multiplicator = (percent / 100).toLocaleString('fr-FR', {
-			maximumFractionDigits: 2,
+			maximumFractionDigits: 1,
 		})
 	return (
 		<Link
