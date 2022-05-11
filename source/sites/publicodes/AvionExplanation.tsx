@@ -88,17 +88,22 @@ export default () => {
 			<p>
 				<strong>Hors CO₂</strong> : réchauffe principalement à court-terme
 			</p>
-			<blockquote>
-				<p>
-					Concrètement, le CO₂ émis s'accumule d'année en année pour très
-					longtemps. À l'inverse, si le trafic aérien se mettait à baisser, les
-					effets hors CO₂ des vols passés s'estomperaient rapidement.
-				</p>
-				<p>
-					Ces deux composantes du réchauffement sont pondérées pour donner un
-					seul chiffre en CO₂<strong>e</strong>quivalent.
-				</p>
-			</blockquote>
+			<details css="margin-bottom: 2rem">
+				<summary>
+					<span className="ui__ button plain simple">En savoir plus</span>
+				</summary>
+				<blockquote>
+					<p>
+						Concrètement, le CO₂ émis s'accumule d'année en année pour très
+						longtemps. À l'inverse, si le trafic aérien se mettait à baisser,
+						les effets hors CO₂ des vols passés s'estomperaient rapidement.
+					</p>
+					<p>
+						Ces deux composantes du réchauffement sont pondérées pour donner un
+						seul chiffre en CO₂<strong>e</strong>quivalent.
+					</p>
+				</blockquote>
+			</details>
 		</div>
 	)
 }
