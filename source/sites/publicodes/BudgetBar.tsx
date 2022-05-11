@@ -43,7 +43,7 @@ export default ({
 						font-size: 60%;
 						max-width: 45%;
 						white-space: normal;
-						line-height: 0.85rem;
+						line-height: 1rem;
 						margin-left: 0.4rem;
 					}
 					--shadow-color: 210deg 75% 31%;
