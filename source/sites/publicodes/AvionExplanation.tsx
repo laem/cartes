@@ -1,4 +1,5 @@
 import { useEngine } from '../../components/utils/EngineContext'
+import { motion } from 'framer-motion'
 
 export default () => {
 	const engine = useEngine(),
@@ -27,7 +28,6 @@ export default () => {
 					padding: 0;
 					height: 4rem;
 					margin: 1rem auto;
-					border: 3px solid white;
 
 					> div {
 						height: 100%;
@@ -35,36 +35,48 @@ export default () => {
 						align-items: center;
 						justify-content: center;
 						font-weight: bold;
+						border: 3px solid white;
 					}
 				`}
 			>
-				<div
+				<motion.div
+					initial={{ width: '0%' }}
+					animate={{ width: 100 * (co2Only / impact) + '%' }}
+					transition={{ duration: 1 }}
 					css={`
-						width: ${100 * (co2Only / impact)}%;
 						background: var(--color);
 						background: linear-gradient(
 							0.25turn,
 							var(--darkerColor),
 							var(--darkColor)
 						);
-						border-right: 4px solid white;
 					`}
 				>
 					<div>CO₂</div>
-				</div>
-				<div
+				</motion.div>
+				<motion.div
+					initial={{ width: '0rem', opacity: 0 }}
+					animate={{
+						width: 100 * (nonCo2 / impact) + '%',
+						opacity: 1,
+						color: 'white',
+					}}
+					transition={{ duration: 1, delay: 2 }}
 					css={`
-						width: ${100 * (nonCo2 / impact)}%;
+						> div {
+							white-space: nowrap;
+						}
 						background: var(--lightColor);
 						background: linear-gradient(
 							0.25turn,
 							var(--color),
 							var(--lightColor)
 						);
+						border-left: none !important;
 					`}
 				>
 					<div>Hors CO₂</div>
-				</div>
+				</motion.div>
 			</div>
 			<p>
 				<strong>CO₂</strong> : continue de réchauffer la planète longtemps après
