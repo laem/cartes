@@ -14,6 +14,9 @@ export default () => {
 		<div
 			css={`
 				margin: 2rem auto;
+				h3 {
+					margin: 2rem 0;
+				}
 				p {
 					line-height: 1.3rem;
 				}
