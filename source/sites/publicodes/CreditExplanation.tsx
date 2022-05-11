@@ -13,7 +13,7 @@ export default () => {
 	return (
 		<section id="scenarios" className="ui__ container">
 			<TopBar />
-			<h1>Le crédit climat personnel</h1>
+			<h1>Le budget climat personnel</h1>
 			<p>
 				Le jeu est simple : plus on émet de gaz à effet de serre, plus on se
 				dirige vers une catastrophe climatique. Ces émissions se mesurent en{' '}
