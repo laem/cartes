@@ -121,7 +121,7 @@ export function getNextQuestions(
 		const indexList =
 			whitelist.findIndex((name) => question.startsWith(name)) + 1
 		const indexNotPriority =
-			notPriority.findIndex((name) => question.startsWith(name)) + 1
+			(notPriority || []).findIndex((name) => question.startsWith(name)) + 1
 		const differenceCoeff = questionDifference(question, lastStepWithAnswer)
 		return indexList + indexNotPriority + differenceCoeff
 	}, nextQuestions)

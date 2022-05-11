@@ -28,6 +28,7 @@ import {
 } from '../../selectors/simulationSelectors'
 import { capitalizeFirst } from './chart/Bar'
 import { Almost, Done, Half, NotBad, QuiteGood } from './Congratulations'
+import AvionExplanation from './AvionExplanation'
 
 const eqValues = compose(isEmpty, symmetricDifference)
 export const colorScale = [
@@ -179,7 +180,7 @@ const Simulateur = ({ objective }) => {
 							objective === 'bilan' ? (
 								<RedirectionToEndPage {...{ rules, engine }} />
 							) : rule.description ? (
-								<CustomDescription rule={rule} />
+								<CustomDescription rule={rule} dottedName={objective} />
 							) : (
 								<EndingCongratulations />
 							)
@@ -217,11 +218,12 @@ const EndingCongratulations = () => (
 const ADEMELogoURL =
 	'https://www.ademe.fr/sites/default/files/logoademe2020_rvb.png'
 
-const CustomDescription = ({ rule }) => {
+const CustomDescription = ({ dottedName, rule }) => {
 	const ref = rule.références,
 		baseCarbone = ref?.find((el) => el.includes('bilans-ges.ademe.fr'))
 	return (
 		<div css="margin: 1rem 0">
+			{dottedName === 'transport . avion . impact' && <AvionExplanation />}
 			{baseCarbone && (
 				<div css="img {vertical-align: middle}">
 					Une donnée{' '}
