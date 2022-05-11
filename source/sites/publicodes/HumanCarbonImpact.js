@@ -160,6 +160,7 @@ const ImpactCard = ({ nodeValue, dottedName, exampleName }) => {
 							{dottedName === 'transport . avion . impact' ? (
 								<BudgetBar
 									{...{
+										noExample: !exampleName,
 										budget,
 										nodeValue,
 										exampleName,

@@ -16,6 +16,7 @@ export default ({
 	factor,
 	closestPeriodLabel,
 	closestPeriod,
+	noExample,
 }) => {
 	const percent = Math.round((nodeValue / budget) * 100),
 		color = colors[Math.round(percent / 10)] || colors[9]
@@ -38,7 +39,11 @@ export default ({
 					background: ${color};
 					height: 2.6rem;
 					color: ${findContrastedTextColor(color.toHex())};
-					padding-top: 0.3rem;
+					${noExample
+						? `
+					padding: 2rem 0 1.8rem
+					`
+						: `padding-top: 0.3rem`};
 					small {
 						font-size: 60%;
 						max-width: 45%;
