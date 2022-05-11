@@ -128,7 +128,6 @@ function StepsTable({
 }: {
 	rules: Array<EvaluatedNode & { nodeKind: 'rule'; dottedName: DottedName }>
 }) {
-	const dispatch = useDispatch()
 	const language = useTranslation().i18n.language
 	return (
 		<table
@@ -141,7 +140,6 @@ function StepsTable({
 					<Answer
 						{...{
 							rule,
-							dispatch,
 							language,
 						}}
 					/>
@@ -151,30 +149,85 @@ function StepsTable({
 	)
 }
 
-const Answer = ({ rule, dispatch, language }) => {
+const Answer = ({ rule, language }) => {
+	// Shameless exception, sometimes you've got to do things dirty
+	if (
+		['transport . avion . départ', 'transport . avion . arrivée'].includes(
+			rule.dottedName
+		)
+	)
+		return null
+
 	const path = parentName(rule.dottedName, ' · ', 1)
 	const simulationDottedName = useSelector(objectifsSelector)[0]
 	const uselessPrefix = simulationDottedName.includes(path)
+	const situation = useSelector(situationSelector)
 
+	if (rule.dottedName === 'transport . avion . distance de vol aller') {
+		const trimSituationString = (el) => el.split("'")[1]
+
+		return (
+			<AnswerComponent
+				{...{
+					dottedName: rule.dottedName,
+					NameComponent: <div>Votre vol</div>,
+					ValueComponent: (
+						<span className="answerContent">
+							{`${trimSituationString(
+								situation['transport . avion . départ']
+							)} - ${trimSituationString(
+								situation['transport . avion . arrivée']
+							)} (${formatValue(rule, { language })})`}
+						</span>
+					),
+				}}
+			/>
+		)
+	}
+
+	const NameComponent = (
+		<div>
+			{path && !uselessPrefix && (
+				<div>
+					<small>{path}</small>
+				</div>
+			)}
+			<div css="font-size: 110%">{rule.title}</div>
+		</div>
+	)
+
+	const ValueComponent = (
+		<span
+			className="answerContent"
+			css={`
+				${rule.passedQuestion ? 'opacity: .5' : ''}
+			`}
+		>
+			{formatValue(rule, { language })}
+			{rule.passedQuestion && emoji(' 🤷🏻')}
+		</span>
+	)
+	return (
+		<AnswerComponent
+			{...{ dottedName: rule.dottedName, NameComponent, ValueComponent }}
+		/>
+	)
+}
+
+const AnswerComponent = ({ dottedName, NameComponent, ValueComponent }) => {
+	const dispatch = useDispatch()
 	return (
 		<motion.tr
 			initial={{ opacity: 0, y: -50, scale: 0.3 }}
 			animate={{ opacity: 1, y: 0, scale: 1 }}
 			transition={{ duration: 0.3 }}
 			exit={{ opacity: 0, scale: 0.5, transition: { duration: 0.3 } }}
-			key={rule.dottedName}
+			key={dottedName}
 			css={`
 				background: var(--darkestColor);
 			`}
 		>
-			<td>
-				{path && !uselessPrefix && (
-					<div>
-						<small>{path}</small>
-					</div>
-				)}
-				<div css="font-size: 110%">{rule.title}</div>
-			</td>
+			<td>{NameComponent}</td>
 			<td>
 				<button
 					className="answer"
@@ -195,18 +248,10 @@ const Answer = ({ rule, dispatch, language }) => {
 						}
 					`}
 					onClick={() => {
-						dispatch(goToQuestion(rule.dottedName))
+						dispatch(goToQuestion(dottedName))
 					}}
 				>
-					<span
-						className="answerContent"
-						css={`
-							${rule.passedQuestion ? 'opacity: .5' : ''}
-						`}
-					>
-						{formatValue(rule, { language })}
-						{rule.passedQuestion && emoji(' 🤷🏻')}
-					</span>
+					{ValueComponent}
 				</button>
 			</td>
 		</motion.tr>
