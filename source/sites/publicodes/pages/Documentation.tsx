@@ -164,4 +164,7 @@ export const DocumentationStyle = styled.div`
 	.tranche:nth-child(2n) {
 		background: var(--darkerColor) !important;
 	}
+	.bHoORO .tranche.activated {
+		background: var(--color) !important;
+	}
 `
