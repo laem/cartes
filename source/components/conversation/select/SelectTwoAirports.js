@@ -72,9 +72,10 @@ export default function SelectTwoAirports({ onChange }) {
 						color: white;
 						font-size: 100%;
 						display: flex;
-						justify-content: start;
-						flex-wrap: wrap;
+						justify-content: space-between;
 						align-items: center;
+						text-align: left;
+						width: 100%;
 					}
 
 					button:hover {
@@ -185,6 +186,7 @@ export default function SelectTwoAirports({ onChange }) {
 						margin-left: 1rem;
 						padding: 0;
 					}
+					width: 100%;
 					@media (min-width: 800px) {
 						width: 30rem;
 					}
