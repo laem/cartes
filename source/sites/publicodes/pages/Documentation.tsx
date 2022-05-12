@@ -161,4 +161,7 @@ export const DocumentationStyle = styled.div`
 	div[name='somme'] > div > div:nth-child(2n) {
 		background: var(--darkerColor);
 	}
+	.tranche:nth-child(2n) {
+		background: var(--darkerColor) !important;
+	}
 `
