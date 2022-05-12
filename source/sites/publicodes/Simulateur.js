@@ -151,6 +151,22 @@ const Simulateur = ({ objective }) => {
 				</Link>
 			)}
 			{!isMainSimulation && <TopBar />}
+			{isMainSimulation && (
+				<div
+					css={`
+						padding: 0.6rem 1rem;
+						margin: 2rem auto;
+						max-width: 30rem;
+						border: 10px solid red;
+					`}
+				>
+					<p>⚠️ Ce calculateur n'est pas encore prêt ni publié.</p>
+					<p>
+						L'idée est là, mais l'expérience utilisateur n'est pas testée
+						encore.
+					</p>
+				</div>
+			)}
 			<div
 				css={`
 					height: 90%;

@@ -21,7 +21,6 @@ const rules = req.keys().reduce((memo, key) => {
 	return { ...memo, ...prefixedRuleSet }
 }, {})
 
-console.log(rules)
 
 const engine = new Engine(rules)
 const SituationContext = createContext({})
