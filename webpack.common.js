@@ -146,7 +146,8 @@ module.exports.commonLoaders = (mode = 'production') => {
 module.exports.HTMLPlugins = ({ injectTrackingScript = false } = {}) => [
 	new HTMLPlugin({
 		template: 'index.html',
-		logo: '/logo.svg',
+		favicon: '/logo.svg',
+		logo: '/logo.png',
 		chunks: ['publicodes'],
 		title: 'Futureco 🔥',
 		description:
