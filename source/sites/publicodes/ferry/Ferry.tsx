@@ -7,7 +7,7 @@ import Documentation from '../pages/Documentation'
 
 const req = require.context('./', true, /\.(yaml)$/)
 const rules = req.keys().reduce((memo, key) => {
-	const jsonRuleSet = req(key) || {}
+	const jsonRuleSet = req(key).default || {}
 	const splitName = key.replace('./', '').split('>.yaml')
 	const prefixedRuleSet =
 		splitName.length > 1
@@ -20,7 +20,6 @@ const rules = req.keys().reduce((memo, key) => {
 			: jsonRuleSet
 	return { ...memo, ...prefixedRuleSet }
 }, {})
-
 
 const engine = new Engine(rules)
 const SituationContext = createContext({})
