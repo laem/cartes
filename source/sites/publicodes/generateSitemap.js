@@ -10,7 +10,11 @@ fetch('https://futureco-data.netlify.app/co2.json')
 				`https://futur.eco/documentation/${encodeRuleName(dottedName)}`
 		)
 		const text = documentationLines.join('\n')
-		fs.writeFileSync('./sitemap.txt', lines + text, 'utf8')
+		fs.writeFileSync(
+			'./source/sites/publicodes/sitemap.txt',
+			lines + text,
+			'utf8'
+		)
 		console.log('Sitemap mis à jour avec les dernières règles publicodes :)')
 	})
 
