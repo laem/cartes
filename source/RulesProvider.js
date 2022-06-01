@@ -77,6 +77,7 @@ export default ({ children }) => {
 		}${rulesDomain}`
 		const dataBranch = branch || pullRequestNumber
 		if (
+			false && // To be reactivated when in a dev branch for the final work on this test section on the site, that is based on nosgestesclimat's model
 			NODE_ENV === 'development' &&
 			!dataBranch &&
 			rulesDomain.includes('ecolab-data')
