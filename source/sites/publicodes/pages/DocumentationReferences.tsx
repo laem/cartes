@@ -10,9 +10,9 @@ const referencesImages = {
 		'/références-images/ladocumentationfrançaise.png',
 	'senat.fr': '/références-images/senat.png',
 	'bpifrance-creation.fr': '/références-images/bpi-création.png',
-	'ademe.fr': 'https://www.ademe.fr/sites/default/files/logoademe2020_rvb.png',
+	'ademe.fr': 'https://www.ademe.fr/wp-content/uploads/2021/12/logo-ademe.svg',
 	'bilans-ges.ademe.fr':
-		'https://www.ademe.fr/sites/default/files/logoademe2020_rvb.png',
+		'https://www.ademe.fr/wp-content/uploads/2021/12/logo-ademe.svg',
 }
 
 type ReferencesProps = {

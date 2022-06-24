@@ -232,7 +232,7 @@ const EndingCongratulations = () => (
 )
 
 const ADEMELogoURL =
-	'https://www.ademe.fr/sites/default/files/logoademe2020_rvb.png'
+	'https://www.ademe.fr/wp-content/uploads/2021/12/logo-ademe.svg'
 
 const CustomDescription = ({ dottedName, rule }) => {
 	const ref = rule.références,
