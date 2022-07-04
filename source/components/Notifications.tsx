@@ -74,7 +74,7 @@ export default function Notifications({ currentQuestion }) {
 								<div className="notification">
 									{emoji(sévérité == 'avertissement' ? '⚠️' : '💁🏻')}
 									<div className="notificationText ui__ card">
-										<Markdown>description</Markdown>
+										<Markdown>{description}</Markdown>
 										<button
 											className="hide"
 											aria-label="close"
