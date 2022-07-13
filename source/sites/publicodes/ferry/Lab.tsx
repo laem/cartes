@@ -1,4 +1,4 @@
-import { useEffect, useRef } from 'react'
+import { useEffect, useRef, useState } from 'react'
 import Mega from './Mega'
 import pathDataToPolys, { calcPolygonArea } from './svgPathToPolygons'
 
@@ -8,18 +8,23 @@ import pathDataToPolys, { calcPolygonArea } from './svgPathToPolygons'
 
  */
 
+const deckTotalArea = (elements, n) =>
+	elements.find((el) => el.id === n + '-total').area
+
 export default () => {
 	const ref = useRef(null)
+	const [elements, setElements] = useState([])
 
 	useEffect(() => {
 		const el = ref.current
 		if (!el) return null
-		;[...el.querySelectorAll('path')].map((path) => {
+		const elements = [...el.querySelectorAll('path')].map((path) => {
 			const d = path.getAttribute('d')
 			let points = d && pathDataToPolys(d, { tolerance: 1, decimals: 1 })
-			const area = points && calcPolygonArea(points[0])
-			console.log(area)
+			const area = points && Math.round(calcPolygonArea(points[0]))
+			return { id: path.id, area }
 		})
+		setElements(elements)
 	}, [])
 
 	return (
@@ -31,6 +36,17 @@ export default () => {
 				}
 			`}
 		>
+			<ul>
+				{elements.map((el) => (
+					<li>
+						{el.id} : {el.area} (
+						{Math.round(
+							(el.area / deckTotalArea(elements, el.id.split('-')[0])) * 100
+						)}
+						%)
+					</li>
+				))}
+			</ul>
 			<Mega ref={ref} />
 		</div>
 	)
