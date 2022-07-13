@@ -1,64 +1,64 @@
 import * as React from 'react'
-import { useCallback } from 'react'
-import pathDataToPolys, { calcPolygonArea } from './svgPathToPolygons'
 
-import image from './megaexpressfour.png'
-
-function SvgMegaExpressFour(props) {
-	const restaurantRef = React.useRef(null)
-	const d = restaurantRef?.current?.getAttribute('d')
-
-	let points = d && pathDataToPolys(d, { tolerance: 1, decimals: 1 })
-	const area = points && calcPolygonArea(points[0])
-
+function SvgMegaExpressFour(props, svgRef) {
 	return (
-		<>
-			{d}
-			<br />
-			{Math.round(area)}
-
-			<svg
-				width="600mm"
-				height="800mm"
-				viewBox="0 0 600 800"
-				xmlnsXlink="http://www.w3.org/1999/xlink"
-				xmlns="http://www.w3.org/2000/svg"
-				{...props}
-			>
-				<image
-					width={558.8}
-					height={745.067}
-					preserveAspectRatio="none"
-					xlinkHref={image}
-					x={19.757}
-					y={32.595}
-				/>
+		<svg
+			width="600mm"
+			height="800mm"
+			viewBox="0 0 600 800"
+			xmlnsXlink="http://www.w3.org/1999/xlink"
+			xmlns="http://www.w3.org/2000/svg"
+			ref={svgRef}
+			{...props}
+		>
+			<image
+				width={558.8}
+				height={745.067}
+				preserveAspectRatio="none"
+				xlinkHref="/images/megaexpressfour.png"
+				x={19.757}
+				y={32.595}
+			/>
+			<g fill="none" strokeWidth={2}>
 				<path
 					d="M153.07 388.542l.892 46.568 134.856-.71.379-9.345 81.56-.348v-28.425l-82.017.44-.148-9.569z"
-					fill="none"
 					stroke="#fff800"
-					strokeWidth={2}
-					id="7-restaurant"
-					ref={restaurantRef}
 				/>
 				<path
-					id="7-total"
-					css="fill:none;stroke:#ffffff;stroke-width:2;stroke-linecap:butt;stroke-linejoin:miter;stroke-dasharray:none;stroke-opacity:1"
-					d="m 153.06315,388.64409 0.89231,46.56778 296.46315,-1.99918 0.13512,-46.45373 z"
+					d="M153.063 388.644l.892 46.568 296.464-2 .135-46.453z"
+					stroke="#fff"
 				/>
-			</svg>
-		</>
+			</g>
+			<g fill="none" strokeWidth={2}>
+				<path
+					d="M153.531 325.741l.892 46.568 134.856-.71.379-9.346 81.56-.347v-28.425l-82.017.44-.148-9.57z"
+					stroke="#fff800"
+				/>
+				<path
+					d="M153.524 325.843l.893 46.568 296.463-2 .135-46.453z"
+					stroke="#fff"
+				/>
+			</g>
+			<text x={153.07} y={388.542}>
+				<tspan
+					style={{
+						textAlign: 'center',
+						verticalAlign: 'bottom',
+					}}
+					dy={12}
+					fontSize={3.175}
+					fontWeight={400}
+				>
+					{'123891.78 px'}
+					<tspan fontSize="65%" baselineShift="super">
+						{'2'}
+					</tspan>
+				</tspan>
+			</text>
+		</svg>
 	)
 }
 
-export default SvgMegaExpressFour
+const ForwardRef = React.forwardRef(SvgMegaExpressFour)
+export default ForwardRef
 
-function useClientRect() {
-	const [rect, setRect] = React.useState(null)
-	const ref = useCallback((node) => {
-		if (node !== null) {
-			setRect(node.getBoundingClientRect())
-		}
-	}, [])
-	return [rect, ref]
-}
