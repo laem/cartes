@@ -1,8 +1,14 @@
 import * as React from 'react'
+import { useCallback } from 'react'
 
 import image from './megaexpressfour.png'
 
 function SvgMegaExpressFour(props) {
+	const [restaurant, restaurantRef] = useClientRect()
+	const [total, totalRef] = useClientRect()
+
+	console.log(restaurant, total)
+
 	return (
 		<svg
 			width="600mm"
@@ -25,13 +31,27 @@ function SvgMegaExpressFour(props) {
 				fill="none"
 				stroke="#fff800"
 				strokeWidth={2}
+				id="7-restaurant"
+				ref={restaurantRef}
 			/>
 			<path
+				id="7-total"
 				css="fill:none;stroke:#ffffff;stroke-width:2;stroke-linecap:butt;stroke-linejoin:miter;stroke-dasharray:none;stroke-opacity:1"
 				d="m 153.06315,388.64409 0.89231,46.56778 296.46315,-1.99918 0.13512,-46.45373 z"
+				ref={totalRef}
 			/>
 		</svg>
 	)
 }
 
 export default SvgMegaExpressFour
+
+function useClientRect() {
+	const [rect, setRect] = React.useState(null)
+	const ref = useCallback((node) => {
+		if (node !== null) {
+			setRect(node.getBoundingClientRect())
+		}
+	}, [])
+	return [rect, ref]
+}
