@@ -4,6 +4,7 @@ import { createContext, useContext, useState } from 'react'
 import Emoji from '../../../components/Emoji'
 import TopBar from '../../../components/TopBar'
 import Documentation from '../pages/Documentation'
+import Lab from './Lab'
 
 const req = require.context('./', true, /\.(yaml)$/)
 const rules = req.keys().reduce((memo, key) => {
@@ -27,6 +28,7 @@ export default ({}) => {
 	const [situation, setSituation] = useState({})
 	return (
 		<div className="ui__ container" css={``}>
+			<Lab />
 			<TopBar />
 			<SituationContext.Provider value={[situation, setSituation]}>
 				<Main />
