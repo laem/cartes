@@ -31,13 +31,14 @@ const rules = req.keys().reduce((memo, key) => {
 }, {})
 
 const engine = new Engine(rules)
-const SituationContext = createContext({
-	'surface . cabine': 12,
-	'volume utile': 12 * 3 * 1000,
-})
+const SituationContext = createContext({})
 
 export default ({}) => {
-	const [situation, setSituation] = useState({})
+	const [situation, setSituation] = useState({
+		'surface . cabine': '12 m2',
+		'volume utile': 12 * 3 * 1000 + ' m3',
+	})
+
 	return (
 		<div className="ui__ container" css={``}>
 			<Meta
@@ -51,9 +52,11 @@ export default ({}) => {
 				<div css=" text-align: center; margin-top: 3rem">
 					Comprendre le calcul <Emoji e="⬇️" />
 				</div>
-				{/*
-				<Lab />
-				*/}
+				<details>
+					<summary>Modèle bateau</summary>
+
+					<Lab setData={setSituation} />
+				</details>
 				<h2>Explications</h2>
 				<Documentation documentationPath="/ferry" engine={engine} embedded />
 			</SituationContext.Provider>
@@ -67,13 +70,15 @@ const Main = ({}) => (
 				display: flex;
 				align-items: center;
 				justify-content: space-evenly;
+				> span {
+					margin-right: 1rem;
+				}
 				img {
 					font-size: 200%;
 					background: white;
 				}
 				h1 {
 					margin-top: 1rem;
-					max-width: 60%;
 				}
 			`}
 		>
@@ -188,7 +193,7 @@ const Questions = ({}) => {
 					</ul>
 				</p>
 
-				<details css="text-align: center">
+				<details css="text-align: center" open>
 					<summary>Ma situation</summary>
 
 					<ul>

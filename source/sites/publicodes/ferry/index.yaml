@@ -67,18 +67,20 @@ hauteur pont haut:
   formule: hauteur pont bas * 2
   note: Nous simplifions pour l'instant ces données qui pourront être améliorées dans un second temps.
 
-volume passager . cabine: surface . cabine * hauteur pont bas
+volume passager . cabine:
+  formule: surface . cabine * hauteur pont bas
+  unité: m3
 
 surface:
 surface . cabine:
   question: Quel est la surface d'une cabine type ?
-  par défaut: 40
+  par défaut: 40 m2
 
 volume utile:
   question: Quel est le volume utile du bateau ?
   description: On appelle ici volume utile la somme de toutes les surfaces qui ne sont pas l'infrastructure elle-même du bateau, sa sécurité, son équipage, etc.
   unité: m3
-  par défaut: 1000000
+  par défaut: 1000000 m3
 
 km par mile nautique: 1.852 km/mn
 

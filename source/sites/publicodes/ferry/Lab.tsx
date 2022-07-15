@@ -8,16 +8,17 @@ import pathDataToPolys, { calcPolygonArea } from './svgPathToPolygons'
 
  */
 
-const deckTotalArea = (elements, n) =>
-	elements.reduce((memo, next) => next.area + memo, 0)
+const sumAreas = (elements, filter = () => true) =>
+	elements.reduce((memo, next) => (filter(next) ? next.area : 0) + memo, 0)
 
-export default () => {
+export default ({ setData }) => {
 	const ref = useRef(null)
 	const [elements, setElements] = useState([])
+	console.log('injection du modèle de surface du megaexpressfour')
 
 	useEffect(() => {
 		const el = ref.current
-		if (!el) return null
+		if (!el) return undefined
 		const elements = [...el.querySelectorAll('path')].map((path) => {
 			const d = path.getAttribute('d')
 			let points = d && pathDataToPolys(d, { tolerance: 1, decimals: 1 })
@@ -25,13 +26,30 @@ export default () => {
 			return { id: path.id, area }
 		})
 		setElements(elements)
-	}, [])
 
-	const cabinesCount = elements.reduce((memo, next) => {
-		return next.id.includes('cabine') ? +next.id.split('-')[2] + memo : memo
-	}, 0)
-	// Cette page cite 252 cabines, ce qui correspond environ à notre calcul de 255 :)
-	// https://corsica-battelli.jimdofree.com/navires/corsica-ferries/méga-express-four/
+		const cabinesCount = elements.reduce((memo, next) => {
+			return next.id.includes('cabine') ? +next.id.split('-')[2] + memo : memo
+		}, 0)
+		// Cette page cite 252 cabines, ce qui correspond environ à notre calcul de 255 :)
+		// https://corsica-battelli.jimdofree.com/navires/corsica-ferries/méga-express-four/
+
+		console.log('useeffectu')
+		const cabinesTotalArea = sumAreas(elements, (next) =>
+			next.id.includes('cabine')
+		)
+		const cabineArea = cabinesTotalArea / cabinesCount
+		const totalArea = sumAreas(elements),
+			totalVolume = totalArea * 3
+
+		setData((data) => ({
+			...data,
+			'surface . cabine': `${Math.round(cabineArea)} m2`,
+			'volume utile': `${totalVolume} m3`,
+		}))
+		return () => {
+			console.log('This will be logged on unmount')
+		}
+	}, [])
 
 	return (
 		<div
@@ -45,15 +63,10 @@ export default () => {
 			<ul>
 				{elements.map((el) => (
 					<li>
-						{el.id} : {el.area} (
-						{Math.round(
-							(el.area / deckTotalArea(elements, el.id.split('-')[0])) * 100
-						)}
-						%)
+						{el.id} : {el.area}
 					</li>
 				))}
 			</ul>
-			{cabinesCount} cabines au total
 			<Mega ref={ref} />
 		</div>
 	)
