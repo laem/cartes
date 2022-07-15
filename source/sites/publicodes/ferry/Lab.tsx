@@ -9,7 +9,7 @@ import pathDataToPolys, { calcPolygonArea } from './svgPathToPolygons'
  */
 
 const deckTotalArea = (elements, n) =>
-	elements.find((el) => el.id === n + '-total').area
+	elements.reduce((memo, next) => next.area + memo, 0)
 
 export default () => {
 	const ref = useRef(null)
@@ -26,6 +26,12 @@ export default () => {
 		})
 		setElements(elements)
 	}, [])
+
+	const cabinesCount = elements.reduce((memo, next) => {
+		return next.id.includes('cabine') ? +next.id.split('-')[2] + memo : memo
+	}, 0)
+	// Cette page cite 252 cabines, ce qui correspond environ à notre calcul de 255 :)
+	// https://corsica-battelli.jimdofree.com/navires/corsica-ferries/méga-express-four/
 
 	return (
 		<div
@@ -47,6 +53,7 @@ export default () => {
 					</li>
 				))}
 			</ul>
+			{cabinesCount} cabines au total
 			<Mega ref={ref} />
 		</div>
 	)
