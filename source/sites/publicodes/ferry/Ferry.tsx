@@ -3,8 +3,16 @@ import Engine from 'publicodes'
 import { createContext, useContext, useState } from 'react'
 import Emoji from '../../../components/Emoji'
 import TopBar from '../../../components/TopBar'
+import Meta from '../../../components/utils/Meta'
 import Documentation from '../pages/Documentation'
 import Lab from './Lab'
+
+const description = `
+
+			Alternative à l'avion, le ferry complète train pour traverser les mers.
+			Découvrez une estimation de son empreinte climat, en fonction de votre
+			billet.
+`
 
 const req = require.context('./', true, /\.(yaml)$/)
 const rules = req.keys().reduce((memo, key) => {
@@ -28,6 +36,11 @@ export default ({}) => {
 	const [situation, setSituation] = useState({})
 	return (
 		<div className="ui__ container" css={``}>
+			<Meta
+				title="Calculateur d'empreinte carbone du ferry"
+				description={description}
+				image="https://futur.eco/images/ferry.png"
+			/>
 			<Lab />
 			<TopBar />
 			<SituationContext.Provider value={[situation, setSituation]}>
@@ -61,11 +74,7 @@ const Main = ({}) => (
 			<Emoji e="⛴️" />
 			<h1 css="">Le ferry, c'est écolo ?</h1>
 		</p>
-		<p>
-			Alternative à l'avion, le ferry complète train pour traverser les mers.
-			Découvrez une estimation de son empreinte climat, en fonction de votre
-			billet.
-		</p>
+		<p>{description}</p>
 		<Questions />
 	</div>
 )
