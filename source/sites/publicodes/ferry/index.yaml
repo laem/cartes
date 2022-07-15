@@ -1,4 +1,4 @@
-ferry:
+index:
   icônes: ⛴
   description: |
 
@@ -24,7 +24,7 @@ ferry:
 
     Enfin, une fois cette méthode du poids acceptée, vous pouvez parcourir [le calcul intégral](/ferry/empreinte-par-km) et intéractif du facteur d'émission.
 
-ferry . empreinte marginale . grammes:
+empreinte marginale . grammes:
   formule: 0.2 gCO2e/kg
   description: |
     Notre calcul est basé sur l'hypothèse que l'embarquement de poids marginal sur le bateau implique une consommation supplémentaire de carburant, qui a son tour induit l'émission de gaz à effet de serre supplémentaire, par km.
@@ -37,44 +37,44 @@ ferry . empreinte marginale . grammes:
 
     L'autre grand problème du modèle est la non-prise en compte de la vitesse du bateau, pourtant fondamentale dans la consommation. Il serait pourtant possible de poser directement à l'utilisateur la question de la vitesse via la ligne qu'il empreinte combinée aux donnés de greenferries. Ou encore plus simplement, l'estimation grossièrement via l'information de nuit / de jour ?
 
-ferry . empreinte marginale:
+empreinte marginale:
   formule: grammes / 1000
   unité: kgCO2e/kg
 
-ferry . part du volume:
+part du volume:
   titre: Part du volume utile du bateau attribuée au passager
   formule: volume passager / volume utile
 
-ferry . volume passager:
+volume passager:
   formule:
     somme:
       - cabine
       - services
       - dortoir
       - voiture
-ferry . volume passager . services: 0
-ferry . volume passager . dortoir: 0
-ferry . volume passager . voiture: 0
+volume passager . services: 0
+volume passager . dortoir: 0
+volume passager . voiture: 0
 
-ferry . volume passager . cabine partagée:
-  applicable si: ferry . cabine
+volume passager . cabine partagée:
+  applicable si: cabine
   formule: (cabines nécessaires * cabine) / groupe
 
-ferry . hauteur pont bas:
+hauteur pont bas:
   formule: 2.7m
 
-ferry . hauteur pont haut:
+hauteur pont haut:
   formule: hauteur pont bas * 2
   note: Nous simplifions pour l'instant ces données qui pourront être améliorées dans un second temps.
 
-ferry . volume passager . cabine: surface . cabine * hauteur pont bas
+volume passager . cabine: surface . cabine * hauteur pont bas
 
-ferry . surface:
-ferry . surface . cabine:
+surface:
+surface . cabine:
   question: Quel est la surface d'une cabine type ?
   par défaut: 40
 
-ferry . volume utile:
+volume utile:
   question: Quel est le volume utile du bateau ?
   description: On appelle ici volume utile la somme de toutes les surfaces qui ne sont pas l'infrastructure elle-même du bateau, sa sécurité, son équipage, etc.
   unité: m3
@@ -82,7 +82,7 @@ ferry . volume utile:
 
 km par mile nautique: 1.852 km/mn
 
-ferry . empreinte du bateau:
+empreinte du bateau:
   titre: Empreinte du bateau témoin
   description: Nous utilisons ici le bateau témoin Méga Express Four de la flotte Corsica Ferries. Ils est représentatif des gros ferries de ~2000 passagers, rapides.
   formule: 630 * km par mile nautique
@@ -90,11 +90,11 @@ ferry . empreinte du bateau:
   note: |
     Données greenferries 2019 tirées de Thetis-MRV 2019 https://www.greenferries.org/ships/mega-express-two-9203186/
 
-ferry . empreinte par km:
+empreinte par km:
   formule: empreinte par km volume
   description: Nous avons choisi la méthode d'attribution en volume. À suivre.
 
-ferry . empreinte par km volume:
+empreinte par km volume:
   titre: Empreinte par km et passager
   formule: empreinte du bateau * part du volume
   description: |
@@ -105,7 +105,7 @@ ferry . empreinte par km volume:
 
   unité: kgCO2e/km
 
-ferry . empreinte par km poids:
+empreinte par km poids:
   titre: Empreinte par km et passager
   formule: empreinte marginale * charge . par personne majorée
   description: |
@@ -116,7 +116,7 @@ ferry . empreinte par km poids:
 
   unité: kgCO2e/km
 
-ferry . cabine:
+cabine:
   icônes: 🛌
   question: Place cabine (plutôt que siège) ?
   description: Sans surprise, voyager en cabine apporte du confort mais en contrepartie du poids embarqué.
@@ -125,7 +125,7 @@ ferry . cabine:
     corsica-ferries: https://www.corsica-ferries.fr/ferries/traversee-ferry.html
   par défaut: oui
 
-ferry . cabines nécessaires:
+cabines nécessaires:
   description: On part pour l'instant du principe qu'il n'y a que des cabines 4 places.
   note: |
     Ici on aimerait utiliser un mécanisme de modulo, qui n'existe pas dans publi.codes.
@@ -141,23 +141,23 @@ ferry . cabines nécessaires:
           plafond: 13
         - montant: groupe / 4
 
-ferry . taille cabine:
+taille cabine:
   applicable si: cabine
   question: Quelle est la taille de la cabine ?
   note: |
     Variable pas intégrée encore.
   par défaut: "'quatre lits'"
 
-ferry . taille cabine . deux lits:
-ferry . taille cabine . quatre lits:
+taille cabine . deux lits:
+taille cabine . quatre lits:
 
-ferry . voiture:
+voiture:
   icônes: 🚗
   question: Transportez-vous votre voiture ?
   description: Le calcul est limité à une voiture, on considère qu'elle est partagée par le groupe.
   par défaut: oui
 
-ferry . groupe:
+groupe:
   icônes: 👥
   question: À combien voyagez-vous ?
   par défaut: 2
@@ -173,12 +173,12 @@ ferry . groupe:
 #
 #
 
-ferry . consommation de services:
+consommation de services:
   icônes: 🍽️
   question: Utilisez vous les services accessoires du ferry (restaurant, piscine, etc.) ?
   par défaut: oui
 
-ferry . passagers:
+passagers:
   formule: 1000
 
   note: |

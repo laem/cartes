@@ -32,8 +32,8 @@ const rules = req.keys().reduce((memo, key) => {
 
 const engine = new Engine(rules)
 const SituationContext = createContext({
-	'ferry . surface . cabine': 12,
-	'ferry . volume utile': 12 * 3 * 1000,
+	'surface . cabine': 12,
+	'volume utile': 12 * 3 * 1000,
 })
 
 export default ({}) => {
@@ -45,15 +45,17 @@ export default ({}) => {
 				description={description}
 				image="https://futur.eco/images/ferry.png"
 			/>
-			<Lab />
 			<TopBar />
 			<SituationContext.Provider value={[situation, setSituation]}>
 				<Main />
 				<div css=" text-align: center; margin-top: 3rem">
 					Comprendre le calcul <Emoji e="⬇️" />
 				</div>
+				{/*
+				<Lab />
+				*/}
 				<h2>Explications</h2>
-				<Documentation documentationPath="" engine={engine} embedded />
+				<Documentation documentationPath="/ferry" engine={engine} embedded />
 			</SituationContext.Provider>
 		</div>
 	)
@@ -97,7 +99,7 @@ const Questions = ({}) => {
 			setSituation((situation) => newSituation(situation))
 		},
 		onSubmit = () => null
-	const evaluation = engine.evaluate('ferry . empreinte par km')
+	const evaluation = engine.evaluate('empreinte par km')
 
 	return (
 		<div
@@ -120,7 +122,7 @@ const Questions = ({}) => {
 				`}
 			>
 				{questions.map((name) => {
-					const dottedName = 'ferry . ' + name,
+					const dottedName = name,
 						{ question, icônes } = engine.getRule(dottedName).rawNode
 					return (
 						<div

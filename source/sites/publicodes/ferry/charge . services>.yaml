@@ -45,9 +45,9 @@ restaurant:
     Pour aller plus loin, il faudrait s'inspirer plus en détail des plans détaillés des ferries, tel que [celui du Jean Nicoli](https://i.imgur.com/1wilp06.jpg).
   formule:
     somme:
-      - 200 * ferry . charge . chaise
-      - 50 * ferry . charge . canapé
-      - 50 * ferry . charge . table
+      - 200 * charge . chaise
+      - 50 * charge . canapé
+      - 50 * charge . table
       - comptoir
       - cuisine
       - victuailles

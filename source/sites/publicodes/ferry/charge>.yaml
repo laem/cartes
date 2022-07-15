@@ -49,7 +49,7 @@ par personne . bagages:
     On retient souvent un chiffre de 20kg pour les bagages par passager, mais 10-15kg semble bien plus réaliste en moyenne : une valise de 20kg semble plutôt la borne haute.
 
 par personne . voiture:
-  applicable si: ferry . voiture
+  applicable si: voiture
   formule: charge . voiture / groupe
 
 par personne . cabine:
