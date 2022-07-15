@@ -31,7 +31,11 @@ const rules = req.keys().reduce((memo, key) => {
 }, {})
 
 const engine = new Engine(rules)
-const SituationContext = createContext({})
+const SituationContext = createContext({
+	'ferry . surface . cabine': 12,
+	'ferry . volume utile': 12 * 3 * 1000,
+})
+
 export default ({}) => {
 	const [situation, setSituation] = useState({})
 	return (

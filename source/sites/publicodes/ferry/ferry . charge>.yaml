@@ -54,9 +54,9 @@ par personne . voiture:
 
 par personne . cabine:
   applicable si: cabine
-  formule: (nombre nécessaire * charge . cabine pour quatre) / groupe
+  formule: (cabines nécessaires * charge . cabine pour quatre) / groupe
 
-par personne . cabine . nombre nécessaire:
+cabines nécessaires:
   description: On part pour l'instant du principe qu'il n'y a que des cabines 4 places.
   note: |
     Ici on aimerait utiliser un mécanisme de modulo, qui n'existe pas dans publi.codes.

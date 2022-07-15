@@ -41,7 +41,71 @@ ferry . empreinte marginale:
   formule: grammes / 1000
   unité: kgCO2e/kg
 
+ferry . part du volume:
+  titre: Part du volume utile du bateau attribuée au passager
+  formule: volume passager / volume utile
+
+ferry . volume passager:
+  formule:
+    somme:
+      - cabine
+      - services
+      - dortoir
+      - voiture
+ferry . volume passager . services: 0
+ferry . volume passager . dortoir: 0
+ferry . volume passager . voiture: 0
+
+ferry . volume passager . cabine partagée:
+  applicable si: ferry . cabine
+  formule: (cabines nécessaires * cabine) / groupe
+
+ferry . hauteur pont bas:
+  formule: 2.7m
+
+ferry . hauteur pont haut:
+  formule: hauteur pont bas * 2
+  note: Nous simplifions pour l'instant ces données qui pourront être améliorées dans un second temps.
+
+ferry . volume passager . cabine: surface . cabine * hauteur pont bas
+
+ferry . surface:
+ferry . surface . cabine:
+  question: Quel est la surface d'une cabine type ?
+  par défaut: 40
+
+ferry . volume utile:
+  question: Quel est le volume utile du bateau ?
+  description: On appelle ici volume utile la somme de toutes les surfaces qui ne sont pas l'infrastructure elle-même du bateau, sa sécurité, son équipage, etc.
+  unité: m3
+  par défaut: 1000000
+
+km par mile nautique: 1.852 km/mn
+
+ferry . empreinte du bateau:
+  titre: Empreinte du bateau témoin
+  description: Nous utilisons ici le bateau témoin Méga Express Four de la flotte Corsica Ferries. Ils est représentatif des gros ferries de ~2000 passagers, rapides.
+  formule: 630 * km par mile nautique
+  unité: kgCO2e/mn
+  note: |
+    Données greenferries 2019 tirées de Thetis-MRV 2019 https://www.greenferries.org/ships/mega-express-two-9203186/
+
 ferry . empreinte par km:
+  formule: empreinte par km volume
+  description: Nous avons choisi la méthode d'attribution en volume. À suivre.
+
+ferry . empreinte par km volume:
+  titre: Empreinte par km et passager
+  formule: empreinte du bateau * part du volume
+  description: |
+
+    Comme expliqué dans notre note de méthode, le principe de calcul ici est simple : nous attribuons une empreinte selon le volume que le billet acheté par le voyageur et les choix de consommation faits à bord occupent sur le bateau. 
+
+    La [note méthodologique](https://hackmd.io/@laem/empreinte-ferry#À-partir-des-chiffres-de-la-“base-carbone”-britannique).
+
+  unité: kgCO2e/km
+
+ferry . empreinte par km poids:
   titre: Empreinte par km et passager
   formule: empreinte marginale * charge . par personne majorée
   description: |
@@ -60,6 +124,22 @@ ferry . cabine:
   références:
     corsica-ferries: https://www.corsica-ferries.fr/ferries/traversee-ferry.html
   par défaut: oui
+
+ferry . cabines nécessaires:
+  description: On part pour l'instant du principe qu'il n'y a que des cabines 4 places.
+  note: |
+    Ici on aimerait utiliser un mécanisme de modulo, qui n'existe pas dans publi.codes.
+  formule:
+    grille:
+      assiette: groupe
+      tranches:
+        - montant: 1
+          plafond: 5
+        - montant: 2
+          plafond: 9
+        - montant: 3
+          plafond: 13
+        - montant: groupe / 4
 
 ferry . taille cabine:
   applicable si: cabine
