@@ -48,7 +48,7 @@ part du volume:
 volume passager:
   formule:
     somme:
-      - cabine
+      - cabine partagée
       - services
       - dortoir
       - voiture
@@ -57,7 +57,7 @@ volume passager . dortoir: 0
 volume passager . voiture: 0
 
 volume passager . cabine partagée:
-  applicable si: cabine
+  applicable si: billet cabine
   formule: (cabines nécessaires * cabine) / groupe
 
 hauteur pont bas:
@@ -115,6 +115,8 @@ empreinte par km poids:
     La [note méthodologique](https://hackmd.io/@laem/empreinte-ferry#À-partir-des-chiffres-de-la-“base-carbone”-britannique).
 
   unité: kgCO2e/km
+
+billet cabine: cabine
 
 cabine:
   icônes: 🛌
