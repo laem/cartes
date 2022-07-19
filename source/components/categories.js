@@ -1,6 +1,7 @@
 const catégories = [
 	'transport',
 	'logement',
+	'meubles',
 	'numérique',
 	'vêtements',
 	'divers',
