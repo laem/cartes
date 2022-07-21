@@ -34,10 +34,7 @@ const engine = new Engine(rules)
 const SituationContext = createContext({})
 
 export default ({}) => {
-	const [situation, setSituation] = useState({
-		'surface . cabine': '12 m2',
-		'volume utile': 12 * 3 * 1000 + ' m3',
-	})
+	const [situation, setSituation] = useState({})
 
 	return (
 		<div className="ui__ container" css={``}>

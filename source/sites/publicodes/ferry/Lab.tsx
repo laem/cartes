@@ -22,7 +22,11 @@ export default ({ setData }) => {
 		const elements = [...el.querySelectorAll('path')].map((path) => {
 			const d = path.getAttribute('d')
 			let points = d && pathDataToPolys(d, { tolerance: 1, decimals: 1 })
-			const area = points && Math.round(calcPolygonArea(points[0]))
+			const pixelArea = points && Math.round(calcPolygonArea(points[0]))
+			// https://fr.wikipedia.org/wiki/Mega_Express_Four
+			const megaExpressFourLengthOverall = 173.7
+			const area = (pixelArea * megaExpressFourLengthOverall) / 340 // This is the length correspond to the length overall, but as drawn on the SVG image
+
 			return { id: path.id, area }
 		})
 		setElements(elements)
@@ -54,15 +58,20 @@ export default ({ setData }) => {
 			next.id.includes('garage-haut')
 		)
 
-		setData((data) => ({
-			...data,
+		const newData = {
 			'cabine . nombre': cabinesCount,
 			'siège . nombre': siegesCount,
 			'surface . cabines': `${Math.round(cabinesTotalArea)} m2`,
 			'surface . sièges': `${Math.round(siegesTotalArea)} m2`,
-			'surface garage . bas': surfacePontBas,
-			'surface garage . haut': surfacePontHaut,
-		}))
+			'surface . garage . bas': surfacePontBas,
+			'surface . garage . haut': surfacePontHaut,
+			'surface . loisirs': sumAreas(elements, (next) =>
+				next.id.includes('loisirs')
+			),
+		}
+		console.log(newData)
+
+		setData((data) => ({ ...data, ...newData }))
 		return () => {
 			console.log('This will be logged on unmount')
 		}

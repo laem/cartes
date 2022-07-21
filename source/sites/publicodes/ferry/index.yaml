@@ -49,11 +49,14 @@ volume passager:
   formule:
     somme:
       - cabine partagée
-      - services
+      - loisirs
       - siège
       - voiture
 
-volume passager . services: 0
+volume passager . loisirs:
+  applicable si: consommation de services
+  formule: surface . loisirs * hauteur pont bas / passagers
+
 volume passager . siège:
   titre: Un siège dans un dortoir
   formule: hauteur pont bas * surface
@@ -79,15 +82,21 @@ volume passager . voiture . longueur:
   description: |
     Nous prenons la longueur définie ici https://parkinggarage.fr/dimension-standard-longueur-largeur-hauteur-parking-box-garage-voiture, avec une majoration moins importante que la largeur, car elle est dynamique (la largeur est fixée par des bornes au sol) et ne nécessite pas d'accomoder deux portières ouvertes en concurrence.
 
-volume:
+volume utile:
+  question: Quel est le volume utile du bateau ?
+  description: On appelle ici volume utile la somme de toutes les surfaces qui ne sont pas l'infrastructure elle-même du bateau, sa sécurité, son équipage, etc.
   formule:
     somme:
-      - hauteur moyenne garage * surface . garage
+      - volume garage
       - surface . cabines * hauteur pont bas
       - surface . sièges * hauteur pont bas
-      - surface . services * hauteur pont bas
+      - surface . loisirs * hauteur pont bas
 
-surface . services: 0
+volume garage: hauteur moyenne garage * surface . garage
+
+surface . loisirs:
+  question: Quelle est la surface dédiée aux loisirs ?
+  description: Restaurants, bars, salons, jeux, commerces, piscines, etc.
 
 hauteur moyenne garage:
   formule: (surface . garage . bas * hauteur pont bas + surface . garage . haut * hauteur pont haut) / surface . garage
@@ -127,19 +136,13 @@ surface . cabine:
 surface . siège:
   formule: sièges / siège . nombre
 
-volume utile:
-  question: Quel est le volume utile du bateau ?
-  description: On appelle ici volume utile la somme de toutes les surfaces qui ne sont pas l'infrastructure elle-même du bateau, sa sécurité, son équipage, etc.
-  unité: m3
-  par défaut: 1000000 m3
-
 km par mile nautique: 1.852 km/mn
 
 empreinte du bateau:
   titre: Empreinte du bateau témoin
   description: Nous utilisons ici le bateau témoin Méga Express Four de la flotte Corsica Ferries. Ils est représentatif des gros ferries de ~2000 passagers, rapides.
   formule: 630 * km par mile nautique
-  unité: kgCO2e/mn
+  unité: kgCO2e/km
   note: |
     Données greenferries 2019 tirées de Thetis-MRV 2019 https://www.greenferries.org/ships/mega-express-two-9203186/
 
@@ -173,10 +176,10 @@ billet cabine: cabine
 
 siège:
 siège . nombre:
-  question;: Quel est le nombre total de sièges passager ?
+  question: Quel est le nombre total de sièges passager ?
 
 cabine . nombre:
-  question;: Quel est le nombre total de cabines passager ?
+  question: Quel est le nombre total de cabines passager ?
 
 cabine:
   icônes: 🛌
@@ -241,11 +244,9 @@ consommation de services:
   par défaut: oui
 
 passagers:
-  formule: 1000
-
+  titre: Passagers max
+  formule: 1880
   note: |
-    Pour certaines services en commun, nous avons besoin de répartir le poids par passager. Nous utilisons donc par convention la valeur de 1000 passagers. 
+    Pour certaines services en commun, nous avons besoin de répartir le poids par passager.
 
-    Pourquoi 1000 ? C'est le Jean Nicoli (Marseille-Corse) rempli aux 2/3 [source](https://fr.wikipedia.org/wiki/Jean_Nicoli_(navire)).
-
-    Bien sûr, personnaliser cela par bateau serait un gros plus.
+    C'est la valeur du Mega Express Four https://fr.wikipedia.org/wiki/Mega_Express_Four
