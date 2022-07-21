@@ -50,10 +50,17 @@ volume passager:
     somme:
       - cabine partagée
       - services
-      - dortoir
+      - siège
       - voiture
+
 volume passager . services: 0
-volume passager . dortoir: 0
+volume passager . siège:
+  titre: Un siège dans un dortoir
+  formule: hauteur pont bas * surface
+volume passager . siège . surface:
+  question: Quelle est la surface majorée occupée par un siège dans un dortoir ?
+  par défaut: 8 m2
+
 volume passager . voiture: 0
 
 volume passager . cabine partagée:
@@ -73,8 +80,8 @@ volume passager . cabine:
 
 surface:
 surface . cabine:
-  question: Quel est la surface d'une cabine type ?
-  par défaut: 40 m2
+  question: Quel est la surface majorée d'une cabine type ?
+  par défaut: 57 m2
 
 volume utile:
   question: Quel est le volume utile du bateau ?
