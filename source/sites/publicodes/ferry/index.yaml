@@ -58,6 +58,7 @@ volume passager . loisirs:
   formule: surface . loisirs * hauteur pont bas / passagers
 
 volume passager . siège:
+  non applicable si: cabine
   titre: Un siège dans un dortoir
   formule: hauteur pont bas * surface
 volume passager . siège . surface:
