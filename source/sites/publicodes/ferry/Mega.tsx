@@ -29,9 +29,9 @@ function SvgMegaExpressFour(props, svgRef) {
 				inkscape:deskcolor="#d1d1d1"
 				inkscape:document-units="mm"
 				showgrid="false"
-				inkscape:zoom={0.86924526}
-				inkscape:cx={1113.6097}
-				inkscape:cy={708.08554}
+				inkscape:zoom={3.124472}
+				inkscape:cx={680.43497}
+				inkscape:cy={1932.9666}
 				inkscape:window-width={1920}
 				inkscape:window-height={1175}
 				inkscape:window-x={0}
@@ -187,7 +187,7 @@ function SvgMegaExpressFour(props, svgRef) {
 						strokeDasharray: 'none',
 					}}
 					d="m 154.59051,452.5401 0.28862,43.21522 22.65794,-0.13383 -0.32734,-32.99628 -1.41734,-10.55141 z"
-					id="6-sieges"
+					id="6-sieges-116"
 					sodipodi:nodetypes="cccccc"
 				/>
 				<path
@@ -201,7 +201,7 @@ function SvgMegaExpressFour(props, svgRef) {
 						strokeOpacity: 1,
 					}}
 					d="m 182.7686,512.60837 -0.16198,7.33274 c -4.97148,1.44595 -8.80236,4.6074 -14.92628,4.32005 l -0.4568,10.0558 14.73729,0.18822 3.53898,2.66008 21.69725,0.27963 0.30021,-24.79101 -11.78677,0.031 z"
-					id="5-sieges"
+					id="5-sieges-113"
 					sodipodi:nodetypes="cccccccccc"
 				/>
 				<path
@@ -215,7 +215,7 @@ function SvgMegaExpressFour(props, svgRef) {
 						strokeOpacity: 1,
 					}}
 					d="m 158.87056,417.88775 0.13971,17.19598 29.18103,-0.29665 -0.87447,-15.02244 -0.2866,-8.48957 -16.09297,0.0181 -0.59973,9.94614 -7.27846,-5.28021 z"
-					id="7-sieges"
+					id="7-sieges-52"
 					sodipodi:nodetypes="ccccccccc"
 				/>
 				<path

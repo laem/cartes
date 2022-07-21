@@ -32,18 +32,31 @@ export default ({ setData }) => {
 		}, 0)
 		// Cette page cite 252 cabines, ce qui correspond environ à notre calcul de 255 :)
 		// https://corsica-battelli.jimdofree.com/navires/corsica-ferries/méga-express-four/
+		//
+		// Avec 280 places en fauteuil, on retrouve au total si 4 personnes par cabine 1300 passager max.
+		// Ceci sans compter les places sans fauteil.
+		// On a donc potentiellement un problème, le mega est annoncé à 1800 passagers max depuis 2007.
+		// Hypothèse probable : il peut accueillir tous ces passagers sur les traversées sans nuits.
 
-		console.log('useeffectu')
 		const cabinesTotalArea = sumAreas(elements, (next) =>
 			next.id.includes('cabine')
 		)
 		const cabineArea = cabinesTotalArea / cabinesCount
+		const siegesCount = elements.reduce((memo, next) => {
+			return next.id.includes('sieges') ? +next.id.split('-')[2] + memo : memo
+		}, 0)
+		const siegesTotalArea = sumAreas(elements, (next) =>
+			next.id.includes('sieges')
+		)
+		const siegeArea = siegesTotalArea / siegesCount
+
 		const totalArea = sumAreas(elements),
 			totalVolume = totalArea * 3
 
 		setData((data) => ({
 			...data,
 			'surface . cabine': `${Math.round(cabineArea)} m2`,
+			'surface . siège': `${Math.round(siegeArea)} m2`,
 			'volume utile': `${totalVolume} m3`,
 		}))
 		return () => {
