@@ -41,18 +41,12 @@ export default ({ setData }) => {
 		const cabinesTotalArea = sumAreas(elements, (next) =>
 			next.id.includes('cabine')
 		)
-		const cabineArea = cabinesTotalArea / cabinesCount
 		const siegesCount = elements.reduce((memo, next) => {
 			return next.id.includes('sieges') ? +next.id.split('-')[2] + memo : memo
 		}, 0)
 		const siegesTotalArea = sumAreas(elements, (next) =>
 			next.id.includes('sieges')
 		)
-		const siegeArea = siegesTotalArea / siegesCount
-
-		const totalArea = sumAreas(elements),
-			totalVolume = totalArea * 3
-
 		const surfacePontBas = sumAreas(elements, (next) =>
 			next.id.includes('garage-bas')
 		)
@@ -62,9 +56,10 @@ export default ({ setData }) => {
 
 		setData((data) => ({
 			...data,
-			'surface . cabine': `${Math.round(cabineArea)} m2`,
-			'surface . siège': `${Math.round(siegeArea)} m2`,
-			'volume utile': `${totalVolume} m3`,
+			'cabine . nombre': cabinesCount,
+			'siège . nombre': siegesCount,
+			'surface . cabines': `${Math.round(cabinesTotalArea)} m2`,
+			'surface . sièges': `${Math.round(siegesTotalArea)} m2`,
 			'surface garage . bas': surfacePontBas,
 			'surface garage . haut': surfacePontHaut,
 		}))

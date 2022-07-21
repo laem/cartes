@@ -79,16 +79,31 @@ volume passager . voiture . longueur:
   description: |
     Nous prenons la longueur définie ici https://parkinggarage.fr/dimension-standard-longueur-largeur-hauteur-parking-box-garage-voiture, avec une majoration moins importante que la largeur, car elle est dynamique (la largeur est fixée par des bornes au sol) et ne nécessite pas d'accomoder deux portières ouvertes en concurrence.
 
-hauteur moyenne garage:
-  formule: (surface garage . bas * hauteur pont bas + surface garage . haut * hauteur pont haut) / surface garage
+volume:
+  formule:
+    somme:
+      - hauteur moyenne garage * surface . garage
+      - surface . cabines * hauteur pont bas
+      - surface . sièges * hauteur pont bas
+      - surface . services * hauteur pont bas
 
-surface garage . bas:
+surface . services: 0
+
+hauteur moyenne garage:
+  formule: (surface . garage . bas * hauteur pont bas + surface . garage . haut * hauteur pont haut) / surface . garage
+
+surface . garage . bas:
   question: Quelle est la surface de garage bas du bateau ?
 
-surface garage . haut:
+surface . garage . haut:
   question: Quelle est la surface de garage haut du bateau ?
 
-surface garage: bas + haut
+surface . garage: bas + haut
+
+surface . cabines:
+  question: Quelle est la surface totale des cabines ?
+surface . sièges:
+  question: Quelle est la surface totale des sièges ?
 
 volume passager . cabine partagée:
   applicable si: billet cabine
@@ -106,9 +121,11 @@ volume passager . cabine:
   unité: m3
 
 surface:
+
 surface . cabine:
-  question: Quel est la surface majorée d'une cabine type ?
-  par défaut: 57 m2
+  formule: cabines / cabine . nombre
+surface . siège:
+  formule: sièges / siège . nombre
 
 volume utile:
   question: Quel est le volume utile du bateau ?
@@ -153,6 +170,13 @@ empreinte par km poids:
   unité: kgCO2e/km
 
 billet cabine: cabine
+
+siège:
+siège . nombre:
+  question;: Quel est le nombre total de sièges passager ?
+
+cabine . nombre:
+  question;: Quel est le nombre total de cabines passager ?
 
 cabine:
   icônes: 🛌
