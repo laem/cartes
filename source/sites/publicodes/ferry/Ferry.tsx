@@ -104,7 +104,9 @@ const Questions = ({}) => {
 			setSituation((situation) => newSituation(situation))
 		},
 		onSubmit = () => null
+
 	const evaluation = engine.evaluate('empreinte par km')
+	if (!evaluation.nodeValue) return null
 
 	return (
 		<div

@@ -53,11 +53,20 @@ export default ({ setData }) => {
 		const totalArea = sumAreas(elements),
 			totalVolume = totalArea * 3
 
+		const surfacePontBas = sumAreas(elements, (next) =>
+			next.id.includes('garage-bas')
+		)
+		const surfacePontHaut = sumAreas(elements, (next) =>
+			next.id.includes('garage-haut')
+		)
+
 		setData((data) => ({
 			...data,
 			'surface . cabine': `${Math.round(cabineArea)} m2`,
 			'surface . siège': `${Math.round(siegeArea)} m2`,
 			'volume utile': `${totalVolume} m3`,
+			'surface garage . bas': surfacePontBas,
+			'surface garage . haut': surfacePontHaut,
 		}))
 		return () => {
 			console.log('This will be logged on unmount')

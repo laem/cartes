@@ -61,7 +61,34 @@ volume passager . siège . surface:
   question: Quelle est la surface majorée occupée par un siège dans un dortoir ?
   par défaut: 8 m2
 
-volume passager . voiture: 0
+volume passager . voiture:
+  applicable si: voiture
+  formule: majoré
+  note: |
+    Ici nous décidons de ne pas voir la capacité en voiture et diviser la surface voiture par ce nombre, car les différentes zones de garage peuvent accomoder aussi bien des voitures que des camions.
+
+volume passager . voiture . majoré:
+  formule: largeur * longueur * hauteur moyenne garage
+  note: Nous partons du principe que certaines voitures se garent dans un garage dont la hauteur du pont haut, donc appliquons la moyenne pondérée par la surface.
+volume passager . voiture . largeur:
+  formule: 2.7 m
+  description: |
+    Nous prenons les dimensions conseillées ici pour un parking standard https://parkinggarage.fr/dimension-standard-longueur-largeur-hauteur-parking-box-garage-voiture/
+volume passager . voiture . longueur:
+  formule: 6 m
+  description: |
+    Nous prenons la longueur définie ici https://parkinggarage.fr/dimension-standard-longueur-largeur-hauteur-parking-box-garage-voiture, avec une majoration moins importante que la largeur, car elle est dynamique (la largeur est fixée par des bornes au sol) et ne nécessite pas d'accomoder deux portières ouvertes en concurrence.
+
+hauteur moyenne garage:
+  formule: (surface garage . bas * hauteur pont bas + surface garage . haut * hauteur pont haut) / surface garage
+
+surface garage . bas:
+  question: Quelle est la surface de garage bas du bateau ?
+
+surface garage . haut:
+  question: Quelle est la surface de garage haut du bateau ?
+
+surface garage: bas + haut
 
 volume passager . cabine partagée:
   applicable si: billet cabine
