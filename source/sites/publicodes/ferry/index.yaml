@@ -66,7 +66,7 @@ volume passager . siège . surface:
 
 volume passager . voiture:
   applicable si: voiture
-  formule: majoré
+  formule: majoré / groupe
   note: |
     Ici nous décidons de ne pas voir la capacité en voiture et diviser la surface voiture par ce nombre, car les différentes zones de garage peuvent accomoder aussi bien des voitures que des camions.
 
