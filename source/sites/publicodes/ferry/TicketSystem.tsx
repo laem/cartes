@@ -43,7 +43,7 @@ export default ({ children }) => (
 				transform: translateY(-800px);
 
 				animation-duration: 2.5s;
-				animation-delay: 500ms;
+				animation-delay: 100ms;
 				animation-name: print;
 				animation-fill-mode: forwards;
 
