@@ -238,12 +238,15 @@ consommation de services:
   par défaut: oui
 
 passagers:
-  titre: Passagers max
-  formule: 1880
-  note: |
+  titre: Passagers moyens
+  formule: 600
+  description: |
     Pour certaines services en commun, nous avons besoin de répartir le poids par passager.
 
-    C'est la valeur du Mega Express Four https://fr.wikipedia.org/wiki/Mega_Express_Four
+    C'est la valeur du Mega Express Four https://fr.wikipedia.org/wiki/Mega_Express_Four mais en ordre de grandeur de la valeur moyenne, obtenu grâce aux déclarations Thetis-MRV exposées sur https://www.greenferries.org/ships/mega-express-four-9086590 en 2018-2019, donc pré-pandémie.
+
+  note: |
+    Ce paramètre est très déterminant. Le nombre de passagers max du Mega Express Four est de 1880 d'après Wikipedia. Il circule donc à 1/3 de son remplissage, ce qui est très faible si on compare au TGV ou aux avions de ligne.
 
 ##################################################################
 #### Ancienne méthode de répartition par charge ##########
