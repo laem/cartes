@@ -6,6 +6,7 @@ import TopBar from '../../../components/TopBar'
 import Meta from '../../../components/utils/Meta'
 import Documentation from '../pages/Documentation'
 import Lab from './Lab'
+import { Link, Navigate, useParams } from 'react-router-dom'
 
 const description = `
 
@@ -35,6 +36,8 @@ const SituationContext = createContext({})
 
 export default ({}) => {
 	const [situation, setSituation] = useState({})
+	const params = useParams()['*']
+	if (!params) return <Navigate to="/ferry/empreinte-par-km" replace />
 
 	return (
 		<div className="ui__ container" css={``}>
@@ -62,7 +65,8 @@ export default ({}) => {
 }
 const Main = ({}) => (
 	<div className="ui__ container">
-		<p
+		<Link
+			to="/ferry"
 			css={`
 				display: flex;
 				align-items: center;
@@ -77,11 +81,13 @@ const Main = ({}) => (
 				h1 {
 					margin-top: 1rem;
 				}
+				text-decoration: none;
+				margin-bottom: 1rem;
 			`}
 		>
 			<Emoji e="⛴️" />
 			<h1 css="">Le ferry, c'est écolo ?</h1>
-		</p>
+		</Link>
 		<p>{description}</p>
 		<Questions />
 	</div>
@@ -122,6 +128,15 @@ const Questions = ({}) => {
 					}
 					.step label {
 						padding: 0.2rem 0.6rem 0.2rem 0.4rem;
+					}
+					border: 0.1rem dashed white;
+					padding: 1rem 2rem;
+					border-radius: 1rem;
+					max-width: 26rem;
+					margin: 0 2rem;
+					@media (max-width: 800px) {
+						margin: 0;
+						padding: 1rem;
 					}
 				`}
 			>

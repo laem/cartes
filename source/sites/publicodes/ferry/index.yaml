@@ -1,45 +1,53 @@
 index:
   icônes: ⛴
-  description: |
 
+empreinte du bateau:
+  titre: Empreinte du bateau témoin
+  description: Nous utilisons ici comme bateau témoin Méga Express Four de la flotte Corsica Ferries. Ils est représentatif des gros ferries de ~2000 passagers, rapides.
+  formule: 630 * km par mile nautique
+  unité: kgCO2e/km
+  note: |
+    Données greenferries 2019 tirées de Thetis-MRV 2019 https://www.greenferries.org/ships/mega-express-two-9203186/
+
+empreinte par km:
+  formule: empreinte par km volume
+  description: |
     Voici notre objectif : estimer l'empreinte d'un passager sur les ferries de voyage comme ceux qui relient la métropole à la Corse et à l'Angleterre.
 
-      Le Ferry est une alternative sérieuse à l’avion, mais il n’existe aujourd’hui aucun facteur d’émission en CO2e (ni ADEME en France, ni à l’international, ni dans la littérature scientifique) qui prenne en compte non pas un passager moyen, mais la diversité des options d'un billet. 
+    Le Ferry est une alternative sérieuse à l’avion, mais il n’existait aucune estimation de son empreinte climat au kilomètre (ni ADEME en France, ni à l’international, ni dans la littérature scientifique) qui prenne en compte non pas un passager moyen, mais la diversité des options d'un billet : 
 
-      
     - passager en voiture ou non
     - passager en cabine, en siège, ou au sol
     - équipement loisir du bateau : restaurant, bar, piscine, grand couloirs, etc.
-    - tonnage fret
+    - le fret embarqué dans les camions
     - % de remplissage du bateau
+    - vitesse
+    - etc
 
-    Pour faire ce calcul, nous partons de l'hypothèse que la consommation de carburant d'un bateau est proportionnelle au poids qu'il transporte.
+    Nous savons combien émettent de gaz à effet de serre (GES) un ferry : il suffit en somme de multipler sa consommation de fioul par le facteur d'émission CO2e du fioul. Mais la difficulté est ensuite d'attribuer une part de ces GES au passager à pied, au passager seul dans sa voiture qui profite d'un lounge VIP, et au transport de marchandises. 
 
+    Pour faire ce calcul, nous sommes d'abord partis sur l'hypothèse que la consommation de carburant d'un bateau est proportionnelle au poids qu'il transporte, et donc qu'on peut attribuer l'empreinte en fonction du poid qu'implique un voyage. C'est vrai, mais l'essentiel (80%) du poids du bâtiment, est *destiné à fournir du volume* aux activités commerciales. 
 
-    Attention, cette hypothèse est criticable sur bien des points. Qu'est-ce qui nous permet cependant de penser que ce sera une bonne première approximation de la réalité ?
-
-    Voici [une introduction](/ferry/méthode/introduction) (1 page) qui déroule le raisonnement justifiant cette méthode.
+    Voici [une introduction](/ferry/méthode/introduction) (1 page) qui déroule le raisonnement justifiant la méthode par poids, abandonnée.
 
     Vous pouvez ensuite enchaîner avec la lecture complète de la [note de méthode](https://hackmd.io/@laem/empreinte-ferry) (~20 pages).
 
-    Enfin, une fois cette méthode du poids acceptée, vous pouvez parcourir [le calcul intégral](/ferry/empreinte-par-km) et intéractif du facteur d'émission.
+    Enfin, une fois cette méthode du poids acceptée, vous pouvez parcourir ci-dessous le calcul intégral et intéractif du facteur d'émission.
 
-empreinte marginale . grammes:
-  formule: 0.2 gCO2e/kg
+empreinte par km volume:
+  titre: Empreinte par km et passager
+  formule: empreinte du bateau * part du volume
   description: |
-    Notre calcul est basé sur l'hypothèse que l'embarquement de poids marginal sur le bateau implique une consommation supplémentaire de carburant, qui a son tour induit l'émission de gaz à effet de serre supplémentaire, par km.
 
-    Le chiffre est un *ordre de grandeur* issu d'une analyse de la "base carbone" du Royaume-Uni. Il est déterminé par une répartition par poids sur un échantillon de bateaux représentatifs. 
-    Tous les détails sur notre [note méthodologique](https://hackmd.io/@laem/empreinte-ferry#À-partir-des-chiffres-de-la-“base-carbone”-britannique).
+    Comme expliqué dans notre note de méthode, le principe de calcul ici est simple : nous attribuons une empreinte selon le volume que le billet acheté par le voyageur et les choix de consommation faits à bord occupent sur le bateau. 
 
-  note: |
-    L'hypothèse, en plus du chiffre unique et donc incertain, est donc que cette surconsommation marginale est linéaire. C'est probablement la critique la plus facile de ce modèle : nous serions ravis de l'améliorer avec une fonction plus nuancée.
+    Voir la [note méthodologique](https://hackmd.io/@laem/empreinte-ferry#À-partir-des-chiffres-de-la-“base-carbone”-britannique).
 
-    L'autre grand problème du modèle est la non-prise en compte de la vitesse du bateau, pourtant fondamentale dans la consommation. Il serait pourtant possible de poser directement à l'utilisateur la question de la vitesse via la ligne qu'il empreinte combinée aux donnés de greenferries. Ou encore plus simplement, l'estimation grossièrement via l'information de nuit / de jour ?
+    En pratique, nous le faisons sur le bateau type Mega Express Four tout simplement car nous en disposons des plans assez détaillés. Le travail pourrait être fait pour d'autres navires par la suite.
 
-empreinte marginale:
-  formule: grammes / 1000
-  unité: kgCO2e/kg
+    [![](https://upload.wikimedia.org/wikipedia/commons/thumb/0/0e/02_Corsica_Ferries_Mega_Express_Four_\(cropped\).jpg/640px-02_Corsica_Ferries_Mega_Express_Four_\(cropped\).jpg)](https://fr.wikipedia.org/wiki/Mega_Express_Four)
+
+  unité: kgCO2e/km
 
 part du volume:
   titre: Part du volume utile du bateau attribuée au passager
@@ -150,40 +158,6 @@ surface . siège:
 
 km par mile nautique: 1.852 km/mn
 
-empreinte du bateau:
-  titre: Empreinte du bateau témoin
-  description: Nous utilisons ici le bateau témoin Méga Express Four de la flotte Corsica Ferries. Ils est représentatif des gros ferries de ~2000 passagers, rapides.
-  formule: 630 * km par mile nautique
-  unité: kgCO2e/km
-  note: |
-    Données greenferries 2019 tirées de Thetis-MRV 2019 https://www.greenferries.org/ships/mega-express-two-9203186/
-
-empreinte par km:
-  formule: empreinte par km volume
-  description: Nous avons choisi la méthode d'attribution en volume. À suivre.
-
-empreinte par km volume:
-  titre: Empreinte par km et passager
-  formule: empreinte du bateau * part du volume
-  description: |
-
-    Comme expliqué dans notre note de méthode, le principe de calcul ici est simple : nous attribuons une empreinte selon le volume que le billet acheté par le voyageur et les choix de consommation faits à bord occupent sur le bateau. 
-
-    La [note méthodologique](https://hackmd.io/@laem/empreinte-ferry#À-partir-des-chiffres-de-la-“base-carbone”-britannique).
-
-  unité: kgCO2e/km
-
-empreinte par km poids:
-  titre: Empreinte par km et passager
-  formule: empreinte marginale * charge . par personne majorée
-  description: |
-
-    Comme expliqué dans notre note de méthode, le principe de calcul est simple : nous attribuons une empreinte selon le poids que le billet acheté par le voyageur implique d'embarquer sur le bateau. 
-
-    La [note méthodologique](https://hackmd.io/@laem/empreinte-ferry#À-partir-des-chiffres-de-la-“base-carbone”-britannique).
-
-  unité: kgCO2e/km
-
 billet cabine: cabine
 
 siège:
@@ -262,3 +236,35 @@ passagers:
     Pour certaines services en commun, nous avons besoin de répartir le poids par passager.
 
     C'est la valeur du Mega Express Four https://fr.wikipedia.org/wiki/Mega_Express_Four
+
+##################################################################
+#### Ancienne méthode de répartition par charge ##########
+##################################################################
+
+empreinte marginale . grammes:
+  formule: 0.2 gCO2e/kg
+  description: |
+    Notre calcul est basé sur l'hypothèse que l'embarquement de poids marginal sur le bateau implique une consommation supplémentaire de carburant, qui a son tour induit l'émission de gaz à effet de serre supplémentaire, par km.
+
+    Le chiffre est un *ordre de grandeur* issu d'une analyse de la "base carbone" du Royaume-Uni. Il est déterminé par une répartition par poids sur un échantillon de bateaux représentatifs. 
+    Tous les détails sur notre [note méthodologique](https://hackmd.io/@laem/empreinte-ferry#À-partir-des-chiffres-de-la-“base-carbone”-britannique).
+
+  note: |
+    L'hypothèse, en plus du chiffre unique et donc incertain, est donc que cette surconsommation marginale est linéaire. C'est probablement la critique la plus facile de ce modèle : nous serions ravis de l'améliorer avec une fonction plus nuancée.
+
+    L'autre grand problème du modèle est la non-prise en compte de la vitesse du bateau, pourtant fondamentale dans la consommation. Il serait pourtant possible de poser directement à l'utilisateur la question de la vitesse via la ligne qu'il empreinte combinée aux donnés de greenferries. Ou encore plus simplement, l'estimation grossièrement via l'information de nuit / de jour ?
+
+empreinte marginale:
+  formule: grammes / 1000
+  unité: kgCO2e/kg
+
+empreinte par km poids:
+  titre: Empreinte par km et passager
+  formule: empreinte marginale * charge . par personne majorée
+  description: |
+
+    Comme expliqué dans notre note de méthode, le principe de calcul est simple : nous attribuons une empreinte selon le poids que le billet acheté par le voyageur implique d'embarquer sur le bateau. 
+
+    La [note méthodologique](https://hackmd.io/@laem/empreinte-ferry#À-partir-des-chiffres-de-la-“base-carbone”-britannique).
+
+  unité: kgCO2e/km
