@@ -8,6 +8,7 @@ import Documentation from '../pages/Documentation'
 import Lab from './Lab'
 import { Link, Navigate, Route, Routes, useParams } from 'react-router-dom'
 import TicketSystem from './TicketSystem'
+import { useEngine } from '../../../components/utils/EngineContext'
 
 const description = `
 
@@ -41,7 +42,14 @@ export default ({}) => {
 	if (!params) return <Navigate to="/ferry/empreinte-par-km" replace />
 
 	return (
-		<div className="ui__ container" css={``}>
+		<div
+			className="ui__ container"
+			css={`
+				h2 {
+					margin: 0.4rem 0 0.2rem !important;
+				}
+			`}
+		>
 			<Meta
 				title="Calculateur d'empreinte carbone du ferry"
 				description={description}
@@ -93,6 +101,16 @@ export default ({}) => {
 
 								<Lab setData={setSituation} />
 							</details>
+
+							<h2>Ma situation</h2>
+							<details>
+								<summary>Détails de la simulation</summary>
+								<ul>
+									{Object.entries(situation).map(([k, v]) => (
+										<li>{`${k} : ${v?.nodeValue || v}`}</li>
+									))}
+								</ul>
+							</details>
 						</SituationContext.Provider>
 					}
 				/>
@@ -112,15 +130,14 @@ const Questions = ({}) => {
 	const [situation, setSituation] = useContext(SituationContext)
 	engine.setSituation(situation) // I don't understand why putting this in a useeffect produces a loop when the input components, due to Input's debounce function I guess.
 	const onChange = (dottedName) => (raw) => {
-			console.log(raw, situation, dottedName)
-			const value = raw.valeur || raw
-			const newSituation = (situation) => ({
-				...situation,
-				[dottedName]: value,
-			})
-			setSituation((situation) => newSituation(situation))
-		},
-		onSubmit = () => null
+		console.log(raw, situation, dottedName)
+		const value = raw.valeur || raw
+		const newSituation = (situation) => ({
+			...situation,
+			[dottedName]: value,
+		})
+		setSituation((situation) => newSituation(situation))
+	}
 
 	const evaluation = engine.evaluate('empreinte par km')
 	if (!evaluation.nodeValue) return null
@@ -152,51 +169,22 @@ const Questions = ({}) => {
 					`}
 				>
 					<h2>Votre billet</h2>
-					{questions.map((name) => {
-						const dottedName = name,
-							{ question, icônes } = engine.getRule(dottedName).rawNode
-						return (
-							<div
-								css={`
-									display: flex;
-									justify-content: start;
-									align-items: center;
-									img {
-										font-size: 300%;
-										margin-right: 1rem;
-									}
-									@media (max-width: 800px) {
-										img {
-											font-size: 200%;
-											margin-right: 0.4rem;
-										}
-									}
-									p {
-										max-width: 20rem;
-									}
-								`}
-							>
-								{icônes && <Emoji e={icônes} />}
-								<label>
-									<p>{question}</p>
-									<RuleInput
-										{...{
-											engine,
-											dottedName,
-											onChange: onChange(dottedName),
-											onSubmit,
-											noSuggestions: false,
-										}}
-									/>
-								</label>
-							</div>
-						)
-					})}
+					{questions.map((name) => (
+						<Question {...{ key: name, name, engine, onChange }} />
+					))}
 				</div>
 			</TicketSystem>
 
 			<div>
-				<h2>Le bateau</h2>
+				<div
+					css={`
+						padding: 0.6rem;
+					`}
+				>
+					<h2>Le bateau</h2>
+
+					<Question {...{ name: 'vitesse', engine, onChange }} />
+				</div>
 
 				<div
 					css={`
@@ -237,17 +225,43 @@ const Questions = ({}) => {
 						</ul>
 					</div>
 				</div>
-
-				<details css="text-align: center">
-					<summary>Ma situation</summary>
-
-					<ul>
-						{Object.entries(situation).map(([k, v]) => (
-							<li>{`${k} : ${v?.nodeValue || v}`}</li>
-						))}
-					</ul>
-				</details>
 			</div>
+		</div>
+	)
+}
+const Question = ({ name: dottedName, onChange }) => {
+	const { question, icônes } = engine.getRule(dottedName).rawNode
+	return (
+		<div
+			css={`
+				display: flex;
+				justify-content: start;
+				align-items: center;
+				img {
+					font-size: 240%;
+					margin-right: 1rem;
+				}
+				@media (max-width: 800px) {
+					img {
+						font-size: 180%;
+						margin-right: 0.4rem;
+					}
+				}
+			`}
+		>
+			{icônes && <Emoji e={icônes} />}
+			<label>
+				<p>{question}</p>
+				<RuleInput
+					{...{
+						engine,
+						dottedName,
+						onChange: onChange(dottedName),
+						onSubmit: () => null,
+						noSuggestions: false,
+					}}
+				/>
+			</label>
 		</div>
 	)
 }

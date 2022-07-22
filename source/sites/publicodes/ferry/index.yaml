@@ -2,8 +2,10 @@ index:
   icônes: ⛴
 
 vitesse:
+  icônes: ⌚
   question: Quelle est la vitesse du ferry ?
   par défaut: 18 noeud
+  unité: noeud
   suggestions:
     lente: 10 noeud
     rapide: 18 noeud

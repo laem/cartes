@@ -4,8 +4,10 @@ export default ({ children }) => (
 	<div
 		css={`
 			margin-top: 1rem;
+			margin-right: 1rem;
 			@media (max-width: 800px) {
 				padding: 0rem;
+				margin: 0;
 			}
 			max-width: 30rem;
 			.top {
