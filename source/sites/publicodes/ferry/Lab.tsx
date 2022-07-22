@@ -68,6 +68,9 @@ export default ({ setData }) => {
 			'surface . loisirs': sumAreas(elements, (next) =>
 				next.id.includes('loisirs')
 			),
+			'surface . communs': sumAreas(elements, (next) =>
+				next.id.includes('commun')
+			),
 		}
 		console.log(newData)
 

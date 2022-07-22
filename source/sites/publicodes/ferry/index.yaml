@@ -52,7 +52,10 @@ volume passager:
       - loisirs
       - siège
       - voiture
+      - communs
 
+volume passager . communs:
+  formule: volume communs / passagers
 volume passager . loisirs:
   applicable si: consommation de services
   formule: surface . loisirs * hauteur pont bas / passagers
@@ -92,8 +95,16 @@ volume utile:
       - surface . cabines * hauteur pont bas
       - surface . sièges * hauteur pont bas
       - surface . loisirs * hauteur pont bas
+      - volume communs
+
+volume communs: hauteur pont bas * surface . communs
 
 volume garage: hauteur moyenne garage * surface . garage
+
+surface . communs:
+  question: Quelle est la surface des zones communes à tous les passagers ?
+  description: |
+    Cela inclut les escaliers, des places assises en salon hors bar ou restaurant, les couloirs intérieurs. Par convention, on n'inclut pas les surfaces extérieures non couvertes, sauf les espaces de loisir évidents : la piscine et les bars extérieurs.
 
 surface . loisirs:
   question: Quelle est la surface dédiée aux loisirs ?
