@@ -213,18 +213,47 @@ const Questions = ({}) => {
 						css={`
 							max-width: 18rem;
 							padding: 0 0rem 0 2rem;
+							ul {
+								padding: 0;
+								list-style-type: none;
+								img {
+									font-size: 115%;
+									margin-right: 1rem;
+								}
+								li {
+									display: flex;
+									align-items: center;
+									justify-content: space-between;
+								}
+							}
 						`}
 					>
-						<Emoji e="🗺️" /> Soit environ :{' '}
 						<ul>
-							<li>
-								{Math.round(evaluation.nodeValue * 350)} kg pour
-								Marseille-Ajaccio{' '}
-							</li>
-							<li>
-								{Math.round(evaluation.nodeValue * 150)} kg pour
-								Cherbourg-Portsmouth
-							</li>
+							{[
+								{
+									distance: 130 * 2,
+									label: 'Cherbourg↔Poole',
+									emoji: '🇬🇧',
+								},
+								{
+									distance: 350 * 2,
+									label: 'Marseille↔Ajaccio',
+									emoji: '🏝️',
+								},
+								{ distance: 800 * 2, label: 'Marseille↔Alger', emoji: '🇩🇿' },
+							].map(({ distance, label, emoji }) => (
+								<li>
+									<Emoji e={emoji} />
+									<div>
+										{label}
+										<div>
+											<strong>
+												{Math.round(evaluation.nodeValue * distance)} kg CO₂e
+											</strong>
+										</div>{' '}
+									</div>
+								</li>
+							))}
 						</ul>
 					</div>
 				</div>
@@ -232,6 +261,7 @@ const Questions = ({}) => {
 		</div>
 	)
 }
+
 const Question = ({ name: dottedName, onChange }) => {
 	const { question, icônes } = engine.getRule(dottedName).rawNode
 	return (
