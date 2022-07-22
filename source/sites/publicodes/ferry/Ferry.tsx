@@ -6,7 +6,7 @@ import TopBar from '../../../components/TopBar'
 import Meta from '../../../components/utils/Meta'
 import Documentation from '../pages/Documentation'
 import Lab from './Lab'
-import { Link, Navigate, useParams } from 'react-router-dom'
+import { Link, Navigate, Route, Routes, useParams } from 'react-router-dom'
 import TicketSystem from './TicketSystem'
 
 const description = `
@@ -48,47 +48,60 @@ export default ({}) => {
 				image="https://futur.eco/images/ferry.png"
 			/>
 			<TopBar />
-			<SituationContext.Provider value={[situation, setSituation]}>
-				<Main />
-				<div css=" text-align: center; margin-top: 3rem">
-					Comprendre le calcul <Emoji e="⬇️" />
-				</div>
-				<details>
-					<summary>Modèle bateau</summary>
+			<Link
+				to="/ferry"
+				css={`
+					display: flex;
+					align-items: center;
+					justify-content: space-evenly;
+					> span {
+						margin-right: 1rem;
+					}
+					img {
+						font-size: 200%;
+						background: white;
+					}
+					h1 {
+						margin-top: 1rem;
+					}
+					text-decoration: none;
+					margin-bottom: 1rem;
+				`}
+			>
+				<Emoji e="⛴️" />
+				<h1 css="">Le ferry, c'est écolo ?</h1>
+			</Link>
+			<Routes>
+				<Route path="surface-mega-express-four" element={<Lab />} />
+				<Route
+					path="*"
+					element={
+						<SituationContext.Provider value={[situation, setSituation]}>
+							<Main />
+							<div css=" text-align: center; margin-top: 3rem">
+								Comprendre le calcul <Emoji e="⬇️" />
+							</div>
+							<h2>Explications</h2>
+							<Documentation
+								documentationPath="/ferry"
+								engine={engine}
+								embedded
+							/>
+							<h2>Modèle de surface du bateau</h2>
+							<details>
+								<summary>Investiguer le modèle</summary>
 
-					<Lab setData={setSituation} />
-				</details>
-				<h2>Explications</h2>
-				<Documentation documentationPath="/ferry" engine={engine} embedded />
-			</SituationContext.Provider>
+								<Lab setData={setSituation} />
+							</details>
+						</SituationContext.Provider>
+					}
+				/>
+			</Routes>
 		</div>
 	)
 }
 const Main = ({}) => (
 	<div className="ui__ container">
-		<Link
-			to="/ferry"
-			css={`
-				display: flex;
-				align-items: center;
-				justify-content: space-evenly;
-				> span {
-					margin-right: 1rem;
-				}
-				img {
-					font-size: 200%;
-					background: white;
-				}
-				h1 {
-					margin-top: 1rem;
-				}
-				text-decoration: none;
-				margin-bottom: 1rem;
-			`}
-		>
-			<Emoji e="⛴️" />
-			<h1 css="">Le ferry, c'est écolo ?</h1>
-		</Link>
 		<p>{description}</p>
 		<Questions />
 	</div>

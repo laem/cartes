@@ -47,6 +47,14 @@ empreinte par km volume:
 
     [![](https://upload.wikimedia.org/wikipedia/commons/thumb/0/0e/02_Corsica_Ferries_Mega_Express_Four_\(cropped\).jpg/640px-02_Corsica_Ferries_Mega_Express_Four_\(cropped\).jpg)](https://fr.wikipedia.org/wiki/Mega_Express_Four)
 
+    Le calcul des différentes surfaces est [un dessin SVG](/ferry/surface-mega-express-four) sur un plan des ponts du navire, qui nous permet ensuite d'en déduire les volumes. 
+
+    ### Limites du calcul
+
+    Un biais à noter serait la non exactitude de ce plan. Il parait cependant assez fiable pour un ordre de grandeur, ce qui est notre but ici.
+
+    Un autre biais est évidemment le choix de ce qui est comptabilité comme surface utile ou non. Nous avons par exemple exclu les ponts à l'air libre, sauf la piscine et les bars extérieurs.
+
   unité: kgCO2e/km
 
 part du volume:

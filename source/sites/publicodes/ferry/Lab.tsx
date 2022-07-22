@@ -11,7 +11,7 @@ import pathDataToPolys, { calcPolygonArea } from './svgPathToPolygons'
 const sumAreas = (elements, filter = () => true) =>
 	elements.reduce((memo, next) => (filter(next) ? next.area : 0) + memo, 0)
 
-export default ({ setData }) => {
+export default ({ setData = () => null }) => {
 	const ref = useRef(null)
 	const [elements, setElements] = useState([])
 	console.log('injection du modèle de surface du megaexpressfour')
@@ -26,8 +26,9 @@ export default ({ setData }) => {
 			// https://fr.wikipedia.org/wiki/Mega_Express_Four
 			const megaExpressFourLengthOverall = 173.7
 			const area = (pixelArea * megaExpressFourLengthOverall) / 340 // This is the length correspond to the length overall, but as drawn on the SVG image
+			const color = getComputedStyle(path).getPropertyValue('stroke')
 
-			return { id: path.id, area: Math.round(area) }
+			return { id: path.id, area: Math.round(area), color }
 		})
 		setElements(elements)
 
@@ -87,11 +88,26 @@ export default ({ setData }) => {
 					width: 100%;
 					height: auto;
 				}
+				ul {
+					display: flex;
+					flex-wrap: wrap;
+					list-style-type: none;
+				}
+				li {
+					margin: 0.2rem;
+				}
 			`}
 		>
+			<h2>Modèle de volume du Mega Express Four</h2>
+			<pre>PONT-ATTRIBUTION-NOMBRE/HAUTEUR</pre>
 			<ul>
 				{elements.map((el) => (
-					<li>
+					<li
+						className="ui__ card content"
+						css={`
+							border: 2px solid ${el.color};
+						`}
+					>
 						{el.id} : {el.area}
 					</li>
 				))}
