@@ -10,19 +10,31 @@ vitesse:
     très rapide: 27 noeud
 
 empreinte totale:
-  formule: (rapport vitesse * rapport vitesse * rapport vitesse) * correction temps de navigation * empreinte totale moyenne
+  formule: facteur vitesse * correction temps de navigation * empreinte totale moyenne
+
+empreinte totale . par km: empreinte totale / km par mile nautique
+
+facteur vitesse:
+  formule: rapport vitesse * rapport vitesse * rapport vitesse
   description: On prend l'hypothèse d'une évolution au cube de la puissance en fonction de la vitesse.
 
 rapport vitesse: vitesse / vitesse moyenne
 
-correction temps de navigation: vitesse moyenne / vitesse
+correction temps de navigation:
+  formule: vitesse moyenne / vitesse
+  description: |
+    La puissance nécessaire pour faire avancer le navire évolue au cube de la vitesse. L'empreinte climat par heure suite naturellement cette même fonction. Mais le navire va alors plus vite : il va émettre plus à l'heure pendant moins de temps, ce facteur corrige le tir pour.
 
 empreinte totale moyenne:
   formule: 630 kgCO2e/noeud
   note: |
     Données greenferries 2019 tirées de Thetis-MRV 2019 https://www.greenferries.org/ships/mega-express-two-9203186/
 vitesse moyenne:
-  formule: 33 noeuds
+  formule: métrique / km par mile nautique
+  unité: noeud
+
+vitesse moyenne . métrique:
+  formule: 33 km/h
   note: |
     Données greenferries 2019 tirées de Thetis-MRV 2019 https://www.greenferries.org/ships/mega-express-two-9203186/
 
@@ -31,7 +43,7 @@ empreinte totale moyenne . par km: empreinte totale moyenne / km par mile nautiq
 empreinte du bateau:
   titre: Empreinte du bateau témoin par km
   description: Nous utilisons ici comme bateau témoin Méga Express Four de la flotte Corsica Ferries. Ils est représentatif des gros ferries de max ~2000 passagers, rapides.
-  formule: empreinte totale moyenne . par km
+  formule: empreinte totale . par km
   unité: kgCO2e/km
 
 empreinte par km:
