@@ -192,7 +192,7 @@ const Questions = ({}) => {
 					</ul>
 				</p>
 
-				<details css="text-align: center" open>
+				<details css="text-align: center">
 					<summary>Ma situation</summary>
 
 					<ul>

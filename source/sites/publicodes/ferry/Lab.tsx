@@ -27,7 +27,7 @@ export default ({ setData }) => {
 			const megaExpressFourLengthOverall = 173.7
 			const area = (pixelArea * megaExpressFourLengthOverall) / 340 // This is the length correspond to the length overall, but as drawn on the SVG image
 
-			return { id: path.id, area }
+			return { id: path.id, area: Math.round(area) }
 		})
 		setElements(elements)
 
