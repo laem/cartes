@@ -7,6 +7,7 @@ import Meta from '../../../components/utils/Meta'
 import Documentation from '../pages/Documentation'
 import Lab from './Lab'
 import { Link, Navigate, useParams } from 'react-router-dom'
+import TicketSystem from './TicketSystem'
 
 const description = `
 
@@ -120,67 +121,66 @@ const Questions = ({}) => {
 				}
 			`}
 		>
-			<div
-				css={`
-					margin: 1rem 0;
-					.step.input {
-						max-width: 12rem;
-					}
-					.step label {
-						padding: 0.2rem 0.6rem 0.2rem 0.4rem;
-					}
-					border: 0.1rem dashed white;
-					padding: 1rem 2rem;
-					border-radius: 1rem;
-					max-width: 26rem;
-					margin: 0 2rem;
-					@media (max-width: 800px) {
-						margin: 0;
-						padding: 1rem;
-					}
-				`}
-			>
-				{questions.map((name) => {
-					const dottedName = name,
-						{ question, icônes } = engine.getRule(dottedName).rawNode
-					return (
-						<div
-							css={`
-								display: flex;
-								justify-content: start;
-								align-items: center;
-								img {
-									font-size: 300%;
-									margin-right: 1rem;
-								}
-								@media (max-width: 800px) {
+			<TicketSystem>
+				<div
+					css={`
+						.step.input {
+							max-width: 12rem;
+						}
+						.step label {
+							padding: 0.2rem 0.6rem 0.2rem 0.4rem;
+						}
+						border-radius: 1rem;
+						padding: 1rem 2rem;
+						@media (max-width: 800px) {
+							margin: 0;
+							padding: 1rem;
+						}
+					`}
+				>
+					{questions.map((name) => {
+						const dottedName = name,
+							{ question, icônes } = engine.getRule(dottedName).rawNode
+						return (
+							<div
+								css={`
+									display: flex;
+									justify-content: start;
+									align-items: center;
 									img {
-										font-size: 200%;
-										margin-right: 0.4rem;
+										font-size: 300%;
+										margin-right: 1rem;
 									}
-								}
-								p {
-									max-width: 20rem;
-								}
-							`}
-						>
-							{icônes && <Emoji e={icônes} />}
-							<label>
-								<p>{question}</p>
-								<RuleInput
-									{...{
-										engine,
-										dottedName,
-										onChange: onChange(dottedName),
-										onSubmit,
-										noSuggestions: false,
-									}}
-								/>
-							</label>
-						</div>
-					)
-				})}
-			</div>
+									@media (max-width: 800px) {
+										img {
+											font-size: 200%;
+											margin-right: 0.4rem;
+										}
+									}
+									p {
+										max-width: 20rem;
+									}
+								`}
+							>
+								{icônes && <Emoji e={icônes} />}
+								<label>
+									<p>{question}</p>
+									<RuleInput
+										{...{
+											engine,
+											dottedName,
+											onChange: onChange(dottedName),
+											onSubmit,
+											noSuggestions: false,
+										}}
+									/>
+								</label>
+							</div>
+						)
+					})}
+				</div>
+			</TicketSystem>
+
 			<div>
 				<div className="ui__ card box">
 					<h2 css="margin: .4rem; font-size: 125%">{evaluation.title}</h2>
