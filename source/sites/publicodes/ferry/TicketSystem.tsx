@@ -62,11 +62,8 @@ export default ({ children }) => (
 				0% {
 					transform: translateY(-800px);
 				}
-				35% {
-					transform: translateY(-400px);
-				}
-				70% {
-					transform: translateY(-240px);
+				50% {
+					transform: translateY(-350px);
 				}
 				100% {
 					transform: translateY(-10px);

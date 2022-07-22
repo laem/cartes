@@ -151,6 +151,7 @@ const Questions = ({}) => {
 						}
 					`}
 				>
+					<h2>Votre billet</h2>
 					{questions.map((name) => {
 						const dottedName = name,
 							{ question, icônes } = engine.getRule(dottedName).rawNode
@@ -195,30 +196,55 @@ const Questions = ({}) => {
 			</TicketSystem>
 
 			<div>
-				<div className="ui__ card box">
-					<h2 css="margin: .4rem; font-size: 125%">{evaluation.title}</h2>
-					<strong>
-						{' '}
-						{evaluation.nodeValue.toLocaleString('fr-FR')} kgCO2e
-					</strong>
-				</div>
-				<p
+				<h2>Le bateau</h2>
+
+				<label>
+					<select name="bateau">
+						<option value="mega4">Mega Expres Four</option>
+					</select>
+					<div>
+						Un seul <em>bateau type</em> est pour l'instant modélisé.
+					</div>
+				</label>
+				<div
 					css={`
-						max-width: 18rem;
-						padding: 0 0rem 0 2rem;
+						border-radius: 1rem;
+						border: 2px solid var(--color);
+						h2 {
+							padding-left: 1rem;
+							color: var(--color);
+							font-weight: bold;
+						}
 					`}
 				>
-					<Emoji e="🗺️" /> Soit environ :{' '}
-					<ul>
-						<li>
-							{Math.round(evaluation.nodeValue * 350)} kg pour Marseille-Ajaccio{' '}
-						</li>
-						<li>
-							{Math.round(evaluation.nodeValue * 150)} kg pour
-							Cherbourg-Portsmouth
-						</li>
-					</ul>
-				</p>
+					<h2>Votre empreinte</h2>
+					<div className="ui__ card box">
+						<h3 css="margin: .4rem; ">{evaluation.title}</h3>
+						<strong>
+							{' '}
+							{evaluation.nodeValue.toLocaleString('fr-FR')} kgCO2e
+						</strong>
+					</div>
+					<div
+						className="ui__ card box"
+						css={`
+							max-width: 18rem;
+							padding: 0 0rem 0 2rem;
+						`}
+					>
+						<Emoji e="🗺️" /> Soit environ :{' '}
+						<ul>
+							<li>
+								{Math.round(evaluation.nodeValue * 350)} kg pour
+								Marseille-Ajaccio{' '}
+							</li>
+							<li>
+								{Math.round(evaluation.nodeValue * 150)} kg pour
+								Cherbourg-Portsmouth
+							</li>
+						</ul>
+					</div>
+				</div>
 
 				<details css="text-align: center">
 					<summary>Ma situation</summary>
