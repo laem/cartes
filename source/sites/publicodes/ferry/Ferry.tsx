@@ -202,7 +202,10 @@ const Questions = ({}) => {
 						<h3 css="margin: .4rem; ">{evaluation.title}</h3>
 						<strong>
 							{' '}
-							{evaluation.nodeValue.toLocaleString('fr-FR')} kgCO2e
+							{(evaluation.nodeValue * 1000).toLocaleString('fr-FR', {
+								maximumSignificantDigits: 2,
+							})}{' '}
+							g CO₂e
 						</strong>
 					</div>
 					<div
