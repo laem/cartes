@@ -246,7 +246,11 @@ const Questions = ({}) => {
 										{label}
 										<div>
 											<strong>
-												{Math.round(evaluation.nodeValue * distance)} kg CO₂e
+												{(evaluation.nodeValue * distance).toLocaleString(
+													'fr-FR',
+													{ maximumSignificantDigits: 2 }
+												)}{' '}
+												kg CO₂e
 											</strong>
 										</div>{' '}
 									</div>
