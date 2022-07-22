@@ -199,13 +199,11 @@ const Questions = ({}) => {
 				>
 					<h2>Votre empreinte</h2>
 					<div className="ui__ card box">
-						<h3 css="margin: .4rem; ">{evaluation.title}</h3>
 						<strong>
-							{' '}
 							{(evaluation.nodeValue * 1000).toLocaleString('fr-FR', {
 								maximumSignificantDigits: 2,
 							})}{' '}
-							g CO₂e
+							g CO₂e / km
 						</strong>
 					</div>
 					<div
