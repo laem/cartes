@@ -1,10 +1,23 @@
 index:
   icônes: ⛴
 
+vitesse:
+  question: Quelle est la vitesse du ferry ?
+  par défaut: 18 noeud
+  suggestions:
+    lente: 10 noeud
+    rapide: 18 noeud
+    très rapide: 27 noeud
+
+empreinte moyenne: 630 kgCO2e/noeud
+vitesse moyenne: 33 / km par mile nautique
+
+empreinte moyenne . par km: empreinte moyenne / km par mile nautique
+
 empreinte du bateau:
   titre: Empreinte du bateau témoin
   description: Nous utilisons ici comme bateau témoin Méga Express Four de la flotte Corsica Ferries. Ils est représentatif des gros ferries de ~2000 passagers, rapides.
-  formule: 630 * km par mile nautique
+  formule:
   unité: kgCO2e/km
   note: |
     Données greenferries 2019 tirées de Thetis-MRV 2019 https://www.greenferries.org/ships/mega-express-two-9203186/

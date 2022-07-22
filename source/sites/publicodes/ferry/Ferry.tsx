@@ -198,14 +198,6 @@ const Questions = ({}) => {
 			<div>
 				<h2>Le bateau</h2>
 
-				<label>
-					<select name="bateau">
-						<option value="mega4">Mega Expres Four</option>
-					</select>
-					<div>
-						Un seul <em>bateau type</em> est pour l'instant modélisé.
-					</div>
-				</label>
 				<div
 					css={`
 						border-radius: 1rem;
