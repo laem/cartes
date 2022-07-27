@@ -12,7 +12,7 @@ import { useEngine } from '../../../components/utils/EngineContext'
 
 const description = `
 
-			Alternative à l'avion, le ferry complète train pour traverser les mers.
+			Alternative à l'avion, le ferry complète le train pour traverser les mers.
 			Découvrez une estimation de son empreinte climat, en fonction de votre
 			billet.
 `

@@ -71,7 +71,9 @@ empreinte par km:
 
     Vous pouvez ensuite enchaîner avec la lecture complète de la [note de méthode](https://hackmd.io/@laem/empreinte-ferry) (~20 pages).
 
-    Enfin, une fois cette méthode du poids acceptée, vous pouvez parcourir ci-dessous le calcul intégral et intéractif du facteur d'émission.
+    Puis, une fois cette méthode du poids acceptée, vous pouvez parcourir ci-dessous le calcul intégral et intéractif du facteur d'émission.
+
+    Finalement, n'hésitez pas à faire des propositions de modification du modèle, soit via une pull request sur [github](https://github.com/laem/futureco/blob/master/source/sites/publicodes/ferry/index.yaml) soit via un simple commentaire sur [ce ticket](https://github.com/laem/futureco/issues/123).
 
 empreinte par km volume:
   titre: Empreinte par km et passager
