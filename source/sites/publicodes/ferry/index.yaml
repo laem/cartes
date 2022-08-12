@@ -7,7 +7,7 @@ vitesse:
   par défaut: 18 noeud
   unité: noeud
   suggestions:
-    lente: 10 noeud
+    lente: 12 noeud
     rapide: 18 noeud
     très rapide: 27 noeud
 
@@ -53,7 +53,7 @@ empreinte par km:
   description: |
     Voici notre objectif : estimer l'empreinte d'un passager sur les ferries de voyage comme ceux qui relient la métropole à la Corse et à l'Angleterre.
 
-    Le Ferry est une alternative sérieuse à l’avion, mais il n’existait aucune estimation de son empreinte climat au kilomètre (ni ADEME en France, ni à l’international, ni dans la littérature scientifique) qui prenne en compte non pas un passager moyen, mais la diversité des options d'un billet : 
+    Le ferry est une alternative sérieuse à l’avion, mais il n’existait aucune estimation de son empreinte climat au kilomètre (ni ADEME en France, ni à l’international, ni dans la littérature scientifique) qui prenne en compte non pas un passager moyen, mais la diversité des options d'un billet : 
 
     - passager en voiture ou non
     - passager en cabine, en siège, ou au sol
@@ -63,7 +63,7 @@ empreinte par km:
     - vitesse
     - etc
 
-    Nous savons combien émettent de gaz à effet de serre (GES) un ferry : il suffit en somme de multipler sa consommation de fioul par le facteur d'émission CO2e du fioul. Mais la difficulté est ensuite d'attribuer une part de ces GES au passager à pied, au passager seul dans sa voiture qui profite d'un lounge VIP, et au transport de marchandises. 
+    Nous savons combien émettent de gaz à effet de serre (GES) un ferry : il suffit en somme de multipler sa consommation de fioul par le facteur d'émission CO2e du fioul. Mais la difficulté est ensuite d'attribuer une part de ces GES au passager à pied, au passager seul dans sa voiture qui profite d'un lounge VIP, et au transport de marchandises, etc. 
 
     Pour faire ce calcul, nous sommes d'abord partis sur l'hypothèse que la consommation de carburant d'un bateau est proportionnelle au poids qu'il transporte, et donc qu'on peut attribuer l'empreinte en fonction du poid qu'implique un voyage. C'est vrai, mais l'essentiel (80%) du poids du bâtiment, est *destiné à fournir du volume* aux activités commerciales. 
 
