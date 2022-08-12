@@ -41,7 +41,8 @@ export default ({ setData = () => null }) => {
 		// Avec 280 places en fauteuil, on retrouve au total si 4 personnes par cabine 1300 passager max.
 		// Ceci sans compter les places sans fauteil.
 		// On a donc potentiellement un problème, le mega est annoncé à 1800 passagers max depuis 2007.
-		// Hypothèse probable : il peut accueillir tous ces passagers sur les traversées sans nuits.
+		// Hypothèse probable : il peut accueillir tous ces passagers sur les traversées sans nuits, et avec une partie des gens dans les couloirs la nuit.
+		// Retour utilisateur : j'étais justement sur le mega express four aller (nuit) et retour (jour), il était complet dans les deux sens et on avait vraiment le sentiment qu'il n'y avait pas de places assises ou en cabines pour tout le monde. Énormément de gens s'installent partout sur le bateau pour se reposer, sous les tables, dans les couloirs, dans les coursives. Ca fait en passant une ambiance assez surprenante vu la classe sociale des voyageurs - et en comparaison le confort des véhicules transportés.
 
 		const cabinesTotalArea = sumAreas(elements, (next) =>
 			next.id.includes('cabine')
