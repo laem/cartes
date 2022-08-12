@@ -36,7 +36,6 @@ export default ({}) => {
 						@media (max-width: 800px) {
 							${displayIntro ? 'display: none;' : ''}
 						}
-						margin-right: 1em;
 					`}
 					src={'/logo.svg'}
 					alt=""
