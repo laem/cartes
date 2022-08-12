@@ -14,7 +14,7 @@ vitesse:
 empreinte totale:
   formule: facteur vitesse * correction temps de navigation * empreinte totale moyenne
 
-empreinte totale . par km: empreinte totale / km par mile nautique
+empreinte totale . par km: empreinte totale / km par mille nautique
 
 facteur vitesse:
   formule: rapport vitesse * rapport vitesse * rapport vitesse
@@ -32,7 +32,7 @@ empreinte totale moyenne:
   note: |
     Données greenferries 2019 tirées de Thetis-MRV 2019 https://www.greenferries.org/ships/mega-express-two-9203186/
 vitesse moyenne:
-  formule: métrique / km par mile nautique
+  formule: métrique / km par mille nautique
   unité: noeud
 
 vitesse moyenne . métrique:
@@ -40,7 +40,7 @@ vitesse moyenne . métrique:
   note: |
     Données greenferries 2019 tirées de Thetis-MRV 2019 https://www.greenferries.org/ships/mega-express-two-9203186/
 
-empreinte totale moyenne . par km: empreinte totale moyenne / km par mile nautique
+empreinte totale moyenne . par km: empreinte totale moyenne / km par mille nautique
 
 empreinte du bateau:
   titre: Empreinte du bateau témoin par km
@@ -213,7 +213,7 @@ surface . cabine:
 surface . siège:
   formule: sièges / siège . nombre
 
-km par mile nautique: 1.852 km/mn
+km par mille nautique: 1.852 km/mn
 
 billet cabine: cabine
 
