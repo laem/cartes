@@ -24,8 +24,10 @@ export default ({ setData = () => null }) => {
 			let points = d && pathDataToPolys(d, { tolerance: 1, decimals: 1 })
 			const pixelArea = points && Math.round(calcPolygonArea(points[0]))
 			// https://fr.wikipedia.org/wiki/Mega_Express_Four
-			const megaExpressFourLengthOverall = 173.7
-			const area = (pixelArea * megaExpressFourLengthOverall) / 340 // This is the length correspond to the length overall, but as drawn on the SVG image
+			const megaExpressFourLengthOverall = 173.7, // real length in meters of the ship
+				megaExpressPixelLength = 340 // This is the length corresponding to the length overall, but as drawn on the SVG image
+			const area =
+				(pixelArea * megaExpressFourLengthOverall) / megaExpressPixelLength
 			const color = getComputedStyle(path).getPropertyValue('stroke')
 
 			return { id: path.id, area: Math.round(area), color }
@@ -100,7 +102,10 @@ export default ({ setData = () => null }) => {
 			`}
 		>
 			<h2>Modèle de volume du Mega Express Four</h2>
-			<pre>PONT-ATTRIBUTION-NOMBRE/HAUTEUR</pre>
+			<pre>
+				Comment lire les blocs : PONT-ATTRIBUTION-NOMBRE/HAUTEURDEPONT (m):
+				SURFACE (m²)
+			</pre>
 			<ul>
 				{elements.map((el) => (
 					<li
@@ -109,7 +114,7 @@ export default ({ setData = () => null }) => {
 							border: 2px solid ${el.color};
 						`}
 					>
-						{el.id} : {el.area}
+						{el.id} : {el.area} m²
 					</li>
 				))}
 			</ul>
