@@ -12,6 +12,7 @@ module.exports = {
 			'@babel/preset-react',
 			{
 				runtime: 'automatic',
+				throwIfNamespace: false,
 			},
 		],
 		'@babel/preset-typescript',

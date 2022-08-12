@@ -1,0 +1,78 @@
+index:
+  question: Allez-vous profiter des restaurants, bars et divers loisirs ?
+  description: |
+    Par exemple, la piscine, le jacuzzi, les machines à jeu, les magasins de souvenir style "duty-free", les bars, etc.
+
+    Nous considérons ici que si vous ne profitez pas de ces services accessoires, leur empreinte ne vous est pas attribuée.
+
+    Notons que ces services peuvent être jugés "nécessaires" par certains, mais que ça dépend énormément de la personne. 
+
+    Pour une traversée d'une nuit de plus de 350km (Marseille-Ajaccio), on peut tout à fait se passer de restaurant. On trouvera souvent à quai des boulangeries ou restaurants, et il est tout à fait possible de manger sur le pont par beau temps, sur les banquettes intérieurs sinon. C'est clairement une question de confort, dont certains ne veulent pas se passer.
+
+    Cela dit, l'affaire est différente pour les longues traversées, par exemple la nuit-jour-nuit d'un Marseille-Tanger. 
+
+    Une optimisation est alors nécessaire entre les poids en plus de services de base, et la vitesse du ferry : plus celui-ci est lent, moins il consomme, mais plus les services à bord deviennent nécessaires.
+  note: |
+    Pour construire ce modèle de poids, rien de mieux que de le faire pour chaque bateau. Vu l'ampleur de la tâche, dans un premier temps nous nous basons sur des valeurs approximatives inspirées de notre bateau-témoin, aux [plans détaillés](https://i.imgur.com/1wilp06.jpg).
+
+    Les images de la [page Wikipedia](https://fr.wikipedia.org/wiki/Jean_Nicoli_(navire)#Locaux_communs) illustrant les parties communes sont aussi très parlantes.
+  icônes: 🍽🍺
+  par défaut: oui
+
+  formule:
+    somme:
+      - restaurant
+      - nom: bars
+        description: On duplique le restaurant, n'ayant pas beaucoup d'informations, le bar étant très proche dans l'idée.
+        valeur: restaurant
+      - piscine
+      - magasin * 2
+      - salle de jeu
+      # - espaces publics
+
+espaces publics:
+  formule: 330 * passagers
+  description: |
+    Cette ligne correspond à la ligne "Public & stairs" dans la [publication Deltamarin](https://i.imgur.com/4o64Po9.png).
+
+    Nous comprenons avec beaucoup d'incertitudes qu'elle inclut tous les espaces publics de type couloirs, espaces d'accueil avec ses nombreux sièges, etc.
+
+    Mais comment cette ligne pourrait-elle représenter 1/3 du poids total ? Je n'arrive pas à imaginer 300kg d'escaliers et de fauteuils par personne. À moins de considérer le poids du pont lui-même ?
+restaurant:
+  description: |
+    Estimation très grossière du poids du restaurant. 
+
+    Pour aller plus loin, il faudrait s'inspirer plus en détail des plans détaillés des ferries, tel que [celui du Jean Nicoli](https://i.imgur.com/1wilp06.jpg).
+  formule:
+    somme:
+      - 200 * charge . chaise
+      - 50 * charge . canapé
+      - 50 * charge . table
+      - comptoir
+      - cuisine
+      - victuailles
+
+restaurant . comptoir: 2000 kg
+restaurant . cuisine: 2000 kg
+restaurant . victuailles: passagers * 1 kg
+
+piscine:
+  formule: volume * 1000
+  unité: kg
+
+piscine . volume:
+  note: On prend les dimensions d'une petite piscine. Si grosse influence, le paramétrer !
+  formule: 10 * 1.5 * 4
+  unité: m3
+
+magasin:
+  formule: 10 * armoire * 150%
+  description: Des magasins de souvenirs, d'alcool, etc.
+  note: |
+    Modèle très simpliste : on imagine simplement dix armoires remplies de la moitié de leur poids.
+
+salle de jeu: 20 * borne d'arcade
+salle de jeu . borne d'arcade:
+  formule: 100 kg
+  références:
+    - https://www.ma-borne-arcade.fr/categorie-produit/bornes-borne-arcade/classic/
