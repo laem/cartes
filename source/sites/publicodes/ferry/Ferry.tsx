@@ -42,14 +42,7 @@ export default ({}) => {
 	if (!params) return <Navigate to="/ferry/empreinte-par-km" replace />
 
 	return (
-		<div
-			className="ui__ container"
-			css={`
-				h2 {
-					margin: 0.4rem 0 0.2rem !important;
-				}
-			`}
-		>
+		<div className="ui__ container">
 			<Meta
 				title="Calculateur d'empreinte carbone du ferry"
 				description={description}
@@ -86,23 +79,17 @@ export default ({}) => {
 					element={
 						<SituationContext.Provider value={[situation, setSituation]}>
 							<Main />
-							<div css=" text-align: center; margin-top: 3rem">
+							<h2 css=" text-align: center; margin-top: 3rem">
 								Comprendre le calcul <Emoji e="⬇️" />
-							</div>
-							<h2>Explications</h2>
+							</h2>
 							<Documentation
 								documentationPath="/ferry"
 								engine={engine}
 								embedded
 							/>
-							<h2>Modèle de surface du bateau</h2>
-							<details>
-								<summary>Investiguer le modèle</summary>
+							<Lab setData={setSituation} />
 
-								<Lab setData={setSituation} />
-							</details>
-
-							<h2>Ma situation</h2>
+							<h2>Paramètres de simulation </h2>
 							<details>
 								<summary>Détails de la simulation</summary>
 								<ul>
@@ -149,6 +136,9 @@ const Questions = ({}) => {
 					display: flex;
 					align-items: center;
 				}
+				h2 {
+					margin-top: 0;
+				}
 			`}
 		>
 			<TicketSystem>
@@ -179,6 +169,9 @@ const Questions = ({}) => {
 				<div
 					css={`
 						padding: 0.6rem;
+						border: 1px solid white;
+						border-radius: 1rem;
+						margin-bottom: 1rem;
 					`}
 				>
 					<h2>Le bateau</h2>
@@ -190,6 +183,7 @@ const Questions = ({}) => {
 					css={`
 						border-radius: 1rem;
 						border: 2px solid var(--color);
+						padding: 0.6rem;
 						h2 {
 							padding-left: 1rem;
 							color: var(--color);
