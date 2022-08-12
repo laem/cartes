@@ -11,6 +11,12 @@ export default () => {
 	const scenario = useSelector((state) => state.scenario)
 	return (
 		<section id="scenarios" className="ui__ container">
+			<Link to="/">
+				<img
+					src="/logo.svg"
+					css="width: 4rem !important; margin: 0 auto;display: block"
+				/>
+			</Link>
 			<h1>Votre scénario climat</h1>
 			<h2 css="display: inline-block;background: var(--color); padding: .1rem .4rem; margin-right: .4rem;  color: white; margin-top: 1rem">
 				Quel futur souhaitez vous ?
