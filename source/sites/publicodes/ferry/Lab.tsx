@@ -35,7 +35,7 @@ export default ({ setData = () => null }) => {
 		setElements(elements)
 
 		const cabinesCount = elements.reduce((memo, next) => {
-			return next.id.includes('cabine') ? +next.id.split('-')[2] + memo : memo
+			return next.id.includes('-cabines') ? +next.id.split('-')[2] + memo : memo
 		}, 0)
 		// Cette page cite 252 cabines, ce qui correspond environ à notre calcul de 255 :)
 		// https://corsica-battelli.jimdofree.com/navires/corsica-ferries/méga-express-four/
@@ -47,19 +47,19 @@ export default ({ setData = () => null }) => {
 		// Retour utilisateur : j'étais justement sur le mega express four aller (nuit) et retour (jour), il était complet dans les deux sens et on avait vraiment le sentiment qu'il n'y avait pas de places assises ou en cabines pour tout le monde. Énormément de gens s'installent partout sur le bateau pour se reposer, sous les tables, dans les couloirs, dans les coursives. Ca fait en passant une ambiance assez surprenante vu la classe sociale des voyageurs - et en comparaison le confort des véhicules transportés.
 
 		const cabinesTotalArea = sumAreas(elements, (next) =>
-			next.id.includes('cabine')
+			next.id.includes('-cabines')
 		)
 		const siegesCount = elements.reduce((memo, next) => {
-			return next.id.includes('sieges') ? +next.id.split('-')[2] + memo : memo
+			return next.id.includes('-sieges') ? +next.id.split('-')[2] + memo : memo
 		}, 0)
 		const siegesTotalArea = sumAreas(elements, (next) =>
-			next.id.includes('sieges')
+			next.id.includes('-sieges')
 		)
 		const surfacePontBas = sumAreas(elements, (next) =>
-			next.id.includes('garage-bas')
+			next.id.includes('-garage-bas')
 		)
 		const surfacePontHaut = sumAreas(elements, (next) =>
-			next.id.includes('garage-haut')
+			next.id.includes('-garage-haut')
 		)
 
 		const areaUnit = (value) => `${Math.round(value)} m2`
@@ -72,10 +72,10 @@ export default ({ setData = () => null }) => {
 			'surface . garage . bas': areaUnit(surfacePontBas),
 			'surface . garage . haut': areaUnit(surfacePontHaut),
 			'surface . loisirs': areaUnit(
-				sumAreas(elements, (next) => next.id.includes('loisirs'))
+				sumAreas(elements, (next) => next.id.includes('-loisirs'))
 			),
 			'surface . communs': areaUnit(
-				sumAreas(elements, (next) => next.id.includes('commun'))
+				sumAreas(elements, (next) => next.id.includes('-commun'))
 			),
 		}
 		console.log(newData)

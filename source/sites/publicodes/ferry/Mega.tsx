@@ -29,9 +29,9 @@ function SvgMegaExpressFour(props, svgRef) {
 				inkscape:deskcolor="#d1d1d1"
 				inkscape:document-units="mm"
 				showgrid="false"
-				inkscape:zoom={0.3934755}
-				inkscape:cx={1113.157}
-				inkscape:cy={1892.1127}
+				inkscape:zoom={3.2820898}
+				inkscape:cx={728.04223}
+				inkscape:cy={1336.8007}
 				inkscape:window-width={1920}
 				inkscape:window-height={1175}
 				inkscape:window-x={0}
@@ -58,15 +58,15 @@ function SvgMegaExpressFour(props, svgRef) {
 					style={{
 						fill: 'none',
 						stroke: '#fff800',
-						strokeWidth: 0.86400003,
+						strokeWidth: 0.864,
 						strokeLinecap: 'butt',
 						strokeLinejoin: 'miter',
 						strokeDasharray: 'none',
 						strokeOpacity: 1,
 					}}
-					d="m 153.79615,324.27763 0.64845,47.4355 50.29278,-0.87518 37.92695,-0.1079 3.43862,-4.67086 -0.0155,-11.67515 -4.87057,-0.7791 -0.10138,-3.90706 -11.50213,0.32106 0.1708,-4.60156 24.35037,-0.72883 0.0565,-5.06625 -8.89331,-0.0242 0.17579,-11.3389 -2.98907,-4.78994 z"
+					d="m 153.79615,324.27763 0.40493,16.44965 7.21192,3.28801 -0.47004,7.28256 -4.66726,3.60287 -1.84859,-0.68201 0.0175,17.49442 50.29278,-0.87518 37.92695,-0.1079 3.43862,-4.67086 -0.0155,-11.67515 -4.87057,-0.7791 -0.10138,-3.90706 -11.50213,0.32106 0.1708,-4.60156 24.35037,-0.72883 0.0565,-5.06625 -8.89331,-0.0242 0.17579,-11.3389 -2.98907,-4.78994 z"
 					id="8-loisirs"
-					sodipodi:nodetypes="cccccccccccccccc"
+					sodipodi:nodetypes="ccccccccccccccccccccc"
 				/>
 				<text
 					x={153.06989}
@@ -113,15 +113,15 @@ function SvgMegaExpressFour(props, svgRef) {
 					style={{
 						fill: 'none',
 						stroke: '#fff800',
-						strokeWidth: 0.86400003,
+						strokeWidth: 0.864,
 						strokeLinecap: 'butt',
 						strokeLinejoin: 'miter',
 						strokeDasharray: 'none',
 						strokeOpacity: 1,
 					}}
-					d="m 153.06989,388.54238 0.89231,46.56778 134.85576,-0.71035 0.37873,-9.34502 81.56036,-0.34737 v -28.42524 l -48.0038,0.082 0.59988,10.03906 -11.70462,-0.86538 -1.54433,3.00321 -14.65,0.36114 0.0892,4.41344 -6.08629,0.0472 -0.04,4.3579 -5.91567,0.3778 -0.39267,-4.68647 -54.73018,0.42445 -0.0753,-4.63823 52.8392,-0.94951 -0.1455,-3.63039 -8.93527,-8.80544 11.68177,-0.58509 5.77779,0.24354 -0.40054,-8.31809 z"
+					d="m 208.16694,388.76434 -1.34961,31.86763 3.38029,0.64668 0.49242,3.04114 3.52109,3.52917 c 2.54805,1.67379 -1.20409,4.13225 0.85816,6.34276 l 73.74867,0.20814 0.37873,-9.34502 81.56036,-0.34737 v -28.42524 l -48.0038,0.082 0.59988,10.03906 -11.70462,-0.86538 -1.54433,3.00321 -14.65,0.36114 0.0892,4.41344 -6.08629,0.0472 -0.04,4.3579 -5.91567,0.3778 -0.39267,-4.68647 -54.73018,0.42445 -0.0753,-4.63823 52.8392,-0.94951 -0.1455,-3.63039 -8.93527,-8.80544 11.68177,-0.58509 5.77779,0.24354 -0.40054,-8.31809 z"
 					id="7-loisirs"
-					sodipodi:nodetypes="ccccccccccccccccccccccccc"
+					sodipodi:nodetypes="ccccccccccccccccccccccccccccc"
 				/>
 				<path
 					style={{
@@ -146,9 +146,9 @@ function SvgMegaExpressFour(props, svgRef) {
 						strokeDasharray: 'none',
 						strokeOpacity: 1,
 					}}
-					d="m 176.49465,451.35673 1.61041,44.06751 39.60259,-10.1006 0.0288,-34.0518 z"
+					d="m 176.49465,451.35673 0.14389,8.80679 1.18432,2.117 0.81137,32.61455 10.76225,-0.24708 0.32122,-4.70272 3.81991,-0.14744 0.15707,-2.66398 14.35182,-0.12833 0.20336,2.56704 9.86107,-0.31677 -0.37448,-37.98395 z"
 					id="6-cabines-29"
-					sodipodi:nodetypes="ccccc"
+					sodipodi:nodetypes="ccccccccccccc"
 				/>
 				<path
 					style={{
@@ -183,12 +183,26 @@ function SvgMegaExpressFour(props, svgRef) {
 						strokeWidth: 0.5,
 						strokeLinecap: 'butt',
 						strokeLinejoin: 'miter',
-						strokeOpacity: 1,
 						strokeDasharray: 'none',
+						strokeOpacity: 1,
 					}}
-					d="m 154.59051,452.5401 0.28862,43.21522 22.65794,-0.13383 -0.32734,-32.99628 -1.41734,-10.55141 z"
-					id="6-sieges-116"
-					sodipodi:nodetypes="cccccc"
+					d="m 154.96416,479.2822 -0.085,16.47312 20.1866,-0.12811 -0.066,-6.691 2.74259,0.0238 -0.34199,-14.19557 -4.52454,-0.34132 -9.58124,6.19135 z"
+					id="6-sieges-58"
+					sodipodi:nodetypes="ccccccccc"
+				/>
+				<path
+					style={{
+						fill: 'none',
+						stroke: '#00f6ff',
+						strokeWidth: 0.5,
+						strokeLinecap: 'butt',
+						strokeLinejoin: 'miter',
+						strokeDasharray: 'none',
+						strokeOpacity: 1,
+					}}
+					d="m 154.77552,452.16645 0.21761,15.95917 7.09542,-0.9313 8.23505,4.58806 6.33473,0.89937 -0.56811,-12.68967 -0.14763,-7.87487 z"
+					id="6-sieges-58-bis"
+					sodipodi:nodetypes="cccccccc"
 				/>
 				<path
 					style={{
@@ -221,7 +235,7 @@ function SvgMegaExpressFour(props, svgRef) {
 				<path
 					style={{
 						fill: 'none',
-						stroke: '#060ffe',
+						stroke: '#000000',
 						strokeWidth: 0.6,
 						strokeLinecap: 'butt',
 						strokeLinejoin: 'miter',
@@ -284,6 +298,44 @@ function SvgMegaExpressFour(props, svgRef) {
 					d="m 362.07888,657.59484 57.69119,3.15254 38.9916,6.17052 1.0874,10.04446 -24.39519,4.62269 -57.90107,4.23773 -20.38602,-0.75742 -0.75762,-10.40213 z"
 					id="1-garage-bas"
 					sodipodi:nodetypes="ccccccccc"
+				/>
+				<path
+					style={{
+						fill: 'none',
+						stroke: '#000000',
+						strokeWidth: 0.6,
+						strokeLinecap: 'butt',
+						strokeLinejoin: 'miter',
+						strokeOpacity: 1,
+						strokeDasharray: 'none',
+					}}
+					d="m 154.43727,468.66227 -2.0345,4.60383 2.36767,5.99348 8.40327,0.97282 9.46156,-5.94516 4.49926,0.20116 -0.0537,-1.71011 -7.09148,-0.85 -8.06597,-4.69408 z"
+					id="6-commun"
+				/>
+				<path
+					style={{
+						fill: 'none',
+						stroke: '#000000',
+						strokeWidth: 0.5,
+						strokeLinecap: 'butt',
+						strokeLinejoin: 'miter',
+						strokeOpacity: 1,
+						strokeDasharray: 'none',
+					}}
+					d="m 158.29422,418.14014 -3.82879,-1.64703 -3.7618,-5.73037 3.5262,-4.85468 4.00494,-1.01963 4.67456,1.91683 v -1.64865 l -5.06619,-2.2447 0.008,-12.40308 46.97917,-0.64281 0.66649,9.38615 1.02588,0.68731 0.86201,24.38918 3.14334,0.0713 3.60558,3.44128 10.13213,0.0103 0.0806,6.72579 -35.9928,-0.0812 -1.3218,-23.28757 -16.02671,-0.003 -0.68073,10.09247 -7.31867,-5.46555 z"
+					id="7-commun"
+				/>
+				<path
+					style={{
+						fill: 'none',
+						stroke: '#000000',
+						strokeWidth: '0.264583px',
+						strokeLinecap: 'butt',
+						strokeLinejoin: 'miter',
+						strokeOpacity: 1,
+					}}
+					d="m 148.32519,346.91992 1.9362,-4.95795 4.84588,-1.11165 6.41902,3.29174 -0.67879,7.11057 -4.88015,3.51485 -6.36274,-2.68787 z"
+					id="8-commun"
 				/>
 			</g>
 		</svg>
