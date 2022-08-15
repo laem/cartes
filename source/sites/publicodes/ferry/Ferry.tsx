@@ -87,7 +87,6 @@ export default ({}) => {
 								engine={engine}
 								embedded
 							/>
-							<Lab setData={setSituation} />
 
 							<h2>Paramètres de simulation </h2>
 							<details>
@@ -97,6 +96,11 @@ export default ({}) => {
 										<li>{`${k} : ${v?.nodeValue || v}`}</li>
 									))}
 								</ul>
+							</details>
+							<details>
+								<summary>Modèle de volume du bateau type</summary>
+
+								<Lab setData={setSituation} />
 							</details>
 						</SituationContext.Provider>
 					}
