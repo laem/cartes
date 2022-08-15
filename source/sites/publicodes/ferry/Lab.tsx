@@ -62,18 +62,20 @@ export default ({ setData = () => null }) => {
 			next.id.includes('garage-haut')
 		)
 
+		const areaUnit = (value) => `${Math.round(value)} m2`
+
 		const newData = {
 			'cabine . nombre': cabinesCount,
 			'siège . nombre': siegesCount,
-			'surface . cabines': `${Math.round(cabinesTotalArea)} m2`,
-			'surface . sièges': `${Math.round(siegesTotalArea)} m2`,
-			'surface . garage . bas': surfacePontBas,
-			'surface . garage . haut': surfacePontHaut,
-			'surface . loisirs': sumAreas(elements, (next) =>
-				next.id.includes('loisirs')
+			'surface . cabines': areaUnit(cabinesTotalArea),
+			'surface . sièges': areaUnit(siegesTotalArea),
+			'surface . garage . bas': areaUnit(surfacePontBas),
+			'surface . garage . haut': areaUnit(surfacePontHaut),
+			'surface . loisirs': areaUnit(
+				sumAreas(elements, (next) => next.id.includes('loisirs'))
 			),
-			'surface . communs': sumAreas(elements, (next) =>
-				next.id.includes('commun')
+			'surface . communs': areaUnit(
+				sumAreas(elements, (next) => next.id.includes('commun'))
 			),
 		}
 		console.log(newData)

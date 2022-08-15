@@ -151,6 +151,7 @@ volume passager . voiture . longueur:
 volume utile:
   question: Quel est le volume utile du bateau ?
   description: On appelle ici volume utile la somme de toutes les surfaces qui ne sont pas l'infrastructure elle-même du bateau, sa sécurité, son équipage, etc.
+  unité: m3
   formule:
     somme:
       - volume garage
