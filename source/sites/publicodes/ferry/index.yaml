@@ -63,7 +63,7 @@ empreinte par km:
     - vitesse
     - etc
 
-    Nous savons combien émettent de gaz à effet de serre (GES) un ferry : il suffit en somme de multipler sa consommation de fioul par le facteur d'émission CO2e du fioul. Mais la difficulté est ensuite d'attribuer une part de ces GES au passager à pied, au passager seul dans sa voiture qui profite d'un lounge VIP, et au transport de marchandises, etc. 
+    Nous savons combien un ferry donné émet de gaz à effet de serre (GES) : il suffit en somme de multipler sa consommation de fioul par le ou les facteurs d'émission CO2e du fioul et autres carburants utilisés. Mais la difficulté est ensuite d'attribuer une part de ces GES au passager à pied, au passager seul dans sa voiture qui profite d'un lounge VIP, et au transport de marchandises, etc. 
 
     Pour faire ce calcul, nous sommes d'abord partis sur l'hypothèse que la consommation de carburant d'un bateau est proportionnelle au poids qu'il transporte, et donc qu'on peut attribuer l'empreinte en fonction du poid qu'implique un voyage. C'est vrai, mais l'essentiel (80%) du poids du bâtiment, est *destiné à fournir du volume* aux activités commerciales. 
 
