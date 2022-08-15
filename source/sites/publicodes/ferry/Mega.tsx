@@ -9,7 +9,7 @@ function SvgMegaExpressFour(props, svgRef) {
 			id="svg5"
 			xmlSpace="preserve"
 			sodipodi:docname="mega-express-four.svg"
-			inkscape:version="1.2 (56b05e47e7, 2022-06-09, custom)"
+			inkscape:version="1.2.1 (ef4d3fba62, 2022-07-19, custom)"
 			xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
 			xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
 			xmlnsXlink="http://www.w3.org/1999/xlink"
@@ -29,9 +29,9 @@ function SvgMegaExpressFour(props, svgRef) {
 				inkscape:deskcolor="#d1d1d1"
 				inkscape:document-units="mm"
 				showgrid="false"
-				inkscape:zoom={3.2820898}
-				inkscape:cx={728.04223}
-				inkscape:cy={1336.8007}
+				inkscape:zoom={15.117022}
+				inkscape:cx={1519.1815}
+				inkscape:cy={1346.7269}
 				inkscape:window-width={1920}
 				inkscape:window-height={1175}
 				inkscape:window-x={0}
@@ -336,6 +336,20 @@ function SvgMegaExpressFour(props, svgRef) {
 					}}
 					d="m 148.32519,346.91992 1.9362,-4.95795 4.84588,-1.11165 6.41902,3.29174 -0.67879,7.11057 -4.88015,3.51485 -6.36274,-2.68787 z"
 					id="8-commun"
+				/>
+				<path
+					style={{
+						fill: 'none',
+						stroke: '#000000',
+						strokeWidth: 0.0944263,
+						strokeLinecap: 'butt',
+						strokeLinejoin: 'miter',
+						strokeDasharray: 'none',
+						strokeOpacity: 1,
+					}}
+					d="m 408.28741,352.39956 h -7.86798 v 4.74169 h 7.91252 z"
+					id="8-unecabine"
+					sodipodi:nodetypes="ccccc"
 				/>
 			</g>
 		</svg>

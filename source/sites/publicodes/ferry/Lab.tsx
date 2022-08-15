@@ -78,7 +78,18 @@ export default ({ setData = () => null }) => {
 				sumAreas(elements, (next) => next.id.includes('-commun'))
 			),
 		}
-		console.log(newData)
+
+		//This elements lets us check if the measured area of a cabine looks correct considering the length and width of two beds
+		const surfaceCheck = elements.find((el) => el.id.includes('-unecabine'))
+
+		console.log(
+			newData,
+			`Surface de la cabine témoin : ${surfaceCheck.area} m2`
+		)
+
+		// Result : 19 m² for a now window cabine
+		// Considering a 1*2m bed, another one, 1m between them, plus a 4m entrance + toilets, we've got 18m²
+		// Which makes a good order of magnitude, but still subject to some errors until we get a precise plan of the cabine
 
 		setData((data) => ({ ...data, ...newData }))
 		return () => {
