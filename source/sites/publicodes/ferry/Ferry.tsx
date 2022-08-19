@@ -1,14 +1,13 @@
 import RuleInput from 'Components/conversation/RuleInput'
 import Engine from 'publicodes'
 import { createContext, useContext, useState } from 'react'
+import { Link, Navigate, Route, Routes, useParams } from 'react-router-dom'
 import Emoji from '../../../components/Emoji'
 import TopBar from '../../../components/TopBar'
 import Meta from '../../../components/utils/Meta'
 import Documentation from '../pages/Documentation'
 import Lab from './Lab'
-import { Link, Navigate, Route, Routes, useParams } from 'react-router-dom'
 import TicketSystem from './TicketSystem'
-import { useEngine } from '../../../components/utils/EngineContext'
 
 const description = `
 
@@ -112,6 +111,21 @@ export default ({}) => {
 const Main = ({}) => (
 	<div className="ui__ container">
 		<p>{description}</p>
+		<div
+			css={`
+				background: #7e151b;
+				color: white;
+				font-size: bold;
+				margin: 1rem auto;
+				max-width: 30rem;
+				padding: 0.4rem 1rem;
+				text-align: center;
+				border-radius: 1rem;
+			`}
+		>
+			Attention, ce calcul n'est pas encore validé pour une version 1. Merci de
+			ne pas partager. Quelques semaines encore à attendre :){' '}
+		</div>
 		<Questions />
 	</div>
 )
