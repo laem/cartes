@@ -179,23 +179,13 @@ const Questions = ({}) => {
 					{questions.map((name) => (
 						<Question {...{ key: name, name, engine, onChange }} />
 					))}
-				</div>
-			</TicketSystem>
-
-			<div>
-				<div
-					css={`
-						padding: 0.6rem;
-						border: 1px solid white;
-						border-radius: 1rem;
-						margin-bottom: 1rem;
-					`}
-				>
 					<h2>Le bateau</h2>
 
 					<Question {...{ name: 'vitesse', engine, onChange }} />
 				</div>
+			</TicketSystem>
 
+			<div>
 				<div
 					css={`
 						border-radius: 1rem;
