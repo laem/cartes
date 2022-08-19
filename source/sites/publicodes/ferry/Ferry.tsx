@@ -206,7 +206,9 @@ const Questions = ({}) => {
 							})}{' '}
 							g CO₂e / km
 						</strong>
-						<p css="font-style: italic; font-size: 80%">par personne 👤</p>
+						<p css="font-style: italic; font-size: 80%; margin: 0">
+							par personne 👤
+						</p>
 					</div>
 					<div
 						className="ui__ card box"
@@ -259,6 +261,15 @@ const Questions = ({}) => {
 								</li>
 							))}
 						</ul>
+						<p css="font-style: italic; font-size: 80%; margin: 0">
+							(aller retour)
+						</p>
+					</div>
+
+					<div className="ui__ card box">
+						<Link to="/simulateur/transport/avion/impact">
+							Et l'avion <Emoji e="✈️" />?
+						</Link>
 					</div>
 				</div>
 			</div>
