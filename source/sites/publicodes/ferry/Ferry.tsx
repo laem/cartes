@@ -217,6 +217,7 @@ const Questions = ({}) => {
 							})}{' '}
 							g CO₂e / km
 						</strong>
+						<p css="font-style: italic; font-size: 80%">par personne 👤</p>
 					</div>
 					<div
 						className="ui__ card box"
