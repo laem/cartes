@@ -11,8 +11,7 @@ import TicketSystem from './TicketSystem'
 
 const description = `
 
-			Alternative à l'avion, le ferry complète le train pour traverser les mers.
-			Découvrez une estimation de son empreinte climat, en fonction de votre
+			Découvrez une estimation de l'empreinte climat en fonction de votre
 			billet.
 `
 
