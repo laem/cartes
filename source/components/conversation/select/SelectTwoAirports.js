@@ -12,7 +12,12 @@ import { updateSituation } from '../../../actions/actions'
 
 const worker = new Worker()
 
-export default function SelectTwoAirports({ onChange }) {
+export default function SelectTwoAirports({
+	onChange,
+	placeholder,
+	db,
+	rulesPath,
+}) {
 	const [state, setState] = useState({
 		depuis: { inputValue: '' },
 		vers: { inputValue: '' },
@@ -22,8 +27,15 @@ export default function SelectTwoAirports({ onChange }) {
 	const dispatch = useDispatch()
 
 	useEffect(() => {
-		worker.onmessage = ({ data: { results, which } }) =>
-			setState((state) => ({ ...state, [which]: { ...state[which], results } }))
+		if (db === 'osmnames') {
+		}
+		if (db === 'airports') {
+			worker.onmessage = ({ data: { results, which } }) =>
+				setState((state) => ({
+					...state,
+					[which]: { ...state[which], results },
+				}))
+		}
 	}, [])
 
 	const [wikidata, setWikidata] = useState(null)
@@ -38,7 +50,7 @@ export default function SelectTwoAirports({ onChange }) {
 
 	const versImageURL = wikidata?.pic && toThumb(wikidata?.pic.value)
 	const { depuis, vers } = state
-	const placeholder = 'Aéroport ou ville '
+
 	const distance = computeDistance(state)
 
 	const renderOptions = (whichInput, { results = [], inputValue }) =>
@@ -93,7 +105,8 @@ export default function SelectTwoAirports({ onChange }) {
 
 						dispatch(
 							updateSituation(
-								'transport . avion . ' +
+								rulesPath +
+									' . ' +
 									{ depuis: 'départ', vers: 'arrivée' }[whichInput],
 								`'${ville}'`
 							)

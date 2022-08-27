@@ -4,12 +4,27 @@ index:
 vitesse:
   icônes: ⌚
   question: Quelle est la vitesse du ferry ?
+  formule: vitesse en kmh / km par mille nautique
   par défaut: 18 noeud
   unité: noeud
   suggestions:
     lente: 12 noeud
     rapide: 18 noeud
     très rapide: 27 noeud
+
+vitesse en kmh:
+  formule: distance / durée
+
+durée:
+  question: Quelle est la durée de votre traversée ?
+  par défaut: 10 h
+  suggestions:
+    demi-journée: 6 h
+    nuit: 10 h
+
+distance:
+  question: Quelle est la distance ?
+  par défaut: 320 km
 
 empreinte totale:
   formule: facteur vitesse * correction temps de navigation * empreinte totale moyenne

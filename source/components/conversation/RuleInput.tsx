@@ -147,7 +147,14 @@ export default function RuleInput<Name extends string = DottedName>({
 	if (airportsQuestions.includes(rule.dottedName))
 		return (
 			<Suspense fallback={<div>Chargement des aéroports ...</div>}>
-				<SelectTwoAirports {...{ ...commonProps }} />
+				<SelectTwoAirports
+					{...{
+						...commonProps,
+						placeholder: 'Aéroport ou ville ',
+						db: 'airports',
+						rulesPath: 'transport . avion',
+					}}
+				/>
 			</Suspense>
 		)
 
