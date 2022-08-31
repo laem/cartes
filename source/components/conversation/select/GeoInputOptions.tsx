@@ -2,19 +2,35 @@ import { useDispatch } from 'react-redux'
 import { computeDistance } from './SelectTwoAirports'
 import Highlighter from 'react-highlight-words'
 import { updateSituation } from '../../../actions/actions'
-export default ({ whichInput, data, setState, onChange, rulesPath }) => (
+export default ({ whichInput, data, updateState, onChange, rulesPath }) => (
 	<ul>
 		{data.results.slice(0, 5).map((option) => (
-			<Option {...{ whichInput, option, setState, onChange, rulesPath }} />
+			<Option
+				{...{
+					whichInput,
+					option,
+					updateState,
+					onChange,
+					rulesPath,
+					data,
+				}}
+			/>
 		))}
 	</ul>
 )
 
-const Option = ({ whichInput, option, setState, onChange, rulesPath }) => {
+const Option = ({
+	whichInput,
+	option,
+	updateState,
+	onChange,
+	rulesPath,
+	data,
+}) => {
 	const dispatch = useDispatch()
 	const { nom, ville, pays } = option.item,
 		choice = option.choice,
-		inputValue = 'abracadabra'
+		inputValue = data.inputValue
 
 	const nameIncludes = (what) =>
 		nom.toLowerCase().includes((what || '').toLowerCase())
@@ -51,9 +67,7 @@ const Option = ({ whichInput, option, setState, onChange, rulesPath }) => {
 		>
 			<button
 				onClick={(e) => {
-					const newState = {
-						[whichInput]: { ...data, choice: option },
-					}
+					const newState = { ...data, choice: option }
 
 					dispatch(
 						updateSituation(
@@ -63,11 +77,7 @@ const Option = ({ whichInput, option, setState, onChange, rulesPath }) => {
 							`'${ville}'`
 						)
 					)
-					setState((state) => ({ ...state, ...newState }))
-					const distance = computeDistance(newState)
-					if (distance) {
-						onChange(distance)
-					}
+					updateState(newState)
 				}}
 			>
 				<Highlighter searchWords={[inputValue]} textToHighlight={nom} />

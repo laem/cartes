@@ -167,7 +167,7 @@ export default function RuleInput<Name extends string = DottedName>({
 						{...{
 							...commonProps,
 							placeholder: 'Port ou ville',
-							db: 'osmnames',
+							db: 'osm',
 							rulesPath: 'ferry',
 							fromIcon: '🛳️',
 							toIcon: '🛳️',

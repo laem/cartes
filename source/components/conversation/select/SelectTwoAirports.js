@@ -48,9 +48,41 @@ export default function SelectTwoAirports({
 	}, [state.vers])
 
 	const versImageURL = wikidata?.pic && toThumb(wikidata?.pic.value)
+	console.log('S', state)
 	const { depuis, vers } = state
 
 	const distance = computeDistance(state)
+	const onInputChange = (whichInput) => (e) => {
+		let v = e.target.value
+		setState({
+			...state,
+			[whichInput]: { ...state[whichInput], inputValue: v },
+			validated: false,
+		})
+		if (v.length > 2) {
+			if (db === 'osm') {
+				fetch(`https://photon.komoot.io/api/?q=${v}&limit=6&layer=city&lang=fr`)
+					.then((res) => res.json())
+					.then((json) => {
+						setState((state) => ({
+							...state,
+							[whichInput]: {
+								...state[whichInput],
+								results: json.features.map((f) => ({
+									item: {
+										nom: f.properties.name,
+										ville: f.properties.cities || f.properties.name,
+										pays: f.properties.country,
+									},
+								})),
+							},
+						}))
+					})
+			} else {
+				worker.postMessage({ input: v, which: whichInput })
+			}
+		}
+	}
 
 	return (
 		<div
@@ -89,7 +121,7 @@ export default function SelectTwoAirports({
 						<CityImage src={versImageURL} />
 					</motion.div>
 				)}
-				{distance && (
+				{!isNaN(distance) && (
 					<div
 						css={`
 							margin: 1rem 0;
@@ -135,43 +167,7 @@ export default function SelectTwoAirports({
 							className="ui__"
 							value={depuis.inputValue}
 							placeholder={placeholder}
-							onChange={(e) => {
-								let v = e.target.value
-								setState({
-									...state,
-									depuis: { ...state.depuis, inputValue: v },
-									validated: false,
-								})
-								if (v.length > 2) {
-									if (db === 'osmnames') {
-										fetch(
-											`https://api.maptiler.com/geocoding/${v}.json?key=agNj1wjcwTfcd7NCdWSp&language=fr`
-										)
-											.then((res) => res.json())
-											.then((json) => {
-												console.log('depuis before', state['depuis'])
-												setState((state) => ({
-													...state,
-													depuis: {
-														...state['depuis'],
-														results: json.features.map((f) => ({
-															item: {
-																nom: f.text,
-																ville: f.text, //TODO can we do better ?
-																pays:
-																	f.context?.at(-2)?.text +
-																	', ' +
-																	f.context?.at(-1)?.text,
-															},
-														})),
-													},
-												}))
-											})
-									} else {
-										worker.postMessage({ input: v, which: 'depuis' })
-									}
-								}
-							}}
+							onChange={onInputChange('depuis')}
 						/>
 					</label>
 					{!depuis.choice &&
@@ -182,7 +178,8 @@ export default function SelectTwoAirports({
 								{...{
 									whichInput: 'depuis',
 									data: state['depuis'],
-									setState,
+									updateState: (newData) =>
+										setState((state) => ({ ...state, depuis: newData })),
 									onChange,
 									rulesPath,
 								}}
@@ -209,16 +206,7 @@ export default function SelectTwoAirports({
 							type="text"
 							value={vers.inputValue}
 							placeholder={placeholder}
-							onChange={(e) => {
-								let v = e.target.value
-								setState({
-									...state,
-									vers: { ...state.vers, inputValue: v },
-									validated: false,
-								})
-								if (v.length > 2)
-									worker.postMessage({ input: v, which: 'vers' })
-							}}
+							onChange={onInputChange('vers')}
 						/>
 					</label>
 					{!vers.choice &&
@@ -229,9 +217,10 @@ export default function SelectTwoAirports({
 								{...{
 									whichInput: 'vers',
 									data: state['vers'],
-									setState,
-									rulesPath,
+									updateState: (newData) =>
+										setState((state) => ({ ...state, vers: newData })),
 									onChange,
+									rulesPath,
 								}}
 							/>
 						)}
