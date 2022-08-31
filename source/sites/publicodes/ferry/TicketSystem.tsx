@@ -3,6 +3,7 @@
 export default ({ children }) => (
 	<div
 		css={`
+			margin-top: 2rem;
 			margin-right: 1rem;
 			@media (max-width: 800px) {
 				padding: 0rem;

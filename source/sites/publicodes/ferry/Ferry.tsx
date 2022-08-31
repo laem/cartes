@@ -20,8 +20,7 @@ import { CityImage } from '../../../components/conversation/select/SelectTwoAirp
 
 const description = `
 
-			Découvrez une estimation de l'empreinte climat en fonction de votre
-			billet.
+			Découvrez une estimation de l'empreinte climat en fonction de votre voyage et des options de votre traversée.
 `
 
 const req = require.context('./', true, /\.(yaml)$/)
@@ -118,22 +117,32 @@ export default ({}) => {
 }
 const Main = ({ situation }) => (
 	<div className="ui__ container">
-		<p>{description}</p>
-		<div
+		<p
 			css={`
-				background: #7e151b;
-				color: white;
-				font-size: bold;
-				margin: 1rem auto;
-				max-width: 30rem;
-				padding: 0.4rem 1rem;
 				text-align: center;
-				border-radius: 1rem;
+				max-width: 40rem;
+				margin: 0 auto;
 			`}
 		>
-			Attention, ce calcul n'est pas encore validé pour une version 1. Merci de
-			ne pas partager. Quelques semaines encore à attendre :){' '}
-		</div>
+			{description}
+		</p>
+		{false && (
+			<div
+				css={`
+					background: #7e151b;
+					color: white;
+					font-size: bold;
+					margin: 1rem auto;
+					max-width: 30rem;
+					padding: 0.4rem 1rem;
+					text-align: center;
+					border-radius: 1rem;
+				`}
+			>
+				Attention, ce calcul n'est pas encore validé pour une version 1. Merci
+				de ne pas partager. Quelques semaines encore à attendre :){' '}
+			</div>
+		)}
 		<Questions situation={situation} />
 	</div>
 )
