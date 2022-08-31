@@ -82,6 +82,7 @@ export default function RuleInput<Name extends string = DottedName>({
 	onSubmit = () => null,
 	engine: givenEngine,
 	noSuggestions = false,
+	updateSituation,
 }: RuleInputProps<Name>) {
 	const engine = givenEngine || useContext(EngineContext)
 	const rule = engine.getRule(dottedName)
@@ -104,6 +105,7 @@ export default function RuleInput<Name extends string = DottedName>({
 		question: rule.rawNode.question,
 		suggestions: rule.suggestions,
 		required: true,
+		updateSituation,
 	}
 
 	if (isMosaic(rule.dottedName)) {

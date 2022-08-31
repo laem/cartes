@@ -19,6 +19,7 @@ export default function SelectTwoAirports({
 	fromIcon = '',
 	toIcon = '',
 	displayImage = true,
+	updateSituation,
 }) {
 	const [state, setState] = useState({
 		depuis: { inputValue: '' },
@@ -52,7 +53,10 @@ export default function SelectTwoAirports({
 	const { depuis, vers } = state
 
 	const distance = computeDistance(state)
-	console.log('distance', distance, state)
+	useEffect(() => {
+		if (typeof distance === 'number')
+			updateSituation('distance aller . orthodromique')(distance)
+	}, [distance])
 	const onInputChange = (whichInput) => (e) => {
 		let v = e.target.value
 		setState({
@@ -122,7 +126,7 @@ export default function SelectTwoAirports({
 							transition={{}}
 							exit={{ opacity: 0, scale: 0.5, transition: { duration: 0.2 } }}
 						>
-							<CityImage src={versImageURL} />
+							<CityImage thinner src={versImageURL} />
 						</motion.div>
 					)}
 					{!isNaN(distance) && (
@@ -187,6 +191,7 @@ export default function SelectTwoAirports({
 										setState((state) => ({ ...state, depuis: newData })),
 									onChange,
 									rulesPath,
+									updateSituation,
 								}}
 							/>
 						)}
@@ -232,6 +237,7 @@ export default function SelectTwoAirports({
 									updateState: (newData) =>
 										setState((state) => ({ ...state, vers: newData })),
 									onChange,
+									updateSituation,
 									rulesPath,
 								}}
 							/>
@@ -282,9 +288,15 @@ export function computeDistance({ depuis, vers }) {
 	)
 }
 
-const CityImage = styled.img`
+export const CityImage = styled.img`
 	object-fit: cover;
 	border-radius: 6rem;
-	max-height: calc(6rem + 6vw);
-	height: auto;
+	width: calc(6rem + 6vw);
+	height: calc(6rem + 6vw);
+	${(props) =>
+		props.thinner
+			? `
+	height: calc(10rem + 6vw);
+	`
+			: ``}
 `

@@ -18,13 +18,17 @@ vitesse:
 vitesse en kmh:
   formule: distance aller / durée du voyage
 
+empreinte du voyage: distance aller retour * empreinte par km
+
 durée du voyage:
   question: Quelle est la durée de votre traversée ?
+  icônes: ⏳️
   par défaut: 10 h
   suggestions:
     demi-journée: 6 h
     nuit: 10 h
 
+distance aller retour: 2 * distance aller
 distance aller:
   formule: orthodromique * 1.3
   description: |

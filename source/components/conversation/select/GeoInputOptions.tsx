@@ -1,8 +1,16 @@
 import { useDispatch } from 'react-redux'
 import { computeDistance } from './SelectTwoAirports'
 import Highlighter from 'react-highlight-words'
-import { updateSituation } from '../../../actions/actions'
-export default ({ whichInput, data, updateState, onChange, rulesPath }) => (
+import { updateSituation as updateGlobalSituation } from '../../../actions/actions'
+import { useContext } from 'react'
+export default ({
+	whichInput,
+	data,
+	updateState,
+	onChange,
+	rulesPath,
+	updateSituation,
+}) => (
 	<ul>
 		{data.results.slice(0, 5).map((option) => (
 			<Option
@@ -13,6 +21,7 @@ export default ({ whichInput, data, updateState, onChange, rulesPath }) => (
 					onChange,
 					rulesPath,
 					data,
+					updateSituation,
 				}}
 			/>
 		))}
@@ -24,6 +33,7 @@ const Option = ({
 	option,
 	updateState,
 	onChange,
+	updateSituation,
 	rulesPath,
 	data,
 }) => {
@@ -69,14 +79,16 @@ const Option = ({
 				onClick={(e) => {
 					const newState = { ...data, choice: option }
 
-					dispatch(
-						updateSituation(
-							rulesPath +
-								' . ' +
-								{ depuis: 'départ', vers: 'arrivée' }[whichInput],
-							`'${ville}'`
-						)
-					)
+					const entry = [
+						rulesPath +
+							' . ' +
+							{ depuis: 'départ', vers: 'arrivée' }[whichInput],
+						`'${ville}'`,
+					]
+
+					updateSituation
+						? updateSituation(entry[0])(entry[1])
+						: dispatch(updateGlobalSituation(...entry))
 					updateState(newState)
 				}}
 			>

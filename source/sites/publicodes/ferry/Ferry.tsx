@@ -1,13 +1,22 @@
 import RuleInput from 'Components/conversation/RuleInput'
 import Engine from 'publicodes'
-import { createContext, useContext, useState } from 'react'
+import { createContext, useContext, useEffect, useState } from 'react'
+import { useSelector } from 'react-redux'
 import { Link, Navigate, Route, Routes, useParams } from 'react-router-dom'
 import Emoji from '../../../components/Emoji'
 import TopBar from '../../../components/TopBar'
 import Meta from '../../../components/utils/Meta'
+import { situationSelector } from '../../../selectors/simulationSelectors'
 import Documentation from '../pages/Documentation'
 import Lab from './Lab'
 import TicketSystem from './TicketSystem'
+import getCityData, { toThumb } from 'Components/wikidata'
+import { motion } from 'framer-motion'
+import { CityImage } from '../../../components/conversation/select/SelectTwoAirports'
+
+/*
+ * envoi Bonpote
+ * */
 
 const description = `
 
@@ -32,7 +41,7 @@ const rules = req.keys().reduce((memo, key) => {
 }, {})
 
 const engine = new Engine(rules)
-const SituationContext = createContext({})
+export const SituationContext = createContext({})
 
 export default ({}) => {
 	const [situation, setSituation] = useState({})
@@ -76,7 +85,7 @@ export default ({}) => {
 					path="*"
 					element={
 						<SituationContext.Provider value={[situation, setSituation]}>
-							<Main />
+							<Main situation={situation} />
 							<h2 css=" text-align: center; margin-top: 3rem">
 								Comprendre le calcul <Emoji e="⬇️" />
 							</h2>
@@ -107,7 +116,7 @@ export default ({}) => {
 		</div>
 	)
 }
-const Main = ({}) => (
+const Main = ({ situation }) => (
 	<div className="ui__ container">
 		<p>{description}</p>
 		<div
@@ -125,7 +134,7 @@ const Main = ({}) => (
 			Attention, ce calcul n'est pas encore validé pour une version 1. Merci de
 			ne pas partager. Quelques semaines encore à attendre :){' '}
 		</div>
-		<Questions />
+		<Questions situation={situation} />
 	</div>
 )
 
@@ -230,6 +239,7 @@ const Questions = ({}) => {
 							}
 						`}
 					>
+						<TravelFootprint situation={situation} />
 						<ul>
 							{[
 								{
@@ -277,6 +287,44 @@ const Questions = ({}) => {
 	)
 }
 
+const TravelFootprint = ({ situation }) => {
+	const ville = situation['ferry . arrivée']
+	const [wikidata, setWikidata] = useState()
+	useEffect(() => {
+		if (!ville) return undefined
+
+		getCityData(ville.replaceAll("'", '')).then((json) =>
+			setWikidata(json?.results?.bindings[0])
+		)
+	}, [ville])
+
+	if (!wikidata) return
+	const versImageURL = wikidata?.pic && toThumb(wikidata?.pic.value)
+
+	const evaluation = engine.evaluate('empreinte du voyage')
+
+	if (!situation['distance aller . orthodromique']) return null
+
+	return (
+		<div>
+			{evaluation.nodeValue.toLocaleString('fr-FR', {
+				maximumSignificantDigits: 2,
+			})}{' '}
+			kg CO₂e
+			{versImageURL && (
+				<motion.div
+					initial={{ opacity: 0, scale: 0.8 }}
+					animate={{ opacity: 1, scale: 1 }}
+					transition={{}}
+					exit={{ opacity: 0, scale: 0.5, transition: { duration: 0.2 } }}
+				>
+					<CityImage src={versImageURL} />
+				</motion.div>
+			)}
+		</div>
+	)
+}
+
 const Question = ({ name: dottedName, onChange }) => {
 	const { question, icônes } = engine.getRule(dottedName).rawNode
 	return (
@@ -307,6 +355,7 @@ const Question = ({ name: dottedName, onChange }) => {
 						onChange: onChange(dottedName),
 						onSubmit: () => null,
 						noSuggestions: false,
+						updateSituation: onChange,
 					}}
 				/>
 			</label>
