@@ -179,9 +179,8 @@ const Questions = ({}) => {
 					{questions.map((name) => (
 						<Question {...{ key: name, name, engine, onChange }} />
 					))}
-					<h2>Le bateau</h2>
-
 					<Question {...{ name: 'distance aller', engine, onChange }} />
+					<Question {...{ name: 'durée du voyage', engine, onChange }} />
 				</div>
 			</TicketSystem>
 

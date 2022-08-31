@@ -18,6 +18,7 @@ export default function SelectTwoAirports({
 	rulesPath,
 	fromIcon = '',
 	toIcon = '',
+	displayImage = true,
 }) {
 	const [state, setState] = useState({
 		depuis: { inputValue: '' },
@@ -98,39 +99,41 @@ export default function SelectTwoAirports({
 				}
 			`}
 		>
-			<div
-				css={`
-					display: flex;
-					justify-content: space-evenly;
-					align-items: center;
-					@media (min-width: 800px) {
-						flex-direction: column;
-					}
-					img {
-						margin-right: 1rem;
-					}
-				`}
-			>
-				{versImageURL && (
-					<motion.div
-						initial={{ opacity: 0, scale: 0.8 }}
-						animate={{ opacity: 1, scale: 1 }}
-						transition={{}}
-						exit={{ opacity: 0, scale: 0.5, transition: { duration: 0.2 } }}
-					>
-						<CityImage src={versImageURL} />
-					</motion.div>
-				)}
-				{!isNaN(distance) && (
-					<div
-						css={`
-							margin: 1rem 0;
-						`}
-					>
-						Distance : <strong>{distance + ' km'}</strong>
-					</div>
-				)}
-			</div>
+			{displayImage && (
+				<div
+					css={`
+						display: flex;
+						justify-content: space-evenly;
+						align-items: center;
+						@media (min-width: 800px) {
+							flex-direction: column;
+						}
+						img {
+							margin-right: 1rem;
+						}
+					`}
+				>
+					{versImageURL && (
+						<motion.div
+							initial={{ opacity: 0, scale: 0.8 }}
+							animate={{ opacity: 1, scale: 1 }}
+							transition={{}}
+							exit={{ opacity: 0, scale: 0.5, transition: { duration: 0.2 } }}
+						>
+							<CityImage src={versImageURL} />
+						</motion.div>
+					)}
+					{!isNaN(distance) && (
+						<div
+							css={`
+								margin: 1rem 0;
+							`}
+						>
+							Distance : <strong>{distance + ' km'}</strong>
+						</div>
+					)}
+				</div>
+			)}
 			<div
 				css={`
 					label {

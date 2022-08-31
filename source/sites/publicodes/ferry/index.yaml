@@ -16,9 +16,9 @@ vitesse:
     très rapide: 27 noeud
 
 vitesse en kmh:
-  formule: distance aller / durée
+  formule: distance aller / durée du voyage
 
-durée:
+durée du voyage:
   question: Quelle est la durée de votre traversée ?
   par défaut: 10 h
   suggestions:

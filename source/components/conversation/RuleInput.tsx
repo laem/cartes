@@ -20,6 +20,7 @@ import DateInput from './DateInput'
 import mosaicQuestions from './mosaicQuestions'
 import ParagrapheInput from './ParagrapheInput'
 import TextInput from './TextInput'
+import TravelTimeSpanInput from './TravelTimeSpanInput'
 
 export const airportsQuestions = [
 	'transport . avion . distance de vol aller',
@@ -160,6 +161,7 @@ export default function RuleInput<Name extends string = DottedName>({
 							rulesPath: 'transport . avion',
 							fromIcon: '🛫',
 							toIcon: '🛬',
+							displayImage,
 						}}
 					/>
 				) : (
@@ -169,14 +171,22 @@ export default function RuleInput<Name extends string = DottedName>({
 							placeholder: 'Port ou ville',
 							db: 'osm',
 							rulesPath: 'ferry',
-							fromIcon: '🛳️',
-							toIcon: '🛳️',
 						}}
 					/>
 				)}
 			</Suspense>
 		)
 
+	if (rule.dottedName === 'durée du voyage')
+		return (
+			<TravelTimeSpanInput
+				{...commonProps}
+				value={commonProps.value}
+				onChange={commonProps.onChange}
+				onSubmit={onSubmit}
+				suggestions={commonProps.suggestions}
+			/>
+		)
 	if (rule.rawNode.type === 'date') {
 		return (
 			<DateInput
