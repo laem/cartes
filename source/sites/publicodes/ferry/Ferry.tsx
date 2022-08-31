@@ -208,22 +208,10 @@ const Questions = ({}) => {
 					`}
 				>
 					<h2>Votre empreinte</h2>
-					<div className="ui__ card box">
-						<strong>
-							{(evaluation.nodeValue * 1000).toLocaleString('fr-FR', {
-								maximumSignificantDigits: 2,
-							})}{' '}
-							g CO₂e / km
-						</strong>
-						<p css="font-style: italic; font-size: 80%; margin: 0">
-							par personne 👤
-						</p>
-					</div>
 					<div
-						className="ui__ card box"
 						css={`
 							max-width: 18rem;
-							padding: 0 0rem 0 2rem;
+							padding: 0;
 							ul {
 								padding: 0;
 								list-style-type: none;
@@ -240,40 +228,6 @@ const Questions = ({}) => {
 						`}
 					>
 						<TravelFootprint situation={situation} />
-						<ul>
-							{[
-								{
-									distance: 130 * 2,
-									label: 'Cherbourg↔Poole',
-									emoji: '🇬🇧',
-								},
-								{
-									distance: 350 * 2,
-									label: 'Marseille↔Ajaccio',
-									emoji: '🏝️',
-								},
-								{ distance: 800 * 2, label: 'Marseille↔Alger', emoji: '🇩🇿' },
-							].map(({ distance, label, emoji }) => (
-								<li>
-									<Emoji e={emoji} />
-									<div>
-										{label}
-										<div>
-											<strong>
-												{(evaluation.nodeValue * distance).toLocaleString(
-													'fr-FR',
-													{ maximumSignificantDigits: 2 }
-												)}{' '}
-												kg CO₂e
-											</strong>
-										</div>{' '}
-									</div>
-								</li>
-							))}
-						</ul>
-						<p css="font-style: italic; font-size: 80%; margin: 0">
-							(aller retour)
-						</p>
 					</div>
 
 					<div className="ui__ card box">
@@ -287,40 +241,94 @@ const Questions = ({}) => {
 	)
 }
 
+const cleanSituationText = (text) => text.replaceAll("'", '')
 const TravelFootprint = ({ situation }) => {
 	const ville = situation['ferry . arrivée']
+	const départ = situation['ferry . départ']
 	const [wikidata, setWikidata] = useState()
 	useEffect(() => {
 		if (!ville) return undefined
 
-		getCityData(ville.replaceAll("'", '')).then((json) =>
+		getCityData(cleanSituationText(ville)).then((json) =>
 			setWikidata(json?.results?.bindings[0])
 		)
 	}, [ville])
 
-	if (!wikidata) return
 	const versImageURL = wikidata?.pic && toThumb(wikidata?.pic.value)
 
-	const evaluation = engine.evaluate('empreinte du voyage')
+	const evaluationWhole = engine.evaluate('empreinte du voyage')
+	const evaluationPerKm = engine.evaluate('empreinte par km')
 
-	if (!situation['distance aller . orthodromique']) return null
+	const distanceComputed = situation['distance aller . orthodromique']
+	const [forcedOpen, setOpen] = useState(false)
 
 	return (
 		<div>
-			{evaluation.nodeValue.toLocaleString('fr-FR', {
-				maximumSignificantDigits: 2,
-			})}{' '}
-			kg CO₂e
-			{versImageURL && (
-				<motion.div
-					initial={{ opacity: 0, scale: 0.8 }}
-					animate={{ opacity: 1, scale: 1 }}
-					transition={{}}
-					exit={{ opacity: 0, scale: 0.5, transition: { duration: 0.2 } }}
-				>
-					<CityImage src={versImageURL} />
-				</motion.div>
+			{distanceComputed && (
+				<div className="ui__ card box">
+					{cleanSituationText(départ)}↔{cleanSituationText(ville)}
+					<strong>
+						{evaluationWhole.nodeValue.toLocaleString('fr-FR', {
+							maximumSignificantDigits: 2,
+						})}{' '}
+					</strong>{' '}
+					kg CO₂e
+					{versImageURL && (
+						<motion.div
+							initial={{ opacity: 0, scale: 0.8 }}
+							animate={{ opacity: 1, scale: 1 }}
+							transition={{}}
+							exit={{ opacity: 0, scale: 0.5, transition: { duration: 0.2 } }}
+						>
+							<CityImage src={versImageURL} />
+						</motion.div>
+					)}
+				</div>
 			)}
+			<div className="ui__ card box">
+				{(evaluationPerKm.nodeValue * 1000).toLocaleString('fr-FR', {
+					maximumSignificantDigits: 2,
+				})}{' '}
+				g CO₂e / km
+				<p css="font-style: italic; font-size: 80%; margin: 0"></p>
+			</div>
+			<p css="font-style: italic; font-size: 90%; margin: 0">
+				(aller retour par personne 👤 )
+			</p>
+			<details open={distanceComputed == null} className="ui__ card box">
+				<summary>Exemples de voyages</summary>
+				<ul>
+					{[
+						{
+							distance: 130 * 2,
+							label: 'Cherbourg↔Poole',
+							emoji: '🇬🇧',
+						},
+						{
+							distance: 350 * 2,
+							label: 'Marseille↔Ajaccio',
+							emoji: '🏝️',
+						},
+						{ distance: 800 * 2, label: 'Marseille↔Alger', emoji: '🇩🇿' },
+					].map(({ distance, label, emoji }) => (
+						<li>
+							<Emoji e={emoji} />
+							<div>
+								{label}
+								<div>
+									<strong>
+										{(evaluationPerKm.nodeValue * distance).toLocaleString(
+											'fr-FR',
+											{ maximumSignificantDigits: 2 }
+										)}{' '}
+										kg CO₂e
+									</strong>
+								</div>{' '}
+							</div>
+						</li>
+					))}
+				</ul>
+			</details>
 		</div>
 	)
 }
