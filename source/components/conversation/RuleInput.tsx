@@ -25,6 +25,10 @@ export const airportsQuestions = [
 	'transport . avion . distance de vol aller',
 	'transport . avion . départ',
 	'transport . avion . arrivée',
+	//ferry. TODO this whole block is ugly
+	'départ',
+	'arrivée',
+	'distance aller',
 ]
 let SelectTwoAirports = React.lazy(
 	() => import('Components/conversation/select/SelectTwoAirports')
@@ -146,15 +150,30 @@ export default function RuleInput<Name extends string = DottedName>({
 
 	if (airportsQuestions.includes(rule.dottedName))
 		return (
-			<Suspense fallback={<div>Chargement des aéroports ...</div>}>
-				<SelectTwoAirports
-					{...{
-						...commonProps,
-						placeholder: 'Aéroport ou ville ',
-						db: 'airports',
-						rulesPath: 'transport . avion',
-					}}
-				/>
+			<Suspense fallback={<div>Chargement des cartes ...</div>}>
+				{rule.dottedName.includes('avion') ? (
+					<SelectTwoAirports
+						{...{
+							...commonProps,
+							placeholder: 'Aéroport ou ville ',
+							db: 'airports',
+							rulesPath: 'transport . avion',
+							fromIcon: '🛫',
+							toIcon: '🛬',
+						}}
+					/>
+				) : (
+					<SelectTwoAirports
+						{...{
+							...commonProps,
+							placeholder: 'Port ou ville',
+							db: 'osmnames',
+							rulesPath: 'ferry',
+							fromIcon: '🛳️',
+							toIcon: '🛳️',
+						}}
+					/>
+				)}
 			</Suspense>
 		)
 

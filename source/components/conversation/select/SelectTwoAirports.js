@@ -1,14 +1,13 @@
 import GreatCircle from 'great-circle'
 import React, { useEffect, useState } from 'react'
 import emoji from 'react-easy-emoji'
-import Highlighter from 'react-highlight-words'
 import Worker from 'worker-loader!./SearchAirports.js'
 import getCityData, { toThumb } from 'Components/wikidata'
 import styled from 'styled-components'
 import Emoji from '../../Emoji'
 import { motion } from 'framer-motion'
 import { useDispatch } from 'react-redux'
-import { updateSituation } from '../../../actions/actions'
+import GeoInputOptions from './GeoInputOptions'
 
 const worker = new Worker()
 
@@ -17,6 +16,8 @@ export default function SelectTwoAirports({
 	placeholder,
 	db,
 	rulesPath,
+	fromIcon = '',
+	toIcon = '',
 }) {
 	const [state, setState] = useState({
 		depuis: { inputValue: '' },
@@ -27,8 +28,6 @@ export default function SelectTwoAirports({
 	const dispatch = useDispatch()
 
 	useEffect(() => {
-		if (db === 'osmnames') {
-		}
 		if (db === 'airports') {
 			worker.onmessage = ({ data: { results, which } }) =>
 				setState((state) => ({
@@ -52,83 +51,6 @@ export default function SelectTwoAirports({
 	const { depuis, vers } = state
 
 	const distance = computeDistance(state)
-
-	const renderOptions = (whichInput, { results = [], inputValue }) =>
-		!state.validated && (
-			<ul>{results.slice(0, 5).map(renderOption(whichInput)(inputValue))}</ul>
-		)
-
-	const renderOption = (whichInput) => (inputValue) => (option) => {
-		const { nom, ville, pays } = option.item,
-			inputState = state[whichInput],
-			choice = inputState && inputState.choice
-
-		const nameIncludes = (what) =>
-			nom.toLowerCase().includes((what || '').toLowerCase())
-		const displayCity = !nameIncludes(ville),
-			displayCountry = !nameIncludes(pays)
-		const locationText =
-			(displayCity ? ville + (displayCountry ? ' - ' : '') : '') +
-			(displayCountry ? pays : '')
-
-		return (
-			<li
-				key={nom + ville + pays}
-				css={`
-					padding: 0.2rem 0.6rem;
-					border-radius: 0.3rem;
-					${choice && choice.nom === nom
-						? 'background: var(--color); color: var(--textColor)'
-						: ''};
-					button {
-						color: white;
-						font-size: 100%;
-						display: flex;
-						justify-content: space-between;
-						align-items: center;
-						text-align: left;
-						width: 100%;
-					}
-
-					button:hover {
-						background: var(--darkerColor2);
-						border-radius: 0.3rem;
-					}
-				`}
-			>
-				<button
-					onClick={(e) => {
-						const newState = {
-							...state,
-							[whichInput]: { ...state[whichInput], choice: option },
-						}
-
-						dispatch(
-							updateSituation(
-								rulesPath +
-									' . ' +
-									{ depuis: 'départ', vers: 'arrivée' }[whichInput],
-								`'${ville}'`
-							)
-						)
-						setState(newState)
-						const distance = computeDistance(newState)
-						if (distance) {
-							onChange(distance)
-						}
-					}}
-				>
-					<Highlighter searchWords={[inputValue]} textToHighlight={nom} />
-					<span style={{ opacity: 0.6, fontSize: '75%', marginLeft: '.6em' }}>
-						<Highlighter
-							searchWords={[inputValue]}
-							textToHighlight={locationText}
-						/>
-					</span>
-				</button>
-			</li>
-		)
-	}
 
 	return (
 		<div
@@ -201,13 +123,13 @@ export default function SelectTwoAirports({
 					}
 					width: 100%;
 					@media (min-width: 800px) {
-						width: 30rem;
+						max-width: 30rem;
 					}
 				`}
 			>
 				<div>
 					<label>
-						<span>Départ {emoji('🛫')}</span>
+						<span>Départ {emoji(fromIcon)}</span>
 						<input
 							type="text"
 							className="ui__"
@@ -220,15 +142,52 @@ export default function SelectTwoAirports({
 									depuis: { ...state.depuis, inputValue: v },
 									validated: false,
 								})
-								if (v.length > 2)
-									worker.postMessage({ input: v, which: 'depuis' })
+								if (v.length > 2) {
+									if (db === 'osmnames') {
+										fetch(
+											`https://api.maptiler.com/geocoding/${v}.json?key=agNj1wjcwTfcd7NCdWSp&language=fr`
+										)
+											.then((res) => res.json())
+											.then((json) => {
+												console.log('depuis before', state['depuis'])
+												setState((state) => ({
+													...state,
+													depuis: {
+														...state['depuis'],
+														results: json.features.map((f) => ({
+															item: {
+																nom: f.text,
+																ville: f.text, //TODO can we do better ?
+																pays:
+																	f.context?.at(-2)?.text +
+																	', ' +
+																	f.context?.at(-1)?.text,
+															},
+														})),
+													},
+												}))
+											})
+									} else {
+										worker.postMessage({ input: v, which: 'depuis' })
+									}
+								}
 							}}
 						/>
 					</label>
 					{!depuis.choice &&
 						depuis.results &&
 						depuis.inputValue !== '' &&
-						renderOptions('depuis', depuis)}
+						!state.validated && (
+							<GeoInputOptions
+								{...{
+									whichInput: 'depuis',
+									data: state['depuis'],
+									setState,
+									onChange,
+									rulesPath,
+								}}
+							/>
+						)}
 					{depuis.choice && (
 						<div css="text-align: right">
 							<Emoji e="✅" />
@@ -244,7 +203,7 @@ export default function SelectTwoAirports({
 				</div>
 				<div>
 					<label>
-						<span>Arrivée {emoji('🛬')}</span>
+						<span>Arrivée {emoji(toIcon)}</span>
 						<input
 							className="ui__"
 							type="text"
@@ -265,7 +224,17 @@ export default function SelectTwoAirports({
 					{!vers.choice &&
 						vers.results &&
 						vers.inputValue !== '' &&
-						renderOptions('vers', vers)}
+						!state.validated && (
+							<GeoInputOptions
+								{...{
+									whichInput: 'vers',
+									data: state['vers'],
+									setState,
+									rulesPath,
+									onChange,
+								}}
+							/>
+						)}
 					{vers.choice && (
 						<div css="text-align: right">
 							<Emoji e="✅" />
@@ -289,7 +258,7 @@ export default function SelectTwoAirports({
 	)
 }
 
-function computeDistance({ depuis, vers }) {
+export function computeDistance({ depuis, vers }) {
 	return (
 		depuis.choice &&
 		vers.choice &&

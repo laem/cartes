@@ -181,7 +181,7 @@ const Questions = ({}) => {
 					))}
 					<h2>Le bateau</h2>
 
-					<Question {...{ name: 'vitesse', engine, onChange }} />
+					<Question {...{ name: 'distance aller', engine, onChange }} />
 				</div>
 			</TicketSystem>
 

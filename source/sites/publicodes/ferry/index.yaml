@@ -1,6 +1,9 @@
 index:
   icônes: ⛴
 
+départ:
+arrivée:
+
 vitesse:
   icônes: ⌚
   question: Quelle est la vitesse du ferry ?
@@ -13,7 +16,7 @@ vitesse:
     très rapide: 27 noeud
 
 vitesse en kmh:
-  formule: distance / durée
+  formule: distance aller / durée
 
 durée:
   question: Quelle est la durée de votre traversée ?
@@ -22,8 +25,8 @@ durée:
     demi-journée: 6 h
     nuit: 10 h
 
-distance:
-  question: Quelle est la distance ?
+distance aller:
+  question: Quelle est votre trajet ?
   par défaut: 320 km
 
 empreinte totale:

@@ -1,0 +1,83 @@
+import { useDispatch } from 'react-redux'
+import { computeDistance } from './SelectTwoAirports'
+import Highlighter from 'react-highlight-words'
+import { updateSituation } from '../../../actions/actions'
+export default ({ whichInput, data, setState, onChange, rulesPath }) => (
+	<ul>
+		{data.results.slice(0, 5).map((option) => (
+			<Option {...{ whichInput, option, setState, onChange, rulesPath }} />
+		))}
+	</ul>
+)
+
+const Option = ({ whichInput, option, setState, onChange, rulesPath }) => {
+	const dispatch = useDispatch()
+	const { nom, ville, pays } = option.item,
+		choice = option.choice,
+		inputValue = 'abracadabra'
+
+	const nameIncludes = (what) =>
+		nom.toLowerCase().includes((what || '').toLowerCase())
+	const displayCity = !nameIncludes(ville),
+		displayCountry = !nameIncludes(pays)
+	const locationText =
+		(displayCity ? ville + (displayCountry ? ' - ' : '') : '') +
+		(displayCountry ? pays : '')
+
+	return (
+		<li
+			key={nom + ville + pays}
+			css={`
+				padding: 0.2rem 0.6rem;
+				border-radius: 0.3rem;
+				${choice && choice.nom === nom
+					? 'background: var(--color); color: var(--textColor)'
+					: ''};
+				button {
+					color: white;
+					font-size: 100%;
+					display: flex;
+					justify-content: space-between;
+					align-items: center;
+					text-align: left;
+					width: 100%;
+				}
+
+				button:hover {
+					background: var(--darkerColor2);
+					border-radius: 0.3rem;
+				}
+			`}
+		>
+			<button
+				onClick={(e) => {
+					const newState = {
+						[whichInput]: { ...data, choice: option },
+					}
+
+					dispatch(
+						updateSituation(
+							rulesPath +
+								' . ' +
+								{ depuis: 'départ', vers: 'arrivée' }[whichInput],
+							`'${ville}'`
+						)
+					)
+					setState((state) => ({ ...state, ...newState }))
+					const distance = computeDistance(newState)
+					if (distance) {
+						onChange(distance)
+					}
+				}}
+			>
+				<Highlighter searchWords={[inputValue]} textToHighlight={nom} />
+				<span style={{ opacity: 0.6, fontSize: '75%', marginLeft: '.6em' }}>
+					<Highlighter
+						searchWords={[inputValue]}
+						textToHighlight={locationText}
+					/>
+				</span>
+			</button>
+		</li>
+	)
+}
