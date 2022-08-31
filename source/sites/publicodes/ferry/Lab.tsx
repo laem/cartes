@@ -14,7 +14,6 @@ const sumAreas = (elements, filter = () => true) =>
 export default ({ setData = () => null }) => {
 	const ref = useRef(null)
 	const [elements, setElements] = useState([])
-	console.log('injection du modèle de surface du megaexpressfour')
 
 	useEffect(() => {
 		const el = ref.current

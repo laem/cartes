@@ -49,10 +49,10 @@ export default function SelectTwoAirports({
 	}, [state.vers])
 
 	const versImageURL = wikidata?.pic && toThumb(wikidata?.pic.value)
-	console.log('S', state)
 	const { depuis, vers } = state
 
 	const distance = computeDistance(state)
+	console.log('distance', distance, state)
 	const onInputChange = (whichInput) => (e) => {
 		let v = e.target.value
 		setState({
@@ -71,6 +71,8 @@ export default function SelectTwoAirports({
 								...state[whichInput],
 								results: json.features.map((f) => ({
 									item: {
+										longitude: f.geometry.coordinates[0],
+										latitude: f.geometry.coordinates[1],
 										nom: f.properties.name,
 										ville: f.properties.cities || f.properties.name,
 										pays: f.properties.country,
@@ -189,7 +191,14 @@ export default function SelectTwoAirports({
 							/>
 						)}
 					{depuis.choice && (
-						<div css="text-align: right">
+						<div
+							css={`
+								text-align: right;
+								img {
+									width: 2rem;
+								}
+							`}
+						>
 							<Emoji e="✅" />
 							{depuis.choice.item.nom}
 							<button
@@ -228,7 +237,14 @@ export default function SelectTwoAirports({
 							/>
 						)}
 					{vers.choice && (
-						<div css="text-align: right">
+						<div
+							css={`
+								text-align: right;
+								img {
+									width: 2rem;
+								}
+							`}
+						>
 							<Emoji e="✅" />
 							{vers.choice.item.nom}
 							<button

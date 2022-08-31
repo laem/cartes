@@ -29,7 +29,7 @@ export const airportsQuestions = [
 	//ferry. TODO this whole block is ugly
 	'départ',
 	'arrivée',
-	'distance aller',
+	'distance aller . orthodromique',
 ]
 let SelectTwoAirports = React.lazy(
 	() => import('Components/conversation/select/SelectTwoAirports')
@@ -161,7 +161,6 @@ export default function RuleInput<Name extends string = DottedName>({
 							rulesPath: 'transport . avion',
 							fromIcon: '🛫',
 							toIcon: '🛬',
-							displayImage,
 						}}
 					/>
 				) : (
@@ -171,6 +170,7 @@ export default function RuleInput<Name extends string = DottedName>({
 							placeholder: 'Port ou ville',
 							db: 'osm',
 							rulesPath: 'ferry',
+							displayImage: false,
 						}}
 					/>
 				)}

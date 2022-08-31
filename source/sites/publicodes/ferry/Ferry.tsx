@@ -134,7 +134,6 @@ const Questions = ({}) => {
 	const [situation, setSituation] = useContext(SituationContext)
 	engine.setSituation(situation) // I don't understand why putting this in a useeffect produces a loop when the input components, due to Input's debounce function I guess.
 	const onChange = (dottedName) => (raw) => {
-		console.log(raw, situation, dottedName)
 		const value = raw.valeur || raw
 		const newSituation = (situation) => ({
 			...situation,
@@ -179,7 +178,9 @@ const Questions = ({}) => {
 					{questions.map((name) => (
 						<Question {...{ key: name, name, engine, onChange }} />
 					))}
-					<Question {...{ name: 'distance aller', engine, onChange }} />
+					<Question
+						{...{ name: 'distance aller . orthodromique', engine, onChange }}
+					/>
 					<Question {...{ name: 'durée du voyage', engine, onChange }} />
 				</div>
 			</TicketSystem>

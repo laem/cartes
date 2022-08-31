@@ -26,6 +26,12 @@ durée du voyage:
     nuit: 10 h
 
 distance aller:
+  formule: orthodromique * 1.3
+  description: |
+    Nous ne calculons pas encore les distances réelles traversées par les bateaux. Ainsi, l'ajout d'un facteur 30% permet de s'en rapprocher. 
+    Si vous avez accès à un facteur moyen sourcé, n'hésitez pas à intervenir.
+
+distance aller . orthodromique:
   question: Quelle est votre trajet ?
   par défaut: 320 km
 

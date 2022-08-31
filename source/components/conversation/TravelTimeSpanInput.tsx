@@ -44,8 +44,8 @@ export default function DateInput({
 		},
 		[onChange]
 	)
-	const [start, setStart] = useState('')
-	const [end, setEnd] = useState('')
+	const [start, setStart] = useState('19:00')
+	const [end, setEnd] = useState('07:00')
 	const [day, setDay] = useState(0)
 
 	const setTime = (date, hhmm) => {
@@ -61,6 +61,7 @@ export default function DateInput({
 	useEffect(() => {
 		const date1 = setTime(new Date(), start),
 			date2 = shiftDays(setTime(new Date(), end), day)
+		if (date1 > date2) setDay(day + 1)
 		const hours = Math.abs(date1 - date2) / 36e5
 
 		onChange(hours)
