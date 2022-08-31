@@ -54,8 +54,10 @@ export default function SelectTwoAirports({
 
 	const distance = computeDistance(state)
 	useEffect(() => {
-		if (typeof distance === 'number')
+		if (typeof distance !== 'number') return
+		if (updateSituation) {
 			updateSituation('distance aller . orthodromique')(distance)
+		} else onChange(distance)
 	}, [distance])
 	const onInputChange = (whichInput) => (e) => {
 		let v = e.target.value
