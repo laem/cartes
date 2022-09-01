@@ -9,7 +9,7 @@ export default ({ children }) => (
 				margin: 0;
 				margin-top: 2rem;
 			}
-			max-width: 30rem;
+			max-width: 35rem;
 			.top {
 				display: flex;
 				align-items: center;

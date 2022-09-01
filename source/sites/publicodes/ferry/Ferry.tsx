@@ -13,6 +13,7 @@ import TicketSystem from './TicketSystem'
 import getCityData, { toThumb } from 'Components/wikidata'
 import { motion } from 'framer-motion'
 import { CityImage } from '../../../components/conversation/select/SelectTwoAirports'
+import useMediaQuery from '../../../components/useMediaQuery'
 
 /*
  * envoi Bonpote
@@ -48,7 +49,7 @@ export default ({}) => {
 	if (!params) return <Navigate to="/ferry/empreinte-par-km" replace />
 
 	return (
-		<div className="ui__ container">
+		<div className="ui__ container" css={'max-width: 1000px !important'}>
 			<Meta
 				title="Calculateur d'empreinte carbone du ferry"
 				description={description}
@@ -116,7 +117,7 @@ export default ({}) => {
 	)
 }
 const Main = ({ situation }) => (
-	<div className="ui__ container">
+	<div>
 		<p
 			css={`
 				text-align: center;
@@ -369,6 +370,8 @@ const TravelFootprint = ({ situation }) => {
 
 const Question = ({ name: dottedName, onChange }) => {
 	const { question, icônes } = engine.getRule(dottedName).rawNode
+	const mobile = useMediaQuery('(max-height: 800px)')
+	const Emojis = icônes && <Emoji e={icônes} />
 	return (
 		<div
 			css={`
@@ -376,20 +379,30 @@ const Question = ({ name: dottedName, onChange }) => {
 				justify-content: start;
 				align-items: center;
 				img {
-					font-size: 240%;
+					font-size: 200%;
 					margin-right: 1rem;
 				}
 				@media (max-width: 800px) {
 					img {
-						font-size: 180%;
+						font-size: 120%;
 						margin-right: 0.4rem;
 					}
 				}
+				header {
+					display: flex;
+					align-items: center;
+				}
+				h3 {
+					font-size: 100%;
+				}
 			`}
 		>
-			{icônes && <Emoji e={icônes} />}
+			{!mobile && Emojis}
 			<label>
-				<p>{question}</p>
+				<header>
+					{mobile && Emojis}
+					<h3>{question}</h3>
+				</header>
 				<RuleInput
 					{...{
 						engine,
