@@ -63,9 +63,9 @@ correction temps de navigation:
     La puissance nécessaire pour faire avancer le navire évolue au cube de la vitesse. L'empreinte climat par heure suite naturellement cette même fonction. Mais le navire va alors plus vite : il va émettre plus à l'heure pendant moins de temps, ce facteur corrige le tir pour.
 
 empreinte totale moyenne:
-  formule: 630 kgCO2e/mn
+  formule: 576.48 kgCO2e/mn
   note: |
-    Données greenferries 2019 tirées de Thetis-MRV 2019 https://www.greenferries.org/ships/mega-express-two-9203186/
+    Données greenferries 2020 tirées de Thetis-MRV 2020 https://mrv.emsa.europa.eu/#public/emission-report
 vitesse moyenne:
   formule: métrique / km par mille nautique
   unité: noeud
