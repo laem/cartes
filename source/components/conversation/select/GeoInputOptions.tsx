@@ -3,6 +3,13 @@ import { computeDistance } from './SelectTwoAirports'
 import Highlighter from 'react-highlight-words'
 import { updateSituation as updateGlobalSituation } from '../../../actions/actions'
 import { useContext } from 'react'
+
+const hash = ({ item: { nom, ville, pays } }) => '' + nom + ville + pays
+const removeDuplicates = (elements) =>
+	elements.reduce((memo, next) => {
+		const duplicate = memo.find((el) => hash(el) === hash(next))
+		return [...memo, ...(duplicate ? [] : [next])]
+	}, [])
 export default ({
 	whichInput,
 	data,
@@ -12,19 +19,21 @@ export default ({
 	updateSituation,
 }) => (
 	<ul>
-		{data.results.slice(0, 5).map((option) => (
-			<Option
-				{...{
-					whichInput,
-					option,
-					updateState,
-					onChange,
-					rulesPath,
-					data,
-					updateSituation,
-				}}
-			/>
-		))}
+		{removeDuplicates(data.results)
+			.slice(0, 5)
+			.map((option) => (
+				<Option
+					{...{
+						whichInput,
+						option,
+						updateState,
+						onChange,
+						rulesPath,
+						data,
+						updateSituation,
+					}}
+				/>
+			))}
 	</ul>
 )
 
