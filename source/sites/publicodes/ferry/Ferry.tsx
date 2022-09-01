@@ -166,83 +166,106 @@ const Questions = ({}) => {
 	return (
 		<div
 			css={`
+				margin-top: 2rem;
 				@media (min-width: 800px) {
 					display: flex;
 					align-items: center;
 				}
 				h2 {
 					margin-top: 0;
+					text-align: center;
 				}
 			`}
 		>
-			<TicketSystem>
-				<div
-					css={`
-						.step.input {
-							max-width: 12rem;
-						}
-						.step label {
-							padding: 0.2rem 0.6rem 0.2rem 0.4rem;
-						}
-						border-radius: 1rem;
-						padding: 1rem 2rem;
-						@media (max-width: 800px) {
-							margin: 0;
-							padding: 1rem;
-						}
-					`}
-				>
-					<h2>Votre billet</h2>
-					{questions.map((name) => (
-						<Question {...{ key: name, name, engine, onChange }} />
-					))}
-					<Question
-						{...{ name: 'distance aller . orthodromique', engine, onChange }}
-					/>
-					<Question {...{ name: 'durée du voyage', engine, onChange }} />
-				</div>
-			</TicketSystem>
-
 			<div>
-				<div
-					css={`
-						border-radius: 1rem;
-						border: 2px solid var(--color);
-						padding: 0.6rem;
-						h2 {
-							padding-left: 1rem;
-							color: var(--color);
-							font-weight: bold;
-						}
-					`}
-				>
-					<h2>Votre empreinte</h2>
+				<h2>Votre billet</h2>
+				<TicketSystem>
 					<div
 						css={`
-							max-width: 18rem;
-							padding: 0;
-							ul {
-								padding: 0;
-								list-style-type: none;
-								img {
-									font-size: 115%;
-									margin-right: 1rem;
-								}
-								li {
-									display: flex;
-									align-items: center;
-									justify-content: space-between;
-								}
+							.step.input {
+								max-width: 12rem;
+							}
+							.step label {
+								padding: 0.2rem 0.6rem 0.2rem 0.4rem;
+							}
+							border-radius: 1rem;
+							padding: 1rem 1.2rem;
+							@media (max-width: 800px) {
+								margin: 0;
+								padding: 1rem;
+							}
+							> div {
+								border-radius: 0.3rem;
+								padding: 0.4rem;
+								background: var(--darkestColor);
+								margin: 0.6rem 0;
 							}
 						`}
 					>
-						<TravelFootprint situation={situation} />
-					</div>
+						<div>
+							{questions.map((name) => (
+								<Question {...{ key: name, name, engine, onChange }} />
+							))}
+						</div>
+						<div>
+							<Question
+								{...{
+									name: 'distance aller . orthodromique',
+									engine,
+									onChange,
+								}}
+							/>
+						</div>
 
-					<div className="ui__ card box">
-						<Link to="/simulateur/transport/avion/impact">
-							Et l'avion <Emoji e="✈️" />?
-						</Link>
+						<div>
+							<Question {...{ name: 'durée du voyage', engine, onChange }} />
+						</div>
+					</div>
+				</TicketSystem>
+			</div>
+
+			<div>
+				<h2>Votre empreinte</h2>
+				<div>
+					<div
+						css={`
+							border-radius: 1rem;
+							border: 4px solid var(--color);
+							padding: 0.6rem;
+							h2 {
+								padding-left: 1rem;
+								color: var(--color);
+								font-weight: bold;
+							}
+						`}
+					>
+						<div
+							css={`
+								max-width: 18rem;
+								padding: 0;
+								ul {
+									padding: 0;
+									list-style-type: none;
+									img {
+										font-size: 115%;
+										margin-right: 1rem;
+									}
+									li {
+										display: flex;
+										align-items: center;
+										justify-content: space-between;
+									}
+								}
+							`}
+						>
+							<TravelFootprint situation={situation} />
+						</div>
+
+						<div className="ui__ card box">
+							<Link to="/simulateur/transport/avion/impact">
+								Et l'avion <Emoji e="✈️" />?
+							</Link>
+						</div>
 					</div>
 				</div>
 			</div>
@@ -276,12 +299,14 @@ const TravelFootprint = ({ situation }) => {
 			{distanceComputed && (
 				<div className="ui__ card box">
 					{cleanSituationText(départ)}↔{cleanSituationText(ville)}
-					<strong>
-						{evaluationWhole.nodeValue.toLocaleString('fr-FR', {
-							maximumSignificantDigits: 2,
-						})}{' '}
-					</strong>{' '}
-					kg CO₂e
+					<div>
+						<strong>
+							{evaluationWhole.nodeValue.toLocaleString('fr-FR', {
+								maximumSignificantDigits: 2,
+							})}
+						</strong>{' '}
+						kg CO₂e
+					</div>
 					{versImageURL && (
 						<motion.div
 							initial={{ opacity: 0, scale: 0.8 }}

@@ -36,7 +36,8 @@ distance aller:
     Si vous avez accès à un facteur moyen sourcé, n'hésitez pas à intervenir.
 
 distance aller . orthodromique:
-  question: Quelle est votre trajet ?
+  icônes: 🗺️
+  question: Quel est votre trajet ?
   par défaut: 320 km
 
 empreinte totale:
