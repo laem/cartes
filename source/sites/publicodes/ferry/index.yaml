@@ -16,17 +16,23 @@ vitesse:
     très rapide: 27 noeud
 
 vitesse en kmh:
-  formule: distance aller / durée du voyage
+  formule: distance aller / durée du voyage . réelle
 
 empreinte du voyage: distance aller retour * empreinte par km
 
 durée du voyage:
   question: Quelle est la durée de votre traversée ?
+  description: On parle de la durée du voyage calculée avec les heures de départ sur le billet, qui n'est donc pas la durée de navigation réelle.
   icônes: ⏳️
   par défaut: 10 h
   suggestions:
     demi-journée: 6 h
     nuit: 10 h
+
+durée du voyage . réelle:
+  formule: durée du voyage - 1
+  description: |
+    Nous considérons que pour un départ à 19h sur le billet, et une arrivée à 7h, pour le calcul de la vitesse la traversée n'a pas duré 12h de navigation mais 11h, car il y a 30 minutes avant que le ferry se lance puis 30 minutes de débarquement. Cela peut évidemment varier en fonction des compagnies et du type de billet (embarquement piéton ou avec voiture), mais c'est un ordre de grandeur.
 
 distance aller retour: 2 * distance aller
 distance aller:
