@@ -20,11 +20,16 @@ import DateInput from './DateInput'
 import mosaicQuestions from './mosaicQuestions'
 import ParagrapheInput from './ParagrapheInput'
 import TextInput from './TextInput'
+import TravelTimeSpanInput from './TravelTimeSpanInput'
 
 export const airportsQuestions = [
 	'transport . avion . distance de vol aller',
 	'transport . avion . départ',
 	'transport . avion . arrivée',
+	//ferry. TODO this whole block is ugly
+	'départ',
+	'arrivée',
+	'distance aller . orthodromique',
 ]
 let SelectTwoAirports = React.lazy(
 	() => import('Components/conversation/select/SelectTwoAirports')
@@ -77,6 +82,7 @@ export default function RuleInput<Name extends string = DottedName>({
 	onSubmit = () => null,
 	engine: givenEngine,
 	noSuggestions = false,
+	updateSituation,
 }: RuleInputProps<Name>) {
 	const engine = givenEngine || useContext(EngineContext)
 	const rule = engine.getRule(dottedName)
@@ -99,6 +105,7 @@ export default function RuleInput<Name extends string = DottedName>({
 		question: rule.rawNode.question,
 		suggestions: rule.suggestions,
 		required: true,
+		updateSituation,
 	}
 
 	if (isMosaic(rule.dottedName)) {
@@ -146,18 +153,42 @@ export default function RuleInput<Name extends string = DottedName>({
 
 	if (airportsQuestions.includes(rule.dottedName))
 		return (
-			<Suspense fallback={<div>Chargement des aéroports ...</div>}>
-				<SelectTwoAirports
-					{...{
-						...commonProps,
-						placeholder: 'Aéroport ou ville ',
-						db: 'airports',
-						rulesPath: 'transport . avion',
-					}}
-				/>
+			<Suspense fallback={<div>Chargement des cartes ...</div>}>
+				{rule.dottedName.includes('avion') ? (
+					<SelectTwoAirports
+						{...{
+							...commonProps,
+							placeholder: 'Aéroport ou ville ',
+							db: 'airports',
+							rulesPath: 'transport . avion',
+							fromIcon: '🛫',
+							toIcon: '🛬',
+						}}
+					/>
+				) : (
+					<SelectTwoAirports
+						{...{
+							...commonProps,
+							placeholder: 'Port ou ville',
+							db: 'osm',
+							rulesPath: 'ferry',
+							displayImage: false,
+						}}
+					/>
+				)}
 			</Suspense>
 		)
 
+	if (rule.dottedName === 'durée du voyage')
+		return (
+			<TravelTimeSpanInput
+				{...commonProps}
+				value={commonProps.value}
+				onChange={commonProps.onChange}
+				onSubmit={onSubmit}
+				suggestions={commonProps.suggestions}
+			/>
+		)
 	if (rule.rawNode.type === 'date') {
 		return (
 			<DateInput

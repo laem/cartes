@@ -1,14 +1,13 @@
 import GreatCircle from 'great-circle'
 import React, { useEffect, useState } from 'react'
 import emoji from 'react-easy-emoji'
-import Highlighter from 'react-highlight-words'
 import Worker from 'worker-loader!./SearchAirports.js'
 import getCityData, { toThumb } from 'Components/wikidata'
 import styled from 'styled-components'
 import Emoji from '../../Emoji'
 import { motion } from 'framer-motion'
 import { useDispatch } from 'react-redux'
-import { updateSituation } from '../../../actions/actions'
+import GeoInputOptions from './GeoInputOptions'
 
 const worker = new Worker()
 
@@ -17,6 +16,10 @@ export default function SelectTwoAirports({
 	placeholder,
 	db,
 	rulesPath,
+	fromIcon = '',
+	toIcon = '',
+	displayImage = true,
+	updateSituation,
 }) {
 	const [state, setState] = useState({
 		depuis: { inputValue: '' },
@@ -27,8 +30,6 @@ export default function SelectTwoAirports({
 	const dispatch = useDispatch()
 
 	useEffect(() => {
-		if (db === 'osmnames') {
-		}
 		if (db === 'airports') {
 			worker.onmessage = ({ data: { results, which } }) =>
 				setState((state) => ({
@@ -52,82 +53,44 @@ export default function SelectTwoAirports({
 	const { depuis, vers } = state
 
 	const distance = computeDistance(state)
-
-	const renderOptions = (whichInput, { results = [], inputValue }) =>
-		!state.validated && (
-			<ul>{results.slice(0, 5).map(renderOption(whichInput)(inputValue))}</ul>
-		)
-
-	const renderOption = (whichInput) => (inputValue) => (option) => {
-		const { nom, ville, pays } = option.item,
-			inputState = state[whichInput],
-			choice = inputState && inputState.choice
-
-		const nameIncludes = (what) =>
-			nom.toLowerCase().includes((what || '').toLowerCase())
-		const displayCity = !nameIncludes(ville),
-			displayCountry = !nameIncludes(pays)
-		const locationText =
-			(displayCity ? ville + (displayCountry ? ' - ' : '') : '') +
-			(displayCountry ? pays : '')
-
-		return (
-			<li
-				key={nom + ville + pays}
-				css={`
-					padding: 0.2rem 0.6rem;
-					border-radius: 0.3rem;
-					${choice && choice.nom === nom
-						? 'background: var(--color); color: var(--textColor)'
-						: ''};
-					button {
-						color: white;
-						font-size: 100%;
-						display: flex;
-						justify-content: space-between;
-						align-items: center;
-						text-align: left;
-						width: 100%;
-					}
-
-					button:hover {
-						background: var(--darkerColor2);
-						border-radius: 0.3rem;
-					}
-				`}
-			>
-				<button
-					onClick={(e) => {
-						const newState = {
+	useEffect(() => {
+		if (typeof distance !== 'number') return
+		if (updateSituation) {
+			updateSituation('distance aller . orthodromique')(distance)
+		} else onChange(distance)
+	}, [distance])
+	const onInputChange = (whichInput) => (e) => {
+		let v = e.target.value
+		setState({
+			...state,
+			[whichInput]: { ...state[whichInput], inputValue: v },
+			validated: false,
+		})
+		if (v.length > 2) {
+			if (db === 'osm') {
+				fetch(`https://photon.komoot.io/api/?q=${v}&limit=6&layer=city&lang=fr`)
+					.then((res) => res.json())
+					.then((json) => {
+						setState((state) => ({
 							...state,
-							[whichInput]: { ...state[whichInput], choice: option },
-						}
-
-						dispatch(
-							updateSituation(
-								rulesPath +
-									' . ' +
-									{ depuis: 'départ', vers: 'arrivée' }[whichInput],
-								`'${ville}'`
-							)
-						)
-						setState(newState)
-						const distance = computeDistance(newState)
-						if (distance) {
-							onChange(distance)
-						}
-					}}
-				>
-					<Highlighter searchWords={[inputValue]} textToHighlight={nom} />
-					<span style={{ opacity: 0.6, fontSize: '75%', marginLeft: '.6em' }}>
-						<Highlighter
-							searchWords={[inputValue]}
-							textToHighlight={locationText}
-						/>
-					</span>
-				</button>
-			</li>
-		)
+							[whichInput]: {
+								...state[whichInput],
+								results: json.features.map((f) => ({
+									item: {
+										longitude: f.geometry.coordinates[0],
+										latitude: f.geometry.coordinates[1],
+										nom: f.properties.name,
+										ville: f.properties.cities || f.properties.name,
+										pays: f.properties.country,
+									},
+								})),
+							},
+						}))
+					})
+			} else {
+				worker.postMessage({ input: v, which: whichInput })
+			}
+		}
 	}
 
 	return (
@@ -144,39 +107,41 @@ export default function SelectTwoAirports({
 				}
 			`}
 		>
-			<div
-				css={`
-					display: flex;
-					justify-content: space-evenly;
-					align-items: center;
-					@media (min-width: 800px) {
-						flex-direction: column;
-					}
-					img {
-						margin-right: 1rem;
-					}
-				`}
-			>
-				{versImageURL && (
-					<motion.div
-						initial={{ opacity: 0, scale: 0.8 }}
-						animate={{ opacity: 1, scale: 1 }}
-						transition={{}}
-						exit={{ opacity: 0, scale: 0.5, transition: { duration: 0.2 } }}
-					>
-						<CityImage src={versImageURL} />
-					</motion.div>
-				)}
-				{distance && (
-					<div
-						css={`
-							margin: 1rem 0;
-						`}
-					>
-						Distance : <strong>{distance + ' km'}</strong>
-					</div>
-				)}
-			</div>
+			{displayImage && (
+				<div
+					css={`
+						display: flex;
+						justify-content: space-evenly;
+						align-items: center;
+						@media (min-width: 800px) {
+							flex-direction: column;
+						}
+						img {
+							margin-right: 1rem;
+						}
+					`}
+				>
+					{versImageURL && (
+						<motion.div
+							initial={{ opacity: 0, scale: 0.8 }}
+							animate={{ opacity: 1, scale: 1 }}
+							transition={{}}
+							exit={{ opacity: 0, scale: 0.5, transition: { duration: 0.2 } }}
+						>
+							<CityImage thinner src={versImageURL} />
+						</motion.div>
+					)}
+					{!isNaN(distance) && (
+						<div
+							css={`
+								margin: 1rem 0;
+							`}
+						>
+							Distance : <strong>{distance + ' km'}</strong>
+						</div>
+					)}
+				</div>
+			)}
 			<div
 				css={`
 					label {
@@ -201,36 +166,46 @@ export default function SelectTwoAirports({
 					}
 					width: 100%;
 					@media (min-width: 800px) {
-						width: 30rem;
+						max-width: 30rem;
 					}
 				`}
 			>
 				<div>
 					<label>
-						<span>Départ {emoji('🛫')}</span>
+						<span>Départ {emoji(fromIcon)}</span>
 						<input
 							type="text"
 							className="ui__"
 							value={depuis.inputValue}
 							placeholder={placeholder}
-							onChange={(e) => {
-								let v = e.target.value
-								setState({
-									...state,
-									depuis: { ...state.depuis, inputValue: v },
-									validated: false,
-								})
-								if (v.length > 2)
-									worker.postMessage({ input: v, which: 'depuis' })
-							}}
+							onChange={onInputChange('depuis')}
 						/>
 					</label>
 					{!depuis.choice &&
 						depuis.results &&
 						depuis.inputValue !== '' &&
-						renderOptions('depuis', depuis)}
+						!state.validated && (
+							<GeoInputOptions
+								{...{
+									whichInput: 'depuis',
+									data: state['depuis'],
+									updateState: (newData) =>
+										setState((state) => ({ ...state, depuis: newData })),
+									onChange,
+									rulesPath,
+									updateSituation,
+								}}
+							/>
+						)}
 					{depuis.choice && (
-						<div css="text-align: right">
+						<div
+							css={`
+								text-align: right;
+								img {
+									width: 2rem;
+								}
+							`}
+						>
 							<Emoji e="✅" />
 							{depuis.choice.item.nom}
 							<button
@@ -244,30 +219,40 @@ export default function SelectTwoAirports({
 				</div>
 				<div>
 					<label>
-						<span>Arrivée {emoji('🛬')}</span>
+						<span>Arrivée {emoji(toIcon)}</span>
 						<input
 							className="ui__"
 							type="text"
 							value={vers.inputValue}
 							placeholder={placeholder}
-							onChange={(e) => {
-								let v = e.target.value
-								setState({
-									...state,
-									vers: { ...state.vers, inputValue: v },
-									validated: false,
-								})
-								if (v.length > 2)
-									worker.postMessage({ input: v, which: 'vers' })
-							}}
+							onChange={onInputChange('vers')}
 						/>
 					</label>
 					{!vers.choice &&
 						vers.results &&
 						vers.inputValue !== '' &&
-						renderOptions('vers', vers)}
+						!state.validated && (
+							<GeoInputOptions
+								{...{
+									whichInput: 'vers',
+									data: state['vers'],
+									updateState: (newData) =>
+										setState((state) => ({ ...state, vers: newData })),
+									onChange,
+									updateSituation,
+									rulesPath,
+								}}
+							/>
+						)}
 					{vers.choice && (
-						<div css="text-align: right">
+						<div
+							css={`
+								text-align: right;
+								img {
+									width: 2rem;
+								}
+							`}
+						>
 							<Emoji e="✅" />
 							{vers.choice.item.nom}
 							<button
@@ -289,7 +274,7 @@ export default function SelectTwoAirports({
 	)
 }
 
-function computeDistance({ depuis, vers }) {
+export function computeDistance({ depuis, vers }) {
 	return (
 		depuis.choice &&
 		vers.choice &&
@@ -305,9 +290,15 @@ function computeDistance({ depuis, vers }) {
 	)
 }
 
-const CityImage = styled.img`
+export const CityImage = styled.img`
 	object-fit: cover;
 	border-radius: 6rem;
-	max-height: calc(6rem + 6vw);
-	height: auto;
+	width: calc(6rem + 6vw);
+	height: calc(6rem + 6vw);
+	${(props) =>
+		props.thinner
+			? `
+	height: calc(10rem + 6vw);
+	`
+			: ``}
 `

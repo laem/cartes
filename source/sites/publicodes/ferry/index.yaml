@@ -1,6 +1,9 @@
 index:
   icônes: ⛴
 
+départ:
+arrivée:
+
 vitesse:
   icônes: ⌚
   question: Quelle est la vitesse du ferry ?
@@ -13,17 +16,34 @@ vitesse:
     très rapide: 27 noeud
 
 vitesse en kmh:
-  formule: distance / durée
+  formule: distance aller / durée du voyage . réelle
 
-durée:
+empreinte du voyage: distance aller retour * empreinte par km
+
+durée du voyage:
   question: Quelle est la durée de votre traversée ?
+  description: On parle de la durée du voyage calculée avec les heures de départ sur le billet, qui n'est donc pas la durée de navigation réelle.
+  icônes: ⏳️
   par défaut: 10 h
   suggestions:
     demi-journée: 6 h
     nuit: 10 h
 
-distance:
-  question: Quelle est la distance ?
+durée du voyage . réelle:
+  formule: durée du voyage - 1
+  description: |
+    Nous considérons que pour un départ à 19h sur le billet, et une arrivée à 7h, pour le calcul de la vitesse la traversée n'a pas duré 12h de navigation mais 11h, car il y a 30 minutes avant que le ferry se lance puis 30 minutes de débarquement. Cela peut évidemment varier en fonction des compagnies et du type de billet (embarquement piéton ou avec voiture), mais c'est un ordre de grandeur.
+
+distance aller retour: 2 * distance aller
+distance aller:
+  formule: orthodromique * 1.3
+  description: |
+    Nous ne calculons pas encore les distances réelles traversées par les bateaux. Ainsi, l'ajout d'un facteur 30% permet de s'en rapprocher. 
+    Si vous avez accès à un facteur moyen sourcé, n'hésitez pas à intervenir.
+
+distance aller . orthodromique:
+  icônes: 🗺️
+  question: Quel est votre trajet ?
   par défaut: 320 km
 
 empreinte totale:
@@ -43,9 +63,9 @@ correction temps de navigation:
     La puissance nécessaire pour faire avancer le navire évolue au cube de la vitesse. L'empreinte climat par heure suite naturellement cette même fonction. Mais le navire va alors plus vite : il va émettre plus à l'heure pendant moins de temps, ce facteur corrige le tir pour.
 
 empreinte totale moyenne:
-  formule: 630 kgCO2e/mn
+  formule: 576.48 kgCO2e/mn
   note: |
-    Données greenferries 2019 tirées de Thetis-MRV 2019 https://www.greenferries.org/ships/mega-express-two-9203186/
+    Données greenferries 2020 tirées de Thetis-MRV 2020 https://mrv.emsa.europa.eu/#public/emission-report
 vitesse moyenne:
   formule: métrique / km par mille nautique
   unité: noeud

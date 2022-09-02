@@ -136,7 +136,6 @@ export default ({ children }) => {
 			}, {})
 
 			setRules(transformRules(rules))
-			console.log('didsetlocalfurules')
 			removeLoader()
 		} else {
 			fetch(rulesURL, { mode: 'cors' })
