@@ -19,21 +19,19 @@ export default ({
 	updateSituation,
 }) => (
 	<ul>
-		{removeDuplicates(data.results)
-			.slice(0, 5)
-			.map((option) => (
-				<Option
-					{...{
-						whichInput,
-						option,
-						updateState,
-						onChange,
-						rulesPath,
-						data,
-						updateSituation,
-					}}
-				/>
-			))}
+		{removeDuplicates(data.results.slice(0, 5)).map((option) => (
+			<Option
+				{...{
+					whichInput,
+					option,
+					updateState,
+					onChange,
+					rulesPath,
+					data,
+					updateSituation,
+				}}
+			/>
+		))}
 	</ul>
 )
 
