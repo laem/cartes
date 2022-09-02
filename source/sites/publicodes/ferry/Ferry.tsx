@@ -127,23 +127,21 @@ const Main = ({ situation }) => (
 		>
 			{description}
 		</p>
-		{false && (
-			<div
-				css={`
-					background: #7e151b;
-					color: white;
-					font-size: bold;
-					margin: 1rem auto;
-					max-width: 30rem;
-					padding: 0.4rem 1rem;
-					text-align: center;
-					border-radius: 1rem;
-				`}
-			>
-				Attention, ce calcul n'est pas encore validé pour une version 1. Merci
-				de ne pas partager. Quelques semaines encore à attendre :){' '}
-			</div>
-		)}
+		<div
+			css={`
+				background: #7e151b;
+				color: white;
+				font-size: bold;
+				margin: 1rem auto;
+				max-width: 30rem;
+				padding: 0.4rem 1rem;
+				text-align: center;
+				border-radius: 1rem;
+			`}
+		>
+			Attention, ce calcul n'est pas encore validé pour une version 1. Merci de
+			ne pas partager. Quelques semaines encore à attendre :){' '}
+		</div>
 		<Questions situation={situation} />
 	</div>
 )
