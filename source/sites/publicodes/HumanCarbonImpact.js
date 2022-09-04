@@ -157,10 +157,18 @@ const ImpactCard = ({ nodeValue, dottedName, exampleName }) => {
 								display: flex;
 								flex-direction: column;
 								justify-content: space-evenly;
+								img[alt*='↔'] {
+									filter: invert(1);
+									margin: 0 0.4rem;
+									width: 1.1rem;
+								}
 							`}
 						>
 							{exampleName && <div>{<Emoji e={exampleName} hasText />}</div>}
-							{dottedName === 'transport . avion . impact' ? (
+							{[
+								'transport . avion . impact',
+								'transport . ferry . empreinte du voyage',
+							].includes(dottedName) ? (
 								<BudgetBar
 									{...{
 										noExample: !exampleName,

@@ -4,7 +4,7 @@ import replace from 'string-replace-to-array'
 
 const regex = emojiRegex()
 
-const url = `https://unpkg.com/openmoji@13.1.0`
+const url = `https://unpkg.com/openmoji@14.0.0`
 const findOpenmoji = (e, black) => {
 	const unicode = e.codePointAt(0).toString(16).toUpperCase()
 
