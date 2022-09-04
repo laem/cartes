@@ -60,11 +60,16 @@ export default ({ nodeValue, formule, dottedName }) => {
 		nextQuestions = useNextQuestions(),
 		foldedSteps = useSelector(answeredQuestionsSelector),
 		situation = useSelector(situationSelector),
-		dirtySituation = Object.keys(situation).find(
-			(question) =>
-				[...nextQuestions, ...foldedSteps].includes(question) &&
-				!engine.getRule(question).rawNode.injecté
-		)
+		dirtySituation = Object.keys(situation).find((question) => {
+			try {
+				return (
+					[...nextQuestions, ...foldedSteps].includes(question) &&
+					!engine.getRule(question).rawNode.injecté
+				)
+			} catch (e) {
+				return false
+			}
+		})
 
 	if (!examplesSource || dirtySituation)
 		return <ImpactCard {...{ nodeValue, dottedName }} />
