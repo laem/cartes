@@ -27,9 +27,9 @@ export const airportsQuestions = [
 	'transport . avion . départ',
 	'transport . avion . arrivée',
 	//ferry. TODO this whole block is ugly
-	'départ',
-	'arrivée',
-	'distance aller . orthodromique',
+	'transport . ferry . départ',
+	'transport . ferry . arrivée',
+	'transport . ferry . distance aller . orthodromique',
 ]
 let SelectTwoAirports = React.lazy(
 	() => import('Components/conversation/select/SelectTwoAirports')
@@ -179,7 +179,7 @@ export default function RuleInput<Name extends string = DottedName>({
 			</Suspense>
 		)
 
-	if (rule.dottedName === 'durée du voyage')
+	if (rule.dottedName === 'transport . ferry . durée du voyage')
 		return (
 			<TravelTimeSpanInput
 				{...commonProps}
