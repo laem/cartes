@@ -1,12 +1,11 @@
+import getCityData, { toThumb } from 'Components/wikidata'
+import { motion } from 'framer-motion'
 import GreatCircle from 'great-circle'
 import React, { useEffect, useState } from 'react'
 import emoji from 'react-easy-emoji'
-import Worker from 'worker-loader!./SearchAirports.js'
-import getCityData, { toThumb } from 'Components/wikidata'
 import styled from 'styled-components'
+import Worker from 'worker-loader!./SearchAirports.js'
 import Emoji from '../../Emoji'
-import { motion } from 'framer-motion'
-import { useDispatch } from 'react-redux'
 import GeoInputOptions from './GeoInputOptions'
 
 const worker = new Worker()
@@ -18,7 +17,7 @@ export default function SelectTwoAirports({
 	rulesPath,
 	fromIcon = '',
 	toIcon = '',
-	displayImage = true,
+	displayImage,
 	updateSituation,
 }) {
 	const [state, setState] = useState({
@@ -26,8 +25,6 @@ export default function SelectTwoAirports({
 		vers: { inputValue: '' },
 		validated: false,
 	})
-
-	const dispatch = useDispatch()
 
 	useEffect(() => {
 		if (db === 'airports') {
@@ -128,7 +125,10 @@ export default function SelectTwoAirports({
 							transition={{}}
 							exit={{ opacity: 0, scale: 0.5, transition: { duration: 0.2 } }}
 						>
-							<CityImage thinner src={versImageURL} />
+							<CityImage
+								thinner={displayImage === 'plane'}
+								src={versImageURL}
+							/>
 						</motion.div>
 					)}
 					{!isNaN(distance) && (

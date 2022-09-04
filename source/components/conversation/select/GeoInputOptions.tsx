@@ -1,8 +1,6 @@
-import { useDispatch } from 'react-redux'
-import { computeDistance } from './SelectTwoAirports'
 import Highlighter from 'react-highlight-words'
+import { useDispatch } from 'react-redux'
 import { updateSituation as updateGlobalSituation } from '../../../actions/actions'
-import { useContext } from 'react'
 
 const hash = ({ item: { nom, ville, pays } }) => '' + nom + ville + pays
 const removeDuplicates = (elements) =>
@@ -10,6 +8,7 @@ const removeDuplicates = (elements) =>
 		const duplicate = memo.find((el) => hash(el) === hash(next))
 		return [...memo, ...(duplicate ? [] : [next])]
 	}, [])
+
 export default ({
 	whichInput,
 	data,
@@ -17,23 +16,26 @@ export default ({
 	onChange,
 	rulesPath,
 	updateSituation,
-}) => (
-	<ul>
-		{removeDuplicates(data.results.slice(0, 5)).map((option) => (
-			<Option
-				{...{
-					whichInput,
-					option,
-					updateState,
-					onChange,
-					rulesPath,
-					data,
-					updateSituation,
-				}}
-			/>
-		))}
-	</ul>
-)
+}) =>
+	data?.results.length > 0 ? (
+		<ul>
+			{removeDuplicates(data.results.slice(0, 5)).map((option) => (
+				<Option
+					{...{
+						whichInput,
+						option,
+						updateState,
+						onChange,
+						rulesPath,
+						data,
+						updateSituation,
+					}}
+				/>
+			))}
+		</ul>
+	) : (
+		<p>Chargement en cours</p>
+	)
 
 const Option = ({
 	whichInput,
