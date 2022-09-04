@@ -17,8 +17,7 @@ export default ({}) => {
 	const ref = useRef(null)
 	const [elements, setElements] = useState([])
 	const dispatch = useDispatch()
-	const setData = (data) =>
-		console.log('data', data) || dispatch(batchUpdateSituation(data))
+	const setData = (data) => dispatch(batchUpdateSituation(data), true)
 
 	useEffect(() => {
 		const el = ref.current
