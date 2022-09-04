@@ -237,8 +237,10 @@ const ImpactCard = ({ nodeValue, dottedName, exampleName }) => {
 }
 
 export const ProgressCircle = ({}) => {
-	const nextSteps = useNextQuestions()
-	const foldedSteps = useSelector((state) => state.simulation?.foldedSteps)
+	const nextSteps = useNextQuestions(),
+		rules = useSelector((state) => state.rules)
+	const foldedStepsRaw = useSelector((state) => state.simulation?.foldedSteps),
+		foldedSteps = foldedStepsRaw.filter((step) => !rules[step].injecté)
 	const progress = foldedSteps.length / (nextSteps.length + foldedSteps.length)
 	const motionProgress = useMotionValue(0)
 	const pathLength = useSpring(motionProgress, { stiffness: 400, damping: 90 })
