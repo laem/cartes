@@ -19,7 +19,6 @@ import Privacy from './Privacy'
 import Scenarios from './Scenarios'
 import Simulateur from './Simulateur'
 import sitePaths from './sitePaths'
-const Ferry = React.lazy(() => import('./ferry/Ferry'))
 const Carburants = React.lazy(() => import('./carburants/Carburants'))
 const Documentation = React.lazy(() => import('./pages/Documentation'))
 
@@ -71,14 +70,6 @@ const Router = ({}) => (
 				<Route path={encodeURIComponent('à-propos')} element={<About />} />
 				<Route path={encodeURIComponent('vie-privée')} element={<Privacy />} />
 				<Route path={encodeURIComponent('nouveautés')} element={<News />} />
-				<Route
-					path="ferry/*"
-					element={
-						<Suspense fallback={<div>Chargement</div>}>
-							<Ferry />
-						</Suspense>
-					}
-				/>
 				<Route
 					path="carburants/*"
 					element={

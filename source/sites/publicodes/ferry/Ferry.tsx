@@ -20,7 +20,6 @@ import useMediaQuery from '../../../components/useMediaQuery'
  * */
 
 const description = `
-
 			Découvrez une estimation de l'empreinte climat en fonction de votre voyage et des options de votre traversée.
 `
 

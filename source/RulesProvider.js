@@ -132,7 +132,17 @@ export default ({ children }) => {
 			)
 			const rules = req.keys().reduce((memo, key) => {
 				const jsonRuleSet = req(key).default || {}
-				return { ...memo, ...jsonRuleSet }
+				const splitName = key.replace('./', '').split('>.yaml')
+				const prefixedRuleSet =
+					splitName.length > 1
+						? Object.fromEntries(
+								Object.entries(jsonRuleSet).map(([k, v]) => [
+									k === 'index' ? splitName[0] : splitName[0] + ' . ' + k,
+									v,
+								])
+						  )
+						: jsonRuleSet
+				return { ...memo, ...prefixedRuleSet }
 			}, {})
 
 			setRules(transformRules(rules))
