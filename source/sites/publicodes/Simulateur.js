@@ -221,7 +221,26 @@ const Simulateur = ({ objective }) => {
 
 					<Lab />
 				</details>
-			)}{' '}
+			)}
+			<div
+				css={`
+					margin-top: 2rem;
+					text-align: center;
+					a {
+						display: flex;
+						align-items: center;
+						justify-content: center;
+						text-decoration: none;
+						color: var(--lighterColor);
+						opacity: 0.8;
+						text-transform: uppercase;
+					}
+				`}
+			>
+				<Link to={'/documentation/' + utils.encodeRuleName(objective)}>
+					{emoji('⚙️')} Comprendre le calcul
+				</Link>
+			</div>
 		</div>
 	)
 }
