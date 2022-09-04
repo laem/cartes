@@ -1,4 +1,6 @@
 import { useEffect, useRef, useState } from 'react'
+import { useDispatch } from 'react-redux'
+import { batchUpdateSituation } from '../../../actions/actions'
 import Mega from './Mega'
 import pathDataToPolys, { calcPolygonArea } from './svgPathToPolygons'
 
@@ -11,9 +13,12 @@ import pathDataToPolys, { calcPolygonArea } from './svgPathToPolygons'
 const sumAreas = (elements, filter = () => true) =>
 	elements.reduce((memo, next) => (filter(next) ? next.area : 0) + memo, 0)
 
-export default ({ setData = () => null }) => {
+export default ({}) => {
 	const ref = useRef(null)
 	const [elements, setElements] = useState([])
+	const dispatch = useDispatch()
+	const setData = (data) =>
+		console.log('data', data) || dispatch(batchUpdateSituation(data))
 
 	useEffect(() => {
 		const el = ref.current
@@ -63,7 +68,7 @@ export default ({ setData = () => null }) => {
 
 		const areaUnit = (value) => `${Math.round(value)} m2`
 
-		const newData = {
+		const newDataUnprefixed = {
 			'cabine . nombre': cabinesCount,
 			'siège . nombre': siegesCount,
 			'surface . cabines': areaUnit(cabinesTotalArea),
@@ -77,6 +82,13 @@ export default ({ setData = () => null }) => {
 				sumAreas(elements, (next) => next.id.includes('-commun'))
 			),
 		}
+
+		const newData = Object.fromEntries(
+			Object.entries(newDataUnprefixed).map(([k, v]) => [
+				'transport . ferry . ' + k,
+				v,
+			])
+		)
 
 		//This elements lets us check if the measured area of a cabine looks correct considering the length and width of two beds
 		const surfaceCheck = elements.find((el) => el.id.includes('-unecabine'))
