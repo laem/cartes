@@ -180,9 +180,12 @@ const Simulateur = ({ objective }) => {
 				`}
 			>
 				<Meta
-					title={rule.titre}
+					title={rule.exposé?.titre || rule.titre}
 					description={rule.exposé?.description || rule.description}
-					image={`https://aejkrqosjq.cloudimg.io/v7/https://futur.eco/.netlify/functions/ending-screenshot?pageToScreenshot=${window.location}`} // we could simply render SVG emojis, but SVG images don't work in og tags, we'll have to convert them
+					image={
+						rule.exposé?.image ||
+						`https://aejkrqosjq.cloudimg.io/v7/https://futur.eco/.netlify/functions/ending-screenshot?pageToScreenshot=${window.location}`
+					} // we could simply render SVG emojis, but SVG images don't work in og tags, we'll have to convert them
 				/>
 
 				{!isMainSimulation && (
