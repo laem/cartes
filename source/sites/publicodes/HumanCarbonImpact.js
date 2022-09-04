@@ -60,8 +60,10 @@ export default ({ nodeValue, formule, dottedName }) => {
 		nextQuestions = useNextQuestions(),
 		foldedSteps = useSelector(answeredQuestionsSelector),
 		situation = useSelector(situationSelector),
-		dirtySituation = Object.keys(situation).find((question) =>
-			[...nextQuestions, ...foldedSteps].includes(question)
+		dirtySituation = Object.keys(situation).find(
+			(question) =>
+				[...nextQuestions, ...foldedSteps].includes(question) &&
+				!engine.getRule(question).rawNode.injecté
 		)
 
 	if (!examplesSource || dirtySituation)
@@ -70,12 +72,12 @@ export default ({ nodeValue, formule, dottedName }) => {
 	const suggestions = rules[examplesSource].suggestions
 
 	const evaluations = Object.entries(suggestions).map(([k, v]) => {
-		const situation = { [examplesSource]: v }
-		engine.setSituation(situation)
+		engine.setSituation({ ...situation, [examplesSource]: v })
 		const evaluation = engine.evaluate(dottedName)
-		engine.setSituation({})
+		engine.setSituation(situation)
 		return { ...evaluation, exampleName: k }
 	})
+	console.log(rule.titre, evaluations)
 
 	return (
 		<ul
@@ -122,6 +124,7 @@ const ImpactCard = ({ nodeValue, dottedName, exampleName }) => {
 	const scenario = useSelector((state) => state.scenario)
 	const budget = scenarios[scenario]['crédit carbone par personne'] * 1000
 
+	if (nodeValue == null) return
 	const [value, unit] = humanWeight(nodeValue)
 	let { closestPeriodLabel, closestPeriod, factor } = humanCarbonImpactData(
 		scenario,
@@ -154,10 +157,18 @@ const ImpactCard = ({ nodeValue, dottedName, exampleName }) => {
 								display: flex;
 								flex-direction: column;
 								justify-content: space-evenly;
+								img[alt*='↔'] {
+									filter: invert(1);
+									margin: 0 0.4rem;
+									width: 1.1rem;
+								}
 							`}
 						>
 							{exampleName && <div>{<Emoji e={exampleName} hasText />}</div>}
-							{dottedName === 'transport . avion . impact' ? (
+							{[
+								'transport . avion . impact',
+								'transport . ferry . empreinte du voyage',
+							].includes(dottedName) ? (
 								<BudgetBar
 									{...{
 										noExample: !exampleName,

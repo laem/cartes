@@ -156,6 +156,8 @@ export function getSearchParamsFromSituation(
 	;(Object.entries(situation) as [DottedName, any][]).forEach(
 		([dottedName, value]) => {
 			const paramName = dottedNameParamNameMapping[dottedName]
+			//Do not store in searchParams variable values that are injected by the simulator
+			if (engine.getRule(dottedName).rawNode.injecté) return
 			const serializedValue = serializeEvaluation(engine.evaluate(value))
 			if (typeof serializedValue !== 'undefined')
 				searchParams.set(paramName, serializedValue)

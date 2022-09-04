@@ -5460,10 +5460,10 @@ opener@^1.5.2:
   resolved "https://registry.yarnpkg.com/opener/-/opener-1.5.2.tgz#5d37e1f35077b9dcac4301372271afdeb2a13598"
   integrity sha512-ur5UIdyw5Y7yEj9wLzhqXiy6GZ3Mwx0yGI+5sMn2r0N0v3cKJvUmFH5yPP+WXh9e0xfyzyJX95D8l088DNFj7A==
 
-openmoji@^13.1.0:
-  version "13.1.0"
-  resolved "https://registry.yarnpkg.com/openmoji/-/openmoji-13.1.0.tgz#ef69730f1efcc65d70871aa518e1517c6a7232c7"
-  integrity sha512-rOY6DKqnCPCU9D8lu/SK1cMVQjiBsiJRT4be+GV+WXPcd1os6AKWKtfGWhz0oIWhTrUB8WbLG72IkTt7l3h6Qw==
+openmoji@^14.0.0:
+  version "14.0.0"
+  resolved "https://registry.yarnpkg.com/openmoji/-/openmoji-14.0.0.tgz#83d52501c3bb96a00d4bbd096825d9b533b4dc51"
+  integrity sha512-MGF9GbXfpULuRtUM1srEv2OP3sg/e8hAw0UCTiP+N3+CX38RCo8/kjyFYm0eO+OENnbbri9Vx4m5pU0Vbc7LGw==
 
 ordered-read-streams@^1.0.0:
   version "1.0.1"

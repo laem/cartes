@@ -179,6 +179,7 @@ const RuleList = ({ rules }) => (
 								h3 {
 									margin: 0;
 									font-size: 110%;
+									line-height: 1.3rem;
 								}
 								padding: 0.6rem !important;
 								@media (max-width: 600px) {

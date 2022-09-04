@@ -19,9 +19,9 @@ import Privacy from './Privacy'
 import Scenarios from './Scenarios'
 import Simulateur from './Simulateur'
 import sitePaths from './sitePaths'
-const Ferry = React.lazy(() => import('./ferry/Ferry'))
 const Carburants = React.lazy(() => import('./carburants/Carburants'))
 const Documentation = React.lazy(() => import('./pages/Documentation'))
+const Lab = React.lazy(() => import('./ferry/Lab'))
 
 let tracker = devTracker
 if (NODE_ENV === 'production') {
@@ -72,14 +72,6 @@ const Router = ({}) => (
 				<Route path={encodeURIComponent('vie-privée')} element={<Privacy />} />
 				<Route path={encodeURIComponent('nouveautés')} element={<News />} />
 				<Route
-					path="ferry/*"
-					element={
-						<Suspense fallback={<div>Chargement</div>}>
-							<Ferry />
-						</Suspense>
-					}
-				/>
-				<Route
 					path="carburants/*"
 					element={
 						<Suspense fallback={<div>Chargement</div>}>
@@ -92,6 +84,15 @@ const Router = ({}) => (
 				<Route
 					path={encodeURIComponent('crédit-climat-personnel')}
 					element={<CreditExplanation />}
+				/>
+
+				<Route
+					path="ferry/surface-mega-express-four"
+					element={
+						<Suspense fallback={<div>Chargement</div>}>
+							<Lab />
+						</Suspense>
+					}
 				/>
 			</Routes>
 		</div>

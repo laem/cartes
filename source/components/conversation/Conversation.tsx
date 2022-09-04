@@ -29,6 +29,7 @@ import './conversation.css'
 import { ExplicableRule } from './Explicable'
 import SimulationEnding from './SimulationEnding'
 import { airportsQuestions } from 'Components/conversation/RuleInput'
+import { ferryQuestions } from './RuleInput'
 
 export type ConversationProps = {
 	customEndMessages?: React.ReactNode
@@ -112,6 +113,8 @@ export default function Conversation({
 
 	const questionsToSubmit = airportsQuestions.includes(currentQuestion)
 		? airportsQuestions
+		: ferryQuestions.includes(currentQuestion)
+		? ferryQuestions
 		: mosaicQuestion
 		? Object.entries(rules)
 				.filter(([dottedName, value]) =>

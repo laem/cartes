@@ -29,6 +29,7 @@ import {
 import { capitalizeFirst } from './chart/Bar'
 import { Almost, Done, Half, NotBad, QuiteGood } from './Congratulations'
 import AvionExplanation from './AvionExplanation'
+import Lab from './ferry/Lab'
 
 const eqValues = compose(isEmpty, symmetricDifference)
 export const colorScale = [
@@ -119,7 +120,9 @@ const Simulateur = ({ objective }) => {
 	const answeredRatio =
 		answeredQuestions.length / (answeredQuestions.length + nextQuestions.length)
 
-	const doomColor = getBackgroundColor(evaluation.nodeValue).toHexString()
+	const doomColor =
+		evaluation.nodeValue &&
+		getBackgroundColor(evaluation.nodeValue).toHexString()
 
 	if (isMainSimulation) {
 		if (answeredRatio >= 0.1 && !messages['notBad'])
@@ -177,9 +180,12 @@ const Simulateur = ({ objective }) => {
 				`}
 			>
 				<Meta
-					title={rule.titre}
+					title={rule.exposé?.titre || rule.titre}
 					description={rule.exposé?.description || rule.description}
-					image={`https://aejkrqosjq.cloudimg.io/v7/https://futur.eco/.netlify/functions/ending-screenshot?pageToScreenshot=${window.location}`} // we could simply render SVG emojis, but SVG images don't work in og tags, we'll have to convert them
+					image={
+						rule.exposé?.image ||
+						`https://aejkrqosjq.cloudimg.io/v7/https://futur.eco/.netlify/functions/ending-screenshot?pageToScreenshot=${window.location}`
+					} // we could simply render SVG emojis, but SVG images don't work in og tags, we'll have to convert them
 				/>
 
 				{!isMainSimulation && (
@@ -204,6 +210,36 @@ const Simulateur = ({ objective }) => {
 						explanations={null}
 					/>
 				)}
+			</div>
+			{objective === 'transport . ferry . empreinte du voyage' && (
+				<details
+					css={`
+						visibility: hidden;
+					`}
+				>
+					<summary>Modèle de volume du bateau type</summary>
+
+					<Lab />
+				</details>
+			)}
+			<div
+				css={`
+					margin-top: 2rem;
+					text-align: center;
+					a {
+						display: flex;
+						align-items: center;
+						justify-content: center;
+						text-decoration: none;
+						color: var(--lighterColor);
+						opacity: 0.8;
+						text-transform: uppercase;
+					}
+				`}
+			>
+				<Link to={'/documentation/' + utils.encodeRuleName(objective)}>
+					{emoji('⚙️')} Comprendre le calcul
+				</Link>
 			</div>
 		</div>
 	)

@@ -32,13 +32,15 @@ export default function AnswerList() {
 			return rule && engine.evaluate(rule)
 		})
 		.filter(Boolean)
-	const foldedStepsToDisplay = foldedQuestions.map((node) => ({
-		...node,
-		passedQuestion:
-			answeredQuestionNames.find(
-				(dottedName) => node.dottedName === dottedName
-			) == null,
-	}))
+	const foldedStepsToDisplay = foldedQuestions
+		.map((node) => ({
+			...node,
+			passedQuestion:
+				answeredQuestionNames.find(
+					(dottedName) => node.dottedName === dottedName
+				) == null,
+		}))
+		.filter((node) => !node.rawNode.injecté)
 
 	const nextSteps = useNextQuestions().map((dottedName) =>
 		engine.evaluate(engine.getRule(dottedName))
@@ -152,9 +154,13 @@ function StepsTable({
 const Answer = ({ rule, language }) => {
 	// Shameless exception, sometimes you've got to do things dirty
 	if (
-		['transport . avion . départ', 'transport . avion . arrivée'].includes(
-			rule.dottedName
-		)
+		[
+			'transport . avion . départ',
+			'transport . avion . arrivée',
+
+			'transport . ferry . départ',
+			'transport . ferry . arrivée',
+		].includes(rule.dottedName)
 	)
 		return null
 
@@ -163,9 +169,8 @@ const Answer = ({ rule, language }) => {
 	const uselessPrefix = simulationDottedName.includes(path)
 	const situation = useSelector(situationSelector)
 
+	const trimSituationString = (el) => el && el.split("'")[1]
 	if (rule.dottedName === 'transport . avion . distance de vol aller') {
-		const trimSituationString = (el) => el.split("'")[1]
-
 		return (
 			<AnswerComponent
 				{...{
@@ -177,6 +182,27 @@ const Answer = ({ rule, language }) => {
 								situation['transport . avion . départ']
 							)} - ${trimSituationString(
 								situation['transport . avion . arrivée']
+							)} (${formatValue(rule, { language })})`}
+						</span>
+					),
+				}}
+			/>
+		)
+	}
+	if (
+		rule.dottedName === 'transport . ferry . distance aller . orthodromique'
+	) {
+		return (
+			<AnswerComponent
+				{...{
+					dottedName: rule.dottedName,
+					NameComponent: <div>Votre traversée</div>,
+					ValueComponent: (
+						<span className="answerContent">
+							{`${trimSituationString(
+								situation['transport . ferry . départ']
+							)} - ${trimSituationString(
+								situation['transport . ferry . arrivée']
 							)} (${formatValue(rule, { language })})`}
 						</span>
 					),

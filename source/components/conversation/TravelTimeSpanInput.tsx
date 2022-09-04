@@ -67,7 +67,21 @@ export default function DateInput({
 		onChange(hours)
 	}, [start, end, day])
 	return (
-		<div className="step input">
+		<div
+			className="step input"
+			css={`
+				padding-bottom: 1rem;
+				input[type='time'] {
+					width: 5.5rem;
+				}
+				input[type='radio'] {
+					margin-right: 0.6rem;
+				}
+				fieldset label {
+					margin-left: 1rem;
+				}
+			`}
+		>
 			<div>
 				{suggestions && (
 					<InputSuggestions
@@ -78,24 +92,28 @@ export default function DateInput({
 						onSecondClick={() => onSubmit?.('suggestion')}
 					/>
 				)}
-				<label>
-					Départ à
-					<DateStyledInput
-						type="time"
-						value={start}
-						onChange={(e) => setStart(e.target.value)}
-						className="ui__ input"
-					/>
-				</label>
-				<label>
-					Arrivée à
-					<DateStyledInput
-						type="time"
-						value={end}
-						onChange={(e) => setEnd(e.target.value)}
-						className="ui__ input"
-					/>
-				</label>
+				<div>
+					<label>
+						Départ{' '}
+						<DateStyledInput
+							type="time"
+							value={start}
+							onChange={(e) => setStart(e.target.value)}
+							className="ui__ input"
+						/>
+					</label>
+				</div>
+				<div>
+					<label>
+						Arrivée{' '}
+						<DateStyledInput
+							type="time"
+							value={end}
+							onChange={(e) => setEnd(e.target.value)}
+							className="ui__ input"
+						/>
+					</label>
+				</div>
 				<fieldset>
 					<label>
 						<input

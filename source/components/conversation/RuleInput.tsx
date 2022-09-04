@@ -22,15 +22,17 @@ import ParagrapheInput from './ParagrapheInput'
 import TextInput from './TextInput'
 import TravelTimeSpanInput from './TravelTimeSpanInput'
 
+// TODO this whole block is ugly
 export const airportsQuestions = [
-	'transport . avion . distance de vol aller',
-	'transport . avion . départ',
-	'transport . avion . arrivée',
-	//ferry. TODO this whole block is ugly
-	'départ',
-	'arrivée',
-	'distance aller . orthodromique',
-]
+		'transport . avion . distance de vol aller',
+		'transport . avion . départ',
+		'transport . avion . arrivée',
+	],
+	ferryQuestions = [
+		'transport . ferry . départ',
+		'transport . ferry . arrivée',
+		'transport . ferry . distance aller . orthodromique',
+	]
 let SelectTwoAirports = React.lazy(
 	() => import('Components/conversation/select/SelectTwoAirports')
 )
@@ -151,35 +153,41 @@ export default function RuleInput<Name extends string = DottedName>({
 *
 */
 
-	if (airportsQuestions.includes(rule.dottedName))
+	if (airportsQuestions.includes(rule.dottedName)) {
 		return (
 			<Suspense fallback={<div>Chargement des cartes ...</div>}>
-				{rule.dottedName.includes('avion') ? (
-					<SelectTwoAirports
-						{...{
-							...commonProps,
-							placeholder: 'Aéroport ou ville ',
-							db: 'airports',
-							rulesPath: 'transport . avion',
-							fromIcon: '🛫',
-							toIcon: '🛬',
-						}}
-					/>
-				) : (
-					<SelectTwoAirports
-						{...{
-							...commonProps,
-							placeholder: 'Port ou ville',
-							db: 'osm',
-							rulesPath: 'ferry',
-							displayImage: false,
-						}}
-					/>
-				)}
+				<SelectTwoAirports
+					{...{
+						...commonProps,
+						placeholder: 'Aéroport ou ville ',
+						db: 'airports',
+						rulesPath: 'transport . avion',
+						fromIcon: '🛫',
+						toIcon: '🛬',
+						displayImage: 'plane',
+					}}
+				/>
 			</Suspense>
 		)
+	}
 
-	if (rule.dottedName === 'durée du voyage')
+	if (ferryQuestions.includes(rule.dottedName)) {
+		return (
+			<Suspense fallback={<div>Chargement des cartes ...</div>}>
+				<SelectTwoAirports
+					{...{
+						...commonProps,
+						placeholder: 'Port ou ville',
+						db: 'osm',
+						rulesPath: 'transport . ferry',
+						displayImage: 'boat',
+					}}
+				/>
+			</Suspense>
+		)
+	}
+
+	if (rule.dottedName === 'transport . ferry . durée du voyage')
 		return (
 			<TravelTimeSpanInput
 				{...commonProps}

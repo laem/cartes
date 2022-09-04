@@ -263,3 +263,7 @@ img[src="http://twemoji.maxcdn.com/2/72x72/.png"]
 {
 	display: none;
 }
+
+details summary {
+	cursor: pointer;
+}

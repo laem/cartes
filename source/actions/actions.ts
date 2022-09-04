@@ -137,11 +137,13 @@ export const updateSituation = (fieldName: DottedName, value: unknown) =>
 	} as const)
 
 export const batchUpdateSituation = (
-	situation: NonNullable<Parameters<Engine<DottedName>['setSituation']>[0]>
+	situation: NonNullable<Parameters<Engine<DottedName>['setSituation']>[0]>,
+	doNotFold: Boolean
 ) =>
 	({
 		type: 'BATCH_UPDATE_SITUATION',
 		situation,
+		doNotFold,
 	} as const)
 
 export const skipTutorial = (id: string) => ({ type: 'SKIP_TUTORIAL', id })

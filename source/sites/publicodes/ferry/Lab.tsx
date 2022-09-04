@@ -1,4 +1,6 @@
 import { useEffect, useRef, useState } from 'react'
+import { useDispatch } from 'react-redux'
+import { batchUpdateSituation } from '../../../actions/actions'
 import Mega from './Mega'
 import pathDataToPolys, { calcPolygonArea } from './svgPathToPolygons'
 
@@ -11,9 +13,11 @@ import pathDataToPolys, { calcPolygonArea } from './svgPathToPolygons'
 const sumAreas = (elements, filter = () => true) =>
 	elements.reduce((memo, next) => (filter(next) ? next.area : 0) + memo, 0)
 
-export default ({ setData = () => null }) => {
+export default ({}) => {
 	const ref = useRef(null)
 	const [elements, setElements] = useState([])
+	const dispatch = useDispatch()
+	const setData = (data) => dispatch(batchUpdateSituation(data), true)
 
 	useEffect(() => {
 		const el = ref.current
@@ -63,7 +67,7 @@ export default ({ setData = () => null }) => {
 
 		const areaUnit = (value) => `${Math.round(value)} m2`
 
-		const newData = {
+		const newDataUnprefixed = {
 			'cabine . nombre': cabinesCount,
 			'siège . nombre': siegesCount,
 			'surface . cabines': areaUnit(cabinesTotalArea),
@@ -78,6 +82,13 @@ export default ({ setData = () => null }) => {
 			),
 		}
 
+		const newData = Object.fromEntries(
+			Object.entries(newDataUnprefixed).map(([k, v]) => [
+				'transport . ferry . ' + k,
+				v,
+			])
+		)
+
 		//This elements lets us check if the measured area of a cabine looks correct considering the length and width of two beds
 		const surfaceCheck = elements.find((el) => el.id.includes('-unecabine'))
 
@@ -90,7 +101,7 @@ export default ({ setData = () => null }) => {
 		// Considering a 1*2m bed, another one, 1m between them, plus a 4m entrance + toilets, we've got 18m²
 		// Which makes a good order of magnitude, but still subject to some errors until we get a precise plan of the cabine
 
-		setData((data) => ({ ...data, ...newData }))
+		setData(newData)
 		return () => {
 			console.log('This will be logged on unmount')
 		}
