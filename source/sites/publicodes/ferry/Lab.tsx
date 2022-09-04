@@ -102,7 +102,7 @@ export default ({}) => {
 		// Considering a 1*2m bed, another one, 1m between them, plus a 4m entrance + toilets, we've got 18m²
 		// Which makes a good order of magnitude, but still subject to some errors until we get a precise plan of the cabine
 
-		setData((data) => ({ ...data, ...newData }))
+		setData(newData)
 		return () => {
 			console.log('This will be logged on unmount')
 		}

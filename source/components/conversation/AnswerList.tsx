@@ -32,13 +32,15 @@ export default function AnswerList() {
 			return rule && engine.evaluate(rule)
 		})
 		.filter(Boolean)
-	const foldedStepsToDisplay = foldedQuestions.map((node) => ({
-		...node,
-		passedQuestion:
-			answeredQuestionNames.find(
-				(dottedName) => node.dottedName === dottedName
-			) == null,
-	}))
+	const foldedStepsToDisplay = foldedQuestions
+		.map((node) => ({
+			...node,
+			passedQuestion:
+				answeredQuestionNames.find(
+					(dottedName) => node.dottedName === dottedName
+				) == null,
+		}))
+		.filter((node) => !node.rawNode.injecté)
 
 	const nextSteps = useNextQuestions().map((dottedName) =>
 		engine.evaluate(engine.getRule(dottedName))

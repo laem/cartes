@@ -119,11 +119,14 @@ const Simulateur = ({ objective }) => {
 	const answeredRatio =
 		answeredQuestions.length / (answeredQuestions.length + nextQuestions.length)
 
-	if (!evaluation.nodeValue) return <div>Problème d'évaluation</div>
+	if (!evaluation.nodeValue) {
+		console.log(evaluation, situation)
+		return <div>Problème d'évaluation</div>
+	}
 
 	const doomColor = getBackgroundColor(evaluation.nodeValue).toHexString()
 
-	if (isMainSimtulation) {
+	if (isMainSimulation) {
 		if (answeredRatio >= 0.1 && !messages['notBad'])
 			return <NotBad answeredRatio={answeredRatio} />
 		if (answeredRatio >= 0.3 && !messages['quiteGood'])
