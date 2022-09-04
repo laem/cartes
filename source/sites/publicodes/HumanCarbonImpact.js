@@ -60,8 +60,10 @@ export default ({ nodeValue, formule, dottedName }) => {
 		nextQuestions = useNextQuestions(),
 		foldedSteps = useSelector(answeredQuestionsSelector),
 		situation = useSelector(situationSelector),
-		dirtySituation = Object.keys(situation).find((question) =>
-			[...nextQuestions, ...foldedSteps].includes(question)
+		dirtySituation = Object.keys(situation).find(
+			(question) =>
+				[...nextQuestions, ...foldedSteps].includes(question) &&
+				!engine.getRule(question).rawNode.injecté
 		)
 
 	if (!examplesSource || dirtySituation)
@@ -70,12 +72,12 @@ export default ({ nodeValue, formule, dottedName }) => {
 	const suggestions = rules[examplesSource].suggestions
 
 	const evaluations = Object.entries(suggestions).map(([k, v]) => {
-		const situation = { [examplesSource]: v }
-		engine.setSituation(situation)
+		engine.setSituation({ ...situation, [examplesSource]: v })
 		const evaluation = engine.evaluate(dottedName)
-		engine.setSituation({})
+		engine.setSituation(situation)
 		return { ...evaluation, exampleName: k }
 	})
+	console.log(rule.titre, evaluations)
 
 	return (
 		<ul
