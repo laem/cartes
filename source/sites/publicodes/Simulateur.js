@@ -236,7 +236,8 @@ const Simulateur = ({ objective }) => {
 						justify-content: center;
 						text-decoration: none;
 						color: var(--lighterColor);
-						opacity: 0.8;
+						opacity: 0.5;
+						font-size: 90%;
 						text-transform: uppercase;
 					}
 				`}
