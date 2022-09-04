@@ -37,7 +37,7 @@ export default ({ e, black, extra, alt, hasText, white }) => {
 
 	const items = replace(e, regex, function (emoji) {
 		const src = findOpenmoji(emoji, useBlack)
-		return <Image {...{ src, alt: emoji, imageSize, white }} />
+		return <Image {...{ src, alt: emoji, imageSize, white }} key={src} />
 	})
 	if (hasText) return items
 	return (

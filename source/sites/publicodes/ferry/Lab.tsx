@@ -133,6 +133,7 @@ export default ({}) => {
 			<ul>
 				{elements.map((el) => (
 					<li
+						key={el.id}
 						className="ui__ card content"
 						css={`
 							border: 2px solid ${el.color};

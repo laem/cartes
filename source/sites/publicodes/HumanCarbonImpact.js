@@ -82,7 +82,6 @@ export default ({ nodeValue, formule, dottedName }) => {
 		engine.setSituation(situation)
 		return { ...evaluation, exampleName: k }
 	})
-	console.log(rule.titre, evaluations)
 
 	return (
 		<ul
@@ -117,7 +116,7 @@ export default ({ nodeValue, formule, dottedName }) => {
 			`}
 		>
 			{evaluations.map(({ nodeValue, dottedName, exampleName }) => (
-				<li>
+				<li key={exampleName}>
 					<ImpactCard {...{ nodeValue, dottedName, exampleName }} />
 				</li>
 			))}
