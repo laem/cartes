@@ -36,5 +36,5 @@ export const toThumb = (url) => {
 	const hash = md5(unescape(encodeURIComponent(decoded)))
 	console.log(decoded, hash)
 
-	return `https://upload.wikimedia.org/wikipedia/commons/thumb/${hash[0]}/${hash[0]}${hash[1]}/${decoded}/700px-${fileName}`
+	return `https://upload.wikimedia.org/wikipedia/commons/thumb/${hash[0]}/${hash[0]}${hash[1]}/${decoded}/400px-${fileName}`
 }
