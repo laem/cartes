@@ -19,6 +19,7 @@ export default ({}) => {
 	const [elements, setElements] = useState([])
 	const dispatch = useDispatch()
 	const setData = (data) => dispatch(batchUpdateSituation(data), true)
+	const [computed, setComputed] = useState(null)
 
 	useEffect(() => {
 		const el = ref.current
@@ -82,6 +83,7 @@ export default ({}) => {
 				sumAreas(elements, (next) => next.id.includes('-commun'))
 			),
 		}
+		setComputed(newDataUnprefixed)
 
 		const newData = Object.fromEntries(
 			Object.entries(newDataUnprefixed).map(([k, v]) => [
@@ -115,22 +117,38 @@ export default ({}) => {
 					width: 100%;
 					height: auto;
 				}
-				ul {
-					display: flex;
-					flex-wrap: wrap;
-					list-style-type: none;
-				}
-				li {
-					margin: 0.2rem;
-				}
+				max-width: 90% !important;
 			`}
+			className="ui__ container"
 		>
 			<h2>Modèle de volume du Mega Express Four</h2>
+			{computed && (
+				<>
+					<h3>Surfaces totales par usage</h3>
+					<ul>
+						{Object.entries(computed).map(([k, v]) => (
+							<li key={k}>
+								{k} : {v}
+							</li>
+						))}
+					</ul>
+				</>
+			)}
+			<h3>Détails du calcul de surfaces</h3>
 			<pre>
 				Comment lire les blocs : PONT-ATTRIBUTION-NOMBRE/HAUTEURDEPONT (m):
 				SURFACE (m²)
 			</pre>
-			<ul>
+			<ul
+				css={`
+					display: flex;
+					flex-wrap: wrap;
+					list-style-type: none;
+					li {
+						margin: 0.2rem;
+					}
+				`}
+			>
 				{elements.map((el) => (
 					<li
 						key={el.id}
