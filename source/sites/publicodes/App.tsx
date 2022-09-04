@@ -13,7 +13,6 @@ import Tracker, { devTracker } from '../../Tracker'
 import About from './About'
 import Contribution from './Contribution'
 import CreditExplanation from './CreditExplanation'
-import Lab from './ferry/Lab'
 import GameOver from './GameOver'
 import Instructions from './Instructions'
 import Privacy from './Privacy'
@@ -47,11 +46,6 @@ export default function Root({}) {
 			}}
 		>
 			<Router />
-			<details>
-				<summary>Modèle de volume du bateau type</summary>
-
-				<Lab />
-			</details>
 		</Provider>
 	)
 }

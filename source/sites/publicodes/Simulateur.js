@@ -29,6 +29,7 @@ import {
 import { capitalizeFirst } from './chart/Bar'
 import { Almost, Done, Half, NotBad, QuiteGood } from './Congratulations'
 import AvionExplanation from './AvionExplanation'
+import Lab from './ferry/Lab'
 
 const eqValues = compose(isEmpty, symmetricDifference)
 export const colorScale = [
@@ -119,12 +120,9 @@ const Simulateur = ({ objective }) => {
 	const answeredRatio =
 		answeredQuestions.length / (answeredQuestions.length + nextQuestions.length)
 
-	if (!evaluation.nodeValue) {
-		console.log(evaluation, situation)
-		return <div>Problème d'évaluation</div>
-	}
-
-	const doomColor = getBackgroundColor(evaluation.nodeValue).toHexString()
+	const doomColor =
+		evaluation.nodeValue &&
+		getBackgroundColor(evaluation.nodeValue).toHexString()
 
 	if (isMainSimulation) {
 		if (answeredRatio >= 0.1 && !messages['notBad'])
@@ -210,6 +208,13 @@ const Simulateur = ({ objective }) => {
 					/>
 				)}
 			</div>
+			{objective === 'transport . ferry . empreinte du voyage' && (
+				<details>
+					<summary>Modèle de volume du bateau type</summary>
+
+					<Lab />
+				</details>
+			)}{' '}
 		</div>
 	)
 }

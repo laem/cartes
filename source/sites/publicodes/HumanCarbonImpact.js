@@ -122,6 +122,7 @@ const ImpactCard = ({ nodeValue, dottedName, exampleName }) => {
 	const scenario = useSelector((state) => state.scenario)
 	const budget = scenarios[scenario]['crédit carbone par personne'] * 1000
 
+	if (nodeValue == null) return
 	const [value, unit] = humanWeight(nodeValue)
 	let { closestPeriodLabel, closestPeriod, factor } = humanCarbonImpactData(
 		scenario,
