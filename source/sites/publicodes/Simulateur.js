@@ -212,7 +212,11 @@ const Simulateur = ({ objective }) => {
 				)}
 			</div>
 			{objective === 'transport . ferry . empreinte du voyage' && (
-				<details>
+				<details
+					css={`
+						visibility: hidden;
+					`}
+				>
 					<summary>Modèle de volume du bateau type</summary>
 
 					<Lab />
