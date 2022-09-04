@@ -6,7 +6,7 @@ import { debounce } from '../utils'
 import safeLocalStorage from './safeLocalStorage'
 import { deserialize, serialize } from './serializeSimulation'
 
-const VERSION = 2
+const VERSION = 3
 
 const LOCAL_STORAGE_KEY = 'futureco::persisted-simulation::v' + VERSION
 
