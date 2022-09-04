@@ -6,7 +6,8 @@ import pathDataToPolys, { calcPolygonArea } from './svgPathToPolygons'
 
 /* For each iteration on the SVG drawing,
  run this command :
- npx --yes  @svgr/cli --ref --replace-attr-values ../1ccc23d5/megaexpressfour.png=/images/megaexpressfour.png -- source/sites/publicodes/ferry/mega-express-four.svg > source/sites/publicodes/ferry/Mega.tsx
+ npx --yes  @svgr/cli --no-svgo --ref --replace-attr-values ../1ccc23d5/megaexpressfour.png=/images/megaexpressfour.png -- source/sites/publicodes/ferry/mega-express-four.svg > source/sites/publicodes/ferry/Mega.tsx
+
 
  */
 
