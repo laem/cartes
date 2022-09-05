@@ -45,8 +45,7 @@ export default function DateInput({
 		if (date1 > date2) setDay(day + 1)
 		const hours = Math.abs(date1 - date2) / 36e5
 
-		console.log('hours', hours)
-		onChange(hours)
+		onChange(Math.max(hours, 0.5))
 	}, [start, end, day])
 	return (
 		<div
