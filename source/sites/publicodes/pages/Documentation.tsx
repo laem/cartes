@@ -108,15 +108,14 @@ function BackToSimulation() {
 
 function DocumentationLanding() {
 	return (
-		<>
+		<div className="ui__ container">
 			<Meta
 				title="Comprendre nos calculs"
 				description="Notre modèle de calcul est entièrement transparent. Chacun peut l'explorer, donner son avis, l'améliorer."
 			/>
-			<Méthode />
 			<h2>Explorer notre documentation</h2>
 			<SearchBar showListByDefault={true} />
-		</>
+		</div>
 	)
 }
 

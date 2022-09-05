@@ -16,6 +16,7 @@ export default function RuleLink(
 		<EngineRuleLink
 			{...props}
 			engine={engine}
+			linkComponent={Link}
 			documentationPath={sitePaths.documentation.index}
 		/>
 	)
