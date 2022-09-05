@@ -47,8 +47,10 @@ export function getCurrentNotification(
 	// Here we filter notifications to not display them out of context
 	// but this supposes that notifications would be well placed in termes of namespaces
 	// for now we're using only one notifcation, so that's the behavior we want
-	const filteredMessages = messages.filter(({ dottedName }) =>
-		parentName(currentQuestion).includes(parentName(dottedName))
+	const filteredMessages = messages.filter(
+		({ dottedName }) =>
+			parentName(currentQuestion).includes(parentName(dottedName)) ||
+			currentQuestion.includes(parentName(dottedName))
 	)
 	return filteredMessages
 }
