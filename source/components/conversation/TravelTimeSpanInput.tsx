@@ -45,6 +45,7 @@ export default function DateInput({
 		if (date1 > date2) setDay(day + 1)
 		const hours = Math.abs(date1 - date2) / 36e5
 
+		console.log('hours', hours)
 		onChange(hours)
 	}, [start, end, day])
 	return (
@@ -68,9 +69,19 @@ export default function DateInput({
 					<InputSuggestions
 						suggestions={suggestions}
 						onFirstClick={(value) => {
-							onChange(value)
+							const [text, value] = Object.entries(suggestions).find(
+								([k, v]) => v.rawNode === value.rawNode
+							)
+							if (text.includes('demi-journée')) {
+								setStart('14:00')
+								setEnd('20:00')
+							}
+							if (text.includes('demi-journée')) {
+								setStart('14:00')
+								setEnd('20:00')
+							}
 						}}
-						onSecondClick={() => onSubmit?.('suggestion')}
+						onSecondClick={() => null}
 					/>
 				)}
 				<div>
