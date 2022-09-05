@@ -3,7 +3,7 @@ import News from 'Pages/News'
 import Wiki from 'Pages/Wiki'
 import React, { Suspense } from 'react'
 import { useTranslation } from 'react-i18next'
-import { Route, Routes } from 'react-router-dom'
+import { Navigate, Route, Routes } from 'react-router-dom'
 import Provider from '../../Provider'
 import {
 	persistSimulation,
@@ -84,6 +84,16 @@ const Router = ({}) => (
 				<Route
 					path={encodeURIComponent('crédit-climat-personnel')}
 					element={<CreditExplanation />}
+				/>
+
+				<Route
+					path="ferry"
+					element={
+						<Navigate
+							replace
+							to="/simulateur/transport/ferry/empreinte-du-voyage"
+						/>
+					}
 				/>
 
 				<Route
