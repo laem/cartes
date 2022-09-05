@@ -25,25 +25,6 @@ export default function DateInput({
 		return `${year}-${month}-${day}`
 	}, [value])
 
-	const handleDateChange = useCallback(
-		(evt) => {
-			if (!evt.target.value) {
-				return onChange(null)
-			}
-			const [year, month, day] = evt.target.value.split('-')
-			if (+year < 1700) {
-				return
-			}
-			if (year.length > 4) {
-				return
-			}
-			if ([day, month, year].some((x) => Number.isNaN(+x))) {
-				return
-			}
-			onChange(`${day}/${month}/${year}`)
-		},
-		[onChange]
-	)
 	const [start, setStart] = useState('19:00')
 	const [end, setEnd] = useState('07:00')
 	const [day, setDay] = useState(0)
@@ -64,7 +45,7 @@ export default function DateInput({
 		if (date1 > date2) setDay(day + 1)
 		const hours = Math.abs(date1 - date2) / 36e5
 
-		onChange(hours)
+		onChange(Math.max(hours, 0.5))
 	}, [start, end, day])
 	return (
 		<div
@@ -86,10 +67,27 @@ export default function DateInput({
 				{suggestions && (
 					<InputSuggestions
 						suggestions={suggestions}
-						onFirstClick={(value) => {
-							onChange(value)
+						onFirstClick={(clicked) => {
+							const [text, value] = Object.entries(suggestions).find(
+								([k, v]) => v.rawNode === clicked.rawNode
+							)
+							if (text.includes('demi-journée')) {
+								setStart('14:00')
+								setEnd('20:00')
+								setDay(0)
+							}
+							if (text.includes('nuit')) {
+								setStart('19:00')
+								setEnd('07:00')
+								setDay(1)
+							}
+							if (text.includes('24h')) {
+								setStart('15:00')
+								setEnd('15:00')
+								setDay(1)
+							}
 						}}
-						onSecondClick={() => onSubmit?.('suggestion')}
+						onSecondClick={() => null}
 					/>
 				)}
 				<div>
@@ -132,12 +130,18 @@ export default function DateInput({
 						le lendemain
 					</label>
 					<label>
+						Jour +{' '}
 						<input
-							type="radio"
-							checked={day === 2}
-							onChange={() => setDay(2)}
+							type="number"
+							value={day}
+							className="ui__"
+							min="2"
+							css={`
+								width: 2rem !important;
+								text-align: center;
+							`}
+							onChange={(e) => setDay(+e.target.value)}
 						/>
-						le surlendemain
 					</label>
 				</fieldset>
 			</div>

@@ -42,6 +42,7 @@ let findPeriod = (scenario, nodeValue) =>
 		.find(([, limit]) => limit <= Math.abs(nodeValue))
 
 let humanCarbonImpactData = (scenario, nodeValue) => {
+	console.log('fp', nodeValue)
 	let [closestPeriod, closestPeriodValue] = findPeriod(scenario, nodeValue),
 		factor = Math.round(nodeValue / closestPeriodValue),
 		closestPeriodLabel = closestPeriod.startsWith('demi')
