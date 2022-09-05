@@ -1,6 +1,7 @@
 import { useEffect, useRef, useState } from 'react'
-import { useDispatch } from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux'
 import { batchUpdateSituation } from '../../../actions/actions'
+import { situationSelector } from '../../../selectors/simulationSelectors'
 import Mega from './Mega'
 import pathDataToPolys, { calcPolygonArea } from './svgPathToPolygons'
 
@@ -20,8 +21,11 @@ export default ({}) => {
 	const dispatch = useDispatch()
 	const setData = (data) => dispatch(batchUpdateSituation(data), true)
 	const [computed, setComputed] = useState(null)
+	const situation = useSelector(situationSelector)
 
 	useEffect(() => {
+		//rerun this on situation RESET
+		if (Object.keys(situation).length > 0) return
 		const el = ref.current
 		if (!el) return undefined
 		const elements = [...el.querySelectorAll('path')].map((path) => {
@@ -108,7 +112,7 @@ export default ({}) => {
 		return () => {
 			console.log('This will be logged on unmount')
 		}
-	}, [])
+	}, [situation])
 
 	return (
 		<div
