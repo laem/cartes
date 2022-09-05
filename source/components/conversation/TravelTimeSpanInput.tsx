@@ -68,17 +68,24 @@ export default function DateInput({
 				{suggestions && (
 					<InputSuggestions
 						suggestions={suggestions}
-						onFirstClick={(value) => {
+						onFirstClick={(clicked) => {
 							const [text, value] = Object.entries(suggestions).find(
-								([k, v]) => v.rawNode === value.rawNode
+								([k, v]) => v.rawNode === clicked.rawNode
 							)
 							if (text.includes('demi-journée')) {
 								setStart('14:00')
 								setEnd('20:00')
+								setDay(0)
 							}
-							if (text.includes('demi-journée')) {
-								setStart('14:00')
-								setEnd('20:00')
+							if (text.includes('nuit')) {
+								setStart('19:00')
+								setEnd('07:00')
+								setDay(1)
+							}
+							if (text.includes('24h')) {
+								setStart('15:00')
+								setEnd('15:00')
+								setDay(1)
 							}
 						}}
 						onSecondClick={() => null}
