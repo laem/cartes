@@ -25,25 +25,6 @@ export default function DateInput({
 		return `${year}-${month}-${day}`
 	}, [value])
 
-	const handleDateChange = useCallback(
-		(evt) => {
-			if (!evt.target.value) {
-				return onChange(null)
-			}
-			const [year, month, day] = evt.target.value.split('-')
-			if (+year < 1700) {
-				return
-			}
-			if (year.length > 4) {
-				return
-			}
-			if ([day, month, year].some((x) => Number.isNaN(+x))) {
-				return
-			}
-			onChange(`${day}/${month}/${year}`)
-		},
-		[onChange]
-	)
 	const [start, setStart] = useState('19:00')
 	const [end, setEnd] = useState('07:00')
 	const [day, setDay] = useState(0)
