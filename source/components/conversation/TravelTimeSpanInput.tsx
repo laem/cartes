@@ -130,12 +130,18 @@ export default function DateInput({
 						le lendemain
 					</label>
 					<label>
+						Jour +{' '}
 						<input
-							type="radio"
-							checked={day === 2}
-							onChange={() => setDay(2)}
+							type="number"
+							value={day}
+							className="ui__"
+							min="2"
+							css={`
+								width: 2rem !important;
+								text-align: center;
+							`}
+							onChange={(e) => setDay(+e.target.value)}
 						/>
-						le surlendemain
 					</label>
 				</fieldset>
 			</div>
