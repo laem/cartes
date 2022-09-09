@@ -1,4 +1,9 @@
 [[redirects]]
+  from = "/voyage/*"
+  to = "/voyage.html"
+  status = 200
+
+[[redirects]]
   from = "/*"
   to = "/publicodes.html"
   status = 200

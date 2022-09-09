@@ -15,7 +15,12 @@ module.exports = {
 		rules: [...commonLoaders('development'), styleLoader('style-loader')],
 	},
 	devServer: {
-		historyApiFallback: true,
+		historyApiFallback: {
+			rewrites: [
+				{ from: /^\/voyage/, to: '/voyage.html' },
+				{ from: /./, to: '/index.html' },
+			],
+		},
 		static: path.join(__dirname, 'dist'),
 		hot: true,
 	},

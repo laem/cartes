@@ -29,6 +29,7 @@ module.exports.default = {
 	entry: {
 		publicodes: './source/sites/publicodes/entry.js',
 		iframe: './source/sites/publicodes/iframe.js',
+		voyage: './source/sites/voyage/entry.js',
 	},
 	output: {
 		path: path.resolve('./dist/'),
@@ -144,6 +145,14 @@ module.exports.commonLoaders = (mode = 'production') => {
 }
 
 module.exports.HTMLPlugins = ({ injectTrackingScript = false } = {}) => [
+	new HTMLPlugin({
+		template: 'voyage.html',
+		chunks: ['voyage'],
+		title: 'Futureco voyage 🏖️',
+		description: 'Voyage proprement.',
+		filename: 'voyage.html',
+		base: '/voyage',
+	}),
 	new HTMLPlugin({
 		template: 'index.html',
 		chunks: ['publicodes'],
