@@ -56,6 +56,11 @@ export default ({ children }) => {
 	const urlParams = new URLSearchParams(window.location.search)
 	const location = useLocation()
 
+	if (location.pathname.indexOf('/voyage') === 0) {
+		removeLoader()
+		return children
+	}
+
 	const branch = urlParams.get('branch')
 	const pullRequestNumber = urlParams.get('PR')
 

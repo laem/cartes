@@ -22,6 +22,7 @@ import sitePaths from './sitePaths'
 const Carburants = React.lazy(() => import('./carburants/Carburants'))
 const Documentation = React.lazy(() => import('./pages/Documentation'))
 const Lab = React.lazy(() => import('./ferry/Lab'))
+import Voyage from './Voyage'
 
 let tracker = devTracker
 if (NODE_ENV === 'production') {
@@ -56,6 +57,7 @@ const Router = ({}) => (
 		<div css="height: 100%">
 			<Routes>
 				<Route path="/" element={<Wiki />} />
+				<Route path="/voyage" element={<Voyage />} />
 				<Route
 					path="documentation/*"
 					element={
