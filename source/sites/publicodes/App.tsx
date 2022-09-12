@@ -104,6 +104,15 @@ const Router = ({}) => (
 						</Suspense>
 					}
 				/>
+					<Route
+					path="avion"
+					element={
+						<Navigate
+							replace
+							to="/simulateur/transport/avion/impact"
+						/>
+					}
+				/>
 			</Routes>
 		</div>
 	</>
