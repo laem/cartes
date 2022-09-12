@@ -253,7 +253,11 @@
 		</div>
 		</div>
 
-		<!-- USER AGENT DATA ATTRIBUTE  -->
+		<script>
+				if(typeof navigator != 'undefined' && /prerender/i.test(navigator.userAgent)) {
+
+										SC_DISABLE_SPEEDY = true
+}</script>
 
 
 		<!-- APP  -->
