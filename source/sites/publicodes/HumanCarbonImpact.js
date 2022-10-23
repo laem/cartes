@@ -205,7 +205,7 @@ const ImpactCard = ({
 									>
 										{title}
 									</p>
-									<BudgetBarStyle color={nodeValue < 0 ? 'ff0000' : '00ff00'}>
+									<BudgetBarStyle color={nodeValue < 0 ? 'ee5253' : '1dd1a1'}>
 										{nodeValue || '?'} {ruleUnit.numerators}
 									</BudgetBarStyle>
 								</div>
