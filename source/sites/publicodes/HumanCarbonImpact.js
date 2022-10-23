@@ -27,6 +27,7 @@ import { splitName } from 'Components/publicodesUtils'
 
 const { encodeRuleName } = utils
 import BudgetBar, { BudgetBarStyle } from './BudgetBar'
+import { questionEcoDimensions } from './Simulateur'
 
 let limitPerPeriod = (scenario) =>
 	mapObjIndexed(
@@ -78,7 +79,7 @@ export default ({ nodeValue, formule, dottedName }) => {
 		return <ImpactCard {...{ nodeValue, dottedName }} />
 
 	if (questionEco) {
-		const evaluations = ['coût', 'énergie', 'climat'].map((unit) =>
+		const evaluations = questionEcoDimensions.map((unit) =>
 			engine.evaluate('lave-linge . ' + unit)
 		)
 		return (
