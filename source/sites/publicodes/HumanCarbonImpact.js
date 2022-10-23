@@ -197,17 +197,37 @@ const ImpactCard = ({
 							{exampleName && <div>{<Emoji e={exampleName} hasText />}</div>}
 							{questionEco ? (
 								<div>
-									<p
+									<h2
 										css={`
 											white-space: initial;
 											line-height: 1rem;
+											font-size: 110%;
+											margin: 0.4rem 0;
+											margin-left: -1rem;
+											text-align: center;
+											width: calc(100% + 2rem);
 										`}
 									>
-										{title}
-									</p>
-									<BudgetBarStyle color={nodeValue < 0 ? 'ee5253' : '1dd1a1'}>
-										{nodeValue || '?'} {ruleUnit.numerators}
-									</BudgetBarStyle>
+										{nodeValue > 0
+											? 'Vous économisez'
+											: title.includes('oût')
+											? 'Ça vous coûte'
+											: title.includes('nergie')
+											? 'Vous consommez'
+											: 'Vous émettez'}
+									</h2>
+									<Link
+										to={'/documentation/' + encodeRuleName(dottedName)}
+										css="color: inherit; text-decoration: none"
+									>
+										<BudgetBarStyle color={nodeValue < 0 ? 'ee5253' : '1dd1a1'}>
+											{nodeValue ? Math.round(Math.abs(nodeValue)) : '?'}{' '}
+											{ruleUnit.numerators}
+										</BudgetBarStyle>
+									</Link>
+									<em>
+										{title.includes('oût') ? 'sur 10 ans' : 'chaque année'}
+									</em>
 								</div>
 							) : [
 									'transport . avion . impact',
