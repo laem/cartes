@@ -22,6 +22,7 @@ import sitePaths from './sitePaths'
 const Carburants = React.lazy(() => import('./carburants/Carburants'))
 const Documentation = React.lazy(() => import('./pages/Documentation'))
 const Lab = React.lazy(() => import('./ferry/Lab'))
+import Questions from './Questions'
 
 let tracker = devTracker
 if (NODE_ENV === 'production') {
@@ -85,6 +86,7 @@ const Router = ({}) => (
 					path={encodeURIComponent('crédit-climat-personnel')}
 					element={<CreditExplanation />}
 				/>
+				<Route path={encodeURIComponent('questions')} element={<Questions />} />
 
 				<Route
 					path="ferry"
@@ -104,14 +106,9 @@ const Router = ({}) => (
 						</Suspense>
 					}
 				/>
-					<Route
+				<Route
 					path="avion"
-					element={
-						<Navigate
-							replace
-							to="/simulateur/transport/avion/impact"
-						/>
-					}
+					element={<Navigate replace to="/simulateur/transport/avion/impact" />}
 				/>
 			</Routes>
 		</div>
