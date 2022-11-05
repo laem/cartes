@@ -170,7 +170,11 @@ const RuleList = ({ rules, input }) => (
 			const engine = useEngine(),
 				rule = dottedName ? engine.getRule(dottedName) : ruleObject,
 				title = rule.title || rule.titre,
-				icônes = rule.icônes || rule.rawNode?.icônes
+				icônes = rule.icônes || rule.rawNode?.icônes,
+				units =
+					rule.unités || rules.rawNode?.exposé.type === 'question éco'
+						? ['€', 'kWh', 'ⵛ']
+						: ['ⵛ']
 
 			return (
 				<li css="list-style-type: none" key={dottedName}>
@@ -216,6 +220,7 @@ const RuleList = ({ rules, input }) => (
 									border-radius: 0.5em 0 0.6em 0;
 									padding: 0 0.3rem;
 								}
+								position: relative;
 							`}
 						>
 							<Emoji e={icônes} />
@@ -231,6 +236,27 @@ const RuleList = ({ rules, input }) => (
 									title
 								)}
 							</h3>
+							<span
+								css={`
+									position: absolute;
+									right: -0.6rem;
+									bottom: -1.6rem;
+									> span {
+										background: var(--color);
+										border-radius: 1rem;
+										padding: 0.6rem;
+										line-height: 1.2rem;
+										color: var(--darkerColor);
+										height: 2rem;
+										width: 2rem;
+										display: inline-block;
+									}
+								`}
+							>
+								{units.map((unit) => (
+									<span>{unit}</span>
+								))}
+							</span>
 						</div>
 					</Link>
 				</li>
