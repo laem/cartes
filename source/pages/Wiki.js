@@ -83,12 +83,10 @@ const CategoryView = ({ exposedRules }) => {
 			css={`
 				padding-left: 0;
 				list-style: none;
-				li {
-				}
 				> li > h2 {
 					text-transform: uppercase;
 					font-size: 85%;
-					margin: 0 auto;
+					margin: 2rem auto 0.6rem;
 					text-align: center;
 					border-radius: 0.3rem;
 					width: 8.3rem;
@@ -104,6 +102,9 @@ const CategoryView = ({ exposedRules }) => {
 				}
 
 				@media (max-width: 600px) {
+					> li > h2 {
+						margin: 0.6rem auto 0.2rem;
+					}
 					li > ul {
 						display: block;
 						white-space: nowrap;
@@ -116,8 +117,13 @@ const CategoryView = ({ exposedRules }) => {
 			`}
 		>
 			<li>
-				<h2>
-					<Emoji e="⭐️" /> En vedette
+				<h2
+					css={`
+						border-bottom: 6px solid orange;
+						padding: 0.1rem;
+					`}
+				>
+					<Emoji e="🔥" /> Actualités
 				</h2>
 				<RuleList
 					{...{ rules: topElements.map((dottedName) => ({ dottedName })) }}
