@@ -126,7 +126,11 @@ const CategoryView = ({ exposedRules }) => {
 					<Emoji e="🔥" /> Actualités
 				</h2>
 				<RuleList
-					{...{ rules: topElements.map((dottedName) => ({ dottedName })) }}
+					{...{
+						rules: topElements.map((dottedName) =>
+							typeof dottedName === 'string' ? { dottedName } : dottedName
+						),
+					}}
 				/>
 			</li>
 			{categories.map(([category, rules], i) => (
@@ -161,18 +165,17 @@ const RuleList = ({ rules, input }) => (
 			align-items: center;
 		`}
 	>
-		{rules.map(({ dottedName }) => {
+		{rules.map((ruleObject) => {
+			const dottedName = ruleObject.dottedName
 			const engine = useEngine(),
-				rule = engine.getRule(dottedName),
-				{
-					title,
-					rawNode: { icônes },
-				} = rule
+				rule = dottedName ? engine.getRule(dottedName) : ruleObject,
+				title = rule.title || rule.titre,
+				icônes = rule.icônes || rule.rawNode?.icônes
 
 			return (
 				<li css="list-style-type: none" key={dottedName}>
 					<Link
-						to={'/simulateur/' + encodeRuleName(dottedName)}
+						to={rule.url || '/simulateurs/' + encodeRuleName(dottedName)}
 						css={`
 							text-decoration: none !important;
 							:hover {
