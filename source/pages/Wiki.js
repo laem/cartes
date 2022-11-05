@@ -13,6 +13,8 @@ import { useEngine } from '../components/utils/EngineContext'
 const { encodeRuleName } = utils
 const worker = new Worker()
 
+import topElements from './topElements.yaml'
+
 export default function Suggestions() {
 	const rules = useSelector((state) => state.rules)
 
@@ -86,11 +88,10 @@ const CategoryView = ({ exposedRules }) => {
 				> li > h2 {
 					text-transform: uppercase;
 					font-size: 85%;
-					width: auto;
 					margin: 0 auto;
 					text-align: center;
 					border-radius: 0.3rem;
-					width: 7rem;
+					width: 8.3rem;
 					color: var(--textColor);
 					background: var(--color);
 				}
@@ -114,10 +115,18 @@ const CategoryView = ({ exposedRules }) => {
 				}
 			`}
 		>
+			<li>
+				<h2>
+					<Emoji e="⭐️" /> En vedette
+				</h2>
+				<RuleList
+					{...{ rules: topElements.map((dottedName) => ({ dottedName })) }}
+				/>
+			</li>
 			{categories.map(([category, rules], i) => (
 				<li>
 					<h2>{category}</h2>
-					<RuleList {...{ rules, exposedRules: rules }} />
+					<RuleList {...{ rules }} />
 					{false && i === 0 && (
 						<div
 							css={`
