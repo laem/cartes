@@ -1,4 +1,8 @@
 prix à la pompe:
+  description: |
+    Le prix "théorique" du carburant à la pompe en France, incluant le prix d'achat du pétrole, la marge de raffinage et les taxes légales. 
+
+    Attention, il n'inclut pas la marge finale du distributeur qui varie beaucoup en fonction des stations et de l'actualité.
   formule:
     somme:
       - pétrole brut
