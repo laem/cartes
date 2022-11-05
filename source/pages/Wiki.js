@@ -172,9 +172,10 @@ const RuleList = ({ rules, input }) => (
 				title = rule.title || rule.titre,
 				icônes = rule.icônes || rule.rawNode?.icônes,
 				units =
-					rule.unités || rules.rawNode?.exposé.type === 'question éco'
-						? ['€', 'kWh', 'ⵛ']
-						: ['ⵛ']
+					rule.unités ||
+					(rule.rawNode?.exposé.type === 'question éco'
+						? ['€', 'kWh', 'CO2e']
+						: ['CO2e'])
 
 			return (
 				<li css="list-style-type: none" key={dottedName}>
@@ -239,22 +240,26 @@ const RuleList = ({ rules, input }) => (
 							<span
 								css={`
 									position: absolute;
-									right: -0.6rem;
-									bottom: -1.6rem;
+									right: -1rem;
+									bottom: -1.1rem;
 									> span {
 										background: var(--color);
 										border-radius: 1rem;
-										padding: 0.6rem;
-										line-height: 1.2rem;
-										color: var(--darkerColor);
-										height: 2rem;
-										width: 2rem;
+										padding: 0.1rem;
+										line-height: ${unitSize + 0.2}rem;
+										color: var(--darkestColor);
+										height: ${unitSize}rem;
+										width: ${unitSize}rem;
 										display: inline-block;
+										margin: 0 0.05rem;
+									}
+									> span img {
+										vertical-align: top;
 									}
 								`}
 							>
 								{units.map((unit) => (
-									<span>{unit}</span>
+									<span>{unitRepresentations[unit]}</span>
 								))}
 							</span>
 						</div>
@@ -264,3 +269,11 @@ const RuleList = ({ rules, input }) => (
 		})}
 	</ul>
 )
+
+const unitSize = 1.6
+
+const unitRepresentations = {
+	'€': '€',
+	CO2e: 'ⵛ',
+	kWh: <img src="/images/energy.svg" />,
+}

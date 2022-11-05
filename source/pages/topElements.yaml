@@ -6,4 +6,5 @@
 - url: /carburants/prix-à-la-pompe
   titre: Prix et origine du carburant à la pompe
   icônes: ⛽️🗺️
-  unités: €
+  unités:
+    - €
