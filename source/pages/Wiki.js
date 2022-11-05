@@ -1,16 +1,17 @@
 import byCategory from 'Components/categories'
 import Search from 'Components/Search'
+import TopBar from 'Components/TopBar'
 import { utils } from 'publicodes'
-const { encodeRuleName } = utils
 import { pick } from 'ramda'
 import React, { useEffect, useState } from 'react'
+import Highlighter from 'react-highlight-words'
 import { useSelector } from 'react-redux'
 import { Link } from 'react-router-dom'
 import Worker from 'worker-loader!Components/WikiSearchWorker.js'
 import Emoji from '../components/Emoji'
 import { useEngine } from '../components/utils/EngineContext'
+const { encodeRuleName } = utils
 const worker = new Worker()
-import TopBar from 'Components/TopBar'
 
 export default function Suggestions() {
 	const rules = useSelector((state) => state.rules)
@@ -58,7 +59,7 @@ export default function Suggestions() {
 						<>
 							<h2 css="font-size: 100%;">Résultats :</h2>
 
-							<RuleList {...{ rules: results, exposedRules }} />
+							<RuleList {...{ rules: results, exposedRules, input }} />
 						</>
 					) : (
 						<p>
@@ -136,7 +137,7 @@ const CategoryView = ({ exposedRules }) => {
 		</ul>
 	)
 }
-const RuleList = ({ rules }) => (
+const RuleList = ({ rules, input }) => (
 	<ul
 		css={`
 			display: flex;
@@ -190,7 +191,17 @@ const RuleList = ({ rules }) => (
 							`}
 						>
 							<Emoji e={icônes} />
-							<h3>{title}</h3>
+							<h3>
+								{input ? (
+									<Highlighter
+										searchWords={input.split(' ')}
+										autoEscape={true}
+										textToHighlight={title}
+									/>
+								) : (
+									title
+								)}
+							</h3>
 						</div>
 					</Link>
 				</li>
