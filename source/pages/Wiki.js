@@ -44,7 +44,7 @@ export default function Suggestions() {
 		<section className="ui__ container">
 			<TopBar />
 			<h1 css="font-size: 150%; line-height: 1.6rem; margin: 1rem">
-				Découvre l'impact de chaque geste du quotidien !
+				Découvre les impacts de chaque geste du quotidien !
 			</h1>
 			<Search
 				setInput={(input) => {
