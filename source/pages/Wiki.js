@@ -188,6 +188,16 @@ const RuleList = ({ rules, input }) => (
 									width: 9rem;
 									font-size: 110%;
 								}
+								.highlighted {
+									background-image: linear-gradient(
+										-100deg,
+										var(--color),
+										var(--lightColor) 95%,
+										var(--color)
+									);
+									border-radius: 0.5em 0 0.6em 0;
+									padding: 0 0.3rem;
+								}
 							`}
 						>
 							<Emoji e={icônes} />
@@ -197,6 +207,7 @@ const RuleList = ({ rules, input }) => (
 										searchWords={input.split(' ')}
 										autoEscape={true}
 										textToHighlight={title}
+										highlightClassName="highlighted"
 									/>
 								) : (
 									title
