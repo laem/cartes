@@ -258,9 +258,10 @@ const RuleList = ({ rules, input }) => (
 									}
 								`}
 							>
-								{units.map((unit) => (
-									<span>{unitRepresentations[unit]}</span>
-								))}
+								{units.map((unit) => {
+									const { text, title } = unitRepresentations[unit]
+									return <span title={title}>{text}</span>
+								})}
 							</span>
 						</div>
 					</Link>
@@ -273,7 +274,10 @@ const RuleList = ({ rules, input }) => (
 const unitSize = 1.6
 
 const unitRepresentations = {
-	'€': '€',
-	CO2e: 'ⵛ',
-	kWh: <img src="/images/energy.svg" />,
+	'€': { text: '€', title: 'Combien ça vous coûte ?' },
+	CO2e: { text: 'ⵛ', title: 'Combien de CO₂ₑ ça émet (empreinte climat) ?' },
+	kWh: {
+		text: <img src="/images/energy.svg" />,
+		title: "Combien d'énergie ça consomme ?",
+	},
 }
