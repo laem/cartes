@@ -170,12 +170,17 @@ const RuleList = ({ rules, input }) => (
 			const engine = useEngine(),
 				rule = dottedName ? engine.getRule(dottedName) : ruleObject,
 				title = rule.title || rule.titre,
-				icônes = rule.icônes || rule.rawNode?.icônes
+				icônes = rule.icônes || rule.rawNode?.icônes,
+				units =
+					rule.unités ||
+					(rule.rawNode?.exposé.type === 'question éco'
+						? ['€', 'kWh', 'CO2e']
+						: ['CO2e'])
 
 			return (
 				<li css="list-style-type: none" key={dottedName}>
 					<Link
-						to={rule.url || '/simulateurs/' + encodeRuleName(dottedName)}
+						to={rule.url || '/simulateur/' + encodeRuleName(dottedName)}
 						css={`
 							text-decoration: none !important;
 							:hover {
@@ -188,7 +193,7 @@ const RuleList = ({ rules, input }) => (
 							css={`
 								width: 9rem;
 								margin: 0.6rem 0.6rem 0.6rem 0rem !important;
-								min-height: 7.5rem;
+								height: 8.5rem;
 								display: flex;
 								flex-direction: column;
 								justify-content: center;
@@ -216,6 +221,7 @@ const RuleList = ({ rules, input }) => (
 									border-radius: 0.5em 0 0.6em 0;
 									padding: 0 0.3rem;
 								}
+								position: relative;
 							`}
 						>
 							<Emoji e={icônes} />
@@ -231,6 +237,32 @@ const RuleList = ({ rules, input }) => (
 									title
 								)}
 							</h3>
+							<span
+								css={`
+									position: absolute;
+									right: -1rem;
+									bottom: -1.1rem;
+									> span {
+										background: var(--color);
+										border-radius: 1rem;
+										padding: 0.1rem;
+										line-height: ${unitSize + 0.2}rem;
+										color: var(--darkestColor);
+										height: ${unitSize}rem;
+										width: ${unitSize}rem;
+										display: inline-block;
+										margin: 0 0.05rem;
+									}
+									> span img {
+										vertical-align: top;
+									}
+								`}
+							>
+								{units.map((unit) => {
+									const { text, title } = unitRepresentations[unit]
+									return <span title={title}>{text}</span>
+								})}
+							</span>
 						</div>
 					</Link>
 				</li>
@@ -238,3 +270,14 @@ const RuleList = ({ rules, input }) => (
 		})}
 	</ul>
 )
+
+const unitSize = 1.6
+
+const unitRepresentations = {
+	'€': { text: '€', title: 'Combien ça vous coûte ?' },
+	CO2e: { text: 'ⵛ', title: 'Combien de CO₂ₑ ça émet (empreinte climat) ?' },
+	kWh: {
+		text: <img src="/images/energy.svg" />,
+		title: "Combien d'énergie ça consomme ?",
+	},
+}

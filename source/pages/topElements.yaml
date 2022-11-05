@@ -1,9 +1,10 @@
 - transport . ferry . empreinte du voyage
-- lave-linge . renouveler
 - transport . avion . impact
-- plaque de cuisson . impact
 - piscine . empreinte
+- lave-linge . renouveler
+- plaque de cuisson . impact
 - url: /carburants/prix-à-la-pompe
   titre: Prix et origine du carburant à la pompe
   icônes: ⛽️🗺️
-  unités: €
+  unités:
+    - €
