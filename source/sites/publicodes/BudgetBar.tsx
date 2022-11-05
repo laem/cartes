@@ -1,6 +1,7 @@
 import { utils } from 'publicodes'
 import React from 'react'
 import { Link } from 'react-router-dom'
+import styled from 'styled-components'
 import tinygradient from 'tinygradient'
 import { findContrastedTextColor } from '../../components/utils/colors'
 
@@ -29,35 +30,7 @@ export default ({
 			css="text-decoration: none; color: inherit"
 			to="/crédit-climat-personnel"
 		>
-			<div
-				css={`
-					min-width: 8rem;
-					display: flex;
-					justify-content: center;
-					align-items: center;
-					font-size: ${exampleName ? '140%' : '220%'};
-					background: ${color};
-					height: 2.6rem;
-					color: ${findContrastedTextColor(color.toHex())};
-					${noExample
-						? `
-					padding: 2rem 0 1.8rem
-					`
-						: `padding-top: 0.3rem`};
-					small {
-						font-size: 60%;
-						max-width: 45%;
-						white-space: normal;
-						line-height: 1rem;
-						margin-left: 0.4rem;
-					}
-					--shadow-color: 210deg 75% 31%;
-					box-shadow: 0.3px 0.5px 0.7px hsl(var(--shadow-color) / 0.36),
-						0.8px 1.6px 2px -0.8px hsl(var(--shadow-color) / 0.36),
-						2.1px 4.1px 5.2px -1.7px hsl(var(--shadow-color) / 0.36),
-						5px 10px 12.6px -2.5px hsl(var(--shadow-color) / 0.36);
-				`}
-			>
+			<BudgetBarStyle largeText={!exampleName} color={color.toHex()}>
 				<div
 					css={`
 						font-weight: bold;
@@ -66,7 +39,36 @@ export default ({
 					{threshold ? `${multiplicator} x` : `${percent} %`}
 				</div>
 				<small>{threshold ? 'le' : 'du'} budget annuel</small>
-			</div>
+			</BudgetBarStyle>
 		</Link>
 	)
 }
+
+export const BudgetBarStyle = styled.div`
+	min-width: 8rem;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	font-size: ${({ largeText }) => (!largeText ? '140%' : '220%')};
+	background: ${(props) => '#' + props.color};
+	height: 2.6rem;
+	color: ${(props) => findContrastedTextColor(props.color)};
+	${(props) =>
+		props.largeText
+			? `
+					padding: 2rem 0 1.8rem
+					`
+			: `padding-top: 0.3rem`};
+	small {
+		font-size: 60%;
+		max-width: 45%;
+		white-space: normal;
+		line-height: 1rem;
+		margin-left: 0.4rem;
+	}
+	--shadow-color: 210deg 75% 31%;
+	box-shadow: 0.3px 0.5px 0.7px hsl(var(--shadow-color) / 0.36),
+		0.8px 1.6px 2px -0.8px hsl(var(--shadow-color) / 0.36),
+		2.1px 4.1px 5.2px -1.7px hsl(var(--shadow-color) / 0.36),
+		5px 10px 12.6px -2.5px hsl(var(--shadow-color) / 0.36);
+`

@@ -23,9 +23,11 @@ import {
 import * as chrono from './chrono'
 import { humanWeight } from './HumanWeight'
 import scenarios from './scenarios.yaml'
+import { splitName } from 'Components/publicodesUtils'
 
 const { encodeRuleName } = utils
-import BudgetBar from './BudgetBar'
+import BudgetBar, { BudgetBarStyle } from './BudgetBar'
+import { questionEcoDimensions } from './Simulateur'
 
 let limitPerPeriod = (scenario) =>
 	mapObjIndexed(
@@ -55,7 +57,8 @@ let humanCarbonImpactData = (scenario, nodeValue) => {
 export default ({ nodeValue, formule, dottedName }) => {
 	const rules = useSelector((state) => state.rules),
 		rule = rules[dottedName],
-		examplesSource = rule.exposé?.['exemples via suggestions']
+		examplesSource = rule.exposé?.['exemples via suggestions'],
+		questionEco = rule.exposé?.type === 'question éco'
 
 	const engine = useEngine(),
 		nextQuestions = useNextQuestions(),
@@ -72,8 +75,23 @@ export default ({ nodeValue, formule, dottedName }) => {
 			}
 		})
 
-	if (!examplesSource || dirtySituation)
+	if (!questionEco && (!examplesSource || dirtySituation))
 		return <ImpactCard {...{ nodeValue, dottedName }} />
+
+	if (questionEco) {
+		const evaluations = questionEcoDimensions.map((unit) =>
+			engine.evaluate('lave-linge . ' + unit)
+		)
+		return (
+			<CardList>
+				{evaluations.map((evaluation) => (
+					<li key={dottedName}>
+						<ImpactCard {...{ ...evaluation, questionEco: true }} />
+					</li>
+				))}
+			</CardList>
+		)
+	}
 
 	const suggestions = rules[examplesSource].suggestions
 
@@ -85,47 +103,54 @@ export default ({ nodeValue, formule, dottedName }) => {
 	})
 
 	return (
-		<ul
-			css={`
-				flex-wrap: nowrap;
-				overflow-x: auto;
-				white-space: nowrap;
-				justify-content: normal;
-				scrollbar-width: none;
-				display: flex;
-				list-style-type: none;
-				justify-content: start;
-				padding: 0;
-				height: auto;
-				margin-bottom: 0;
-				width: calc(100vw - 1.5rem);
-				transform: translateX(-1.5rem);
-				@media (min-width: 800px) {
-					/* TODO */
-					width: fit-content;
-					position: relative;
-					left: calc(50%);
-					transform: translateX(-50%);
-					overflow: initial;
-					justify-content: space-evenly;
-				}
-				background: white;
-				border-radius: 0.3rem;
-				li {
-					margin: 0 0.1rem;
-				}
-			`}
-		>
+		<CardList>
 			{evaluations.map(({ nodeValue, dottedName, exampleName }) => (
 				<li key={exampleName}>
 					<ImpactCard {...{ nodeValue, dottedName, exampleName }} />
 				</li>
 			))}
-		</ul>
+		</CardList>
 	)
 }
 
-const ImpactCard = ({ nodeValue, dottedName, exampleName }) => {
+const CardList = styled.ul`
+	flex-wrap: nowrap;
+	overflow-x: auto;
+	white-space: nowrap;
+	justify-content: normal;
+	scrollbar-width: none;
+	display: flex;
+	list-style-type: none;
+	justify-content: start;
+	padding: 0;
+	height: auto;
+	margin-bottom: 0;
+	width: calc(100vw - 1.5rem);
+	transform: translateX(-1.5rem);
+	@media (min-width: 800px) {
+		/* TODO */
+		width: fit-content;
+		position: relative;
+		left: calc(50%);
+		transform: translateX(-50%);
+		overflow: initial;
+		justify-content: space-evenly;
+	}
+	background: white;
+	border-radius: 0.3rem;
+	li {
+		margin: 0 0.1rem;
+	}
+`
+
+const ImpactCard = ({
+	nodeValue,
+	dottedName,
+	title,
+	exampleName,
+	questionEco,
+	unit: ruleUnit,
+}) => {
 	const scenario = useSelector((state) => state.scenario)
 	const budget = scenarios[scenario]['crédit carbone par personne'] * 1000
 
@@ -145,9 +170,10 @@ const ImpactCard = ({ nodeValue, dottedName, exampleName }) => {
 					padding: 0.4em;
 					margin: 0 auto;
 					color: var(--textColor);
+					max-width: 13rem;
 				`}
 			>
-				{closestPeriodLabel === 'négligeable' ? (
+				{!questionEco && closestPeriodLabel === 'négligeable' ? (
 					<span>Impact négligeable {emoji('😎')}</span>
 				) : (
 					<>
@@ -170,10 +196,44 @@ const ImpactCard = ({ nodeValue, dottedName, exampleName }) => {
 							`}
 						>
 							{exampleName && <div>{<Emoji e={exampleName} hasText />}</div>}
-							{[
-								'transport . avion . impact',
-								'transport . ferry . empreinte du voyage',
-							].includes(dottedName) ? (
+							{questionEco ? (
+								<div>
+									<h2
+										css={`
+											white-space: initial;
+											line-height: 1rem;
+											font-size: 110%;
+											margin: 0.4rem 0;
+											margin-left: -1rem;
+											text-align: center;
+											width: calc(100% + 2rem);
+										`}
+									>
+										{nodeValue > 0
+											? 'Vous économisez'
+											: title.includes('oût')
+											? 'Ça vous coûte'
+											: title.includes('nergie')
+											? 'Vous consommez'
+											: 'Vous émettez'}
+									</h2>
+									<Link
+										to={'/documentation/' + encodeRuleName(dottedName)}
+										css="color: inherit; text-decoration: none"
+									>
+										<BudgetBarStyle color={nodeValue < 0 ? 'ee5253' : '1dd1a1'}>
+											{nodeValue ? Math.round(Math.abs(nodeValue)) : '?'}{' '}
+											{ruleUnit.numerators}
+										</BudgetBarStyle>
+									</Link>
+									<em>
+										{title.includes('oût') ? 'sur 10 ans' : 'chaque année'}
+									</em>
+								</div>
+							) : [
+									'transport . avion . impact',
+									'transport . ferry . empreinte du voyage',
+							  ].includes(dottedName) ? (
 								<BudgetBar
 									{...{
 										noExample: !exampleName,
@@ -225,7 +285,11 @@ const ImpactCard = ({ nodeValue, dottedName, exampleName }) => {
 										border-radius: 0.4rem;
 									`}
 								>
-									{value} {unit} CO₂e
+									{questionEco ? null : (
+										<span>
+											{value} {unit} CO₂e
+										</span>
+									)}
 								</p>
 							</Link>
 						</div>

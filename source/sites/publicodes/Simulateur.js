@@ -30,6 +30,7 @@ import { capitalizeFirst } from './chart/Bar'
 import { Almost, Done, Half, NotBad, QuiteGood } from './Congratulations'
 import AvionExplanation from './AvionExplanation'
 import Lab from './ferry/Lab'
+import { parentName } from '../../components/publicodesUtils'
 
 const eqValues = compose(isEmpty, symmetricDifference)
 export const colorScale = [
@@ -56,13 +57,25 @@ const getBackgroundColor = (score) => {
 	return colors[Math.round(cursor)]
 }
 
+export const questionEcoDimensions = ['coût', 'énergie', 'climat']
+
 export default ({}) => {
 	const dispatch = useDispatch()
 	const urlParams = useParams()
 	const rawObjective = urlParams['*'],
-		decoded = utils.decodeRuleName(rawObjective),
-		config = {
-			objectifs: [decoded],
+		decoded = utils.decodeRuleName(rawObjective)
+
+	const rules = useSelector((state) => state.rules),
+		decodedRule = rules[decoded],
+		objectifs =
+			decodedRule.exposé?.type === 'question éco'
+				? questionEcoDimensions.map(
+						(dimension) => parentName(decoded) + ' . ' + dimension
+				  )
+				: [decoded]
+
+	const config = {
+			objectifs,
 			questions: {
 				'non prioritaires':
 					decoded === 'transport . avion . impact'
