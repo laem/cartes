@@ -188,7 +188,7 @@ const RuleList = ({ rules, input }) => (
 							css={`
 								width: 9rem;
 								margin: 0.6rem 0.6rem 0.6rem 0rem !important;
-								min-height: 7.5rem;
+								height: 8rem;
 								display: flex;
 								flex-direction: column;
 								justify-content: center;
