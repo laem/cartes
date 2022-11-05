@@ -180,7 +180,7 @@ const RuleList = ({ rules, input }) => (
 			return (
 				<li css="list-style-type: none" key={dottedName}>
 					<Link
-						to={rule.url || '/simulateurs/' + encodeRuleName(dottedName)}
+						to={rule.url || '/simulateur/' + encodeRuleName(dottedName)}
 						css={`
 							text-decoration: none !important;
 							:hover {
