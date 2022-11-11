@@ -4,6 +4,9 @@ import React from 'https://esm.sh/react@18.2.0'
 import { ImageResponse } from 'https://deno.land/x/og_edge/mod.ts'
 
 export default async function handler(req: Request) {
+	const { searchParams } = new URL(req.url)
+	const dottedName = searchParams.get('dottedName')
+
 	return new ImageResponse(
 		(
 			<div
@@ -18,6 +21,7 @@ export default async function handler(req: Request) {
 				}}
 			>
 				Hello!
+				{dottedName}
 			</div>
 		)
 	)
