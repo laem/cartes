@@ -3,26 +3,45 @@
 import React from 'https://esm.sh/react@18.2.0'
 import { ImageResponse } from 'https://deno.land/x/og_edge/mod.ts'
 
-export default async function handler(req: Request) {
+export default function handler(req: Request) {
 	const { searchParams } = new URL(req.url)
-	const dottedName = searchParams.get('dottedName')
+	const username = searchParams.get('username')
 
 	return new ImageResponse(
 		(
 			<div
 				style={{
+					fontSize: 60,
+					color: 'black',
+					background: '#f6f6f6',
 					width: '100%',
 					height: '100%',
-					display: 'flex',
-					alignItems: 'center',
+					paddingTop: 50,
+					flexDirection: 'column',
 					justifyContent: 'center',
-					fontSize: 128,
-					background: 'lavender',
+					alignItems: 'center',
+					display: 'flex',
 				}}
 			>
-				Hello!
-				{dottedName}
+				{/* eslint-disable-next-line @next/next/no-img-element */}
+				<img
+					alt="avatar"
+					width="256"
+					src={`https://github.com/${username || 'netlify'}.png`}
+					style={{
+						borderRadius: 128,
+					}}
+				/>
+				{username ? (
+					<p>YOYOgithub.com/{username}</p>
+				) : (
+					<p>Mon nom d'ut /?username=ascorbic</p>
+				)}
 			</div>
-		)
+		),
+		{
+			width: 1200,
+			height: 630,
+		}
 	)
 }
