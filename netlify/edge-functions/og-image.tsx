@@ -2,6 +2,7 @@
 
 import React from 'https://esm.sh/react@18.2.0'
 import { ImageResponse } from 'https://deno.land/x/og_edge/mod.ts'
+import Emoji from '../../source/components/Emoji.tsx'
 
 export default function handler(req: Request) {
 	const { searchParams } = new URL(req.url)
@@ -33,9 +34,12 @@ export default function handler(req: Request) {
 					}}
 				/>
 				{username ? (
-					<p>YOYOgithub.com/{username}</p>
+					<>
+						<p>YOYOgithub.com/{username}</p>
+						<Emoji e="🗽" />
+					</>
 				) : (
-					<p>Mon nom d'ut /?username=ascorbic</p>
+					<p>Mon nozdazdm d'ut /?username=ascorbic</p>
 				)}
 			</div>
 		),
