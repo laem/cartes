@@ -11,5 +11,5 @@
   publish = "dist" # If you use a _redirect file, provide the path to your static content folder
 
 [[edge_functions]]
-  function = "hello"
-  path = "/test"
+  function = "og-image"
+  path = "/og-image"
