@@ -201,7 +201,9 @@ const Simulateur = ({ objective }) => {
 					description={rule.exposé?.description || rule.description}
 					image={
 						rule.exposé?.image ||
-						`https://aejkrqosjq.cloudimg.io/v7/https://futur.eco/.netlify/functions/ending-screenshot?pageToScreenshot=${window.location}`
+						`/og-image?title=${rule.exposé?.titre || rule.titre}&emojis=${
+							rule.icônes
+						}`
 					} // we could simply render SVG emojis, but SVG images don't work in og tags, we'll have to convert them
 				/>
 

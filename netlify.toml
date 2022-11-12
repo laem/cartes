@@ -1,11 +1,19 @@
+[build]
+publish = "dist"
+
 [[redirects]]
-  from = "/*"
-  to = "/publicodes.html"
-  status = 200
+from = "/*"
+to = "/publicodes.html"
+status = 200
 
 [dev]
-  framework = "#custom"
-  command = "yarn start" # Command to start your dev server
-  port = 8888 # The port that the netlify dev will be accessible on
-  targetPort = 8080
-  publish = "dist" # If you use a _redirect file, provide the path to your static content folder
+framework = "#custom"
+command = "yarn start" # Command to start your dev server
+port = 8888 # The port that the netlify dev will be accessible on
+targetPort = 8080
+publish = "dist" # If you use a _redirect file, provide the path to your static content folder
+
+[[edge_functions]]
+function = "og-image"
+path = "/og-image"
+
