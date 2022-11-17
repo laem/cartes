@@ -199,11 +199,11 @@ const Simulateur = ({ objective }) => {
 				<Meta
 					title={rule.exposé?.titre || rule.titre}
 					description={rule.exposé?.description || rule.description}
-					image={
-						rule.exposé?.image ||
+					image={ 
+						rule.exposé?.image || ("https://futur.eco" +
 						`/og-image?title=${rule.exposé?.titre || rule.titre}&emojis=${
 							rule.icônes
-						}`
+						}`)
 					} // we could simply render SVG emojis, but SVG images don't work in og tags, we'll have to convert them
 				/>
 
