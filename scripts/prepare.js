@@ -1,4 +1,4 @@
-require('./fetch-releases.js')
+//require('./fetch-releases.js')
 
 // on betagouv/ecolab-climat, the rules are fetched in the browser from ecolab-data
 // require('./dottednames.js')

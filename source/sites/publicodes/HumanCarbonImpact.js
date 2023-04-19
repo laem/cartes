@@ -1,15 +1,9 @@
 import animate from 'Components/ui/animate'
 import { useNextQuestions } from 'Components/utils/useNextQuestion'
-import {
-	motion,
-	motionValue,
-	useMotionValue,
-	useSpring,
-	useTransform,
-} from 'framer-motion'
+import { motion, useMotionValue, useSpring } from 'framer-motion'
 import { utils } from 'publicodes'
 import { mapObjIndexed, toPairs } from 'ramda'
-import React, { useEffect, useState } from 'react'
+import { useEffect } from 'react'
 import emoji from 'react-easy-emoji'
 import { useSelector } from 'react-redux'
 import { Link } from 'react-router-dom'
@@ -20,14 +14,13 @@ import {
 	answeredQuestionsSelector,
 	situationSelector,
 } from '../../selectors/simulationSelectors'
+import BudgetBar, { BudgetBarStyle } from './BudgetBar'
 import * as chrono from './chrono'
 import { humanWeight } from './HumanWeight'
 import scenarios from './scenarios.yaml'
-import { splitName } from 'Components/publicodesUtils'
+import { questionEcoDimensions } from './Simulateur'
 
 const { encodeRuleName } = utils
-import BudgetBar, { BudgetBarStyle } from './BudgetBar'
-import { questionEcoDimensions } from './Simulateur'
 
 let limitPerPeriod = (scenario) =>
 	mapObjIndexed(
