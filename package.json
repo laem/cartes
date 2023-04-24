@@ -128,7 +128,7 @@
 		"webpack-dev-server": "^4.3.0",
 		"whatwg-fetch": "^3.6.2",
 		"y-webrtc": "^10.2.3",
-		"yaml": "^2.0.1",
+		"yaml": "^2.2.2",
 		"yarn": "^1.22.10",
 		"yjs": "^13.5.35"
 	},
