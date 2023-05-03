@@ -25,7 +25,7 @@ La catastrophe climatique n'est plus une menace lointaine, c'est une actualité.
 			<a href="https://github.com/laem/futureco"> est libre</a>. Plongez-vous
 			dans nos modèles carbone en explorant la{' '}
 			<Link to="/documentation">documentation</Link>. Ce site respecte votre{' '}
-			<Link to="/documentation">vie privée</Link>.
+			<Link to="/vie-privée">vie privée</Link>.
 		</p>
 	</section>
 )
