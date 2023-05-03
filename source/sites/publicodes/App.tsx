@@ -1,5 +1,4 @@
 import 'Components/ui/index.css'
-import News from 'Pages/News'
 import Wiki from 'Pages/Wiki'
 import React, { Suspense } from 'react'
 import { useTranslation } from 'react-i18next'
@@ -16,13 +15,13 @@ import CreditExplanation from './CreditExplanation'
 import GameOver from './GameOver'
 import Instructions from './Instructions'
 import Privacy from './Privacy'
+import Questions from './Questions'
 import Scenarios from './Scenarios'
 import Simulateur from './Simulateur'
 import sitePaths from './sitePaths'
 const Carburants = React.lazy(() => import('./carburants/Carburants'))
 const Documentation = React.lazy(() => import('./pages/Documentation'))
 const Lab = React.lazy(() => import('./ferry/Lab'))
-import Questions from './Questions'
 
 let tracker = devTracker
 if (NODE_ENV === 'production') {
@@ -71,7 +70,6 @@ const Router = ({}) => (
 				<Route path="contribuer/:input" element={<Contribution />} />
 				<Route path={encodeURIComponent('à-propos')} element={<About />} />
 				<Route path={encodeURIComponent('vie-privée')} element={<Privacy />} />
-				<Route path={encodeURIComponent('nouveautés')} element={<News />} />
 				<Route
 					path="carburants/*"
 					element={
