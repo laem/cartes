@@ -136,7 +136,6 @@
 		"styled-components": "^5"
 	},
 	"scripts": {
-		"prepare": "node scripts/prepare.js",
 		"start": "webpack serve --mode development --config webpack.dev.js",
 		"compile": "NODE_ENV=production yarn run webpack --config webpack.prod.js",
 		"stats": "webpack --config webpack.prod.js --profile --json > stats.json",
