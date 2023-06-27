@@ -6,6 +6,12 @@ from = "/*"
 to = "/publicodes.html"
 status = 200
 
+[[redirects]]
+from = "/national/*"
+to = "https://fu2.netlify.app/:splat"
+status = 200
+force = false
+
 [dev]
 framework = "#custom"
 command = "yarn start" # Command to start your dev server
@@ -16,4 +22,5 @@ publish = "dist" # If you use a _redirect file, provide the path to your static 
 [[edge_functions]]
 function = "og-image"
 path = "/og-image"
+
 
