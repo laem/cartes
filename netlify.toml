@@ -9,7 +9,7 @@ force = false
 
 [[redirects]]
 from = "/*"
-to = "/publicodes.html"
+to = "/index.html"
 status = 200
 
 
