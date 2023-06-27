@@ -2,15 +2,16 @@
 publish = "dist"
 
 [[redirects]]
-from = "/*"
-to = "/publicodes.html"
-status = 200
-
-[[redirects]]
 from = "/national/*"
 to = "https://fu2.netlify.app/:splat"
 status = 200
 force = false
+
+[[redirects]]
+from = "/*"
+to = "/publicodes.html"
+status = 200
+
 
 [dev]
 framework = "#custom"
