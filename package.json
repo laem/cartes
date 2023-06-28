@@ -69,6 +69,7 @@
 		"@babel/runtime": "^7.3.4",
 		"@pmmmwh/react-refresh-webpack-plugin": "^0.5.1",
 		"@rehooks/local-storage": "^2.4.4",
+		"@vercel/og": "^0.5.8",
 		"add": "^2.0.6",
 		"babel-plugin-webpack-alias": "^2.1.2",
 		"buffer": "^6.0.3",
