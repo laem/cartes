@@ -3,7 +3,7 @@ publish = "dist"
 
 [[redirects]]
 from = "/national/*"
-to = "https://fu2.netlify.app/national/:splat"
+to = "https://fu2-hthj.vercel.app/national/:splat"
 status = 200
 force = false
 
