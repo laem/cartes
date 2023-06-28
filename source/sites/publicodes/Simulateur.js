@@ -202,9 +202,11 @@ const Simulateur = ({ objective }) => {
 					image={
 						rule.exposé?.image ||
 						'https://futur.eco' +
-							`/${NEXT_PUBLIC_VERCEL_ENV ? `api/` : ``}og-image?title=${
-								rule.exposé?.titre || rule.titre
-							}&emojis=${rule.icônes}`
+							`/${
+								process.env.NEXT_PUBLIC_VERCEL_ENV ? `api/` : ``
+							}og-image?title=${rule.exposé?.titre || rule.titre}&emojis=${
+								rule.icônes
+							}`
 					} // we could simply render SVG emojis, but SVG images don't work in og tags, we'll have to convert them
 				/>
 
