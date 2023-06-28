@@ -7,6 +7,11 @@
 		{
 			"source": "/national/:match*",
 			"destination": "https://fu2-hthj.vercel.app/national/:match*"
-		}
+		},
+		{
+			"source": "/api/:match*",
+			"destination": "/api/:match*"
+		},
+		{ "source": "/(.*)", "destination": "/" }
 	]
 }
