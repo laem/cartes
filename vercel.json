@@ -1,0 +1,8 @@
+{
+	"rewrites": [
+		{
+			"source": "/national/:match*",
+			"destination": "https://fu2-hthj.vercel.app/national/:match*"
+		}
+	]
+}
