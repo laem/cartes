@@ -1,15 +1,9 @@
 import animate from 'Components/ui/animate'
 import { useNextQuestions } from 'Components/utils/useNextQuestion'
-import {
-	motion,
-	motionValue,
-	useMotionValue,
-	useSpring,
-	useTransform,
-} from 'framer-motion'
+import { motion, useMotionValue, useSpring } from 'framer-motion'
 import { utils } from 'publicodes'
 import { mapObjIndexed, toPairs } from 'ramda'
-import React, { useEffect, useState } from 'react'
+import { useEffect } from 'react'
 import emoji from 'react-easy-emoji'
 import { useSelector } from 'react-redux'
 import { Link } from 'react-router-dom'
@@ -20,9 +14,11 @@ import {
 	answeredQuestionsSelector,
 	situationSelector,
 } from '../../selectors/simulationSelectors'
+import BudgetBar, { BudgetBarStyle } from './BudgetBar'
 import * as chrono from './chrono'
 import { humanWeight } from './HumanWeight'
 import scenarios from './scenarios.yaml'
+import { questionEcoDimensions } from './Simulateur'
 
 const { encodeRuleName } = utils
 
@@ -41,6 +37,7 @@ let findPeriod = (scenario, nodeValue) =>
 		.find(([, limit]) => limit <= Math.abs(nodeValue))
 
 let humanCarbonImpactData = (scenario, nodeValue) => {
+	console.log('fp', nodeValue)
 	let [closestPeriod, closestPeriodValue] = findPeriod(scenario, nodeValue),
 		factor = Math.round(nodeValue / closestPeriodValue),
 		closestPeriodLabel = closestPeriod.startsWith('demi')
@@ -53,72 +50,104 @@ let humanCarbonImpactData = (scenario, nodeValue) => {
 export default ({ nodeValue, formule, dottedName }) => {
 	const rules = useSelector((state) => state.rules),
 		rule = rules[dottedName],
-		examplesSource = rule.exposé?.['exemples via suggestions']
+		examplesSource = rule.exposé?.['exemples via suggestions'],
+		questionEco = rule.exposé?.type === 'question éco'
 
 	const engine = useEngine(),
 		nextQuestions = useNextQuestions(),
 		foldedSteps = useSelector(answeredQuestionsSelector),
 		situation = useSelector(situationSelector),
-		dirtySituation = Object.keys(situation).find((question) =>
-			[...nextQuestions, ...foldedSteps].includes(question)
-		)
+		dirtySituation = Object.keys(situation).find((question) => {
+			try {
+				return (
+					[...nextQuestions, ...foldedSteps].includes(question) &&
+					!engine.getRule(question).rawNode.injecté
+				)
+			} catch (e) {
+				return false
+			}
+		})
 
-	if (!examplesSource || dirtySituation)
+	if (!questionEco && (!examplesSource || dirtySituation))
 		return <ImpactCard {...{ nodeValue, dottedName }} />
+
+	if (questionEco) {
+		const evaluations = questionEcoDimensions.map((unit) =>
+			engine.evaluate('lave-linge . ' + unit)
+		)
+		return (
+			<CardList>
+				{evaluations.map((evaluation) => (
+					<li key={dottedName}>
+						<ImpactCard {...{ ...evaluation, questionEco: true }} />
+					</li>
+				))}
+			</CardList>
+		)
+	}
 
 	const suggestions = rules[examplesSource].suggestions
 
 	const evaluations = Object.entries(suggestions).map(([k, v]) => {
-		const situation = { [examplesSource]: v }
-		engine.setSituation(situation)
+		engine.setSituation({ ...situation, [examplesSource]: v })
 		const evaluation = engine.evaluate(dottedName)
-		engine.setSituation({})
+		engine.setSituation(situation)
 		return { ...evaluation, exampleName: k }
 	})
 
 	return (
-		<ul
-			css={`
-				flex-wrap: nowrap;
-				overflow-x: auto;
-				white-space: nowrap;
-				justify-content: normal;
-				scrollbar-width: none;
-				display: flex;
-				list-style-type: none;
-				justify-content: start;
-				padding: 0;
-				height: auto;
-				margin-bottom: 0;
-				width: calc(100vw - 1.5rem);
-				transform: translateX(-1.5rem);
-				@media (min-width: 800px) {
-					/* TODO */
-					width: fit-content;
-					position: relative;
-					left: calc(50%);
-					transform: translateX(-50%);
-					overflow: initial;
-					justify-content: space-evenly;
-				}
-				background: white;
-				border-radius: 0.3rem;
-				li {
-					margin: 0 0.1rem;
-				}
-			`}
-		>
+		<CardList>
 			{evaluations.map(({ nodeValue, dottedName, exampleName }) => (
-				<li>
+				<li key={exampleName}>
 					<ImpactCard {...{ nodeValue, dottedName, exampleName }} />
 				</li>
 			))}
-		</ul>
+		</CardList>
 	)
 }
 
-const ImpactCard = ({ nodeValue, dottedName, exampleName }) => {
+const CardList = styled.ul`
+	flex-wrap: nowrap;
+	overflow-x: auto;
+	white-space: nowrap;
+	justify-content: normal;
+	scrollbar-width: none;
+	display: flex;
+	list-style-type: none;
+	justify-content: start;
+	padding: 0;
+	height: auto;
+	margin-bottom: 0;
+	width: calc(100vw - 1.5rem);
+	transform: translateX(-1.5rem);
+	@media (min-width: 800px) {
+		/* TODO */
+		width: fit-content;
+		position: relative;
+		left: calc(50%);
+		transform: translateX(-50%);
+		overflow: initial;
+		justify-content: space-evenly;
+	}
+	background: white;
+	border-radius: 0.3rem;
+	li {
+		margin: 0 0.1rem;
+	}
+`
+
+const ImpactCard = ({
+	nodeValue,
+	dottedName,
+	title,
+	exampleName,
+	questionEco,
+	unit: ruleUnit,
+}) => {
 	const scenario = useSelector((state) => state.scenario)
+	const budget = scenarios[scenario]['crédit carbone par personne'] * 1000
+
+	if (nodeValue == null) return
 	const [value, unit] = humanWeight(nodeValue)
 	let { closestPeriodLabel, closestPeriod, factor } = humanCarbonImpactData(
 		scenario,
@@ -134,9 +163,10 @@ const ImpactCard = ({ nodeValue, dottedName, exampleName }) => {
 					padding: 0.4em;
 					margin: 0 auto;
 					color: var(--textColor);
+					max-width: 13rem;
 				`}
 			>
-				{closestPeriodLabel === 'négligeable' ? (
+				{!questionEco && closestPeriodLabel === 'négligeable' ? (
 					<span>Impact négligeable {emoji('😎')}</span>
 				) : (
 					<>
@@ -151,35 +181,91 @@ const ImpactCard = ({ nodeValue, dottedName, exampleName }) => {
 								display: flex;
 								flex-direction: column;
 								justify-content: space-evenly;
+								img[alt*='↔'] {
+									filter: invert(1);
+									margin: 0 0.4rem;
+									width: 1.1rem;
+								}
 							`}
 						>
 							{exampleName && <div>{<Emoji e={exampleName} hasText />}</div>}
-							<div
-								css={`
-									display: flex;
-									justify-content: center;
-									align-items: center;
-									font-size: ${exampleName ? '140%' : '220%'};
-									img {
-										width: 1.6rem;
-										margin-left: 0.4rem;
-										vertical-align: bottom;
-									}
-								`}
-							>
+							{questionEco ? (
 								<div>
-									{factor +
-										' ' +
-										closestPeriodLabel +
-										(closestPeriod[closestPeriod.length - 1] !== 's' &&
-										Math.abs(factor) > 1
-											? 's'
-											: '')}
+									<h2
+										css={`
+											white-space: initial;
+											line-height: 1rem;
+											font-size: 110%;
+											margin: 0.4rem 0;
+											margin-left: -1rem;
+											text-align: center;
+											width: calc(100% + 2rem);
+										`}
+									>
+										{nodeValue > 0
+											? 'Vous économisez'
+											: title.includes('oût')
+											? 'Ça vous coûte'
+											: title.includes('nergie')
+											? 'Vous consommez'
+											: 'Vous émettez'}
+									</h2>
+									<Link
+										to={'/documentation/' + encodeRuleName(dottedName)}
+										css="color: inherit; text-decoration: none"
+									>
+										<BudgetBarStyle color={nodeValue < 0 ? 'ee5253' : '1dd1a1'}>
+											{nodeValue ? Math.round(Math.abs(nodeValue)) : '?'}{' '}
+											{ruleUnit.numerators}
+										</BudgetBarStyle>
+									</Link>
+									<em>
+										{title.includes('oût') ? 'sur 10 ans' : 'chaque année'}
+									</em>
 								</div>
-								<Link css="" to="/crédit-climat-personnel">
-									<img src={require('Images/yellow-info.svg').default} />
-								</Link>
-							</div>
+							) : [
+									'transport . avion . impact',
+									'transport . ferry . empreinte du voyage',
+							  ].includes(dottedName) ? (
+								<BudgetBar
+									{...{
+										noExample: !exampleName,
+										budget,
+										nodeValue,
+										exampleName,
+										factor,
+										closestPeriodLabel,
+										closestPeriod,
+									}}
+								/>
+							) : (
+								<div
+									css={`
+										display: flex;
+										justify-content: center;
+										align-items: center;
+										font-size: ${exampleName ? '140%' : '220%'};
+										img {
+											width: 1.6rem;
+											margin-left: 0.4rem;
+											vertical-align: bottom;
+										}
+									`}
+								>
+									<div>
+										{factor +
+											' ' +
+											closestPeriodLabel +
+											(closestPeriod[closestPeriod.length - 1] !== 's' &&
+											Math.abs(factor) > 1
+												? 's'
+												: '')}
+									</div>
+									<Link css="" to="/crédit-climat-personnel">
+										<img src={'/images/yellow-info.svg'} />
+									</Link>
+								</div>
+							)}
 							<Link
 								css="color: inherit; text-decoration: none"
 								to={'/documentation/' + encodeRuleName(dottedName)}
@@ -192,7 +278,11 @@ const ImpactCard = ({ nodeValue, dottedName, exampleName }) => {
 										border-radius: 0.4rem;
 									`}
 								>
-									{value} {unit} CO₂e
+									{questionEco ? null : (
+										<span>
+											{value} {unit} CO₂e
+										</span>
+									)}
 								</p>
 							</Link>
 						</div>
@@ -204,8 +294,10 @@ const ImpactCard = ({ nodeValue, dottedName, exampleName }) => {
 }
 
 export const ProgressCircle = ({}) => {
-	const nextSteps = useNextQuestions()
-	const foldedSteps = useSelector((state) => state.simulation?.foldedSteps)
+	const nextSteps = useNextQuestions(),
+		rules = useSelector((state) => state.rules)
+	const foldedStepsRaw = useSelector((state) => state.simulation?.foldedSteps),
+		foldedSteps = foldedStepsRaw.filter((step) => !rules[step]?.injecté)
 	const progress = foldedSteps.length / (nextSteps.length + foldedSteps.length)
 	const motionProgress = useMotionValue(0)
 	const pathLength = useSpring(motionProgress, { stiffness: 400, damping: 90 })

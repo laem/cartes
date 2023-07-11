@@ -1,6 +1,7 @@
 const catégories = [
 	'transport',
 	'logement',
+	'meubles',
 	'numérique',
 	'vêtements',
 	'divers',
@@ -22,9 +23,6 @@ export default (rules) => {
 		}, {})
 	)
 	return raw.sort(([c1], [c2]) =>
-		console.log(c1, c2, catégories.indexOf(c2), catégories.indexOf(c1)) ||
-		c1 === 'alimentation'
-			? 1
-			: catégories.indexOf(c1) - catégories.indexOf(c2)
+		c1 === 'alimentation' ? 1 : catégories.indexOf(c1) - catégories.indexOf(c2)
 	)
 }

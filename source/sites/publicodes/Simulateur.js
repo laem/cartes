@@ -1,8 +1,9 @@
 import { setSimulationConfig } from 'Actions/actions'
-import PeriodSwitch from 'Components/PeriodSwitch'
 import { extractCategories } from 'Components/publicodesUtils'
 import { buildEndURL } from 'Components/SessionBar'
 import Simulation from 'Components/Simulation'
+import SimulationResults from 'Components/SimulationResults'
+import TopBar from 'Components/TopBar'
 import { useEngine } from 'Components/utils/EngineContext'
 import { Markdown } from 'Components/utils/markdown'
 import { TrackerContext } from 'Components/utils/withTracker'
@@ -10,31 +11,26 @@ import { utils } from 'publicodes'
 import { compose, isEmpty, symmetricDifference } from 'ramda'
 import React, { useContext, useEffect } from 'react'
 import emoji from 'react-easy-emoji'
-import { Helmet } from 'react-helmet'
 import { useDispatch, useSelector } from 'react-redux'
-import { Redirect } from 'react-router'
+import { Link, Navigate, useLocation, useParams } from 'react-router-dom'
 import tinygradient from 'tinygradient'
 import {
 	deletePreviousSimulation,
 	resetSimulation,
 } from '../../actions/actions'
-import {
-	sessionBarMargin,
-	useSafePreviousSimulation,
-} from '../../components/SessionBar'
+import { useSafePreviousSimulation } from '../../components/SessionBar'
+import Meta from '../../components/utils/Meta'
 import { useNextQuestions } from '../../components/utils/useNextQuestion'
-import FuturecoMonochrome from '../../images/FuturecoMonochrome'
+import FuturecoMonochrome from 'Components/FuturecoMonochrome'
 import {
 	answeredQuestionsSelector,
 	situationSelector,
 } from '../../selectors/simulationSelectors'
-import { Almost, Done, Half, NotBad, QuiteGood } from './Congratulations'
-import { Link } from 'react-router-dom'
-import TopBar from 'Components/TopBar'
-import SimulationResults from 'Components/SimulationResults'
 import { capitalizeFirst } from './chart/Bar'
-import Meta from '../../components/utils/Meta'
-import { getEmojiImageUrls } from '../../components/Emoji'
+import { Almost, Done, Half, NotBad, QuiteGood } from './Congratulations'
+import AvionExplanation from './AvionExplanation'
+import Lab from './ferry/Lab'
+import { parentName } from '../../components/publicodesUtils'
 
 const eqValues = compose(isEmpty, symmetricDifference)
 export const colorScale = [
@@ -61,17 +57,42 @@ const getBackgroundColor = (score) => {
 	return colors[Math.round(cursor)]
 }
 
-export default ({ match }) => {
+export const questionEcoDimensions = ['coût', 'énergie', 'climat']
+
+export default ({}) => {
 	const dispatch = useDispatch()
-	const rawObjective = match.params.name,
-		decoded = utils.decodeRuleName(rawObjective),
-		config = {
-			objectifs: [decoded],
+	const urlParams = useParams()
+	const rawObjective = urlParams['*'],
+		decoded = utils.decodeRuleName(rawObjective)
+
+	const rules = useSelector((state) => state.rules),
+		decodedRule = rules[decoded],
+		objectifs =
+			decodedRule.exposé?.type === 'question éco'
+				? questionEcoDimensions.map(
+						(dimension) => parentName(decoded) + ' . ' + dimension
+				  )
+				: [decoded]
+
+	const config = {
+			objectifs,
+			questions: {
+				'non prioritaires':
+					decoded === 'transport . avion . impact'
+						? ['transport . avion . forçage radiatif']
+						: null,
+				prioritaires:
+					decoded === 'transport . ferry . empreinte du voyage'
+						? ['transport . ferry . distance aller . orthodromique']
+						: null,
+			},
 		},
 		configSet = useSelector((state) => state.simulation?.config)
 	const wrongConfig = !eqValues(config.objectifs, configSet?.objectifs || [])
+	const url = useLocation().pathname
 	useEffect(
-		() => (wrongConfig ? dispatch(setSimulationConfig(config)) : () => null),
+		() =>
+			wrongConfig ? dispatch(setSimulationConfig(config, url)) : () => null,
 		[]
 	)
 
@@ -116,7 +137,9 @@ const Simulateur = ({ objective }) => {
 	const answeredRatio =
 		answeredQuestions.length / (answeredQuestions.length + nextQuestions.length)
 
-	const doomColor = getBackgroundColor(evaluation.nodeValue).toHexString()
+	const doomColor =
+		evaluation.nodeValue &&
+		getBackgroundColor(evaluation.nodeValue).toHexString()
 
 	if (isMainSimulation) {
 		if (answeredRatio >= 0.1 && !messages['notBad'])
@@ -148,6 +171,22 @@ const Simulateur = ({ objective }) => {
 				</Link>
 			)}
 			{!isMainSimulation && <TopBar />}
+			{isMainSimulation && (
+				<div
+					css={`
+						padding: 0.6rem 1rem;
+						margin: 2rem auto;
+						max-width: 30rem;
+						border: 10px solid red;
+					`}
+				>
+					<p>⚠️ Ce calculateur n'est pas encore prêt ni publié.</p>
+					<p>
+						L'idée est là, mais l'expérience utilisateur n'est pas testée
+						encore.
+					</p>
+				</div>
+			)}
 			<div
 				css={`
 					height: 90%;
@@ -158,9 +197,15 @@ const Simulateur = ({ objective }) => {
 				`}
 			>
 				<Meta
-					title={rule.title}
+					title={rule.exposé?.titre || rule.titre}
 					description={rule.exposé?.description || rule.description}
-					//image={getEmojiImageUrls(rule.icônes)[0]} .svg images don't work in og tags, we'll have to convert them
+					image={
+						rule.exposé?.image ||
+						'https://futur.eco' +
+							`/api/og-image?title=${rule.exposé?.titre || rule.titre}&emojis=${
+								rule.icônes
+							}`
+					} // we could simply render SVG emojis, but SVG images don't work in og tags, we'll have to convert them
 				/>
 
 				{!isMainSimulation && (
@@ -168,7 +213,7 @@ const Simulateur = ({ objective }) => {
 				)}
 
 				{isMainSimulation && gameOver ? (
-					<Redirect to="/fin" />
+					<Navigate to="/fin" />
 				) : (
 					<Simulation
 						noFeedback
@@ -177,7 +222,7 @@ const Simulateur = ({ objective }) => {
 							objective === 'bilan' ? (
 								<RedirectionToEndPage {...{ rules, engine }} />
 							) : rule.description ? (
-								<CustomDescription rule={rule} />
+								<CustomDescription rule={rule} dottedName={objective} />
 							) : (
 								<EndingCongratulations />
 							)
@@ -185,6 +230,37 @@ const Simulateur = ({ objective }) => {
 						explanations={null}
 					/>
 				)}
+			</div>
+			{objective === 'transport . ferry . empreinte du voyage' && (
+				<details
+					css={`
+						visibility: hidden;
+					`}
+				>
+					<summary>Modèle de volume du bateau type</summary>
+
+					<Lab />
+				</details>
+			)}
+			<div
+				css={`
+					margin-top: 2rem;
+					text-align: center;
+					a {
+						display: flex;
+						align-items: center;
+						justify-content: center;
+						text-decoration: none;
+						color: var(--lighterColor);
+						opacity: 0.5;
+						font-size: 90%;
+						text-transform: uppercase;
+					}
+				`}
+			>
+				<Link to={'/documentation/' + utils.encodeRuleName(objective)}>
+					{emoji('⚙️')} Comprendre le calcul
+				</Link>
 			</div>
 		</div>
 	)
@@ -205,7 +281,7 @@ const RedirectionToEndPage = ({ rules, engine }) => {
 		])
 	}, [tracker])
 
-	return <Redirect to={buildEndURL(rules, engine)} />
+	return <Navigate to={buildEndURL(rules, engine)} />
 }
 
 const EndingCongratulations = () => (
@@ -213,9 +289,9 @@ const EndingCongratulations = () => (
 )
 
 const ADEMELogoURL =
-	'https://www.ademe.fr/sites/default/files/logoademe2020_rvb.png'
+	'https://www.ademe.fr/wp-content/uploads/2021/12/logo-ademe.svg'
 
-const CustomDescription = ({ rule }) => {
+const CustomDescription = ({ dottedName, rule }) => {
 	const ref = rule.références,
 		baseCarbone = ref?.find((el) => el.includes('bilans-ges.ademe.fr'))
 	return (
@@ -228,6 +304,7 @@ const CustomDescription = ({ rule }) => {
 				</div>
 			)}
 			<Markdown>{capitalizeFirst(rule.description)}</Markdown>
+			{dottedName === 'transport . avion . impact' && <AvionExplanation />}
 		</div>
 	)
 }

@@ -19,7 +19,7 @@ export default ({}) => {
 			css={`
 				display: flex;
 				align-items: center;
-				justify-content: space-between;
+				justify-content: center;
 				margin: 0.6rem;
 				margin-bottom: 0;
 				@media (max-width: 800px) {
@@ -36,7 +36,6 @@ export default ({}) => {
 						@media (max-width: 800px) {
 							${displayIntro ? 'display: none;' : ''}
 						}
-						margin-right: 1em;
 					`}
 					src={'/logo.svg'}
 					alt=""
@@ -74,6 +73,9 @@ export default ({}) => {
 							width: 2rem;
 							height: auto;
 						}
+						position: fixed;
+						right: 1rem;
+						top: 2rem;
 					`}
 				>
 					<Link to="/scénarios" title="Paramètres">

@@ -7,7 +7,7 @@ import { RulePage, getDocumentationSiteMap } from 'publicodes-react'
 import { ComponentType, useCallback, useContext, useMemo } from 'react'
 import { Trans, useTranslation } from 'react-i18next'
 import { useDispatch, useSelector } from 'react-redux'
-import { Redirect, useLocation, Link } from 'react-router-dom'
+import { useLocation, Link } from 'react-router-dom'
 import { RootState } from 'Reducers/rootReducer'
 import Meta from '../../../components/utils/Meta'
 import BandeauContribuer from '../BandeauContribuer'
@@ -15,9 +15,10 @@ import Méthode from './Méthode'
 import styled from 'styled-components'
 import Helmet from 'react-helmet'
 import { Markdown } from 'Components/utils/markdown'
-import { Route } from 'react-router'
+import { Route, Routes, useNavigate, useParams } from 'react-router'
 import References from './DocumentationReferences'
 import TopBar from '../../../components/TopBar'
+import { configSelector } from '../../../selectors/simulationSelectors'
 
 export default function ({
 	documentationPath = '/documentation',
@@ -33,7 +34,6 @@ export default function ({
 		() => getDocumentationSiteMap({ engine, documentationPath }),
 		[engine, documentationPath]
 	)
-	const { i18n } = useTranslation()
 
 	if (pathname === '/documentation') {
 		return <DocumentationLanding />
@@ -58,42 +58,48 @@ export default function ({
 					</div>
 				</>
 			)}
-			<Route
-				path={documentationPath + '/:name+'}
-				render={({ match }) =>
-					console.log('BOB', match.params.name) ||
-					(match.params.name && (
-						<DocumentationStyle>
-							<RulePage
-								language={i18n.language as 'fr' | 'en'}
-								rulePath={match.params.name}
-								engine={engine}
-								documentationPath={documentationPath}
-								renderers={{
-									Head: Helmet,
-									Link: Link,
-									Text: Markdown,
-									References,
-								}}
-							/>
-						</DocumentationStyle>
-					))
-				}
-			/>
+			<Routes>
+				<Route
+					path="*"
+					element={<DocPage {...{ documentationPath, engine }} />}
+				/>
+			</Routes>
 
 			<BandeauContribuer />
 		</div>
 	)
 }
+const DocPage = ({ documentationPath, engine }) => {
+	const url = useParams()['*']
+	const { i18n } = useTranslation()
+	return (
+		<DocumentationStyle>
+			<RulePage
+				language={i18n.language as 'fr' | 'en'}
+				rulePath={url}
+				engine={engine}
+				documentationPath={documentationPath}
+				renderers={{
+					Head: Helmet,
+					Link: Link,
+					Text: Markdown,
+					References,
+				}}
+			/>
+		</DocumentationStyle>
+	)
+}
 function BackToSimulation() {
-	const dispatch = useDispatch()
-	const handleClick = useCallback(() => {
-		dispatch(goBackToSimulation())
-	}, [])
+	const simulation = useSelector((state) => state.simulation),
+		url = simulation?.url
+	const navigate = useNavigate()
+
 	return (
 		<button
 			className="ui__ simple small push-left button"
-			onClick={handleClick}
+			onClick={() => {
+				navigate(url)
+			}}
 		>
 			← <Trans i18nKey="back">Reprendre la simulation</Trans>
 		</button>
@@ -102,15 +108,14 @@ function BackToSimulation() {
 
 function DocumentationLanding() {
 	return (
-		<>
+		<div className="ui__ container">
 			<Meta
 				title="Comprendre nos calculs"
 				description="Notre modèle de calcul est entièrement transparent. Chacun peut l'explorer, donner son avis, l'améliorer."
 			/>
-			<Méthode />
 			<h2>Explorer notre documentation</h2>
 			<SearchBar showListByDefault={true} />
-		</>
+		</div>
 	)
 }
 
@@ -154,5 +159,11 @@ export const DocumentationStyle = styled.div`
 
 	div[name='somme'] > div > div:nth-child(2n) {
 		background: var(--darkerColor);
+	}
+	.tranche:nth-child(2n) {
+		background: var(--darkerColor) !important;
+	}
+	.bHoORO .tranche.activated {
+		background: var(--color) !important;
 	}
 `

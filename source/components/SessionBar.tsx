@@ -4,14 +4,13 @@ import { useEngine } from 'Components/utils/EngineContext'
 import { last } from 'ramda'
 import React, { useEffect, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
-import { useHistory, useLocation } from 'react-router-dom'
+import { useLocation, useNavigate } from 'react-router-dom'
 import { RootState } from 'Reducers/rootReducer'
 import {
 	answeredQuestionsSelector,
 	objectifsSelector,
 } from 'Selectors/simulationSelectors'
 import styled from 'styled-components'
-import CarbonImpact from '../sites/publicodes/CarbonImpact'
 import ConferenceBarLazy from '../sites/publicodes/conference/ConferenceBarLazy'
 import { backgroundConferenceAnimation } from '../sites/publicodes/conference/conferenceStyle'
 
@@ -94,7 +93,7 @@ export default function SessionBar({
 	const rules = useSelector((state) => state.rules)
 	const engine = useEngine(objectifs)
 
-	const history = useHistory()
+	const navigate = useNavigate()
 	const location = useLocation(),
 		path = location.pathname
 
@@ -113,7 +112,7 @@ export default function SessionBar({
 			className="simple small"
 			onClick={() => {
 				dispatch(goToQuestion(last(answeredQuestions)))
-				history.push('/simulateur/bilan')
+				navigate('/simulateur/bilan')
 			}}
 			css={buttonStyle('simulateur')}
 		>
@@ -126,7 +125,7 @@ export default function SessionBar({
 		<Button
 			className="simple small"
 			onClick={() => {
-				history.push('/actions/liste')
+				navigate('/actions/liste')
 			}}
 			css={buttonStyle('/actions')}
 		>
@@ -135,7 +134,7 @@ export default function SessionBar({
 		</Button>,
 		<Button
 			className="simple small"
-			onClick={() => history.push('/profil')}
+			onClick={() => navigate('/profil')}
 			css={buttonStyle('profil')}
 		>
 			<img
@@ -148,7 +147,7 @@ export default function SessionBar({
 			<Button
 				key="personas"
 				className="simple small"
-				onClick={() => history.push('/personas')}
+				onClick={() => navigate('/personas')}
 				css={buttonStyle('personas')}
 			>
 				<img
@@ -169,7 +168,7 @@ export default function SessionBar({
 			>
 				<Button
 					className="simple small"
-					onClick={() => history.push('/conférence/' + conference.room)}
+					onClick={() => navigate('/conférence/' + conference.room)}
 					css={`
 						${buttonStyle('conf')}
 						padding: 0.4rem;

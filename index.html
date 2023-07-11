@@ -7,7 +7,7 @@
 		<link
 			rel="icon"
 			type="image/svg+xml"
-			href="<%= htmlWebpackPlugin.options.logo %>"
+			href="/images/logo.svg"
 		/>
 
 		<meta
@@ -27,7 +27,7 @@
 			content="<%= htmlWebpackPlugin.options.description %>"
 		/>
 
-		<meta property="og:image" content="<%= htmlWebpackPlugin.options.logo %>" data-react-helmet="true"	/>
+		<meta property="og:image" content="https://futur.eco/images/logo.png" data-react-helmet="true"	/>
 
 		<meta
 			name="google-site-verification"
@@ -253,12 +253,17 @@
 		</div>
 		</div>
 
-		<!-- USER AGENT DATA ATTRIBUTE  -->
+		<script>
+				if(typeof navigator != 'undefined' && /prerender/i.test(navigator.userAgent)) {
+
+										SC_DISABLE_SPEEDY = true
+}</script>
 
 
 		<!-- APP  -->
 		<div id="js"></div>
 
+		<script defer data-domain="futur.eco" src="https://plausible.io/js/script.js"></script>
 		<script src="https://futur.eco/iframeResizer.contentWindow.min.js"></script>
 
 

@@ -7,7 +7,7 @@ const {
 const webpack = require('webpack')
 
 const MiniCssExtractPlugin = require('mini-css-extract-plugin')
-const TerserPlugin = require('terser-webpack-plugin')
+const CssMinimizerPlugin = require('css-minimizer-webpack-plugin')
 
 // Server-side prerendering is not activated here. If you want to work on this, go see this fork's parent, github.com/betagouv/mon-entreprise
 
@@ -23,6 +23,9 @@ module.exports = {
 	devtool: 'source-map',
 	output: {
 		...common.output,
+	},
+	optimization: {
+		minimizer: [`...`, new CssMinimizerPlugin()],
 	},
 	plugins: [
 		...(common.plugins || []),

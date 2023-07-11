@@ -1,11 +1,9 @@
 import emoji from 'react-easy-emoji'
-import { useHistory } from 'react-router'
 import { Link } from 'react-router-dom'
 import IllustratedMessage from '../../components/ui/IllustratedMessage'
 import { PersonaGrid } from './Personas'
 
 export default ({}) => {
-	const history = useHistory()
 	return (
 		<div className="ui__ card light colored content" css="margin-top: 1.6rem">
 			<h1>Simulation manquante</h1>

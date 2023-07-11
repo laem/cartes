@@ -9,8 +9,21 @@ fetch('https://futureco-data.netlify.app/co2.json')
 			(dottedName) =>
 				`https://futur.eco/documentation/${encodeRuleName(dottedName)}`
 		)
-		const text = documentationLines.join('\n')
-		fs.writeFileSync('./sitemap.txt', lines + text, 'utf8')
+		const simulationLines = Object.keys(json)
+			.filter(
+				(dottedName) => json[dottedName] && json[dottedName]['exposé'] != null
+			)
+			.map(
+				(dottedName) =>
+					`https://futur.eco/simulateur/${encodeRuleName(dottedName)}`
+			)
+
+		const text = [...simulationLines, ...documentationLines].join('\n')
+		fs.writeFileSync(
+			'./source/sites/publicodes/sitemap.txt',
+			lines + text,
+			'utf8'
+		)
 		console.log('Sitemap mis à jour avec les dernières règles publicodes :)')
 	})
 

@@ -177,11 +177,14 @@ function batchUpdateSituationReducer(state: RootState, action: Action) {
 				fieldName,
 				value,
 			})
-			return mainReducer(withSituationUpdate ?? undefined, {
-				type: 'STEP_ACTION',
-				name: 'fold',
-				step: fieldName,
-			})
+			return (
+				!action.doNotFold &&
+				mainReducer(withSituationUpdate ?? undefined, {
+					type: 'STEP_ACTION',
+					name: 'fold',
+					step: fieldName,
+				})
+			)
 		},
 		state
 	)

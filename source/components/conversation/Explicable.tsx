@@ -29,10 +29,14 @@ export function ExplicableRule({ dottedName }: { dottedName: DottedName }) {
 			css={`
 				margin-left: 0.3rem !important;
 				vertical-align: middle;
-				font-size: 110% !important;
+				img {
+					width: 2.3rem;
+					margin-left: 0.4rem;
+					vertical-align: bottom;
+				}
 			`}
 		>
-			{emoji('ℹ️')}
+			<img src={'/images/yellow-info.svg'} />
 		</button>
 	)
 }

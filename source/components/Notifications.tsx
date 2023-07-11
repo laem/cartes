@@ -1,6 +1,6 @@
 import { hideNotification } from 'Actions/actions'
 import animate from 'Components/ui/animate'
-import { useEngine, useInversionFail } from 'Components/utils/EngineContext'
+import { useEngine } from 'Components/utils/EngineContext'
 import Engine, { RuleNode } from 'publicodes'
 import emoji from 'react-easy-emoji'
 import { useTranslation } from 'react-i18next'
@@ -18,7 +18,7 @@ import { ScrollToElement } from './utils/Scroll'
 type Notification = {
 	dottedName: RuleNode['dottedName']
 	description: RuleNode['rawNode']['description']
-	sévérité: 'avertissement' | 'information'
+	sévérité: 'avertissement' | 'information' | 'invalide'
 }
 
 export function getNotifications(engine: Engine) {
@@ -34,35 +34,39 @@ export function getNotifications(engine: Engine) {
 			description,
 		}))
 }
-export default function Notifications({ currentQuestion }) {
-	const { t } = useTranslation()
-	const engine = useEngine()
-	const inversionFail = useInversionFail()
-	const hiddenNotifications = useSelector(
-		(state: RootState) => state.simulation?.hiddenNotifications
-	)
-	const dispatch = useDispatch()
 
-	const messages: Array<Notification> = inversionFail
-		? [
-				{
-					dottedName: 'inversion fail',
-					description: t(
-						'simulateurs.inversionFail',
-						'Le montant saisi abouti à un résultat impossible. Cela est dû à un effet de seuil dans le calcul des cotisations.\n\nNous vous invitons à réessayer en modifiant légèrement le montant renseigné (quelques euros de plus par exemple).'
-					),
-					sévérité: 'avertissement',
-				},
-		  ]
-		: (getNotifications(engine) as Array<Notification>)
+export function getCurrentNotification(
+	engine,
+	currentQuestion: RuleNode['dottedName']
+) {
+	const messages: Array<Notification> = getNotifications(
+		engine
+	) as Array<Notification>
+
 	if (!messages?.length) return null
-
 	// Here we filter notifications to not display them out of context
 	// but this supposes that notifications would be well placed in termes of namespaces
 	// for now we're using only one notifcation, so that's the behavior we want
-	const filteredMessages = messages.filter(({ dottedName }) =>
-		parentName(currentQuestion).includes(parentName(dottedName))
+	const filteredMessages = messages.filter(
+		({ dottedName }) =>
+			parentName(currentQuestion).includes(parentName(dottedName)) ||
+			currentQuestion.includes(parentName(dottedName))
 	)
+	return filteredMessages
+}
+
+export default function Notifications({ currentQuestion }) {
+	const { t } = useTranslation()
+	const hiddenNotifications = useSelector(
+		(state: RootState) => state.simulation?.hiddenNotifications
+	)
+	const engine = useEngine()
+
+	const dispatch = useDispatch()
+
+	const filteredMessages = getCurrentNotification(engine, currentQuestion)
+
+	if (!filteredMessages) return null
 
 	return (
 		<div id="notificationsBlock">
@@ -71,17 +75,25 @@ export default function Notifications({ currentQuestion }) {
 					hiddenNotifications?.includes(dottedName) ? null : (
 						<animate.fromTop key={dottedName}>
 							<li>
-								<div className="notification">
-									{emoji(sévérité == 'avertissement' ? '⚠️' : '💁🏻')}
+								<div role="alert" className="notification">
+									{emoji(
+										sévérité == 'avertissement'
+											? '⚠️'
+											: sévérité == 'invalide'
+											? '🚫'
+											: '💁🏻'
+									)}
 									<div className="notificationText ui__ card">
-										<Markdown>description</Markdown>
-										<button
-											className="hide"
-											aria-label="close"
-											onClick={() => dispatch(hideNotification(dottedName))}
-										>
-											×
-										</button>
+										<Markdown>{description}</Markdown>
+										{sévérité !== 'invalide' && (
+											<button
+												className="hide"
+												aria-label="close"
+												onClick={() => dispatch(hideNotification(dottedName))}
+											>
+												×
+											</button>
+										)}
 									</div>
 								</div>
 							</li>

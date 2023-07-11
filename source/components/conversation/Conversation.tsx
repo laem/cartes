@@ -29,6 +29,7 @@ import './conversation.css'
 import { ExplicableRule } from './Explicable'
 import SimulationEnding from './SimulationEnding'
 import { airportsQuestions } from 'Components/conversation/RuleInput'
+import { ferryQuestions } from './RuleInput'
 
 export type ConversationProps = {
 	customEndMessages?: React.ReactNode
@@ -112,6 +113,8 @@ export default function Conversation({
 
 	const questionsToSubmit = airportsQuestions.includes(currentQuestion)
 		? airportsQuestions
+		: ferryQuestions.includes(currentQuestion)
+		? ferryQuestions
 		: mosaicQuestion
 		? Object.entries(rules)
 				.filter(([dottedName, value]) =>
@@ -200,14 +203,16 @@ export default function Conversation({
 					<CategoryVisualisation questionCategory={questionCategory} />
 				)}
 				<div className="step">
-					<h3
-						css={`
-							@media (max-width: 800px) {
-								margin: 0.4rem 0;
-							}
-						`}
-					>
-						{questionText}{' '}
+					<header css="display: flex; justify-content: start; ">
+						<h3
+							css={`
+								@media (max-width: 800px) {
+									margin: 0.4rem 0;
+								}
+							`}
+						>
+							{questionText}
+						</h3>
 						{hasDescription && (
 							<ExplicableRule
 								dottedName={
@@ -216,7 +221,7 @@ export default function Conversation({
 								}
 							/>
 						)}
-					</h3>
+					</header>
 					<Aide />
 					<fieldset>
 						<RuleInput

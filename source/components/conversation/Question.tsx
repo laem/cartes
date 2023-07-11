@@ -216,7 +216,7 @@ export const RadioLabel = (props: RadioLabelProps) => {
 						<animate.appear>
 							<div className="ui__ card box">
 								<h2>{props.label}</h2>
-								<Markdown source={props.description} />
+								<Markdown children={props.description} />
 								{props.références && (
 									<>
 										<h3>

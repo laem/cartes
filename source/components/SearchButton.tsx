@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react'
 import emoji from 'react-easy-emoji'
 import { Trans } from 'react-i18next'
-import { Redirect } from 'react-router'
+import { Navigate } from 'react-router-dom'
 
 type SearchButtonProps = {
 	invisibleButton?: boolean
@@ -27,7 +27,7 @@ export default function SearchButton({ invisibleButton }: SearchButtonProps) {
 	const close = () => setVisible(false)
 
 	return visible ? (
-		<Redirect to="/documentation" />
+		<Navigate to="/documentation" />
 	) : (
 		<button
 			className="ui__ simple small button"

@@ -1,28 +1,23 @@
 import { goToQuestion } from 'Actions/actions'
-import {
-	extractCategoriesNamespaces,
-	parentName,
-	sortCategories,
-} from 'Components/publicodesUtils'
+import Emoji from 'Components/Emoji'
+import { parentName } from 'Components/publicodesUtils'
 import { useEngine } from 'Components/utils/EngineContext'
 import { useNextQuestions } from 'Components/utils/useNextQuestion'
+import { motion } from 'framer-motion'
 import { DottedName } from 'modele-social'
 import { EvaluatedNode, formatValue } from 'publicodes'
-import { useEffect, useState } from 'react'
+import { useEffect } from 'react'
 import emoji from 'react-easy-emoji'
 import { Trans, useTranslation } from 'react-i18next'
 import { useDispatch, useSelector } from 'react-redux'
-import { useHistory } from 'react-router'
 import { situationSelector } from 'Selectors/simulationSelectors'
+import { resetSimulation } from '../../actions/actions'
 import {
 	answeredQuestionsSelector,
 	objectifsSelector,
 } from '../../selectors/simulationSelectors'
-import { splitName, safeGetRule } from '../publicodesUtils'
-import Emoji from 'Components/Emoji'
+import { safeGetRule } from '../publicodesUtils'
 import './AnswerList.css'
-import { resetSimulation } from '../../actions/actions'
-import { motion } from 'framer-motion'
 
 export default function AnswerList() {
 	const dispatch = useDispatch()
@@ -37,13 +32,15 @@ export default function AnswerList() {
 			return rule && engine.evaluate(rule)
 		})
 		.filter(Boolean)
-	const foldedStepsToDisplay = foldedQuestions.map((node) => ({
-		...node,
-		passedQuestion:
-			answeredQuestionNames.find(
-				(dottedName) => node.dottedName === dottedName
-			) == null,
-	}))
+	const foldedStepsToDisplay = foldedQuestions
+		.map((node) => ({
+			...node,
+			passedQuestion:
+				answeredQuestionNames.find(
+					(dottedName) => node.dottedName === dottedName
+				) == null,
+		}))
+		.filter((node) => !node.rawNode.injecté)
 
 	const nextSteps = useNextQuestions().map((dottedName) =>
 		engine.evaluate(engine.getRule(dottedName))
@@ -133,7 +130,6 @@ function StepsTable({
 }: {
 	rules: Array<EvaluatedNode & { nodeKind: 'rule'; dottedName: DottedName }>
 }) {
-	const dispatch = useDispatch()
 	const language = useTranslation().i18n.language
 	return (
 		<table
@@ -146,7 +142,6 @@ function StepsTable({
 					<Answer
 						{...{
 							rule,
-							dispatch,
 							language,
 						}}
 					/>
@@ -156,31 +151,109 @@ function StepsTable({
 	)
 }
 
-const Answer = ({ rule, dispatch, language }) => {
-	const history = useHistory()
+const Answer = ({ rule, language }) => {
+	// Shameless exception, sometimes you've got to do things dirty
+	if (
+		[
+			'transport . avion . départ',
+			'transport . avion . arrivée',
+
+			'transport . ferry . départ',
+			'transport . ferry . arrivée',
+		].includes(rule.dottedName)
+	)
+		return null
+
 	const path = parentName(rule.dottedName, ' · ', 1)
 	const simulationDottedName = useSelector(objectifsSelector)[0]
 	const uselessPrefix = simulationDottedName.includes(path)
+	const situation = useSelector(situationSelector)
 
+	const trimSituationString = (el) => el && el.split("'")[1]
+	if (rule.dottedName === 'transport . avion . distance de vol aller') {
+		return (
+			<AnswerComponent
+				{...{
+					dottedName: rule.dottedName,
+					NameComponent: <div>Votre vol</div>,
+					ValueComponent: (
+						<span className="answerContent">
+							{`${trimSituationString(
+								situation['transport . avion . départ']
+							)} - ${trimSituationString(
+								situation['transport . avion . arrivée']
+							)} (${formatValue(rule, { language })})`}
+						</span>
+					),
+				}}
+			/>
+		)
+	}
+	if (
+		rule.dottedName === 'transport . ferry . distance aller . orthodromique'
+	) {
+		return (
+			<AnswerComponent
+				{...{
+					dottedName: rule.dottedName,
+					NameComponent: <div>Votre traversée</div>,
+					ValueComponent: (
+						<span className="answerContent">
+							{`${trimSituationString(
+								situation['transport . ferry . départ']
+							)} - ${trimSituationString(
+								situation['transport . ferry . arrivée']
+							)} (${formatValue(rule, { language })})`}
+						</span>
+					),
+				}}
+			/>
+		)
+	}
+
+	const NameComponent = (
+		<div>
+			{path && !uselessPrefix && (
+				<div>
+					<small>{path}</small>
+				</div>
+			)}
+			<div css="font-size: 110%">{rule.title}</div>
+		</div>
+	)
+
+	const ValueComponent = (
+		<span
+			className="answerContent"
+			css={`
+				${rule.passedQuestion ? 'opacity: .5' : ''}
+			`}
+		>
+			{formatValue(rule, { language })}
+			{rule.passedQuestion && emoji(' 🤷🏻')}
+		</span>
+	)
+	return (
+		<AnswerComponent
+			{...{ dottedName: rule.dottedName, NameComponent, ValueComponent }}
+		/>
+	)
+}
+
+const AnswerComponent = ({ dottedName, NameComponent, ValueComponent }) => {
+	const dispatch = useDispatch()
 	return (
 		<motion.tr
 			initial={{ opacity: 0, y: -50, scale: 0.3 }}
 			animate={{ opacity: 1, y: 0, scale: 1 }}
 			transition={{ duration: 0.3 }}
 			exit={{ opacity: 0, scale: 0.5, transition: { duration: 0.3 } }}
-			key={rule.dottedName}
+			key={dottedName}
 			css={`
 				background: var(--darkestColor);
 			`}
 		>
-			<td>
-				{path && !uselessPrefix && (
-					<div>
-						<small>{path}</small>
-					</div>
-				)}
-				<div css="font-size: 110%">{rule.title}</div>
-			</td>
+			<td>{NameComponent}</td>
 			<td>
 				<button
 					className="answer"
@@ -201,18 +274,10 @@ const Answer = ({ rule, dispatch, language }) => {
 						}
 					`}
 					onClick={() => {
-						dispatch(goToQuestion(rule.dottedName))
+						dispatch(goToQuestion(dottedName))
 					}}
 				>
-					<span
-						className="answerContent"
-						css={`
-							${rule.passedQuestion ? 'opacity: .5' : ''}
-						`}
-					>
-						{formatValue(rule, { language })}
-						{rule.passedQuestion && emoji(' 🤷🏻')}
-					</span>
+					{ValueComponent}
 				</button>
 			</td>
 		</motion.tr>

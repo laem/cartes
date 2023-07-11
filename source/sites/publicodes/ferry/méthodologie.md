@@ -2,94 +2,170 @@
 
 ## Introduction
 
-**Le problème** : estimer l'empreinte d'un passager sur les Ferries qui relient la métropole à la Corse et à l'Angleterre.
+:::info
+**Le problème** : estimer l'empreinte climat (ou l'empreinte carbone, ou le CO2 e) d'un passager sur les Ferries qui relient la métropole à la Corse et à l'Angleterre.
+:::
 
 Le Ferry est une alternative sérieuse à l'avion, mais il n'existe aujourd'hui aucun facteur d'émission en CO2e (ni ADEME, ni à l'international, ni dans la littérature scientifique) qui prenne en compte les paramètres suivants :
 
 -   passager en voiture ou non
 -   passager en cabine, en siège, ou au sol
 -   équipement loisir du bateau : restaurant, bar, piscine, grand couloirs, etc.
--   tonnage fret
+-   tonnage fret éventuellement
 -   % de remplissage du bateau
+-   vitesse
+-   etc
 
 **L'objectif** : un mini-site qui permet de calculer cette empreinte en fonction de paramètres faciles à saisir.
 
-Le message final pourrait par exemple être l'une ou plusieurs de ces affirmations :
+Le message final pourrait par exemple être l'une ou plusieurs de ces affirmations, ou leur inverse :
 
 -   un voyage en ferry est pire que l'avion en CO2e/km
 -   avec une voiture partagée pour < 3 personnes, c'est pire qu'un avion, sinon c'est mieux
 -   un voyage en ferry sans voiture représente un dixième de l'empreinte d'un vol équivalent
--   peu importe le nombre de passagers sur un bateau, si on considère que le fret est nécessaire, l'ajout de passagers est négligeable
+-   peu importe le nombre de passagers sur un bateau, si on considère que le fret est nécessaire, l'ajout de passagers est négligeable (très peu probable)
 
 :::warning
-Ceci est un document de méthode. Ce n'est pas _le calcul_ lui-même. Seul le calcul fait foi en termes de mise à jour. Il est [ici](https://futur.eco/ferry/empreinte-par-km).
+Ceci est un document de méthode. Ce n'est pas _le calcul_ lui-même. Seul le calcul fait foi en termes de mise à jour.
+Dans un premier temps, nous sommes partis sur une méthode d'attribution de l'empreinte via le poids des services consommés à bord.
+Il s'agit a priori d'une **mauvaise méthode**, ou du moins pas la meilleur méthode, qui semble être celle en volume, plus éventuellement un malus poids.
 :::
 
-## Quelle méthode de répartition
+:::success
+🕹️ La première version est terminée !
 
-### Introduction
+Voici [le simulateur d'empreinte carbone du ferry](https://futur.eco/ferry).
+:::
 
-#### Le problème
+### Le coeur du problème : quelle méthode d'allocation
 
 Nous connaissons la consommation de carburant d'un ferry, nous pouvons donc en déduire l'empreinte climat en tonnes de CO2e émises pour un trajet donné en km.
+
 Mais ce qu'on entend par Ferry, c'est souvent un bateau qui transporte beaucoup de fret.
 
 > Note : les ferries consomment du gazole et du fuel lourd (beaucoup plus polluant). Nous limitons ici notre travail à l'étude des GES, pas aux SOx et de NOx. Ni pour l'instant à l'utilisation de gaz fossile liquéfié en remplacement du pétrole.
 
-Pire : la gamme de services de transport disponibles pour un passager est très large : cela va du passager qui dort au sol dans le couloir à celui qui embarque avec son SUV+caravane et qui profite du Jacuzzi dans l'un des 3 bars du bateau avant de rentrer dans sa cabine XXL.
+Pire, c'est bien plus compliqué que le transport de passagers uniformes au côté du fret : la gamme de services de transport disponibles pour un passager est très large, allant du passager qui dort au sol dans le couloir à celui qui embarque avec son SUV+caravane et qui profite du Jacuzzi dans l'un des 3 bars du bateau avant de rentrer dans sa suite de cabines XXL.
 
-Ainsi, même si l'on savait que l'empreinte moyenne d'un passager était de 300gCO2e/km (~ comme une voiture sur route), il est intolérable que le passager sobre se voie attribuer la même empreinte que notre passager de luxe.
-Nous devons donc _calculer_ l'attribution de l'empreinte en fonction des caractéristiques du billet. Cela peut se faire selon au moins 2 méthodes : par poids, ou par surface.
+Ainsi, même si l'on savait que l'empreinte moyenne d'un passager était de 300gCO2e/km (~ comme une voiture sur route), en ayant simplement divisé l'empreinte totale du bateau par le nombre moyen de passagers l'empruntant, et à supposer qu'il n'y ait pas de fret, il est intolérable que le passager sobre se voie attribuer la même empreinte que notre passager de luxe.
 
-#### La solution retenue
+Même si bien sûr, la comparaison d'empreinte moyenne entre deux bateaux, calculée selon la même méthode, reste un élément très pertinent de choix.
 
-Nous avons déterminé que la meilleure méthode est un calcul de répartition par poids.
-L'ADEME avait privilégié en 2008 une méthode par surface, mais elle a été archivée dans la base carbone, donc invalidée. Elle semblait basée sur une méthode par surface.
+Nous devons donc _calculer_ l'attribution de l'empreinte en fonction des caractéristiques du billet. Cela peut se faire selon au moins 2 méthodes : par poids, ou par surface (ou plutôt par volume).
+
+### La solution retenue
+
+Nous avons déterminé que la meilleure méthode est un calcul de répartition par volume.
+
+L'ADEME avait privilégié en 2008 une méthode qui semble être par surface, mais elle a été archivée dans la base carbone, donc invalidée.
+
 Le ministère britannique de l'environnement a choisi une méthode par poids.
+
 La norme EN 16258, déjà datée, autorise les deux méthodes, mais note l'extrême divergence des deux méthodes.
+
 La future norme ISO 14083, en cours de publication, devrait retenir la méthode par poids.
+
 D'autres publications d'armateurs privilégient la méthode par poids.
 
-#### Pourquoi ?
+### Pourquoi ?
 
-Mais pourquoi privilégier la méthode par poids ?
-Tu prends un passager qui va dormir en fauteuil. Son fauteuil + toilettes pèsent 100kg. Il n'utilise pas les restaurants, etc, il reste dormir dans l'espace cinéma qui leur est alloué, tout simplement.
-Tu prends une voiture, elle pèse 1500kg. Pour le même poids tu pourrais donc y mettre 15 passagers ! Donc diminuer d'autant l'empreinte du trajet _par personne_.
+Voici un raisonnement élémentaire. Pourquoi utiliser une méthode par poids, surface ou volume ?
 
-##### Mais quid de la surface ?
+Prenons un passager qui va dormir en fauteuil. Son fauteuil + toilettes pèsent 100kg. Il n'utilise pas les restaurants, etc, il reste dormir dans l'espace cinéma qui leur est alloué, tout simplement.
 
-Tu me diras alors, oui mais ces passagers ils prennent plus de surface que la voiture.
-D'une, ce n'est pas certain du tout (par exemple, les ponts de chargement des voitures ne font en général pas 2m de haut mais plutôt 4, pour accomoder les camions ?), et c'est difficile à calculer
-De deux, ce n'est pas la surface qui coûte des kg de pétrole brulés, mais le poids du bateau : le poids fait s'enfoncer le bateau, et c'est la force de frottement de l'eau sur la partie immergée contre laquelle il faut lutter.
+Prenons un passager qui fait transporter sa voiture, elle pèse 1500kg. Pour le même poids on pourrait y mettre 15 passagers ! Donc diminuer d'autant l'empreinte du trajet _par personne_, en ajoutant des personnes à qui on rend un service avec la même consommation de carburant.
 
-La surface ne semble pas manquer sur le bateau : les parties _strictement nécessaires_ que sont les salles d'habitation (cabines ou sièges) ne représentent qu'une faible partie de la surface souvent utilisée par des zones vides, des loisirs, des commerces, qui pourrait donc être utilisée pour densifier en passagers (jusqu'à une certaine limite, certes, à définir ?).
+#### Poids ou volume ?
 
-##### Mais quid du poids de l'infrastructure du bateau lui-même ?
+##### Poids
 
-Vous me direz, oui mais le poids des passagers / fret, bref ce qu'on met dedans pour l'opérer commercialement n'est qu'une partie du poids total : le ferry de base a sa coque, son lestage pour l'équilibrer, etc.
-Eh bien si l'on peut remplacer une voiture par 15 personnes, c'est qu'on peut mieux amortir _par personne_ tout ce matériel de base pour diminuer l'empreinte par passager transporté !
+La question, c'est de décider selon quelle métrique faire l'allocation, puis ensuite la faire effectivement pour un bateau, puis 2, puis un ensemble de bateau.
+
+Dans un premier temps, nous sommes partis sur la métrique surface, au vu de la littérature disponible et du raisonnement logique élémentaire suivant : c'est le poids d'un bateau qui le fait s'enfoncer dans l'eau, et c'est la force de frottement de l'eau sur la partie immergée contre laquelle il faut lutter, ainsi la puissance nécessaire pour faire avancer le bateau (donc la consommation d'essence supplémentaire) dépend de son poids. Donc plus on "occupe" une partie importante du poids embarqué du bateau, plus on le fait dépenser de fioul, plus on mérite de se voir attribuer une partie importante et proportionnelle de l'empreinte.
+
+###### Mais quid du poids de l'infrastructure du bateau lui-même ?
+
+Vous me direz, oui mais le poids des passagers / fret, bref ce qu'on met dedans pour l'opérer commercialement n'est qu'une partie du poids total : le ferry de base a sa coque, son [ballast](<https://fr.wikipedia.org/wiki/Ballast_(marine)>) pour l'équilibrer (des grands réservoirs qu’on remplit d’eau de mer pour compenser un chargement faible ou équilibrer l’assiette et la gîte), etc.
+
+Eh bien si l'on peut remplacer une voiture par 15 personnes, c'est qu'on peut mieux amortir _par personne_ tout ce matériel de base pour diminuer l'empreinte par passager transporté (même si bien sûr, la borne maximum de ce nombre de personnes pouvant remplacer la voiture est à déterminer, le 15 étant ici basé uniquement sur le poids) !
 
 On attribue donc aux passagers leur part de poids, donc aussi leur part de la consommation du matos lui-même qui fait avancer le bateau.
 
-À titre d'exemple, quel que soit le rapport voitures / passagers, le linéaire de barrière sur les ponts est le même. D'autres éléments de poids eux dépendent du nombre de passager, il faut donc les prendre en compte dans le calcul (quantité d'eau embarquée, canots de sauvetage, etc.).
+À titre d'exemple, quel que soit le rapport voitures / passagers, le linéaire de barrière sur les ponts est le même. D'autres éléments de "poids de base" du bateaux eux dépendent directement du nombre de passagers, il faut donc les prendre en compte dans le calcul (quantité d'eau embarquée, canots de sauvetage, etc.).
 
-##### N'y a-t-il pas d'autres limitations à ce modèle ?
+Un premier modèle d'allocation en poids a été construit. TODO mettre le lien ?
 
-###### La répartition du poids
+#### Volume
 
-Si bien sûr. On peut voir notamment la problématique du centre de gravité du bateau, qui doit être assez bas (cf [cette vidéo très pédagogique](https://youtu.be/Y_c1UNEdEsk?t=1367)). Ces contraintes de répartition du poids sont-elles à même de mettre en cause ce modèle ? Surtout, à partir de quel seuil de densité ? Les ponts supérieurs dédiés aux passagers sont-ils volontairement peu denses ? Peut-être, seuls les armateurs ou opérateurs pourront nous répondre.
+Mais une autre perspective renverse l'équation : sur un ferry de 150-200 mètres de long, la masse des véhicules représente environ 10-15% de la masse totale du navire et les passagers quelques pourcents.
+
+Vérifions sur un bateau réel type, le Jean Nicoli qui fait des liaisons Marseille-Ajaccio, qu'en effet le poids de la cargaison était relativement peu significative par rapport au poids du bateau lui même.
+
+Sur le Jean Nicoli, on a port en lourd (TPL, chargement maximal qu'il peut emporter) = 5 k et déplacement = 20k. Donc 1/4. Mais que comprennent les 5 000 tonnes de port en lourd du Jean Nicoli? S'il y a le carburant, l'eau douce et l'eau de ballast, ça réduit considérablement la masse du fret et des passagers. Mais ! c'est une valeur maximum, peut-être bien loin du chargement usuel en conditions commerciales réelles, qui pourrait être 1/3 du tpl, donnant un 1/4 \* 1/3 = 1/12, donc en effet bien <10%.
+
+> les rapports sont similaires sur le Mega Andrea, bateau plus court.
+
+Ainsi, le navire est grand pour accueillir une surface de pont importante et il est lourd parce qu’il est grand. Sa coque et ses équipements divers représentent de l'ordre de 70-80% de la masse totale.
+
+Si les objets transportés étaient plus légers, la masse du navire et donc sa consommation variraient, mais pas de beaucoup tant que l'aménagement intérieure du navire n'est pas revue.
+
+> Il semble quand même que le poids ne soit pas neutre. Après une première version simple, il faudra peut-être créer un modèle hybride selon une fonction mathématique à définir (par exemple un `max(%poids, %surface)`, ou encore une fonction qui privilégie la surface mais avec un malus poids secondaire).
+
+Nous avons donc refait le calcul en allocation volume, en gardant donc l'idée que la grosse majorité du poids du bateau sert à créer de la place pour faire naviguer des choses (fret, voitures, services) et des gens qui ne représentent que 25 à 5% du poids, mais la majorité du volume rendu disponible par ce poids.
+
+> Pourquoi parler de volume et pas de surface ? C'est une nuance très importante, car les ponts accueillant fret et véhicules passagers (la partie "Ro" de RoPax) comporte souvent des doubles ponts. Par exemple, les ponts de chargement des voitures peuvent faire plus de 4m de haut plutôt que 2m, et des [_car decks_](https://www.macgregor.com/Products/products/car-decks/hoistable-car-decks/) amovibles permettent d'optimiser la hauteur des ponts à mi-longueur.
+
+:::info
+Le poids est bien le critère principal de la consommation du bateau, mais l'essentiel du poids est nécessaire pour la carcasse elle-même, le facteur limitant prépondérant (mais pas unique) devenant au final le volume.
+:::
+
+La bonne nouvelle, c'est que le calcul en volume est a priori plus simple qu'en poids.
+
+Quelques remarques diverses sur la différence entre allocation poids vs volume, en attendant des chiffres réels :
+
+-   en volume, les grands espaces voyageur sont largement pénalisés, et donc leur rentabilisation ou un ferry sans services de luxe spacieux serait super intéressants
+-   une voiture peut à peu près être remplacée en volume par une cabine, ce qui rend en effet la voiture très polluante, mais pas vraiment plus qu'en allocation masse
+    -   la voiture vaut 12m3 pour 1,5t
+    -   la cabine 12m3 pour 800 kg
+    -   le coin de salon de restaurant vaut 12m3 et 200kg.
+
+En termes de méthode, nous allons dans un premier temps baser le calcul sur un bateau commercial choisi pour sa représentativité supposée et la disponibilité publique de ses informations : plans ("deck plans") détaillés, informations sur les commerces, photos des cabines, etc.
+
+Sous réserve de disponibilité de ces informations, il semble qu'en se basant sur les données publiques des ferries (largement détaillées sur wikipedia déjà) et la base de donnée exposée par greenferries.org, on pourrait faire des calculs propres à chaque bateau. Cela nécessiterait un gros travail, mais loin d'être démesuré par rapport à l'enjeu, chaque bateau étant un immense bâtiment plus peuplé que 70% des communes françaises, qui ont pourtant toutes leur cadastre, etc.
+
+Mesurer le volume de chaque service à bord et le comparer au [tonnage UMS net](<https://fr.wikipedia.org/wiki/Tonnage#Tonnage_net_(NRT)>), qui contrairement à son nom représente le volume commercial disponible ? Ça me semble peut-être plus risqué que de le mesurer, car c'est un standard qui semble être utilisé pour la taxation, pas destiné à cela. On apprend notamment sur wikipedia que la mesure n'est pas linéaire (!).
+
+#### N'y a-t-il pas des limitations à notre modèle ?
+
+Si bien sûr. Tous les modèles sont imparfaits.
+
+##### La répartition géographique du poids
+
+On peut voir notamment la problématique du centre de gravité du bateau, qui doit être assez bas (cf [cette vidéo très pédagogique](https://youtu.be/Y_c1UNEdEsk?t=1367)). Ces contraintes de répartition du poids sont-elles à même de mettre en cause ce modèle ? Surtout, à partir de quel seuil de densité ? Les ponts supérieurs dédiés aux passagers sont-ils volontairement peu denses ? Peut-être, seuls les chantiers navals, ou éventuellement les armateurs ou opérateurs pourront nous répondre.
+
+> "L'armateur est celui qui arme le navire, c'est-à-dire qu'il l'exploite en fournissant le matériel et les marins nécessaires au transport et aux services maritimes. Si, historiquement l'armateur était en général le propriétaire du navire, il peut en être simplement affréteur c'est-à-dire locataire."
 
 Toujours est-il que les ponts actuellement utilisés pour le fret et les véhicules passager, pourraient être convertis en "habitations" sans problème, et le poids des ponts passagers dédiés à des services accessoires et des cabines ou cabines peu remplies, pourrait être troqué pour des "habitations" plus sobres. À ce titre, voir la diversité de cabines de ce ferry japonais, de la cabine luxe au dortoir commun, dans [cette vidéo](https://youtu.be/xnXrOiG21H0?t=401).
 
-###### La sécurité des passagers
+> Notons que les contraintes sont aussi bien sûr commerciales (là il faut discuter avec les armateurs et compagnies) qui régissent la répartition des espaces passagers (taille de cabine minimale, règles de circulation, espaces où les passagers dépensent leur argent…).
 
-Un autre exemple de limitation, c'est la sécurité sur le bateau : un ferry qui va en Corse et accueille 1500 passagers max, peut-il en acceillir 3000 tout en respectant les lois et les principes de sécurité, en supposant évidemment des changements de configuration à bord ? Il faudrait analyser ces seuils.
+##### La sécurité des passagers
+
+Un autre exemple de limitation, c'est la sécurité sur le bateau : un ferry qui va en Corse et accueille 1500 passagers max, peut-il en accueillir 3000 tout en respectant les lois et les principes de sécurité, en supposant évidemment des changements de configuration à bord ? Il faudrait analyser ces seuils.
 
 En regardant la ligne Marseille-Ajaccio sur [le précieux greenferries.org](https://www.greenferries.org/routes/marseille-fr-ajaccio-fr/), on peut remarquer que le nombre de passagers max varie entre 544 (pour 120 véhicules passager) et 2000 (pour 560 véhicules passager) !
 
-### La base : trouver l'équation physique
+---Fin de l'introduction---
 
-La façon la plus rigoureuse pour avancer serait de modéliser la formule de consommation de carburant du bâteau. Ses paramètres, et leur poids (facteur, carré, cube) nous donneraient alors les clefs de la méthode de répartition du bateau.
+Dans la suite, plus technique, nous évoquons la physique du bateau, et faisons un tour qui se veut exhaustif de la littérature d'empreinte climat des ferries.
+
+---
+
+## La base : trouver l'équation physique
+
+> Nous n'avons bien sûr pas la prétention d'être experts ni incollables en propulsion des navires, donc si vous lisez ces lignes et trouvez le raisonnement imparfait ou problématique : faites mieux, ajoutons d'autres paramètres importants en plus du poids, ou revoyons carrément les conclusions de cette v1 du calcul 🙂.
+
+La façon la plus rigoureuse pour avancer serait de modéliser la formule de consommation de carburant du bateau. Ses paramètres, et leur poids (facteur, carré, cube) nous donneraient alors les clefs de la méthode de répartition du bateau.
 
 Dans ce document, très bien illustré et très fourni en formules mathématiques, j'ai l'impression qu'il y a tout pour construire la formule de calcul physique.
 
@@ -108,17 +184,21 @@ Source : une [ancienne version](https://github.com/laem/futureco-data/files/7995
 
 ![](https://i.imgur.com/vzNOKWS.png)
 
-### Première version simplifiée : le poids
+La résistance de vagues est la part la plus importante de la consommation d’un ferry. On peut optimiser sa carène (ce que font déjà les chantiers) mais le plus efficace est de réduire la vitesse du navire.
 
-Ce document permet-il d'affirmer que c'est selon le poids que nous devons faire la répartition ? J'ai l'impression que oui : les forces dominantes sont clairement celles qui sont proportionnelles au déplacement du bateau, donc au poids embarqué.
+Sur le graphique, on lit le nombre de Froude en abscisses. C’est le ratio de la vitesse par la racine carrée de g x L (g : accélération de la pesanteur. L : longueur à la flottaison du navire). Fn = V/racine(gxL)
+V en mètres par seconde.
 
-Attention : rappelons-nous l'objectif, qui n'est pas de proposer une empreinte climat parfaite, mais de donner l'estimation la moins pire, meilleure que les estimations existentes, le plus vite possible.
+On voit qu’au-delà de 0.23, la résistance du navire augmente très fortement.
+Sur un navire de 150 mètres, ce point (Fn = 0.23) correspond à une vitesse d’environ 17 noeuds. Au-delà, plus on accélère, plus les émissions de CO2 et autres explosent (c’est le cas à plus basse vitesse mais plus raisonnablement).
 
-Je n'ai bien sûr pas la prétention d'être expert en propulsion des navires, donc si vous lisez ces lignes et trouvez le raisonnement imparfait ou problématique : faites mieux, ajoutons d'autres paramètres importants en plus du poids, ou revoyons carrément les conclusions de cette v1 du calcul 🙂.
+On voit donc sur ces publications que c'est le poids qui prévaut dans la consommation du bateau. Mais comme expliqué dans l'introduction, ça n'en fait pas la clef de répartition logique.
 
-#### Attention à la vitesse
+## Attention à la vitesse
 
-Note importante : la 🐇 vitesse du bateau est clairement une information capitale pour le calcul de l'empreinte, car elle fait évoluer la consommation au cube ! À prendre en compte pour une v2 du calcul, surtout que le passager à parfois le choix entre des bâteaux de jour plus rapides, ou de nuit plus lents.
+La 🐇 vitesse du bateau est clairement une information capitale pour le calcul de l'empreinte, car elle fait évoluer la consommation au cube ! Plus un navire va vite, plus il génère de grosses vagues et consomme de l’énergie pour cela.
+
+À prendre en compte pour une v2 du calcul (ou la v1, si le critère est trop important et qu'on trouve des moyens pratiques simples pour l'inclure), surtout que le passager a parfois le choix entre des bateaux de jour plus rapides, ou de nuit plus lents.
 
 > Cet [article Les Echos](https://www.lesechos.fr/idees-debats/editos-analyses/les-marins-se-mettent-au-vert-1147056) contient quelques chiffres sur la réduction de la vitesse, un facteur clef pour réduire la conso :
 
@@ -126,25 +206,44 @@ Note importante : la 🐇 vitesse du bateau est clairement une information capit
 
 [source page 9](https://www.usna.edu/NAOE/_files/documents/Courses/EN400/02.07%20Chapter%207.pdf&page=9)
 
-Cette information ne nous intéresse pas pour la répartition des poids, mais elle reste fondamentale pour l'utilisateur qui aurait le loisir de choisir entre deux bâteaux navigant à une vitesse différente. On pense en particulier à l'heure du voyage : comme pour le train, on peut s'attendre à ce qu'un voyage de nuit permette de baisser radicalement la vitesse, les passagers ayant une grande tolérance au temps passé sur le bateau. Cependant, le voyage de nuit peut multiplier l'espace en cabine nécessaire. Il faut donc jongler entre ces deux points contradictoires, et voir lequel l'emporte.
+Cette information ne nous intéresse pas pour l'allocation, mais elle reste fondamentale pour l'utilisateur qui aurait le loisir de choisir entre deux bâteaux navigant à une vitesse différente. On pense en particulier à l'heure du voyage : comme pour le train, on peut s'attendre à ce qu'un voyage de nuit permette de baisser radicalement la vitesse, les passagers ayant une grande tolérance au temps passé sur le bateau. Cependant, le voyage de nuit peut multiplier l'espace en cabine nécessaire. Il faut donc jongler entre ces deux points contradictoires, et voir lequel l'emporte.
 
-#### Autres paramètres
+À noter que la vitesse est souvent un argument commercial fort. Transformer les aspirations des passagers (leur compréhension du bénéfice / risque d'une traversée plus rapide) peut être un objectif très pragmatique et efficace pour réduire l'empreinte du transport maritime.
+
+### Modélisation de l'impact de la vitesse du bateau
+
+Voilà un modèle de calcul sommaire https://docs.google.com/spreadsheets/d/1qbGPlkThi-0YjW9cbatJJ21gn3WpSKmaeh9KCg3kMGo/edit?usp=sharing
+
+Hypothèses :
+
+> -   Puissance des moteurs de propulsion : 44 480 kW à 27.6 kn (la conso des groupes électrogènes n'est pas prise en compte, même si ce n'est pas négligeable)
+> -   Evolution de la puissance au cube en fonction de la vitesse du navire
+> -   Consommation des moteurs 200g/kWh (cela pourrait être précisé mais l'ordre de grandeur est bon)
+> -   3.64kg CO2 pour 1 kg HFO (base carbone Ademe)
+> -   néglige l'impact d'une cargaison moins lourde sur la conso
+> -   pourquoi pas plus de 28 kn ? Au-delà, ce sont des NGV, et ils semblent définitivement abandonnés en raison de la consommation excessive de carburant, voir [wikipedia](https://fr.wikipedia.org/wiki/Navire_à_grande_vitesse#Problématique_des_NGV).
+
+Ce modèle simple semble valider l'ordre de grandeur de consommation et donc d'empreinte climat globale du bateau, les 625kgCO2e/mille (le tableur donne 445kg) de https://www.greenferries.org/ships/jean-nicoli-9161948 (vitesse moyenne de 31km/h donc ~17 noeuds mais non linéaire en fonction de la vitesse).
+
+## Autres paramètres
 
 Finalement, n'oublions pas qu'un bateau en condition réelles fait aussi face au vent, au courant et à la houle (qu'il ne faut pas confondre à la résistance des vagues créées par le bateau), qui peuvent bien sûr changer la donne.
 
 > For a ship steaming into a 20-knot wind, ship’s resistance may be increased by up to 25-30%.
 
-Pourtant, il est intéressant de noter que pour un aller-retour, on peut supposer a priori que ces forces sont en partie compensées dans le sens inverse. Il faudrait cependant le confirmer. On peut imaginer par exemple que les bateaux prennent consciencieusement en compte ces courants et vents, notamment en changeant de trajectoire pour optimiser la consommation de carburant.
+Pourtant, il est intéressant de noter que pour un aller-retour, on peut supposer a priori que ces forces sont en partie compensées dans le sens inverse. Il faudrait cependant le confirmer. On peut imaginer par exemple que les bateaux prennent consciencieusement en compte ces courants et vents, notamment en changeant de trajectoire pour optimiser la consommation de carburant. Note : sur une traversée de la Manche le courant est plutôt traversier, donc l'optimisation n'est pas vraiment possible.
 
 Le taux de remplissage est aussi un paramètre super important, mais comment l'obtenir ? THETIS nous donne les taux moyens, mais que peut-on en faire ? Aller dans un bateau au taux faible, c'est améliorer ce taux. Privilégier un bateau au taux fort, c'est envoyer un message à la compagnie dans le bon sens. A noter le taux influence forcément le prix (à choix voiture cabine constants), mais dans quel sens ? Si le bateau est plein, donc rentabilisé, l'entreprise pourrait brader les places restantes. Elle pourrait aussi considérer qu'il y a bcp de demande, donc multiplier les prix...
 
-Le plus simple est probablement de ne pas prendre en compte cette donnée pour une 1ère version du calcul.
+Le plus simple est probablement de ne pas prendre en compte cette donnée pour une 1ère version du calcul, ou prendre un taux moyen fixe.
 
 Note : la documentation base carbone contient un tableau de taux de remplissage : https://bilans-ges.ademe.fr/documentation/UPLOAD_DOC_FR/index.htm?maritime2.htm
 
-### Que dit la loi européenne Thetis-MRV ?
+## Mesures existantes de l'empreinte du ferry
 
-Nous avons la chance semble-t-il d'être dans l'Union Européenne qui a imposé un cadre déclaratif obligeant les compagnies de ferries à déclarer chaque année la pollution en CO2e de leurs bateaux.
+### La loi européenne Thetis-MRV ?
+
+Nous avons la chance d'être dans l'Union Européenne qui a imposé un cadre déclaratif obligeant les compagnies de ferries à déclarer chaque année la pollution en CO2e de leurs bateaux.
 
 Détails :
 
@@ -173,7 +272,7 @@ On y apprend cependant l'existence de 2 méthodes d'allocation : par poids et pa
 
 ![](https://i.imgur.com/ZV1XILe.png)
 
-Question donc : peut-on avoir l'information de la méthode utilisée (masse ou surface) pour les différents bateaux de Thetis-MRV ? Non, elle me semble inaccessible. On a posé la question aux responsables... on verra la réponse.
+Question donc : peut-on avoir l'information de la méthode utilisée (masse ou surface) pour les différents bateaux de Thetis-MRV ? Non, elle me semble inaccessible. On a posé la question aux responsables... on verra la réponse. Mise à jour : la réponse est non, suite à une discussion par mail.
 
 On lira encore une fois ici que les deux méthodes sont complètement contradictoires 😥.
 
@@ -198,11 +297,11 @@ maritime transport
 
 [Ici](https://www.verifavia-shipping.com/shipping-carbon-emissions-verification/shipping-mrv-regulation-the-uk-monitoring-reporting-verification-uk-mrv-240.php) on peut voir la doc d'un des vérificateurs des données Thethis MRV. On apprend notamment qu'à partir de 2022 l'UK aura son propre clone de cette loi, mais pas grand chose de plus à propos de la méthode de répartition à privilégier.
 
-En conclusion, à ce stade (et nous y reviendrons par la suite), Thetis-MRV ne nous aident pas dans notre calcul de répartition, même si de façon peu convainquante, la loi valide la méthode par poids comme une possibilité.
+En conclusion, à ce stade (et nous y reviendrons par la suite), Thetis-MRV ne nous aide pas dans notre calcul de répartition, même si de façon peu convainquante, la loi valide la méthode par poids et celle par volume (via la surface) comme des possibilités.
 
-### Publication de Deltamarin confirmant la méthode poids
+### Publication de Deltamarin allant vers la méthode poids
 
-Un document d'un armateur qui parle en long et en large de la métrique EEDI.
+Un document d'un armateur qui parle en long et en large de la métrique EEDI (Energy Efficiency Design Index).
 
 Page 70, on touche presque au but sur notre question de l'allocation.
 
@@ -227,7 +326,7 @@ En somme, notre travail ici consiste simplement à reprendre ce modèle d'attrib
 
 ### Publication du ministère de l'environnement / ADEME
 
-Ici, une publication ministère environnement / ADEME qui constituait un guide pour l'affichage légal de l'empreinte
+Ici, une publication ministère environnement / ADEME qui constituait un guide pour l'affichage légal de l'empreinte :
 
 http://www.bretagne.developpement-durable.gouv.fr/IMG/pdf/guide2_information_co2_cle7a3f22.pdf
 
@@ -239,7 +338,7 @@ Les chiffres page 133 sont impressionnants ! Et ils sont exactement ceux de la b
 
 Or ces chiffres sont donc archivés. On comprend donc que le plus probable est que **l'ADEME ne les a pas considérés crédibles**, ou que les opérateurs de ferries les contestaient. https://bilans-ges.ademe.fr/fr/basecarbone/donnees-consulter/liste-element?recherche=ferry
 
-Ce tableau est très intéressant, il donne une répartition selon le critère passager / voiture / fret
+Ce tableau est très intéressant, il donne une répartition selon le critère passager / voiture / fret :
 
 ![](https://i.imgur.com/vydM6pr.png).
 
@@ -257,9 +356,9 @@ Et en effet, on lit plus haut que `Le décret n° 2011-1336 indique que la répa
 
 ![](https://i.imgur.com/ZzpiUmg.png)
 
-C'est donc une autre méthode encore qui est utilisée ici. Plutôt que de regarder le poids, ou le prix, on utilise le volume.
+C'est donc une autre méthode encore qui est utilisée ici. Plutôt que de regarder le poids, ou le prix, on utilise le nombre de ponts.
 
-Raisonner en nombre de ponts, au vu du plan de ce ferry (Vizzavona) français, ça parait... aberrant 😫
+Raisonner en nombre de ponts, au vu du plan de ce ferry (Vizzavona) français, ça parait pour le moins inexact 😫.
 
 ![](https://i.imgur.com/ymk7nVL.jpg)
 
@@ -304,7 +403,10 @@ p.49 on obtient le détail des profils pour les ferries, c'est intéressant, car
 
 ![](https://i.imgur.com/WXoEuRe.png)
 
-Ce semble être ce taux de remplissage qui donne l'empreinte en mode "optimisé". Ça me semble être un raccourci farfelu, car ajouter des voitures alourdit le bateau qui consomme donc plus...
+> A noter la différence de puissance de l’appareil propulsif entre les navires qui avancent à 18 noeuds et celui qui va à 23 noeuds
+> Entre les 2 premiers, les plus comparables, la puissance évolue bien environ selon le cube de la vitesse (un peu plus)
+
+Ce semble être ce taux de remplissage qui donne l'empreinte en mode "optimisé". Ça peut sembler être un raccourci farfelu, car ajouter des voitures alourdit le bateau qui consomme donc plus, mais tout cela dépend du rapport poids de l'équipement du navire de base et du poids de cargaison embarqué.
 
 Par contre, ce qui est intéressant pour nous, c'est que le 38% de passagers ou bien moins sur les ferries nous permettrait peut-être d'affiner le calcul des infrastructures partagées (restaurant, etc.) ?
 
@@ -312,9 +414,9 @@ Pas sûr, car si on prend l'empreinte des GHG factors britanniques, c'est une em
 
 Reste donc une question centrale : pourquoi ces données d'abord acceptées par l'ADEME ont été archivées ?
 
-Malheureusement, l'annexe 5 était sensé nous donner la méthode de répartition. Sauf qu'elle est manquante dans le document... J'ai essayé de contacter les 2 sociétés qui ont écrit le rapport, et shortsea.Fr qui l'héberge, mais elles semblent toutes disparues :/
+Malheureusement, l'annexe 5 était censé nous donner la méthode de répartition. Sauf qu'elle est manquante dans le document... J'ai essayé de contacter les 2 sociétés qui ont écrit le rapport, et shortsea.Fr qui l'héberge, mais elles semblent toutes disparues :/
 
-Par contre, page 40 on lit, ceci. Ça laisse entendre une répartition sur le poids, mais pas le poids du contenu transporté, mais sur le contenant ! Ainsi il semble que le poids des ponts en acier soient l'élément clef, et donc cette méthode de répartition serait très similaire à la répartition par surface. Impossible de savoir s'ils ont par exemple considéré le poids des cabines, des restaurants, des voitures, des passagers en l'absence de l'annexe.
+Par contre, page 40 on lit, ceci. Ça laisse entendre une répartition sur le poids, mais pas le poids du contenu transporté, mais sur le contenant ! Ainsi il semble que le poids des ponts en acier soit l'élément clef, et donc cette méthode de répartition serait très similaire à la répartition par surface. Impossible de savoir s'ils ont par exemple considéré le poids des cabines, des restaurants, des voitures, des passagers en l'absence de l'annexe.
 
 ![](https://i.imgur.com/drCAmlh.png)
 
@@ -330,6 +432,8 @@ On peut remarquer aussi qu'en
 Comment expliquer une telle inversion si la méthode était le poids, alors qu'un passager en ferry de nuit a bien sûr besoin de cabine, restauration, bar etc. ?
 
 Comment expliquer aussi que les camions et remorques n'auraient que 28% des émissions en RoPAX, et les véhicules légers 18% ?
+
+> hypothèse : s'il y a plus de véhicules la nuit que la journée, le ratio de poids véhicules / passager augmente, et donc les émissions sont plus attribuées aux véhicules qu'aux humains
 
 On lit "tonnage annuel moyen marchandises" (M de tonnes/ milles) :
 Nuit 167
@@ -349,7 +453,7 @@ Elle laisse clairement conclure que la méthode utilisée dans l'étude précéd
 
 --> c'est définitivement un calcul non basé sur le poids mais sur la surface.
 
-Il semblerait d'ailleurs, d'après les informations que j'ai pu obtenir, que la future norme ISO, pour des questions de simplification et d’harmonisation entre tous les modes, prévoierait de faire une allocation entre passagers et marchandises basée sur la masse respective.
+Il semblerait d'ailleurs, d'après les informations obtenues, que la future norme ISO, pour des questions de simplification et d’harmonisation entre tous les modes, prévoirait de faire une allocation entre passagers et marchandises basée sur la masse respective.
 
 ### Liens et autres méthodes intéressantes
 
@@ -376,7 +480,27 @@ https://www.mdpi.com/1996-1073/4/2/239
 
 -   peut-être une autre source à investiguer ici : https://www.marineinsight.com/naval-architecture/power-requirement-ship-estimated/
 
-## Comment passer d'un poids à une empreinte en CO2e/km ?
+## Le calcul
+
+Maintenant la méthode définie, place au calcul du poids des différents billets !
+
+L'objectif est simple : calculer le volume occupé par chaque type de service de transport (passager, voiture, fret), et lui attribuer en fonction du volume utilisé une part de 100% des émissions du ferry.
+
+Le calcul est exposé dans une 1ère version d'un [site destiné au grand public](https://futur.eco/ferry).
+
+Sur le site, on peut parcourir intéractivement chaque étape du calcul en fonction des paramètres du billet voyageur grâce au langage https://publi.codes.
+
+Si vous désirez consulter l'ensemble du modèle de calcul sous forme de code source, c'est ici, et dans les autres fichiers yaml du même dossier.
+
+[Les sources du calcul](https://github.com/laem/futureco/blob/fv2/source/sites/publicodes/ferry/index.yaml).
+
+C'est une v1 du calcul, qui évoluera sur github en fonction des futures revues et contributions.
+
+## [méthode poids] Comment passer d'un poids à une empreinte en CO2e/km ?
+
+:::warning
+Cette section était nécessaire quand la méthode de répartition choisie était le poids, car il est inenvisageable de calculer le poids de chaque élément du bateau. La méthode en volume nous permet elle de nous passer de ce type de facteur d'émission, car nous pouvons assez facilement sur les plans détaillés mesurer chaque élément du ferry.
+:::
 
 Nous avons exploré 3 possibilités pour passer de tonnes à CO2e/km.
 
@@ -386,15 +510,15 @@ Simplement multiplier par 30g / tonne, une donnée ADEME, méthode simple mais q
 
 La publication Deltamarin, table 20, citée ci-dessus, laisse bien entendre qu'on peut multiplier l'EEDI par le poids. Donc qu'on pourrait peut-être le faire sur l'EIV aussi et obtenir l'empreinte d'un billet passager indépendamment du fret.
 
-Peut-on donc carrément utiliser le facteur de "technical efficiency" (EIV) des bateaux [de Greenferries/Thetis](https://www.greenferries.org/doc/technical_efficiency/) ? Ce serait ultra simple. Le bateau [Jean Nicoli 6g](https://www.greenferries.org/ships/jean-nicoli-9161948). Probablement très lié à la vitesse et à l'âge du bateau.
+Peut-on donc carrément utiliser le facteur de "technical efficiency" (EIV) des bateaux [de la base Thetis indexée par Greenferries](https://www.greenferries.org/doc/technical_efficiency/) ? Ce serait ultra simple. Le bateau [Jean Nicoli à 6g](https://www.greenferries.org/ships/jean-nicoli-9161948). Probablement très lié à la vitesse et à l'âge du bateau.
 
 > They are theoretical measures: they rely on applying formulas based on the characteristics of a ship, not on experimental measures.
 
-Si l'on prend le Jean Nicoli à EIV (6.04 gCO2/t·nm), et qu'on considère qu'une voiture c'est 1,5 tonne + 1 tonne / passenger (deltamarin table 20 ex. 1), on obtient 12g CO2e/nm donc ~20g CO2e/km. Chiffre étonemment bas qui reflète probablement le faible EIV du Nicoli. Sans parler du passager sans cabine, qui chiffrerait alors à quelques grammes !
+Si l'on prend le Jean Nicoli à EIV (6.04 gCO2/t·nm), et qu'on considère qu'une voiture c'est 1,5 tonne + 1 tonne / passenger (deltamarin table 20 ex. 1), on obtient 12g CO2e/nm (nautic miles) donc ~20g CO2e/km. Chiffre étonamment bas qui reflète probablement le faible EIV du Nicoli. Sans parler du passager sans cabine, qui chiffrerait alors à quelques grammes !
 
 D'ailleurs, le graphe fait par Greenferries montre bien que soit l'EIV ne veut pas dire grand chose, soit les g/pax.km sont pétés. Je privilégie la deuxième option... due à la variation de poids des billets passager, ou à l'usage de méthodes hétérogènes par les compagnies de ferries (ici Corsica Linea) qui n'attribuent pas le poids passager vs fret selon les mêmes méthodes.
 
-Le problème de cette méthode, c'est qu'elle ignore qu'une partie du poid est allouée ni au fret, ni aux passagers (périmètre large cabines restaus etc.) mais au bateau de base. Ce serait une mesure de tonne marginale, mais il reste à attribuer une part de la base.
+Le problème de cette méthode, c'est qu'elle ignore qu'une partie du poids est allouée ni au fret, ni aux passagers (périmètre large cabines restaus etc.) mais au bateau de base. Ce serait une mesure de tonne marginale, mais il reste à attribuer une part de la base.
 
 Comment l'estimer ? Peut-être simplement via le tonnage à vide du bateau vs chargé :) ? Une piste, à investiguer.
 
@@ -415,7 +539,7 @@ Il semble y avoir une corrélation vitesse - kg·CO₂/n.mile.
 
 Voir les mega express qui vont plus vite que d'autres, ou encore le [Lota](https://www.greenferries.org/ships/pascal-lota-9365398) qui va à 38 km/h.
 
-**La vitesse** est un paramètre important dont on dispose via greenferries pour chaque bateau ** mais qui n'explique pas l'immense variabilité** de l'attribution fret / passagers.
+**La vitesse** est un paramètre important dont on dispose via greenferries pour chaque bateau (et qu'on peut aussi calculer simplement trajet par trajet) ** mais qui n'explique pas l'immense variabilité** de l'attribution fret / passagers.
 
 Qui est donc probablement due à l'application du calcul par masse vs surface. Ce serait dingue... mais possible, la loi semble, comme on l'a vu dans la section "Répartition", l'autoriser voire cadrer la possibilité d'utiliser deux méthodes contradictoires.
 
@@ -481,15 +605,3 @@ On note notamment cette remarque :
 > It is important to note that this emission factor is relevant only for ferries carrying passengers and freight and that emission factors for passenger only ferries are likely to be significantly higher. No suitable dataset has yet been identified to enable the production of a ferry emission factor for passenger-only services (which were excluded from the BFF (2007) work).
 
 Il n'est pas aisé de comprendre pourquoi cela changerait les chiffres. Peut-être parce que le fret permet d'atteindre des poids tellement considérables que l'ajout de passagers ne fait que changer le poids marginal, un seuil initial "en perte" étant alors largement dépassé ?
-
-## Le calcul
-
-Maintenant la méthode définie, place au calcul du poids des différents billets !
-
-C'est ici, et dans les autres fichiers yaml du même dossier.
-
-[Les sources du calcul](https://github.com/laem/futureco/blob/fv2/source/sites/publicodes/ferry/index.yaml).
-
-C'est une v0 du calcul, qui évoluera.
-
-Le calcul est exposé dans une version alpha d'un [site destiné au grand public](https://fv2--futureco.netlify.app/ferry).

@@ -37,12 +37,32 @@ export default ({ dottedName, formule, title, icônes, nodeValue }) => {
 			`}
 		>
 			<ProgressCircle />
-			<div css="width: 100%; img { font-size: 150%}}">
-				{icônes && <Emoji e={icônes} />}
+			<div
+				id="shareImage"
+				css={`
+					display: flex;
+					align-items: center;
+					justify-content: center;
+					flex-wrap: wrap;
+					width: 100%;
+				`}
+			>
+				<div css="width: 100%; img { font-size: 150%}}">
+					{icônes && <Emoji e={icônes} />}
+				</div>
+				<h1
+					css={`
+						width: 100%;
+						font-size: 120%;
+						color: var(--darkerColor);
+						margin: 0;
+						margin-bottom: 1rem;
+						line-height: 2rem;
+					`}
+				>
+					{title}
+				</h1>
 			</div>
-			<h1 css="width: 100%; font-size: 120%; color: var(--darkerColor); margin: 0; margin-bottom: 1rem">
-				{title}
-			</h1>
 			<>
 				<div
 					css={`

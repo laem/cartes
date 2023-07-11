@@ -41,7 +41,6 @@ export function LinkRenderer({
 			)
 		}
 	}
-	console.log(href, children)
 
 	return (
 		<a target="_blank" rel="noreferrer" href={href} {...otherProps}>

@@ -64,7 +64,7 @@ export default ({ children }) => {
 			(url) => location.pathname.indexOf(url) === 0
 		)
 			? 'ecolab-data.netlify.app/co2.json'
-			: 'fv2--futureco-data.netlify.app/co2.json'
+			: 'futureco-data.netlify.app/co2.json'
 
 		/* This enables loading the rules of a branch,
 		 * to showcase the app as it would be once this branch of -data  has been merged*/
@@ -77,6 +77,7 @@ export default ({ children }) => {
 		}${rulesDomain}`
 		const dataBranch = branch || pullRequestNumber
 		if (
+			false && // To be reactivated when in a dev branch for the final work on this test section on the site, that is based on nosgestesclimat's model
 			NODE_ENV === 'development' &&
 			!dataBranch &&
 			rulesDomain.includes('ecolab-data')
@@ -105,7 +106,7 @@ export default ({ children }) => {
 			)
 
 			const rules = req.keys().reduce((memo, key) => {
-				const jsonRuleSet = req(key) || {}
+				const jsonRuleSet = req(key).default || {}
 				const ruleSetPlus = Object.fromEntries(
 					Object.entries(jsonRuleSet).map(([k, v]) =>
 						plusDottedNames[k]
@@ -130,12 +131,21 @@ export default ({ children }) => {
 				/\.(yaml)$/
 			)
 			const rules = req.keys().reduce((memo, key) => {
-				const jsonRuleSet = req(key) || {}
-				return { ...memo, ...jsonRuleSet }
+				const jsonRuleSet = req(key).default || {}
+				const splitName = key.replace('./', '').split('>.yaml')
+				const prefixedRuleSet =
+					splitName.length > 1
+						? Object.fromEntries(
+								Object.entries(jsonRuleSet).map(([k, v]) => [
+									k === 'index' ? splitName[0] : splitName[0] + ' . ' + k,
+									v,
+								])
+						  )
+						: jsonRuleSet
+				return { ...memo, ...prefixedRuleSet }
 			}, {})
 
 			setRules(transformRules(rules))
-			console.log('didsetlocalfurules')
 			removeLoader()
 		} else {
 			fetch(rulesURL, { mode: 'cors' })

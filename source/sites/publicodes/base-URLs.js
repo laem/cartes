@@ -1,5 +1,5 @@
-module.exports = `https://nosgestesclimat.fr/simulateur/bilan
-https://nosgestesclimat.fr/vie-privée
-https://nosgestesclimat.fr/documentation
-https://nosgestesclimat.fr/à-propos
+module.exports = `https://futur.eco
+https://futur.eco/à-propos
+https://futur.eco/documentation
+https://futur.eco/scénarios
 `

@@ -26,4 +26,14 @@ for (var key in iframeAttributes) {
 }
 iframeResize({}, iframe)
 
+const link = document.createElement('div')
+link.innerHTML = `
+<a href="https://futur.eco" target="_blank">Découvrir d'autres calculateurs d'impact carbone</a>
+`
+link.style.cssText = `
+margin: .6rem auto 1rem;
+text-align: center
+`
+
 script.parentNode.insertBefore(iframe, script)
+script.parentNode.insertBefore(link, script)

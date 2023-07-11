@@ -1,16 +1,19 @@
 import byCategory from 'Components/categories'
 import Search from 'Components/Search'
+import TopBar from 'Components/TopBar'
 import { utils } from 'publicodes'
-const { encodeRuleName } = utils
 import { pick } from 'ramda'
 import React, { useEffect, useState } from 'react'
+import Highlighter from 'react-highlight-words'
 import { useSelector } from 'react-redux'
 import { Link } from 'react-router-dom'
 import Worker from 'worker-loader!Components/WikiSearchWorker.js'
 import Emoji from '../components/Emoji'
 import { useEngine } from '../components/utils/EngineContext'
+const { encodeRuleName } = utils
 const worker = new Worker()
-import TopBar from 'Components/TopBar'
+
+import topElements from './topElements.yaml'
 
 export default function Suggestions() {
 	const rules = useSelector((state) => state.rules)
@@ -44,7 +47,7 @@ export default function Suggestions() {
 		<section className="ui__ container">
 			<TopBar />
 			<h1 css="font-size: 150%; line-height: 1.6rem; margin: 1rem">
-				Découvre l'impact de chaque geste du quotidien !
+				Découvre les impacts de chaque geste du quotidien !
 			</h1>
 			<Search
 				setInput={(input) => {
@@ -58,7 +61,7 @@ export default function Suggestions() {
 						<>
 							<h2 css="font-size: 100%;">Résultats :</h2>
 
-							<RuleList {...{ rules: results, exposedRules }} />
+							<RuleList {...{ rules: results, exposedRules, input }} />
 						</>
 					) : (
 						<p>
@@ -80,16 +83,13 @@ const CategoryView = ({ exposedRules }) => {
 			css={`
 				padding-left: 0;
 				list-style: none;
-				li {
-				}
 				> li > h2 {
 					text-transform: uppercase;
 					font-size: 85%;
-					width: auto;
-					margin: 0 auto;
+					margin: 2rem auto 0.6rem;
 					text-align: center;
 					border-radius: 0.3rem;
-					width: 7rem;
+					width: 8.3rem;
 					color: var(--textColor);
 					background: var(--color);
 				}
@@ -102,6 +102,9 @@ const CategoryView = ({ exposedRules }) => {
 				}
 
 				@media (max-width: 600px) {
+					> li > h2 {
+						margin: 0.6rem auto 0.2rem;
+					}
 					li > ul {
 						display: block;
 						white-space: nowrap;
@@ -113,10 +116,27 @@ const CategoryView = ({ exposedRules }) => {
 				}
 			`}
 		>
+			<li>
+				<h2
+					css={`
+						border-bottom: 6px solid orange;
+						padding: 0.1rem;
+					`}
+				>
+					<Emoji e="🔥" /> Actualités
+				</h2>
+				<RuleList
+					{...{
+						rules: topElements.map((dottedName) =>
+							typeof dottedName === 'string' ? { dottedName } : dottedName
+						),
+					}}
+				/>
+			</li>
 			{categories.map(([category, rules], i) => (
 				<li>
 					<h2>{category}</h2>
-					<RuleList {...{ rules, exposedRules: rules }} />
+					<RuleList {...{ rules }} />
 					{false && i === 0 && (
 						<div
 							css={`
@@ -136,7 +156,7 @@ const CategoryView = ({ exposedRules }) => {
 		</ul>
 	)
 }
-const RuleList = ({ rules }) => (
+const RuleList = ({ rules, input }) => (
 	<ul
 		css={`
 			display: flex;
@@ -145,18 +165,22 @@ const RuleList = ({ rules }) => (
 			align-items: center;
 		`}
 	>
-		{rules.map(({ dottedName }) => {
+		{rules.map((ruleObject) => {
+			const dottedName = ruleObject.dottedName
 			const engine = useEngine(),
-				rule = engine.getRule(dottedName),
-				{
-					title,
-					rawNode: { icônes },
-				} = rule
+				rule = dottedName ? engine.getRule(dottedName) : ruleObject,
+				title = rule.title || rule.titre,
+				icônes = rule.icônes || rule.rawNode?.icônes,
+				units =
+					rule.unités ||
+					(rule.rawNode?.exposé.type === 'question éco'
+						? ['€', 'kWh', 'CO2e']
+						: ['CO2e'])
 
 			return (
 				<li css="list-style-type: none" key={dottedName}>
 					<Link
-						to={'/simulateur/' + encodeRuleName(dottedName)}
+						to={rule.url || '/simulateur/' + encodeRuleName(dottedName)}
 						css={`
 							text-decoration: none !important;
 							:hover {
@@ -169,7 +193,7 @@ const RuleList = ({ rules }) => (
 							css={`
 								width: 9rem;
 								margin: 0.6rem 0.6rem 0.6rem 0rem !important;
-								min-height: 7.5rem;
+								height: 8.5rem;
 								display: flex;
 								flex-direction: column;
 								justify-content: center;
@@ -179,6 +203,7 @@ const RuleList = ({ rules }) => (
 								h3 {
 									margin: 0;
 									font-size: 110%;
+									line-height: 1.3rem;
 								}
 								padding: 0.6rem !important;
 								@media (max-width: 600px) {
@@ -186,10 +211,58 @@ const RuleList = ({ rules }) => (
 									width: 9rem;
 									font-size: 110%;
 								}
+								.highlighted {
+									background-image: linear-gradient(
+										-100deg,
+										var(--color),
+										var(--lightColor) 95%,
+										var(--color)
+									);
+									border-radius: 0.5em 0 0.6em 0;
+									padding: 0 0.3rem;
+								}
+								position: relative;
 							`}
 						>
 							<Emoji e={icônes} />
-							<h3>{title}</h3>
+							<h3>
+								{input ? (
+									<Highlighter
+										searchWords={input.split(' ')}
+										autoEscape={true}
+										textToHighlight={title}
+										highlightClassName="highlighted"
+									/>
+								) : (
+									title
+								)}
+							</h3>
+							<span
+								css={`
+									position: absolute;
+									right: -1rem;
+									bottom: -1.1rem;
+									> span {
+										background: var(--color);
+										border-radius: 1rem;
+										padding: 0.1rem;
+										line-height: ${unitSize + 0.2}rem;
+										color: var(--darkestColor);
+										height: ${unitSize}rem;
+										width: ${unitSize}rem;
+										display: inline-block;
+										margin: 0 0.05rem;
+									}
+									> span img {
+										vertical-align: top;
+									}
+								`}
+							>
+								{units.map((unit) => {
+									const { text, title } = unitRepresentations[unit]
+									return <span title={title}>{text}</span>
+								})}
+							</span>
 						</div>
 					</Link>
 				</li>
@@ -197,3 +270,14 @@ const RuleList = ({ rules }) => (
 		})}
 	</ul>
 )
+
+const unitSize = 1.6
+
+const unitRepresentations = {
+	'€': { text: '€', title: 'Combien ça vous coûte ?' },
+	CO2e: { text: 'ⵛ', title: 'Combien de CO₂ₑ ça émet (empreinte climat) ?' },
+	kWh: {
+		text: <img src="/images/energy.svg" />,
+		title: "Combien d'énergie ça consomme ?",
+	},
+}

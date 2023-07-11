@@ -1,18 +1,19 @@
-var emojiRegex = require('emoji-regex')
-const openmoji = require('openmoji')
-import replace from 'string-replace-to-array'
+import emojiRegex from 'https://dev.jspm.io/emoji-regex'
+import openmojis from '../openmojis.json' assert { type: 'json' }
+import replace from 'https://dev.jspm.io/string-replace-to-array'
 
 const regex = emojiRegex()
 
-const url = `https://unpkg.com/openmoji@13.1.0`
+const url = `https://unpkg.com/openmoji@14.0.0`
 const findOpenmoji = (e, black) => {
 	const unicode = e.codePointAt(0).toString(16).toUpperCase()
 
-	const directFound = openmoji.openmojis.find((el) => el.emoji === e)
-	const hexFound = openmoji.openmojis.find((el) => el.hexcode === unicode)
-	const found = directFound || hexFound
+	const found = openmojis[e] || openmojis[e + '️']
+	// for a reason I don't understand, openmoji JSON file contains the variation 16 emoji somtimes... U+FE0F
 
-	return found && url + found.openmoji_images[black ? 'black' : 'color'].svg
+	return (
+		found && `${url}/${black ? 'black' : 'color'}/svg/${found || unicode}.svg`
+	)
 }
 
 const sizeEm = 2
@@ -36,7 +37,7 @@ export default ({ e, black, extra, alt, hasText, white }) => {
 
 	const items = replace(e, regex, function (emoji) {
 		const src = findOpenmoji(emoji, useBlack)
-		return <Image {...{ src, alt: emoji, imageSize, white }} />
+		return <Image {...{ src, alt: emoji, imageSize, white }} key={src} />
 	})
 	if (hasText) return items
 	return (

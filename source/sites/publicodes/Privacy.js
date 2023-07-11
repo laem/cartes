@@ -13,8 +13,10 @@ export default () => (
 			questions restent chez vous, nous n'en collectons aucune.
 		</p>
 		<p>
-			Ce site n'a aucun suivi de son utilisation, contrairement à la majorité
-			qui envoie vos données aux GAFA.{' '}
+			Ce site collecte des données de suivi de son utilisation, dans l'unique
+			but de s'améliorer. Les données collectées sont anonymes, elles ne sont
+			pas envoyées à un GAFAM, mais à un serveur Européen, plausible.io, qui
+			s'engage à respecter les règles de la RGPD.
 		</p>
 	</div>
 )

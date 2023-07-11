@@ -5,6 +5,10 @@ prix à la pompe:
       - raffinage
       - taxes
       - distribution
+  description: |
+    C'est le prix "théorique" du carburant à la pompe en France, incluant le prix d'achat du pétrole, la marge de raffinage et les taxes légales. 
+
+    Attention, il n'inclut pas la marge finale du distributeur qui varie beaucoup en fonction des stations et de l'actualité.
   note: |
     Sources. 
 

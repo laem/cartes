@@ -1,20 +1,17 @@
-import Engine from 'publicodes'
-import { RulePage } from 'publicodes-react'
-import { createContext, useContext, useEffect, useMemo, useState } from 'react'
-import { Redirect, Route, Switch } from 'react-router'
 import RuleInput from 'Components/conversation/RuleInput'
+import Engine from 'publicodes'
+import { createContext, useContext, useEffect, useState } from 'react'
 import Emoji from '../../../components/Emoji'
-import Documentation, { DocumentationStyle } from '../pages/Documentation'
-import fetchBrentPrice from './fetchBrentPrice'
-import Meta from '../../../components/utils/Meta'
 import StackedBarChart from '../../../components/StackedBarChart'
-import pays from './pays.yaml'
-import Markdown from 'markdown-to-jsx'
 import TopBar from '../../../components/TopBar'
+import Meta from '../../../components/utils/Meta'
+import Documentation from '../pages/Documentation'
+import fetchBrentPrice from './fetchBrentPrice'
+import pays from './pays.yaml'
 
 const req = require.context('./', true, /\.(yaml)$/)
 const rules = req.keys().reduce((memo, key) => {
-	const jsonRuleSet = req(key) || {}
+	const jsonRuleSet = req(key).default || {}
 	const splitName = key.replace('./', '').split('>.yaml')
 	const prefixedRuleSet =
 		splitName.length > 1
@@ -27,8 +24,6 @@ const rules = req.keys().reduce((memo, key) => {
 			: jsonRuleSet
 	return { ...memo, ...prefixedRuleSet }
 }, {})
-
-console.log(rules)
 
 const engine = new Engine(rules)
 const SituationContext = createContext({})
@@ -97,15 +92,13 @@ const Questions = ({}) => {
 	const evaluation = engine.evaluate('prix à la pompe')
 	const [brentPrice, setBrentPrice] = useState(null)
 	const brentName = 'baril de brent . dollars'
-	useEffect(
-		() =>
-			fetchBrentPrice().then((res) => {
-				setBrentPrice(res)
+	useEffect(() => {
+		fetchBrentPrice().then((res) => {
+			setBrentPrice(res)
 
-				onChange(brentName)(res[1])
-			}),
-		[]
-	)
+			onChange(brentName)(res[1])
+		})
+	}, [])
 
 	if (!evaluation.nodeValue) return <p>Problème de calcul.</p>
 
