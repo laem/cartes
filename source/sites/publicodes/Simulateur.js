@@ -177,7 +177,7 @@ const Simulateur = ({ objective }) => {
 				</Link>
 			)}
 			{!isMainSimulation && <TopBar />}
-			{isMainSimulation && (
+			{isMainSimulation && false && (
 				<div
 					css={`
 						padding: 0.6rem 1rem;

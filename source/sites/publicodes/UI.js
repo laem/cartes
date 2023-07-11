@@ -16,7 +16,7 @@ export const GameDialog = styled.div`
 	}
 	max-width: 550px;
 	width: 90vw;
-	margin: 0 auto;
+	margin: 1rem auto;
 
 	@media (min-width: 800px) {
 		justify-content: center;
