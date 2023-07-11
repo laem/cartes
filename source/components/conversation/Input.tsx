@@ -1,5 +1,4 @@
-import { formatValue, Evaluation, Unit } from 'publicodes'
-const { serializeUnit } = require('publicodes')
+import { formatValue, Evaluation, Unit, serializeUnit } from 'publicodes'
 import { useCallback } from 'react'
 import { useTranslation } from 'react-i18next'
 import NumberFormat from 'react-number-format'

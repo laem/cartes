@@ -1,6 +1,3 @@
-import { Link } from 'react-router-dom'
-import { useState } from 'react'
-import emoji from 'react-easy-emoji'
 import { colorScale } from './Simulateur'
 import { GameDialog, LoudButton } from './UI'
 
