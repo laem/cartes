@@ -223,7 +223,7 @@ const Simulateur = ({ objective }) => {
 				) : (
 					<Simulation
 						noFeedback
-						orderByCategories={categories}
+						orderByCategories={categories.reverse()}
 						customEnd={
 							objective === 'bilan' ? (
 								<RedirectionToEndPage {...{ rules, engine }} />

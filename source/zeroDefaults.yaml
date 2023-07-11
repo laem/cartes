@@ -127,7 +127,6 @@ transport . mobilité douce . autres véhicules à moteur . km: 0
 transport . voiture . saisie voyageurs: 99
 transport . voiture . gabarit: "'petite'"
 transport . voiture . thermique . consommation aux 100: 0
-transport . voiture . thermique . carburant: "'essence E85'"
 transport . vacances . van . propriétaire: non
 transport . deux roues . usager: non
 transport . deux roues . km: 0
