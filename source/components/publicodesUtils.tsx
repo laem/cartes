@@ -1,6 +1,12 @@
 import { sortBy } from 'ramda'
 import { capitalise0 } from '../utils'
 
+export const MODEL_ROOT_RULE_NAME = 'bilan'
+
+export function isRootRule(dottedName: DottedName): boolean {
+	return dottedName === MODEL_ROOT_RULE_NAME
+}
+
 export const parentName = (dottedName, outputSeparator = ' . ', shift = 0) =>
 	splitName(dottedName).slice(shift, -1).join(outputSeparator)
 
@@ -33,11 +39,34 @@ export const correctValue = (evaluated) => {
 export const ruleFormula = (rule) =>
 	rule?.explanation?.valeur?.explanation?.valeur
 
-export const ruleSumNode = (rule) => {
-	const formula = ruleFormula(rule)
+function ruleSumNode(
+	rules: NGCRulesNodes,
+	rule: NGCRuleNode
+): string[] | undefined {
+	const formula = rule.rawNode.formule
 
-	if (formula.nodeKind !== 'somme') return null
-	return formula.explanation.map((node) => node.dottedName)
+	if (!formula || !formula['somme']) {
+		return undefined
+	}
+
+	return formula['somme']
+		?.map((name: string) => {
+			try {
+				const node = coreUtils.disambiguateReference(
+					rules,
+					rule.dottedName,
+					name
+				)
+				return node
+			} catch (e) {
+				console.log(
+					`One element of the sum is not a variable. It could be a raw number injected by the optimisation algorithm.`,
+					e
+				)
+				return null
+			}
+		})
+		.filter(Boolean)
 }
 
 export const extractCategoriesNamespaces = (
@@ -63,29 +92,42 @@ export const extractCategoriesNamespaces = (
 	return categories
 }
 
-export const extractCategories = (
-	rules,
-	engine,
-	valuesFromURL,
-	parentRule = 'bilan',
+export function extractCategories(
+	rules: any,
+	engine: Engine<DottedName>,
+	valuesFromURL?: any,
+	parentRule = MODEL_ROOT_RULE_NAME,
 	sort = true
-) => {
-	const rule = engine.getRule(parentRule),
-		sumNodes = ruleSumNode(rule)
+): Category[] {
+	const rule = engine.getRule(parentRule)
+	const sumNodes = ruleSumNode(
+		engine.getParsedRules() as NGCRulesNodes,
+		rule as NGCRuleNode
+	)
+
+	if (sumNodes === undefined) {
+		return []
+	}
 
 	const categories = sumNodes.map((dottedName) => {
-		const node = engine.evaluate(dottedName)
-		const { icônes, couleur } = rules[dottedName]
+		const node = engine.evaluate(dottedName) as Category
+		const { icônes, couleur, abréviation } = rules[dottedName]
 		const split = splitName(dottedName),
-			parent = split.length > 1 && split[0]
+			parent = split.length > 1 ? split[0] : ''
 		return {
 			...node,
 			icons: icônes || rules[parent].icônes,
-			color: couleur || rules[parent].couleur,
+			color:
+				categoryColorOverride[dottedName] ||
+				categoryColorOverride[parent] ||
+				couleur ||
+				rules[parent].couleur,
 			nodeValue: valuesFromURL ? valuesFromURL[dottedName[0]] : node.nodeValue,
-			dottedName: (parentRule === 'bilan' && parent) || node.dottedName,
+			dottedName: (isRootRule(parentRule) && parent) || node.dottedName,
+			documentationDottedName: node.dottedName,
 			title:
-				parentRule === 'bilan' && parent ? rules[parent].titre : node.title,
+				isRootRule(parentRule) && parent ? rules[parent].titre : node.title,
+			abbreviation: abréviation,
 		}
 	})
 

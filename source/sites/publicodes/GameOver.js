@@ -1,7 +1,8 @@
+import FuturecoMonochrome from 'Components/FuturecoMonochrome'
 import { useState } from 'react'
 import emoji from 'react-easy-emoji'
 import { useDispatch, useSelector } from 'react-redux'
-import { Link, Navigate, Route } from 'react-router-dom'
+import { Link, Navigate, Route, Routes } from 'react-router-dom'
 import {
 	deletePreviousSimulation,
 	resetSimulation,
@@ -9,7 +10,6 @@ import {
 import Emoji from '../../components/Emoji'
 import ShareButton from '../../components/ShareButton'
 import { useNextQuestions } from '../../components/utils/useNextQuestion'
-import FuturecoMonochrome from 'Components/FuturecoMonochrome'
 import { answeredQuestionsSelector } from '../../selectors/simulationSelectors'
 import { colorScale } from './Simulateur'
 import { GameDialog, LoudButton } from './UI'
