@@ -141,6 +141,8 @@ const Simulateur = ({ objective }) => {
 		evaluation.nodeValue &&
 		getBackgroundColor(evaluation.nodeValue).toHexString()
 
+	console.log('EVAL', engine.evaluate('alimentation . bonus'))
+
 	if (isMainSimulation) {
 		if (answeredRatio >= 0.1 && !messages['notBad'])
 			return <NotBad answeredRatio={answeredRatio} />

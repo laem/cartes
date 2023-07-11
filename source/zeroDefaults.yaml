@@ -1,6 +1,7 @@
 finance . actifs classiques: 0
 finance . actifs responsables: 0
 transport . boulot . distance: 0
+divers . produits consommables . consommation: "'faible'"
 alimentation . boisson . eau en bouteille . affirmatif: non
 alimentation . boisson . sucrées . litres: 0 l/semaine
 alimentation . boisson . alcool . litres: 0
@@ -10,16 +11,18 @@ alimentation . plats . végétalien . nombre: 0
 alimentation . plats . végétarien . nombre: 0
 alimentation . plats . viande 1 . nombre: 0
 alimentation . plats . viande 2 . nombre: 0
-alimentation . plats . poisson 1 . nombre: 2
-alimentation . local . consommation: 'jamais'
-alimentation . de saison . consommation: 'jamais'
-alimentation . petit déjeuner . type: "'aucun'"
+alimentation . plats . poisson 1 . nombre: 0
+alimentation . plats . poisson 2 . nombre: 0
 alimentation . déchets . niveau d'engagement: "'affirmatif'"
-alimentation . déchets . quantité jetée: 'zéro déchet'
+alimentation . déchets . quantité jetée: "'zéro déchet'"
 alimentation . déchets . gestes . compostage biodéchets . présent: oui
 alimentation . déchets . gestes . gaspillage alimentaire . présent: non
 alimentation . déchets . gestes . stop pub . présent: oui
 alimentation . déchets . gestes . acheter en vrac . présent: oui
+alimentation . type de lait: "'lait de soja'"
+alimentation . petit déjeuner . type: "'aucun'"
+alimentation . de saison . consommation: "'oui toujours'"
+alimentation . local . consommation: "'oui toujours'"
 divers . ameublement . meubles . armoire . nombre: 0
 divers . ameublement . meubles . canapé . nombre: 0
 divers . ameublement . meubles . matelas . nombre: 0
@@ -29,8 +32,7 @@ divers . ameublement . meubles . chaise . nombre: 0
 divers . ameublement . meubles . petit meuble . nombre: 0
 divers . ameublement . meubles . grand meuble . nombre: 0
 divers . animaux domestiques . empreinte . chats . nombre: 0
-divers . ameublement . préservation: 'maximum'
-alimentation . type de lait: 'lait de soja'
+divers . ameublement . préservation: "'maximum'"
 divers . textile . t-shirt . nombre: 0
 divers . textile . pantalon . nombre: 0
 divers . textile . short . nombre: 0
@@ -42,28 +44,41 @@ divers . textile . chaussure . nombre: 0
 divers . textile . manteau . nombre: 0
 divers . textile . petit article . nombre: 0
 divers . textile . gros article . nombre: 0
-divers . électroménager . réfrigérateur . présent: non
-divers . électroménager . mini réfrigérateur . présent: non
-divers . électroménager . lave-linge . présent: non
-divers . électroménager . sèche-linge . présent: non
-divers . électroménager . lave-vaisselle . présent: non
-divers . électroménager . four . présent: non
-divers . électroménager . micro-ondes . présent: non
-divers . électroménager . plaques . présent: non
-divers . électroménager . bouilloire . présent: non
-divers . électroménager . cafetière . présent: non
-divers . électroménager . aspirateur . présent: non
-divers . électroménager . robot cuisine . présent: non
-divers . électroménager . tondeuse électrique . présent: non
+divers . électroménager . appareils . réfrigérateur . nombre: 0
+divers . électroménager . appareils . lave-linge . nombre: 0
+divers . électroménager . appareils . sèche-linge . nombre: 0
+divers . électroménager . appareils . lave-vaisselle . nombre: 0
+divers . électroménager . appareils . hotte . nombre: 0
+divers . électroménager . appareils . four . nombre: 0
+divers . électroménager . appareils . micro-onde . nombre: 0
+divers . électroménager . appareils . plaques . nombre: 0
+divers . électroménager . appareils . bouilloire . nombre: 0
+divers . électroménager . appareils . cafetière . nombre: 0
+divers . électroménager . appareils . aspirateur . nombre: 0
+divers . électroménager . préservation: "'maximum'"
+
 divers . autres produits . montant: 0
-logement . habitants: 99
+
+logement . gaz . biogaz . part: 100%
+logement . saisie habitants: 99
+logement . appartement: oui
+logement . éco-construit: oui
+logement . chauffage . réseau de chaleur . présent: non
+logement . chauffage . réseau de chaleur . consommation: 0
+logement . chauffage . PAC . présent: non
+logement . chauffage . électricité . présent: non
 logement . surface: 0
 logement . âge: 999
 logement . électricité . consommation: 0
-logement . bois . chauffage au bois: non
+logement . chauffage . bois . présent: non
+logement . chauffage . bois . type: "'bûche'"
+logement . chauffage . bois . type . granulés . consommation: 0
+logement . chauffage . bois . type . bûche . consommation . saisie: 0
+logement . climatisation . présent: non
+logement . climatisation . nombre: 0
+
 logement . bois . consommation . granulés: 0
 logement . bois . consommation . bûche: 0
-logement . bois . type: "'bûche'"
 logement . gaz . chauffage au gaz: non
 logement . gaz . consommation: 0
 logement . fioul . chauffage au fioul: non
@@ -84,7 +99,6 @@ numérique . TV . présent: non
 numérique . TV . durée: 4
 numérique . vidéoprojecteur . présent: non
 numérique . vidéoprojecteur . durée: 4
-transport . voiture . voyageurs: 2
 transport . voiture . km: 0 km/an
 transport . voiture . motorisation: "'électrique'"
 transport . voiture . âge: 99
@@ -96,3 +110,28 @@ transport . avion . long courrier . heures de vol: 0
 transport . train . km: 0
 transport . métro ou tram . heures par semaine: 0
 transport . bus . heures par semaine: 0
+
+transport . vacances . camping car . propriétaire: non
+transport . vacances . camping car . km: 0 km/an
+transport . vacances . camping car . consommation aux 100: 0
+transport . vacances . caravane . propriétaire: non
+transport . vacances . caravane . distance: 0
+transport . ferry . présent: non
+transport . ferry . heures: 0
+transport . mobilité douce . marche . présent: non
+transport . mobilité douce . vélo . présent: non
+transport . mobilité douce . vae . présent: non
+transport . mobilité douce . vae . km: 0
+transport . mobilité douce . autres véhicules à moteur . présent: non
+transport . mobilité douce . autres véhicules à moteur . km: 0
+transport . voiture . saisie voyageurs: 99
+transport . voiture . gabarit: "'petite'"
+transport . voiture . thermique . consommation aux 100: 0
+transport . voiture . thermique . carburant: "'essence E85'"
+transport . vacances . van . propriétaire: non
+transport . deux roues . usager: non
+transport . deux roues . km: 0
+transport . deux roues . type: "'scooter électrique'"
+
+logement . piscine . présent: non
+logement . piscine . surface: 1
