@@ -63,7 +63,7 @@ export default ({ children }) => {
 		const rulesDomain = ['/simulateur/bilan', '/instructions', '/fin'].find(
 			(url) => location.pathname.indexOf(url) === 0
 		)
-			? 'ecolab-data.netlify.app/co2.json'
+			? 'data.nosgestesclimat.fr/co2-model.FR-lang.fr.json'
 			: 'futureco-data.netlify.app/co2.json'
 
 		/* This enables loading the rules of a branch,

@@ -2544,7 +2544,7 @@ comma-separated-tokens@^1.0.0:
   resolved "https://registry.yarnpkg.com/comma-separated-tokens/-/comma-separated-tokens-1.0.8.tgz"
   integrity sha512-GHuDRO12Sypu2cV70d1dkA2EUmXHgntrzbpvOB+Qy+49ypNfGgFQIC2fhhXbnyrJRynDCAARsT7Ou0M6hirpfw==
 
-commander@^2.19.0, commander@^2.20.0:
+commander@^2.20.0:
   version "2.20.3"
   resolved "https://registry.yarnpkg.com/commander/-/commander-2.20.3.tgz#fd485e84c03eb4881c20722ba48035e8531aeb33"
   integrity sha512-GpVkmM8vF2vQUkj2LvZmD35JxeJOLCwJ9cUkugyk2nuhbv3+mJvpLYYt+0+USMxE+oj+ey/lJEnhZw75x/OMcQ==
@@ -3043,11 +3043,6 @@ dir-glob@^3.0.1:
   integrity sha512-WkrWp9GR4KXfKGYzOLmTuGVi1UWFfws377n9cc55/tb6DuqyF6pcQ5AbiHEshaDpY9v6oaSr2XCDidGmMwdzIA==
   dependencies:
     path-type "^4.0.0"
-
-discontinuous-range@1.0.0:
-  version "1.0.0"
-  resolved "https://registry.yarnpkg.com/discontinuous-range/-/discontinuous-range-1.0.0.tgz"
-  integrity sha1-44Mx8IRLukm5qctxx3FYWqsbxlo=
 
 dns-equal@^1.0.0:
   version "1.0.0"
@@ -5431,7 +5426,7 @@ monaco-editor-webpack-plugin@^7.0.1:
   dependencies:
     loader-utils "^2.0.2"
 
-moo@^0.5.0, moo@^0.5.1:
+moo@^0.5.0:
   version "0.5.1"
   resolved "https://registry.yarnpkg.com/moo/-/moo-0.5.1.tgz"
   integrity sha512-I1mnb5xn4fO80BH9BLcF0yLypy2UKl+Cb01Fu0hJRkJjlCRtxZMWkTdAtDd5ZqCOxtCkhmRwyI57vWT+1iZ67w==
@@ -5478,16 +5473,6 @@ nanoid@^3.3.4:
   version "3.3.4"
   resolved "https://registry.yarnpkg.com/nanoid/-/nanoid-3.3.4.tgz#730b67e3cd09e2deacf03c027c81c9d9dbc5e8ab"
   integrity sha512-MqBkQh/OHTS2egovRtLk45wEyNXwF+cokD+1YPf9u5VfJiRdAiRwB2froX5Co9Rh20xs4siNPm8naNotSD6RBw==
-
-nearley@^2.19.2:
-  version "2.20.1"
-  resolved "https://registry.yarnpkg.com/nearley/-/nearley-2.20.1.tgz"
-  integrity sha512-+Mc8UaAebFzgV+KpI5n7DasuuQCHA89dmwm7JXw3TV43ukfNQ9DnBH3Mdb2g/I4Fdxc26pwimBWvjIw0UAILSQ==
-  dependencies:
-    commander "^2.19.0"
-    moo "^0.5.0"
-    railroad-diagrams "^1.0.0"
-    randexp "0.4.6"
 
 negotiator@0.6.3:
   version "0.6.3"
@@ -6319,21 +6304,17 @@ proxy-from-env@1.1.0:
   resolved "https://registry.yarnpkg.com/proxy-from-env/-/proxy-from-env-1.1.0.tgz#e102f16ca355424865755d2c9e8ea4f24d58c3e2"
   integrity sha512-D+zkORCbA9f1tdWRK0RaCR3GPv50cMxcrz4X8k5LTSUD1Dkw47mKJEZQNunItRTkWwgtaUSo1RVFRIG9ZXiFYg==
 
-publicodes-react@^1.0.0-beta.32:
-  version "1.0.0-beta.32"
-  resolved "https://registry.yarnpkg.com/publicodes-react/-/publicodes-react-1.0.0-beta.32.tgz#07348dfd147c1d2994a602c24dbc7803a2545c8b"
-  integrity sha512-bOaXQEMD9p2UGT4yon47rEZl/ESY9cujfOn/lYFuFgHcn08UFmy5Cb2k9calVwxJlg3tgmcZKTvZBVwDwsiTyA==
+publicodes-react@^1.0.0-beta.70:
+  version "1.0.0-beta.70"
+  resolved "https://registry.yarnpkg.com/publicodes-react/-/publicodes-react-1.0.0-beta.70.tgz#765de53dfa0ce31af8dcafa2b050426a133f8985"
+  integrity sha512-mVa56kd0ztRwvfID1/KfQZs98TMURLbXbIOiJvVAkt6CsjE/2zVZ2943eSGSO2h/SmIWoYcdVvhfXj6sg+2B3Q==
   dependencies:
     styled-components "^5.1.0"
 
-publicodes@^1.0.0-beta.32:
-  version "1.0.0-beta.32"
-  resolved "https://registry.yarnpkg.com/publicodes/-/publicodes-1.0.0-beta.32.tgz#f5fb4e3979f305e3a79ce54c3f23ddaf8e3c4c5e"
-  integrity sha512-i9IifNhSk8mpTdfggbn697VwE5EQYc2auppN34W+oXs5XBQ8Hnmm/aeXic7768T+7DKajnB5Ul+t2uwX72p1/Q==
-  dependencies:
-    moo "^0.5.1"
-    nearley "^2.19.2"
-    yaml "^1.9.2"
+publicodes@^1.0.0-beta.70:
+  version "1.0.0-beta.70"
+  resolved "https://registry.yarnpkg.com/publicodes/-/publicodes-1.0.0-beta.70.tgz#fab60cd26b255d04e381458c43659243ac385fcb"
+  integrity sha512-Aj/B/EnbH4HGM3E+8bq1I5KJvIQ0q5+GauygZT5ynJK7AytDnoAx6pKJnn9uzxTNAAzGsYpxxVinXi7UCxnftA==
 
 pump@^2.0.0:
   version "2.0.1"
@@ -6409,23 +6390,10 @@ quick-temp@^0.1.8:
     rimraf "^2.5.4"
     underscore.string "~3.3.4"
 
-railroad-diagrams@^1.0.0:
-  version "1.0.0"
-  resolved "https://registry.yarnpkg.com/railroad-diagrams/-/railroad-diagrams-1.0.0.tgz"
-  integrity sha1-635iZ1SN3t+4mcG5Dlc3RVnN234=
-
 ramda@^0.28.0:
   version "0.28.0"
   resolved "https://registry.yarnpkg.com/ramda/-/ramda-0.28.0.tgz#acd785690100337e8b063cab3470019be427cc97"
   integrity sha512-9QnLuG/kPVgWvMQ4aODhsBUFKOUmnbUnsSXACv+NCQZcHbeb+v8Lodp8OVxtRULN1/xOyYLLaL6npE6dMq5QTA==
-
-randexp@0.4.6:
-  version "0.4.6"
-  resolved "https://registry.yarnpkg.com/randexp/-/randexp-0.4.6.tgz"
-  integrity sha512-80WNmd9DA0tmZrw9qQa62GPPWfuXJknrmVmLcxvq4uZBdYqb1wYoKTmnlGUchvVWe0XiLupYkBoXVOxz3C8DYQ==
-  dependencies:
-    discontinuous-range "1.0.0"
-    ret "~0.1.10"
 
 randombytes@^2.1.0:
   version "2.1.0"
@@ -6892,11 +6860,6 @@ resolve@^2.0.0-next.3:
   dependencies:
     is-core-module "^2.2.0"
     path-parse "^1.0.6"
-
-ret@~0.1.10:
-  version "0.1.15"
-  resolved "https://registry.yarnpkg.com/ret/-/ret-0.1.15.tgz"
-  integrity sha512-TTlYpa+OL+vMMNG24xSlQGEJ3B/RzEfUlLct7b5G/ytav+wPrplCpVMFuwzXbkecJrb6IYo1iFb0S9v37754mg==
 
 retry@^0.13.1:
   version "0.13.1"
@@ -8565,7 +8528,7 @@ yaml@^1.10.0:
   resolved "https://registry.yarnpkg.com/yaml/-/yaml-1.10.0.tgz"
   integrity sha512-yr2icI4glYaNG+KWONODapy2/jDdMSDnrONSjblABjD9B4Z5LgiircSt8m8sRZFNi08kG9Sm0uSHtEmP3zaEGg==
 
-yaml@^1.10.2, yaml@^1.9.2:
+yaml@^1.10.2:
   version "1.10.2"
   resolved "https://registry.yarnpkg.com/yaml/-/yaml-1.10.2.tgz#2301c5ffbf12b467de8da2333a459e29e7920e4b"
   integrity sha512-r3vXyErRCYJ7wg28yvBY5VSoAF8ZvlcW9/BwUzEtUsjvX/DKs24dIkuwjtuprwJJHsbyUbLApepYTR1BN4uHrg==
