@@ -33,7 +33,8 @@ const setDefaultsToZero = (rules) =>
 						[k]:
 							zeros[k] != null
 								? { ...v, 'par défaut': zeros[k] }
-								: console.log('NO', k, ':', v['par défaut']) || v,
+								: //console.log('NO', k, ':', v['par défaut']) ||
+								  v,
 				  },
 		{}
 	)
@@ -166,7 +167,6 @@ export default ({ children }) => {
 					const questions = Object.entries(newRules).filter(
 						([k, v]) => v && v.question
 					)
-					console.log('NEW', questions)
 					removeLoader()
 				})
 		}

@@ -141,7 +141,11 @@ const Simulateur = ({ objective }) => {
 		evaluation.nodeValue &&
 		getBackgroundColor(evaluation.nodeValue).toHexString()
 
-	console.log('EVAL', engine.evaluate('alimentation . bonus'))
+	console.log(
+		'EVAL',
+		engine.evaluate('bilan').nodeValue,
+		categories.map((cat) => Math.round(cat.nodeValue) + ' ' + cat.dottedName)
+	)
 
 	if (isMainSimulation) {
 		if (answeredRatio >= 0.1 && !messages['notBad'])
@@ -214,7 +218,7 @@ const Simulateur = ({ objective }) => {
 					<SimulationResults {...{ ...rule, ...evaluation }} />
 				)}
 
-				{isMainSimulation && gameOver && false ? (
+				{isMainSimulation && gameOver ? (
 					<Navigate to="/fin" />
 				) : (
 					<Simulation

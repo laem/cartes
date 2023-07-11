@@ -1,5 +1,6 @@
 import { sortBy } from 'ramda'
 import { capitalise0 } from '../utils'
+import { utils as coreUtils } from 'publicodes'
 
 export const MODEL_ROOT_RULE_NAME = 'bilan'
 
@@ -117,11 +118,7 @@ export function extractCategories(
 		return {
 			...node,
 			icons: icônes || rules[parent].icônes,
-			color:
-				categoryColorOverride[dottedName] ||
-				categoryColorOverride[parent] ||
-				couleur ||
-				rules[parent].couleur,
+			color: couleur || rules[parent].couleur,
 			nodeValue: valuesFromURL ? valuesFromURL[dottedName[0]] : node.nodeValue,
 			dottedName: (isRootRule(parentRule) && parent) || node.dottedName,
 			documentationDottedName: node.dottedName,
