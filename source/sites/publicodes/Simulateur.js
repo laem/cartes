@@ -212,7 +212,7 @@ const Simulateur = ({ objective }) => {
 					<SimulationResults {...{ ...rule, ...evaluation }} />
 				)}
 
-				{isMainSimulation && gameOver ? (
+				{isMainSimulation && gameOver && false ? (
 					<Navigate to="/fin" />
 				) : (
 					<Simulation

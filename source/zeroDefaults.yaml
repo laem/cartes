@@ -4,13 +4,33 @@ transport . boulot . distance: 0
 alimentation . boisson . eau en bouteille . affirmatif: non
 alimentation . boisson . sucrées . litres: 0 l/semaine
 alimentation . boisson . alcool . litres: 0
+alimentation . boisson . chaude . café . nombre: 0
+alimentation . boisson . chaude . thé . nombre: 7
 alimentation . plats . végétalien . nombre: 0
 alimentation . plats . végétarien . nombre: 0
 alimentation . plats . viande 1 . nombre: 0
 alimentation . plats . viande 2 . nombre: 0
+alimentation . plats . poisson 1 . nombre: 2
+alimentation . local . consommation: 'jamais'
+alimentation . de saison . consommation: 'jamais'
 alimentation . petit déjeuner . type: "'aucun'"
-alimentation . lait . lait végétal: oui
 alimentation . déchets . niveau d'engagement: "'affirmatif'"
+alimentation . déchets . quantité jetée: 'zéro déchet'
+alimentation . déchets . gestes . compostage biodéchets . présent: oui
+alimentation . déchets . gestes . gaspillage alimentaire . présent: non
+alimentation . déchets . gestes . stop pub . présent: oui
+alimentation . déchets . gestes . acheter en vrac . présent: oui
+divers . ameublement . meubles . armoire . nombre: 0
+divers . ameublement . meubles . canapé . nombre: 0
+divers . ameublement . meubles . matelas . nombre: 0
+divers . ameublement . meubles . lit . nombre: 0
+divers . ameublement . meubles . table . nombre: 0
+divers . ameublement . meubles . chaise . nombre: 0
+divers . ameublement . meubles . petit meuble . nombre: 0
+divers . ameublement . meubles . grand meuble . nombre: 0
+divers . animaux domestiques . empreinte . chats . nombre: 0
+divers . ameublement . préservation: 'maximum'
+alimentation . type de lait: 'lait de soja'
 divers . textile . t-shirt . nombre: 0
 divers . textile . pantalon . nombre: 0
 divers . textile . short . nombre: 0
@@ -76,4 +96,3 @@ transport . avion . long courrier . heures de vol: 0
 transport . train . km: 0
 transport . métro ou tram . heures par semaine: 0
 transport . bus . heures par semaine: 0
-

@@ -23,10 +23,18 @@ import transformRules from './transformRules'
 // But e.g. the question of number of people in the car is asked after the number of km. Hence we set this number to 2.
 const setDefaultsToZero = (rules) =>
 	Object.entries(rules).reduce(
-		(memo, [k, v]) => ({
-			...memo,
-			[k]: zeros[k] != null ? { ...v, 'par défaut': zeros[k] } : v,
-		}),
+		(memo, [k, v]) =>
+			!v
+				? memo
+				: !v['par défaut']
+				? { ...memo, [k]: v }
+				: {
+						...memo,
+						[k]:
+							zeros[k] != null
+								? { ...v, 'par défaut': zeros[k] }
+								: console.log('NO', k, ':', v['par défaut']) || v,
+				  },
 		{}
 	)
 
@@ -151,11 +159,14 @@ export default ({ children }) => {
 			fetch(rulesURL, { mode: 'cors' })
 				.then((response) => response.json())
 				.then((json) => {
-					setRules(
-						rulesURL.includes('futureco')
-							? transformRules(json)
-							: setDefaultsToZero(json)
+					const newRules = rulesURL.includes('futureco')
+						? transformRules(json)
+						: setDefaultsToZero(json)
+					setRules(newRules)
+					const questions = Object.entries(newRules).filter(
+						([k, v]) => v && v.question
 					)
+					console.log('NEW', questions)
 					removeLoader()
 				})
 		}
