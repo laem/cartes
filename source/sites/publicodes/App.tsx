@@ -14,6 +14,7 @@ import Contribution from './Contribution'
 import CreditExplanation from './CreditExplanation'
 import GameOver from './GameOver'
 import Instructions from './Instructions'
+import Landing from './Landing'
 import Privacy from './Privacy'
 import Questions from './Questions'
 import Scenarios from './Scenarios'
@@ -55,7 +56,7 @@ const Router = ({}) => (
 	<>
 		<div css="height: 100%">
 			<Routes>
-				<Route path="/" element={<Wiki />} />
+				<Route path="/" element={<Landing />} />
 				<Route
 					path="documentation/*"
 					element={

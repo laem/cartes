@@ -12,7 +12,7 @@ export default () => {
 				}
 				text-align: center;
 				> img {
-					height: 50%;
+					height: 50vh;
 					object-fit: cover;
 					width: 100vw;
 					-webkit-mask-image: -webkit-gradient(
