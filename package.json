@@ -79,6 +79,7 @@
 		"core-js": "^3.31.1",
 		"dotenv": "^16.0.0",
 		"emoji-regex": "^10.1.0",
+		"eslint-config-next": "^13.4.12",
 		"framer-motion": "^6.3.3",
 		"fuse.js": "6.5.3",
 		"great-circle": "^0.2.8",
@@ -90,6 +91,7 @@
 		"markdown-to-jsx": "^7.1.7",
 		"mini-css-extract-plugin": "^2.6.0",
 		"moo": "^0.5.0",
+		"next": "^13.4.12",
 		"openmoji": "^14.0.0",
 		"path-browserify": "^1.0.1",
 		"process": "^0.11.10",
@@ -137,21 +139,9 @@
 		"styled-components": "^5"
 	},
 	"scripts": {
-		"start": "webpack serve --mode development --config webpack.dev.js",
-		"compile": "NODE_ENV=production yarn run webpack --config webpack.prod.js",
-		"stats": "webpack --config webpack.prod.js --profile --json > stats.json",
-		"analyze-bundle": "ANALYZE_BUNDLE=1 yarn run build",
-		"clean": "rimraf dist node_modules source/data",
-		"test": "yarn test:file \"./{,!(node_modules)/**/}!(webpack).test.js\"",
-		"test:file": "yarn mocha-webpack --webpack-config ./webpack.dev.js --include test/componentTestSetup.js --require mock-local-storage --require test/helpers/browser.js",
-		"test:bundlesize": "bundlesize",
-		"test:dev-e2e:publicode": "cypress open --browser chromium --config baseUrl=http://localhost:8080/publicodes,integrationFolder=cypress/integration/publi.codes",
-		"test:dev-e2e:mon-entreprise": "cypress open --browser chromium",
-		"test:dev-e2e:mycompanyinfrance": "cypress open --browser chromium --config baseUrl=http://localhost:8080/infrance",
-		"i18n:rules:check": "node scripts/i18n/check-missing-rule-translation.js",
-		"i18n:rules:translate": "node scripts/i18n/translate-rules.js",
-		"i18n:ui:check": "yarn run i18next -c scripts/i18n/parser.config.js && node scripts/i18n/check-missing-UI-translation",
-		"i18n:ui:translate": "rm -rf source/locales/static-analysis-fr.json && yarn run i18next -c scripts/i18n/parser.config.js && node scripts/i18n/translate-ui.js",
-		"publish:publicodes": "yarn run lint && yarn run "
+		"dev": "next dev",
+		"build": "next build",
+		"start": "next start",
+		"lint": "next lint"
 	}
 }

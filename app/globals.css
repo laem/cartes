@@ -1,0 +1,51 @@
+:root {
+	--color1: #976aec;
+	--color2: #7963e3;
+	--darkColor: #121226;
+}
+
+* {
+	box-sizing: border-box;
+	padding: 0;
+	margin: 0;
+}
+
+html,
+body {
+	font-family: var(--font-inter);
+	max-width: 100vw;
+	overflow-x: hidden;
+	height: 100%;
+	font-size: 105%;
+}
+
+body {
+	color: #111;
+}
+main {
+	padding: 0 0.6rem;
+	min-height: 100%;
+	display: grid;
+	grid-template-rows: auto 1fr auto;
+	max-width: 850px;
+	margin: 0 auto;
+}
+
+a {
+}
+
+h1,
+h2,
+h3,
+h4 {
+	margin: 1rem 0 0.6rem 0;
+}
+
+p {
+	margin: 1rem 0;
+}
+
+blockquote {
+	border-left: 0.4rem solid var(--color1);
+	padding-left: 0.6rem;
+}
