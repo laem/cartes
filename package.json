@@ -78,7 +78,7 @@
 		"color-convert": "^2.0.1",
 		"core-js": "^3.31.1",
 		"dotenv": "^16.0.0",
-		"emoji-regex": "^10.1.0",
+		"emoji-regex": "^10.2.1",
 		"eslint-config-next": "^13.4.12",
 		"framer-motion": "^6.3.3",
 		"fuse.js": "6.5.3",
