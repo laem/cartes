@@ -38,10 +38,16 @@ export const LoudButton = ({ to, children }) => {
 	const [play] = useSound('/sounds/bite.mp3')
 
 	return (
-		<button onClick={play}>
-			<Link href={to} className="ui__ plain button">
-				{children}
-			</Link>
-		</button>
+		<Button onClick={play} href={to}>
+			{children}
+		</Button>
 	)
 }
+
+const Button = styled.button`
+	padding: 0.3rem 0.8rem;
+	background: var(--color2);
+	color: white;
+	font-size: 140%;
+	border: none;
+`

@@ -10,4 +10,7 @@ export const Footer = styled.footer`
 	a {
 		color: inherit;
 	}
+	display: flex;
+	justify-content: center;
+	align-items: center;
 `

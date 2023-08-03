@@ -137,22 +137,6 @@ export default () => {
 						</li>
 					</Link>
 				</ul>
-
-				<footer css="display: flex; justify-content: center; align-items: center; height: 3rem">
-					<div
-						css={`
-							display: flex;
-							justify-content: center;
-							flex-wrap: wrap;
-							> * {
-								margin: 0 0.6rem;
-							}
-						`}
-					>
-						<Link href="/à-propos">À propos</Link>
-					</div>
-					<img src="/logo.svg" css="width: 2rem !important" />
-				</footer>
 			</div>
 		</div>
 	)
