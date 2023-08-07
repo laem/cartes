@@ -38,7 +38,7 @@ export const LoudButton = ({ to, children }) => {
 	const [play] = useSound('/sounds/bite.mp3')
 
 	return (
-		<Button onClick={play} href={to}>
+		<Button cta onClick={play} href={to}>
 			{children}
 		</Button>
 	)
@@ -51,6 +51,7 @@ const Button = styled.button`
 	font-size: 140%;
 	border: none;
 	cursor: pointer;
+	${({ cta }) => cta && `padding: .8rem 1.4rem; font-weight: bold`}
 `
 
 export const Card = styled.li`

@@ -60,7 +60,7 @@ export default function Nav({}) {
 							/>
 						)}
 						La catastrophe climatique n'est plus une menace lointaine, c'est une
-						actualité.&nbsp;<Link href="/à-propos">En savoir plus</Link>.
+						actualité.&nbsp;<Link href="/a-propos">En savoir plus</Link>.
 					</p>
 				)}
 				{!pathname.includes('/scénarios') && (
@@ -94,7 +94,7 @@ export const NavFooter = () => (
 				flex-wrap: wrap;
 			`}
 		>
-			<Link href="/à-propos">À propos</Link>
+			<Link href="/a-propos">À propos</Link>
 		</div>
 		<img src="/logo.svg" css="width: 2rem !important; margin-left: 1rem" />
 	</Footer>
