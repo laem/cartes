@@ -126,7 +126,7 @@
 		"reduce-reducers": "^1.0.4",
 		"redux": "^4.2.1",
 		"redux-thunk": "^2.4.1",
-		"regenerator-runtime": "^0.13.9",
+		"regenerator-runtime": "^0.14.0",
 		"remark-footnotes": "^4.0.1",
 		"remark-frontmatter": "^4.0.1",
 		"remark-mdx-frontmatter": "^3.0.0",
@@ -144,9 +144,6 @@
 		"yaml": "^2.0.1",
 		"yarn": "^1.22.10",
 		"yjs": "^13.5.35"
-	},
-	"resolutions": {
-		"styled-components": "^5"
 	},
 	"scripts": {
 		"dev": "next dev",
