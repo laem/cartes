@@ -1,9 +1,9 @@
 import './globals.css'
 import StyledComponentsRegistry from '../lib/registry'
-import Nav, { NavFooter } from './Nav'
+import Nav, { NavFooter } from 'Components/Nav'
 import { Inter } from 'next/font/google'
 import Script from 'next/script'
-import Providers from './providers/Providers'
+import Providers from '@/providers/Providers'
 
 // If loading a variable font, you don't need to specify the font weight
 const inter = Inter({

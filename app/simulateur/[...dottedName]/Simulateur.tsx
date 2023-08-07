@@ -1,7 +1,7 @@
 'use client'
 
-import { setSimulationConfig } from '@/app/actions'
-import { questionEcoDimensions } from '@/app/components/questionEcoDimensions'
+import { setSimulationConfig } from '@/actions'
+import { questionEcoDimensions } from 'Components/questionEcoDimensions'
 import { parentName } from 'Components/utils/publicodesUtils'
 import { usePathname } from 'next/navigation'
 import { compose, isEmpty, symmetricDifference } from 'ramda'

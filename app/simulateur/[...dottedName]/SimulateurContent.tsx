@@ -1,9 +1,9 @@
 'use client'
 
-import Emoji from '@/app/components/Emoji'
-import Simulation from '@/app/components/Simulation'
-import { getBackgroundColor, limit } from '@/app/components/testColors'
-import { useEngine2 } from '@/app/providers/EngineWrapper'
+import Emoji from 'Components/Emoji'
+import Simulation from 'Components/Simulation'
+import { getBackgroundColor, limit } from 'Components/testColors'
+import { useEngine2 } from '@/providers/EngineWrapper'
 import {
 	Almost,
 	Done,
@@ -20,12 +20,12 @@ import { useRouter } from 'next/router'
 import Engine, { utils } from 'publicodes'
 import { useEffect, useMemo } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
-import { useNextQuestions } from '../../components/utils/useNextQuestion'
+import { useNextQuestions } from 'Components/utils/useNextQuestion'
 import {
 	answeredQuestionsSelector,
 	configSituationSelector,
 	situationSelector,
-} from '../../selectors/simulationSelectors'
+} from '@/selectors/simulationSelectors'
 import CustomSimulateurEnding from './CustomSimulateurEnding'
 
 //TODO add metadata https://nextjs.org/docs/app/building-your-application/optimizing/metadata

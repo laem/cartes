@@ -1,8 +1,8 @@
 'use client'
 import Link from 'next/link'
 
-import Emoji from './components/Emoji'
-import { Card, LoudButton } from './components/UI'
+import Emoji from 'Components/Emoji'
+import { Card, LoudButton } from 'Components/UI'
 
 export default () => {
 	return (

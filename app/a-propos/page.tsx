@@ -1,4 +1,4 @@
-import Article from '@/app/components/Article'
+import Article from 'Components/Article'
 import { Metadata } from 'next'
 
 export const metadata: Metadata = {
