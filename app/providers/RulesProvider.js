@@ -1,8 +1,11 @@
+'use client'
+
 import {
 	EngineProvider,
 	SituationProvider,
 	engineOptions,
 } from 'Components/utils/EngineContext'
+
 import {
 	configSituationSelector,
 	situationSelector,
@@ -12,9 +15,10 @@ import Engine from 'publicodes'
 import React, { useEffect, useMemo } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import zeros from './zeroDefaults.yaml'
-import { useLocation } from 'react-router'
 
 import transformRules from './transformRules'
+import { useParams, usePathname } from 'next/navigation'
+import { useSearchParams } from 'react-router-dom'
 
 // This is a difficult task : categories must equal to zero, in order to not make the test fail without having answered to a non-zero per default category
 // but some categories are conditionned by one variable, like the housing which is divided by the number of inhabitants.
@@ -62,15 +66,15 @@ export default ({ children }) => {
 
 	const setRules = (rules) => dispatch({ type: 'SET_RULES', rules })
 
-	const urlParams = new URLSearchParams(window.location.search)
-	const location = useLocation()
+	const urlParams = new URLSearchParams(useParams())
+	const pathname = usePathname()
 
 	const branch = urlParams.get('branch')
 	const pullRequestNumber = urlParams.get('PR')
 
 	useEffect(() => {
 		const rulesDomain = ['/simulateur/bilan', '/instructions', '/fin'].find(
-			(url) => location.pathname.indexOf(url) === 0
+			(url) => pathname.indexOf(url) === 0
 		)
 			? 'data.nosgestesclimat.fr/co2-model.FR-lang.fr.json'
 			: 'futureco-data.netlify.app/co2.json'
@@ -87,7 +91,7 @@ export default ({ children }) => {
 		const dataBranch = branch || pullRequestNumber
 		if (
 			false && // To be reactivated when in a dev branch for the final work on this test section on the site, that is based on nosgestesclimat's model
-			NODE_ENV === 'development' &&
+			process.env.NODE_ENV === 'development' &&
 			!dataBranch &&
 			rulesDomain.includes('ecolab-data')
 		) {
@@ -129,13 +133,13 @@ export default ({ children }) => {
 			setRules(setDefaultsToZero(rules))
 			removeLoader()
 		} else if (
-			NODE_ENV === 'development' &&
+			process.env.NODE_ENV === 'development' &&
 			!dataBranch &&
 			rulesDomain.includes('futureco-data')
 		) {
 			// Rules are stored in nested yaml files
 			const req = require.context(
-				'../../futureco-data/data/',
+				'../../../futureco-data/data/',
 				true,
 				/\.(yaml)$/
 			)
@@ -170,7 +174,7 @@ export default ({ children }) => {
 					removeLoader()
 				})
 		}
-	}, [location.pathname, branch, pullRequestNumber])
+	}, [pathname, branch, pullRequestNumber])
 
 	if (!rules) return null
 	return <EngineWrapper rules={rules}>{children}</EngineWrapper>

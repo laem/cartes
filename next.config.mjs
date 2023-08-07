@@ -48,6 +48,9 @@ const nextConfig = {
 
 		return config
 	},
+	publicRuntimeConfig: {
+		NODE_ENV: process.env.NODE_ENV,
+	},
 }
 
 const withMDX = nextMdx({

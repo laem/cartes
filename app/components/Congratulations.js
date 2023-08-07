@@ -1,3 +1,4 @@
+'use client'
 import { useDispatch } from 'react-redux'
 import tinygradient from 'tinygradient'
 import { Dialog } from './GameOver'

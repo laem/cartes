@@ -1,11 +1,13 @@
+'use client'
+import { batchUpdateSituation } from '@/app/actions'
 import { useEngine } from 'Components/utils/EngineContext'
+import { usePathname, useSearchParams } from 'next/navigation'
+import { useRouter } from 'next/router'
 import Engine, { ParsedRules, serializeEvaluation } from 'publicodes'
-import { useEffect, useMemo, useState } from 'react'
+import { useCallback, useEffect, useMemo, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { useLocation } from 'react-router'
-import { useSearchParams } from 'react-router-dom'
 import { configSelector } from 'Selectors/simulationSelectors'
-import { batchUpdateSituation } from '@/app/actions'
 import {
 	RootState,
 	SimulationConfig,
@@ -19,7 +21,22 @@ type DottedName = string
 type ParamName = DottedName | ShortName
 
 export function syncSearchParams() {
-	const [searchParams, setSearchParams] = useSearchParams()
+	const router = useRouter()
+	const pathname = usePathname()
+	const searchParams = useSearchParams()!
+
+	// Get a new searchParams string by merging the current
+	// searchParams with a provided key/value pair
+	const createQueryString = useCallback(
+		(name: string, value: string) => {
+			const params = new URLSearchParams(searchParams)
+			params.set(name, value)
+
+			return params.toString()
+		},
+		[searchParams]
+	)
+
 	const dispatch = useDispatch()
 	const situation = useSelector(situationSelector)
 	const situationSearchParams = useParamsFromSituation(situation)
@@ -37,7 +54,7 @@ export function syncSearchParams() {
 		dispatch(batchUpdateSituation(newSituation as Situation))
 	}, [])
 	useEffect(() => {
-		setSearchParams(situationSearchParams, { replace: true })
+		router.push(pathname + '?' + situationSearchParams.toString())
 	}, [situationSearchParams.toString()])
 }
 

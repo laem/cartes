@@ -1,3 +1,4 @@
+'use client'
 import Conversation, {
 	ConversationProps,
 } from 'Components/conversation/Conversation'
@@ -5,7 +6,7 @@ import SearchButton from 'Components/SearchButton'
 import * as animate from 'Components/ui/animate'
 import React from 'react'
 import AnswerList from './conversation/AnswerList'
-import { syncSearchParams } from './utils/useSearchParamsSimulationSharing'
+//TODO import { syncSearchParams } from './utils/useSearchParamsSimulationSharing'
 
 type SimulationProps = {
 	explanations?: React.ReactNode
@@ -28,7 +29,7 @@ export default function Simulation({
 	const Animation = animate[animation]
 	//const situation = useSelector(situationSelector)
 	//const searchParams = useParamsFromSituation(situation)
-	syncSearchParams()
+	// TODO syncSearchParams()
 	return (
 		<>
 			<AnswerList />
