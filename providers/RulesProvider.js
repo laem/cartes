@@ -6,7 +6,6 @@ import zeros from './zeroDefaults.yaml'
 
 import { useParams, usePathname } from 'next/navigation'
 import transformRules from './transformRules'
-import EngineWrapper from './EngineWrapper'
 
 // This is a difficult task : categories must equal to zero, in order to not make the test fail without having answered to a non-zero per default category
 // but some categories are conditionned by one variable, like the housing which is divided by the number of inhabitants.
@@ -160,7 +159,7 @@ export default ({ children }) => {
 					const questions = Object.entries(newRules).filter(
 						([k, v]) => v && v.question
 					)
-					removeLoader()
+					//removeLoader()
 				})
 		}
 	}, [pathname, branch, pullRequestNumber])

@@ -1,5 +1,5 @@
+import { useEngine2 } from '@/providers/EngineWrapper'
 import React from 'react'
-import { useEngine } from '../utils/EngineContext'
 import './Progress.css'
 
 type ProgressProps = {
@@ -13,7 +13,7 @@ export default function Progress({
 	style,
 	className,
 }: ProgressProps) {
-	const engine = useEngine()
+	const engine = useEngine2()
 	const { nodeValue } = engine.evaluate('bilan')
 	return (
 		<div className={'progress__container ' + className} css={style}>

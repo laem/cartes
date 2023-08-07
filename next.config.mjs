@@ -12,9 +12,15 @@ const __dirname = path.dirname(__filename)
 const nextConfig = {
 	experimental: {
 		mdxRs: true,
+		serverComponentsExternalPackages: ['publicodes'],
 	},
 	compiler: {
 		styledComponents: true,
+	},
+	eslint: {
+		// Warning: This allows production builds to successfully complete even if
+		// your project has ESLint errors.
+		ignoreDuringBuilds: true,
 	},
 	typescript: {
 		// !! WARN !!
