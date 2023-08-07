@@ -1,7 +1,8 @@
-import { formatValue, Evaluation, Unit, serializeUnit } from 'publicodes'
+'use client'
+import { Evaluation, serializeUnit, Unit } from 'publicodes'
 import { useCallback } from 'react'
 import { useTranslation } from 'react-i18next'
-import NumberFormat from 'react-number-format'
+import { NumericFormat } from 'react-number-format'
 import { currencyFormat, debounce } from '../../utils'
 import InputSuggestions from './InputSuggestions'
 import { InputCommonProps } from './RuleInput'
@@ -40,7 +41,7 @@ export default function Input({
 							onSecondClick={() => onSubmit?.('suggestion')}
 						/>
 					)}
-					<NumberFormat
+					<NumericFormat
 						autoFocus={autoFocus}
 						className="suffixed ui__"
 						id={id}

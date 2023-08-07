@@ -1,6 +1,6 @@
+'use client'
 import animate from 'Components/ui/animate'
 import { Markdown } from 'Components/utils/markdown'
-import { Trans } from 'react-i18next'
 import { useDispatch, useSelector } from 'react-redux'
 import './Aide.css'
 import mosaicQuestions from './mosaicQuestions'

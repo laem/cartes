@@ -1,11 +1,11 @@
+'use client'
+import { useEngine2 } from '@/app/providers/EngineWrapper'
 import Input from 'Components/conversation/Input'
 import Question, { Choice } from 'Components/conversation/Question'
 import CurrencyInput from 'Components/CurrencyInput/CurrencyInput'
 import PercentageField from 'Components/PercentageField'
-import { parentName } from 'Components/utils/publicodesUtils'
 import ToggleSwitch from 'Components/ui/ToggleSwitch'
-import { EngineContext } from 'Components/utils/EngineContext'
-import { DottedName } from 'modele-social'
+import { parentName } from 'Components/utils/publicodesUtils'
 import {
 	ASTNode,
 	EvaluatedRule,
@@ -14,14 +14,13 @@ import {
 	utils,
 } from 'publicodes'
 import { Evaluation } from 'publicodes/dist/types/AST/types'
-import React, { Suspense, useContext } from 'react'
+import React, { Suspense } from 'react'
 import { useTranslation } from 'react-i18next'
 import DateInput from './DateInput'
 import mosaicQuestions from './mosaicQuestions'
 import ParagrapheInput from './ParagrapheInput'
 import TextInput from './TextInput'
 import TravelTimeSpanInput from './TravelTimeSpanInput'
-import { useEngine2 } from '@/app/providers/EngineWrapper'
 
 // TODO this whole block is ugly
 export const airportsQuestions = [

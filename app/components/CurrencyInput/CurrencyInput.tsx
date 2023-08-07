@@ -1,7 +1,8 @@
 import classnames from 'classnames'
 import React, { useMemo, useRef, useState } from 'react'
-import NumberFormat, { NumberFormatProps } from 'react-number-format'
+import { NumericFormat } from 'react-number-format'
 import { debounce, currencyFormat } from '../../utils'
+
 import './CurrencyInput.css'
 
 type CurrencyInputProps = NumberFormatProps & {
@@ -53,17 +54,14 @@ export default function CurrencyInput({
 		event.persist()
 		event.target = {
 			...event.target,
-			value: nextValue.current
+			value: nextValue.current,
 		}
 		nextValue.current = ''
 		onChangeDebounced?.(event)
 	}
 
-	const {
-		isCurrencyPrefixed,
-		thousandSeparator,
-		decimalSeparator
-	} = currencyFormat(language)
+	const { isCurrencyPrefixed, thousandSeparator, decimalSeparator } =
+		currencyFormat(language)
 	// Autogrow the input
 	const valueLength = currentValue.toString().length
 	const width = `${5 + (valueLength - 5) * 0.75}em`
@@ -75,7 +73,7 @@ export default function CurrencyInput({
 			onClick={() => inputRef.current?.focus()}
 		>
 			{!currentValue && isCurrencyPrefixed && currencySymbol}
-			<NumberFormat
+			<NumericFormat
 				{...forwardedProps}
 				thousandSeparator={thousandSeparator}
 				decimalSeparator={decimalSeparator}

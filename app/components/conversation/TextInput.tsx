@@ -1,3 +1,5 @@
+'use client'
+
 import { useCallback } from 'react'
 import { debounce } from '../../utils'
 import { InputCommonProps } from './RuleInput'
@@ -7,7 +9,7 @@ export default function TextInput({
 	value,
 	id,
 	defaultValue,
-	autoFocus
+	autoFocus,
 }: InputCommonProps) {
 	const debouncedOnChange = useCallback(debounce(1000, onChange), [])
 

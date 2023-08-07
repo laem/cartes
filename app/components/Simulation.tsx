@@ -40,7 +40,6 @@ export default function Simulation({
 					orderByCategories={orderByCategories}
 					customEndMessages={customEndMessages}
 				/>
-				hihi
 				{explanations}
 			</Animation>
 		</>

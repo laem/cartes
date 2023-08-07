@@ -1,7 +1,7 @@
+'use client'
 import { ASTNode } from 'publicodes'
 import { toPairs } from 'ramda'
 import { useState } from 'react'
-import { useTranslation } from 'react-i18next'
 import Emoji from '../Emoji'
 
 type InputSuggestionsProps = {
@@ -16,7 +16,6 @@ export default function InputSuggestions({
 	onFirstClick,
 }: InputSuggestionsProps) {
 	const [suggestion, setSuggestion] = useState<ASTNode>()
-	const { t, i18n } = useTranslation()
 
 	return (
 		<div
@@ -45,7 +44,7 @@ export default function InputSuggestions({
 							if (suggestion !== value) setSuggestion(value)
 							else onSecondClick && onSecondClick(value)
 						}}
-						title={t('cliquez pour insérer cette suggestion')}
+						title={'cliquez pour insérer cette suggestion'}
 					>
 						<Emoji e={text} hasText />
 					</button>

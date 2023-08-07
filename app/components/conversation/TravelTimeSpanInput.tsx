@@ -1,6 +1,7 @@
+'use client'
 import { RuleInputProps } from 'Components/conversation/RuleInput'
 import { Rule } from 'publicodes'
-import { useCallback, useEffect, useMemo, useState } from 'react'
+import { useEffect, useMemo, useState } from 'react'
 import styled from 'styled-components'
 import InputSuggestions from './InputSuggestions'
 
