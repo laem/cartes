@@ -1,5 +1,4 @@
-'use client'
-
+'use client';
 import Emoji from 'Components/Emoji'
 import Simulation from 'Components/Simulation'
 import { getBackgroundColor, limit } from 'Components/testColors'
@@ -28,9 +27,7 @@ import {
 } from '@/selectors/simulationSelectors'
 import CustomSimulateurEnding from './CustomSimulateurEnding'
 
-//TODO add metadata https://nextjs.org/docs/app/building-your-application/optimizing/metadata
-//
-export default ({ objective }) => {
+const SimulateurContent = ({ objective }) => {
 	console.log('OBJ', objective)
 	const rules = useSelector((state) => state.rules),
 		rule = rules[objective]
@@ -178,7 +175,11 @@ export default ({ objective }) => {
 			</div>
 		</div>
 	)
-}
+};
+
+//TODO add metadata https://nextjs.org/docs/app/building-your-application/optimizing/metadata
+//
+export default SimulateurContent;
 
 const EndingCongratulations = () => (
 	<h3>

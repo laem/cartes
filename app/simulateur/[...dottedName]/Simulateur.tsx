@@ -1,5 +1,4 @@
-'use client'
-
+'use client';
 import { setSimulationConfig } from '@/actions'
 import { questionEcoDimensions } from 'Components/questionEcoDimensions'
 import { parentName } from 'Components/utils/publicodesUtils'
@@ -12,7 +11,7 @@ import SimulateurContent from './SimulateurContent'
 
 const eqValues = compose(isEmpty, symmetricDifference)
 
-export default ({ dottedName }) => {
+const Simulateur = ({ dottedName }) => {
 	const dispatch = useDispatch()
 	const pathname = usePathname()
 
@@ -43,4 +42,6 @@ export default ({ dottedName }) => {
 	if (!configSet || wrongConfig) return null
 
 	return <SimulateurContent objective={dottedName} />
-}
+};
+
+export default Simulateur;

@@ -1,8 +1,8 @@
-'use client'
+'use client';
 import { colorScale } from 'Components/testColors'
 import { GameDialog, LoudButton } from 'Components/UI'
 
-export default () => {
+const Page = () => {
 	return (
 		<GameDialog>
 			<>
@@ -27,4 +27,6 @@ export default () => {
 			</>
 		</GameDialog>
 	)
-}
+};
+
+export default Page;

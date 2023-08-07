@@ -1,10 +1,10 @@
-'use client'
+'use client';
 import Link from 'next/link'
 
 import Emoji from 'Components/Emoji'
 import { Card, LoudButton } from 'Components/UI'
 
-export default () => {
+const Page = () => {
 	return (
 		<div
 			css={`
@@ -141,4 +141,6 @@ export default () => {
 			</div>
 		</div>
 	)
-}
+};
+
+export default Page;

@@ -1,11 +1,11 @@
-'use client'
+'use client';
 import Emoji, { emoji } from 'Components/Emoji'
 import Link from 'next/link'
 import React from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import scenarios from './scenarios.yaml'
 
-export default () => {
+const Page = () => {
 	const dispatch = useDispatch()
 	const scenario = useSelector((state) => state.scenario)
 	return (
@@ -155,4 +155,6 @@ export default () => {
 			</p>
 		</section>
 	)
-}
+};
+
+export default Page;

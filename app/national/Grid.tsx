@@ -2,8 +2,7 @@
 // https://shhdharmen.github.io/keyboard-css/#states
 // https://codepen.io/vladracoare/pen/jOPmMap
 
-'use client'
-
+'use client';
 import Link from 'next/link'
 import useSound from 'use-sound'
 import data from './data.yaml'
@@ -13,24 +12,24 @@ const { encodeRuleName } = utils
 
 const undefinedIsZero = (figure) => (figure == null ? 0 : figure)
 
-export default ({ state, setState }) => (
-	<ul
-		id="shareImage"
-		css={`
-			display: flex;
-			align-items: center;
-			justify-content: center;
-			flex-wrap: wrap;
-			touch-action: manipulation;
-		`}
-	>
-		{data
-			.sort((a, b) => undefinedIsZero(b.formule) - undefinedIsZero(a.formule))
-			.map((el) => (
-				<Card {...{ data: el, state, setState }} />
-			))}
-	</ul>
-)
+const Grid = ({ state, setState }) => <ul
+    id="shareImage"
+    css={`
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        flex-wrap: wrap;
+        touch-action: manipulation;
+    `}
+>
+    {data
+        .sort((a, b) => undefinedIsZero(b.formule) - undefinedIsZero(a.formule))
+        .map((el) => (
+            <Card {...{ data: el, state, setState }} />
+        ))}
+</ul>;
+
+export default Grid;
 
 const Card = ({ data: { titre, icônes, formule }, state, setState }) => {
 	const [playActive] = useSound('/national/sounds/pop-down.mp3', {

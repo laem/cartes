@@ -3,7 +3,7 @@ import Markdown from 'markdown-to-jsx'
 import { utils } from 'publicodes'
 const { decodeRuleName } = utils
 
-export default ({ params }) => {
+const Page = ({ params }) => {
 	const { nom: raw } = params
 
 	const nom = decodeRuleName(raw)
@@ -17,4 +17,6 @@ export default ({ params }) => {
 			<Markdown>{rule.notes}</Markdown>
 		</main>
 	)
-}
+};
+
+export default Page;

@@ -16,7 +16,7 @@ import {
 	Ensemble,
 } from 'Components/GameOver'
 
-export default ({ params: { diapo } }) => {
+const Page = ({ params: { diapo } }) => {
 	switch (diapo) {
 		case 'perdu':
 			return <Perdu />
@@ -49,4 +49,6 @@ export default ({ params: { diapo } }) => {
 		case 'ensemble':
 			return <Ensemble />
 	}
-}
+};
+
+export default Page;

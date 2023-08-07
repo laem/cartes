@@ -5,7 +5,7 @@ import { capitalise0 } from 'publicodes'
 const ADEMELogoURL =
 	'https://www.ademe.fr/wp-content/uploads/2021/12/logo-ademe.svg'
 
-export default ({ dottedName, rule }) => {
+const CustomSimulateurEnding = ({ dottedName, rule }) => {
 	const ref = rule.références,
 		baseCarbone = ref?.find((el) => el.includes('bilans-ges.ademe.fr'))
 	return (
@@ -21,4 +21,6 @@ export default ({ dottedName, rule }) => {
 			{dottedName === 'transport . avion . impact' && <AvionExplanation />}
 		</div>
 	)
-}
+};
+
+export default CustomSimulateurEnding;
