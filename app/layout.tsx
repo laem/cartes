@@ -3,6 +3,7 @@ import StyledComponentsRegistry from '../lib/registry'
 import Nav, { NavFooter } from './Nav'
 import { Inter } from 'next/font/google'
 import Script from 'next/script'
+import Providers from './providers/Providers'
 
 // If loading a variable font, you don't need to specify the font weight
 const inter = Inter({
@@ -37,9 +38,11 @@ export default function RootLayout({
 			/>
 			<body>
 				<StyledComponentsRegistry>
-					<Nav />
-					{children}
-					<NavFooter />
+					<Providers>
+						<Nav />
+						{children}
+						<NavFooter />
+					</Providers>
 				</StyledComponentsRegistry>
 			</body>
 		</html>

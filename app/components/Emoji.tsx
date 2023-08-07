@@ -18,7 +18,7 @@ const findOpenmoji = (e, black) => {
 
 const sizeEm = 2
 
-export default ({ e, black, extra, alt, hasText, white }) => {
+const Emoji = ({ e, black, extra, alt, hasText, white }) => {
 	const useBlack = black || white
 	if (e == null && extra == null) return null
 	if (extra)
@@ -71,3 +71,6 @@ export const getEmojiImageUrls = (emojis) =>
 	replace(emojis, regex, function (emoji) {
 		return findOpenmoji(emoji)
 	})
+
+export const emoji = (e) => <Emoji e={e} />
+export default Emoji

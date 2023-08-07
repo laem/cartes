@@ -47,37 +47,6 @@ export const sessionBarMargin = `
 		}
 `
 
-export const buildEndURL = (rules, engine) => {
-	const categories = extractCategories(rules, engine),
-		detailsString =
-			categories &&
-			categories.reduce(
-				(memo, next) =>
-					memo +
-					next.name[0] +
-					(Math.round(next.nodeValue / 10) / 100).toFixed(2),
-				''
-			)
-
-	if (detailsString == null) return null
-
-	return `/fin?details=${detailsString}`
-}
-
-export const useSafePreviousSimulation = () => {
-	const previousSimulation = useSelector(
-		(state: RootState) => state.previousSimulation
-	)
-
-	const dispatch = useDispatch()
-	const answeredQuestions = useSelector(answeredQuestionsSelector)
-	const arePreviousAnswers = !!answeredQuestions.length
-	useEffect(() => {
-		if (!arePreviousAnswers && previousSimulation)
-			dispatch(loadPreviousSimulation())
-	}, [])
-}
-
 export default function SessionBar({
 	answerButtonOnly = false,
 	noResults = false,
