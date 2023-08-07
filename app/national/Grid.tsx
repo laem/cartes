@@ -4,10 +4,12 @@
 
 'use client'
 
-import data from './data.yaml'
 import Link from 'next/link'
 import useSound from 'use-sound'
-import { encodeRuleName } from 'Components/utils/publicodesUtils'
+import data from './data.yaml'
+
+import { utils } from 'publicodes'
+const { encodeRuleName } = utils
 
 const undefinedIsZero = (figure) => (figure == null ? 0 : figure)
 

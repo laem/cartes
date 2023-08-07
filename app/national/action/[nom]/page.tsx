@@ -1,6 +1,7 @@
 import data from '../../data.yaml'
 import Markdown from 'markdown-to-jsx'
-import { decodeRuleName } from 'Components/utils/publicodesUtils'
+import { utils } from 'publicodes'
+const { decodeRuleName } = utils
 
 export default ({ params }) => {
 	const { nom: raw } = params

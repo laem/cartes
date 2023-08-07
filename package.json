@@ -45,6 +45,7 @@
 		"csv-loader": "^3.0.3",
 		"cypress-plugin-tab": "^1.0.5",
 		"enzyme-adapter-react-16": "^1.15.6",
+		"eslint": "^8.46.0",
 		"eslint-plugin-react": "^7.29.4",
 		"file-loader": "^6.2.0",
 		"i18next-parser": "^8.4.0",
