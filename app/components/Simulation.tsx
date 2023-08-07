@@ -1,11 +1,10 @@
 'use client'
-import Conversation, {
-	ConversationProps,
-} from 'Components/conversation/Conversation'
+import { ConversationProps } from 'Components/conversation/Conversation'
 import SearchButton from 'Components/SearchButton'
 import * as animate from 'Components/ui/animate'
 import React from 'react'
 import AnswerList from './conversation/AnswerList'
+import Questions from './Questions'
 //TODO import { syncSearchParams } from './utils/useSearchParamsSimulationSharing'
 
 type SimulationProps = {
@@ -41,36 +40,9 @@ export default function Simulation({
 					orderByCategories={orderByCategories}
 					customEndMessages={customEndMessages}
 				/>
+				hihi
 				{explanations}
 			</Animation>
-		</>
-	)
-}
-
-function Questions({
-	customEndMessages,
-	customEnd,
-	orderByCategories,
-}: {
-	customEndMessages?: ConversationProps['customEndMessages']
-	orderByCategories: Array<Object>
-}) {
-	return (
-		<>
-			<div
-				css={`
-					@media (min-width: 800px) {
-						margin-top: 0.6rem;
-					}
-					border-radius: 0.6rem;
-				`}
-			>
-				<Conversation
-					orderByCategories={orderByCategories}
-					customEnd={customEnd}
-					customEndMessages={customEndMessages}
-				/>
-			</div>
 		</>
 	)
 }

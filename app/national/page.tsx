@@ -1,5 +1,5 @@
 import { Metadata } from 'next'
-import InteractiveGrid from '@/InteractiveGrid'
+import InteractiveGrid from './InteractiveGrid'
 
 const title = "Le tableau de bord d'une République verte",
 	description =

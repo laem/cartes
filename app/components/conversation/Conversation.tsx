@@ -1,4 +1,5 @@
 'use client'
+
 import {
 	goToQuestion,
 	updateSituation,
@@ -70,12 +71,6 @@ export default function Conversation({
 			: situation[currentQuestion] != null
 
 	const [dismissedRespirations, dismissRespiration] = useState([])
-
-	useEffect(() => {
-		if (previousAnswers.length === 1) {
-			tracker.push(['trackEvent', 'NGC', '1ère réponse au bilan'])
-		}
-	}, [previousAnswers, tracker])
 
 	const currentQuestionIndex = previousAnswers.findIndex(
 			(a) => a === unfoldedStep

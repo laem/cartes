@@ -11,9 +11,8 @@ const __dirname = path.dirname(__filename)
 
 const nextConfig = {
 	experimental: {
-		serverComponentsExternalPackages: ['publicodes'],
+		mdxRs: true,
 	},
-	reactStrictMode: true,
 	compiler: {
 		styledComponents: true,
 	},
@@ -51,18 +50,8 @@ const nextConfig = {
 
 		return config
 	},
-	publicRuntimeConfig: {
-		NODE_ENV: process.env.NODE_ENV,
-	},
 }
 
-const withMDX = nextMdx({
-	options: {
-		// If you use remark-gfm, you'll need to use next.config.mjs
-		// as the package is ESM only
-		// https://github.com/remarkjs/remark-gfm#install
-		remarkPlugins: [remarkFrontmatter, remarkMdxFrontmatter],
-	},
-})
+const withMDX = nextMdx()
 
 export default withMDX(nextConfig)

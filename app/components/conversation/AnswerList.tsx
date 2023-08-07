@@ -1,4 +1,5 @@
 'use client'
+import { useEngine2 } from '@/app/providers/EngineWrapper'
 import Emoji from 'Components/Emoji'
 import { useEngine } from 'Components/utils/EngineContext'
 import { parentName, safeGetRule } from 'Components/utils/publicodesUtils'
@@ -18,7 +19,7 @@ import './AnswerList.css'
 
 export default function AnswerList() {
 	const dispatch = useDispatch()
-	const engine = useEngine()
+	const engine = useEngine2()
 	const situation = useSelector(situationSelector)
 	const foldedQuestionNames = useSelector(answeredQuestionsSelector)
 	const answeredQuestionNames = Object.keys(situation)
