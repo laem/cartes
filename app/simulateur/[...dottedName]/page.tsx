@@ -1,4 +1,4 @@
-import {utils} from 'publicodes'
+import { utils } from 'publicodes'
 import Simulateur from './Simulateur'
 
 export default ({ params: { dottedName } }) => {

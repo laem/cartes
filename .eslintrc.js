@@ -17,7 +17,6 @@ module.exports = {
   plugins: [
     "react",
     "react-hooks",
-    "mocha"
   ],
   rules: {
     "quotes": [
@@ -42,8 +41,6 @@ module.exports = {
     "react-hooks/exhaustive-deps": "warn",
     "react/jsx-uses-react": "off",
     "react/react-in-jsx-scope": "off",
-    "mocha/no-skipped-tests": "warn",
-    "mocha/no-exclusive-tests": "error"
   },
   settings: {
     "react": {
@@ -97,7 +94,6 @@ module.exports = {
     {
       files: ["**/*.test.js"],
       env: {
-        mocha: true
       }
     }
   ],
@@ -105,7 +101,6 @@ module.exports = {
     "eslint:recommended",
     "plugin:react/recommended",
     "prettier",
-    "prettier/react",
-    "prettier/@typescript-eslint"
+		  "next"
   ]
 }
