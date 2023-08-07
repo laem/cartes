@@ -21,6 +21,7 @@ import mosaicQuestions from './mosaicQuestions'
 import ParagrapheInput from './ParagrapheInput'
 import TextInput from './TextInput'
 import TravelTimeSpanInput from './TravelTimeSpanInput'
+import { useEngine2 } from '@/app/providers/EngineWrapper'
 
 // TODO this whole block is ugly
 export const airportsQuestions = [
@@ -86,7 +87,7 @@ export default function RuleInput<Name extends string = DottedName>({
 	noSuggestions = false,
 	updateSituation,
 }: RuleInputProps<Name>) {
-	const engine = givenEngine || useContext(EngineContext)
+	const engine = givenEngine || useEngine2()
 	const rule = engine.getRule(dottedName)
 	const evaluation = engine.evaluate(dottedName)
 	const rules = engine.getParsedRules()

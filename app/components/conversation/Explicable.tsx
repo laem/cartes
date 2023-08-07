@@ -1,5 +1,5 @@
-import React, { useContext, useState } from 'react'
-import emoji from 'react-easy-emoji'
+'use client'
+import { useContext } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { DottedName } from 'Rules'
 import './Explicable.css'
@@ -10,7 +10,6 @@ const explainVariable = (variableName: DottedName | null = null) =>
 		variableName,
 	} as const)
 export function ExplicableRule({ dottedName }: { dottedName: DottedName }) {
-	const tracker = useContext(TrackerContext)
 	const explained = useSelector((state: RootState) => state.explainedVariable)
 	const dispatch = useDispatch()
 

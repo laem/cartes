@@ -218,6 +218,7 @@ export default function Conversation({
 							dottedName={currentQuestion}
 							onChange={onChange}
 							onSubmit={submit}
+							engine={engine}
 						/>
 					</fieldset>
 				</div>
