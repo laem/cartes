@@ -1,3 +1,4 @@
+'use client'
 import { useEffect, useState } from 'react'
 import { Trans } from 'react-i18next'
 import { Navigate } from 'react-router-dom'

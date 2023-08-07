@@ -1,3 +1,4 @@
+'use client'
 import Engine from 'publicodes'
 import React, { createContext, useContext } from 'react'
 

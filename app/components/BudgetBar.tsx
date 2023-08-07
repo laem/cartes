@@ -1,9 +1,11 @@
+'use client'
 import { utils } from 'publicodes'
 import React from 'react'
-import { Link } from 'react-router-dom'
+
 import styled from 'styled-components'
 import tinygradient from 'tinygradient'
 import { findContrastedTextColor } from 'Components/utils/colors'
+import Link from 'next/link'
 
 export const colorScale = ['#e1d738', '#f6b93b', '#ff0000', '#000000']
 const gradient = tinygradient(colorScale),
@@ -28,7 +30,7 @@ export default ({
 	return (
 		<Link
 			css="text-decoration: none; color: inherit"
-			to="/crédit-climat-personnel"
+			href="/crédit-climat-personnel"
 		>
 			<BudgetBarStyle largeText={!exampleName} color={color.toHex()}>
 				<div

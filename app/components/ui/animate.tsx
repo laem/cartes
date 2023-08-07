@@ -1,3 +1,4 @@
+'use client'
 import { motion } from 'framer-motion'
 
 export const appear = ({ children, delay = 0, duration = 0.3 }: Props) => (

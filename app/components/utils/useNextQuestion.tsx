@@ -35,6 +35,7 @@ import {
 } from '@/app/selectors/simulationSelectors'
 import { EngineContext } from './EngineContext'
 import Engine from 'publicodes'
+import { useEngine2 } from '@/app/providers/EngineWrapper'
 
 type MissingVariables = Partial<Record<DottedName, number>>
 export function getNextSteps(
@@ -137,7 +138,7 @@ export const useNextQuestions = function (): Array<DottedName> {
 	const currentQuestion = useSelector(currentQuestionSelector)
 	const questionsConfig = useSelector(configSelector).questions ?? {}
 	const situation = useSelector(situationSelector)
-	const engine = useContext(EngineContext)
+	const engine = useEngine2()
 	const missingVariables = objectifs.map(
 		(node) => engine.evaluate(node).missingVariables ?? {}
 	)

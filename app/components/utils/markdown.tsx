@@ -1,8 +1,9 @@
 import Emoji from 'Components/Emoji'
 import MarkdownToJsx, { MarkdownToJSX } from 'markdown-to-jsx'
 import React, { useEffect } from 'react'
-import { Link, useLocation } from 'react-router-dom'
+import Link from 'next/link'
 import { isIterable } from '../../utils'
+import { usePathname } from 'next/navigation'
 
 const internalURLs = {
 	'futur.eco': 'futureco',
@@ -20,7 +21,7 @@ export function LinkRenderer({
 
 	if (href && !href.startsWith('http')) {
 		return (
-			<Link to={href} {...otherProps}>
+			<Link href={href} {...otherProps}>
 				{children}
 			</Link>
 		)
@@ -35,7 +36,7 @@ export function LinkRenderer({
 			internalURLs[domain as keyof typeof internalURLs] === siteName
 		) {
 			return (
-				<Link to={href.replace(`https://${domain}`, '')} {...otherProps}>
+				<Link href={href.replace(`https://${domain}`, '')} {...otherProps}>
 					{children}
 				</Link>
 			)
@@ -134,6 +135,7 @@ const flatMapChildren = (children: React.ReactNode): Array<string | number> => {
 	)
 }
 
+/* TODO
 export function useScrollToHash() {
 	const location = useLocation()
 
@@ -149,6 +151,7 @@ export function useScrollToHash() {
 		}
 	}, [location])
 }
+*/
 
 export function HeadingWithAnchorLink({
 	level,
@@ -157,8 +160,8 @@ export function HeadingWithAnchorLink({
 	level: number
 	children: React.ReactNode
 }) {
-	useScrollToHash()
-	const { pathname } = useLocation()
+	//useScrollToHash()
+	const pathname = usePathname()
 	const headingId = flatMapChildren(children)
 		.join(' ')
 		.toLowerCase()
@@ -169,7 +172,7 @@ export function HeadingWithAnchorLink({
 
 	const childrenWithAnchor = headingId ? (
 		<>
-			<Link className="anchor-link" to={`${pathname}#${headingId}`}>
+			<Link className="anchor-link" href={`${pathname}#${headingId}`}>
 				#
 			</Link>
 			{children}

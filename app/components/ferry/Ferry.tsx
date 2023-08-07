@@ -3,17 +3,17 @@ import Engine from 'publicodes'
 import { createContext, useContext, useEffect, useState } from 'react'
 import { useSelector } from 'react-redux'
 import { Link, Navigate, Route, Routes, useParams } from 'react-router-dom'
-import Emoji from '../../../components/Emoji'
-import TopBar from '../../../components/TopBar'
-import Meta from '../../../components/utils/Meta'
+import Emoji from 'Components/Emoji'
+import TopBar from 'Components/TopBar'
+import Meta from 'Components/utils/Meta'
 import { situationSelector } from '../../../selectors/simulationSelectors'
 import Documentation from '../pages/Documentation'
 import Lab from './Lab'
 import TicketSystem from './TicketSystem'
 import getCityData, { toThumb } from 'Components/wikidata'
 import { motion } from 'framer-motion'
-import { CityImage } from '../../../components/conversation/select/SelectTwoAirports'
-import useMediaQuery from '../../../components/useMediaQuery'
+import { CityImage } from 'Components/conversation/select/SelectTwoAirports'
+import useMediaQuery from 'Components/useMediaQuery'
 
 /*
  * envoi Bonpote
@@ -260,7 +260,7 @@ const Questions = ({}) => {
 						</div>
 
 						<div className="ui__ card box">
-							<Link to="/simulateur/transport/avion/impact">
+							<Link href="/simulateur/transport/avion/impact">
 								Et l'avion <Emoji e="✈️" />?
 							</Link>
 						</div>

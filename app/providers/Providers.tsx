@@ -1,6 +1,5 @@
 'use client'
 
-import { useServerInsertedHTML } from 'next/navigation'
 import { PropsWithChildren } from 'react'
 import ReduxProvider from './ReduxProvider'
 import RulesProvider from './RulesProvider'

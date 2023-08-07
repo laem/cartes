@@ -1,7 +1,9 @@
 'use client'
 
 import Emoji from '@/app/components/Emoji'
+import Simulation from '@/app/components/Simulation'
 import { getBackgroundColor, limit } from '@/app/components/testColors'
+import { useEngine2 } from '@/app/providers/EngineWrapper'
 import {
 	Almost,
 	Done,
@@ -11,18 +13,17 @@ import {
 } from 'Components/Congratulations'
 import Lab from 'Components/ferry/Lab'
 import FuturecoMonochrome from 'Components/FuturecoMonochrome'
-import Simulation from 'Components/Simulation'
 import SimulationResults from 'Components/SimulationResults'
-import { useEngine } from 'Components/utils/EngineContext'
 import { extractCategories } from 'Components/utils/publicodesUtils'
 import Link from 'next/link'
 import { useRouter } from 'next/router'
-import { utils } from 'publicodes'
-import { useEffect } from 'react'
+import Engine, { utils } from 'publicodes'
+import { useEffect, useMemo } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { useNextQuestions } from '../../components/utils/useNextQuestion'
 import {
 	answeredQuestionsSelector,
+	configSituationSelector,
 	situationSelector,
 } from '../../selectors/simulationSelectors'
 import CustomSimulateurEnding from './CustomSimulateurEnding'
@@ -30,11 +31,12 @@ import CustomSimulateurEnding from './CustomSimulateurEnding'
 //TODO add metadata https://nextjs.org/docs/app/building-your-application/optimizing/metadata
 //
 export default ({ objective }) => {
+	console.log('OBJ', objective)
 	const rules = useSelector((state) => state.rules),
-		rule = rules[objective],
-		engine = useEngine(),
-		situation = useSelector(situationSelector),
-		evaluation = engine.evaluate(objective),
+		rule = rules[objective]
+
+	const engine = useEngine2()
+	const evaluation = engine.evaluate(objective),
 		dispatch = useDispatch(),
 		categories = objective === 'bilan' && extractCategories(rules, engine)
 
@@ -53,8 +55,9 @@ export default ({ objective }) => {
 		}
 	}, [])
 
-	const nextQuestions = useNextQuestions(),
+	const nextQuestions = useNextQuestions(engine),
 		answeredQuestions = useSelector(answeredQuestionsSelector)
+
 	const messages = useSelector((state) => state.simulation?.messages)
 
 	const isMainSimulation = objective === 'bilan'
@@ -66,12 +69,6 @@ export default ({ objective }) => {
 	const doomColor =
 		evaluation.nodeValue &&
 		getBackgroundColor(evaluation.nodeValue).toHexString()
-
-	console.log(
-		'EVAL',
-		engine.evaluate('bilan').nodeValue,
-		categories.map((cat) => Math.round(cat.nodeValue) + ' ' + cat.dottedName)
-	)
 
 	if (isMainSimulation) {
 		if (answeredRatio >= 0.1 && !messages['notBad'])
@@ -136,7 +133,7 @@ export default ({ objective }) => {
 				) : (
 					<Simulation
 						noFeedback
-						orderByCategories={categories.reverse()}
+						orderByCategories={categories}
 						customEnd={
 							rule.description ? (
 								<CustomSimulateurEnding rule={rule} dottedName={objective} />

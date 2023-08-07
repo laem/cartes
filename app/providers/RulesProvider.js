@@ -1,24 +1,12 @@
 'use client'
 
-import {
-	EngineProvider,
-	SituationProvider,
-	engineOptions,
-} from 'Components/utils/EngineContext'
-
-import {
-	configSituationSelector,
-	situationSelector,
-} from 'Selectors/simulationSelectors'
-
-import Engine from 'publicodes'
-import React, { useEffect, useMemo } from 'react'
+import { useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import zeros from './zeroDefaults.yaml'
 
-import transformRules from './transformRules'
 import { useParams, usePathname } from 'next/navigation'
-import { useSearchParams } from 'react-router-dom'
+import transformRules from './transformRules'
+import EngineWrapper from './EngineWrapper'
 
 // This is a difficult task : categories must equal to zero, in order to not make the test fail without having answered to a non-zero per default category
 // but some categories are conditionned by one variable, like the housing which is divided by the number of inhabitants.
@@ -133,6 +121,7 @@ export default ({ children }) => {
 			setRules(setDefaultsToZero(rules))
 			removeLoader()
 		} else if (
+			false &&
 			process.env.NODE_ENV === 'development' &&
 			!dataBranch &&
 			rulesDomain.includes('futureco-data')
@@ -177,27 +166,5 @@ export default ({ children }) => {
 	}, [pathname, branch, pullRequestNumber])
 
 	if (!rules) return null
-	return <EngineWrapper rules={rules}>{children}</EngineWrapper>
-}
-
-const EngineWrapper = ({ rules, children }) => {
-	const engine = useMemo(
-			() => new Engine(rules, engineOptions),
-			[rules, engineOptions]
-		),
-		userSituation = useSelector(situationSelector),
-		configSituation = useSelector(configSituationSelector),
-		situation = useMemo(
-			() => ({
-				...configSituation,
-				...userSituation,
-			}),
-			[configSituation, userSituation]
-		)
-
-	return (
-		<EngineProvider value={engine}>
-			<SituationProvider situation={situation}>{children}</SituationProvider>
-		</EngineProvider>
-	)
+	return children
 }

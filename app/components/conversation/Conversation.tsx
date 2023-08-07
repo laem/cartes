@@ -1,8 +1,10 @@
+'use client'
 import {
 	goToQuestion,
 	updateSituation,
 	validateStepWithValue,
 } from '@/app/actions'
+import { useEngine2 } from '@/app/providers/EngineWrapper'
 import RuleInput, {
 	airportsQuestions,
 	isMosaic,
@@ -10,10 +12,9 @@ import RuleInput, {
 } from 'Components/conversation/RuleInput'
 import Notifications from 'Components/Notifications'
 import { splitName } from 'Components/utils/publicodesUtils'
-import { EngineContext } from 'Components/utils/EngineContext'
 import { useNextQuestions } from 'Components/utils/useNextQuestion'
 import { sortBy } from 'ramda'
-import React, { useContext, useEffect, useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { Trans } from 'react-i18next'
 import { useDispatch, useSelector } from 'react-redux'
 import {
@@ -40,12 +41,11 @@ export default function Conversation({
 	orderByCategories,
 }: ConversationProps) {
 	const dispatch = useDispatch()
-	const engine = useContext(EngineContext),
+	const engine = useEngine2(),
 		rules = engine.getParsedRules()
 	const nextQuestions = useNextQuestions()
 	const situation = useSelector(situationSelector)
 	const previousAnswers = useSelector(answeredQuestionsSelector)
-	const tracker = useContext(TrackerContext)
 	const objectifs = useSelector(objectifsSelector)
 	const rawRules = useSelector((state) => state.rules)
 	const previousSimulation = useSelector((state) => state.previousSimulation)

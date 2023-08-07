@@ -1,3 +1,4 @@
+'use client'
 import { createSelector } from 'reselect'
 import { RootState, SimulationConfig } from '@/app/reducers'
 

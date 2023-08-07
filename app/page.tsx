@@ -111,6 +111,7 @@ export default () => {
 						}
 					`}
 				>
+					{/*
 					<Link href="/ferry">
 						<Card>
 							<div>
@@ -119,6 +120,7 @@ export default () => {
 							<h3>Ferry</h3>
 						</Card>
 					</Link>
+					*/}
 					<Link href="/simulateur/transport/avion/impact">
 						<Card>
 							<div>

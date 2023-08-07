@@ -1,3 +1,4 @@
+'use client'
 import Emoji from 'Components/Emoji'
 import { useEngine } from 'Components/utils/EngineContext'
 import { parentName, safeGetRule } from 'Components/utils/publicodesUtils'

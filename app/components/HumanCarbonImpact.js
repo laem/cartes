@@ -1,3 +1,6 @@
+import scenarios from '@/app/scenarios/scenarios.yaml'
+import Emoji from 'Components/Emoji'
+import { questionEcoDimensions } from 'Components/questionEcoDimensions'
 import animate from 'Components/ui/animate'
 import { useNextQuestions } from 'Components/utils/useNextQuestion'
 import { motion, useMotionValue, useSpring } from 'framer-motion'
@@ -5,21 +8,18 @@ import { utils } from 'publicodes'
 import { mapObjIndexed, toPairs } from 'ramda'
 import { useEffect } from 'react'
 import { useSelector } from 'react-redux'
-import { Link } from 'react-router-dom'
-import styled from 'styled-components'
-import Emoji from 'Components/Emoji'
-import { useEngine } from 'Components/utils/EngineContext'
+import Link from 'next/link'
 import {
 	answeredQuestionsSelector,
 	situationSelector,
 } from 'Selectors/simulationSelectors'
+import styled from 'styled-components'
 import BudgetBar, { BudgetBarStyle } from './BudgetBar'
 import * as chrono from './chrono'
 import { humanWeight } from './HumanWeight'
-import scenarios from '@/app/scenarios/scenarios.yaml'
-import { questionEcoDimensions } from 'Components/questionEcoDimensions'
 
 const { encodeRuleName } = utils
+import { useEngine2 } from '@/app/providers/EngineWrapper'
 
 let limitPerPeriod = (scenario) =>
 	mapObjIndexed(
@@ -52,7 +52,7 @@ export default ({ nodeValue, formule, dottedName }) => {
 		examplesSource = rule.exposé?.['exemples via suggestions'],
 		questionEco = rule.exposé?.type === 'question éco'
 
-	const engine = useEngine(),
+	const engine = useEngine2(),
 		nextQuestions = useNextQuestions(),
 		foldedSteps = useSelector(answeredQuestionsSelector),
 		situation = useSelector(situationSelector),
@@ -212,7 +212,7 @@ const ImpactCard = ({
 											: 'Vous émettez'}
 									</h2>
 									<Link
-										to={'/documentation/' + encodeRuleName(dottedName)}
+										href={'/documentation/' + encodeRuleName(dottedName)}
 										css="color: inherit; text-decoration: none"
 									>
 										<BudgetBarStyle color={nodeValue < 0 ? 'ee5253' : '1dd1a1'}>
@@ -262,14 +262,14 @@ const ImpactCard = ({
 												? 's'
 												: '')}
 									</div>
-									<Link css="" to="/crédit-climat-personnel">
+									<Link css="" href="/crédit-climat-personnel">
 										<img src={'/images/yellow-info.svg'} />
 									</Link>
 								</div>
 							)}
 							<Link
 								css="color: inherit; text-decoration: none"
-								to={'/documentation/' + encodeRuleName(dottedName)}
+								href={'/documentation/' + encodeRuleName(dottedName)}
 							>
 								<p
 									css={`
