@@ -2,7 +2,7 @@
 import Link from 'next/link'
 
 import Emoji from './components/Emoji'
-import { LoudButton } from './components/UI'
+import { Card, LoudButton } from './components/UI'
 
 export default () => {
 	return (
@@ -36,7 +36,6 @@ export default () => {
 			/>
 
 			<div
-				className="ui__ container"
 				css={`
 					display: flex;
 					flex-direction: column;
@@ -113,28 +112,28 @@ export default () => {
 					`}
 				>
 					<Link href="/ferry">
-						<li className="ui__ interactive card light-border box">
-							<div className="ui__ big box-icon">
+						<Card>
+							<div>
 								<Emoji e="⛴️" />
 							</div>
 							<h3>Ferry</h3>
-						</li>
+						</Card>
 					</Link>
 					<Link href="/simulateur/transport/avion/impact">
-						<li className="ui__ interactive card light-border box">
-							<div className="ui__ big box-icon">
+						<Card>
+							<div>
 								<Emoji e="✈️" />
 							</div>
 							<h3>Avion</h3>
-						</li>
+						</Card>
 					</Link>
 					<Link href="/wiki">
-						<li className="ui__ interactive card light-border box">
-							<div className="ui__ big box-icon">
+						<Card>
+							<div>
 								<Emoji e="➕" />
 							</div>
 							<h3>Tout le reste</h3>
-						</li>
+						</Card>
 					</Link>
 				</ul>
 			</div>

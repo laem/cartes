@@ -50,4 +50,24 @@ const Button = styled.button`
 	color: white;
 	font-size: 140%;
 	border: none;
+	cursor: pointer;
+`
+
+export const Card = styled.li`
+	min-width: 12rem;
+	padding: 1rem;
+	margin: 1rem;
+	list-style-type: none;
+	border: 1px solid #0000006b;
+	border-radius: 0.2rem;
+
+	--shadow-color: 0deg 0% 63%;
+	--shadow-elevation-medium: 0.3px 0.5px 0.7px hsl(var(--shadow-color) / 0.36),
+		0.8px 1.6px 2px -0.8px hsl(var(--shadow-color) / 0.36),
+		2.1px 4.1px 5.2px -1.7px hsl(var(--shadow-color) / 0.36),
+		5px 10px 12.6px -2.5px hsl(var(--shadow-color) / 0.36);
+	box-shadow: var(--shadow-elevation-medium);
+	@media (max-width: 800px) {
+		min-width: 8rem;
+	}
 `

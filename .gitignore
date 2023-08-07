@@ -16,5 +16,4 @@ node_modules/
 .netlify
 
 source/data
-.next/
-.next
+.next/**
