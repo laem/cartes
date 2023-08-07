@@ -46,7 +46,7 @@ let humanCarbonImpactData = (scenario, nodeValue) => {
 	return { closestPeriod, closestPeriodValue, closestPeriodLabel, factor }
 }
 
-export default ({ nodeValue, formule, dottedName }) => {
+const HumanCarbonImpact = ({ nodeValue, formule, dottedName }) => {
 	const rules = useSelector((state) => state.rules),
 		rule = rules[dottedName],
 		examplesSource = rule.exposé?.['exemples via suggestions'],
@@ -103,7 +103,9 @@ export default ({ nodeValue, formule, dottedName }) => {
 			))}
 		</CardList>
 	)
-}
+};
+
+export default HumanCarbonImpact;
 
 const CardList = styled.ul`
 	flex-wrap: nowrap;

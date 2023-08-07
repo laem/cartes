@@ -1,7 +1,7 @@
 import { useEngine } from 'Components/utils/EngineContext'
 import { motion } from 'framer-motion'
 
-export default () => {
+const AvionExplanation = () => {
 	const engine = useEngine(),
 		impact = engine.evaluate('transport . avion . impact').nodeValue,
 		forcingFactor = engine.evaluate(
@@ -106,4 +106,6 @@ export default () => {
 			</details>
 		</div>
 	)
-}
+};
+
+export default AvionExplanation;

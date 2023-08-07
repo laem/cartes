@@ -1,5 +1,4 @@
-'use client'
-
+'use client';
 import { goToQuestion, updateSituation } from '@/actions'
 import RuleInput, { RuleInputProps } from 'Components/conversation/RuleInput'
 import Notifications from 'Components/Notifications'
@@ -18,19 +17,21 @@ export type ConversationProps = {
 	customEnd?: React.ReactNode
 }
 
-export default ({
-	currentQuestion,
-	customEnd,
-	customEndMessages,
-	orderByCategories,
-	previousAnswers,
-	mosaicQuestion,
-	rules,
-	engine,
-	submit,
-	situation,
-	unfoldedStep,
-}) => {
+const Conversation2 = (
+    {
+        currentQuestion,
+        customEnd,
+        customEndMessages,
+        orderByCategories,
+        previousAnswers,
+        mosaicQuestion,
+        rules,
+        engine,
+        submit,
+        situation,
+        unfoldedStep,
+    }
+) => {
 	const dispatch = useDispatch()
 	const [dismissedRespirations, dismissRespiration] = useState([])
 	const onChange: RuleInputProps['onChange'] = (value) => {
@@ -156,4 +157,6 @@ export default ({
 			</div>
 		</section>
 	)
-}
+};
+
+export default Conversation2;

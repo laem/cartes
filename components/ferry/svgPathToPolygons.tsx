@@ -1,6 +1,6 @@
 const { parseSVG, makeAbsolute } = require('svg-path-parser')
 
-export default function (svgPathString, opts = {}) {
+export default function SvgPathToPolygons(svgPathString, opts = {}) {
 	if (!opts.tolerance) opts.tolerance = 1
 	const polys = []
 	const tolerance2 = opts.tolerance * opts.tolerance

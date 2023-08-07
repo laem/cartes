@@ -1,4 +1,4 @@
-'use client'
+'use client';
 import { motion } from 'framer-motion'
 import React, { useEffect, useRef } from 'react'
 
@@ -37,7 +37,7 @@ const sidebar = {
 	}),
 }
 
-export default ({ dismiss, questionCategory }) => {
+const CategoryRespiration = ({ dismiss, questionCategory }) => {
 	const containerRef = useRef(null)
 	const { height, width } = useDimensions(containerRef)
 
@@ -99,4 +99,6 @@ export default ({ dismiss, questionCategory }) => {
 			</motion.div>
 		</motion.section>
 	)
-}
+};
+
+export default CategoryRespiration;

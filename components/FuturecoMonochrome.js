@@ -1,6 +1,6 @@
 import { lightenColor } from '../components/utils/colors'
 
-export default ({ color }) => {
+const FuturecoMonochrome = ({ color }) => {
 	const darkest = lightenColor(color, -25),
 		darker = lightenColor(color, -15)
 	return (
@@ -37,4 +37,6 @@ export default ({ color }) => {
 			</g>
 		</svg>
 	)
-}
+};
+
+export default FuturecoMonochrome;

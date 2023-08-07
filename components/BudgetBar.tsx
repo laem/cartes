@@ -1,4 +1,4 @@
-'use client'
+'use client';
 import { utils } from 'publicodes'
 import React from 'react'
 
@@ -12,15 +12,18 @@ const gradient = tinygradient(colorScale),
 	colors = gradient.rgb(10)
 
 const { encodeRuleName } = utils
-export default ({
-	budget,
-	nodeValue,
-	exampleName,
-	factor,
-	closestPeriodLabel,
-	closestPeriod,
-	noExample,
-}) => {
+
+const BudgetBar = (
+    {
+        budget,
+        nodeValue,
+        exampleName,
+        factor,
+        closestPeriodLabel,
+        closestPeriod,
+        noExample,
+    }
+) => {
 	const percent = Math.round((nodeValue / budget) * 100),
 		color = colors[Math.round(percent / 10)] || colors[9]
 	const threshold = percent > 140,
@@ -44,7 +47,9 @@ export default ({
 			</BudgetBarStyle>
 		</Link>
 	)
-}
+};
+
+export default BudgetBar;
 
 export const BudgetBarStyle = styled.div`
 	min-width: 8rem;

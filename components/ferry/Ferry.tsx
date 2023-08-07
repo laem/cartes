@@ -42,7 +42,7 @@ const rules = req.keys().reduce((memo, key) => {
 const engine = new Engine(rules)
 export const SituationContext = createContext({})
 
-export default ({}) => {
+const Ferry = ({}) => {
 	const [situation, setSituation] = useState({})
 	const params = useParams()['*']
 	if (!params) return <Navigate to="/ferry/empreinte-par-km" replace />
@@ -114,7 +114,9 @@ export default ({}) => {
 			</Routes>
 		</div>
 	)
-}
+};
+
+export default Ferry;
 const Main = ({ situation }) => (
 	<div>
 		<p

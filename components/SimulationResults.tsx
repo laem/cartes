@@ -4,7 +4,7 @@ import HumanCarbonImpact, {
 } from 'Components/HumanCarbonImpact'
 import Emoji from './Emoji'
 
-export default ({ dottedName, formule, title, icônes, nodeValue }) => {
+const SimulationResults = ({ dottedName, formule, title, icônes, nodeValue }) => {
 	return (
 		<div
 			key={dottedName}
@@ -87,4 +87,6 @@ export default ({ dottedName, formule, title, icônes, nodeValue }) => {
 			</>
 		</div>
 	)
-}
+};
+
+export default SimulationResults;

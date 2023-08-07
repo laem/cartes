@@ -20,7 +20,8 @@ export const humanWeight = (possiblyNegativeValue, concise = false) => {
 
 	return [value, unit]
 }
-export default ({ nodeValue, overrideValue }) => {
+
+const HumanWeight = ({ nodeValue, overrideValue }) => {
 	const [value, unit] = humanWeight(nodeValue)
 	return (
 		<span
@@ -46,7 +47,9 @@ export default ({ nodeValue, overrideValue }) => {
 			</span>
 		</span>
 	)
-}
+};
+
+export default HumanWeight;
 
 const OverrideBlock = ({ value: rawValue }) => {
 	const [value, unit] = humanWeight(rawValue)

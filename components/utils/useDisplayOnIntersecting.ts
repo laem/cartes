@@ -1,11 +1,13 @@
 import { useEffect, useRef, useState } from 'react'
 
-export default function ({
-	root = null,
-	rootMargin,
-	threshold = 0,
-	unobserve = true,
-}: IntersectionObserverInit & { unobserve?: boolean }): [
+export default function UseDisplayOnIntersecting(
+    {
+        root = null,
+        rootMargin,
+        threshold = 0,
+        unobserve = true,
+    }: IntersectionObserverInit & { unobserve?: boolean }
+): [
 	React.RefObject<HTMLDivElement>,
 	boolean
 ] {

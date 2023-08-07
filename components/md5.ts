@@ -1,4 +1,4 @@
-export default function (d) {
+export default function Md5(d) {
 	var r = M(V(Y(X(d), 8 * d.length)))
 	return r.toLowerCase()
 }

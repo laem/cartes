@@ -1,7 +1,6 @@
 'use client'
 import { useEngine2 } from '@/providers/EngineWrapper'
 import Emoji from 'Components/Emoji'
-import { useEngine } from 'Components/utils/EngineContext'
 import { parentName, safeGetRule } from 'Components/utils/publicodesUtils'
 import { useNextQuestions } from 'Components/utils/useNextQuestion'
 import { motion } from 'framer-motion'

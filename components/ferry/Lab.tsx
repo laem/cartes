@@ -15,7 +15,7 @@ import pathDataToPolys, { calcPolygonArea } from './svgPathToPolygons'
 const sumAreas = (elements, filter = () => true) =>
 	elements.reduce((memo, next) => (filter(next) ? next.area : 0) + memo, 0)
 
-export default ({}) => {
+const Lab = ({}) => {
 	const ref = useRef(null)
 	const [elements, setElements] = useState([])
 	const dispatch = useDispatch()
@@ -168,4 +168,6 @@ export default ({}) => {
 			<Mega ref={ref} />
 		</div>
 	)
-}
+};
+
+export default Lab;
