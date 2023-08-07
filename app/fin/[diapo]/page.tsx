@@ -38,7 +38,7 @@ export default ({ params: { diapo } }) => {
 			return <Danger />
 		case 'culpabilisation':
 			return <Culpabilisation />
-		case 'le-système':
+		case 'le-systeme':
 			return <LeSystème />
 		case 'pourquoi-trois':
 			return <PourquoiTrois />

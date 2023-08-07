@@ -9,12 +9,14 @@ import { useNextQuestions } from 'Components/utils/useNextQuestion'
 import { answeredQuestionsSelector } from 'Selectors/simulationSelectors'
 import { colorScale } from 'Components/testColors'
 import { GameDialog, LoudButton } from './UI'
+import { useRouter } from 'next/navigation'
 
 const emoji = (e) => <Emoji e={e} />
 
 const Eraser = ({}) => {
 	const dispatch = useDispatch()
 	const [erased, setErased] = useState(false)
+	const router = useRouter()
 
 	useEffect(() => {
 		if (erased) router.push('/simulateur/bilan')
@@ -280,7 +282,7 @@ export const Culpabilisation = () => (
 			l'argent ne fait pas le bonheur, mais il défonce assurément le climat.
 		</p>
 
-		<LoudButton to="/fin/le-système">Et les entreprises ?</LoudButton>
+		<LoudButton to="/fin/le-systeme">Et les entreprises ?</LoudButton>
 	</Dialog>
 )
 export const LeSystème = () => (
