@@ -38,9 +38,11 @@ export const LoudButton = ({ to, children }) => {
 	const [play] = useSound('/sounds/bite.mp3')
 
 	return (
-		<Button cta onClick={play} href={to}>
-			{children}
-		</Button>
+		<Link href={to}>
+			<Button cta onClick={play}>
+				{children}
+			</Button>
+		</Link>
 	)
 }
 

@@ -1,7 +1,8 @@
+'use client'
 import FuturecoMonochrome from 'Components/FuturecoMonochrome'
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
-import { Link, Navigate, Route, Routes } from 'react-router-dom'
+import Link from 'next/link'
 import Emoji from 'Components/Emoji'
 import ShareButton from 'Components/ShareButton'
 import { useNextQuestions } from 'Components/utils/useNextQuestion'
@@ -15,7 +16,10 @@ const Eraser = ({}) => {
 	const dispatch = useDispatch()
 	const [erased, setErased] = useState(false)
 
-	if (erased) return <Navigate to="/simulateur/bilan" />
+	useEffect(() => {
+		if (erased) router.push('/simulateur/bilan')
+	}, [erased])
+
 	return (
 		<button
 			className="ui__ button simple small"
@@ -42,7 +46,7 @@ export const Dialog = ({ children, noEraser = false, neutralColor }) => (
 				}
 			`}
 		>
-			<Link to="/">
+			<Link href="/">
 				<FuturecoMonochrome
 					color={neutralColor ? '#2988e6' : colorScale.slice(-1)[0]}
 				/>
@@ -53,30 +57,8 @@ export const Dialog = ({ children, noEraser = false, neutralColor }) => (
 		{!noEraser && <Eraser />}
 	</GameDialog>
 )
-export default () => {
-	return (
-		<Routes>
-			<Route path="" element={<Perdu />} />
-			<Route path="perdu" element={<Perdu />} />
-			<Route path="définition" element={<Définition />} />
-			<Route path="suffisant" element={<Suffisant />} />
-			<Route path="changer" element={<Changer />} />
-			<Route path="chemin" element={<Chemin />} />
-			<Route path="sources" element={<Sources />} />
-			<Route path="action" element={<Action />} />
-			<Route path="quand" element={<Quand />} />
-			<Route path="danger" element={<Danger />} />
-			<Route path="culpabilisation" element={<Culpabilisation />} />
-			<Route path="le-système" element={<LeSystème />} />
-			<Route path="pourquoi-trois" element={<PourquoiTrois />} />
-			<Route path="claque" element={<Claque />} />
-			<Route path="trajectoire" element={<Trajectoire />} />
-			<Route path="ensemble" element={<Ensemble />} />
-		</Routes>
-	)
-}
 
-const Perdu = () => {
+export const Perdu = () => {
 	const answeredQuestions = useSelector(answeredQuestionsSelector),
 		answerCount = answeredQuestions.length,
 		nextSteps = useNextQuestions(),
@@ -96,14 +78,14 @@ const Perdu = () => {
 				Il a suffi de <strong>{answerCount}</strong> réponses au test sur{' '}
 				<strong>{totalCount}</strong> questions pour le savoir.
 			</p>
-			<LoudButton to="/fin/définition">
+			<LoudButton to="/fin/definition">
 				Comment ça <br /> <em>pas écolo </em> ?
 			</LoudButton>
 		</Dialog>
 	)
 }
 
-const Définition = () => (
+export const Définition = () => (
 	<Dialog>
 		<h1>Être écolo, définition !</h1>
 		<p>On ne peut pas être écolo si on défonce le climat. </p>
@@ -125,7 +107,7 @@ const Définition = () => (
 	</Dialog>
 )
 
-const Suffisant = () => (
+export const Suffisant = () => (
 	<Dialog>
 		<h1>Non, mais...</h1>
 		<p>
@@ -144,7 +126,7 @@ const Suffisant = () => (
 	</Dialog>
 )
 
-const Chemin = () => (
+export const Chemin = () => (
 	<Dialog>
 		<h1>Comment prendre le bon chemin ?</h1>
 		<p>
@@ -159,7 +141,7 @@ const Chemin = () => (
 		<LoudButton to="/fin/ensemble">Et ça suffit ?</LoudButton>
 	</Dialog>
 )
-const Claque = () => (
+export const Claque = () => (
 	<Dialog>
 		<h1>La claque</h1>
 		<p>
@@ -178,7 +160,7 @@ const Claque = () => (
 		<LoudButton to="/fin/trajectoire">Il est où alors ?</LoudButton>
 	</Dialog>
 )
-const Trajectoire = () => (
+export const Trajectoire = () => (
 	<Dialog>
 		<h1>La trajectoire</h1>
 		<p>
@@ -245,7 +227,7 @@ const Trajectoire = () => (
 		<LoudButton to="/fin/quand">Mais quand ça ?</LoudButton>
 	</Dialog>
 )
-const Quand = () => (
+export const Quand = () => (
 	<Dialog>
 		<h1>C'est urgent</h1>
 		<p>
@@ -262,7 +244,7 @@ const Quand = () => (
 		<LoudButton to="/fin/danger">Lequel ?</LoudButton>
 	</Dialog>
 )
-const Danger = () => (
+export const Danger = () => (
 	<Dialog>
 		<h1>Quel danger ?</h1>
 		<p>
@@ -282,7 +264,7 @@ const Danger = () => (
 		</LoudButton>
 	</Dialog>
 )
-const Culpabilisation = () => (
+export const Culpabilisation = () => (
 	<Dialog>
 		<p>
 			En tant que français, nous sommes et serons parmi les moins touchés par la
@@ -301,7 +283,7 @@ const Culpabilisation = () => (
 		<LoudButton to="/fin/le-système">Et les entreprises ?</LoudButton>
 	</Dialog>
 )
-const LeSystème = () => (
+export const LeSystème = () => (
 	<Dialog>
 		<p>
 			Nous avons tous le réflexe naturel de faire endosser la responsabilité à
@@ -322,7 +304,7 @@ const LeSystème = () => (
 	</Dialog>
 )
 
-const PourquoiTrois = () => (
+export const PourquoiTrois = () => (
 	<Dialog>
 		<h1>Les maths</h1>
 		<p>
@@ -341,7 +323,7 @@ const PourquoiTrois = () => (
 	</Dialog>
 )
 
-const Sources = () => (
+export const Sources = () => (
 	<Dialog>
 		<h1>Ça sort d'où ?</h1>
 		<p>
@@ -372,7 +354,7 @@ const Sources = () => (
 	</Dialog>
 )
 
-const Action = () => (
+export const Action = () => (
 	<Dialog>
 		<h1>Où est le GPS&nbsp;?</h1>
 		<p>
@@ -389,7 +371,7 @@ const Action = () => (
 	</Dialog>
 )
 
-const Ensemble = () => (
+export const Ensemble = () => (
 	<Dialog>
 		<h1>En parler</h1>
 		<p>
@@ -414,7 +396,7 @@ const Ensemble = () => (
 	</Dialog>
 )
 
-const Changer = () => (
+export const Changer = () => (
 	<Dialog>
 		<h1>Changer, maintenant</h1>
 		<p>

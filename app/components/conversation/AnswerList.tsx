@@ -1,6 +1,6 @@
 import Emoji from 'Components/Emoji'
-import { parentName } from 'Components/publicodesUtils'
 import { useEngine } from 'Components/utils/EngineContext'
+import { parentName, safeGetRule } from 'Components/utils/publicodesUtils'
 import { useNextQuestions } from 'Components/utils/useNextQuestion'
 import { motion } from 'framer-motion'
 import { DottedName } from 'modele-social'
@@ -8,12 +8,11 @@ import { EvaluatedNode, formatValue } from 'publicodes'
 import { useEffect } from 'react'
 import { Trans, useTranslation } from 'react-i18next'
 import { useDispatch, useSelector } from 'react-redux'
-import { situationSelector } from 'Selectors/simulationSelectors'
 import {
 	answeredQuestionsSelector,
 	objectifsSelector,
+	situationSelector,
 } from 'Selectors/simulationSelectors'
-import { safeGetRule } from 'Components/utils/publicodesUtils'
 import './AnswerList.css'
 
 export default function AnswerList() {

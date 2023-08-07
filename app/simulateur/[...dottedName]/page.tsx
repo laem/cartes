@@ -2,30 +2,8 @@
 
 import { setSimulationConfig } from '@/app/actions'
 import Emoji from '@/app/components/Emoji'
-import FuturecoMonochrome from 'Components/FuturecoMonochrome'
-import Simulation from 'Components/Simulation'
-import SimulationResults from 'Components/SimulationResults'
-import { useEngine } from 'Components/utils/EngineContext'
-import { Markdown } from 'Components/utils/markdown'
-import {
-	buildEndURL,
-	extractCategories,
-} from 'Components/utils/publicodesUtils'
-import Link from 'next/link'
-import { usePathname } from 'next/navigation'
-import { utils } from 'publicodes'
-import { compose, isEmpty, symmetricDifference } from 'ramda'
-import { useContext, useEffect } from 'react'
-import { useDispatch, useSelector } from 'react-redux'
-import { parentName } from 'Components/utils/publicodesUtils'
-import Meta from '../../components/utils/Meta'
-import { useNextQuestions } from '../../components/utils/useNextQuestion'
-import {
-	answeredQuestionsSelector,
-	situationSelector,
-} from '../../selectors/simulationSelectors'
-import AvionExplanation from 'Components/AvionExplanation'
-import { capitalizeFirst } from '@/app/utils'
+import { questionEcoDimensions } from '@/app/components/questionEcoDimensions'
+import { getBackgroundColor } from '@/app/components/testColors'
 import {
 	Almost,
 	Done,
@@ -34,16 +12,36 @@ import {
 	QuiteGood,
 } from 'Components/Congratulations'
 import Lab from 'Components/ferry/Lab'
-import { questionEcoDimensions } from '@/app/components/questionEcoDimensions'
-import { getBackgroundColor } from '@/app/components/testColors'
+import FuturecoMonochrome from 'Components/FuturecoMonochrome'
+import Simulation from 'Components/Simulation'
+import SimulationResults from 'Components/SimulationResults'
+import { useEngine } from 'Components/utils/EngineContext'
+import {
+	buildEndURL,
+	extractCategories,
+	parentName,
+} from 'Components/utils/publicodesUtils'
+import Link from 'next/link'
+import { usePathname } from 'next/navigation'
+import { capitalise0, utils } from 'publicodes'
+import { compose, isEmpty, symmetricDifference } from 'ramda'
+import { useContext, useEffect } from 'react'
+import { useDispatch, useSelector } from 'react-redux'
+import Meta from '../../components/utils/Meta'
+import { useNextQuestions } from '../../components/utils/useNextQuestion'
+import {
+	answeredQuestionsSelector,
+	situationSelector,
+} from '../../selectors/simulationSelectors'
+import CustomSimulateurEnding from './CustomSimulateurEnding'
 
 const eqValues = compose(isEmpty, symmetricDifference)
 
-export default ({ slug }) => {
+const Simulateur = ({ params: { dottedName } }) => {
 	const dispatch = useDispatch()
 	const pathname = usePathname()
 
-	const rawObjective = slug.join('/'),
+	const rawObjective = dottedName.join('/'),
 		decoded = utils.decodeRuleName(rawObjective)
 
 	const rules = useSelector((state) => state.rules),
@@ -80,10 +78,10 @@ export default ({ slug }) => {
 
 	if (!configSet || wrongConfig) return null
 
-	return <Simulateur objective={decoded} />
+	return <SimulateurContent objective={decoded} />
 }
 
-const Simulateur = ({ objective }) => {
+const SimulateurContent = ({ objective }) => {
 	const rules = useSelector((state) => state.rules),
 		rule = rules[objective],
 		engine = useEngine(),
@@ -206,10 +204,8 @@ const Simulateur = ({ objective }) => {
 						noFeedback
 						orderByCategories={categories.reverse()}
 						customEnd={
-							objective === 'bilan' ? (
-								<RedirectionToEndPage {...{ rules, engine }} />
-							) : rule.description ? (
-								<CustomDescription rule={rule} dottedName={objective} />
+							rule.description ? (
+								<CustomSimulateurEnding rule={rule} dottedName={objective} />
 							) : (
 								<EndingCongratulations />
 							)
@@ -253,47 +249,10 @@ const Simulateur = ({ objective }) => {
 	)
 }
 
-const RedirectionToEndPage = ({ rules, engine }) => {
-	// Necessary to call 'buildEndURL' with the latest situation
-	const situation = useSelector(situationSelector)
-	const tracker = useContext(TrackerContext)
-
-	useEffect(() => {
-		tracker.push([
-			'trackEvent',
-			'NGC',
-			'A terminé la simulation',
-			null,
-			rules['bilan'].nodeValue,
-		])
-	}, [tracker])
-
-	return <Navigate to={buildEndURL(rules, engine)} />
-}
-
 const EndingCongratulations = () => (
 	<h3>
 		<Emoji e="🌟" /> Vous avez complété cette simulation
 	</h3>
 )
 
-const ADEMELogoURL =
-	'https://www.ademe.fr/wp-content/uploads/2021/12/logo-ademe.svg'
-
-const CustomDescription = ({ dottedName, rule }) => {
-	const ref = rule.références,
-		baseCarbone = ref?.find((el) => el.includes('bilans-ges.ademe.fr'))
-	return (
-		<div css="margin: 1rem 0">
-			{baseCarbone && (
-				<div css="img {vertical-align: middle}">
-					Une donnée{' '}
-					<img css="height: 2rem; margin-right: .2rem" src={ADEMELogoURL} />
-					<a href="https://bilans-ges.ademe.fr"> base carbone ADEME</a>
-				</div>
-			)}
-			<Markdown>{capitalizeFirst(rule.description)}</Markdown>
-			{dottedName === 'transport . avion . impact' && <AvionExplanation />}
-		</div>
-	)
-}
+export default Simulateur

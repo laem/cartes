@@ -1,6 +1,5 @@
 import { sortBy } from 'ramda'
-import { capitalise0 } from '../utils'
-import { utils as coreUtils } from 'publicodes'
+import { utils as coreUtils, capitalise0 } from 'publicodes'
 
 export const MODEL_ROOT_RULE_NAME = 'bilan'
 
@@ -140,4 +139,20 @@ export const safeGetRule = (engine, dottedName) => {
 	} catch (e) {
 		console.log(e)
 	}
+}
+export const buildEndURL = (rules, engine) => {
+	const categories = extractCategories(rules, engine),
+		detailsString =
+			categories &&
+			categories.reduce(
+				(memo, next) =>
+					memo +
+					next.name[0] +
+					(Math.round(next.nodeValue / 10) / 100).toFixed(2),
+				''
+			)
+
+	if (detailsString == null) return null
+
+	return `/fin?details=${detailsString}`
 }

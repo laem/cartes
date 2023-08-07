@@ -17,9 +17,9 @@ export default () => {
 			<p>
 				Le jeu est simple : plus on émet de gaz à effet de serre, plus on se
 				dirige vers une catastrophe climatique. Ces émissions se mesurent en{' '}
-				<Link to="/à-propos">kg équivalent CO₂</Link>, et le budget attribué aux
+				<Link to="/a-propos">kg équivalent CO₂</Link>, et le budget attribué aux
 				humains pour limiter le réchauffement est en général défini à{' '}
-				<Link to="/scénarios">2 tonnes</Link> par humain et par an.{' '}
+				<Link to="/scenarios">2 tonnes</Link> par humain et par an.{' '}
 			</p>
 			<p>
 				Ce qui nous fait une belle jambe, n'est-ce pas : que veut dire 2 tonnes

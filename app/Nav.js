@@ -6,10 +6,10 @@ import Emoji from './components/Emoji'
 
 export default function Nav({}) {
 	const pathname = usePathname()
-	const displayIntro = ['/', '/wiki', '/contribuer/', '/à-propos'].includes(
+	const displayIntro = ['/', '/wiki', '/contribuer/', '/a-propos'].includes(
 		pathname
 	)
-	if (pathname === '/') return null
+	if (pathname === '/' || pathname.includes('/fin')) return null
 	return (
 		<nav>
 			<section
@@ -63,7 +63,7 @@ export default function Nav({}) {
 						actualité.&nbsp;<Link href="/a-propos">En savoir plus</Link>.
 					</p>
 				)}
-				{!pathname.includes('/scénarios') && (
+				{!pathname.includes('/scenarios') && (
 					<div
 						css={`
 							img {
@@ -75,7 +75,7 @@ export default function Nav({}) {
 							top: 2rem;
 						`}
 					>
-						<Link href="/scénarios" title="Paramètres">
+						<Link href="/scenarios" title="Paramètres">
 							<Emoji e="⚙️" />
 						</Link>
 					</div>

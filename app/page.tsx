@@ -83,7 +83,7 @@ export default () => {
 						</em>
 					</p>
 				</header>
-				<LoudButton to="instructions">Faire le test</LoudButton>
+				<LoudButton to="/instructions">Faire le test</LoudButton>
 				<p>
 					<Emoji e="⏱️" /> 2 minutes chrono
 				</p>

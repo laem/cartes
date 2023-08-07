@@ -9,6 +9,7 @@ import RuleInput, {
 	RuleInputProps,
 } from 'Components/conversation/RuleInput'
 import Notifications from 'Components/Notifications'
+import { splitName } from 'Components/utils/publicodesUtils'
 import { EngineContext } from 'Components/utils/EngineContext'
 import { useNextQuestions } from 'Components/utils/useNextQuestion'
 import { sortBy } from 'ramda'
@@ -20,7 +21,6 @@ import {
 	situationSelector,
 } from 'Selectors/simulationSelectors'
 import { objectifsSelector } from '../../selectors/simulationSelectors'
-import { splitName } from '../publicodesUtils'
 import useKeypress from '../utils/useKeyPress'
 import Aide from './Aide'
 import CategoryRespiration from './CategoryRespiration'

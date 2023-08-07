@@ -3,8 +3,6 @@ import { useLocation } from 'react-router'
 export function isIterable<T>(obj: unknown): obj is Iterable<T> {
 	return Symbol.iterator in Object(obj)
 }
-export function capitalise0(name: undefined): undefined
-export function capitalise0(name: string): string
 export function capitalise0(name?: string) {
 	return name && name[0].toUpperCase() + name.slice(1)
 }

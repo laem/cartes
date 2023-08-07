@@ -5,7 +5,7 @@ import { useTranslation } from 'react-i18next'
 import { useDispatch, useSelector } from 'react-redux'
 import { RootState } from 'Reducers/rootReducer'
 import './Notifications.css'
-import { parentName } from './publicodesUtils'
+import { parentName } from 'Components/utils/publicodesUtils'
 import { Markdown } from './utils/markdown'
 import { ScrollToElement } from './utils/Scroll'
 

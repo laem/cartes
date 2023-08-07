@@ -16,7 +16,7 @@ import {
 import BudgetBar, { BudgetBarStyle } from './BudgetBar'
 import * as chrono from './chrono'
 import { humanWeight } from './HumanWeight'
-import scenarios from './scenarios.yaml'
+import scenarios from '@/app/scenarios/scenarios.yaml'
 import { questionEcoDimensions } from 'Components/questionEcoDimensions'
 
 const { encodeRuleName } = utils
