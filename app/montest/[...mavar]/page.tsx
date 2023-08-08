@@ -1,8 +1,10 @@
-import Engine from 'publicodes'
+import Test from './Test'
 
-export default ({ params: { mavar } }) => {
-	const engine = new Engine({ a: 'b + c', b: 3, c: 26 })
-	const evaluation = engine.evaluate('a')
-
-	return mavar + evaluation.nodeValue
+export default function MaVar({ params: { mavar } }) {
+	return (
+		<>
+			<h1>Mon titre</h1>
+			<Test maVar={mavar} />
+		</>
+	)
 }

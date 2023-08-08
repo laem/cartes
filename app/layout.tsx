@@ -37,13 +37,13 @@ export default function RootLayout({
 				src="https://plausible.io/js/script.js"
 			/>
 			<body>
-				<StyledComponentsRegistry>
-					<Providers>
+				<Providers>
+					<StyledComponentsRegistry>
 						<Nav />
 						{children}
 						<NavFooter />
-					</Providers>
-				</StyledComponentsRegistry>
+					</StyledComponentsRegistry>
+				</Providers>
 			</body>
 		</html>
 	)
