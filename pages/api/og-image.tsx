@@ -4,7 +4,7 @@ export const config = {
 	runtime: 'edge',
 }
 
-export default function handler(req) {
+function handler(req) {
 	const { searchParams } = new URL(req.url)
 	const emojis = searchParams.get('emojis'),
 		title = searchParams.get('title')
@@ -55,3 +55,5 @@ export default function handler(req) {
 		}
 	)
 }
+
+export default handler

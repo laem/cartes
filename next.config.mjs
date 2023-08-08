@@ -50,6 +50,7 @@ const nextConfig = {
 		})
 		config.module.rules.push({ test: /\.mp3$/, type: 'asset/resource' })
 		config.resolve.alias = {
+			...config.resolve.alias,
 			Components: path.resolve(__dirname, './components'),
 			Selectors: path.resolve(__dirname, './selectors'),
 		}
