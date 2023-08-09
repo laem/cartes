@@ -1,7 +1,7 @@
 import data from '../../data.yaml'
 import { utils } from 'publicodes'
 const { decodeRuleName } = utils
-import Markdown from 'markdown-to-jsx'
+import { MDXRemote } from 'next-mdx-remote/rsc'
 
 const Page = ({ params }) => {
 	const { nom: raw } = params
@@ -14,7 +14,7 @@ const Page = ({ params }) => {
 	return (
 		<main>
 			<h1>{rule.titre}</h1>
-			<Markdown>{rule.notes}</Markdown>
+			<MDXRemote source={rule.notes} />
 		</main>
 	)
 }
