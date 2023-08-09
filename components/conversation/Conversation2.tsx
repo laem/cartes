@@ -11,6 +11,7 @@ import './conversation.css'
 import { ExplicableRule } from './Explicable'
 import { isMosaic } from './mosaicQuestions'
 import SimulationEnding from './SimulationEnding'
+import { Fieldset } from './UI'
 
 export type ConversationProps = {
 	customEndMessages?: React.ReactNode
@@ -122,14 +123,14 @@ const Conversation2 = ({
 						)}
 					</header>
 					<Aide />
-					<fieldset>
+					<Fieldset>
 						<RuleInput
 							dottedName={currentQuestion}
 							onChange={onChange}
 							onSubmit={submit}
 							engine={engine}
 						/>
-					</fieldset>
+					</Fieldset>
 				</div>
 				<div className="ui__ answer-group">
 					{previousAnswers.length > 0 && currentQuestionIndex !== 0 && (

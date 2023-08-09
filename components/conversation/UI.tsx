@@ -1,4 +1,13 @@
-import styled, { css } from 'styled-components'
+'use client'
+import styled from 'styled-components'
+
+export const Fieldset = styled.fieldset`
+	display: flex;
+	justify-content: flex-end;
+	flex-wrap: wrap;
+	align-items: baseline;
+`
+
 export const CategoryLabel = styled.span`
 	background: 'darkblue';
 	color: var(--darkColor);

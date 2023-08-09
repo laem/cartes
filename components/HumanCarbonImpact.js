@@ -103,9 +103,9 @@ const HumanCarbonImpact = ({ nodeValue, formule, dottedName }) => {
 			))}
 		</CardList>
 	)
-};
+}
 
-export default HumanCarbonImpact;
+export default HumanCarbonImpact
 
 const CardList = styled.ul`
 	flex-wrap: nowrap;
@@ -265,7 +265,7 @@ const ImpactCard = ({
 												: '')}
 									</div>
 									<Link css="" href="/crédit-climat-personnel">
-										<img src={'/images/yellow-info.svg'} />
+										<img src={'/yellow-info.svg'} />
 									</Link>
 								</div>
 							)}
