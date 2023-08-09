@@ -9,7 +9,9 @@ import { useNextQuestions } from 'Components/utils/useNextQuestion'
 import { answeredQuestionsSelector } from 'Selectors/simulationSelectors'
 import { colorScale } from 'Components/testColors'
 import { GameDialog, LoudButton } from './UI'
+
 import { useRouter } from 'next/navigation'
+import { useEngine2 } from '@/providers/EngineWrapper'
 
 const emoji = (e) => <Emoji e={e} />
 
@@ -60,10 +62,12 @@ export const Dialog = ({ children, noEraser = false, neutralColor }) => (
 	</GameDialog>
 )
 
-export const Perdu = () => {
+export const Perdu = ({ rules }) => {
+	const engine = useEngine2(rules)
+
 	const answeredQuestions = useSelector(answeredQuestionsSelector),
 		answerCount = answeredQuestions.length,
-		nextSteps = useNextQuestions(),
+		nextSteps = useNextQuestions(engine),
 		nextStepsCount = nextSteps.length,
 		totalCount = answerCount + nextStepsCount
 

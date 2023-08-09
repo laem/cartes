@@ -153,7 +153,7 @@ const Conversation2 = ({
 						</Button>
 					) : null}
 				</div>
-				<Notifications currentQuestion={currentQuestion} />
+				<Notifications currentQuestion={currentQuestion} engine={engine} />
 			</div>
 		</section>
 	)

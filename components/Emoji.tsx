@@ -45,7 +45,7 @@ const Emoji = ({ e, black, extra, alt, hasText, white }) => {
 }
 
 const Image = ({ src, alt, imageSize, white }) => (
-	<ImageStyle src={src} alt={alt} imageSize={imageSize} white={white} />
+	<ImageStyle src={src} alt={alt} $imageSize={imageSize} $white={white} />
 )
 
 export const getEmojiImageUrls = (emojis) =>

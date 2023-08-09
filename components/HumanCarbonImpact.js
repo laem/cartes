@@ -1,3 +1,4 @@
+'use client'
 import scenarios from '@/app/scenarios/scenarios.yaml'
 import Emoji from 'Components/Emoji'
 import { questionEcoDimensions } from 'Components/questionEcoDimensions'
@@ -19,7 +20,6 @@ import * as chrono from './chrono'
 import { humanWeight } from './HumanWeight'
 
 const { encodeRuleName } = utils
-import { useEngine2 } from '@/providers/EngineWrapper'
 
 let limitPerPeriod = (scenario) =>
 	mapObjIndexed(
@@ -46,14 +46,13 @@ let humanCarbonImpactData = (scenario, nodeValue) => {
 	return { closestPeriod, closestPeriodValue, closestPeriodLabel, factor }
 }
 
-const HumanCarbonImpact = ({ nodeValue, formule, dottedName }) => {
-	const rules = useSelector((state) => state.rules),
+const HumanCarbonImpact = ({ nodeValue, formule, dottedName, engine }) => {
+	const rules = engine.getParsedRules(),
 		rule = rules[dottedName],
 		examplesSource = rule.exposé?.['exemples via suggestions'],
 		questionEco = rule.exposé?.type === 'question éco'
 
-	const engine = useEngine2(),
-		nextQuestions = useNextQuestions(),
+	const nextQuestions = useNextQuestions(engine),
 		foldedSteps = useSelector(answeredQuestionsSelector),
 		situation = useSelector(situationSelector),
 		dirtySituation = Object.keys(situation).find((question) => {
@@ -296,9 +295,9 @@ const ImpactCard = ({
 	)
 }
 
-export const ProgressCircle = ({}) => {
-	const nextSteps = useNextQuestions(),
-		rules = useSelector((state) => state.rules)
+export const ProgressCircle = ({ engine }) => {
+	const nextSteps = useNextQuestions(engine),
+		rules = engine.getParsedRules()
 	const foldedStepsRaw = useSelector((state) => state.simulation?.foldedSteps),
 		foldedSteps = foldedStepsRaw.filter((step) => !rules[step]?.injecté)
 	const progress = foldedSteps.length / (nextSteps.length + foldedSteps.length)

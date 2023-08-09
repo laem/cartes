@@ -6,6 +6,7 @@ export default function Questions({
 	customEndMessages,
 	customEnd,
 	orderByCategories,
+	rules,
 }: {
 	customEndMessages?: ConversationProps['customEndMessages']
 	orderByCategories: Array<Object>
@@ -21,6 +22,7 @@ export default function Questions({
 				`}
 			>
 				<Conversation
+					rules={rules}
 					orderByCategories={orderByCategories}
 					customEnd={customEnd}
 					customEndMessages={customEndMessages}

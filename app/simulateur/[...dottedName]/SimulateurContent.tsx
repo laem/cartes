@@ -1,4 +1,4 @@
-'use client';
+'use client'
 import Emoji from 'Components/Emoji'
 import Simulation from 'Components/Simulation'
 import { getBackgroundColor, limit } from 'Components/testColors'
@@ -27,12 +27,11 @@ import {
 } from '@/selectors/simulationSelectors'
 import CustomSimulateurEnding from './CustomSimulateurEnding'
 
-const SimulateurContent = ({ objective }) => {
+const SimulateurContent = ({ objective, rules }) => {
 	console.log('OBJ', objective)
-	const rules = useSelector((state) => state.rules),
-		rule = rules[objective]
+	const rule = rules[objective]
 
-	const engine = useEngine2()
+	const engine = useEngine2(rules)
 	const evaluation = engine.evaluate(objective),
 		dispatch = useDispatch(),
 		categories = objective === 'bilan' && extractCategories(rules, engine)
@@ -122,13 +121,14 @@ const SimulateurContent = ({ objective }) => {
 				`}
 			>
 				{!isMainSimulation && (
-					<SimulationResults {...{ ...rule, ...evaluation }} />
+					<SimulationResults {...{ ...rule, ...evaluation, engine, rules }} />
 				)}
 
 				{isMainSimulation && gameOver ? (
 					<Navigate to="/fin" />
 				) : (
 					<Simulation
+						rules={rules}
 						noFeedback
 						orderByCategories={categories}
 						customEnd={
@@ -175,11 +175,11 @@ const SimulateurContent = ({ objective }) => {
 			</div>
 		</div>
 	)
-};
+}
 
 //TODO add metadata https://nextjs.org/docs/app/building-your-application/optimizing/metadata
 //
-export default SimulateurContent;
+export default SimulateurContent
 
 const EndingCongratulations = () => (
 	<h3>

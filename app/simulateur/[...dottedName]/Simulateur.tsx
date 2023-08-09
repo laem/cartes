@@ -39,7 +39,7 @@ const Simulateur = ({ dottedName, rules }) => {
 
 	if (!configSet || wrongConfig) return null
 
-	return <SimulateurContent objective={dottedName} />
+	return <SimulateurContent objective={dottedName} rules={rules} />
 }
 
 export default Simulateur

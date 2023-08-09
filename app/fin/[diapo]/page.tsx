@@ -1,25 +1,27 @@
+import { getRules } from '@/providers/getRules'
 import {
-	Perdu,
-	Définition,
-	Suffisant,
+	Action,
 	Changer,
 	Chemin,
-	Sources,
-	Action,
-	Quand,
-	Danger,
-	Culpabilisation,
-	LeSystème,
-	PourquoiTrois,
 	Claque,
-	Trajectoire,
+	Culpabilisation,
+	Danger,
+	Définition,
 	Ensemble,
+	LeSystème,
+	Perdu,
+	PourquoiTrois,
+	Quand,
+	Sources,
+	Suffisant,
+	Trajectoire,
 } from 'Components/GameOver'
 
-const Page = ({ params: { diapo } }) => {
+const Page = async ({ params: { diapo } }) => {
+	const rules = await getRules('NGC')
 	switch (diapo) {
 		case 'perdu':
-			return <Perdu />
+			return <Perdu rules={rules} />
 		case 'definition':
 			return <Définition />
 		case 'suffisant':
@@ -49,6 +51,6 @@ const Page = ({ params: { diapo } }) => {
 		case 'ensemble':
 			return <Ensemble />
 	}
-};
+}
 
-export default Page;
+export default Page

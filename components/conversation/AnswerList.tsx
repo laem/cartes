@@ -1,5 +1,6 @@
 'use client'
 import { useEngine2 } from '@/providers/EngineWrapper'
+import { getRules } from '@/providers/getRules'
 import Emoji from 'Components/Emoji'
 import { parentName, safeGetRule } from 'Components/utils/publicodesUtils'
 import { useNextQuestions } from 'Components/utils/useNextQuestion'
@@ -16,9 +17,9 @@ import {
 } from 'Selectors/simulationSelectors'
 import './AnswerList.css'
 
-export default function AnswerList() {
+export default function AnswerList({ rules }) {
 	const dispatch = useDispatch()
-	const engine = useEngine2()
+	const engine = useEngine2(rules)
 	const situation = useSelector(situationSelector)
 	const foldedQuestionNames = useSelector(answeredQuestionsSelector)
 	const answeredQuestionNames = Object.keys(situation)
@@ -39,10 +40,9 @@ export default function AnswerList() {
 		}))
 		.filter((node) => !node.rawNode.injecté)
 
-	const nextSteps = useNextQuestions().map((dottedName) =>
+	const nextSteps = useNextQuestions(engine).map((dottedName) =>
 		engine.evaluate(engine.getRule(dottedName))
 	)
-	const rules = useSelector((state) => state.rules)
 
 	useEffect(() => {
 		const handleKeyDown = (e: KeyboardEvent) => {

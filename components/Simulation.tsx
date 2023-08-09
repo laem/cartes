@@ -24,6 +24,7 @@ export default function Simulation({
 	orderByCategories,
 	showPeriodSwitch,
 	animation = 'appear',
+	rules,
 }: SimulationProps) {
 	const Animation = animate[animation]
 	//const situation = useSelector(situationSelector)
@@ -31,11 +32,12 @@ export default function Simulation({
 	// TODO syncSearchParams()
 	return (
 		<>
-			<AnswerList />
+			<AnswerList rules={rules} />
 			<SearchButton invisibleButton />
 			<Animation delay={0.3}>
 				{results}
 				<Questions
+					rules={rules}
 					customEnd={customEnd}
 					orderByCategories={orderByCategories}
 					customEndMessages={customEndMessages}

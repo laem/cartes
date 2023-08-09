@@ -130,13 +130,12 @@ export function getNextQuestions(
 	}, nextQuestions)
 }
 
-export const useNextQuestions = function (): Array<DottedName> {
+export const useNextQuestions = function (engine): Array<DottedName> {
 	const objectifs = useSelector(objectifsSelector)
 	const answeredQuestions = useSelector(answeredQuestionsSelector)
 	const currentQuestion = useSelector(currentQuestionSelector)
 	const questionsConfig = useSelector(configSelector).questions ?? {}
 	const situation = useSelector(situationSelector)
-	const engine = useEngine2()
 	const missingVariables = objectifs.map(
 		(node) => engine.evaluate(node).missingVariables ?? {}
 	)
@@ -155,10 +154,10 @@ export const useNextQuestions = function (): Array<DottedName> {
 	return nextQuestions
 }
 
-export function useSimulationProgress(): number {
+export function useSimulationProgress(engine): number {
 	const objectifs = useSelector(objectifsSelector)
 	const numberQuestionAnswered = useSelector(answeredQuestionsSelector).length
-	const numberQuestionLeft = useNextQuestions().length
+	const numberQuestionLeft = useNextQuestions(engine).length
 
 	return numberQuestionAnswered / (numberQuestionAnswered + numberQuestionLeft)
 }

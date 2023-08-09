@@ -1,10 +1,15 @@
 import emoji from 'react-easy-emoji'
-import HumanCarbonImpact, {
-	ProgressCircle,
-} from 'Components/HumanCarbonImpact'
+import HumanCarbonImpact, { ProgressCircle } from 'Components/HumanCarbonImpact'
 import Emoji from './Emoji'
 
-const SimulationResults = ({ dottedName, formule, title, icônes, nodeValue }) => {
+const SimulationResults = ({
+	dottedName,
+	formule,
+	title,
+	icônes,
+	nodeValue,
+	engine,
+}) => {
 	return (
 		<div
 			key={dottedName}
@@ -36,7 +41,7 @@ const SimulationResults = ({ dottedName, formule, title, icônes, nodeValue }) =
 				}
 			`}
 		>
-			<ProgressCircle />
+			<ProgressCircle engine={engine}/>
 			<div
 				id="shareImage"
 				css={`
@@ -81,12 +86,13 @@ const SimulationResults = ({ dottedName, formule, title, icônes, nodeValue }) =
 							nodeValue,
 							formule,
 							dottedName,
+							engine,
 						}}
 					/>
 				</div>
 			</>
 		</div>
 	)
-};
+}
 
-export default SimulationResults;
+export default SimulationResults

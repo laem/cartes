@@ -21,21 +21,22 @@ import { isMosaic } from './mosaicQuestions'
 export type ConversationProps = {
 	customEndMessages?: React.ReactNode
 	customEnd?: React.ReactNode
+	rules: object
 }
 
 export default function Conversation({
 	customEndMessages,
 	customEnd,
 	orderByCategories,
+	rules: rawRules,
 }: ConversationProps) {
 	const dispatch = useDispatch()
-	const engine = useEngine2(),
+	const engine = useEngine2(rawRules),
 		rules = engine.getParsedRules()
-	const nextQuestions = useNextQuestions()
+	const nextQuestions = useNextQuestions(engine)
 	const situation = useSelector(situationSelector)
 	const previousAnswers = useSelector(answeredQuestionsSelector)
 	const objectifs = useSelector(objectifsSelector)
-	const rawRules = useSelector((state) => state.rules)
 	const previousSimulation = useSelector((state) => state.previousSimulation)
 
 	const sortedQuestions = orderByCategories

@@ -17,7 +17,6 @@ export async function getRules(ruleSet: 'NGC' | 'futureco') {
 	}
 
 	const json = await res.json()
-	console.log('JSON from getRules', json)
 
 	const newRules =
 		ruleSet === 'futureco' ? transformRules(json) : setDefaultsToZero(json)

@@ -1,13 +1,12 @@
 import animate from 'Components/ui/animate'
+import { parentName } from 'Components/utils/publicodesUtils'
 import Engine, { RuleNode } from 'publicodes'
 import { useTranslation } from 'react-i18next'
 import { useDispatch, useSelector } from 'react-redux'
 import { RootState } from 'Reducers/rootReducer'
 import './Notifications.css'
-import { parentName } from 'Components/utils/publicodesUtils'
 import { Markdown } from './utils/markdown'
 import { ScrollToElement } from './utils/Scroll'
-import { useEngine2 } from '@/providers/EngineWrapper'
 
 // To add a new notification to a simulator, you should create a publicodes rule
 // with the "type: notification" attribute. The display can be customized with
@@ -53,12 +52,11 @@ export function getCurrentNotification(
 	return filteredMessages
 }
 
-export default function Notifications({ currentQuestion }) {
+export default function Notifications({ currentQuestion, engine }) {
 	const { t } = useTranslation()
 	const hiddenNotifications = useSelector(
 		(state: RootState) => state.simulation?.hiddenNotifications
 	)
-	const engine = useEngine2()
 
 	const dispatch = useDispatch()
 
