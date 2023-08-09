@@ -120,13 +120,22 @@ const Page = () => {
 							<h3>Ferry</h3>
 						</Card>
 					</Link>
-					*/}
 					<Link href="/simulateur/transport/avion/impact">
 						<Card>
 							<div>
 								<Emoji e="✈️" />
 							</div>
 							<h3>Avion</h3>
+						</Card>
+					</Link>
+					*/}
+
+					<Link href="/simulateur/piscine/empreinte">
+						<Card>
+							<div>
+								<Emoji e="🏊️" />
+							</div>
+							<h3>Piscine</h3>
 						</Card>
 					</Link>
 					<Link href="/wiki">

@@ -87,4 +87,7 @@ Choisissez 14 plats qui représentent votre semaine type : 7 midi et 7 dîners.
 	},
 ]
 
+export const isMosaic = (dottedName) =>
+	mosaicQuestions.find(({ isApplicable }) => isApplicable(dottedName))
+
 export default mosaicQuestions

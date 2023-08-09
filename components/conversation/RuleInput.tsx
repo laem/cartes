@@ -16,23 +16,14 @@ import {
 import { Evaluation } from 'publicodes/dist/types/AST/types'
 import React, { Suspense } from 'react'
 import { useTranslation } from 'react-i18next'
+import { airportsQuestions } from './customQuestions/airport'
+import { ferryQuestions } from './customQuestions/ferry'
 import DateInput from './DateInput'
-import mosaicQuestions from './mosaicQuestions'
+import { isMosaic } from './mosaicQuestions'
 import ParagrapheInput from './ParagrapheInput'
 import TextInput from './TextInput'
 import TravelTimeSpanInput from './TravelTimeSpanInput'
 
-// TODO this whole block is ugly
-export const airportsQuestions = [
-		'transport . avion . distance de vol aller',
-		'transport . avion . départ',
-		'transport . avion . arrivée',
-	],
-	ferryQuestions = [
-		'transport . ferry . départ',
-		'transport . ferry . arrivée',
-		'transport . ferry . distance aller . orthodromique',
-	]
 let SelectTwoAirports = React.lazy(
 	() => import('Components/conversation/select/SelectTwoAirports')
 )
@@ -65,9 +56,6 @@ export const binaryQuestion = [
 	{ value: 'oui', label: 'Oui' },
 	{ value: 'non', label: 'Non' },
 ] as const
-
-export const isMosaic = (dottedName) =>
-	mosaicQuestions.find(({ isApplicable }) => isApplicable(dottedName))
 
 // This function takes the unknown rule and finds which React component should
 // be displayed to get a user input through successive if statements

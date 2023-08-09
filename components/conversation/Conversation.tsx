@@ -2,10 +2,10 @@
 
 import { goToQuestion, updateSituation, validateStepWithValue } from '@/actions'
 import { useEngine2 } from '@/providers/EngineWrapper'
-import { sortBy } from 'Components/utils/utils'
-import { airportsQuestions, isMosaic } from 'Components/conversation/RuleInput'
+import { ferryQuestions } from 'Components/conversation/customQuestions/ferry'
 import { useNextQuestions } from 'Components/utils/useNextQuestion'
-import React, { useEffect, useState } from 'react'
+import { sortBy } from 'Components/utils/utils'
+import React, { useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import {
 	answeredQuestionsSelector,
@@ -14,7 +14,8 @@ import {
 import { objectifsSelector } from '../../selectors/simulationSelectors'
 import useKeypress from '../utils/useKeyPress'
 import './conversation.css'
-import { ferryQuestions } from './RuleInput'
+import { airportsQuestions } from './customQuestions/airport'
+import { isMosaic } from './mosaicQuestions'
 
 export type ConversationProps = {
 	customEndMessages?: React.ReactNode
