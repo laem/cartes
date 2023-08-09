@@ -1,7 +1,7 @@
 import data from '../../data.yaml'
-import Markdown from 'markdown-to-jsx'
 import { utils } from 'publicodes'
 const { decodeRuleName } = utils
+import Markdown from 'markdown-to-jsx'
 
 const Page = ({ params }) => {
 	const { nom: raw } = params
@@ -17,6 +17,6 @@ const Page = ({ params }) => {
 			<Markdown>{rule.notes}</Markdown>
 		</main>
 	)
-};
+}
 
-export default Page;
+export default Page
