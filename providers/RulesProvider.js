@@ -30,22 +30,6 @@ const setDefaultsToZero = (rules) =>
 		{}
 	)
 
-const removeLoader = () => {
-	// Remove loader
-	var css = document.createElement('style')
-	css.type = 'text/css'
-	css.innerHTML = `
-		#js {
-				animation: appear 0.5s;
-				opacity: 1;
-		}
-		#loading {
-				display: none !important;
-		}
-    `
-	document.body.appendChild(css)
-}
-
 export default ({ children }) => {
 	const rules = useSelector((state) => state.rules)
 
@@ -118,7 +102,6 @@ export default ({ children }) => {
 			}, {})
 
 			setRules(setDefaultsToZero(rules))
-			removeLoader()
 		} else if (
 			false &&
 			process.env.NODE_ENV === 'development' &&
@@ -147,7 +130,6 @@ export default ({ children }) => {
 			}, {})
 
 			setRules(transformRules(rules))
-			removeLoader()
 		} else {
 			fetch(rulesURL, { mode: 'cors' })
 				.then((response) => response.json())
@@ -159,7 +141,6 @@ export default ({ children }) => {
 					const questions = Object.entries(newRules).filter(
 						([k, v]) => v && v.question
 					)
-					//removeLoader()
 				})
 		}
 	}, [pathname, branch, pullRequestNumber])
