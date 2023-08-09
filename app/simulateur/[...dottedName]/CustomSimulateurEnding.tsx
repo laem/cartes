@@ -21,6 +21,6 @@ const CustomSimulateurEnding = ({ dottedName, rule }) => {
 			{dottedName === 'transport . avion . impact' && <AvionExplanation />}
 		</div>
 	)
-};
+}
 
-export default CustomSimulateurEnding;
+export default CustomSimulateurEnding

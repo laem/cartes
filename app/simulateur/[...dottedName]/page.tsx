@@ -4,7 +4,11 @@ import Simulateur from './Simulateur'
 const Page = ({ params: { dottedName } }) => {
 	const rawObjective = dottedName.join('/'),
 		decoded = utils.decodeRuleName(rawObjective)
-	return <Simulateur dottedName={decoded} />
-};
+	return (
+		<main>
+			<Simulateur dottedName={decoded} />
+		</main>
+	)
+}
 
-export default Page;
+export default Page

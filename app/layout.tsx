@@ -40,7 +40,7 @@ export default function RootLayout({
 				<Providers>
 					<StyledComponentsRegistry>
 						<Nav />
-						<main>{children}</main>
+						{children}
 						<NavFooter />
 					</StyledComponentsRegistry>
 				</Providers>
