@@ -14,6 +14,7 @@ import {
 import { objectifsSelector } from '../../selectors/simulationSelectors'
 import useKeypress from '../utils/useKeyPress'
 import './conversation.css'
+import Conversation2 from './Conversation2'
 import { airportsQuestions } from './customQuestions/airport'
 import { isMosaic } from './mosaicQuestions'
 
@@ -107,8 +108,6 @@ export default function Conversation({
 	useKeypress('Escape', setDefault, [currentQuestion])
 	useKeypress('Enter', () => submit('enter'), [currentQuestion])
 
-	return 'haouiuoi'
-	/*
 	return (
 		<Conversation2
 			{...{
@@ -126,5 +125,4 @@ export default function Conversation({
 			}}
 		/>
 	)
-	*/
 }

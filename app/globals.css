@@ -20,7 +20,8 @@ body {
 }
 
 body {
-	color: #111;
+	color: white;
+	background: #000;
 }
 main {
 	padding: 0 0.6rem;

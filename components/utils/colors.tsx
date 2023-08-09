@@ -1,3 +1,4 @@
+'use client'
 import convert from 'color-convert'
 import React, { createContext, useEffect, useRef } from 'react'
 

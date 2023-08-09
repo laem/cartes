@@ -1,32 +1,27 @@
 'use client'
+
+import dynamic from 'next/dynamic'
 import { useEngine2 } from '@/providers/EngineWrapper'
 import Input from 'Components/conversation/Input'
 import Question, { Choice } from 'Components/conversation/Question'
-import CurrencyInput from 'Components/CurrencyInput/CurrencyInput'
-import PercentageField from 'Components/PercentageField'
 import ToggleSwitch from 'Components/ui/ToggleSwitch'
 import { parentName } from 'Components/utils/publicodesUtils'
-import {
-	ASTNode,
-	EvaluatedRule,
-	formatValue,
-	reduceAST,
-	utils,
-} from 'publicodes'
+import { ASTNode, EvaluatedRule, reduceAST, utils } from 'publicodes'
 import { Evaluation } from 'publicodes/dist/types/AST/types'
-import React, { Suspense } from 'react'
+import React from 'react'
 import { useTranslation } from 'react-i18next'
-import { airportsQuestions } from './customQuestions/airport'
-import { ferryQuestions } from './customQuestions/ferry'
-import DateInput from './DateInput'
 import { isMosaic } from './mosaicQuestions'
-import ParagrapheInput from './ParagrapheInput'
-import TextInput from './TextInput'
-import TravelTimeSpanInput from './TravelTimeSpanInput'
 
-let SelectTwoAirports = React.lazy(
-	() => import('Components/conversation/select/SelectTwoAirports')
+/*
+ * TODO compilation works without this import
+const SelectTwoAirports = dynamic(
+	() => import('Components/conversation/select/SelectTwoAirports'),
+
+	{
+		loading: () => <p>Chargement des aéroports...</p>,
+	}
 )
+*/
 
 type Value = any
 export type RuleInputProps<Name extends string = DottedName> = {
@@ -141,6 +136,8 @@ export default function RuleInput<Name extends string = DottedName>({
 *
 */
 
+	/*
+		 * TODO deactivated for the nextjs migration
 	if (airportsQuestions.includes(rule.dottedName)) {
 		return (
 			<Suspense fallback={<div>Chargement des cartes ...</div>}>
@@ -185,6 +182,10 @@ export default function RuleInput<Name extends string = DottedName>({
 				suggestions={commonProps.suggestions}
 			/>
 		)
+		*/
+
+	/*
+		 * TODO deactivated for the nextjs migration
 	if (rule.rawNode.type === 'date') {
 		return (
 			<DateInput
@@ -196,6 +197,7 @@ export default function RuleInput<Name extends string = DottedName>({
 			/>
 		)
 	}
+	*/
 
 	if (
 		evaluation.unit == null &&
@@ -221,6 +223,9 @@ export default function RuleInput<Name extends string = DottedName>({
 		)
 	}
 
+	/*
+	 *
+		 * TODO deactivated for the nextjs migration
 	if (evaluation.unit?.numerators.includes('€') && isTarget) {
 		const unité = formatValue(
 			{ nodeValue: value ?? 0, unit: evaluation.unit },
@@ -253,6 +258,7 @@ export default function RuleInput<Name extends string = DottedName>({
 			<ParagrapheInput {...commonProps} value={value as Evaluation<string>} />
 		)
 	}
+	*/
 
 	return (
 		<Input
