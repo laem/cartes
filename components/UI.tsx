@@ -47,13 +47,24 @@ export const LoudButton = ({ to, children }) => {
 }
 
 const Button = styled.button`
+	border-radius: 0.3rem;
 	padding: 0.3rem 0.8rem;
-	background: var(--color2);
+	background-image: linear-gradient(
+		50deg,
+		var(--darkColor) 80%,
+		var(--color) 100%
+	);
+	border: 1px solid var(--color);
+	background-position-x: 99%;
+	background-size: 280%;
+	transition: all 0.08s;
 	color: white;
 	font-size: 140%;
-	border: none;
 	cursor: pointer;
-	${({ cta }) => cta && `padding: .8rem 1.4rem; font-weight: bold`}
+	${({ cta }) => cta && `padding: .8rem 1.4rem; font-weight: bold;`}
+	&:hover {
+		background-position-x: 0;
+	}
 `
 
 export const Card = styled.li`
