@@ -5,6 +5,7 @@ import Notifications from 'Components/Notifications'
 import { splitName } from 'Components/utils/publicodesUtils'
 import React, { useState } from 'react'
 import { useDispatch } from 'react-redux'
+import { Button } from '../UI'
 import Aide from './Aide'
 import CategoryRespiration from './CategoryRespiration'
 import './conversation.css'
@@ -135,21 +136,21 @@ const Conversation2 = ({
 				<div className="ui__ answer-group">
 					{previousAnswers.length > 0 && currentQuestionIndex !== 0 && (
 						<>
-							<button
+							<Button
 								onClick={goToPrevious}
 								className="ui__ simple small push-left button"
 							>
 								← Précédent
-							</button>
+							</Button>
 						</>
 					)}
 					{currentQuestionIsAnswered ? (
-						<button
+						<Button
 							className="ui__ plain small button"
 							onClick={() => submit('accept')}
 						>
 							<span className="text">Suivant →</span>
-						</button>
+						</Button>
 					) : null}
 				</div>
 				<Notifications currentQuestion={currentQuestion} />

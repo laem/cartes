@@ -46,7 +46,7 @@ export const LoudButton = ({ to, children }) => {
 	)
 }
 
-const Button = styled.button`
+export const Button = styled.button`
 	border-radius: 0.3rem;
 	padding: 0.3rem 0.8rem;
 	background-image: linear-gradient(
@@ -59,9 +59,14 @@ const Button = styled.button`
 	background-size: 280%;
 	transition: all 0.08s;
 	color: white;
-	font-size: 140%;
 	cursor: pointer;
-	${({ cta }) => cta && `padding: .8rem 1.4rem; font-weight: bold;`}
+	font-size: 120%;
+	${({ cta }) =>
+		cta &&
+		`
+	font-size: 140%;
+	padding: .8rem 1.4rem; font-weight: bold;
+	`}
 	&:hover {
 		background-position-x: 0;
 	}
