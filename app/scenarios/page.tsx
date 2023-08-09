@@ -1,4 +1,4 @@
-'use client';
+'use client'
 import Emoji, { emoji } from 'Components/Emoji'
 import Link from 'next/link'
 import React from 'react'
@@ -9,7 +9,7 @@ const Page = () => {
 	const dispatch = useDispatch()
 	const scenario = useSelector((state) => state.scenario)
 	return (
-		<section id="scenarios" className="ui__ container">
+		<main id="scenarios">
 			<h1>Votre scénario climat</h1>
 			<h2 css="display: inline-block;background: var(--color); padding: .1rem .4rem; margin-right: .4rem;  color: white; margin-top: 1rem">
 				Quel futur souhaitez vous ?
@@ -153,8 +153,8 @@ const Page = () => {
 				</a>{' '}
 				l remet en perspective de façon scientifiquement plus rigoureuse.
 			</p>
-		</section>
+		</main>
 	)
-};
+}
 
-export default Page;
+export default Page
