@@ -33,6 +33,12 @@ main {
 }
 
 a {
+	border: none;
+	font-size: inherit;
+	padding: none;
+	text-decoration: underline;
+	text-underline-offset: 4px;
+	color: var(--lightColor);
 }
 
 h1,

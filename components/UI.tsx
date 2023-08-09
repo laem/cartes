@@ -39,7 +39,7 @@ export const LoudButton = ({ to, children }) => {
 
 	return (
 		<Link href={to}>
-			<Button cta onClick={play}>
+			<Button cta="true" onClick={play}>
 				{children}
 			</Button>
 		</Link>
@@ -67,7 +67,7 @@ const Button = styled.button`
 	}
 `
 
-export const Card = styled.li`
+export const LightCard = styled.li`
 	min-width: 12rem;
 	padding: 1rem;
 	margin: 1rem;
@@ -83,5 +83,36 @@ export const Card = styled.li`
 	box-shadow: var(--shadow-elevation-medium);
 	@media (max-width: 800px) {
 		min-width: 8rem;
+	}
+`
+
+export const Card = styled.li`
+	align-items: center;
+	color: inherit;
+	display: flex;
+	flex: 0.3;
+	flex-direction: column;
+	font-size: inherit !important;
+	margin: 0.6rem;
+	max-width: 18rem;
+	padding: 1rem;
+	text-align: center;
+	text-decoration: none;
+
+	border: 4px solid var(--darkerColor);
+	border-radius: 0.3rem;
+	background: var(--darkerColor2);
+	box-shadow: 0 1px 3px rgba(var(--rgbColor), 0.12),
+		0 1px 2px rgba(var(--rgbColor), 0.24);
+	padding-left: 1rem;
+	padding-right: 1rem;
+	transition: box-shadow 0.15s, border-color 0.15s;
+
+	&:hover {
+		border-color: var(--lightColor);
+		box-shadow: 0 2px 4px -1px rgba(var(--rgbColor), 0.2),
+			0 4px 5px 0 rgba(var(--rgbColor), 0.14),
+			0 1px 10px 0 rgba(var(--rgbColor), 0.12);
+		opacity: inherit !important;
 	}
 `

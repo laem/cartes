@@ -1,2 +1,5 @@
 import { MDXRemote } from 'next-mdx-remote/rsc'
-export default ({ children }) => <MDXRemote source={children}></MDXRemote>
+
+export const Markdown = ({ children }) => (
+	<MDXRemote source={children}></MDXRemote>
+)
