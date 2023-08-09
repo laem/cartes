@@ -1,6 +1,7 @@
 import emojiRegex from 'emoji-regex'
 import openmojis from './openmojis.json' assert { type: 'json' }
 import replace from 'string-replace-to-array'
+import { Text, Image as ImageStyle } from './EmojiUI'
 
 const regex = emojiRegex()
 
@@ -40,31 +41,11 @@ const Emoji = ({ e, black, extra, alt, hasText, white }) => {
 		return <Image {...{ src, alt: emoji, imageSize, white }} key={src} />
 	})
 	if (hasText) return items
-	return (
-		<span
-			css={`
-				display: inline-flex;
-				vertical-align: middle;
-				align-items: center;
-			`}
-		>
-			{items}
-		</span>
-	)
+	return <Text>{items}</Text>
 }
 
 const Image = ({ src, alt, imageSize, white }) => (
-	<img
-		css={`
-			aspect-ratio: 1 / 1;
-			width: ${imageSize}em;
-			height: ${imageSize}em;
-			vertical-align: middle !important;
-			${white && 'filter: invert(1)'}
-		`}
-		src={src}
-		alt={alt}
-	/>
+	<ImageStyle src={src} alt={alt} imageSize={imageSize} white={white} />
 )
 
 export const getEmojiImageUrls = (emojis) =>

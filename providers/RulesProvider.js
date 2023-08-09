@@ -2,33 +2,12 @@
 
 import { useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
-import zeros from './zeroDefaults.yaml'
 
 import { useParams, usePathname } from 'next/navigation'
 import transformRules from './transformRules'
+import setDefaultsToZero from './setDefaultsToZero'
 
-// This is a difficult task : categories must equal to zero, in order to not make the test fail without having answered to a non-zero per default category
-// but some categories are conditionned by one variable, like the housing which is divided by the number of inhabitants.
-// Or, should the number of inhabitants be the first question asked ?
-// Yes it should.
-// But e.g. the question of number of people in the car is asked after the number of km. Hence we set this number to 2.
-const setDefaultsToZero = (rules) =>
-	Object.entries(rules).reduce(
-		(memo, [k, v]) =>
-			!v
-				? memo
-				: !v['par défaut']
-				? { ...memo, [k]: v }
-				: {
-						...memo,
-						[k]:
-							zeros[k] != null
-								? { ...v, 'par défaut': zeros[k] }
-								: //console.log('NO', k, ':', v['par défaut']) ||
-								  v,
-				  },
-		{}
-	)
+const devMode = process.env.NODE_ENV === 'development'
 
 export default ({ children }) => {
 	const rules = useSelector((state) => state.rules)
@@ -62,7 +41,7 @@ export default ({ children }) => {
 		const dataBranch = branch || pullRequestNumber
 		if (
 			false && // To be reactivated when in a dev branch for the final work on this test section on the site, that is based on nosgestesclimat's model
-			process.env.NODE_ENV === 'development' &&
+			devMode &&
 			!dataBranch &&
 			rulesDomain.includes('ecolab-data')
 		) {
@@ -104,7 +83,7 @@ export default ({ children }) => {
 			setRules(setDefaultsToZero(rules))
 		} else if (
 			false &&
-			process.env.NODE_ENV === 'development' &&
+			devMode &&
 			!dataBranch &&
 			rulesDomain.includes('futureco-data')
 		) {
