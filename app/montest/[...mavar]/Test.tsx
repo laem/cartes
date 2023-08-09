@@ -2,8 +2,7 @@
 import Engine from 'publicodes'
 import { useSelector } from 'react-redux'
 
-export default function Test({ maVar }) {
-	const rules = useSelector((state) => state.rules)
+export default function Test({ maVar, rules }) {
 	if (!rules) return 'En attente des règles'
 
 	console.log('RULES', rules)
