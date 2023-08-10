@@ -20,6 +20,7 @@ export const useEngine2 = (rules) => {
 			}),
 			[configSituation, userSituation]
 		)
+	engine.setSituation(situation)
 
 	return engine
 }
