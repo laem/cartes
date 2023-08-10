@@ -69,8 +69,9 @@ p {
 }
 
 blockquote {
-	border-left: 0.4rem solid var(--color1);
+	border-left: 0.4rem solid var(--color);
 	padding-left: 0.6rem;
+	margin: 0.6rem 0;
 }
 
 fieldset {

@@ -22,8 +22,6 @@ const limitPerPeriod = (scenario) =>
 		])
 	)
 
-console.log('YO', limitPerPeriod('B'))
-
 const findPeriod = (scenario, nodeValue) =>
 	Object.entries(limitPerPeriod(scenario))
 		.sort(([, a], [, b]) => b - a)
@@ -166,7 +164,7 @@ const ImpactCard = ({
 												? 's'
 												: '')}
 									</div>
-									<Link css="" href="/crédit-climat-personnel">
+									<Link css="" href="/credit-climat-personnel">
 										<img src={'/yellow-info.svg'} />
 									</Link>
 								</div>
