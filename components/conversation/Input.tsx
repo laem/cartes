@@ -6,6 +6,7 @@ import { NumericFormat } from 'react-number-format'
 import { currencyFormat, debounce } from 'Components/utils/utils'
 import InputSuggestions from './InputSuggestions'
 import { InputCommonProps } from './RuleInput'
+import { InputStyle } from './UI'
 
 // TODO: fusionner Input.js et CurrencyInput.js
 export default function Input({
@@ -41,23 +42,25 @@ export default function Input({
 							onSecondClick={() => onSubmit?.('suggestion')}
 						/>
 					)}
-					<NumericFormat
-						autoFocus={autoFocus}
-						className="suffixed ui__"
-						id={id}
-						thousandSeparator={thousandSeparator}
-						decimalSeparator={decimalSeparator}
-						allowEmptyFormatting={true}
-						// We don't want to call `onValueChange` in case this component is
-						// re-render with a new "value" prop from the outside.
-						onValueChange={({ floatValue }) => {
-							debouncedOnChange(
-								floatValue != undefined ? { valeur: floatValue, unité } : {}
-							)
-						}}
-						autoComplete="off"
-						{...{ [missing ? 'placeholder' : 'value']: value ?? '' }}
-					/>
+
+					<InputStyle>
+						<NumericFormat
+							autoFocus={autoFocus}
+							id={id}
+							thousandSeparator={thousandSeparator}
+							decimalSeparator={decimalSeparator}
+							allowEmptyFormatting={true}
+							// We don't want to call `onValueChange` in case this component is
+							// re-render with a new "value" prop from the outside.
+							onValueChange={({ floatValue }) => {
+								debouncedOnChange(
+									floatValue != undefined ? { valeur: floatValue, unité } : {}
+								)
+							}}
+							autoComplete="off"
+							{...{ [missing ? 'placeholder' : 'value']: value ?? '' }}
+						/>
+					</InputStyle>
 					<span className="suffix">&nbsp;{unité}</span>
 				</div>
 			</div>

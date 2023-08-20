@@ -212,58 +212,6 @@ pre.ui__.code > code {
 	hyphens: none;
 }
 
-input.ui__,
-textarea.ui__,
-select.ui__ {
-	padding: 0.4rem;
-	max-width: 100%;
-	margin-bottom: 0.6rem;
-	border: 1px solid var(--lighterTextColor);
-	border-radius: 0.3rem;
-	background-color: var(--darkerColor);
-	color: inherit;
-	font-size: inherit;
-	transition: border-color 0.1s;
-	position: relative;
-	font-family: inherit;
-}
-input.ui__ {
-	width: 25rem;
-}
-textarea.ui__ {
-	width: 100%;
-}
-
-input.ui__[inputmode='numeric'] {
-	width: 10rem;
-}
-input.ui__[type='date'] {
-	width: auto;
-}
-input.ui__.suffixed {
-	text-align: right;
-}
-input.ui__:focus,
-select.ui__:focus {
-	border-color: var(--color);
-}
-
-/* Remove IE's clear button the appears before our suffix */
-input.ui__::-ms-clear {
-	width: 0;
-	height: 0;
-}
-
-input.ui__::placeholder {
-	opacity: 0.75;
-	color: var(--lighterColor);
-}
-
-img[src="http://twemoji.maxcdn.com/2/72x72/.png"]
-{
-	display: none;
-}
-
 details summary {
 	cursor: pointer;
 }
