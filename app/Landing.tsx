@@ -5,19 +5,21 @@ export const Container = styled.div`
 	height: 100%;
 	text-align: center;
 `
-export const Image = styled.img`
-	height: 50vh;
-	object-fit: cover;
-	width: 100vw;
-	-webkit-mask-image: -webkit-gradient(
-		linear,
-		left top,
-		left bottom,
-		from(rgba(0, 0, 0, 1)),
-		to(rgba(0, 0, 0, 0))
-	);
-	z-index: -10;
-	position: relative;
+export const Image = styled.div`
+	img {
+		height: 50vh;
+		object-fit: cover;
+		width: 100vw;
+		-webkit-mask-image: -webkit-gradient(
+			linear,
+			left top,
+			left bottom,
+			from(rgba(0, 0, 0, 1)),
+			to(rgba(0, 0, 0, 0))
+		);
+		z-index: -10;
+		position: relative;
+	}
 `
 
 export const Header = styled.header`

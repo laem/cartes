@@ -30,7 +30,7 @@ export default function Input({
 
 	return (
 		<>
-			<div className="step input">
+			<div>
 				<div>
 					{!noSuggestions && (
 						<InputSuggestions

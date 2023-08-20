@@ -1,17 +1,23 @@
 import Link from 'next/link'
+import Image from 'next/image'
 
 import Emoji from 'Components/Emoji'
 import { Card, LoudButton } from 'Components/UI'
-import { CardList, Container, Content, Header, Image } from './Landing'
+import {
+	CardList,
+	Container,
+	Content,
+	Header,
+	Image as StyledImage,
+} from './Landing'
+import incendie from 'public/incendie.png'
 
 const Page = () => {
 	return (
 		<Container>
-			<Image
-				srcSet="https://i.imgur.com/HXWewY4l.jpg 640w, https://i.imgur.com/HXWewY4.jpg 1720w "
-				src="https://i.imgur.com/HXWewY4.jpg"
-				alt="Photo d'un incendie terrible"
-			/>
+			<StyledImage>
+				<Image src={incendie} alt="Photo d'un incendie terrible" />
+			</StyledImage>
 
 			<Content>
 				<Header>
