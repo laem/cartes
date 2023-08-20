@@ -1,13 +1,11 @@
+'use client'
 import getCityData, { toThumb } from 'Components/wikidata'
 import { motion } from 'framer-motion'
 import GreatCircle from 'great-circle'
 import React, { useEffect, useState } from 'react'
 import styled from 'styled-components'
-import Worker from 'worker-loader!./SearchAirports.js'
 import Emoji from '../../Emoji'
 import GeoInputOptions from './GeoInputOptions'
-
-const worker = new Worker()
 
 export default function SelectTwoAirports({
 	onChange,
@@ -24,16 +22,6 @@ export default function SelectTwoAirports({
 		vers: { inputValue: '' },
 		validated: false,
 	})
-
-	useEffect(() => {
-		if (db === 'airports') {
-			worker.onmessage = ({ data: { results, which } }) =>
-				setState((state) => ({
-					...state,
-					[which]: { ...state[which], results },
-				}))
-		}
-	}, [])
 
 	const [wikidata, setWikidata] = useState(null)
 
@@ -84,7 +72,15 @@ export default function SelectTwoAirports({
 						}))
 					})
 			} else {
-				worker.postMessage({ input: v, which: whichInput })
+				fetch(`/api/airports?input=${v}&which=${whichInput}`)
+					.then((res) => res.json())
+					.then((results) => {
+						setState((state) => ({
+							...state,
+
+							[whichInput]: { results },
+						}))
+					})
 			}
 		}
 	}

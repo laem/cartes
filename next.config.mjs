@@ -49,6 +49,16 @@ const nextConfig = {
 			use: 'yaml-loader',
 		})
 		config.module.rules.push({ test: /\.mp3$/, type: 'asset/resource' })
+		config.module.rules.push({
+			test: /\.csv$/,
+			loader: 'csv-loader',
+			options: {
+				dynamicTyping: true,
+				header: true,
+				skipEmptyLines: true,
+			},
+		})
+
 		config.resolve.alias = {
 			...config.resolve.alias,
 			Components: path.resolve(__dirname, './components'),

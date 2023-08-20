@@ -43,7 +43,7 @@
 		"css-loader": "^6.7.1",
 		"css-minimizer-webpack-plugin": "^5.0.1",
 		"css-to-object": "^1.1.0",
-		"csv-loader": "^3.0.3",
+		"csv-loader": "^3.0.5",
 		"cypress-plugin-tab": "^1.0.5",
 		"enzyme-adapter-react-16": "^1.15.6",
 		"eslint": "^8.46.0",

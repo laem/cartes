@@ -8,12 +8,11 @@ import ToggleSwitch from 'Components/ui/ToggleSwitch'
 import { parentName } from 'Components/utils/publicodesUtils'
 import { ASTNode, EvaluatedRule, reduceAST, utils } from 'publicodes'
 import { Evaluation } from 'publicodes/dist/types/AST/types'
-import React from 'react'
+import React, { Suspense } from 'react'
 import { useTranslation } from 'react-i18next'
 import { isMosaic } from './mosaicQuestions'
+import { airportsQuestions } from './customQuestions/airport'
 
-/*
- * TODO compilation works without this import
 const SelectTwoAirports = dynamic(
 	() => import('Components/conversation/select/SelectTwoAirports'),
 
@@ -21,7 +20,6 @@ const SelectTwoAirports = dynamic(
 		loading: () => <p>Chargement des aéroports...</p>,
 	}
 )
-*/
 
 type Value = any
 export type RuleInputProps<Name extends string = DottedName> = {
@@ -136,8 +134,6 @@ export default function RuleInput<Name extends string = DottedName>({
 *
 */
 
-	/*
-		 * TODO deactivated for the nextjs migration
 	if (airportsQuestions.includes(rule.dottedName)) {
 		return (
 			<Suspense fallback={<div>Chargement des cartes ...</div>}>
@@ -155,6 +151,7 @@ export default function RuleInput<Name extends string = DottedName>({
 			</Suspense>
 		)
 	}
+	/*
 
 	if (ferryQuestions.includes(rule.dottedName)) {
 		return (

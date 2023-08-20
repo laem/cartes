@@ -24,10 +24,8 @@ const fuse = new Fuse(airports, {
 export function GET(request: Request) {
 	const { searchParams } = new URL(request.url)
 	const input = searchParams.get('input')
-	const which = searchParams.get('which')
 
 	const results = fuse.search(input)
-	const res = { which, results }
 
-	return NextResponse.json(res)
+	return NextResponse.json(results)
 }
