@@ -25,7 +25,7 @@ import {
 	configSituationSelector,
 	situationSelector,
 } from '@/selectors/simulationSelectors'
-import CustomSimulateurEnding from './CustomSimulateurEnding'
+import CustomSimulateurEnding from 'Components/CustomSimulateurEnding'
 
 const SimulateurContent = ({ objective, rules }) => {
 	console.log('OBJ', objective)
@@ -133,7 +133,11 @@ const SimulateurContent = ({ objective, rules }) => {
 						orderByCategories={categories}
 						customEnd={
 							rule.description ? (
-								<CustomSimulateurEnding rule={rule} dottedName={objective} />
+								<CustomSimulateurEnding
+									rule={rule}
+									dottedName={objective}
+									engine={engine}
+								/>
 							) : (
 								<EndingCongratulations />
 							)

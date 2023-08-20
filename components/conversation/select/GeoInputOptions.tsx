@@ -1,3 +1,4 @@
+'use client'
 import Highlighter from 'react-highlight-words'
 import { useDispatch } from 'react-redux'
 import { updateSituation as updateGlobalSituation } from '@/actions'

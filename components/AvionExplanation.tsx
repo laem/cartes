@@ -1,9 +1,9 @@
+'use client'
 import { useEngine2 } from '@/providers/EngineWrapper'
 import { motion } from 'framer-motion'
 
-const AvionExplanation = () => {
-	const engine = useEngine2(),
-		impact = engine.evaluate('transport . avion . impact').nodeValue,
+const AvionExplanation = ({ engine }) => {
+	const impact = engine.evaluate('transport . avion . impact').nodeValue,
 		forcingFactor = engine.evaluate(
 			'transport . avion . forçage radiatif . coefficient'
 		).nodeValue,

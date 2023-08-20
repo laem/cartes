@@ -10,9 +10,6 @@ export const QuestionList = styled.ul`
 	justify-content: flex-end;
 	align-items: center;
 	flex-wrap: wrap;
-	li {
-		margin: 0 0.4rem;
-	}
 `
 
 export const VariantLeaf = styled.li`
@@ -20,6 +17,7 @@ export const VariantLeaf = styled.li`
 	align-items: center;
 	display: flex;
 	justify-content: flex-end;
+	margin-bottom: 1em;
 	&:not(:first-child) {
 		margin-left: 0.6rem;
 	}

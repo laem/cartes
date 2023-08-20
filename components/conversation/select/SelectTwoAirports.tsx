@@ -5,6 +5,7 @@ import GreatCircle from 'great-circle'
 import React, { useEffect, useState } from 'react'
 import styled from 'styled-components'
 import Emoji from '../../Emoji'
+import { InputStyle } from '../UI'
 import GeoInputOptions from './GeoInputOptions'
 
 export default function SelectTwoAirports({
@@ -170,13 +171,14 @@ export default function SelectTwoAirports({
 						<span>
 							Départ <Emoji e={fromIcon} />
 						</span>
-						<input
-							type="text"
-							className="ui__"
-							value={depuis.inputValue}
-							placeholder={placeholder}
-							onChange={onInputChange('depuis')}
-						/>
+						<InputStyle>
+							<input
+								type="text"
+								value={depuis.inputValue}
+								placeholder={placeholder}
+								onChange={onInputChange('depuis')}
+							/>
+						</InputStyle>
 					</label>
 					{!depuis.choice &&
 						depuis.results &&
@@ -219,13 +221,14 @@ export default function SelectTwoAirports({
 						<span>
 							Arrivée <Emoji e={toIcon} />
 						</span>
-						<input
-							className="ui__"
-							type="text"
-							value={vers.inputValue}
-							placeholder={placeholder}
-							onChange={onInputChange('vers')}
-						/>
+						<InputStyle>
+							<input
+								type="text"
+								value={vers.inputValue}
+								placeholder={placeholder}
+								onChange={onInputChange('vers')}
+							/>
+						</InputStyle>
 					</label>
 					{!vers.choice &&
 						vers.results &&

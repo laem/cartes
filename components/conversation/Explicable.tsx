@@ -38,7 +38,7 @@ export function ExplicableRule({ dottedName }: { dottedName: DottedName }) {
 				}
 			`}
 		>
-			<img src={'/images/yellow-info.svg'} />
+			<img src={'/yellow-info.svg'} />
 		</button>
 	)
 }

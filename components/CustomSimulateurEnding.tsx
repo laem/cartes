@@ -1,11 +1,10 @@
-import { Markdown } from 'Components/utils/markdown'
-import AvionExplanation from 'Components/AvionExplanation'
-import { capitalise0 } from 'publicodes'
+import { Markdown } from 'Components/utils/ClientMarkdown'
+import AvionExplanation from './AvionExplanation'
 
 const ADEMELogoURL =
 	'https://www.ademe.fr/wp-content/uploads/2021/12/logo-ademe.svg'
 
-const CustomSimulateurEnding = ({ dottedName, rule }) => {
+const CustomSimulateurEnding = ({ dottedName, rule, engine }) => {
 	const ref = rule.références,
 		baseCarbone = ref?.find((el) => el.includes('bilans-ges.ademe.fr'))
 	return (
@@ -17,8 +16,10 @@ const CustomSimulateurEnding = ({ dottedName, rule }) => {
 					<a href="https://bilans-ges.ademe.fr"> base carbone ADEME</a>
 				</div>
 			)}
-			<Markdown>{capitalise0(rule.description)}</Markdown>
-			{dottedName === 'transport . avion . impact' && <AvionExplanation />}
+			<Markdown children={rule.description}></Markdown>
+			{dottedName === 'transport . avion . impact' && (
+				<AvionExplanation engine={engine} />
+			)}
 		</div>
 	)
 }
