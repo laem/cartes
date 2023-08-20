@@ -47,6 +47,7 @@ const Page = () => {
 							<h3>Ferry</h3>
 						</Card>
 					</Link>
+					*/}
 					<Link href="/simulateur/transport/avion/impact">
 						<Card>
 							<div>
@@ -55,7 +56,6 @@ const Page = () => {
 							<h3>Avion</h3>
 						</Card>
 					</Link>
-					*/}
 
 					<Link href="/simulateur/piscine/empreinte">
 						<Card>
@@ -65,14 +65,16 @@ const Page = () => {
 							<h3>Piscine</h3>
 						</Card>
 					</Link>
-					<Link href="/wiki">
-						<Card>
-							<div>
-								<Emoji e="➕" />
-							</div>
-							<h3>Tout le reste</h3>
-						</Card>
-					</Link>
+					{false && (
+						<Link href="/wiki">
+							<Card>
+								<div>
+									<Emoji e="➕" />
+								</div>
+								<h3>Tout le reste</h3>
+							</Card>
+						</Link>
+					)}
 				</CardList>
 			</Content>
 		</Container>
