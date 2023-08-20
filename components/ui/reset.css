@@ -60,8 +60,7 @@ label {
 
 button {
 	background: none;
-	border: 1px solid #222;
-	border-radius: 0.2em;
+	border: none;
 	padding: 0 1em;
 }
 

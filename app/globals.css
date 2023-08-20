@@ -129,3 +129,14 @@ fieldset {
 	min-width: 0;
 	padding: 0.01em 0 0;
 }
+
+button {
+	background: none;
+	border: 1px solid #222;
+	border-radius: 0.2em;
+	padding: 0 1em;
+}
+
+button:enabled {
+	cursor: pointer;
+}

@@ -1,4 +1,3 @@
-import classnames from 'classnames'
 import { Markdown } from 'Components/utils/markdown'
 import { ASTNode } from 'publicodes'
 import { Rule } from 'publicodes/dist/types/rule'
@@ -7,6 +6,8 @@ import { Explicable } from './Explicable'
 import { binaryQuestion, InputCommonProps, RuleInputProps } from './RuleInput'
 import animate from 'Components/ui/animate'
 import Emoji from 'Components/Emoji'
+import { Button, Card } from '../UI'
+import { BinaryItem, QuestionList, Variant, VariantLeaf } from './QuestionUI'
 
 /* Ceci est une saisie de type "radio" : l'utilisateur choisit une réponse dans
 	une liste, ou une liste de listes. Les données @choices sont un arbre de type:
@@ -68,20 +69,7 @@ export default function Question({
 
 	const renderBinaryQuestion = (choices: typeof binaryQuestion) => {
 		return choices.map(({ value, label }) => (
-			<span
-				key={value}
-				css={`
-					:not(:first-child) {
-						margin-left: 0.6rem;
-					}
-					input {
-						width: 0;
-						opacity: 0;
-						height: 0;
-						position: absolute;
-					}
-				`}
-			>
+			<BinaryItem key={value}>
 				<RadioLabel
 					{...{
 						value,
@@ -92,7 +80,7 @@ export default function Question({
 						onChange: handleChange,
 					}}
 				/>
-			</span>
+			</BinaryItem>
 		))
 	}
 	const renderChildren = (choices: Choice) => {
@@ -101,22 +89,9 @@ export default function Question({
 		const relativeDottedName = (radioDottedName: string) =>
 			radioDottedName.split(questionDottedName + ' . ')[1]
 		return (
-			<ul
-				css={`
-					width: 100%;
-					padding: 0;
-					margin: 0;
-					display: flex;
-					justify-content: flex-end;
-					flex-wrap: wrap;
-					li {
-						margin: 0 0.4rem;
-					}
-				`}
-				className="ui__ radio"
-			>
+			<QuestionList>
 				{choices.canGiveUp && (
-					<li key="aucun" className="variantLeaf aucun">
+					<VariantLeaf key="aucun" aucun>
 						<RadioLabel
 							{...{
 								value: 'non',
@@ -128,7 +103,7 @@ export default function Question({
 								onChange: handleChange,
 							}}
 						/>
-					</li>
+					</VariantLeaf>
 				)}
 				{choices.children &&
 					choices.children.map(
@@ -139,12 +114,12 @@ export default function Question({
 							children,
 						}) =>
 							children ? (
-								<li key={dottedName} className="variant">
+								<Variant key={dottedName}>
 									<div>{title}</div>
 									{renderChildren({ children } as Choice)}
-								</li>
+								</Variant>
 							) : (
-								<li key={dottedName} className="variantLeaf">
+								<VariantLeaf key={dottedName}>
 									<RadioLabel
 										{...{
 											value: `'${relativeDottedName(dottedName)}'`,
@@ -159,10 +134,10 @@ export default function Question({
 											onChange: handleChange,
 										}}
 									/>
-								</li>
+								</VariantLeaf>
 							)
 					)}
-			</ul>
+			</QuestionList>
 		)
 	}
 
@@ -170,19 +145,7 @@ export default function Question({
 		? renderBinaryQuestion(choices)
 		: renderChildren(choices)
 
-	return (
-		<div
-			className="step question"
-			css={`
-				margin: 0.3rem 0;
-				display: flex;
-				align-items: center;
-				flex-wrap: wrap;
-			`}
-		>
-			{choiceElements}
-		</div>
-	)
+	return <div>{choiceElements}</div>
 }
 
 type RadioLabelProps = RadioLabelContentProps & {
@@ -198,8 +161,7 @@ export const RadioLabel = (props: RadioLabelProps) => {
 			<RadioLabelContent {...props} />
 			{props.description && (
 				<>
-					<button
-						className="ui__ link-button"
+					<Button
 						onClick={() => setIsOpen(!isOpen)}
 						css={`
 							margin-left: 0.3rem !important;
@@ -208,13 +170,13 @@ export const RadioLabel = (props: RadioLabelProps) => {
 						`}
 					>
 						<Emoji e={'ℹ️'} />
-					</button>
+					</Button>
 					{isOpen && (
 						<animate.appear>
-							<div className="ui__ card box">
+							<Card>
 								<h2>{props.label}</h2>
 								<Markdown children={props.description} />
-							</div>
+							</Card>
 						</animate.appear>
 					)}
 				</>
@@ -252,9 +214,6 @@ function RadioLabelContent({
 				onSubmit('dblClick', value)
 			}}
 			style={labelStyle}
-			className={classnames('userAnswerButton ui__ button ', {
-				selected,
-			})}
 		>
 			<input
 				type="radio"

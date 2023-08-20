@@ -12,7 +12,7 @@ import './conversation.css'
 import { ExplicableRule } from './Explicable'
 import { isMosaic } from './mosaicQuestions'
 import SimulationEnding from './SimulationEnding'
-import { Fieldset } from './UI'
+import { Fieldset, StepButtons } from './UI'
 
 export type ConversationProps = {
 	customEndMessages?: React.ReactNode
@@ -133,7 +133,7 @@ const Conversation2 = ({
 						/>
 					</Fieldset>
 				</div>
-				<div className="ui__ answer-group">
+				<StepButtons>
 					{previousAnswers.length > 0 && currentQuestionIndex !== 0 && (
 						<>
 							<Button
@@ -152,7 +152,7 @@ const Conversation2 = ({
 							<span className="text">Suivant →</span>
 						</Button>
 					) : null}
-				</div>
+				</StepButtons>
 				<Notifications currentQuestion={currentQuestion} engine={engine} />
 			</div>
 		</section>

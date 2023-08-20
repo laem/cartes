@@ -1,7 +1,6 @@
-import classnames from 'classnames'
+import { currencyFormat, debounce } from 'Components/utils/utils'
 import React, { useMemo, useRef, useState } from 'react'
 import { NumericFormat } from 'react-number-format'
-import { debounce, currencyFormat } from 'Components/utils/utils'
 
 import './CurrencyInput.css'
 
@@ -68,7 +67,7 @@ export default function CurrencyInput({
 
 	return (
 		<div
-			className={classnames(className, 'currencyInput__container')}
+			className={className + ' currencyInput__container'}
 			{...(valueLength > 5 ? { style: { width } } : {})}
 			onClick={() => inputRef.current?.focus()}
 		>

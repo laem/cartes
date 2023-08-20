@@ -1,8 +1,7 @@
-import classnames from 'classnames'
+import Animate from 'Components/ui/animate'
 import { Markdown } from 'Components/utils/markdown'
 import { ScrollToElement } from 'Components/utils/Scroll'
 import React, { useContext, useEffect, useState } from 'react'
-import Animate from 'Components/ui/animate'
 import Checkbox from '../Checkbox'
 import './index.css'
 
@@ -54,9 +53,9 @@ export function CheckItem({
 				/>
 
 				<button
-					className={classnames('ui__ checklist-button', {
-						opened: displayExplanations,
-					})}
+					className={`ui__ checklist-button ${
+						displayExplanations ? 'opened' : ''
+					}`}
 					onClick={handleClick}
 				>
 					{title}

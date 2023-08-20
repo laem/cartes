@@ -6,6 +6,12 @@ export const Fieldset = styled.fieldset`
 	justify-content: flex-end;
 	flex-wrap: wrap;
 	align-items: baseline;
+	span {
+		white-space: nowrap;
+	}
+	ul {
+		list-style-type: none;
+	}
 `
 
 export const CategoryLabel = styled.span`
@@ -85,4 +91,10 @@ export const InputStyle = styled.span`
 		opacity: 0.75;
 		color: var(--lighterColor);
 	}
+`
+
+export const StepButtons = styled.div`
+	align-items: center;
+	display: flex;
+	justify-content: flex-end;
 `
