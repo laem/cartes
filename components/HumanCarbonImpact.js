@@ -14,8 +14,8 @@ import ImpactCard from './ImpactCard'
 const HumanCarbonImpact = ({ nodeValue, formule, dottedName, engine }) => {
 	const rules = engine.getParsedRules(),
 		rule = rules[dottedName],
-		examplesSource = rule.exposé?.['exemples via suggestions'],
-		questionEco = rule.exposé?.type === 'question éco'
+		examplesSource = rule.rawNode.exposé?.['exemples via suggestions'],
+		questionEco = rule.rawNode.exposé?.type === 'question éco'
 
 	const nextQuestions = useNextQuestions(engine),
 		foldedSteps = useSelector(answeredQuestionsSelector),
@@ -98,6 +98,7 @@ const CardList = styled.ul`
 	border-radius: 0.3rem;
 	li {
 		margin: 0 0.1rem;
+		padding: 0.2em 0;
 	}
 `
 
