@@ -5,7 +5,7 @@ import Notifications from 'Components/Notifications'
 import { splitName } from 'Components/utils/publicodesUtils'
 import React, { useState } from 'react'
 import { useDispatch } from 'react-redux'
-import { Button } from '../UI'
+import { Button, LightButton } from '../UI'
 import Aide from './Aide'
 import CategoryRespiration from './CategoryRespiration'
 import './conversation.css'
@@ -136,19 +136,11 @@ const Conversation2 = ({
 				<StepButtons>
 					{previousAnswers.length > 0 && currentQuestionIndex !== 0 && (
 						<>
-							<Button
-								onClick={goToPrevious}
-								className="ui__ simple small push-left button"
-							>
-								← Précédent
-							</Button>
+							<LightButton onClick={goToPrevious}>← Précédent</LightButton>
 						</>
 					)}
 					{currentQuestionIsAnswered ? (
-						<Button
-							className="ui__ plain small button"
-							onClick={() => submit('accept')}
-						>
+						<Button onClick={() => submit('accept')}>
 							<span className="text">Suivant →</span>
 						</Button>
 					) : null}

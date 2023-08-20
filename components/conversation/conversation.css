@@ -7,33 +7,3 @@
 	transition: color 0.1s;
 	margin-left: 0.6rem;
 }
-.step label.userAnswerButton {
-	margin-bottom: 0.6rem;
-	background: none;
-	border: 1px solid var(--color) !important;
-	text-transform: none !important;
-	background-color: var(--darkColor);
-	color: var(--textColor) !important;
-	font-weight: 500 !important;
-	border-radius: 0.3rem;
-}
-.step label.userAnswerButton.selected {
-	background: var(--lightColor);
-	color: var(--textColor) !important;
-}
-
-@media print {
-	.step label.userAnswerButton.selected {
-		border: none;
-	}
-
-	.step label.userAnswerButton:not(.selected) {
-		display: none;
-	}
-}
-@media (hover) {
-	.step label.userAnswerButton:hover:not(.selected) {
-		background: var(--lightColor);
-		transition: all 0.05s;
-	}
-}

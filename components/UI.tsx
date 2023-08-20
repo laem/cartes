@@ -72,6 +72,29 @@ export const Button = styled.button`
 	}
 `
 
+export const LightButton = styled.button`
+	background: #0000;
+	border: none;
+	color: var(--lightColor);
+	padding-left: 0;
+	padding-right: 0;
+	border-radius: 0.3rem;
+	font-size: 90%;
+	font-weight: 500;
+	line-height: 1.2rem;
+	padding: 0.4rem 0.8rem;
+	transition: all 0.08s;
+	width: inherit;
+	cursor: pointer;
+	display: inline-block;
+	text-align: center;
+	text-decoration: none;
+	&:hover {
+		opacity: 0.8;
+		transform: translateX(-3px);
+	}
+`
+
 export const LightCard = styled.li`
 	min-width: 12rem;
 	padding: 1rem;

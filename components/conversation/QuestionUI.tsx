@@ -1,13 +1,11 @@
 import styled from 'styled-components'
 
-export const
 export const QuestionList = styled.ul`
-	margin: 0.3rem 0;
+	margin: 1.6rem 0;
 	flex-wrap: wrap;
 
 	width: 100%;
 	padding: 0;
-	margin: 0;
 	display: flex;
 	justify-content: flex-end;
 	align-items: center;
@@ -74,5 +72,33 @@ export const BinaryItem = styled.span`
 		opacity: 0;
 		height: 0;
 		position: absolute;
+	}
+`
+
+export const RadioLabelStyle = styled.label`
+	cursor: pointer;
+	margin-bottom: 0.6rem;
+	padding: 0.4rem 1rem;
+	background: none;
+	border: 1px solid var(--color) !important;
+	text-transform: none !important;
+	background-color: var(--darkColor);
+	color: var(--textColor) !important;
+	font-weight: 500 !important;
+	border-radius: 0.3rem;
+
+	${(p) =>
+		p.$selected &&
+		`
+
+	background: var(--lightColor);
+	color: var(--textColor) !important;
+	`}
+
+	@media (hover) {
+		&:hover:not(.selected) {
+			background: var(--lightColor);
+			transition: all 0.05s;
+		}
 	}
 `

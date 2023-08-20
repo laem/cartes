@@ -132,7 +132,7 @@ fieldset {
 
 button {
 	background: none;
-	border: 1px solid #222;
+	border: none;
 	border-radius: 0.2em;
 	padding: 0 1em;
 }

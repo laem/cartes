@@ -7,7 +7,13 @@ import { binaryQuestion, InputCommonProps, RuleInputProps } from './RuleInput'
 import animate from 'Components/ui/animate'
 import Emoji from 'Components/Emoji'
 import { Button, Card } from '../UI'
-import { BinaryItem, QuestionList, Variant, VariantLeaf } from './QuestionUI'
+import {
+	BinaryItem,
+	QuestionList,
+	RadioLabelStyle,
+	Variant,
+	VariantLeaf,
+} from './QuestionUI'
 
 /* Ceci est une saisie de type "radio" : l'utilisateur choisit une réponse dans
 	une liste, ou une liste de listes. Les données @choices sont un arbre de type:
@@ -89,7 +95,7 @@ export default function Question({
 		const relativeDottedName = (radioDottedName: string) =>
 			radioDottedName.split(questionDottedName + ' . ')[1]
 		return (
-			<QuestionList>
+			<>
 				{choices.canGiveUp && (
 					<VariantLeaf key="aucun" aucun>
 						<RadioLabel
@@ -137,7 +143,7 @@ export default function Question({
 								</VariantLeaf>
 							)
 					)}
-			</QuestionList>
+			</>
 		)
 	}
 
@@ -145,7 +151,7 @@ export default function Question({
 		? renderBinaryQuestion(choices)
 		: renderChildren(choices)
 
-	return <div>{choiceElements}</div>
+	return <QuestionList>{choiceElements}</QuestionList>
 }
 
 type RadioLabelProps = RadioLabelContentProps & {
@@ -208,12 +214,13 @@ function RadioLabelContent({
 	const selected = value === currentSelection
 
 	return (
-		<label
+		<RadioLabelStyle
 			key={value}
 			onDoubleClick={() => {
 				onSubmit('dblClick', value)
 			}}
 			style={labelStyle}
+			$selected={selected}
 		>
 			<input
 				type="radio"
@@ -226,6 +233,6 @@ function RadioLabelContent({
 				{icônes && <Emoji e={icônes} />}&nbsp;
 				{label}
 			</span>
-		</label>
+		</RadioLabelStyle>
 	)
 }
