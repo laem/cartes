@@ -100,6 +100,11 @@ export const NavFooter = () => (
 		>
 			<Link href="/a-propos">À propos</Link>
 		</div>
-		<img src="/logo.svg" css="width: 2rem !important; margin-left: 1rem" />
+		<img
+			src="/logo.svg"
+			css="width: 2rem !important; height: auto;margin-left: 1rem"
+			width="10px"
+			height="10px"
+		/>
 	</Footer>
 )
