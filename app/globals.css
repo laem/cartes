@@ -12,11 +12,11 @@
 
 html,
 body {
-	font-family: var(--font-inter);
+	font-family: Helvetica, Arial, sans-serif;
 	max-width: 100vw;
 	overflow-x: hidden;
 	height: 100%;
-	font-size: 105%;
+	font-size: 100%;
 	line-height: 1.7rem;
 }
 @media (max-width: 500px) {
