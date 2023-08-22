@@ -1,5 +1,6 @@
 import setDefaultsToZero from './setDefaultsToZero'
 import transformRules from './transformRules'
+import { utils } from 'publicodes'
 
 export async function getRules(ruleSet: 'NGC' | 'futureco') {
 	const rulesDomain =
@@ -22,4 +23,10 @@ export async function getRules(ruleSet: 'NGC' | 'futureco') {
 		ruleSet === 'futureco' ? transformRules(json) : setDefaultsToZero(json)
 
 	return newRules
+}
+
+export async function getRulesFromDottedName(dottedName) {
+	const ruleSet = dottedName === 'bilan' ? 'NGC' : 'futureco'
+	const rules = await getRules(ruleSet)
+	return rules
 }
