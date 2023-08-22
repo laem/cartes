@@ -25,6 +25,7 @@ export default function Simulation({
 	showPeriodSwitch,
 	animation = 'appear',
 	rules,
+	engine,
 }: SimulationProps) {
 	const Animation = animate[animation]
 	//const situation = useSelector(situationSelector)
@@ -32,7 +33,7 @@ export default function Simulation({
 	// TODO syncSearchParams()
 	return (
 		<>
-			<AnswerList rules={rules} />
+			<AnswerList engine={engine} rules={rules} />
 			<SearchButton invisibleButton />
 			<Animation delay={0.3}>
 				{results}

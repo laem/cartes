@@ -1,8 +1,6 @@
 'use client'
-import Emoji from 'Components/Emoji'
-import Simulation from 'Components/Simulation'
-import { getBackgroundColor, limit } from 'Components/testColors'
 import { useEngine2 } from '@/providers/EngineWrapper'
+import { answeredQuestionsSelector } from '@/selectors/simulationSelectors'
 import {
 	Almost,
 	Done,
@@ -10,22 +8,20 @@ import {
 	NotBad,
 	QuiteGood,
 } from 'Components/Congratulations'
+import CustomSimulateurEnding from 'Components/CustomSimulateurEnding'
+import Emoji from 'Components/Emoji'
 import Lab from 'Components/ferry/Lab'
 import FuturecoMonochrome from 'Components/FuturecoMonochrome'
+import Simulation from 'Components/Simulation'
 import SimulationResults from 'Components/SimulationResults'
+import { getBackgroundColor, limit } from 'Components/testColors'
 import { extractCategories } from 'Components/utils/publicodesUtils'
+import { useNextQuestions } from 'Components/utils/useNextQuestion'
 import Link from 'next/link'
 import { useRouter } from 'next/router'
-import Engine, { utils } from 'publicodes'
-import { useEffect, useMemo } from 'react'
+import { utils } from 'publicodes'
+import { useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
-import { useNextQuestions } from 'Components/utils/useNextQuestion'
-import {
-	answeredQuestionsSelector,
-	configSituationSelector,
-	situationSelector,
-} from '@/selectors/simulationSelectors'
-import CustomSimulateurEnding from 'Components/CustomSimulateurEnding'
 
 const SimulateurContent = ({ objective, rules }) => {
 	console.log('OBJ', objective)
@@ -129,6 +125,7 @@ const SimulateurContent = ({ objective, rules }) => {
 				) : (
 					<Simulation
 						rules={rules}
+						engine={engine}
 						noFeedback
 						orderByCategories={categories}
 						customEnd={

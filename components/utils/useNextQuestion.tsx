@@ -1,4 +1,3 @@
-import { useEngine2 } from '@/providers/EngineWrapper'
 import {
 	answeredQuestionsSelector,
 	configSelector,

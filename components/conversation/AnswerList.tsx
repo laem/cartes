@@ -16,9 +16,8 @@ import {
 } from 'Selectors/simulationSelectors'
 import './AnswerList.css'
 
-export default function AnswerList({ rules }) {
+export default function AnswerList({ rules, engine }) {
 	const dispatch = useDispatch()
-	const engine = useEngine2(rules)
 	const situation = useSelector(situationSelector)
 	const foldedQuestionNames = useSelector(answeredQuestionsSelector)
 	const answeredQuestionNames = Object.keys(situation)
