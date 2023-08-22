@@ -1,6 +1,5 @@
 'use client'
 import { useEngine2 } from '@/providers/EngineWrapper'
-import { getRules } from '@/providers/getRules'
 import Emoji from 'Components/Emoji'
 import { parentName, safeGetRule } from 'Components/utils/publicodesUtils'
 import { useNextQuestions } from 'Components/utils/useNextQuestion'
@@ -27,7 +26,9 @@ export default function AnswerList({ rules }) {
 		.map((dottedName) => {
 			const rule = safeGetRule(engine, dottedName)
 
-			return rule && engine.evaluate(rule)
+			const evaluated = rule && engine.evaluate(rule)
+			if (dottedName.includes('ferry')) console.log('R', evaluated)
+			return evaluated
 		})
 		.filter(Boolean)
 	const foldedStepsToDisplay = foldedQuestions
@@ -38,7 +39,8 @@ export default function AnswerList({ rules }) {
 					(dottedName) => node.dottedName === dottedName
 				) == null,
 		}))
-		.filter((node) => !node.rawNode.injecté)
+		.filter((node) => !node.rawNode?.valeur?.rawNode?.valeur?.rawNode?.injecté) // Very strange, should just be rule.rawNode
+	// Engine evaluated multiple times ? TODO
 
 	const nextSteps = useNextQuestions(engine).map((dottedName) =>
 		engine.evaluate(engine.getRule(dottedName))

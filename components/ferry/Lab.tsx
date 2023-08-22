@@ -169,6 +169,6 @@ const Lab = ({}) => {
 			<Mega ref={ref} />
 		</div>
 	)
-};
+}
 
-export default Lab;
+export default Lab
