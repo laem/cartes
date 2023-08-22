@@ -5,12 +5,15 @@ import { Inter } from 'next/font/google'
 import Script from 'next/script'
 import Providers from '@/providers/Providers'
 
+/*
 // If loading a variable font, you don't need to specify the font weight
 const inter = Inter({
 	subsets: ['latin'],
 	display: 'swap',
 	variable: '--font-inter',
 })
+className={inter.className}>
+*/
 
 export const metadata = {
 	title: 'Futureco',
@@ -29,7 +32,7 @@ export default function RootLayout({
 	children: React.ReactNode
 }) {
 	return (
-		<html lang="fr" className={inter.className}>
+		<html lang="fr" >
 			<Script
 				defer
 				strategy="lazyOnload"

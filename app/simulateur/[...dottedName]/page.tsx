@@ -50,7 +50,6 @@ export async function generateMetadata(
 
 const Page = async ({ params: { dottedName: rawDottedName } }: Props) => {
 	const dottedName = rawDottedName.join('/')
-	console.log('PARAM', rawDottedName, dottedName)
 	const decoded = utils.decodeRuleName(dottedName)
 	const rules = await getRulesFromDottedName(dottedName)
 	return (
