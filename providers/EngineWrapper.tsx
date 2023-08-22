@@ -10,7 +10,10 @@ import { useMemo } from 'react'
 import { useSelector } from 'react-redux'
 
 export const useEngine2 = (rules) => {
-	const engine = useMemo(() => new Engine(rules), [rules]),
+	const engine = useMemo(
+			() => console.log('new engine') || new Engine(rules),
+			[rules]
+		),
 		userSituation = useSelector(situationSelector),
 		configSituation = useSelector(configSituationSelector),
 		situation = useMemo(

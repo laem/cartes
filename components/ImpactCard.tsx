@@ -165,7 +165,7 @@ const ImpactCard = ({
 												: '')}
 									</div>
 									<Link css="" href="/credit-climat-personnel">
-										<img src={'/yellow-info.svg'} />
+										<img src={'/yellow-info.svg'} width="10px" height="10px" />
 									</Link>
 								</div>
 							)}

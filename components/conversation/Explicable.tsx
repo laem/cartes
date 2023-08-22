@@ -29,14 +29,16 @@ export function ExplicableRule({ dottedName }: { dottedName: DottedName }) {
 			css={`
 				margin-left: 0.3rem !important;
 				vertical-align: middle;
+				height: auto;
 				img {
 					width: 2.3rem;
+					height: auto;
 					margin-left: 0.4rem;
 					vertical-align: bottom;
 				}
 			`}
 		>
-			<img src={'/yellow-info.svg'} />
+			<img src={'/yellow-info.svg'} height="10px" width="10px" />
 		</button>
 	)
 }

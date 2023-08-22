@@ -26,10 +26,12 @@ export default function Nav({}) {
 			>
 				<Link href="/" title="Revenir à l'accueil">
 					<img
-						width="5em"
+						width="10px"
+						height="10px"
 						css={`
 							aspect-ratio: 1 / 1;
 							width: ${displayIntro ? '8em' : '5em'};
+							height: auto;
 							@media (max-width: 800px) {
 								${displayIntro ? 'display: none;' : ''}
 							}
@@ -57,6 +59,8 @@ export default function Nav({}) {
 								`}
 								src={'/logo.svg'}
 								alt=""
+								width="10px"
+								height="10px"
 							/>
 						)}
 						La catastrophe climatique n'est plus une menace lointaine, c'est une
