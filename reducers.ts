@@ -11,7 +11,7 @@ function explainedVariable(
 ): DottedName | null {
 	switch (action.type) {
 		case 'EXPLAIN_VARIABLE':
-			return action.variableName
+			return action.variableName || null
 		case 'STEP_ACTION':
 			return null
 		default:

@@ -1,13 +1,14 @@
 'use client'
+import { RootState } from '@/reducers'
 import animate from 'Components/ui/animate'
-import { Markdown } from 'Components/utils/markdown'
+import { Markdown } from 'Components/utils/ClientMarkdown'
 import { useDispatch, useSelector } from 'react-redux'
+import { LightButton } from '../UI'
 import './Aide.css'
 import mosaicQuestions from './mosaicQuestions'
 
-export default function Aide() {
+export default function Aide({ rules }) {
 	const explained = useSelector((state: RootState) => state.explainedVariable)
-	const rules = useSelector((state) => state.rules)
 
 	const dispatch = useDispatch()
 
@@ -18,7 +19,7 @@ export default function Aide() {
 	const rule =
 			rules[explained] ||
 			mosaicQuestions.find((question) => question.dottedName === explained),
-		text = rule.description
+		text = rule.rawNode.description
 
 	return (
 		<animate.fromTop>
@@ -31,11 +32,9 @@ export default function Aide() {
 					}
 				`}
 			>
-				{rule.title && <h2>{rule.title}</h2>}
+				{rule.rawNode.title && <h2>{rule.rawNode.title}</h2>}
 				<Markdown>{text}</Markdown>
-				<button onClick={stopExplaining} className="ui__ button simple">
-					Refermer
-				</button>
+				<LightButton onClick={stopExplaining}>Refermer</LightButton>
 			</div>
 		</animate.fromTop>
 	)

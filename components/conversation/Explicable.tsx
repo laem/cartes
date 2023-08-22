@@ -18,9 +18,7 @@ export function ExplicableRule({ dottedName }: { dottedName: DottedName }) {
 
 	return (
 		<button
-			className="ui__ link-button"
 			onClick={(e) => {
-				tracker.push(['trackEvent', 'help', dottedName])
 				if (explained === dottedName) {
 					return dispatch(explainVariable(null))
 				}

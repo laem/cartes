@@ -123,7 +123,7 @@ const Conversation2 = ({
 							/>
 						)}
 					</header>
-					<Aide />
+					<Aide rules={rules} />
 					<Fieldset>
 						<RuleInput
 							dottedName={currentQuestion}
