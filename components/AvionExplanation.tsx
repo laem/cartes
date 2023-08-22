@@ -1,5 +1,4 @@
 'use client'
-import { useEngine2 } from '@/providers/EngineWrapper'
 import { motion } from 'framer-motion'
 
 const AvionExplanation = ({ engine }) => {

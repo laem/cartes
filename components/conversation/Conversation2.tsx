@@ -100,6 +100,11 @@ const Conversation2 = ({
 				@media (max-width: 800px) {
 					padding: 0.4rem 0 0.4rem;
 				}
+
+				@media (min-width: 800px) {
+					margin-top: 0.6rem;
+				}
+				border-radius: 0.6rem;
 			`}
 		>
 			<div style={{ outline: 'none' }}>

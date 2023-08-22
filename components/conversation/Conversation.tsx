@@ -1,7 +1,6 @@
 'use client'
 
 import { goToQuestion, updateSituation, validateStepWithValue } from '@/actions'
-import { useEngine2 } from '@/providers/EngineWrapper'
 import { ferryQuestions } from 'Components/conversation/customQuestions/ferry'
 import { useNextQuestions } from 'Components/utils/useNextQuestion'
 import { sortBy } from 'Components/utils/utils'
@@ -29,10 +28,10 @@ export default function Conversation({
 	customEnd,
 	orderByCategories,
 	rules: rawRules,
+	engine,
 }: ConversationProps) {
 	const dispatch = useDispatch()
-	const engine = useEngine2(rawRules),
-		rules = engine.getParsedRules()
+	const rules = engine.getParsedRules()
 	const nextQuestions = useNextQuestions(engine)
 	const situation = useSelector(situationSelector)
 	const previousAnswers = useSelector(answeredQuestionsSelector)

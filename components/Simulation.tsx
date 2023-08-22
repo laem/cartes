@@ -4,7 +4,9 @@ import SearchButton from 'Components/SearchButton'
 import * as animate from 'Components/ui/animate'
 import React from 'react'
 import AnswerList from './conversation/AnswerList'
-import Questions from './Questions'
+import Conversation, {
+	ConversationProps,
+} from 'Components/conversation/Conversation'
 //TODO import { syncSearchParams } from './utils/useSearchParamsSimulationSharing'
 
 type SimulationProps = {
@@ -37,10 +39,12 @@ export default function Simulation({
 			<SearchButton invisibleButton />
 			<Animation delay={0.3}>
 				{results}
-				<Questions
+
+				<Conversation
+					engine={engine}
 					rules={rules}
-					customEnd={customEnd}
 					orderByCategories={orderByCategories}
+					customEnd={customEnd}
 					customEndMessages={customEndMessages}
 				/>
 				{explanations}

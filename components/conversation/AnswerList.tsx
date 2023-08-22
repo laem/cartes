@@ -1,5 +1,4 @@
 'use client'
-import { useEngine2 } from '@/providers/EngineWrapper'
 import Emoji from 'Components/Emoji'
 import { parentName, safeGetRule } from 'Components/utils/publicodesUtils'
 import { useNextQuestions } from 'Components/utils/useNextQuestion'
