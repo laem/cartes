@@ -75,6 +75,9 @@ export const InputStyle = styled.span`
 	input[type='date'] {
 		width: auto;
 	}
+	input[type='number'] {
+		appearance: textfield;
+	}
 	${(props) =>
 		props.suffixed &&
 		`

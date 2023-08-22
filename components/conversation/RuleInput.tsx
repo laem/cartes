@@ -12,6 +12,8 @@ import React, { Suspense } from 'react'
 import { useTranslation } from 'react-i18next'
 import { isMosaic } from './mosaicQuestions'
 import { airportsQuestions } from './customQuestions/airport'
+import { ferryQuestions } from './customQuestions/ferry'
+import TravelTimeSpanInput from './TravelTimeSpanInput'
 
 const SelectTwoAirports = dynamic(
 	() => import('Components/conversation/select/SelectTwoAirports'),
@@ -151,7 +153,6 @@ export default function RuleInput<Name extends string = DottedName>({
 			</Suspense>
 		)
 	}
-	/*
 
 	if (ferryQuestions.includes(rule.dottedName)) {
 		return (
@@ -179,7 +180,6 @@ export default function RuleInput<Name extends string = DottedName>({
 				suggestions={commonProps.suggestions}
 			/>
 		)
-		*/
 
 	/*
 		 * TODO deactivated for the nextjs migration

@@ -3,6 +3,7 @@ import { ASTNode } from 'publicodes'
 import { toPairs } from 'ramda'
 import { useState } from 'react'
 import Emoji from '../Emoji'
+import { LightButton } from '../UI'
 
 type InputSuggestionsProps = {
 	suggestions?: Record<string, ASTNode>
@@ -30,8 +31,8 @@ export default function InputSuggestions({
 		>
 			{toPairs(suggestions).map(([text, value]: [string, ASTNode]) => {
 				return (
-					<button
-						className="ui__ link-button"
+					<LightButton
+						$dashedBottom
 						key={text}
 						css={`
 							margin: 0.2rem 0.4rem !important;
@@ -47,7 +48,7 @@ export default function InputSuggestions({
 						title={'cliquez pour insérer cette suggestion'}
 					>
 						<Emoji e={text} hasText />
-					</button>
+					</LightButton>
 				)
 			})}
 		</div>

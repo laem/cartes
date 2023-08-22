@@ -2,8 +2,8 @@
 import { RuleInputProps } from 'Components/conversation/RuleInput'
 import { Rule } from 'publicodes'
 import { useEffect, useMemo, useState } from 'react'
-import styled from 'styled-components'
 import InputSuggestions from './InputSuggestions'
+import { InputStyle } from './UI'
 
 type DateInputProps = {
 	onChange: RuleInputProps['onChange']
@@ -132,17 +132,18 @@ export default function DateInput({
 					</label>
 					<label>
 						Jour +{' '}
-						<input
-							type="number"
-							value={day}
-							className="ui__"
-							min="2"
-							css={`
-								width: 2rem !important;
-								text-align: center;
-							`}
-							onChange={(e) => setDay(+e.target.value)}
-						/>
+						<InputStyle>
+							<input
+								type="number"
+								value={day}
+								min="2"
+								css={`
+									width: 2rem !important;
+									text-align: center;
+								`}
+								onChange={(e) => setDay(+e.target.value)}
+							/>
+						</InputStyle>
 					</label>
 				</fieldset>
 			</div>
@@ -150,8 +151,8 @@ export default function DateInput({
 	)
 }
 
-const DateStyledInput = styled.input`
-	font-family: 'Roboto', sans-serif;
-	text-transform: uppercase;
-	height: inherit;
-`
+const DateStyledInput = (props) => (
+	<InputStyle>
+		<input {...props} />
+	</InputStyle>
+)

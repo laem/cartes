@@ -38,8 +38,7 @@ const Page = () => {
 
 				<h2>Mini-calculateurs</h2>
 				<CardList>
-					{/*
-					<Link href="/ferry">
+					<Link href="/simulateur/transport/ferry/empreinte-du-voyage">
 						<Card>
 							<div>
 								<Emoji e="⛴️" />
@@ -47,7 +46,6 @@ const Page = () => {
 							<h3>Ferry</h3>
 						</Card>
 					</Link>
-					*/}
 					<Link href="/simulateur/transport/avion/impact">
 						<Card>
 							<div>

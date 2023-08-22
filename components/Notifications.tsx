@@ -4,8 +4,10 @@ import Engine, { RuleNode } from 'publicodes'
 import { useTranslation } from 'react-i18next'
 import { useDispatch, useSelector } from 'react-redux'
 import { RootState } from 'Reducers/rootReducer'
-import './Notifications.css'
-import { Markdown } from './utils/markdown'
+import Emoji from './Emoji'
+import { NotificationsBlock } from './NotificationStyles'
+import { Card } from './UI'
+import { Markdown } from './utils/ClientMarkdown'
 import { ScrollToElement } from './utils/Scroll'
 
 // To add a new notification to a simulator, you should create a publicodes rule
@@ -53,7 +55,6 @@ export function getCurrentNotification(
 }
 
 export default function Notifications({ currentQuestion, engine }) {
-	const { t } = useTranslation()
 	const hiddenNotifications = useSelector(
 		(state: RootState) => state.simulation?.hiddenNotifications
 	)
@@ -65,7 +66,7 @@ export default function Notifications({ currentQuestion, engine }) {
 	if (!filteredMessages) return null
 
 	return (
-		<div id="notificationsBlock">
+		<NotificationsBlock>
 			<ul style={{ margin: 0, padding: 0 }}>
 				{filteredMessages.map(({ sévérité, dottedName, description }) =>
 					hiddenNotifications?.includes(dottedName) ? null : (
@@ -81,7 +82,7 @@ export default function Notifications({ currentQuestion, engine }) {
 												: '💁🏻'
 										}
 									/>
-									<div className="notificationText ui__ card">
+									<Card className="notificationText" $fullWidth>
 										<Markdown>{description}</Markdown>
 										{sévérité !== 'invalide' && (
 											<button
@@ -97,7 +98,7 @@ export default function Notifications({ currentQuestion, engine }) {
 												×
 											</button>
 										)}
-									</div>
+									</Card>
 								</div>
 							</li>
 							<ScrollToElement />
@@ -105,6 +106,6 @@ export default function Notifications({ currentQuestion, engine }) {
 					)
 				)}
 			</ul>
-		</div>
+		</NotificationsBlock>
 	)
 }

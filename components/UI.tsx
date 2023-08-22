@@ -93,6 +93,13 @@ export const LightButton = styled.button`
 		opacity: 0.8;
 		transform: translateX(-3px);
 	}
+	${(props) =>
+		props.$dashedBottom &&
+		`
+	border-bottom: 1px dashed;
+border-radius: 0px;
+padding: .2rem;
+`}
 `
 
 export const LightCard = styled.li`
@@ -143,4 +150,7 @@ export const Card = styled.li`
 			0 1px 10px 0 rgba(var(--rgbColor), 0.12);
 		opacity: inherit !important;
 	}
+	${(props) =>
+		props.$fullWidth &&
+		`max-width: 100%; display: block; flex: unset; text-align: left `}
 `
