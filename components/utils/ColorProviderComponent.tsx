@@ -9,7 +9,6 @@ const createVariableString = (variables) => {
 			} else return ``
 		})
 		.join(';')
-	console.log('YO', result)
 	return result
 }
 
@@ -17,7 +16,5 @@ export const ColorProviderComponent = styled.div`
 	height: 100%;
 	display: flex;
 	flex-direction: column;
-	${(props) =>
-		console.log('got variables', props.$variables) ||
-		createVariableString(props.$variables)}
+	${(props) => createVariableString(props.$variables)}
 `
