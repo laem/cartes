@@ -8,7 +8,6 @@ export default function Nav({}) {
 	const pathname = usePathname()
 	const displayIntro = ['/', '/wiki', '/contribuer/'].includes(pathname)
 	if (
-		pathname === '/' ||
 		pathname.includes('/fin') ||
 		pathname.includes('instructions') ||
 		pathname.includes('/simulateur/bilan')
