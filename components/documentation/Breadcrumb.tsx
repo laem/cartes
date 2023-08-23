@@ -8,10 +8,11 @@ export const Breadcrumb = ({ rules, dottedName }) => {
 		.reverse()
 		.map((parentDottedName) => {
 			const rule = rules[parentDottedName]
+			const href = utils.encodeRuleName(parentDottedName)
 			return rule === undefined ? null : (
 				<span key={parentDottedName}>
 					{rule.icônes !== undefined && <span>{rule.icônes}</span>}
-					<Link href={utils.encodeRuleName(parentDottedName)}>
+					<Link href={'/documentation/' + href}>
 						{getTitle({ ...rule, dottedName: parentDottedName })}
 					</Link>
 

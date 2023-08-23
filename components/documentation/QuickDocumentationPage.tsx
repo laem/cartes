@@ -6,6 +6,7 @@ import {
 } from '@/components/utils/publicodesUtils'
 import { Markdown } from 'Components/utils/ClientMarkdown'
 import { capitalise0, omit } from 'Components/utils/utils'
+import { parseExpression } from 'publicodes'
 import FriendlyObjectViewer from '../FriendlyObjectViewer'
 import { Breadcrumb } from './Breadcrumb'
 import DocumentationStyle, {
