@@ -1,6 +1,7 @@
 'use client'
 import convert from 'color-convert'
 import React, { createContext, useEffect, useRef } from 'react'
+import { ColorProviderComponent } from './ColorProviderComponent'
 
 /*
 	Hex to RGB conversion:
@@ -119,16 +120,7 @@ export function ThemeColorsProvider({ color, children }: ProviderProps) {
 	return (
 		<ThemeColorsContext.Provider value={colors}>
 			{/* This div is only used to set the CSS variables */}
-			<div
-				ref={divRef}
-				css={`
-					height: 100%;
-					display: flex;
-					flex-direction: column;
-				`}
-			>
-				{children}
-			</div>
+			<ColorProviderComponent ref={divRef}>{children}</ColorProviderComponent>
 		</ThemeColorsContext.Provider>
 	)
 }
