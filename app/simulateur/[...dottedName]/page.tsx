@@ -26,9 +26,13 @@ export async function generateMetadata(
 	{ params, searchParams }: Props,
 	parent?: ResolvingMetadata
 ): Promise<Metadata> {
-	const dottedName = utils.decodeRuleName(params.dottedName.join('/')),
+	const dottedName = utils.decodeRuleName(
+			decodeURIComponent(params.dottedName.join('/'))
+		),
 		rules = await getRulesFromDottedName(dottedName),
 		rule = rules[dottedName]
+
+	console.log('yoyo', rule, dottedName)
 
 	const title = rule.exposé?.titre || rule.titre
 	const description = rule.exposé?.description || rule.description
@@ -49,7 +53,7 @@ export async function generateMetadata(
 }
 
 const Page = async ({ params: { dottedName: rawDottedName } }: Props) => {
-	const dottedName = rawDottedName.join('/')
+	const dottedName = decodeURIComponent(rawDottedName.join('/'))
 	const decoded = utils.decodeRuleName(dottedName)
 	const rules = await getRulesFromDottedName(dottedName)
 	return (
