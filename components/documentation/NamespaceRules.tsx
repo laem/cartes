@@ -1,19 +1,21 @@
-import { title as getTitle } from '@/components/utils/publicodesUtils'
+import {
+	parentName,
+	title as getTitle,
+} from '@/components/utils/publicodesUtils'
 import RuleListItem from './RuleListItem'
+import { NamespaceList } from './RuleListItemUI'
 
 export const NamespaceRules = ({ rules, dottedName }) => {
+	const parent = parentName(dottedName)
 	const namespaceRules = Object.keys(rules).filter(
-		(key) => key.includes(dottedName) && key !== dottedName
+		(key) => key.includes(parent) && key !== dottedName
 	)
+	console.log('NS', Object.keys(rules), parent)
 	if (!namespaceRules.length) return null
 	return (
 		<section>
 			<h2>Pages proches</h2>
-			<ul
-				css={`
-					list-style: none;
-				`}
-			>
+			<NamespaceList>
 				{namespaceRules.map((ruleName) => {
 					const item = {
 						...rules[ruleName],
@@ -31,7 +33,7 @@ export const NamespaceRules = ({ rules, dottedName }) => {
 						/>
 					)
 				})}
-			</ul>
+			</NamespaceList>
 		</section>
 	)
 }

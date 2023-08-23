@@ -1,6 +1,7 @@
 import { utils } from 'publicodes'
 import Link from 'next/link'
 import highlightMatches from '../highlightMatches'
+import { Item } from './RuleListItemUI'
 
 export default function RuleListItem({
 	rules,
@@ -12,23 +13,8 @@ export default function RuleListItem({
 	matches: Matches | null
 }) {
 	return (
-		<li
-			key={item.dottedName}
-			css={`
-				margin: 0.4rem 0;
-				padding: 0.6rem 0.6rem;
-				border-bottom: 1px solid var(--lighterColor);
-				small {
-					display: block;
-				}
-			`}
-		>
-			<Link
-				href={`/documentation/${utils.encodeRuleName(item.dottedName)}`}
-				css={`
-					text-decoration: none;
-				`}
-			>
+		<Item key={item.dottedName}>
+			<Link href={`/documentation/${utils.encodeRuleName(item.dottedName)}`}>
 				<small>
 					{item.espace
 						.slice(1)
@@ -48,13 +34,7 @@ export default function RuleListItem({
 						))}
 					<br />
 				</small>
-				<span
-					css={`
-						margin-right: 0.6rem;
-					`}
-				>
-					{rules[item.dottedName]?.icônes}
-				</span>
+				<span>{rules[item.dottedName]?.icônes}</span>
 				{matches
 					? highlightMatches(
 							item.title,
@@ -62,6 +42,6 @@ export default function RuleListItem({
 					  )
 					: item.title}
 			</Link>
-		</li>
+		</Item>
 	)
 }
