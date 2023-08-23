@@ -1,10 +1,11 @@
 const script = document.getElementById('futureco'),
+	path = script?.getAttribute('path') || '',
 	integratorUrl = encodeURIComponent(window.location.href.toString())
 
 const srcURL = new URL(script.src)
 const hostname = srcURL.hostname || 'futur.eco'
 
-const src = `https://${hostname}/?iframe&integratorUrl=${integratorUrl}`
+const src = `https://${hostname}/${path}?iframe&integratorUrl=${integratorUrl}`
 
 const iframe = document.createElement('iframe')
 
@@ -67,7 +68,7 @@ text-align: center
 `
 const fullscreenButton = document.createElement('button')
 fullscreenButton.innerHTML = `
-<img width="14px" height="14px" src="https://nextfu.vercel.app/images/fullscreen.svg" style="filter: invert(1); vertical-align: middle; cursor: pointer"/>
+<img width="14px" height="14px" src="https://nextfu.vercel.app/fullscreen.svg" style="filter: invert(1); vertical-align: middle; cursor: pointer"/>
 Passer en mode plein écran
 
 `
