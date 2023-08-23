@@ -32,7 +32,7 @@ export default function RootLayout({
 	children: React.ReactNode
 }) {
 	return (
-		<html lang="fr" >
+		<html lang="fr">
 			<Script
 				defer
 				strategy="lazyOnload"
@@ -40,13 +40,13 @@ export default function RootLayout({
 				src="https://plausible.io/js/script.js"
 			/>
 			<body>
-				<Providers>
-					<StyledComponentsRegistry>
+				<StyledComponentsRegistry>
+					<Providers>
 						<Nav />
 						{children}
 						<NavFooter />
-					</StyledComponentsRegistry>
-				</Providers>
+					</Providers>
+				</StyledComponentsRegistry>
 			</body>
 		</html>
 	)
