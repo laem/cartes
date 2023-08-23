@@ -1,4 +1,4 @@
-'use client';
+'use client'
 import { colorScale } from 'Components/testColors'
 import { GameDialog, LoudButton } from 'Components/UI'
 
@@ -8,8 +8,11 @@ const Page = () => {
 			<>
 				<h1>Mode d'emploi</h1>
 				<p>Répond simplement aux questions qui s'affichent.</p>
+				{/*
+				<p>La couleur t'indique ton score.</p>
+				*/}
 				<p>
-					La couleur t'indique ton score. On commence tous en{' '}
+					On commence tous en{' '}
 					<span
 						css={`
 							background: ${colorScale[0]};
@@ -27,6 +30,6 @@ const Page = () => {
 			</>
 		</GameDialog>
 	)
-};
+}
 
-export default Page;
+export default Page

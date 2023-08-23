@@ -9,7 +9,13 @@ export default function Nav({}) {
 	const displayIntro = ['/', '/wiki', '/contribuer/', '/a-propos'].includes(
 		pathname
 	)
-	if (pathname === '/' || pathname.includes('/fin')) return null
+	if (
+		pathname === '/' ||
+		pathname.includes('/fin') ||
+		pathname.includes('instructions') ||
+		pathname.includes('/simulateur/bilan')
+	)
+		return null
 	return (
 		<nav>
 			<section
