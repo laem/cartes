@@ -49,7 +49,9 @@ const CategoryView = ({ exposedRules, rules }) => {
 				<RuleList
 					{...{
 						rules: topElements.map((dottedName) =>
-							typeof dottedName === 'string' ? rules[dottedName] : dottedName
+							typeof dottedName === 'string'
+								? { dottedName, ...rules[dottedName] }
+								: dottedName
 						),
 					}}
 				/>
@@ -81,8 +83,8 @@ const RuleList = ({ rules, input }) => (
 	<RuleListStyle>
 		{rules.map((rule) => {
 			const dottedName = rule.dottedName
+			console.log(dottedName)
 
-			if (JSON.stringify(rule).includes('ferry')) console.log('YO', rule)
 			const title = ruleTitle(rule),
 				icônes = rule.icônes || rule.rawNode?.icônes,
 				units =

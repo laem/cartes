@@ -1,8 +1,8 @@
 import type { Metadata, ResolvingMetadata } from 'next'
 
+import QuickDocumentationPage from '@/components/documentation/QuickDocumentationPage'
 import { getRulesFromDottedName } from '@/providers/getRules'
 import { utils } from 'publicodes'
-import Simulateur from './Simulateur'
 
 type Props = {
 	params: { dottedName: string[] }
@@ -23,9 +23,9 @@ export async function generateMetadata(
 	const image =
 		rule.exposé?.image ||
 		'https://futur.eco' +
-			`/api/og-image?title=${rule.exposé?.titre || rule.titre}&emojis=${
-				rule.icônes
-			}`
+			`/api/og-image?title=${
+				rule.exposé?.titre || rule.titre
+			} - le calcul&emojis=${rule.icônes}`
 	return {
 		title,
 		description,
@@ -42,7 +42,7 @@ const Page = async ({ params: { dottedName: rawDottedName } }: Props) => {
 	const rules = await getRulesFromDottedName(dottedName)
 	return (
 		<main>
-			<Simulateur dottedName={decoded} rules={rules} />
+			<QuickDocumentationPage dottedName={decoded} rules={rules} />
 		</main>
 	)
 }
