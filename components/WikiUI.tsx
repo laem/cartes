@@ -29,29 +29,32 @@ export const CategoryList = styled.ul`
 		> li > h2 {
 			margin: 0.6rem auto 0.2rem;
 		}
-		li > ul {
-			display: block;
-			white-space: nowrap;
-			overflow-x: auto;
-		}
-		li > ul > li {
-			margin: 0 1rem;
-		}
 	}
 `
 
 export const RuleListStyle = styled.ul`
 	display: flex;
 	flex-wrap: wrap;
-	justify-content: space-evenly;
+	justify-content: center;
 	align-items: center;
 	li {
 		list-style-type: none;
+		margin: 0.6rem 1.6rem;
 	}
 	li > a {
 		text-decoration: none !important;
 		:hover {
 			opacity: 1 !important;
+		}
+	}
+	@media (max-width: 600px) {
+		white-space: nowrap;
+		overflow-x: auto;
+		flex-wrap: nowrap;
+		justify-content: start;
+
+		li {
+			margin: 0 0.4rem;
 		}
 	}
 `
