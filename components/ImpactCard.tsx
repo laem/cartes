@@ -8,6 +8,7 @@ import { useSelector } from 'react-redux'
 import BudgetBar, { BudgetBarStyle } from './BudgetBar'
 import * as chrono from './chrono'
 import { humanWeight } from './HumanWeight'
+import InfoIcon from './InfoIcon'
 
 const { encodeRuleName } = utils
 
@@ -165,7 +166,7 @@ const ImpactCard = ({
 												: '')}
 									</div>
 									<Link css="" href="/credit-climat-personnel">
-										<img src={'/yellow-info.svg'} width="10px" height="10px" />
+										<InfoIcon />
 									</Link>
 								</div>
 							)}

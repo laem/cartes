@@ -1,7 +1,7 @@
 'use client'
-import { useContext } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { DottedName } from 'Rules'
+import InfoIcon from '../InfoIcon'
 import './Explicable.css'
 
 const explainVariable = (variableName: DottedName | null = null) =>
@@ -38,7 +38,7 @@ export function ExplicableRule({ dottedName }: { dottedName: DottedName }) {
 				}
 			`}
 		>
-			<img src={'/yellow-info.svg'} height="10px" width="10px" />
+			<InfoIcon />
 		</button>
 	)
 }

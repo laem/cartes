@@ -1,12 +1,11 @@
+import Emoji from 'Components/Emoji'
+import animate from 'Components/ui/animate'
 import { Markdown } from 'Components/utils/ClientMarkdown'
 import { ASTNode } from 'publicodes'
 import { Rule } from 'publicodes/dist/types/rule'
 import { useCallback, useEffect, useState } from 'react'
-import { Explicable } from './Explicable'
-import { binaryQuestion, InputCommonProps, RuleInputProps } from './RuleInput'
-import animate from 'Components/ui/animate'
-import Emoji from 'Components/Emoji'
-import { Button, Card, LightButton } from '../UI'
+import InfoIcon from '../InfoIcon'
+import { Card, LightButton } from '../UI'
 import {
 	BinaryItem,
 	QuestionList,
@@ -14,8 +13,7 @@ import {
 	Variant,
 	VariantLeaf,
 } from './QuestionUI'
-import Image from 'next/image'
-import yellowInfo from '@/public/yellow-info.svg'
+import { binaryQuestion, InputCommonProps, RuleInputProps } from './RuleInput'
 
 /* Ceci est une saisie de type "radio" : l'utilisateur choisit une réponse dans
 	une liste, ou une liste de listes. Les données @choices sont un arbre de type:
@@ -182,7 +180,7 @@ export const RadioLabel = (props: RadioLabelProps) => {
 						`}
 						title="Obtenir plus d'infos"
 					>
-						<Image src={yellowInfo} alt="Icône d'information" />
+						<InfoIcon />
 					</button>
 					{isOpen && (
 						<animate.appear>
