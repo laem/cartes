@@ -1,6 +1,5 @@
-'use client'
 import convert from 'color-convert'
-import React, { createContext, useEffect, useRef } from 'react'
+import React from 'react'
 import { ColorProviderComponent } from './ColorProviderComponent'
 
 /*
@@ -98,10 +97,6 @@ const generateTheme = (themeColor?: string) => {
 	}
 }
 
-export type ThemeColors = ReturnType<typeof generateTheme>
-
-export const ThemeColorsContext = createContext<ThemeColors>(generateTheme())
-
 type ProviderProps = {
 	color?: string
 	children: React.ReactNode
@@ -109,18 +104,10 @@ type ProviderProps = {
 
 export function ThemeColorsProvider({ color, children }: ProviderProps) {
 	const colors = generateTheme(color)
-	const divRef = useRef<HTMLDivElement>(null)
-	useEffect(() => {
-		Object.entries(colors).forEach(([key, value]) => {
-			if (typeof value === 'string') {
-				divRef.current?.style.setProperty(`--${key}`, value)
-			}
-		}, colors)
-	}, [colors])
+	console.log(colors)
 	return (
-		<ThemeColorsContext.Provider value={colors}>
-			{/* This div is only used to set the CSS variables */}
-			<ColorProviderComponent ref={divRef}>{children}</ColorProviderComponent>
-		</ThemeColorsContext.Provider>
+		<ColorProviderComponent $variables={colors}>
+			{children}
+		</ColorProviderComponent>
 	)
 }
