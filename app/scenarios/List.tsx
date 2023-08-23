@@ -1,9 +1,10 @@
 'use client'
+import { LightButton } from '@/components/UI'
 import Emoji, { emoji } from 'Components/Emoji'
 import { useDispatch, useSelector } from 'react-redux'
 import scenarios from './scenarios.yaml'
 
-export default () => {
+export default function ScenariosList() {
 	const dispatch = useDispatch()
 	const scenario = useSelector((state) => state.scenario)
 
@@ -21,6 +22,7 @@ export default () => {
 		>
 			{Object.entries(scenarios).map(([nom, s]) => (
 				<li
+					key={nom}
 					className="ui__ card"
 					css={`
 						flex: 0 0 auto;
@@ -40,13 +42,6 @@ export default () => {
 							font-style: italic;
 							font-size: 90%;
 							line-height: 1.5rem;
-						}
-
-						button {
-							visibility: hidden;
-						}
-						:hover button {
-							visibility: visible;
 						}
 
 						${scenario === nom
@@ -91,15 +86,14 @@ export default () => {
 						{scenario === nom ? (
 							<div>{emoji('✅')}</div>
 						) : (
-							<button
-								className="ui__ button"
+							<LightButton
 								onClick={() => {
 									dispatch({ type: 'SET_SCENARIO', scenario: nom })
 									setTimeout(() => window.history.go(-1), 1000)
 								}}
 							>
 								Sélectionner
-							</button>
+							</LightButton>
 						)}
 					</div>
 				</li>
