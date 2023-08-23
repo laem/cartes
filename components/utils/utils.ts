@@ -1,5 +1,4 @@
 import { formatValue } from 'publicodes'
-import { useLocation } from 'react-router'
 export function isIterable<T>(obj: unknown): obj is Iterable<T> {
 	return Symbol.iterator in Object(obj)
 }
@@ -92,9 +91,6 @@ export const sortBy = (f) => (list) =>
 export const last = (array) => {
 	const [lastItem] = array.slice(-1)
 	return lastItem
-}
-export function useQuery() {
-	return new URLSearchParams(useLocation().search)
 }
 
 export function omit(keys, obj) {

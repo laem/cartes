@@ -1,6 +1,7 @@
 import { utils } from 'publicodes'
 import { capitalise0 } from './utils/utils'
 import Link from 'next/link'
+import { List, OrderedList, Wrapper } from './ObjectiViewerUI'
 
 const FriendlyObjectViewer = ({
 	data,
@@ -33,12 +34,7 @@ const FriendlyObjectViewer = ({
 
 	const isArray = Object.keys(data).every((key) => Number.isInteger(+key))
 	const Level = isArray ? (
-		<ol
-			css={`
-				padding-left: 2rem;
-				list-style-type: circle;
-			`}
-		>
+		<OrderedList>
 			{Object.entries(data).map(([key, value]) => (
 				<li key={key}>
 					<FriendlyObjectViewer
@@ -49,23 +45,14 @@ const FriendlyObjectViewer = ({
 					/>
 				</li>
 			))}
-		</ol>
+		</OrderedList>
 	) : (
-		<ul
-			css={`
-				list-style-type: none;
-				margin-bottom: 0;
-			`}
-		>
+		<List>
 			{Object.entries(data).map(([key, value]) =>
 				typeof value === 'string' || typeof value === 'number' ? (
 					<li key={key}>
 						<span>{capitaliseOrNot(key)}:</span>
-						<span
-							css={`
-								margin-left: 1rem;
-							`}
-						>
+						<span>
 							<FriendlyObjectViewer
 								data={value}
 								level={level + 1}
@@ -77,11 +64,7 @@ const FriendlyObjectViewer = ({
 				) : (
 					<li key={key}>
 						<div>{capitaliseOrNot(key)}:</div>
-						<div
-							css={`
-								margin-left: 1rem;
-							`}
-						>
+						<div>
 							<FriendlyObjectViewer
 								data={value}
 								level={level + 1}
@@ -92,21 +75,10 @@ const FriendlyObjectViewer = ({
 					</li>
 				)
 			)}
-		</ul>
+		</List>
 	)
 
-	if (level === 0)
-		return (
-			<div
-				css={`
-					border: 1px solid var(--darkColor);
-					padding: 0.2rem 1rem;
-					border-radius: 0.2rem;
-				`}
-			>
-				{Level}
-			</div>
-		)
+	if (level === 0) return <Wrapper>{Level}</Wrapper>
 	return Level
 }
 
