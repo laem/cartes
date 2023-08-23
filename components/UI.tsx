@@ -121,7 +121,7 @@ export const LightCard = styled.li`
 	}
 `
 
-export const Card = styled.li`
+export const Card = styled.div`
 	align-items: center;
 	color: inherit;
 	display: flex;

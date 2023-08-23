@@ -62,14 +62,16 @@ export const Content = styled.div`
 export const CardList = styled.ul`
 	display: flex;
 	justif-content: center;
+	list-style-type: none;
+	flex-wrap: no-wrap;
 	li {
 		min-width: 12rem;
 	}
 	@media (max-width: 800px) {
 		li {
-			min-width: 8rem;
+			min-width: 9rem;
 		}
-		width: 100%;
+		width: 100vw;
 		flex-wrap: nowrap;
 		overflow-x: auto;
 		white-space: nowrap;

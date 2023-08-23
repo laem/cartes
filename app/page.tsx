@@ -38,32 +38,38 @@ const Page = () => {
 
 				<h2>Mini-calculateurs</h2>
 				<CardList>
-					<Link href="/simulateur/transport/ferry/empreinte-du-voyage">
-						<Card>
-							<div>
-								<Emoji e="⛴️" />
-							</div>
-							<h3>Ferry</h3>
-						</Card>
-					</Link>
-					<Link href="/simulateur/transport/avion/impact">
-						<Card>
-							<div>
-								<Emoji e="✈️" />
-							</div>
-							<h3>Avion</h3>
-						</Card>
-					</Link>
+					<li>
+						<Link href="/simulateur/transport/ferry/empreinte-du-voyage">
+							<Card>
+								<div>
+									<Emoji e="⛴️" />
+								</div>
+								<h3>Ferry</h3>
+							</Card>
+						</Link>
+					</li>
 
-					<Link href="/simulateur/piscine/empreinte">
-						<Card>
-							<div>
-								<Emoji e="🏊️" />
-							</div>
-							<h3>Piscine</h3>
-						</Card>
-					</Link>
-					{false && (
+					<li>
+						<Link href="/simulateur/transport/avion/impact">
+							<Card>
+								<div>
+									<Emoji e="✈️" />
+								</div>
+								<h3>Avion</h3>
+							</Card>
+						</Link>
+					</li>
+					<li>
+						<Link href="/simulateur/piscine/empreinte">
+							<Card>
+								<div>
+									<Emoji e="🏊️" />
+								</div>
+								<h3>Piscine</h3>
+							</Card>
+						</Link>
+					</li>
+					<li>
 						<Link href="/wiki">
 							<Card>
 								<div>
@@ -72,7 +78,7 @@ const Page = () => {
 								<h3>Tout le reste</h3>
 							</Card>
 						</Link>
-					)}
+					</li>
 				</CardList>
 			</Content>
 		</Container>
