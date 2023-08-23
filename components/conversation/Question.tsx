@@ -122,7 +122,7 @@ export default function Question({
 							children ? (
 								<Variant key={dottedName}>
 									<div>{title}</div>
-									{renderChildren({ children } as Choice)}
+									<ul>{renderChildren({ children } as Choice)}</ul>
 								</Variant>
 							) : (
 								<VariantLeaf key={dottedName}>

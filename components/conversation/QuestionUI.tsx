@@ -39,13 +39,19 @@ export const VariantLeaf = styled.li`
 `
 
 export const Variant = styled.li`
-	display: inline-flex;
 	align-items: center;
 	margin-bottom: 1em;
+	width: 100%;
+	display: flex;
+	justify-content: end;
+	flex-direction: column;
+	align-items: end;
+
 	&:not(:first-child) {
 		margin-left: 0.6rem;
 	}
 	> ul {
+		display: flex;
 		border-right: 2px dashed #aaa;
 		text-align: right;
 		padding-right: 1em;
