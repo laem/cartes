@@ -6,7 +6,12 @@ import Highlighter from 'react-highlight-words'
 const { encodeRuleName } = utils
 
 import topElements from '@/app/wiki/topElements.yaml'
-import { CategoryList, RuleListStyle, WikiCard } from '@/components/WikiUI'
+import {
+	CardUnits,
+	CategoryList,
+	RuleListStyle,
+	WikiCard,
+} from '@/components/WikiUI'
 import { Card } from '@/components/UI'
 import { title as ruleTitle } from 'Components/utils/publicodesUtils'
 
@@ -82,7 +87,7 @@ const RuleList = ({ rules, input }) => (
 				icônes = rule.icônes || rule.rawNode?.icônes,
 				units =
 					rule.unités ||
-					(rule.rawNode?.exposé.type === 'question éco'
+					(rule.exposé.type === 'question éco'
 						? ['€', 'kWh', 'CO2e']
 						: ['CO2e'])
 
@@ -103,32 +108,16 @@ const RuleList = ({ rules, input }) => (
 									title
 								)}
 							</h3>
-							<span
-								css={`
-									position: absolute;
-									right: -1rem;
-									bottom: -1.1rem;
-									> span {
-										background: var(--color);
-										border-radius: 1rem;
-										padding: 0.1rem;
-										line-height: ${unitSize + 0.2}rem;
-										color: var(--darkestColor);
-										height: ${unitSize}rem;
-										width: ${unitSize}rem;
-										display: inline-block;
-										margin: 0 0.05rem;
-									}
-									> span img {
-										vertical-align: top;
-									}
-								`}
-							>
+							<CardUnits>
 								{units.map((unit) => {
 									const { text, title } = unitRepresentations[unit]
-									return <span title={title}>{text}</span>
+									return (
+										<span key={unit} title={title}>
+											{text}
+										</span>
+									)
 								})}
-							</span>
+							</CardUnits>
 						</WikiCard>
 					</Link>
 				</li>
@@ -137,13 +126,11 @@ const RuleList = ({ rules, input }) => (
 	</RuleListStyle>
 )
 
-const unitSize = 1.6
-
 const unitRepresentations = {
 	'€': { text: '€', title: 'Combien ça vous coûte ?' },
 	CO2e: { text: 'ⵛ', title: 'Combien de CO₂ₑ ça émet (empreinte climat) ?' },
 	kWh: {
-		text: <img src="/images/energy.svg" />,
+		text: <img src="/energy.svg" />,
 		title: "Combien d'énergie ça consomme ?",
 	},
 }

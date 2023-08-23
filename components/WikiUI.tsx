@@ -92,3 +92,24 @@ export const WikiCard = styled(Card)`
 	}
 	position: relative;
 `
+
+const unitSize = 1.6
+export const CardUnits = styled.span`
+	position: absolute;
+	right: -1rem;
+	bottom: -1.1rem;
+	> span {
+		background: var(--color);
+		border-radius: 1rem;
+		padding: 0.1rem;
+		line-height: ${unitSize + 0.2}rem;
+		color: var(--darkestColor);
+		height: ${unitSize}rem;
+		width: ${unitSize}rem;
+		display: inline-block;
+		margin: 0 0.05rem;
+	}
+	> span img {
+		vertical-align: top;
+	}
+`
