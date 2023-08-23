@@ -1,4 +1,4 @@
-import { Markdown } from 'Components/utils/markdown'
+import { Markdown } from 'Components/utils/ClientMarkdown'
 import { ASTNode } from 'publicodes'
 import { Rule } from 'publicodes/dist/types/rule'
 import { useCallback, useEffect, useState } from 'react'
@@ -6,7 +6,7 @@ import { Explicable } from './Explicable'
 import { binaryQuestion, InputCommonProps, RuleInputProps } from './RuleInput'
 import animate from 'Components/ui/animate'
 import Emoji from 'Components/Emoji'
-import { Button, Card } from '../UI'
+import { Button, Card, LightButton } from '../UI'
 import {
 	BinaryItem,
 	QuestionList,
@@ -14,6 +14,8 @@ import {
 	Variant,
 	VariantLeaf,
 } from './QuestionUI'
+import Image from 'next/image'
+import yellowInfo from '@/public/yellow-info.svg'
 
 /* Ceci est une saisie de type "radio" : l'utilisateur choisit une réponse dans
 	une liste, ou une liste de listes. Les données @choices sont un arbre de type:
@@ -167,21 +169,29 @@ export const RadioLabel = (props: RadioLabelProps) => {
 			<RadioLabelContent {...props} />
 			{props.description && (
 				<>
-					<Button
+					<button
 						onClick={() => setIsOpen(!isOpen)}
 						css={`
 							margin-left: 0.3rem !important;
 							vertical-align: middle;
 							font-size: 110% !important;
+							img {
+								width: 2rem;
+								height: 2rem;
+							}
 						`}
+						title="Obtenir plus d'infos"
 					>
-						<Emoji e={'ℹ️'} />
-					</Button>
+						<Image src={yellowInfo} alt="Icône d'information" />
+					</button>
 					{isOpen && (
 						<animate.appear>
 							<Card>
 								<h2>{props.label}</h2>
 								<Markdown children={props.description} />
+								<LightButton onClick={() => setIsOpen(false)}>
+									Refermer
+								</LightButton>
 							</Card>
 						</animate.appear>
 					)}
