@@ -42,8 +42,6 @@ body {
 main {
 	padding: 0 0.6rem;
 	min-height: 100%;
-	display: grid;
-	grid-template-rows: auto 1fr auto;
 	max-width: 850px;
 	margin: 0 auto;
 	width: 100%;
