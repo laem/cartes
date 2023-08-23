@@ -154,3 +154,10 @@ export const Card = styled.div`
 		props.$fullWidth &&
 		`max-width: 100%; display: block; flex: unset; text-align: left `}
 `
+
+export const InlineImage = styled.span`
+	img {
+		width: 2rem;
+		height: 2rem;
+	}
+`
