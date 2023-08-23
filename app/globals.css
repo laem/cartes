@@ -45,6 +45,12 @@ main {
 	max-width: 850px;
 	margin: 0 auto;
 	width: 100%;
+	flex-grow: 1;
+}
+footer,
+nav {
+	flex-grow: 0;
+	flex-shrink: 0;
 }
 
 a {
@@ -61,19 +67,23 @@ h1 {
 	margin-bottom: 1rem;
 	font-size: 1.9rem;
 	line-height: 3rem;
-	font-size: 300%;
-}
-@media (max-width: 800px) {
-	h1 {
-		font-size: 230%;
-		line-height: 2.2rem;
-	}
+	font-size: 200%;
 }
 h2 {
 	margin-top: 1.4rem;
 	margin-bottom: 1rem;
 	font-size: 1.4rem;
 	font-size: 160%;
+}
+@media (max-width: 800px) {
+	h1 {
+		font-size: 160%;
+		line-height: 2.2rem;
+	}
+	h2 {
+		font-size: 140%;
+		line-height: 2.2rem;
+	}
 }
 h3 {
 	margin-top: 1rem;

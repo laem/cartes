@@ -14,7 +14,7 @@ const createVariableString = (variables) => {
 
 export const ColorProviderComponent = styled.div`
 	min-height: 100%;
-	display: grid;
-	grid-template-rows: auto 1fr auto;
+	display: flex;
+	flex-direction: column;
 	${(props) => createVariableString(props.$variables)}
 `

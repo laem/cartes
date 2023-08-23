@@ -6,9 +6,7 @@ import Emoji from './Emoji'
 
 export default function Nav({}) {
 	const pathname = usePathname()
-	const displayIntro = ['/', '/wiki', '/contribuer/', '/a-propos'].includes(
-		pathname
-	)
+	const displayIntro = ['/', '/wiki', '/contribuer/'].includes(pathname)
 	if (
 		pathname === '/' ||
 		pathname.includes('/fin') ||
