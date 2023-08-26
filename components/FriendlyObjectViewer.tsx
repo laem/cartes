@@ -27,7 +27,8 @@ const FriendlyObjectViewer = ({
 			)
 		} catch (e) {
 			console.log(e)
-			return <span>{capitaliseOrNot(data)}</span>
+			const Content = <span>{capitaliseOrNot(data)}</span>
+			if (level === 0) return <Wrapper>{Content}</Wrapper>
 		}
 	}
 	if (typeof data === 'number') return <span>{data}</span>

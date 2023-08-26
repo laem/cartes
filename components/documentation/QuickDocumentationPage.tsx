@@ -107,11 +107,17 @@ export default function QuickDocumentationPage({
 				{Object.keys(yamlAttributesToDisplay).length > 0 && (
 					<div>
 						<h2>Comment cette donnée est-elle calculée ?</h2>
-
-						<FriendlyObjectViewer
-							data={yamlAttributesToDisplay}
-							context={{ dottedName, rules }}
-						/>
+						{typeof rule === 'string' ? (
+							<FriendlyObjectViewer
+								data={rule}
+								context={{ dottedName, rules }}
+							/>
+						) : (
+							<FriendlyObjectViewer
+								data={yamlAttributesToDisplay}
+								context={{ dottedName, rules }}
+							/>
+						)}
 					</div>
 				)}
 
