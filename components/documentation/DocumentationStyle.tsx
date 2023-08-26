@@ -73,3 +73,18 @@ export const QuestionRuleSectionStyle = styled.section`
 		margin: 1rem;
 	}
 `
+
+export const VariableList = styled.ul`
+	padding-left: 2rem;
+`
+
+export const RightSection = styled.section`
+	margin: 1rem 0;
+	display: block;
+	text-align: right;
+`
+
+export const QuestionStyle = styled.q`
+	font-size: 180%;
+	quotes: '«' '»' '‹' '›';
+`

@@ -267,11 +267,7 @@ export default function RuleInput<Name extends string = DottedName>({
 			inputEstimation={
 				rule.rawNode.aide &&
 				rules[
-					utils.disambiguateRuleReference(
-						rules,
-						rule.dottedName,
-						rule.rawNode.aide
-					)
+					utils.disambiguateReference(rules, rule.dottedName, rule.rawNode.aide)
 				]
 			}
 		/>

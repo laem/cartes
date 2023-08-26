@@ -6,15 +6,16 @@ import {
 } from '@/components/utils/publicodesUtils'
 import { Markdown } from 'Components/utils/ClientMarkdown'
 import { capitalise0, omit } from 'Components/utils/utils'
-import { parseExpression } from 'publicodes'
 import FriendlyObjectViewer from '../FriendlyObjectViewer'
 import { Breadcrumb } from './Breadcrumb'
 import DocumentationStyle, {
 	QuestionRuleSectionStyle,
+	QuestionStyle,
 	Wrapper,
 } from './DocumentationStyle'
 import { GithubContributionLink } from './GithubContributionLink'
 import { NamespaceRules } from './NamespaceRules'
+import OperationVariables from './OperationVariables'
 import References from './References'
 
 /*
@@ -81,14 +82,7 @@ export default function QuickDocumentationPage({
 				{rule.question && (
 					<>
 						<QuestionRuleSection title="💬 Question pour l'utilisateur">
-							<q
-								css={`
-									font-size: 120%;
-									quotes: '«' '»' '‹' '›';
-								`}
-							>
-								{rule.question}
-							</q>
+							<QuestionStyle>{rule.question}</QuestionStyle>
 						</QuestionRuleSection>
 						{rule.description && (
 							<QuestionRuleSection title="ℹ️ Aide à la saisie">
@@ -120,6 +114,11 @@ export default function QuickDocumentationPage({
 						/>
 					</div>
 				)}
+
+				<div>
+					<h2>Explorer le calcul</h2>
+					<OperationVariables {...{ rule, rules, dottedName }} />
+				</div>
 				{rule.note && (
 					<div>
 						<h2>Notes</h2>

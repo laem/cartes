@@ -10,7 +10,6 @@ export const NamespaceRules = ({ rules, dottedName }) => {
 	const namespaceRules = Object.keys(rules).filter(
 		(key) => key.includes(parent) && key !== dottedName
 	)
-	console.log('NS', Object.keys(rules), parent)
 	if (!namespaceRules.length) return null
 	return (
 		<section>
