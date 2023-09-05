@@ -37,7 +37,7 @@ export default function AnswerList({ rules, engine }) {
 					(dottedName) => node.dottedName === dottedName
 				) == null,
 		}))
-		.filter((node) => !node.rawNode?.valeur?.rawNode?.valeur?.rawNode?.injecté) // Very strange, should just be rule.rawNode
+		.filter((node) => !JSON.stringify(node).includes('"injecté":"oui"')) // Very strange, should just be rule.rawNode, instead we've got to search for a deeply nested final value, hence the stringified search
 	// Engine evaluated multiple times ? TODO
 
 	const nextSteps = useNextQuestions(engine).map((dottedName) =>
