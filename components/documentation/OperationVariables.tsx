@@ -13,11 +13,20 @@ const findSimpleOperationToLink = (expression, rules, dottedName) => {
 	if (!operation) return null
 	const [key, value] = operation
 
+	// HACK when parsed, publicode rules get the "private" attribute, mostly to "false".
+	// But here, we're using disambiguateReference on unparsed rules. Hence we need to set all of them to private: false to avoid throwing errors
+	const publicRules = Object.fromEntries(
+		Object.entries(rules).map(([k, v]) => [k, { ...v, private: false }])
+	)
+
 	const references = value
 		.filter((el) => el.variable != null)
-		.map((el) => utils.disambiguateReference(rules, dottedName, el.variable))
+		.map((el) =>
+			utils.disambiguateReference(publicRules, dottedName, el.variable)
+		)
 	return references
 }
+
 export default function OperationVariables({ rule, rules, dottedName }) {
 	const isExpression = isExpressionRule(rule)
 	if (!isExpression) return null
