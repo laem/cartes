@@ -12,6 +12,9 @@ export const List = styled.ul`
 	li {
 		margin-left: 1rem;
 	}
+	span:last-of-type {
+		margin-left: 1rem;
+	}
 `
 export const Wrapper = styled.div`
 	border: 1px solid var(--darkColor);
