@@ -111,5 +111,7 @@ export const CardUnits = styled.span`
 	}
 	> span img {
 		vertical-align: top;
+		width: auto;
+		height: auto;
 	}
 `

@@ -3,6 +3,9 @@ import Emoji from 'Components/Emoji'
 import Link from 'next/link'
 import { utils } from 'publicodes'
 import Highlighter from 'react-highlight-words'
+import Image from 'next/image'
+import energy from '@/public/energy.svg'
+
 const { encodeRuleName } = utils
 
 import topElements from '@/app/wiki/topElements.yaml'
@@ -132,7 +135,7 @@ const unitRepresentations = {
 	'€': { text: '€', title: 'Combien ça vous coûte ?' },
 	CO2e: { text: 'ⵛ', title: 'Combien de CO₂ₑ ça émet (empreinte climat) ?' },
 	kWh: {
-		text: <img src="/energy.svg" />,
+		text: <Image src={energy} alt="Symbôle représentant l'énergie en kWh" />,
 		title: "Combien d'énergie ça consomme ?",
 	},
 }
