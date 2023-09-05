@@ -2,10 +2,10 @@ import {
 	DottedName,
 	NGCRule,
 	NGCRules,
-	splitName,
+	title as ruleTitle,
 } from '@/components/utils/publicodesUtils'
 import { Markdown } from 'Components/utils/ClientMarkdown'
-import { capitalise0, omit } from 'Components/utils/utils'
+import { omit } from 'Components/utils/utils'
 import FriendlyObjectViewer from '../FriendlyObjectViewer'
 import { Breadcrumb } from './Breadcrumb'
 import DocumentationStyle, {
@@ -48,8 +48,7 @@ export default function QuickDocumentationPage({
 	const rule = rules[dottedName] || {}
 	console.log('Display QUICKDOC for ', rule)
 
-	const split = splitName(dottedName)
-	const title = rule.titre ?? capitalise0(split[splitName.length - 1])
+	const title = ruleTitle({ ...rule, dottedName })
 
 	const yamlAttributesToDisplay = omit(
 		[

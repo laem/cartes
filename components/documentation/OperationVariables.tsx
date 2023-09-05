@@ -7,9 +7,11 @@ import { VariableList } from './DocumentationStyle'
 const findSimpleOperationToLink = (expression, rules, dottedName) => {
 	const parsed = parseExpression(expression)
 	console.log('P', parsed)
-	const operation = Object.entries(parsed).find(
-		([k, v]) => v.length === 2 && v.some((el) => el.variable != null)
-	)
+	const operation = parsed.variable
+		? [null, [{ variable: parsed.variable }]] // artificially create the shape of an operation (e.g. *) with a single element
+		: Object.entries(parsed).find(
+				([k, v]) => Array.isArray(v) && v.some((el) => el.variable != null)
+		  )
 	if (!operation) return null
 	const [key, value] = operation
 

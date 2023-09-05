@@ -1,6 +1,7 @@
 import type { Metadata, ResolvingMetadata } from 'next'
 
 import QuickDocumentationPage from '@/components/documentation/QuickDocumentationPage'
+import { title as ruleTitle } from '@/components/utils/publicodesUtils'
 import { getRulesFromDottedName } from '@/providers/getRules'
 import { utils } from 'publicodes'
 
@@ -18,7 +19,7 @@ export async function generateMetadata(
 		rules = await getRulesFromDottedName(dottedName),
 		rule = rules[dottedName] || {}
 
-	const title = rule.exposé?.titre || rule.titre
+	const title = ruleTitle({ ...rule, dottedName })
 	const description = rule.exposé?.description || rule.description
 	const image =
 		rule.exposé?.image ||
