@@ -21,14 +21,14 @@ const FriendlyObjectViewer = ({
 			)
 
 			return (
-				<Link to={`/documentation/${utils.encodeRuleName(isRule)}`}>
+				<Link href={`/documentation/${utils.encodeRuleName(isRule)}`}>
 					{capitaliseOrNot(data)}
 				</Link>
 			)
 		} catch (e) {
-			console.log(e)
 			const Content = <span>{capitaliseOrNot(data)}</span>
 			if (level === 0) return <Wrapper>{Content}</Wrapper>
+			return Content
 		}
 	}
 	if (typeof data === 'number') return <span>{data}</span>
