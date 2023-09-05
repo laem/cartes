@@ -71,12 +71,14 @@ export const InputStyle = styled.span`
 
 	input[inputmode='numeric'] {
 		width: 10rem;
+		text-align: right;
 	}
 	input[type='date'] {
 		width: auto;
 	}
 	input[type='number'] {
 		appearance: textfield;
+		text-align: right;
 	}
 	${(props) =>
 		props.suffixed &&
