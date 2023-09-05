@@ -28,7 +28,7 @@ export default function OperationVariables({ rule, rules, dottedName }) {
 	return (
 		<VariableList>
 			{references.map((el) => (
-				<li>
+				<li key={el}>
 					<Link href={`/documentation/` + utils.encodeRuleName(el)}>
 						{ruleTitle({ dottedName: el, ...rules[el] })}
 					</Link>

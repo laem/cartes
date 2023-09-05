@@ -16,7 +16,7 @@ export async function generateMetadata(
 			decodeURIComponent(params.dottedName.join('/'))
 		),
 		rules = await getRulesFromDottedName(dottedName),
-		rule = rules[dottedName]
+		rule = rules[dottedName] || {}
 
 	const title = rule.exposé?.titre || rule.titre
 	const description = rule.exposé?.description || rule.description

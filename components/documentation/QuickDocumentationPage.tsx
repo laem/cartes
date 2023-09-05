@@ -45,7 +45,9 @@ export default function QuickDocumentationPage({
 	setLoadEngine: (value: boolean) => void
 	rules: NGCRules
 }) {
-	const rule = rules[dottedName]
+	const rule = rules[dottedName] || {}
+	console.log('Display QUICKDOC for ', rule)
+
 	const split = splitName(dottedName)
 	const title = rule.titre ?? capitalise0(split[splitName.length - 1])
 
@@ -79,6 +81,14 @@ export default function QuickDocumentationPage({
 						{rule.icônes ?? ''} {title}&gt;
 					</h1>
 				</header>
+				{Object.keys(rule).length < 1 && (
+					<div>
+						<p>
+							Cette règle n'est qu'un espace de nom qui contient d'autres
+							règles.
+						</p>
+					</div>
+				)}
 				{rule.question && (
 					<>
 						<QuestionRuleSection title="💬 Question pour l'utilisateur">
