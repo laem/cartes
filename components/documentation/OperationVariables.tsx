@@ -19,7 +19,10 @@ const findSimpleOperationToLink = (expression, rules, dottedName) => {
 	return references
 }
 export default function OperationVariables({ rule, rules, dottedName }) {
-	const references = findSimpleOperationToLink(rule.formule, rules, dottedName)
+	const isExpression = isExpressionRule(rule)
+	if (!isExpression) return null
+
+	const references = findSimpleOperationToLink(isExpression, rules, dottedName)
 
 	if (references == null) return null
 	return (
@@ -33,4 +36,10 @@ export default function OperationVariables({ rule, rules, dottedName }) {
 			))}
 		</VariableList>
 	)
+}
+
+export const isExpressionRule = (rule) => {
+	if (typeof rule === 'string') return rule
+	if (typeof rule.formule === 'string') return rule.formule
+	return null
 }

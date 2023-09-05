@@ -15,7 +15,7 @@ import DocumentationStyle, {
 } from './DocumentationStyle'
 import { GithubContributionLink } from './GithubContributionLink'
 import { NamespaceRules } from './NamespaceRules'
-import OperationVariables from './OperationVariables'
+import OperationVariables, { isExpressionRule } from './OperationVariables'
 import References from './References'
 
 /*
@@ -121,10 +121,12 @@ export default function QuickDocumentationPage({
 					</div>
 				)}
 
-				<div>
-					<h2>Explorer le calcul</h2>
-					<OperationVariables {...{ rule, rules, dottedName }} />
-				</div>
+				{isExpressionRule(rule) && (
+					<div>
+						<h2>Explorer le calcul</h2>
+						<OperationVariables {...{ rule, rules, dottedName }} />
+					</div>
+				)}
 				{rule.note && (
 					<div>
 						<h2>Notes</h2>
