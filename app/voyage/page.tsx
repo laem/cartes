@@ -5,7 +5,7 @@ import Image from 'next/image'
 import { Header, Sources } from './UI'
 import Emoji from '@/components/Emoji'
 
-const title = 'Quel est le vrai coût de la bagnole ?'
+const title = `Quel est le vrai coût d'une voiture ?`
 const description1 =
 		"Le coût d'un trajet en voiture est souvent réduit à celui du carburant et des péages d'autoroute. Mais qui alors paie l'achat, l'entretien, le parking, l'assurance ?",
 	description2 =
