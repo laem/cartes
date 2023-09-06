@@ -14,7 +14,7 @@ const description1 =
 export const metadata: Metadata = {
 	title,
 	description: description1 + ' ' + description2,
-	openGraph: { images: ['https://futur.eco/voitures.png'] },
+	openGraph: { images: [`https://${process.env.VERCEL_URL}/voitures.png`] },
 }
 
 const Page = () => (
