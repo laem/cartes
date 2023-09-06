@@ -49,6 +49,9 @@ const Card = ({ data: { titre, icônes, formule }, state, setState }) => {
 			css={`
 				margin: 1.4rem;
 				list-style-type: none;
+				display: flex;
+				flex-direction: column;
+				justify-content: center;
 			`}
 			key={titre}
 		>
@@ -152,9 +155,6 @@ const Card = ({ data: { titre, icônes, formule }, state, setState }) => {
 						margin: 0 auto;
 						border-radius: 0.4rem;
 					}
-					a {
-						color: var(--darkColor);
-					}
 				`}
 			>
 				<div className="button__content">
@@ -162,20 +162,20 @@ const Card = ({ data: { titre, icônes, formule }, state, setState }) => {
 
 					<p className="button__text">{titre}</p>
 					<div className="button__figure">- {formule} %</div>
-					{state[titre] && (
-						<Link
-							href={`/national/action/${encodeRuleName(titre)}`}
-							css={`
-								text-decoration: none;
-							`}
-						>
-							<small>
-								<em>explications</em>
-							</small>
-						</Link>
-					)}
 				</div>
 			</button>
+
+			<Link
+				href={`/national/action/${encodeRuleName(titre)}`}
+				css={`
+					text-decoration: none;
+					visibility: ${formule != null ? 'visible' : 'hidden'};
+					text-align: center;
+					color: var(--color);
+				`}
+			>
+				Explications
+			</Link>
 		</li>
 	)
 }
