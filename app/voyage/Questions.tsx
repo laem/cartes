@@ -30,9 +30,16 @@ export default function Questions({
 	)
 	return (
 		<ul>
-			<SimulationResults
-				{...{ ...rule, ...evaluation, engine, rules, ResultsBlock }}
-			/>
+			<div
+				css={`
+					opacity: ${answeredQuestions.length /
+					(answeredQuestions.length + nextQuestions.length)};
+				`}
+			>
+				<SimulationResults
+					{...{ ...rule, ...evaluation, engine, rules, ResultsBlock }}
+				/>
+			</div>
 			<Simulation
 				rules={rules}
 				engine={engine}

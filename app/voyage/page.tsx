@@ -3,14 +3,17 @@ import Voyage from './Voyage'
 import voitures from '@/public/voitures.svg'
 import Image from 'next/image'
 import { Header } from './UI'
+import Emoji from '@/components/Emoji'
 
 const title = 'Quel est le vrai coût de la bagnole ?'
-const description =
-	"Le coût d'un trajet en voiture ne se résume pas au carburant et aux péages d'autoroute. Qui alors paie l'achat, l'entretien, le parking, l'assurance ? On fait le point en quelques clics."
+const description1 =
+		"Le coût d'un trajet en voiture est souvent réduit à celui du carburant et des péages d'autoroute. Mais qui alors paie l'achat, l'entretien, le parking, l'assurance ?",
+	description2 =
+		"On fait le point en quelques clics avec le simulateur de référence du coût d'un trajet en voiture."
 
 export const metadata: Metadata = {
 	title,
-	description,
+	description: description1 + ' ' + description2,
 	openGraph: { images: ['https://futur.eco/voitures.png'] },
 }
 
@@ -25,7 +28,11 @@ export default () => (
 			/>
 			<div>
 				<h1>{title}</h1>
-				<p>{description}</p>
+				<p>{description1}</p>
+				<p>
+					{' '}
+					<Emoji e="🔻" /> {description2}
+				</p>
 			</div>
 		</Header>
 		<Voyage />
