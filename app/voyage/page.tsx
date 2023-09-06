@@ -60,7 +60,11 @@ const Page = () => (
 				<a href="https://www.reddit.com/r/france/comments/14aswpe/le_vrai_coût_dun_kilomètre_parcouru_en_voiture/">
 					ce modèle de calcul
 				</a>{' '}
-				publié sur reddit.com/r/france
+				publié sur reddit.com/r/france. Les résultats moyens de ce modèle de
+				calcul sont cohérents avec l'évluation du Ministère de l'économie ainsi
+				que les calculs du magazine Auto-Moto, comme expliqué sur le lien
+				reddit, qui propose également une très bonne Foire aux Questions, ainsi
+				qu'une riche discussion où de nombreux automobilistes se sont exprimés.
 			</p>
 		</Sources>
 	</main>
