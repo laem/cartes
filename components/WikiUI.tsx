@@ -91,6 +91,15 @@ export const WikiCard = styled(Card)`
 		padding: 0 0.3rem;
 	}
 	position: relative;
+	${(props) =>
+		props.$inversedColor &&
+		`
+	background: var(--lightestColor);
+	color: var(--darkColor);
+	a, h3 {color: inherit};
+	border-color: var(--darkColor);
+
+	`}
 `
 
 const unitSize = 1.6

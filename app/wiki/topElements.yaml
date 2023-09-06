@@ -1,5 +1,11 @@
 - transport . ferry . empreinte du voyage
 - transport . avion . impact
+- url: /national
+  titre: Planification écologique
+  icônes: 🇫🇷
+  inversedColor: true
+  unités:
+    - CO2e
 - piscine . empreinte
 - lave-linge . renouveler
 - plaque de cuisson . impact

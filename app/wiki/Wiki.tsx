@@ -98,7 +98,7 @@ const RuleList = ({ rules, input }) => (
 			return (
 				<li key={dottedName}>
 					<Link href={rule.url || '/simulateur/' + encodeRuleName(dottedName)}>
-						<WikiCard>
+						<WikiCard $inversedColor={rule.inversedColor}>
 							<Emoji e={icônes} />
 							<h3>
 								{input ? (
