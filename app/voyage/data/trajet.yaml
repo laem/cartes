@@ -10,7 +10,8 @@ trajet . voyageurs:
 trajet voiture:
 
 trajet voiture . coût trajet par personne:
-  titre: Coût du trajet en voiture par personne
+  titre: Coût du trajet en voiture
+  description: Coût du trajet par personne
   formule:
     variations:
       - si: trajet . voyageurs > 0

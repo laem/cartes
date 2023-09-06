@@ -182,7 +182,7 @@ const SimulateurContent = ({ objective, rules }) => {
 //
 export default SimulateurContent
 
-const EndingCongratulations = () => (
+export const EndingCongratulations = () => (
 	<h3>
 		<Emoji e="🌟" /> Vous avez complété cette simulation
 	</h3>

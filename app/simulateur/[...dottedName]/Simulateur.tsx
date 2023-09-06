@@ -3,13 +3,10 @@ import { setSimulationConfig } from '@/actions'
 import { questionEcoDimensions } from 'Components/questionEcoDimensions'
 import { parentName } from 'Components/utils/publicodesUtils'
 import { usePathname } from 'next/navigation'
-import { compose, isEmpty, symmetricDifference } from 'ramda'
 import { useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
-import configBuilder from './configBuilder'
+import configBuilder, { eqValues } from './configBuilder'
 import SimulateurContent from './SimulateurContent'
-
-const eqValues = compose(isEmpty, symmetricDifference)
 
 const Simulateur = ({ dottedName, rules }) => {
 	const dispatch = useDispatch()
