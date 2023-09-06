@@ -1,5 +1,6 @@
 import type { Metadata, ResolvingMetadata } from 'next'
 
+import { title as ruleTitle } from '@/components/utils/publicodesUtils'
 import { getRulesFromDottedName } from '@/providers/getRules'
 import { utils } from 'publicodes'
 import Simulateur from './Simulateur'
@@ -16,9 +17,9 @@ export async function generateMetadata(
 			decodeURIComponent(params.dottedName.join('/'))
 		),
 		rules = await getRulesFromDottedName(dottedName),
-		rule = rules[dottedName]
+		rule = rules[dottedName] || {}
 
-	const title = rule.exposé?.titre || rule.titre
+	const title = rule.exposé?.titre || ruleTitle({ ...rule, dottedName })
 	const description = rule.exposé?.description || rule.description
 	const image =
 		rule.exposé?.image ||

@@ -19,7 +19,7 @@ export async function generateMetadata(
 		rules = await getRulesFromDottedName(dottedName),
 		rule = rules[dottedName] || {}
 
-	const title = ruleTitle({ ...rule, dottedName })
+	const title = rule.exposé?.titre || ruleTitle({ ...rule, dottedName })
 	const description = rule.exposé?.description || rule.description
 	const image =
 		rule.exposé?.image ||
