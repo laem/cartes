@@ -13,6 +13,9 @@ export default function Nav({}) {
 		pathname.includes('/simulateur/bilan')
 	)
 		return null
+
+	const displayScenariosLink =
+		!pathname.includes('/scenarios') && !pathname.includes('/national')
 	return (
 		<nav>
 			<section
@@ -70,7 +73,7 @@ export default function Nav({}) {
 						actualité.&nbsp;<Link href="/a-propos">En savoir plus</Link>.
 					</p>
 				)}
-				{!pathname.includes('/scenarios') && (
+				{displayScenariosLink && (
 					<div
 						css={`
 							img {

@@ -1,5 +1,6 @@
 import { Metadata } from 'next'
 import InteractiveGrid from './InteractiveGrid'
+import { Main } from './UI'
 
 const title = "Le tableau de bord d'une République verte",
 	description =
@@ -18,12 +19,12 @@ export const metadata: Metadata = {
 
 export default function Home() {
 	return (
-		<main>
+		<Main>
 			<header>
 				<h1>{title}</h1>
 				<p>{description}</p>
 			</header>
 			<InteractiveGrid />
-		</main>
+		</Main>
 	)
 }
