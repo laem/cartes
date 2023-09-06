@@ -76,12 +76,12 @@ const Card = ({ data: { titre, icônes, formule }, state, setState }) => {
 					background: #f4f5f6;
 					border: 4px solid #888888;
 					${state[titre] &&
-					`border: 4px solid green; 
-				background: #daede0;`}
+					`border: 6px solid var(--color); 
+				background: var(--lightestColor);`}
 					outline: none;
 					border-radius: 40px;
-					box-shadow: -6px -20px 35px #ffffff, -6px -10px 15px #ffffff,
-						-20px 0px 30px #ffffff, 6px 20px 25px rgba(0, 0, 0, 0.2);
+					box-shadow: -6px -20px 35px #ffffff20, -6px -10px 15px #ffffff20,
+						-20px 0px 30px #ffffff20, 6px 20px 25px rgba(0, 0, 0, 0.2);
 					transition: 0.13s ease-in-out;
 					cursor: pointer;
 					&:active {
@@ -150,6 +150,9 @@ const Card = ({ data: { titre, icônes, formule }, state, setState }) => {
 						color: white;
 						margin: 0 auto;
 						border-radius: 0.4rem;
+					}
+					a {
+						color: var(--darkColor);
 					}
 				`}
 			>
