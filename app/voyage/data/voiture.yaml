@@ -1,0 +1,113 @@
+voiture:
+
+voiture . coût au km:
+  formule:
+    variations:
+      - si: motorisation = 'essence'
+        alors: trajet voiture . prix carburant * motorisation . essence . consommation / 100
+      - si: motorisation = 'diesel'
+        alors: trajet voiture . prix carburant * motorisation . diesel . consommation / 100
+      - si: motorisation = 'biocarburant'
+        alors: trajet voiture . prix carburant * motorisation . biocarburant . consommation / 100
+      - si: motorisation = 'hybride'
+        alors: trajet voiture . prix carburant * motorisation . hybride . consommation / 100
+      - si: motorisation = 'électrique'
+        alors: trajet voiture . prix électricité * motorisation . électrique . consommation / 100
+  unité: l / km
+
+voiture . motorisation:
+  question: Quelle est la motorisation du véhicule ?
+  par défaut: "'diesel'"
+  formule:
+    une possibilité:
+      choix obligatoire: oui
+      possibilités:
+        - électrique
+        - hybride
+        - essence
+        - diesel
+        - biocarburant
+
+voiture . motorisation . électrique:
+voiture . motorisation . hybride:
+voiture . motorisation . essence:
+voiture . motorisation . diesel:
+voiture . motorisation . biocarburant:
+  titre: Biocarburant E85
+
+voiture . motorisation . électrique . consommation:
+  question: Quelle est la consommation de la voiture ?
+  par défaut: 15
+  unité: kWh / 100 km
+
+voiture . motorisation . hybride . consommation:
+  question: Quelle est la consommation de la voiture ?
+  par défaut: 4.5
+  unité: l / 100 km
+  note: source à trouver
+
+voiture . motorisation . essence . consommation:
+  question: Quelle est la consommation de la voiture ?
+  par défaut: 6.8
+  unité: l / 100 km
+  note: https://carlabelling.ademe.fr/chiffrescles/r/evolutionConsoMoyenne
+
+voiture . motorisation . diesel . consommation:
+  question: Quelle est la consommation de la voiture ?
+  par défaut: 5
+  unité: l / 100 km
+  note: https://carlabelling.ademe.fr/chiffrescles/r/evolutionConsoMoyenne
+
+voiture . motorisation . biocarburant . consommation:
+  question: Quelle est la consommation de la voiture ?
+  par défaut: 6.8 * 1.25
+  unité: l / 100 km
+  note: +25% par rapport à l'essence
+
+voiture . prix d'achat:
+  question: Quel est le prix d'achat de la voiture ?
+  par défaut: 15000€
+
+voiture . durée de vie:
+  note: source à trouver (durée de vie moyenne d'une voiture)
+  formule: 20
+  unité: an
+
+voiture . km annuels:
+  titre: Kilomètres annuels
+  formule: km prévisionnels / durée de vie
+
+voiture . km prévisionnels:
+  titre: Kilomètres prévisionnels sur toute la durée de vie
+  note: source à trouver
+  formule: 250000 km
+
+voiture . couts fixes au km:
+  formule: couts fixes / km annuels
+
+voiture . couts fixes:
+  titre: Coûts fixe annuels voiture
+  formule:
+    somme:
+      - achat amorti
+      - assurance
+      - entretien
+      - parking et pv
+
+voiture . couts fixes . achat amorti:
+  formule: prix d'achat / durée de vie
+
+voiture . couts fixes . assurance:
+  question: Quel est le coût annuel de l'assurance ?
+  note: Aide à la saisie mensuelle ?
+  par défaut: 600€
+
+voiture . couts fixes . entretien:
+  question: Quel est le coût annuel d'entretien de la voiture ?
+  descritpion: |
+    Le Mag de l'auto nous dit entre 840 et 1000€ selon les modèles pour les "petits" rouleurs.
+  par défaut: 900€
+
+voiture . couts fixes . parking et pv:
+  question: Quel est le coût annuel de l'ensemble des frais type parking, contravention ?
+  par défaut: 100€

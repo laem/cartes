@@ -8,14 +8,14 @@ export const Header = styled.header`
 	}
 	display: flex;
 	flex-wrap: wrap;
-	justify-content: center;
+	justify-content: space-evenly;
 	align-items: center;
 	> div {
 		margin-left: 2rem;
-		max-width: 700px;
+		max-width: 600px;
 	}
 	img {
-		width: 6vw;
+		max-width: 6vw;
 		height: auto;
 		border-radius: 0.6rem;
 	}

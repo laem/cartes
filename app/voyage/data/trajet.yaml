@@ -1,0 +1,78 @@
+# Temps, €, carbone
+
+trajet:
+
+trajet . voyageurs:
+  injecté: oui
+  question: Combien de voyageurs ?
+  par défaut: 1
+
+trajet voiture:
+
+trajet voiture . coût trajet par personne:
+  titre: Coût du trajet en voiture par personne
+  formule:
+    variations:
+      - si: trajet . voyageurs > 0
+        alors: coût trajet / trajet . voyageurs
+      - sinon: coût trajet
+
+trajet voiture . coût trajet:
+  titre: Coût du trajet en voiture
+  formule:
+    somme:
+      - voiture . coût au km * distance
+      - coûts fixes
+      - péages
+    unité: €
+
+trajet voiture . prix carburant:
+  question: Quel est le prix du carburant ?
+  par défaut:
+    variations:
+      - si: voiture . motorisation = 'essence'
+        alors: 1.90
+      - si: voiture . motorisation = 'diesel'
+        alors: 1.80
+      - si: voiture . motorisation = 'biocarburant'
+        alors: 1.15
+      - si: voiture . motorisation = 'hybride'
+        alors: 1.80
+  note: |
+    https://prix-carburants-info.fr
+    Pour l'hybride, diesel.
+  unité: € / l
+
+trajet voiture . prix électricité:
+  question: Quel est le prix de l'électricité ?
+  par défaut: 0.206
+  unité: € / kWh
+
+trajet voiture . coûts fixes:
+  titre: Coûts fixes ramenés au trajet
+  formule: voiture . couts fixes au km * distance
+
+trajet voiture . distance:
+  titre: Distance trajet en voiture
+  question: Quelle est la distance du trajet ?
+  description: Par défaut Nantes-Orléans
+  par défaut: 335 km
+
+trajet voiture . péages:
+  titre: Prix péages
+  formule: 30 €
+
+trajet train:
+
+trajet train . coût trajet total:
+  titre: Coût du trajet en train par personne
+  formule: coût trajet * trajet . voyageurs
+
+trajet train . coût trajet:
+  formule: distance * train . prix au km * train . réduction
+
+trajet train . distance:
+  titre: Distance trajet
+  question: Quelle est la distance du trajet ?
+  description: Par défaut Nantes-Orléans
+  par défaut: 270 km
