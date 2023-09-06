@@ -3,9 +3,9 @@
 trajet:
 
 trajet . voyageurs:
-  injecté: oui
   question: Combien de voyageurs ?
   par défaut: 1
+  unité: voyageurs
 
 trajet voiture:
 
