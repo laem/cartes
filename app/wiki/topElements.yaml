@@ -1,5 +1,10 @@
 - transport . ferry . empreinte du voyage
 - transport . avion . impact
+- url: /voyage
+  titre: Coût d'un trajet en voiture
+  icônes: 🚗
+  unités:
+    - €
 - url: /national
   titre: Planification écologique
   icônes: 🇫🇷
