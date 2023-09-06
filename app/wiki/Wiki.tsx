@@ -86,7 +86,6 @@ const RuleList = ({ rules, input }) => (
 	<RuleListStyle>
 		{rules.map((rule) => {
 			const dottedName = rule.dottedName
-			console.log(dottedName)
 
 			const title = ruleTitle(rule),
 				icônes = rule.icônes || rule.rawNode?.icônes,
