@@ -13,6 +13,8 @@ const configBuilder = (objectifs, decoded) => ({
 		prioritaires:
 			decoded === 'transport . ferry . empreinte du voyage'
 				? ['transport . ferry . distance aller . orthodromique']
+				: decoded === 'trajet voiture . coût trajet par personne'
+				? ['trajet voiture . distance']
 				: null,
 	},
 })
