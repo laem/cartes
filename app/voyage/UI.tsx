@@ -20,3 +20,11 @@ export const Header = styled.header`
 		border-radius: 0.6rem;
 	}
 `
+
+export const Sources = styled.aside`
+	margin-top: 6rem;
+	hr {
+		opacity: 0.3;
+		color: var(--lightColor);
+	}
+`
