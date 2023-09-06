@@ -6,7 +6,7 @@ import { Header } from './UI'
 
 const title = 'Quel est le vrai coût de la bagnole ?'
 const description =
-	"Le coût d'un trajet en voiture ne se résume pas au carburant et aux péages d'autoroute. Qui alors paie l'achat, l'entretien, le parking, l'assurance ?"
+	"Le coût d'un trajet en voiture ne se résume pas au carburant et aux péages d'autoroute. Qui alors paie l'achat, l'entretien, le parking, l'assurance ? On fait le point en quelques clics."
 
 export const metadata: Metadata = {
 	title,

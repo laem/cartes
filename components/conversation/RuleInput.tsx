@@ -15,8 +15,8 @@ import { airportsQuestions } from './customQuestions/airport'
 import { ferryQuestions } from './customQuestions/ferry'
 import TravelTimeSpanInput from './TravelTimeSpanInput'
 
-const SelectTwoAirports = dynamic(
-	() => import('Components/conversation/select/SelectTwoAirports'),
+const VoyageInput = dynamic(
+	() => import('Components/conversation/VoyageInput'),
 
 	{
 		loading: () => <p>Chargement des aéroports...</p>,
@@ -139,7 +139,7 @@ export default function RuleInput<Name extends string = DottedName>({
 	if (airportsQuestions.includes(rule.dottedName)) {
 		return (
 			<Suspense fallback={<div>Chargement des cartes ...</div>}>
-				<SelectTwoAirports
+				<VoyageInput
 					{...{
 						...commonProps,
 						placeholder: 'Aéroport ou ville ',
@@ -157,7 +157,7 @@ export default function RuleInput<Name extends string = DottedName>({
 	if (ferryQuestions.includes(rule.dottedName)) {
 		return (
 			<Suspense fallback={<div>Chargement des cartes ...</div>}>
-				<SelectTwoAirports
+				<VoyageInput
 					{...{
 						...commonProps,
 						placeholder: 'Port ou ville',

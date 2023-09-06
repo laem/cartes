@@ -4,18 +4,18 @@ import { motion } from 'framer-motion'
 import GreatCircle from 'great-circle'
 import React, { useEffect, useState } from 'react'
 import styled from 'styled-components'
-import Emoji from '../../Emoji'
-import { InputStyle } from '../UI'
+import Emoji from 'Components/Emoji'
+import { InputStyle } from './UI'
 import GeoInputOptions from './GeoInputOptions'
 
-export default function SelectTwoAirports({
+export default function VoyageInput({
 	onChange,
 	placeholder,
 	db,
 	rulesPath,
 	fromIcon = '',
 	toIcon = '',
-	displayImage,
+	displayImage = true,
 	updateSituation,
 }) {
 	const [state, setState] = useState({
