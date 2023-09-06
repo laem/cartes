@@ -53,9 +53,14 @@ trajet voiture . coûts fixes:
   titre: Coûts fixes ramenés au trajet
   formule: voiture . couts fixes au km * distance
 
+trajet voiture . départ:
+  note: Variable remplie par une interface de recherche.
+trajet voiture . arrivée:
+  note: Variable remplie par une interface de recherche.
+
 trajet voiture . distance:
   titre: Distance trajet en voiture
-  question: Quelle est la distance du trajet ?
+  question: Quel est votre trajet ?
   description: Par défaut Nantes-Orléans
   par défaut: 335 km
 

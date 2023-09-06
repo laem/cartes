@@ -14,6 +14,7 @@ import { isMosaic } from './mosaicQuestions'
 import { airportsQuestions } from './customQuestions/airport'
 import { ferryQuestions } from './customQuestions/ferry'
 import TravelTimeSpanInput from './TravelTimeSpanInput'
+import { voyageQuestions } from './customQuestions/voyage'
 
 const VoyageInput = dynamic(
 	() => import('Components/conversation/VoyageInput'),
@@ -138,7 +139,7 @@ export default function RuleInput<Name extends string = DottedName>({
 
 	if (airportsQuestions.includes(rule.dottedName)) {
 		return (
-			<Suspense fallback={<div>Chargement des cartes ...</div>}>
+			<Suspense fallback={<div>Chargement des aéroports ...</div>}>
 				<VoyageInput
 					{...{
 						...commonProps,
@@ -156,7 +157,7 @@ export default function RuleInput<Name extends string = DottedName>({
 
 	if (ferryQuestions.includes(rule.dottedName)) {
 		return (
-			<Suspense fallback={<div>Chargement des cartes ...</div>}>
+			<Suspense fallback={<div>Chargement du globe ...</div>}>
 				<VoyageInput
 					{...{
 						...commonProps,
@@ -164,6 +165,22 @@ export default function RuleInput<Name extends string = DottedName>({
 						db: 'osm',
 						rulesPath: 'transport . ferry',
 						displayImage: 'boat',
+					}}
+				/>
+			</Suspense>
+		)
+	}
+
+	if (voyageQuestions.includes(rule.dottedName)) {
+		return (
+			<Suspense fallback={<div>Chargement du globe ...</div>}>
+				<VoyageInput
+					{...{
+						...commonProps,
+						placeholder: 'Ville',
+						db: 'osm',
+						rulesPath: 'trajet voiture',
+						displayImage: true,
 					}}
 				/>
 			</Suspense>
