@@ -14,7 +14,6 @@ html,
 body {
 	font-family: Helvetica, Arial, sans-serif;
 	max-width: 100vw;
-	overflow-x: hidden;
 	height: 100%;
 	font-size: 100%;
 	line-height: 1.7rem;
