@@ -61,7 +61,7 @@ trajet voiture . arrivée:
 trajet voiture . distance:
   titre: Distance trajet en voiture
   question: Quel est votre trajet ?
-  description: Par défaut Nantes-Orléans
+  description: Saisissez une ville de départ et une ville de destination.
   par défaut: 335 km
 
 trajet voiture . péages:
