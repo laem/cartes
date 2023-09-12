@@ -24,9 +24,11 @@ taxes:
       - TICPE
 
 TVA sur TICPE:
-  formule: 20% * TICPE
+  formule: 0.2 * TICPE
 
-TICPE: par hectolitre / 100
+TICPE:
+  formule: par hectolitre / 100
+  unité: €/l
 
 TICPE . par hectolitre:
   formule:
@@ -50,7 +52,7 @@ TICPE . par hectolitre:
 
 TVA:
   titre: TVA sur le pétrole à la pompe
-  formule: 20% * base
+  formule: 0.2 * base
   note: Exception en Corse à 13%.
 
 TVA . base: pétrole brut + raffinage + distribution
@@ -70,20 +72,24 @@ taux de change dollars par euro:
   formule: 1.07 $/€
   note: 12 septembre 2023, source https://www.banque-france.fr/statistiques/taux-et-cours/les-taux-de-change-salle-des-marches/parites-moyenne-mensuelle
 
-pétrole brut: brent
+pétrole brut:
+  description: |
+    Pour voir la provenance de notre pétrole brut : https://www.insee.fr/fr/statistiques/2119697
+  formule: brent
 
 brent: baril de brent / volume baril
 volume baril:
-  formule: 159 l
+  formule: 159 l/baril
   note: https://fr.wikipedia.org/wiki/Baril
 
 baril de brent: dollars / taux de change dollars par euro
 
 baril de brent . dollars:
   description: |
-    Le Brent est le le pétrole brut de la mer du Nord, il est traité à l’ICE (InterContinental Exchange) de la bourse de Londres. 
+    Le Brent est le pétrole brut de la mer du Nord, il est traité à l’ICE (InterContinental Exchange) de la bourse de Londres. 
     C'est surtout le brut de référence sur le marché européen. 
     Le marché étant largement mondialisé, le prix du pétrole de la mer du Nord dépendant des autres pétroles.
+  question: Quel est le prix en dollars du baril de Brent ?
   formule: 97.13 $/baril
   note: |
     Source pour le prix https://www.ecologie.gouv.fr/prix-des-produits-petroliers
