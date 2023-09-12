@@ -5,7 +5,7 @@ import {
 import RuleListItem from './RuleListItem'
 import { NamespaceList } from './RuleListItemUI'
 
-export const NamespaceRules = ({ rules, dottedName }) => {
+export const NamespaceRules = ({ rules, dottedName, pathPrefix }) => {
 	const parent = parentName(dottedName)
 	const namespaceRules = Object.keys(rules).filter(
 		(key) => key.includes(parent) && key !== dottedName
@@ -25,6 +25,7 @@ export const NamespaceRules = ({ rules, dottedName }) => {
 					return (
 						<RuleListItem
 							key={item.dottedName}
+							pathPrefix={pathPrefix}
 							{...{
 								rules,
 								item: titledItem,

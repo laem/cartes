@@ -4,6 +4,7 @@ import Link from 'next/link'
 import { List, OrderedList, Wrapper } from './ObjectiViewerUI'
 
 const FriendlyObjectViewer = ({
+	pathPrefix,
 	data,
 	level = 0,
 	context,
@@ -21,7 +22,9 @@ const FriendlyObjectViewer = ({
 			)
 
 			return (
-				<Link href={`/documentation/${utils.encodeRuleName(isRule)}`}>
+				<Link
+					href={pathPrefix + `/documentation/${utils.encodeRuleName(isRule)}`}
+				>
 					{capitaliseOrNot(data)}
 				</Link>
 			)
@@ -43,6 +46,7 @@ const FriendlyObjectViewer = ({
 						level={level + 1}
 						context={context}
 						options={options}
+						pathPrefix={pathPrefix}
 					/>
 				</li>
 			))}
@@ -59,6 +63,7 @@ const FriendlyObjectViewer = ({
 								level={level + 1}
 								context={context}
 								options={options}
+								pathPrefix={pathPrefix}
 							/>
 						</span>
 					</li>
@@ -70,6 +75,7 @@ const FriendlyObjectViewer = ({
 								data={value}
 								level={level + 1}
 								context={context}
+								pathPrefix={pathPrefix}
 								options={options}
 							/>
 						</div>

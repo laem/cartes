@@ -39,6 +39,7 @@ export default function QuickDocumentationPage({
 	dottedName,
 	setLoadEngine,
 	rules,
+	pathPrefix = '',
 }: {
 	rule: NGCRule
 	dottedName: DottedName
@@ -75,7 +76,11 @@ export default function QuickDocumentationPage({
 		<Wrapper>
 			<DocumentationStyle>
 				<header id="shareImage">
-					<Breadcrumb dottedName={dottedName} rules={rules} />
+					<Breadcrumb
+						dottedName={dottedName}
+						rules={rules}
+						pathPrefix={pathPrefix}
+					/>
 					<h1>
 						{rule.icônes ?? ''} {title}&gt;
 					</h1>
@@ -120,11 +125,13 @@ export default function QuickDocumentationPage({
 							<FriendlyObjectViewer
 								data={rule}
 								context={{ dottedName, rules }}
+								pathPrefix={pathPrefix}
 							/>
 						) : (
 							<FriendlyObjectViewer
 								data={yamlAttributesToDisplay}
 								context={{ dottedName, rules }}
+								pathPrefix={pathPrefix}
 							/>
 						)}
 					</div>
@@ -133,7 +140,10 @@ export default function QuickDocumentationPage({
 				{isExpressionRule(rule) && (
 					<div>
 						<h2>Explorer le calcul</h2>
-						<OperationVariables {...{ rule, rules, dottedName }} />
+						<OperationVariables
+							{...{ rule, rules, dottedName }}
+							pathPrefix={pathPrefix}
+						/>
 					</div>
 				)}
 				{rule.note && (
@@ -150,7 +160,7 @@ export default function QuickDocumentationPage({
 				)}
 
 				<GithubContributionLink dottedName={dottedName} />
-				<NamespaceRules {...{ rules, dottedName }} />
+				<NamespaceRules {...{ rules, dottedName }} pathPrefix={pathPrefix} />
 			</DocumentationStyle>
 		</Wrapper>
 	)

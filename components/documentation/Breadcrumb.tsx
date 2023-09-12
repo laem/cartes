@@ -2,7 +2,7 @@ import { title as getTitle } from '@/components/utils/publicodesUtils'
 import Link from 'next/link'
 import { utils } from 'publicodes'
 
-export const Breadcrumb = ({ rules, dottedName }) => {
+export const Breadcrumb = ({ rules, dottedName, pathPrefix }) => {
 	const elements = utils
 		.ruleParents(dottedName)
 		.reverse()
@@ -13,7 +13,7 @@ export const Breadcrumb = ({ rules, dottedName }) => {
 			return rule == undefined ? null : (
 				<span key={parentDottedName}>
 					{rule.icônes !== undefined && <span>{rule.icônes}</span>}
-					<Link href={'/documentation/' + href}>
+					<Link href={pathPrefix + '/documentation/' + href}>
 						{getTitle({ ...rule, dottedName: parentDottedName })}
 					</Link>
 

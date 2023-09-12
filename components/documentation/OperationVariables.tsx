@@ -32,7 +32,12 @@ const findSimpleOperationToLink = (expression, rules, dottedName) => {
 	return references
 }
 
-export default function OperationVariables({ rule, rules, dottedName }) {
+export default function OperationVariables({
+	rule,
+	rules,
+	dottedName,
+	pathPrefix,
+}) {
 	const isExpression = isExpressionRule(rule)
 	if (!isExpression) return null
 
@@ -43,7 +48,9 @@ export default function OperationVariables({ rule, rules, dottedName }) {
 		<VariableList>
 			{references.map((el) => (
 				<li key={el}>
-					<Link href={`/documentation/` + utils.encodeRuleName(el)}>
+					<Link
+						href={pathPrefix + `/documentation/` + utils.encodeRuleName(el)}
+					>
 						{ruleTitle({ dottedName: el, ...rules[el] })}
 					</Link>
 				</li>
