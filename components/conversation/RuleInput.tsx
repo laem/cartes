@@ -1,20 +1,22 @@
 'use client'
 
-import dynamic from 'next/dynamic'
 import { useEngine2 } from '@/providers/EngineWrapper'
 import Input from 'Components/conversation/Input'
 import Question, { Choice } from 'Components/conversation/Question'
 import ToggleSwitch from 'Components/ui/ToggleSwitch'
 import { parentName } from 'Components/utils/publicodesUtils'
+import dynamic from 'next/dynamic'
 import { ASTNode, EvaluatedRule, reduceAST, utils } from 'publicodes'
 import { Evaluation } from 'publicodes/dist/types/AST/types'
 import React, { Suspense } from 'react'
 import { useTranslation } from 'react-i18next'
+import {
+	airportsQuestions,
+	ferryQuestions,
+	voyageQuestions,
+} from './customQuestions/voyageInput'
 import { isMosaic } from './mosaicQuestions'
-import { airportsQuestions } from './customQuestions/airport'
-import { ferryQuestions } from './customQuestions/ferry'
 import TravelTimeSpanInput from './TravelTimeSpanInput'
-import { voyageQuestions } from './customQuestions/voyage'
 
 const VoyageInput = dynamic(
 	() => import('Components/conversation/VoyageInput'),

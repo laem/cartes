@@ -227,7 +227,7 @@ const Answer = ({ rule, language }) => {
 			`}
 		>
 			{formatValue(rule, { language })}
-			{rule.passedQuestion && emoji(' 🤷🏻')}
+			{rule.passedQuestion && <Emoji e={' 🤷🏻'} />}
 		</span>
 	)
 	return (

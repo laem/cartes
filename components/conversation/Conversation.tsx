@@ -1,7 +1,6 @@
 'use client'
 
 import { goToQuestion, updateSituation, validateStepWithValue } from '@/actions'
-import { ferryQuestions } from 'Components/conversation/customQuestions/ferry'
 import { useNextQuestions } from 'Components/utils/useNextQuestion'
 import { sortBy } from 'Components/utils/utils'
 import React, { useEffect } from 'react'
@@ -14,7 +13,11 @@ import { objectifsSelector } from '../../selectors/simulationSelectors'
 import useKeypress from '../utils/useKeyPress'
 import './conversation.css'
 import Conversation2 from './Conversation2'
-import { airportsQuestions } from './customQuestions/airport'
+import {
+	airportsQuestions,
+	ferryQuestions,
+	voyageQuestions,
+} from './customQuestions/voyageInput'
 import { isMosaic } from './mosaicQuestions'
 
 export type ConversationProps = {
@@ -60,6 +63,7 @@ export default function Conversation({
 			!previousSimulation &&
 			currentQuestion !== unfoldedStep
 		) {
+			console.log('gotoq', currentQuestion)
 			dispatch(goToQuestion(currentQuestion))
 		}
 	}, [dispatch, currentQuestion, previousAnswers, unfoldedStep, objectifs])
@@ -73,6 +77,8 @@ export default function Conversation({
 		? airportsQuestions
 		: ferryQuestions.includes(currentQuestion)
 		? ferryQuestions
+		: voyageQuestions.includes(currentQuestion)
+		? voyageQuestions
 		: mosaicQuestion
 		? Object.entries(rules)
 				.filter(([dottedName, value]) =>
@@ -122,6 +128,7 @@ export default function Conversation({
 				submit,
 				situation,
 				unfoldedStep,
+				setDefault,
 			}}
 		/>
 	)
