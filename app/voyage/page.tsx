@@ -4,6 +4,7 @@ import voitures from '@/public/voitures.svg'
 import Image from 'next/image'
 import { Header, Sources } from './UI'
 import Emoji from '@/components/Emoji'
+import Explanation from './Explanation.mdx'
 
 const title = `Quel est le vrai coût d'une voiture ?`
 const description1 =
@@ -37,35 +38,7 @@ const Page = () => (
 		</Header>
 		<Voyage />
 		<Sources>
-			<hr />
-			<h2>Sources</h2>
-
-			<p>
-				Le modèle de calcul exposé ici est entièrement open source, disponible
-				en ligne{' '}
-				<a href="https://github.com/laem/futureco/blob/master/app/voyage/data">
-					sur la plateforme collaborative Github
-				</a>
-				.
-			</p>
-			<p>
-				Ce simulateur est basé sur{' '}
-				<a href="https://github.com/Clemog/train-voiture/">
-					un travail initial de Clément Auger
-				</a>
-				.
-			</p>
-			<p>
-				TODO pas encore fait il est renforcé par{' '}
-				<a href="https://www.reddit.com/r/france/comments/14aswpe/le_vrai_coût_dun_kilomètre_parcouru_en_voiture/">
-					ce modèle de calcul
-				</a>{' '}
-				publié sur reddit.com/r/france. Les résultats moyens de ce modèle de
-				calcul sont cohérents avec l'évluation du Ministère de l'économie ainsi
-				que les calculs du magazine Auto-Moto, comme expliqué sur le lien
-				reddit, qui propose également une très bonne Foire aux Questions, ainsi
-				qu'une riche discussion où de nombreux automobilistes se sont exprimés.
-			</p>
+			<Explanation />
 		</Sources>
 	</main>
 )
