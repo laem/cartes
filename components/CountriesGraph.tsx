@@ -9,7 +9,7 @@ const CountriesGraph = ({}) => {
 			<ul
 				css={`
 					padding-left: 0;
-					margin-top: 1rem;
+					margin-top: 3rem;
 					width: 95vw;
 					max-width: 30rem;
 					li {
