@@ -111,11 +111,13 @@ function InnerStackedBarChart({ data, precision }: InnerStackedBarChartProps) {
 					))}
 			</BarStack>
 			<BarStackLegend className="print-background-force">
-				{dataWithPercentage.map(({ key, percentage, color, legend }) => (
+				{dataWithPercentage.map(({ value, key, percentage, color, legend }) => (
 					<BarStackLegendItem key={key}>
 						<SmallCircle style={{ backgroundColor: color }} />
 						{legend}
-						<strong>{Intl.NumberFormat().format(percentage)} %</strong>
+						<strong title={value}>
+							{Intl.NumberFormat().format(percentage)} %
+						</strong>
 					</BarStackLegendItem>
 				))}
 			</BarStackLegend>

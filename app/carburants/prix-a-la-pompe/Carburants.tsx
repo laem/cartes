@@ -15,47 +15,11 @@ const SituationContext = createContext({})
 export default function Carburants({}) {
 	const [situation, setSituation] = useState({})
 	return (
-		<main>
-			<SituationContext.Provider value={[situation, setSituation]}>
-				<Main />
-
-				<div css=" text-align: center; margin-top: 3rem">
-					Comprendre le calcul <Emoji e="⬇️" />
-				</div>
-				<p>
-					Détail du calcul à venir. En attendant,{' '}
-					<a href="https://github.com/laem/futureco/blob/master/app/carburants/prix-a-la-pompe/rules.yaml">
-						le calcul est disponible ici en
-					</a>
-					.
-				</p>
-			</SituationContext.Provider>
-		</main>
+		<SituationContext.Provider value={[situation, setSituation]}>
+			<Questions />
+		</SituationContext.Provider>
 	)
 }
-const Main = ({}) => (
-	<main>
-		<p
-			css={`
-				display: flex;
-				align-items: center;
-				justify-content: space-evenly;
-				img {
-					font-size: 400%;
-				}
-				h1 {
-					margin-top: 1rem;
-					max-width: 80%;
-				}
-			`}
-		>
-			<Emoji e="⛽️" />
-			<h1 css="">Prix à la pompe 2022</h1>
-		</p>
-
-		<Questions />
-	</main>
-)
 
 const Questions = ({}) => {
 	const questions = ['type']
@@ -71,6 +35,7 @@ const Questions = ({}) => {
 		},
 		onSubmit = () => null
 	const evaluation = engine.evaluate('prix à la pompe')
+	console.log('E', evaluation)
 	const [brentPrice, setBrentPrice] = useState(null)
 	const brentName = 'baril de brent . dollars'
 	useEffect(() => {
