@@ -1,13 +1,9 @@
 'use client'
-import Engine from 'publicodes'
-import { createContext, useState } from 'react'
 import rules from './data/rules.ts'
 
-import VoyageInput from '@/components/conversation/VoyageInput'
-import Questions from './Questions'
 import { useEngine2 } from '@/providers/EngineWrapper'
-import Simulateur from '../simulateur/[...dottedName]/Simulateur'
 import { useSimulationConfig } from '../simulateur/[...dottedName]/configBuilder'
+import Questions from './Questions'
 
 export default function Voyage() {
 	const objective = 'trajet voiture . coût trajet par personne'

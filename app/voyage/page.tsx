@@ -7,7 +7,7 @@ import Emoji from '@/components/Emoji'
 
 const title = `Quel est le vrai coût d'une voiture ?`
 const description1 =
-		"Le coût d'un trajet en voiture est souvent réduit à celui du carburant et des péages d'autoroute. Mais qui alors paie l'achat, l'entretien, le parking, l'assurance ?",
+		"Le coût d'un trajet en voiture est souvent réduit à celui du carburant et des péages d'autoroute. Mais alors qui paie l'achat, l'entretien, le parking, l'assurance ?",
 	description2 =
 		"On fait le point en quelques clics avec le simulateur de référence du coût d'un trajet en voiture."
 
