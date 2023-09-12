@@ -7,6 +7,8 @@ import styled from 'styled-components'
 import Emoji from 'Components/Emoji'
 import { InputStyle } from './UI'
 import GeoInputOptions from './GeoInputOptions'
+import useGeo from '../useGeo'
+import { LightButton } from '../UI'
 
 export default function VoyageInput({
 	onChange,
@@ -23,6 +25,9 @@ export default function VoyageInput({
 		vers: { inputValue: '' },
 		validated: false,
 	})
+
+	const geo = useGeo()
+	console.log(geo)
 
 	const [wikidata, setWikidata] = useState(null)
 
@@ -180,6 +185,25 @@ export default function VoyageInput({
 							/>
 						</InputStyle>
 					</label>
+					{geo && !state.depuis.choice && (
+						<small
+							css={`
+								display: block;
+								text-align: right;
+							`}
+						>
+							<Emoji e="✨" />
+							suggestion:{' '}
+							<LightButton
+								onClick={() => {
+									const value = geo.city + ', ' + geo.country
+									onInputChange('depuis')({ target: { value } })
+								}}
+							>
+								{geo.city}
+							</LightButton>
+						</small>
+					)}
 					{!depuis.choice &&
 						depuis.results &&
 						depuis.inputValue !== '' &&
