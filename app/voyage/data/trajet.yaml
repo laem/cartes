@@ -71,7 +71,18 @@ trajet voiture . distance:
 
 trajet voiture . péages:
   titre: Les péages
-  formule: 30 €
+  formule: distance * péages par km * part autoroute
+
+trajet voiture . part autoroute:
+  formule: 15 %
+  note: Nous cherchons une source pour ce chiffre. Nous n'avons pas mieux que [celle-ci](https://fr.statista.com/statistiques/899236/frequence-utilisation-voiture-en-autoroute-france/), mais ce n'est pas ce qu'on cherche.
+
+trajet voiture . péages par km:
+  formule: 0.113 €/km
+  note: |
+    Les prix sont très variables ! D'après [cette source](https://www.auto-moto.com/en-bref/prix-autoroutes-2021-peages-plus-chers-chers-10567), l'autoroute A14 coûte 55 centimes par km, quand l'autoroute A68 coûte 2 centimes par km.
+
+    La source de notre chiffre est [cet article](https://www.pourleco.com/consommation/combien-coute-lautoroute) (avez-vous mieux ?), qui nous donne 10 centimes en 2020, que nous [réactualisons avec l'inflation](https://france-inflation.com/calculateur_inflation.php).
 
 trajet train:
 
