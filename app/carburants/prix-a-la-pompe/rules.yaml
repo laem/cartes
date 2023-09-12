@@ -68,7 +68,13 @@ raffinage . en dollars:
 
     Donc ici, août 2023.
 
-    Il faudra donc mettre à jour cela régulièrement, faute d'une API.
+    Mieux : [cette adresse](https://ufip.fr/valeurs/datas/getcurrent) nous donne les toutes dernières valeurs de la marge de raffinage. 
+
+    Je déduis de ce tableur que la marge brute de raffinage est en fait une déduction de deux valeurs : le prix du Brent ; le prix de vente de produit raffiné à Rotterdam.
+
+    Selon une formule de calcul qui pondère probablement les produits raffinés.
+
+    Cependant, un mois de délai semble raisonnable : les stations services ne sont pas non plus en flux tendu à la journée, il y a bien du stockage de carburant sur le territoire ? Privilégions la valeur moyenne du mois dernier.
 
 taux de change dollars par euro:
   formule: 1.07 $/€

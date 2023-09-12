@@ -41,6 +41,11 @@ const nextConfig = {
 				destination: '/simulateur/transport/avion/impact',
 				permanent: true,
 			},
+			{
+				source: '/essence',
+				destination: '/carburants/prix-a-la-pompe',
+				permanent: true,
+			},
 		]
 	},
 	webpack: (config, options) => {
