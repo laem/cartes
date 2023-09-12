@@ -60,8 +60,13 @@ raffinage . par baril:
   formule: en dollars / taux de change dollars par euro
 
 raffinage . en dollars:
-  formule: 9.94 $/baril
-  note: Moyenne courante en septembre 2023, source tableau [La marge "brute" de raffinage](https://www.ecologie.gouv.fr/prix-des-produits-petroliers#scroll-nav__2).
+  formule: 17.56 $/baril
+  note: |
+    Nous avions d'abord pris la moyenne courante de l'année, depuis ce tableau [La marge "brute" de raffinage](https://www.ecologie.gouv.fr/prix-des-produits-petroliers#scroll-nav__2).
+
+    Mais vu les variations, qui correspondent probablement à des périodes où les stocks sont plus tendus, pour être représentatif du prix à la pompe instantané, mieux vaut probablement prendre la dernière valeur disponible.
+
+    Il faudrait trouver l'indicateur le plus récent possible, M-1...
 
 taux de change dollars par euro:
   formule: 1.07 $/€
