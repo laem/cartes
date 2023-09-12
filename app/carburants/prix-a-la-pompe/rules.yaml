@@ -66,7 +66,9 @@ raffinage . en dollars:
 
     Mais vu les variations, qui correspondent probablement à des périodes où les stocks sont plus tendus, pour être représentatif du prix à la pompe instantané, mieux vaut probablement prendre la dernière valeur disponible.
 
-    Il faudrait trouver l'indicateur le plus récent possible, M-1...
+    Donc ici, août 2023.
+
+    Il faudra donc mettre à jour cela régulièrement, faute d'une API.
 
 taux de change dollars par euro:
   formule: 1.07 $/€
