@@ -21,7 +21,9 @@ raffinage et distribution: raffinage + distribution
 taxes:
   formule:
     somme:
+      - TVA sur TICPE
       - TICPE
+      - TVA
 
 TVA sur TICPE:
   formule: 0.2 * TICPE
