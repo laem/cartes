@@ -53,10 +53,16 @@ const CountriesGraph = ({}) => {
 						</li>
 					))}
 			</ul>
-			<p>
+			<small
+				css={`
+					text-align: right;
+					display: block;
+					font-style: italic;
+				`}
+			>
 				Données{' '}
 				<a href="https://www.insee.fr/fr/statistiques/2119697">INSEE 2022</a>
-			</p>
+			</small>
 		</div>
 	)
 }
