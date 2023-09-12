@@ -21,6 +21,7 @@ export async function generateMetadata(
 
 	const title = rule.exposé?.titre || ruleTitle({ ...rule, dottedName })
 	const description = rule.exposé?.description || rule.description
+
 	const image =
 		rule.exposé?.image ||
 		'https://futur.eco' +

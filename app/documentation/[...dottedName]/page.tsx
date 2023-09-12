@@ -21,12 +21,13 @@ export async function generateMetadata(
 
 	const title = rule.exposé?.titre || ruleTitle({ ...rule, dottedName })
 	const description = rule.exposé?.description || rule.description
+
 	const image =
 		rule.exposé?.image ||
 		'https://futur.eco' +
 			`/api/og-image?title=${
 				rule.exposé?.titre || rule.titre
-			} - le calcul&emojis=${rule.icônes}`
+			} - le calcul&emojis=${rule.icônes || '📚'}`
 	return {
 		title,
 		description,
