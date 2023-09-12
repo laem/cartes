@@ -73,6 +73,7 @@ const SimulateurContent = ({ objective, rules }) => {
 			return <Almost answeredRatio={answeredRatio} />
 		if (!nextQuestions.length) return <Done />
 	}
+
 	return (
 		<div className="ui__ container">
 			{isMainSimulation && (

@@ -148,7 +148,8 @@ export const useNextQuestions = function (engine): Array<DottedName> {
 				([question]) => !answeredQuestions.includes(question)
 			),
 			orderedEntries = sortBy(([k, v]) => v, missingEntries).reverse(),
-			maxScore = orderedEntries[0][1],
+			firstEntry = orderedEntries[0],
+			maxScore = firstEntry ? [1] : 0,
 			prio = questionsConfig.prioritaires || [],
 			artificialOrdered = sortBy(
 				([k, v]) =>

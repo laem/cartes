@@ -1,6 +1,7 @@
 'use client'
 import Simulation from '@/components/Simulation'
 import SimulationResults from '@/components/SimulationResults'
+import StackedBarChart from '@/components/StackedBarChart'
 import { useNextQuestions } from '@/components/utils/useNextQuestion'
 import { answeredQuestionsSelector } from '@/selectors/simulationSelectors'
 import { formatValue } from 'publicodes'
@@ -39,6 +40,24 @@ export default function Questions({
 			>
 				<SimulationResults
 					{...{ ...rule, ...evaluation, engine, rules, ResultsBlock }}
+				/>
+
+				<StackedBarChart
+					engine={engine}
+					data={[
+						{
+							dottedName: 'trajet voiture . coût du trajet au km',
+							color: '#6a89cc',
+						},
+						{
+							dottedName: 'trajet voiture . coûts fixes',
+							color: '#f8c291',
+						},
+						{
+							dottedName: 'trajet voiture . péages',
+							color: '#cf6a87',
+						},
+					]}
 				/>
 			</div>
 			<Simulation

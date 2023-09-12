@@ -135,14 +135,20 @@ export default function StackedRulesChart({
 	precision = 0.1,
 	engine,
 }: StackedRulesChartProps) {
-	console.log('TA', engine.evaluate('taxes'))
 	const targetUnit = useSelector(targetUnitSelector)
-	const evaluatedData = data.map(({ dottedName, title, color }) => ({
-		key: dottedName,
-		value: engine.evaluate({ valeur: dottedName, unité: targetUnit }).nodeValue,
-		legend: <Link href={'/carburants/' + dottedName}>{title}</Link>,
-		color,
-	}))
+	const evaluatedData = data.map(({ dottedName, title, color }) => {
+		const rule = engine.getRule(dottedName)
+
+		return {
+			key: dottedName,
+			value: engine.evaluate({ valeur: dottedName, unité: targetUnit })
+				.nodeValue,
+			legend: (
+				<Link href={'/carburants/' + dottedName}>{title || rule.title}</Link>
+			),
+			color,
+		}
+	})
 	console.log('EV', evaluatedData)
 	return <StackedBarChart precision={precision} data={evaluatedData} />
 }
