@@ -3,6 +3,8 @@ const lines = [
 	'https://futur.eco/a-propos',
 	//	'https://futur.eco/documentation',
 	'https://futur.eco/scenarios',
+	'https://futur.eco/national',
+	'https://futur.eco/carburants/prix-a-la-pompe',
 ]
 
 const getResults = () =>
@@ -42,18 +44,6 @@ export default async function sitemap() {
 			lastModified: new Date(),
 			changeFrequency: 'yearly',
 			priority: 1,
-		},
-		{
-			url: 'https://acme.com/about',
-			lastModified: new Date(),
-			changeFrequency: 'monthly',
-			priority: 0.8,
-		},
-		{
-			url: 'https://acme.com/blog',
-			lastModified: new Date(),
-			changeFrequency: 'weekly',
-			priority: 0.5,
 		},
 	]
 }
