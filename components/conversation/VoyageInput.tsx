@@ -9,6 +9,9 @@ import { InputStyle } from './UI'
 import GeoInputOptions from './GeoInputOptions'
 import useGeo from '../useGeo'
 import { LightButton } from '../UI'
+import Image from 'next/image'
+import startPoint from '@/public/start-point.svg'
+import destinationPoint from '@/public/destination-point.svg'
 
 export default function VoyageInput({
 	onChange,
@@ -172,19 +175,21 @@ export default function VoyageInput({
 				`}
 			>
 				<div>
-					<label>
-						<span>
-							Départ <Emoji e={fromIcon} />
-						</span>
-						<InputStyle>
-							<input
-								type="text"
-								value={depuis.inputValue}
-								placeholder={placeholder}
-								onChange={onInputChange('depuis')}
-							/>
-						</InputStyle>
-					</label>
+					{!depuis.choice && (
+						<label>
+							<span>
+								Départ <Emoji e={fromIcon} />
+							</span>
+							<InputStyle>
+								<input
+									type="text"
+									value={depuis.inputValue}
+									placeholder={placeholder}
+									onChange={onInputChange('depuis')}
+								/>
+							</InputStyle>
+						</label>
+					)}
 					{geo && !state.depuis.choice && (
 						<small
 							css={`
@@ -223,37 +228,53 @@ export default function VoyageInput({
 					{depuis.choice && (
 						<div
 							css={`
-								text-align: right;
-								img {
-									width: 2rem;
+								> img {
+									filter: invert(1);
+									width: 3rem;
+									height: auto;
 								}
+								display: flex;
+								justify-content: space-evenly;
+								align-items: center;
 							`}
 						>
-							<Emoji e="✅" />
-							{depuis.choice.item.nom}
-							<button
-								type="button"
-								onClick={() => setState({ ...state, depuis: {} })}
+							<Image src={startPoint} alt="Depuis" />
+							<div
+								css={`
+									text-align: right;
+									img {
+										width: 2rem;
+									}
+								`}
 							>
-								<Emoji e="✏️" />{' '}
-							</button>
+								<Emoji e="✅" />
+								{depuis.choice.item.nom}
+								<button
+									type="button"
+									onClick={() => setState({ ...state, depuis: {} })}
+								>
+									<Emoji e="✏️" />{' '}
+								</button>
+							</div>
 						</div>
 					)}
 				</div>
 				<div>
-					<label>
-						<span>
-							Arrivée <Emoji e={toIcon} />
-						</span>
-						<InputStyle>
-							<input
-								type="text"
-								value={vers.inputValue}
-								placeholder={placeholder}
-								onChange={onInputChange('vers')}
-							/>
-						</InputStyle>
-					</label>
+					{!vers.choice && (
+						<label>
+							<span>
+								Arrivée <Emoji e={toIcon} />
+							</span>
+							<InputStyle>
+								<input
+									type="text"
+									value={vers.inputValue}
+									placeholder={placeholder}
+									onChange={onInputChange('vers')}
+								/>
+							</InputStyle>
+						</label>
+					)}
 					{!vers.choice &&
 						vers.results &&
 						vers.inputValue !== '' &&
@@ -273,20 +294,34 @@ export default function VoyageInput({
 					{vers.choice && (
 						<div
 							css={`
-								text-align: right;
-								img {
-									width: 2rem;
+								> img {
+									filter: invert(1);
+									width: 3rem;
+									height: auto;
 								}
+								display: flex;
+								justify-content: space-evenly;
+								align-items: center;
 							`}
 						>
-							<Emoji e="✅" />
-							{vers.choice.item.nom}
-							<button
-								type="button"
-								onClick={() => setState({ ...state, vers: {} })}
+							<Image src={startPoint} alt="Vers" />
+							<div
+								css={`
+									text-align: right;
+									img {
+										width: 2rem;
+									}
+								`}
 							>
-								<Emoji e="✏️" />{' '}
-							</button>
+								<Emoji e="✅" />
+								{vers.choice.item.nom}
+								<button
+									type="button"
+									onClick={() => setState({ ...state, vers: {} })}
+								>
+									<Emoji e="✏️" />{' '}
+								</button>
+							</div>
 						</div>
 					)}
 				</div>
