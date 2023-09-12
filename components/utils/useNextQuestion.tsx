@@ -143,10 +143,13 @@ export const useNextQuestions = function (engine): Array<DottedName> {
 		objectifs[0] === 'trajet voiture . coût trajet par personne'
 	) {
 		//This is a new rewrite of the getNextQuestions function, I wonder why we left this simplicity...
-		const missingEntries = Object.entries(missingVariables[0]),
+		const allMissingEntries = Object.entries(missingVariables[0]),
+			missingEntries = allMissingEntries.filter(
+				([question]) => !answeredQuestions.includes(question)
+			),
 			orderedEntries = sortBy(([k, v]) => v, missingEntries).reverse(),
 			maxScore = orderedEntries[0][1],
-			prio = questionsConfig.prioritaires,
+			prio = questionsConfig.prioritaires || [],
 			artificialOrdered = sortBy(
 				([k, v]) =>
 					prio.includes(k)
@@ -159,9 +162,10 @@ export const useNextQuestions = function (engine): Array<DottedName> {
 		if (currentQuestion && currentQuestion !== nextQuestions[0]) {
 			return [currentQuestion, ...nextQuestions]
 		}
+
+		console.log('MV', situation, nextQuestions)
 		return nextQuestions
 	}
-	console.log('MV', missingVariables)
 	const nextQuestions = useMemo(() => {
 		return getNextQuestions(
 			missingVariables,
