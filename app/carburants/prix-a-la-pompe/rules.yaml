@@ -100,13 +100,21 @@ distribution:
   titre: Marge brute de transport-distribution
   description: |
     La marge brute de transport-distribution correspond à la différence entre les prix de vente hors taxes des produits pétroliers aux consommateurs et les cotations internationales des produits pétroliers raffinés.
-  formule: 16.45 / 100
+  formule:
+    variations:
+      - si: type = 'gazole'
+        alors: 0.234
+      - si: type = 'essence E5'
+        alors: 0.254
+      - sinon: 0.24 # Moyenne approximative des deux précédentes valeurs, faute de la trouver
   unité: €/l
   note: |
-    Chiffre pour l'année 2021. Le coût pour l'essence étant très proche du coûte pour le gazole à 0,5 centimes d'€/l, nous avons 
-    simplement retenu la moyenne des deux coûts.
 
     Source https://www.ecologie.gouv.fr/prix-des-produits-petroliers#scroll-nav__3
+
+    MAJ : la page de ecologie.gouv.fr est totalement à la ramasse en septembre 2023 : les marges de distribution ont explosé ! Merci [la CLCV pour cette alerte](https://www.clcv.org/communiques-de-presse/carburantsprix-la-pompe-trop-de-marges-quand-une-operation-prix-coutant)
+
+    Nous prenons les dernier chiffre disponibles sur ce lien, juin 2023.
 
 type:
   par défaut: "'gazole'"
