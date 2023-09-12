@@ -157,6 +157,9 @@ const Answer = ({ rule, language }) => {
 
 			'transport . ferry . départ',
 			'transport . ferry . arrivée',
+
+			'trajet voiture . départ',
+			'trajet voiture . arrivée',
 		].includes(rule.dottedName)
 	)
 		return null
@@ -200,6 +203,25 @@ const Answer = ({ rule, language }) => {
 								situation['transport . ferry . départ']
 							)} - ${trimSituationString(
 								situation['transport . ferry . arrivée']
+							)} (${formatValue(rule, { language })})`}
+						</span>
+					),
+				}}
+			/>
+		)
+	}
+	if (rule.dottedName === 'trajet voiture . distance') {
+		return (
+			<AnswerComponent
+				{...{
+					dottedName: rule.dottedName,
+					NameComponent: <div>Votre trajet</div>,
+					ValueComponent: (
+						<span className="answerContent">
+							{`${trimSituationString(
+								situation['trajet voiture . départ']
+							)} - ${trimSituationString(
+								situation['trajet voiture . arrivée']
 							)} (${formatValue(rule, { language })})`}
 						</span>
 					),

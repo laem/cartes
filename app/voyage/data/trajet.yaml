@@ -63,6 +63,7 @@ trajet voiture . distance:
   question: Quel est votre trajet ?
   description: Saisissez une ville de départ et une ville de destination.
   par défaut: 335 km
+  unité: km
 
 trajet voiture . péages:
   titre: Prix péages

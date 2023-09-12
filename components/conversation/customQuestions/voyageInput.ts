@@ -4,7 +4,7 @@ export const ferryQuestions = [
 	'transport . ferry . distance aller . orthodromique',
 ]
 export const voyageQuestions = [
-	'trajet voiture. départ',
+	'trajet voiture . départ',
 	'trajet voiture . arrivée',
 	'trajet voiture . distance',
 ]
