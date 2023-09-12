@@ -2,9 +2,10 @@ import { Metadata } from 'next'
 import Voyage from './Voyage'
 import voitures from '@/public/voitures.svg'
 import Image from 'next/image'
-import { Header, Sources } from './UI'
+import { CenteredH2, Header, Sources } from './UI'
 import Emoji from '@/components/Emoji'
 import Explanation from './Explanation.mdx'
+import Link from 'next/link'
 
 const title = `Quel est le vrai coût d'une voiture ?`
 const description1 =
