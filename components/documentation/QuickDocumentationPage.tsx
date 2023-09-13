@@ -8,6 +8,7 @@ import { Markdown } from 'Components/utils/ClientMarkdown'
 import { omit } from 'Components/utils/utils'
 import FriendlyObjectViewer from '../FriendlyObjectViewer'
 import { Breadcrumb } from './Breadcrumb'
+import ComputeButton from './ComputeButton'
 import DocumentationStyle, {
 	QuestionRuleSectionStyle,
 	QuestionStyle,
@@ -47,7 +48,6 @@ export default function QuickDocumentationPage({
 	rules: NGCRules
 }) {
 	const rule = rules[dottedName] || {}
-	console.log('Display QUICKDOC for ', rule)
 
 	const title = ruleTitle({ ...rule, dottedName })
 
@@ -110,14 +110,7 @@ export default function QuickDocumentationPage({
 						{rule.description && <Markdown>{rule.description}</Markdown>}
 					</section>
 				)}
-				{false && (
-					<button
-						onClick={() => setLoadEngine(true)}
-						className="ui__ button cta plain attention"
-					>
-						🧮 Lancer le calcul
-					</button>
-				)}
+				<ComputeButton />
 				{Object.keys(yamlAttributesToDisplay).length > 0 && (
 					<div>
 						<h2>Comment cette donnée est-elle calculée ?</h2>
