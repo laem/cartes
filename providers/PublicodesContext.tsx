@@ -1,9 +1,11 @@
 'use client'
 
-import React, { useContext, useMemo, useState } from 'react'
+import React, { useContext, useEffect, useMemo, useState } from 'react'
 
 import rules from '@/app/voyage/data/rules'
 import Engine from 'publicodes'
+import { useSelector } from 'react-redux'
+import { situationSelector } from '@/selectors/simulationSelectors'
 
 const PublicodesContext = React.createContext()
 
@@ -19,6 +21,14 @@ export default function PublicodesProvider({ children }) {
 		}
 		return
 	}, [request])
+
+	const situation = useSelector(situationSelector)
+	useEffect(() => {
+		if (!engine) return
+
+		console.log('will set situation', situation)
+		engine.setSituation(situation)
+	}, [situation, engine])
 
 	return (
 		<PublicodesContext.Provider value={[requestPublicodes, engine]}>

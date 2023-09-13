@@ -39,6 +39,9 @@ const Page = () => (
 		</Header>
 		<Voyage />
 		<Sources>
+			<Link href="/voyage/documentation/trajet-voiture/coût-trajet-par-personne">
+				Lien cool
+			</Link>
 			<Explanation />
 		</Sources>
 	</main>

@@ -304,7 +304,7 @@ export default function VoyageInput({
 								align-items: center;
 							`}
 						>
-							<Image src={startPoint} alt="Vers" />
+							<Image src={destinationPoint} alt="Vers" />
 							<div
 								css={`
 									text-align: right;

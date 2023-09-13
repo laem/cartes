@@ -164,7 +164,6 @@ export const useNextQuestions = function (engine): Array<DottedName> {
 			return [currentQuestion, ...nextQuestions]
 		}
 
-		console.log('MV', situation, nextQuestions)
 		return nextQuestions
 	}
 	const nextQuestions = useMemo(() => {

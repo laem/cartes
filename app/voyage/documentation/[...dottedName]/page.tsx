@@ -1,12 +1,15 @@
 import rules from '@/app/voyage/data/rules.ts'
 import QuickDocumentationPage from '@/components/documentation/QuickDocumentationPage'
 import { utils } from 'publicodes'
+import Link from 'next/link'
+import Emoji from '@/components/Emoji'
 
 const Page = async ({ params: { dottedName: rawDottedName } }: Props) => {
 	const dottedName = decodeURIComponent(rawDottedName.join('/'))
 	const decoded = utils.decodeRuleName(dottedName)
 	return (
 		<main>
+			<Back />
 			<QuickDocumentationPage
 				dottedName={decoded}
 				rules={rules}
@@ -17,3 +20,11 @@ const Page = async ({ params: { dottedName: rawDottedName } }: Props) => {
 }
 
 export default Page
+
+const Back = () => (
+	<div>
+		<Link href="/voyage/">
+			<Emoji e=" 	⬅" /> Revenir au calculateur
+		</Link>
+	</div>
+)
