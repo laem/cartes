@@ -23,12 +23,14 @@ export default function PublicodesProvider({ children }) {
 	}, [request])
 
 	const situation = useSelector(situationSelector)
+	const exemple = useSelector((state) => state.exemple),
+		exempleSituation = exemple?.situation || {}
 	useEffect(() => {
 		if (!engine) return
 
 		console.log('will set situation', situation)
-		engine.setSituation(situation)
-	}, [situation, engine])
+		engine.setSituation({ ...situation, ...exempleSituation })
+	}, [situation, engine, exempleSituation])
 
 	return (
 		<PublicodesContext.Provider value={[requestPublicodes, engine]}>
