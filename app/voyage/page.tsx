@@ -33,10 +33,7 @@ const Page = () => (
 				<div>
 					<h1>{title}</h1>
 					<p>{description1}</p>
-					<p>
-						{' '}
-						<Emoji e="🔻" /> {description2}
-					</p>
+					<p> {description2}</p>
 				</div>
 			</Header>
 		</Card>
