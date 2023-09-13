@@ -98,12 +98,13 @@ export const ExplainedHeader = styled.header`
 	}
 `
 
-export const Exemples = styled.ul`
+export const ExemplesList = styled.ul`
 	list-style-type: none;
 	li button {
 		display: flex;
 		align-items: center;
 		margin: 0.4rem 0;
+		padding: 0;
 	}
 `
 
@@ -118,4 +119,10 @@ export const Circle = styled.span`
 
 	margin: 0 0.4rem;
 	${(p) => p.$clicked && `background: var(--lightColor)`}
+`
+
+export const ExempleTitle = styled.span`
+	padding: 0 0.4rem;
+	text-align: left;
+	${(p) => p.$clicked && `background: var(--lightColor); color: black`}
 `

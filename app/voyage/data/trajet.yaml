@@ -26,6 +26,18 @@ trajet voiture . coût trajet par personne:
         alors: coût trajet / trajet . voyageurs
       - sinon: coût trajet
   exemples:
+    - titre: Lille->Nice en essence à 7l/100 tout à deux
+      situation:
+        trajet voiture . distance: 834 km
+        trajet . voyageurs: 2
+    - titre: Brest->Rennes en covoiturage à 3 en électrique
+      situation:
+        trajet voiture . distance: 250 km
+        trajet . voyageurs: 3
+    - titre: Domicile travail 8 km en diesel tout seul
+      situation:
+        trajet voiture . distance: 8 km
+        trajet . voyageurs: 1
 
 trajet voiture . coût trajet:
   titre: Coût du trajet en voiture

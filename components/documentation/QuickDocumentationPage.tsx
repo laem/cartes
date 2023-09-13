@@ -10,13 +10,11 @@ import FriendlyObjectViewer from '../FriendlyObjectViewer'
 import { Breadcrumb } from './Breadcrumb'
 import ComputeButton from './ComputeButton'
 import DocumentationStyle, {
-	Circle,
-	Exemples,
-	ExplainedHeader,
 	QuestionRuleSectionStyle,
 	QuestionStyle,
 	Wrapper,
 } from './DocumentationStyle'
+import Exemples from './Exemples'
 import { GithubContributionLink } from './GithubContributionLink'
 import { NamespaceRules } from './NamespaceRules'
 import OperationVariables, { isExpressionRule } from './OperationVariables'
@@ -71,15 +69,10 @@ export default function QuickDocumentationPage({
 			'inactive',
 			// specific to NGC form generation, could be cool to visualize, but in a <details> tag, since it's big
 			'mosaique',
+			'exemples',
 		],
 		rule
 	)
-
-	const exemples = [
-		'Lille->Nice en essence à 7l/100 tout à deux',
-		'Brest->Rennes en covoiturage à 3 en électrique',
-		'Domicile travail 8 km en diesel tout seul',
-	]
 
 	return (
 		<Wrapper>
@@ -138,21 +131,7 @@ export default function QuickDocumentationPage({
 						)}
 					</div>
 				)}
-				<ExplainedHeader>
-					<h2>Exemples de calcul</h2>
-					<small>Cliquez pour en tester un</small>
-				</ExplainedHeader>
-				<Exemples>
-					{exemples.map((exemple) => (
-						<li key={exemple}>
-							<button>
-								<Circle $clicked={Math.random() > 0.4} />
-								<span>{exemple}</span>
-							</button>
-						</li>
-					))}
-				</Exemples>
-
+				<Exemples exemples={rule.exemples} />
 				{isExpressionRule(rule) && (
 					<div>
 						<h2>Explorer le calcul</h2>

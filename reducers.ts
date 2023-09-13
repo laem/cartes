@@ -188,6 +188,11 @@ function batchUpdateSituationReducer(state: RootState, action: Action) {
 	)
 }
 
+function exemple(state = null, action) {
+	if (action.type !== 'SET_EXEMPLE') return state
+	return action.exemple
+}
+
 const mainReducer = (state: any, action: Action) =>
 	combineReducers({
 		explainedVariable,
@@ -199,6 +204,7 @@ const mainReducer = (state: any, action: Action) =>
 		iframeOptions: defaultTo(null),
 		tutorials,
 		scenario,
+		exemple,
 	})(state, action)
 
 export default reduceReducers<RootState>(
