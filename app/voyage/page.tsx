@@ -1,11 +1,12 @@
-import { Metadata } from 'next'
-import Voyage from './Voyage'
-import voitures from '@/public/voitures.svg'
-import Image from 'next/image'
-import { CenteredH2, Header, Sources } from './UI'
 import Emoji from '@/components/Emoji'
-import Explanation from './Explanation.mdx'
+import { Card } from '@/components/UI'
+import voitures from '@/public/voitures.svg'
+import { Metadata } from 'next'
+import Image from 'next/image'
 import Link from 'next/link'
+import Explanation from './Explanation.mdx'
+import { Header, Sources } from './UI'
+import Voyage from './Voyage'
 
 const title = `Quel est le vrai coût d'une voiture ?`
 const description1 =
@@ -21,22 +22,24 @@ export const metadata: Metadata = {
 
 const Page = () => (
 	<main>
-		<Header>
-			<Image
-				src={voitures}
-				alt="Illustration de plusieurs formes d'automobiles, de la citadine au camping car"
-				width="100"
-				height="140"
-			/>
-			<div>
-				<h1>{title}</h1>
-				<p>{description1}</p>
-				<p>
-					{' '}
-					<Emoji e="🔻" /> {description2}
-				</p>
-			</div>
-		</Header>
+		<Card $fullWidth>
+			<Header>
+				<Image
+					src={voitures}
+					alt="Illustration de plusieurs formes d'automobiles, de la citadine au camping car"
+					width="100"
+					height="140"
+				/>
+				<div>
+					<h1>{title}</h1>
+					<p>{description1}</p>
+					<p>
+						{' '}
+						<Emoji e="🔻" /> {description2}
+					</p>
+				</div>
+			</Header>
+		</Card>
 		<Voyage />
 		<Sources>
 			<hr />
