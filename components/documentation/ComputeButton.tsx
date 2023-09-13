@@ -4,7 +4,7 @@ import { usePublicodes } from '@/providers/PublicodesContext'
 import { formatValue } from 'publicodes'
 import { Button, Card } from '../UI'
 
-export default function ComputeButton() {
+export default function ComputeButton({ dottedName }) {
 	const [requestPublicodes, engine] = usePublicodes()
 	const setLoadEngine = () => {
 		requestPublicodes('common')
@@ -18,9 +18,7 @@ export default function ComputeButton() {
 				🧮 Lancer le calcul
 			</Button>
 		)
-	const evaluation = engine.evaluate(
-			'trajet voiture . coût trajet par personne'
-		),
+	const evaluation = engine.evaluate(dottedName),
 		value = formatValue(evaluation)
 	return (
 		<div>
