@@ -10,6 +10,9 @@ import FriendlyObjectViewer from '../FriendlyObjectViewer'
 import { Breadcrumb } from './Breadcrumb'
 import ComputeButton from './ComputeButton'
 import DocumentationStyle, {
+	Circle,
+	Exemples,
+	ExplainedHeader,
 	QuestionRuleSectionStyle,
 	QuestionStyle,
 	Wrapper,
@@ -72,6 +75,12 @@ export default function QuickDocumentationPage({
 		rule
 	)
 
+	const exemples = [
+		'Lille->Nice en essence à 7l/100 tout à deux',
+		'Brest->Rennes en covoiturage à 3 en électrique',
+		'Domicile travail 8 km en diesel tout seul',
+	]
+
 	return (
 		<Wrapper>
 			<DocumentationStyle>
@@ -129,6 +138,20 @@ export default function QuickDocumentationPage({
 						)}
 					</div>
 				)}
+				<ExplainedHeader>
+					<h2>Exemples de calcul</h2>
+					<small>Cliquez pour en tester un</small>
+				</ExplainedHeader>
+				<Exemples>
+					{exemples.map((exemple) => (
+						<li key={exemple}>
+							<button>
+								<Circle $clicked={Math.random() > 0.4} />
+								<span>{exemple}</span>
+							</button>
+						</li>
+					))}
+				</Exemples>
 
 				{isExpressionRule(rule) && (
 					<div>

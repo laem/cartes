@@ -6,6 +6,7 @@
 	border-collapse: collapse;
 	width: 100%;
 	font-size: 90%;
+	border: none;
 }
 .answer-list tr:nth-child(2n + 1) {
 	background: none !important;
@@ -13,6 +14,7 @@
 
 .answer-list td {
 	padding: 0.4rem 0.6rem;
+	border-radius: 1rem;
 }
 
 .answer-list td:last-of-type {

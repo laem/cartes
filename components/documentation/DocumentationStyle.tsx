@@ -9,7 +9,7 @@ export default styled.div`
 		background: var(--lighterColor);
 		padding: 0.4rem 0.6rem 0.2rem;
 	}
-	header {
+	> header:first-child {
 		color: var(--textColor);
 		small {
 			color: inherit;
@@ -35,12 +35,7 @@ export default styled.div`
 			0 1px 2px rgba(var(--rgbColor), 0.24);
 		border-radius: 0.4rem;
 	}
-	button {
-		color: inherit;
-	}
-	span {
-		background: inherit;
-	}
+
 	small {
 		background: none !important;
 	}
@@ -87,4 +82,37 @@ export const RightSection = styled.section`
 export const QuestionStyle = styled.q`
 	font-size: 180%;
 	quotes: '«' '»' '‹' '›';
+`
+
+export const ExplainedHeader = styled.header`
+	display: flex;
+	align-items: baseline;
+	h2 {
+		margin-right: 1rem;
+	}
+	small {
+		color: var(--lighterColor);
+	}
+`
+
+export const Exemples = styled.ul`
+	list-style-type: none;
+	li button {
+		display: flex;
+		align-items: center;
+		margin: 0.4rem 0;
+	}
+`
+
+const size = '1.2rem'
+export const Circle = styled.span`
+	display: inline-block;
+	border: 2px solid var(--lightColor);
+	width: ${size};
+	height: ${size};
+
+	border-radius: ${size};
+
+	margin: 0 0.4rem;
+	${(p) => p.$clicked && `background: var(--lightColor)`}
 `

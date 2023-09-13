@@ -17,6 +17,8 @@ trajet voiture . coût trajet par personne:
       - si: trajet . voyageurs > 0
         alors: coût trajet / trajet . voyageurs
       - sinon: coût trajet
+  exemples: 
+t
 
 trajet voiture . coût trajet:
   titre: Coût du trajet en voiture

@@ -45,7 +45,7 @@ const Page = () => (
 			<p>
 				Vous pouvez explorer l'ensemble du calcul sur la{' '}
 				<Link href="/voyage/documentation/trajet-voiture/coût-trajet-par-personne">
-					documentation
+					documentation intéractive
 				</Link>
 				.
 			</p>

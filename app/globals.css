@@ -142,6 +142,9 @@ button {
 	border: none;
 	border-radius: 0.2em;
 	padding: 0 1em;
+	font-size: 100%;
+	font-family: inherit;
+	color: inherit;
 }
 
 button:enabled {
