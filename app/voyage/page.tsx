@@ -39,9 +39,16 @@ const Page = () => (
 		</Header>
 		<Voyage />
 		<Sources>
-			<Link href="/voyage/documentation/trajet-voiture/coût-trajet-par-personne">
-				Lien cool
-			</Link>
+			<hr />
+			<h2>Le calcul</h2>
+
+			<p>
+				Vous pouvez explorer l'ensemble du calcul sur la{' '}
+				<Link href="/voyage/documentation/trajet-voiture/coût-trajet-par-personne">
+					documentation
+				</Link>
+				.
+			</p>
 			<Explanation />
 		</Sources>
 	</main>
