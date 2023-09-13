@@ -25,15 +25,15 @@ export default function PublicodesProvider({ children }) {
 	const situation = useSelector(situationSelector)
 	const exemple = useSelector((state) => state.exemple),
 		exempleSituation = exemple?.situation || {}
-	useEffect(() => {
+	const updatedEngine = useMemo(() => {
 		if (!engine) return
 
-		console.log('will set situation', situation)
-		engine.setSituation({ ...situation, ...exempleSituation })
+		console.log('will set situation', situation, exempleSituation)
+		return engine.setSituation({ ...situation, ...exempleSituation })
 	}, [situation, engine, exempleSituation])
 
 	return (
-		<PublicodesContext.Provider value={[requestPublicodes, engine]}>
+		<PublicodesContext.Provider value={[requestPublicodes, updatedEngine]}>
 			{children}
 		</PublicodesContext.Provider>
 	)

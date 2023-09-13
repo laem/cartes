@@ -6,16 +6,17 @@ import styled from 'styled-components'
 import { Button, Card } from '../UI'
 
 export default function ComputeButton({ dottedName }) {
-	const [requestPublicodes, engine] = usePublicodes()
-	const setLoadEngine = () => {
-		requestPublicodes('common')
-	}
+	const context = usePublicodes()
+	console.log('cont', context)
+	if (!context) return null
+
+	const [requestPublicodes, engine] = context
 	if (!engine)
 		return (
 			<Wrapper>
 				<h2>Valeur</h2>
 				<Button
-					onClick={() => setLoadEngine(true)}
+					onClick={() => requestPublicodes('common')}
 					className="ui__ button cta plain attention"
 				>
 					🧮 Lancer le calcul
@@ -24,6 +25,7 @@ export default function ComputeButton({ dottedName }) {
 		)
 	const evaluation = engine.evaluate(dottedName),
 		value = formatValue(evaluation)
+
 	return (
 		<Wrapper>
 			<h2>Valeur</h2>
