@@ -12,7 +12,7 @@ export default function PublicodesProvider({ children }) {
 	const engine = useMemo(() => {
 		if (request != null) {
 			console.log(
-				'Engine requested by a client component, will parse Rules (expensive operation)'
+				'⚠️ Engine requested by a client component, will parse Rules (expensive operation)'
 			)
 			const engine = new Engine(rules)
 			return engine

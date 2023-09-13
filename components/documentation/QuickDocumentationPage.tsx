@@ -110,7 +110,6 @@ export default function QuickDocumentationPage({
 						{rule.description && <Markdown>{rule.description}</Markdown>}
 					</section>
 				)}
-				<ComputeButton dottedName={dottedName} />
 				{Object.keys(yamlAttributesToDisplay).length > 0 && (
 					<div>
 						<h2>Comment cette donnée est-elle calculée ?</h2>
@@ -129,6 +128,7 @@ export default function QuickDocumentationPage({
 						)}
 					</div>
 				)}
+				<ComputeButton dottedName={dottedName} />
 
 				{isExpressionRule(rule) && (
 					<div>
