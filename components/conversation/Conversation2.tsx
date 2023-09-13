@@ -114,6 +114,7 @@ const Conversation2 = ({
 					<header css="display: flex; justify-content: start; ">
 						<h3
 							css={`
+								margin: 0.6rem 0;
 								@media (max-width: 800px) {
 									margin: 0.4rem 0;
 								}
