@@ -11,14 +11,21 @@ trajet voiture:
 
 trajet voiture . coût trajet par personne:
   titre: Coût du trajet en voiture
-  description: Coût du trajet par personne
+  description: |
+    Voici un modèle de calcul du coût d'un trajet en voiture par personne.
+
+    Le coût inclut la plupart des frais principaux : carburant, taxes, péages, parking, assurance, entretien, équipements, services, accidents, etc.
+  note: |
+    Ne sont pas inclus pour l'instant : 
+      - le lavage, qui dépend fortement des exigences de la personne
+      - le coût immobilier d'un garage, qui peut être énorme dans certaines villes
+      - sûrement bien d'autres coûts plus mineurs qui viennent saler la facture
   formule:
     variations:
       - si: trajet . voyageurs > 0
         alors: coût trajet / trajet . voyageurs
       - sinon: coût trajet
-  exemples: 
-t
+  exemples:
 
 trajet voiture . coût trajet:
   titre: Coût du trajet en voiture

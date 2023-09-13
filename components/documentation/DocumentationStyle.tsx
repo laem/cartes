@@ -9,6 +9,9 @@ export default styled.div`
 		background: var(--lighterColor);
 		padding: 0.4rem 0.6rem 0.2rem;
 	}
+	section {
+		margin-top: 1rem;
+	}
 	> header:first-child {
 		color: var(--textColor);
 		small {
