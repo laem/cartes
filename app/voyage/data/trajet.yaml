@@ -53,16 +53,22 @@ trajet voiture . prix carburant:
   par défaut:
     variations:
       - si: voiture . motorisation = 'essence'
-        alors: 1.90
+        alors: (1.956 + 1.988) / 2
       - si: voiture . motorisation = 'diesel'
-        alors: 1.80
+        alors: 1.908
       - si: voiture . motorisation = 'biocarburant'
-        alors: 1.15
+        alors: 1.043
       - si: voiture . motorisation = 'hybride'
         alors: 1.80
+  description: |
+    Source : https://prix-carburants-info.fr
+    Données du 14 septembre 2023.
+
   note: |
-    https://prix-carburants-info.fr
-    Pour l'hybride, diesel.
+    À mettre à jour régulièrement, ou trouver une API.
+
+    TODO Trouver la bonne source pour l'hybride.
+
   unité: € / l
 
 trajet voiture . prix électricité:
