@@ -30,10 +30,10 @@ voiture . motorisation . biocarburant:
 
 voiture . consommation thermique:
   question: Quelle est la consommation de la voiture ?
-  par défaut: consommation par défaut
+  par défaut: par défaut
   unité: kWh / 100 km
 
-voiture . consommation carburant . par défaut:
+voiture . consommation thermique . par défaut:
   formule:
     variations:
       - si: motorisation = 'essence'
@@ -43,7 +43,7 @@ voiture . consommation carburant . par défaut:
       - si: motorisation = 'biocarburant'
         alors: 6.8 * 1.25
       - si: motorisation = 'hybride'
-        alors: trajet voiture . prix carburant * motorisation . hybride . consommation / 100
+        alors: 4.5
 
   description: |
     Pour l'essence et le diesel, la source est Carlabelling par l'ADEME : https://carlabelling.ademe.fr/chiffrescles/r/evolutionConsoMoyenne
