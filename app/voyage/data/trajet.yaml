@@ -51,6 +51,7 @@ trajet voiture . coût du trajet au km:
 
 trajet voiture . prix carburant:
   question: Quel est le prix du carburant ?
+  unité: €/l
   par défaut:
     variations:
       - si: voiture . motorisation = 'essence'
@@ -70,13 +71,16 @@ trajet voiture . prix carburant:
 
     TODO Trouver la bonne source pour l'hybride.
 
-  unité: € / l
-
 trajet voiture . prix électricité:
   question: Quel est le prix de l'électricité ?
-  par défaut: 0.206
+  par défaut: 0.2276
   unité: € / kWh
+  description: |
+    Nous prenons ici le prix d'EDF tarif bleu reglementé, disponible [sur cette page](https://www.hellowatt.fr/contrat-electricite/prix-electricite).
+  note: |
+    Pour bien faire les choses, il faudrait prendre un prix représentatif du choix des français dans leur abonnement : le prix du kWh des fournisseurs concurrent d'EDF a explosé en 2021.
 
+    Aussi, il faudrait prendre en compte une part de l'abonnement proportionnelle à la consommation d'une voiture électrique dans un foyer.
 trajet voiture . coûts fixes:
   titre: Coûts fixes ramenés au trajet
   formule: voiture . couts fixes au km * distance

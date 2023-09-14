@@ -7,6 +7,17 @@ voiture . coût au km:
         alors: trajet voiture . prix électricité * motorisation . électrique . consommation / 100
       - sinon: trajet voiture . prix carburant * consommation thermique / 100
   unité: € / km
+  exemples:
+    - titre: grosse essence à 2€ le litre
+      situation:
+        voiture . consommation thermique: 9
+        trajet voiture . prix carburant: 2 €/l
+        voiture . motorisation: "'essence'"
+    - titre: électrique
+      situation:
+        voiture . consommation thermique: 9
+        trajet voiture . prix carburant: 2 €/l
+        voiture . motorisation: "'électrique'"
 
 voiture . motorisation:
   question: Quelle est la motorisation du véhicule ?
