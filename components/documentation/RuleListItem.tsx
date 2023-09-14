@@ -13,6 +13,8 @@ export default function RuleListItem({
 	item: SearchItem
 	matches: Matches | null
 }) {
+	const parents = item.espace.slice(1).reverse()
+
 	return (
 		<Item key={item.dottedName}>
 			<Link
@@ -20,11 +22,9 @@ export default function RuleListItem({
 					pathPrefix + `/documentation/${utils.encodeRuleName(item.dottedName)}`
 				}
 			>
-				<small>
-					{item.espace
-						.slice(1)
-						.reverse()
-						.map((name) => (
+				{parents.length > 0 && (
+					<small>
+						{parents.map((name) => (
 							<span key={name}>
 								{matches
 									? highlightMatches(
@@ -37,8 +37,9 @@ export default function RuleListItem({
 								›{' '}
 							</span>
 						))}
-					<br />
-				</small>
+						<br />
+					</small>
+				)}
 				<div>
 					<span>{rules[item.dottedName]?.icônes}</span>
 					{matches

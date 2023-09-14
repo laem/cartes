@@ -1,4 +1,5 @@
 voiture:
+  icônes: 🚗
 
 voiture . coût au km:
   formule:
@@ -20,6 +21,7 @@ voiture . coût au km:
         voiture . motorisation: "'électrique'"
 
 voiture . motorisation:
+  icônes: ⚙️
   question: Quelle est la motorisation du véhicule ?
   par défaut: "'diesel'"
   formule:
@@ -33,6 +35,7 @@ voiture . motorisation:
         - biocarburant
 
 voiture . motorisation . électrique:
+  icônes: ⚡️
 voiture . motorisation . hybride:
 voiture . motorisation . essence:
 voiture . motorisation . diesel:
