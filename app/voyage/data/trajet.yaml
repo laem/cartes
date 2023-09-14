@@ -23,14 +23,20 @@ trajet voiture . coût trajet par personne:
       - sûrement bien d'autres coûts plus mineurs qui viennent saler la facture
   formule: coût trajet / trajet . voyageurs
   exemples:
-    - titre: Lille->Nice en essence à 7l/100 tout à deux
+    - titre: Lille->Nice en essence à 7l/100 à deux
       situation:
         trajet voiture . distance: 834 km
+        voiture . motorisation: "'essence'"
         trajet . voyageurs: 2
+    - titre: Bordeaux->Lyon en diesel tout seul
+      situation:
+        trajet voiture . distance: 435 km
+        trajet . voyageurs: 3
     - titre: Brest->Rennes en covoiturage à 3 en électrique
       situation:
         trajet voiture . distance: 250 km
         trajet . voyageurs: 3
+        voiture . motorisation: "'électrique'"
     - titre: Domicile travail 8 km en diesel tout seul
       situation:
         trajet voiture . distance: 8 km
@@ -46,7 +52,7 @@ trajet voiture . coût trajet:
     unité: €
 
 trajet voiture . coût du trajet au km:
-  formule: voiture . coût au km * distance
+  formule: voiture . coût au km * distance en voiture
   titre: Coût direct
 
 trajet voiture . prix carburant:
@@ -83,23 +89,43 @@ trajet voiture . prix électricité:
     Aussi, il faudrait prendre en compte une part de l'abonnement proportionnelle à la consommation d'une voiture électrique dans un foyer.
 trajet voiture . coûts fixes:
   titre: Coûts fixes ramenés au trajet
-  formule: voiture . couts fixes au km * distance
+  formule: voiture . couts fixes au km * distance en voiture
 
 trajet voiture . départ:
   note: Variable remplie par une interface de recherche.
 trajet voiture . arrivée:
   note: Variable remplie par une interface de recherche.
 
+trajet voiture . distance en voiture:
+  formule: distance * 1.3
+  description: |
+    Idéalement, pour chaque trajet, il faudrait calculer la trace GPS, ou plutôt différentes traces en fonction des choix de l'automobiliste (autoroute, pas d'autoroute, éviter les routes de montagne, etc.) et en mesurer la distance.
+
+    Pour l'instant, nous ne faisons qu'estimer la distance en plus qu'imposent les virages.
+
+    Pour ce faire, nous nous basons sur 3 trajets, Lille → Nice, Brest → Rennes et Bordeaux → Lyon, pour trouver un coefficient de majoration de 1,4 : pour 100 km de distance à vol d'oiseau, une voiture parcourera en moyenne 135 km.
+
+    Le calcul est fait sur 7 exemples courts, moyens, longs et disponible dans le tableur app/voyage/data/estimation-majoration-distance-voiture.ods.
+
+  note: |
+    Bien sûr, la méthode est contestable : quid des trajets au bord d'une côte accidentée où de longs détours sont nécessaires ? La France étant héxagonale, ce problème est en moyenne mitigé.
+
+    Quid d'une différence entre trajets courts, moyens, longs ? Il faudrait en effet l'intégrer. 
+
+    Le plus simpe cependant, sera bien sûr d'utiliser un calculateur d'itinéraire dans le futur.
+
 trajet voiture . distance:
   titre: Distance trajet en voiture
   question: Quel est votre trajet ?
   description: Saisissez une ville de départ et une ville de destination.
+  note: |
+    La distance est pour l'instant calculée de façon basique : on regarde la distance à vol d'oiseau entre la ville de départ et d'arrivée, puis on applique une majoration pour prendre en compte le fait qu'un trajet en voiture est loin d'être une ligne droite.
   par défaut: 335 km
   unité: km
 
 trajet voiture . péages:
   titre: Les péages
-  formule: distance * péages par km * part autoroute
+  formule: distance en voiture * péages par km * part autoroute
 
 trajet voiture . part autoroute:
   formule: 15 %
