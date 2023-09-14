@@ -70,6 +70,16 @@ voiture . motorisation . électrique . consommation:
   question: Quelle est la consommation de la voiture ?
   par défaut: 15
   unité: kWh / 100 km
+  note: |
+    Ici, [un test intéressant en conditions réelle de la Renault Zoé](https://fr.motor1.com/reviews/518916/renault-zoe-test-consommation-reelle/), une des voitures électriques les plus vendues en Europe. 
+
+    Voici l'un des résultat : 
+    > Mixte urbain et extra-urbain : 11,8 kWh/100 km (8,4 km/kWh)
+436 km d'autonomie
+
+    TODO: Il sera donc essentiel de faire varier les prix en fonction des choix de l'utilisateur. 
+
+
 
 voiture . prix d'achat:
   question: Quel est le prix d'achat de la voiture ?
