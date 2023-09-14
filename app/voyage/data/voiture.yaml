@@ -93,6 +93,13 @@ voiture . couts fixes:
       - assurance
       - entretien
       - parking et pv
+  exemples:
+    - titre: Avec une assurance légère
+      situation:
+        voiture . couts fixes . assurance: 350 €
+    - titre: Avec une assurance luxe
+      situation:
+        voiture . couts fixes . assurance: 850 €
 
 voiture . couts fixes . achat amorti:
   formule: prix d'achat / durée de vie

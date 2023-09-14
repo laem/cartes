@@ -20,18 +20,6 @@ export default function ExempleItem({ exemple }) {
 				<Circle $clicked={clicked} />
 				<ExempleTitle $clicked={clicked}>{exemple.titre}</ExempleTitle>
 			</button>
-			{clicked && (
-				<div
-					css={`
-						> div {
-							max-width: 20rem;
-							margin: 0.8rem 4rem 1.6rem;
-						}
-					`}
-				>
-					<FriendlyObjectViewer data={exemple.situation} />
-				</div>
-			)}
 		</li>
 	)
 }
