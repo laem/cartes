@@ -46,15 +46,15 @@ export default function Questions({
 					engine={engine}
 					data={[
 						{
-							dottedName: 'trajet voiture . coût du trajet au km',
+							dottedName: 'voiture . coût instantané au km',
 							color: '#6a89cc',
 						},
 						{
-							dottedName: 'trajet voiture . coûts fixes',
+							dottedName: 'voiture . coût de possession au km',
 							color: '#f8c291',
 						},
 						{
-							dottedName: 'trajet voiture . péages',
+							dottedName: 'voiture . coûts divers au km',
 							color: '#cf6a87',
 						},
 					]}
