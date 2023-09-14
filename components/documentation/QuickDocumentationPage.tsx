@@ -41,6 +41,7 @@ export default function QuickDocumentationPage({
 	dottedName,
 	rules,
 	pathPrefix = '',
+	spotlight = [],
 }: {
 	rule: NGCRule
 	dottedName: DottedName
@@ -154,7 +155,7 @@ export default function QuickDocumentationPage({
 				)}
 
 				<GithubContributionLink dottedName={dottedName} />
-				<NamespaceRules {...{ rules, dottedName }} pathPrefix={pathPrefix} />
+				<NamespaceRules {...{ rules, dottedName, pathPrefix, spotlight }} />
 			</DocumentationStyle>
 		</Wrapper>
 	)
