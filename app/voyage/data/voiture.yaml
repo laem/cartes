@@ -1,6 +1,12 @@
 voiture:
   icônes: 🚗
 
+voiture . coûts au km:
+  formule:
+    somme:
+      - coût instantané au km
+      - coût de possession au km
+      - coûts divers au km
 voiture . coût instantané au km:
   description: |
     C'est le coût qui remplace souvent de faion erronée le coût complet d'un km en voiture. 
@@ -107,3 +113,4 @@ voiture . coût de possession au km:
   formule: coût de possession / km annuels
 voiture . coûts divers au km:
   formule: coûts divers / km annuels
+  unité: €/km

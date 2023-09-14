@@ -16,7 +16,13 @@ export const NamespaceRules = ({
 	const namespaceRules = Object.keys(rules).filter(
 		(key) => key.includes(parent) && key !== dottedName
 	)
-	const allRules = [...spotlight, ...difference(namespaceRules, spotlight)]
+	//This is a system to recommand the best rules to the user
+	const closeRules = rules[dottedName]['similaires'] || [],
+		promotedRules = [...closeRules, ...difference(spotlight, closeRules)]
+	const allRules = [
+		...promotedRules,
+		...difference(namespaceRules, promotedRules),
+	]
 	if (!allRules.length) return null
 	return (
 		<section>

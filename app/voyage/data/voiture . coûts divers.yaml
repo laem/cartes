@@ -11,18 +11,32 @@ voiture . coûts divers:
       - pv
       - permis de conduire
 
-voiture . coût divers . parking:
+voiture . coûts divers . parking:
   question: Quel est le coût annuel de l'ensemble des frais de parking ?
+  description: |
+    En fonction de l'usage, des trajets, les coûts de parking peuvent être énormes. 
+
+    On pense bien sûr à la fameuse place gratuite qu'on ne trouve pas en ville, réduits à payer un parking au sous-sol. 
+
+    Mais le coût le plus important reste la location du parking pour votre voiture quand elle dort chez vous, unutilisée, chaque nuit.
+
+    À Paris, ce montant dépasse les 100 €/mois. Dans des métropoles comme Rennes, ils peuvent dépasser les 50 € / mois.
+
+  note: |
+    Cette composante "à demeure" devrait être intégrée dans la catégorie "possession" et devrait inclure le coût immobilier (location ou achat) du garage.
+
+    Quand une maison vaut 500 000 € à l'achat, le garage n'est aucunement gratuit. Supposons qu'il coûte 1/5 ème du prix, et que la maison n'est jamais cédée. Cela représente par exemple 100 000 € pour 50 ans, donc 600 000 km, soit 17 centimes par km parcouru. Aïe.
   par défaut: 100€
-voiture . coût divers . pv:
+
+voiture . coûts divers . pv:
   question: Quel est le coût annuel des contraventions que vous avez du payer ?
   par défaut: stationnement interdit + excès de vitesse
   note: Idéalement, il faudrait trouver le montant moyen payé par français par an.
 
-voiture . coût divers . pv . excès de vitesse: 68 €
-voiture . coût divers . pv . stationnement interdit: 15 €
+voiture . coûts divers . pv . excès de vitesse: 68 €
+voiture . coûts divers . pv . stationnement interdit: 15 €
 
-voiture . coût divers . permis de conduire:
+voiture . coûts divers . permis de conduire:
   formule: 1804 €
   description: |
     Sans conducteur avec permis, pas de km parcourus en voiture individuelle !

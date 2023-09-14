@@ -25,6 +25,8 @@ trajet voiture . coût trajet par personne:
 
     Faire une variation du modèle pour une voiture de location.
   formule: coût trajet / trajet . voyageurs
+  similaires:
+    - voiture . coûts au km
   exemples:
     - titre: Lille->Nice en essence à 7l/100 à deux
       situation:
