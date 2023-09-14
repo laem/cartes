@@ -49,13 +49,18 @@ trajet voiture . coût trajet:
   titre: Coût total du trajet en voiture
   formule:
     somme:
-      - coût du trajet au km
-      - coûts fixes
-      - péages
+      - coût instantané
+      - coût de possession
     unité: €
 
-trajet voiture . coût du trajet au km:
-  formule: voiture . coût au km * distance en voiture
+trajet voiture . coût instantané:
+  formule:
+    somme:
+      - coût énergétique
+      - péages
+
+trajet voiture . coût énergétique:
+  formule: voiture . coût instantané au km * distance en voiture
   titre: Coût direct
 
 trajet voiture . prix carburant:
@@ -90,9 +95,9 @@ trajet voiture . prix électricité:
     Pour bien faire les choses, il faudrait prendre un prix représentatif du choix des français dans leur abonnement : le prix du kWh des fournisseurs concurrent d'EDF a explosé en 2021.
 
     Aussi, il faudrait prendre en compte une part de l'abonnement proportionnelle à la consommation d'une voiture électrique dans un foyer.
-trajet voiture . coûts fixes:
-  titre: Coûts fixes ramenés au trajet
-  formule: voiture . coûts fixes au km * distance en voiture
+trajet voiture . coût de possession:
+  titre: Coûts de possession ramenés au trajet
+  formule: voiture . coût de possession au km * distance en voiture
 
 trajet voiture . départ:
   note: Variable remplie par une interface de recherche.

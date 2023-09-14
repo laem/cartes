@@ -1,7 +1,11 @@
 voiture:
   icônes: 🚗
 
-voiture . coût au km:
+voiture . coût instantané au km:
+  description: |
+    C'est le coût qui remplace souvent de faion erronée le coût complet d'un km en voiture. 
+
+    Le coût instantané représente le coût que l'on a l'impression de payer, car on le paie le jour même où dans la semaine (si le plein d'essence ou d'électricité a été auparavant).
   formule:
     variations:
       - si: motorisation = 'électrique'
@@ -9,14 +13,18 @@ voiture . coût au km:
       - sinon: trajet voiture . prix carburant * consommation thermique / 100
   unité: € / km
   exemples:
-    - titre: grosse essence à 2€ le litre
+    - titre: Clio diesel
+      situation:
+        voiture . motorisation: "'diesel'"
+        voiture . prix d'achat: 29000 €
+    - titre: SUV essence à 2€ le litre
       situation:
         voiture . consommation thermique: 9
         trajet voiture . prix carburant: 2 €/l
         voiture . motorisation: "'essence'"
+        voiture . prix d'achat: 29000 €
     - titre: électrique
       situation:
-        voiture . consommation thermique: 9
         trajet voiture . prix carburant: 2 €/l
         voiture . motorisation: "'électrique'"
 

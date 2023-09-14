@@ -1,5 +1,5 @@
-voiture . coûts fixes:
-  titre: Coûts fixe annuels voiture
+voiture . coût de possession:
+  titre: Coûts de possession annuels voiture
   formule:
     somme:
       - achat amorti
@@ -12,10 +12,10 @@ voiture . coûts fixes:
   exemples:
     - titre: Avec une assurance légère
       situation:
-        voiture . coûts fixes . assurance: 350 €
+        voiture . coût de possession . assurance: 350 €
     - titre: Avec une assurance luxe
       situation:
-        voiture . coûts fixes . assurance: 850 €
+        voiture . coût de possession . assurance: 850 €
 
 voiture . prix d'achat:
   question: Quel est le prix d'achat de la voiture, prime écologique déduite ?
@@ -37,14 +37,14 @@ voiture . prix d'achat:
     Renault Zoé e-tech R110: 30100 €
     Tesla Model 3: 38000 €
 
-voiture . coûts fixes . achat amorti:
+voiture . coût de possession . achat amorti:
   formule: prix d'achat / durée de vie
   description: |
     Cette méthode de calcul nous permet de ne pas devoir retrancher le prix de revente. C'est une autre méthode possible. Ici, nous considérons donc, et c'est théorique bien sûr, que chacun garde sa voiture jusqu'au bout de sa vie. C'est vrai pour la moyenne française, mais faux à titre individuel.
 
     La [méthode de u/h2o52](https://www.reddit.com/r/france/comments/14aswpe/le_vrai_coût_dun_kilomètre_parcouru_en_voiture/) considère elle un prix de revente.
 
-voiture . coûts fixes . lavage:
+voiture . coût de possession . lavage:
   description: |
     Les Français lavent en moyenne l'extérieur de leur voiture 6 fois par an. Plus de 50% des lavages sont faits dans une station service ou dédiée.
 
@@ -56,7 +56,7 @@ voiture . coûts fixes . lavage:
   formule: 6 * 10
   unité: €
 
-voiture . coûts fixes . assurance:
+voiture . coût de possession . assurance:
   question: Quel est le coût annuel de l'assurance ?
   note: Aide à la saisie mensuelle ?
   description: |
@@ -66,7 +66,7 @@ voiture . coûts fixes . assurance:
     premier prix (au tiers): 527 €
     haut de gamme (tous risques): 733 €
 
-voiture . coûts fixes . entretien:
+voiture . coût de possession . entretien:
   question: Quel est le coût annuel d'entretien de la voiture ?
   descritpion: |
     Le Mag de l'auto nous dit entre 840 € et 1000 € selon les modèles pour les "petits" rouleurs. Pour les gros rouleurs, ils l'estiment à 1700 €.
@@ -78,18 +78,18 @@ voiture . coûts fixes . entretien:
     petit rouleur: 840 €
     gros rouleur: 1700 €
 
-voiture . coûts fixes . parking:
+voiture . coût de possession . parking:
   question: Quel est le coût annuel de l'ensemble des frais de parking ?
   par défaut: 100€
-voiture . coûts fixes . pv:
+voiture . coût de possession . pv:
   question: Quel est le coût annuel des contraventions que vous avez du payer ?
   par défaut: stationnement interdit + excès de vitesse
   note: Idéalement, il faudrait trouver le montant moyen payé par français par an.
 
-voiture . coûts fixes . pv . excès de vitesse: 68 €
-voiture . coûts fixes . pv . stationnement interdit: 15 €
+voiture . coût de possession . pv . excès de vitesse: 68 €
+voiture . coût de possession . pv . stationnement interdit: 15 €
 
-voiture . coûts fixes . permis de conduire:
+voiture . coût de possession . permis de conduire:
   formule: 1804 €
   description: |
     Sans conducteur avec permis, pas de km parcourus en voiture individuelle !
