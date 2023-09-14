@@ -8,11 +8,10 @@ export const Breadcrumb = ({ rules, dottedName, pathPrefix }) => {
 		.reverse()
 		.map((parentDottedName) => {
 			const rule = rules[parentDottedName]
-			console.log('tring rule', rule, dottedName, parentDottedName)
 			const href = utils.encodeRuleName(parentDottedName)
-			return rule == undefined ? null : (
+			return rule === undefined ? null : (
 				<span key={parentDottedName}>
-					{rule.icônes !== undefined && <span>{rule.icônes}</span>}
+					{rule?.icônes !== undefined && <span>{rule.icônes}</span>}
 					<Link href={pathPrefix + '/documentation/' + href}>
 						{getTitle({ ...rule, dottedName: parentDottedName })}
 					</Link>
@@ -24,5 +23,6 @@ export const Breadcrumb = ({ rules, dottedName, pathPrefix }) => {
 	if (!elements.length) {
 		return null
 	}
+
 	return <small>{elements}</small>
 }

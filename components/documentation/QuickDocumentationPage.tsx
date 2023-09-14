@@ -39,7 +39,6 @@ const QuestionRuleSection = ({ title, children }) => (
 
 export default function QuickDocumentationPage({
 	dottedName,
-	setLoadEngine,
 	rules,
 	pathPrefix = '',
 }: {
@@ -84,7 +83,7 @@ export default function QuickDocumentationPage({
 						pathPrefix={pathPrefix}
 					/>
 					<h1>
-						{rule.icônes ?? ''} {title}&gt;
+						{rule.icônes ?? ''} {title}
 					</h1>
 				</header>
 				{Object.keys(rule).length < 1 && (

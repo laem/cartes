@@ -26,8 +26,8 @@ export default styled.div`
 		}
 		h1 {
 			color: inherit;
-			margin-top: 0.6rem;
-			margin-bottom: 0.6rem;
+			margin-top: 0rem;
+			margin-bottom: 0.4rem;
 			a {
 				text-decoration: none;
 			}
