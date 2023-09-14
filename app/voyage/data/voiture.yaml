@@ -106,6 +106,7 @@ voiture . coûts fixes:
       - assurance
       - entretien
       - parking et pv
+      - lavage
   exemples:
     - titre: Avec une assurance légère
       situation:
@@ -141,6 +142,18 @@ voiture . coûts fixes . achat amorti:
 
     La [méthode de u/h2o52](https://www.reddit.com/r/france/comments/14aswpe/le_vrai_coût_dun_kilomètre_parcouru_en_voiture/) considère elle un prix de revente.
 
+voiture . coûts fixes . lavage:
+  description: |
+    Les Français lavent en moyenne l'extérieur de leur voiture 6 fois par an. Plus de 50% des lavages sont faits dans une station service ou dédiée.
+
+    Source https://www.commlc.com/salle-de-presse/elephant-bleu-b2c/item/infographie-pratiques-lavage.
+
+    Faut de trouver des prix moyens de lavage, la prestation en soi étant très variable, nous prenons simplement un forfait minorant de 10€. 
+
+    Le lavage à domicile est également compté à ce prix minorant, car il consomme beaucoup d'eau, de produits souvent dédiés et... de temps.
+  formule: 6 * 10
+  unité: €
+
 voiture . coûts fixes . assurance:
   question: Quel est le coût annuel de l'assurance ?
   note: Aide à la saisie mensuelle ?
@@ -154,8 +167,14 @@ voiture . coûts fixes . assurance:
 voiture . coûts fixes . entretien:
   question: Quel est le coût annuel d'entretien de la voiture ?
   descritpion: |
-    Le Mag de l'auto nous dit entre 840 et 1000€ selon les modèles pour les "petits" rouleurs.
-  par défaut: 900€
+    Le Mag de l'auto nous dit entre 840 € et 1000 € selon les modèles pour les "petits" rouleurs. Pour les gros rouleurs, ils l'estiment à 1700 €.
+
+  note: |
+    C'est une source de mauvaise qualité, qui ne décortique pas ses calculs, et ne les source pas. Nous devons trouver mieux, et probablement reconstruire nous-mêmes le prix paramétré.
+  par défaut: 1000€
+  suggestions:
+    petit rouleur: 840 €
+    gros rouleur: 1700 €
 
 voiture . coûts fixes . parking et pv:
   question: Quel est le coût annuel de l'ensemble des frais type parking, contravention ?

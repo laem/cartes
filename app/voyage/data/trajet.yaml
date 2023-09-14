@@ -18,7 +18,6 @@ trajet voiture . coût trajet par personne:
     Le coût inclut la plupart des frais principaux : carburant, taxes, péages, parking, assurance, entretien, équipements, services, accidents, etc.
   note: |
     Ne sont pas inclus pour l'instant : 
-      - le lavage, qui dépend fortement des exigences de la personne
       - le coût immobilier d'un garage, qui peut être énorme dans certaines villes
       - sûrement bien d'autres coûts plus mineurs qui viennent saler la facture
   formule: coût trajet / trajet . voyageurs
