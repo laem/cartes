@@ -16,10 +16,14 @@ trajet voiture . coût trajet par personne:
     Voici un modèle de calcul du coût d'un trajet en voiture par personne.
 
     Le coût inclut la plupart des frais principaux : carburant, taxes, péages, parking, assurance, entretien, équipements, services, accidents, etc.
+
+    Attention, il n'est a priori pas valable pour une voiture de location. Cela dit, il se pourrait bien que le résultat final soit le même. Les locations de voiture sont plus chères, car vous payez la marge du loueur et d'autres services, mais en échange, celui-ci rentabilise beaucoup plus la voiture et rationnalise leur entretien sur un immense parc.
   note: |
     Ne sont pas inclus pour l'instant : 
       - le coût immobilier d'un garage, qui peut être énorme dans certaines villes
       - sûrement bien d'autres coûts plus mineurs qui viennent saler la facture
+
+    Faire une variation du modèle pour une voiture de location.
   formule: coût trajet / trajet . voyageurs
   exemples:
     - titre: Lille->Nice en essence à 7l/100 à deux

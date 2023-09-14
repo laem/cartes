@@ -7,6 +7,7 @@ voiture . coûts fixes:
       - entretien
       - parking et pv
       - lavage
+      - permis de conduire
   exemples:
     - titre: Avec une assurance légère
       situation:
@@ -76,6 +77,17 @@ voiture . coûts fixes . entretien:
     petit rouleur: 840 €
     gros rouleur: 1700 €
 
-voiture . coûts fixes . parking et pv:
-  question: Quel est le coût annuel de l'ensemble des frais type parking, contravention ?
+voiture . coûts fixes . parking:
+  question: Quel est le coût annuel de l'ensemble des frais de parking ?
   par défaut: 100€
+voiture . coûts fixes . pv:
+  question: Quel est le coût annuel des contraventions que vous avez du payer ?
+  par défaut:
+
+  voiture . coûts fixes . permis de conduire:
+    formule: 1804 €
+    description: |
+      Sans conducteur avec permis, pas de km parcourus en voiture individuelle !
+
+      Bien sûr, on peut se dire "Non mais tous les Français passent le permis de toutes façon". Certes, une majorité le passe, mais avec le même raisonnement, on prétend que tous les Français ont une voiture de toute façon... et on en revient à un coût totalement sous-estimé.
+    note: Le prix est tiré de cette [enquête d'une association de consommateurs 2023](https://hauteloire.ufcquechoisir.fr/2016/10/05/enquete-auto-ecoles/).
