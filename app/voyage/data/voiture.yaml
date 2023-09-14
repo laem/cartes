@@ -96,10 +96,10 @@ voiture . km prévisionnels:
   note: source à trouver
   formule: 250000 km
 
-voiture . couts fixes au km:
-  formule: couts fixes / km annuels
+voiture . coûts fixes au km:
+  formule: coûts fixes / km annuels
 
-voiture . couts fixes:
+voiture . coûts fixes:
   titre: Coûts fixe annuels voiture
   formule:
     somme:
@@ -110,25 +110,25 @@ voiture . couts fixes:
   exemples:
     - titre: Avec une assurance légère
       situation:
-        voiture . couts fixes . assurance: 350 €
+        voiture . coûts fixes . assurance: 350 €
     - titre: Avec une assurance luxe
       situation:
-        voiture . couts fixes . assurance: 850 €
+        voiture . coûts fixes . assurance: 850 €
 
-voiture . couts fixes . achat amorti:
+voiture . coûts fixes . achat amorti:
   formule: prix d'achat / durée de vie
 
-voiture . couts fixes . assurance:
+voiture . coûts fixes . assurance:
   question: Quel est le coût annuel de l'assurance ?
   note: Aide à la saisie mensuelle ?
   par défaut: 600€
 
-voiture . couts fixes . entretien:
+voiture . coûts fixes . entretien:
   question: Quel est le coût annuel d'entretien de la voiture ?
   descritpion: |
     Le Mag de l'auto nous dit entre 840 et 1000€ selon les modèles pour les "petits" rouleurs.
   par défaut: 900€
 
-voiture . couts fixes . parking et pv:
+voiture . coûts fixes . parking et pv:
   question: Quel est le coût annuel de l'ensemble des frais type parking, contravention ?
   par défaut: 100€

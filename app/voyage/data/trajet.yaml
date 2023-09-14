@@ -89,7 +89,7 @@ trajet voiture . prix électricité:
     Aussi, il faudrait prendre en compte une part de l'abonnement proportionnelle à la consommation d'une voiture électrique dans un foyer.
 trajet voiture . coûts fixes:
   titre: Coûts fixes ramenés au trajet
-  formule: voiture . couts fixes au km * distance en voiture
+  formule: voiture . coûts fixes au km * distance en voiture
 
 trajet voiture . départ:
   note: Variable remplie par une interface de recherche.
