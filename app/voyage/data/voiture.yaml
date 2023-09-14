@@ -59,7 +59,7 @@ voiture . motorisation . biocarburant:
 voiture . consommation thermique:
   question: Quelle est la consommation de la voiture ?
   par défaut: par défaut
-  unité: kWh / 100 km
+  unité: l / 100 km
 
 voiture . consommation thermique . par défaut:
   formule:

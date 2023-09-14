@@ -67,8 +67,12 @@ voiture . coût de possession . assurance:
 
 voiture . coût de possession . entretien:
   question: Quel est le coût annuel d'entretien de la voiture ?
-  descritpion: |
+  description: |
     Le Mag de l'auto nous dit entre 840 € et 1000 € selon les modèles pour les "petits" rouleurs. Pour les gros rouleurs, ils l'estiment à 1700 €.
+
+    Un certain nombre d'entretiens sont imposés par la loi, tels que le contrôle technique. 
+
+    Pour le reste, le propriétaire a une marge de manoeuvre sur la somme consacrée à l'entretien, mais gardons en tête qu'un déficit d'entretien peut se payer par une explosion des coûts : le renouvellement de la voiture doit se faire plus rapidement !
 
   note: |
     C'est une source de mauvaise qualité, qui ne décortique pas ses calculs, et ne les source pas. Nous devons trouver mieux, et probablement reconstruire nous-mêmes le prix paramétré.
