@@ -3,17 +3,10 @@ voiture:
 voiture . coût au km:
   formule:
     variations:
-      - si: motorisation = 'essence'
-        alors: trajet voiture . prix carburant * motorisation . essence . consommation / 100
-      - si: motorisation = 'diesel'
-        alors: trajet voiture . prix carburant * motorisation . diesel . consommation / 100
-      - si: motorisation = 'biocarburant'
-        alors: trajet voiture . prix carburant * motorisation . biocarburant . consommation / 100
-      - si: motorisation = 'hybride'
-        alors: trajet voiture . prix carburant * motorisation . hybride . consommation / 100
       - si: motorisation = 'électrique'
         alors: trajet voiture . prix électricité * motorisation . électrique . consommation / 100
-  unité: l / km
+      - sinon: trajet voiture . prix carburant * consommation thermique / 100
+  unité: € / km
 
 voiture . motorisation:
   question: Quelle est la motorisation du véhicule ?
@@ -35,34 +28,37 @@ voiture . motorisation . diesel:
 voiture . motorisation . biocarburant:
   titre: Biocarburant E85
 
+voiture . consommation thermique:
+  question: Quelle est la consommation de la voiture ?
+  par défaut: consommation par défaut
+  unité: kWh / 100 km
+
+voiture . consommation carburant . par défaut:
+  formule:
+    variations:
+      - si: motorisation = 'essence'
+        alors: 6.8
+      - si: motorisation = 'diesel'
+        alors: 5
+      - si: motorisation = 'biocarburant'
+        alors: 6.8 * 1.25
+      - si: motorisation = 'hybride'
+        alors: trajet voiture . prix carburant * motorisation . hybride . consommation / 100
+
+  description: |
+    Pour l'essence et le diesel, la source est Carlabelling par l'ADEME : https://carlabelling.ademe.fr/chiffrescles/r/evolutionConsoMoyenne
+
+    Pour l'hybride, on prend +25% par rapport à l'essence. Quelle est la source ?
+
+  note: |
+    Quid des consommations réelles ? Celles-ci sont probablement des consommations théoriques fournies par les constructeurs après des tests sur banc d'essai. 
+
+    En particulier pour l'hybride, une ONG avait publié une étude sur le sujet...
+
 voiture . motorisation . électrique . consommation:
   question: Quelle est la consommation de la voiture ?
   par défaut: 15
   unité: kWh / 100 km
-
-voiture . motorisation . hybride . consommation:
-  question: Quelle est la consommation de la voiture ?
-  par défaut: 4.5
-  unité: l / 100 km
-  note: source à trouver
-
-voiture . motorisation . essence . consommation:
-  question: Quelle est la consommation de la voiture ?
-  par défaut: 6.8
-  unité: l / 100 km
-  note: https://carlabelling.ademe.fr/chiffrescles/r/evolutionConsoMoyenne
-
-voiture . motorisation . diesel . consommation:
-  question: Quelle est la consommation de la voiture ?
-  par défaut: 5
-  unité: l / 100 km
-  note: https://carlabelling.ademe.fr/chiffrescles/r/evolutionConsoMoyenne
-
-voiture . motorisation . biocarburant . consommation:
-  question: Quelle est la consommation de la voiture ?
-  par défaut: 6.8 * 1.25
-  unité: l / 100 km
-  note: +25% par rapport à l'essence
 
 voiture . prix d'achat:
   question: Quel est le prix d'achat de la voiture ?
