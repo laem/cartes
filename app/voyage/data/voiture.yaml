@@ -81,10 +81,6 @@ voiture . motorisation . électrique . consommation:
 
     TODO: Il sera donc essentiel de faire varier les prix en fonction des choix de l'utilisateur.
 
-voiture . prix d'achat:
-  question: Quel est le prix d'achat de la voiture ?
-  par défaut: 15000€
-
 voiture . durée de vie:
   note: source à trouver (durée de vie moyenne d'une voiture)
   formule: 20
@@ -117,6 +113,26 @@ voiture . coûts fixes:
     - titre: Avec une assurance luxe
       situation:
         voiture . coûts fixes . assurance: 850 €
+
+voiture . prix d'achat:
+  question: Quel est le prix d'achat de la voiture, prime écologique déduite ?
+  note: |
+    Nous n'avons pas inclus dans les prix la prime à la conversion pour une voiture électrique, d'environ 2500 €.
+
+    Sources : 
+    - pour les voitures électriques https://www.phonandroid.com/combien-coute-une-tesla-en-france-voici-les-prix-de-chaque-modele.html
+    - pour la Tesla model 3 https://www.phonandroid.com/combien-coute-une-tesla-en-france-voici-les-prix-de-chaque-modele.html
+    - pour les thermiques : https://www.caroom.fr
+    - pour les occasions: https://occasion.largus.fr/auto/renault/clio-iv/
+  par défaut: 15000€
+  suggestions:
+    Clio occasion: 12000 €
+    Zoé occasion: 15000 €
+    Dacia Spring Essential: 15800 €
+    Clio V / Peugeot 208: 18000 €
+    SUV Peugeot 3008: 29000 €
+    Renault Zoé e-tech R110: 30100 €
+    Tesla Model 3: 38000 €
 
 voiture . coûts fixes . achat amorti:
   formule: prix d'achat / durée de vie
