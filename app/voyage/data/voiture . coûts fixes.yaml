@@ -84,6 +84,7 @@ voiture . coûts fixes . parking:
 voiture . coûts fixes . pv:
   question: Quel est le coût annuel des contraventions que vous avez du payer ?
   par défaut: stationnement interdit + excès de vitesse
+  note: Idéalement, il faudrait trouver le montant moyen payé par français par an.
 
 voiture . coûts fixes . pv . excès de vitesse: 68 €
 voiture . coûts fixes . pv . stationnement interdit: 15 €

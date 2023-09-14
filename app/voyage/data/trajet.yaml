@@ -113,6 +113,8 @@ trajet voiture . distance en voiture:
   note: |
     Bien sûr, la méthode est contestable : quid des trajets au bord d'une côte accidentée où de longs détours sont nécessaires ? La France étant héxagonale, ce problème est en moyenne mitigé.
 
+    > Le modèle s'applique donc très mal à des trajets pénisulaires comme Brest -> Camaret, ou d'autres qui traversent des grandes fleuves avec peu de ponts, comme l'estuaire de la Seine au Havre.
+
     Quid d'une différence entre trajets courts, moyens, longs ? Il faudrait en effet l'intégrer. 
 
     Le plus simpe cependant, sera bien sûr d'utiliser un calculateur d'itinéraire dans le futur.
