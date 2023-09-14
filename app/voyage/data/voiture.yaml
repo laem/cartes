@@ -136,11 +136,20 @@ voiture . prix d'achat:
 
 voiture . coûts fixes . achat amorti:
   formule: prix d'achat / durée de vie
+  description: |
+    Cette méthode de calcul nous permet de ne pas devoir retrancher le prix de revente. C'est une autre méthode possible. Ici, nous considérons donc, et c'est théorique bien sûr, que chacun garde sa voiture jusqu'au bout de sa vie. C'est vrai pour la moyenne française, mais faux à titre individuel.
+
+    La [méthode de u/h2o52](https://www.reddit.com/r/france/comments/14aswpe/le_vrai_coût_dun_kilomètre_parcouru_en_voiture/) considère elle un prix de revente.
 
 voiture . coûts fixes . assurance:
   question: Quel est le coût annuel de l'assurance ?
   note: Aide à la saisie mensuelle ?
-  par défaut: 600€
+  description: |
+    Le prix moyen et les suggestions de prix d'assurance voiture sont listés ici https://selectra.info/assurance/assurance-auto/tarif.
+  par défaut: 610€
+  suggestions:
+    premier prix (au tiers): 527 €
+    haut de gamme (tous risques): 733 €
 
 voiture . coûts fixes . entretien:
   question: Quel est le coût annuel d'entretien de la voiture ?
