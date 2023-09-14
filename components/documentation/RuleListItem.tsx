@@ -1,7 +1,7 @@
 import { utils } from 'publicodes'
 import Link from 'next/link'
 import highlightMatches from '../highlightMatches'
-import { Item } from './RuleListItemUI'
+import { InlineSmall, Item } from './RuleListItemUI'
 
 export default function RuleListItem({
 	rules,
@@ -39,13 +39,16 @@ export default function RuleListItem({
 						))}
 					<br />
 				</small>
-				<span>{rules[item.dottedName]?.icônes}</span>
-				{matches
-					? highlightMatches(
-							item.title,
-							matches.filter((m) => m.key === 'title')
-					  )
-					: item.title}
+				<div>
+					<span>{rules[item.dottedName]?.icônes}</span>
+					{matches
+						? highlightMatches(
+								item.title,
+								matches.filter((m) => m.key === 'title')
+						  )
+						: item.title}
+					{item.unité && <InlineSmall>{item.unité}</InlineSmall>}
+				</div>
 			</Link>
 		</Item>
 	)
