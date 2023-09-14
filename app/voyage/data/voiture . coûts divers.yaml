@@ -1,0 +1,31 @@
+voiture . coûts divers:
+  titre: Coûts divers annuels voiture
+  description: |
+    Tout ce qui n'est pas instantané et inévitable, ni lié à la possession d'une voiture. 
+
+    Par exemple, quand on loue une voiture, on peut conduire en infraction et les PV seront évidemment pour notre pomme. En général, on n'a pas à laver l'extérieur de la voiture, mais cela dépend.
+
+  formule:
+    somme:
+      - parking
+      - pv
+      - permis de conduire
+
+voiture . coût divers . parking:
+  question: Quel est le coût annuel de l'ensemble des frais de parking ?
+  par défaut: 100€
+voiture . coût divers . pv:
+  question: Quel est le coût annuel des contraventions que vous avez du payer ?
+  par défaut: stationnement interdit + excès de vitesse
+  note: Idéalement, il faudrait trouver le montant moyen payé par français par an.
+
+voiture . coût divers . pv . excès de vitesse: 68 €
+voiture . coût divers . pv . stationnement interdit: 15 €
+
+voiture . coût divers . permis de conduire:
+  formule: 1804 €
+  description: |
+    Sans conducteur avec permis, pas de km parcourus en voiture individuelle !
+
+    Bien sûr, on peut se dire "Non mais tous les Français passent le permis de toutes façon". Certes, une majorité le passe, mais avec le même raisonnement, on prétend que tous les Français ont une voiture de toute façon... et on en revient à un coût totalement sous-estimé.
+  note: Le prix est tiré de cette [enquête d'une association de consommateurs 2023](https://hauteloire.ufcquechoisir.fr/2016/10/05/enquete-auto-ecoles/).

@@ -103,5 +103,7 @@ voiture . km prévisionnels:
   note: source à trouver
   formule: 250000 km
 
-voiture . coûts fixes au km:
-  formule: coûts fixes / km annuels
+voiture . coût de possession au km:
+  formule: coût de possession / km annuels
+voiture . coûts divers au km:
+  formule: coûts divers / km annuels

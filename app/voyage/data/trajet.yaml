@@ -51,6 +51,7 @@ trajet voiture . coût trajet:
     somme:
       - coût instantané
       - coût de possession
+      - coûts divers
     unité: €
 
 trajet voiture . coût instantané:
@@ -98,6 +99,10 @@ trajet voiture . prix électricité:
 trajet voiture . coût de possession:
   titre: Coûts de possession ramenés au trajet
   formule: voiture . coût de possession au km * distance en voiture
+
+trajet voiture . coûts divers:
+  titre: Coûts divers ramenés au trajet
+  formule: voiture . coûts divers au km * distance en voiture
 
 trajet voiture . départ:
   note: Variable remplie par une interface de recherche.
@@ -147,18 +152,3 @@ trajet voiture . péages par km:
     Les prix sont très variables ! D'après [cette source](https://www.auto-moto.com/en-bref/prix-autoroutes-2021-peages-plus-chers-chers-10567), l'autoroute A14 coûte 55 centimes par km, quand l'autoroute A68 coûte 2 centimes par km.
 
     La source de notre chiffre est [cet article](https://www.pourleco.com/consommation/combien-coute-lautoroute) (avez-vous mieux ?), qui nous donne 10 centimes en 2020, que nous [réactualisons avec l'inflation](https://france-inflation.com/calculateur_inflation.php).
-
-trajet train:
-
-trajet train . coût trajet total:
-  titre: Coût du trajet en train par personne
-  formule: coût trajet * trajet . voyageurs
-
-trajet train . coût trajet:
-  formule: distance * train . prix au km * train . réduction
-
-trajet train . distance:
-  titre: Distance trajet
-  question: Quelle est la distance du trajet ?
-  description: Par défaut Nantes-Orléans
-  par défaut: 270 km

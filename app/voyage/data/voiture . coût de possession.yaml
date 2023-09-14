@@ -1,14 +1,13 @@
 voiture . coût de possession:
   titre: Coûts de possession annuels voiture
+  description: |
+    Tout ce qui
   formule:
     somme:
       - achat amorti
       - assurance
       - entretien
-      - parking
-      - pv
       - lavage
-      - permis de conduire
   exemples:
     - titre: Avec une assurance légère
       situation:
@@ -77,22 +76,3 @@ voiture . coût de possession . entretien:
   suggestions:
     petit rouleur: 840 €
     gros rouleur: 1700 €
-
-voiture . coût de possession . parking:
-  question: Quel est le coût annuel de l'ensemble des frais de parking ?
-  par défaut: 100€
-voiture . coût de possession . pv:
-  question: Quel est le coût annuel des contraventions que vous avez du payer ?
-  par défaut: stationnement interdit + excès de vitesse
-  note: Idéalement, il faudrait trouver le montant moyen payé par français par an.
-
-voiture . coût de possession . pv . excès de vitesse: 68 €
-voiture . coût de possession . pv . stationnement interdit: 15 €
-
-voiture . coût de possession . permis de conduire:
-  formule: 1804 €
-  description: |
-    Sans conducteur avec permis, pas de km parcourus en voiture individuelle !
-
-    Bien sûr, on peut se dire "Non mais tous les Français passent le permis de toutes façon". Certes, une majorité le passe, mais avec le même raisonnement, on prétend que tous les Français ont une voiture de toute façon... et on en revient à un coût totalement sous-estimé.
-  note: Le prix est tiré de cette [enquête d'une association de consommateurs 2023](https://hauteloire.ufcquechoisir.fr/2016/10/05/enquete-auto-ecoles/).
