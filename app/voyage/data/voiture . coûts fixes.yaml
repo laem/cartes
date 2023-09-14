@@ -5,7 +5,8 @@ voiture . coûts fixes:
       - achat amorti
       - assurance
       - entretien
-      - parking et pv
+      - parking
+      - pv
       - lavage
       - permis de conduire
   exemples:
@@ -82,12 +83,15 @@ voiture . coûts fixes . parking:
   par défaut: 100€
 voiture . coûts fixes . pv:
   question: Quel est le coût annuel des contraventions que vous avez du payer ?
-  par défaut:
+  par défaut: stationnement interdit + excès de vitesse
 
-  voiture . coûts fixes . permis de conduire:
-    formule: 1804 €
-    description: |
-      Sans conducteur avec permis, pas de km parcourus en voiture individuelle !
+voiture . coûts fixes . pv . excès de vitesse: 68 €
+voiture . coûts fixes . pv . stationnement interdit: 15 €
 
-      Bien sûr, on peut se dire "Non mais tous les Français passent le permis de toutes façon". Certes, une majorité le passe, mais avec le même raisonnement, on prétend que tous les Français ont une voiture de toute façon... et on en revient à un coût totalement sous-estimé.
-    note: Le prix est tiré de cette [enquête d'une association de consommateurs 2023](https://hauteloire.ufcquechoisir.fr/2016/10/05/enquete-auto-ecoles/).
+voiture . coûts fixes . permis de conduire:
+  formule: 1804 €
+  description: |
+    Sans conducteur avec permis, pas de km parcourus en voiture individuelle !
+
+    Bien sûr, on peut se dire "Non mais tous les Français passent le permis de toutes façon". Certes, une majorité le passe, mais avec le même raisonnement, on prétend que tous les Français ont une voiture de toute façon... et on en revient à un coût totalement sous-estimé.
+  note: Le prix est tiré de cette [enquête d'une association de consommateurs 2023](https://hauteloire.ufcquechoisir.fr/2016/10/05/enquete-auto-ecoles/).
