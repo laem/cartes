@@ -1,0 +1,33 @@
+dimensions:
+  - titre: distance
+    valeurs:
+      - titre: 1000 km (Brest→Nice)
+        situation:
+          trajet voiture . distance: 1000
+      - titre: 500 km (Bordeaux→Lyon)
+        situation:
+          trajet voiture . distance: 500
+      - titre: 150 km (Brest→Rennes)
+        situation:
+          trajet voiture . distance: 150
+      - titre: 15 km (Puteaux → Montreuil)
+        situation:
+          trajet voiture . distance: 15
+      - titre: 4 km (Nancy → Vandoeuvre)
+        situation:
+          trajet voiture . distance: 4
+  - titre: voiture
+    valeurs:
+      - titre: citadine diesel
+        situation:
+          voiture . consommation thermique: 5
+          voiture . prix d'achat: 18000 €
+      - titre: SUV diesel
+        situation:
+          voiture . consommation thermique: 7
+          voiture . prix d'achat: 29000 €
+
+      - titre: citadine électrique
+        situation:
+          voiture . motorisation: "'électrique'"
+          voiture . prix d'achat: 30100 €
