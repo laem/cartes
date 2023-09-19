@@ -2,7 +2,7 @@
 import styled from 'styled-components'
 
 export const Header = styled.header`
-	margin-top: 1rem;
+	margin-top: 0rem;
 	h1 {
 		margin-top: 0;
 	}
@@ -18,6 +18,14 @@ export const Header = styled.header`
 		max-width: 6vw;
 		height: auto;
 		border-radius: 0.6rem;
+	}
+	@media (max-width: 800px) {
+		img {
+			display: none;
+		}
+		div {
+			margin-left: 0;
+		}
 	}
 `
 
