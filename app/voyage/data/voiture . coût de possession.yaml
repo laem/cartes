@@ -65,7 +65,7 @@ voiture . coût de possession . assurance:
     premier prix (au tiers): 527 €
     haut de gamme (tous risques): 733 €
 
-voiture . coût de possession . entretien:
+voiture . coût de possession . entretien thermique:
   question: Quel est le coût annuel d'entretien de la voiture ?
   description: |
     Le Mag de l'auto nous dit entre 840 € et 1000 € selon les modèles pour les "petits" rouleurs. Pour les gros rouleurs, ils l'estiment à 1700 €.
@@ -80,3 +80,12 @@ voiture . coût de possession . entretien:
   suggestions:
     petit rouleur: 840 €
     gros rouleur: 1700 €
+
+voiture . coût de possession . entretien:
+  formule: entretien thermique * 70%
+  description: L'estimation des gains de coût d'entretien d'une voiture électrique varie fortement. [Cet article](https://www.caradisiac.com/cout-d-entretien-des-ve-neuves-ou-d-occasion-on-economise-ou-pas-alors-202126.htm) nous permet de déduire une estimation grossière de -30%.
+
+  note: |
+    CF le note de `entretien thermique` : il faudra paramétrer ces facteurs. En particulier, les voitures plus chères coûtent plus cher à entretenir.
+
+    La batterie est aussi à étudier, mais pour l'instant nous la rangeons plutôt dans le prix d'achat ramené à la durée de vie. Mais la durée de vie d'une VE, batterie comprise, étonne chaque année encore plus par sa longévité.
