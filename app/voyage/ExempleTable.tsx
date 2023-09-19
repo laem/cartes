@@ -10,7 +10,7 @@ export default function ExempleTable() {
 		voiture = exemples.dimensions[1]
 	return (
 		<div>
-			<HorizontalOl>
+			<HorizontalOl $header>
 				<li key={'distance'}>Distance</li>
 				{voiture.valeurs.map((element2) => (
 					<li key={element2.titre}>{element2.titre}</li>
@@ -20,7 +20,11 @@ export default function ExempleTable() {
 				{distances.valeurs.map((element) => (
 					<li key={element.titre}>
 						<HorizontalOl>
-							<li>{element.titre}</li>
+							<li>
+								{element.titre}
+								<small>{element['sous-titre']}</small>
+							</li>
+
 							{voiture.valeurs.map((element2) => (
 								<li>
 									{formatValue(
@@ -32,6 +36,7 @@ export default function ExempleTable() {
 											.evaluate(objective).nodeValue,
 										{ precision: 0 }
 									)}
+									&nbsp; €
 								</li>
 							))}
 						</HorizontalOl>

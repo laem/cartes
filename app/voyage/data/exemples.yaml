@@ -1,19 +1,24 @@
 dimensions:
   - titre: distance
     valeurs:
-      - titre: 1000 km (Brest→Nice)
+      - titre: 1000 km
+        sous-titre: Brest→Nice
         situation:
           trajet voiture . distance: 1000
-      - titre: 500 km (Bordeaux→Lyon)
+      - titre: 500 km
+        sous-titre: Bordeaux→Lyon
         situation:
           trajet voiture . distance: 500
-      - titre: 150 km (Brest→Rennes)
+      - titre: 150 km
+        sous-titre: Brest→Rennes
         situation:
           trajet voiture . distance: 150
-      - titre: 15 km (Puteaux → Montreuil)
+      - titre: 15 km
+        sous-titre: Puteaux → Montreuil
         situation:
           trajet voiture . distance: 15
-      - titre: 4 km (Nancy → Vandoeuvre)
+      - titre: 4 km
+        sous-titre: Nancy → Vandoeuvre
         situation:
           trajet voiture . distance: 4
   - titre: voiture
