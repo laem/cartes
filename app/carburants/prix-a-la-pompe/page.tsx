@@ -3,7 +3,7 @@ import { Metadata } from 'next'
 import Carburants from './Carburants'
 import { Header, P } from './UI'
 
-const title = 'Comprendre le prix à la pompe'
+const title = 'Comprendre le prix du carburant en France'
 const description =
 	"Comprendre comment le prix de l'essence et du gazole à la pompe est calculé. Prix du pétrole brut (Brent), taxes (TVA, TICPE), marges de raffinage et distribution."
 
