@@ -6,6 +6,12 @@ export const VerticalOl = styled.ol`
 	display: flex;
 	flex-direction: column;
 	list-style-type: none;
+	img {
+		width: 1.5rem;
+		height: auto;
+		filter: invert(1);
+		vertical-align: text-bottom;
+	}
 `
 export const HorizontalOl = styled.ol`
 	${(p) =>
@@ -28,5 +34,34 @@ export const HorizontalOl = styled.ol`
 	}
 	li small {
 		display: block;
+	}
+`
+
+export const PassengersButton = styled.button`
+	padding: 0.4rem 1rem;
+	display: block;
+	margin: 1rem auto;
+	font-size: 200%;
+	display: flex;
+	align-items: center;
+	border: 1px solid var(--lightColor);
+	background: var(--lightColor);
+	color: var(--darkestColor);
+	img {
+		width: 2.5rem;
+		height: 2.5rem;
+	}
+`
+
+export const ExplanationBlock = styled.p`
+	img {
+		width: 3rem;
+		height: auto;
+	}
+	display: flex;
+	p {
+		margin: 1rem;
+		line-height: 1.2rem;
+		font-style: italic;
 	}
 `

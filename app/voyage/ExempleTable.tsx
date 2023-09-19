@@ -1,15 +1,23 @@
+'use client'
 import Publicodes, { formatValue } from 'publicodes'
 import rules from './data/rules'
 import exemples from './data/exemples.yaml'
-import { HorizontalOl, VerticalOl } from './ExempleTableUI'
+import { ExplanationBlock, HorizontalOl, VerticalOl } from './ExempleTableUI'
+import { useState } from 'react'
+import Passengers, { PersonImage } from './Passengers'
+import Emoji from '@/components/Emoji'
 
 export default function ExempleTable() {
 	const engine = new Publicodes(rules),
 		objective = 'trajet voiture . coût trajet par personne'
 	const distances = exemples.dimensions[0],
 		voiture = exemples.dimensions[1]
+
+	const [passengers, setPassengers] = useState(1)
+
 	return (
 		<div>
+			<Passengers {...{ passengers, setPassengers }} />
 			<HorizontalOl $header>
 				<li key={'distance'}>Distance</li>
 				{voiture.valeurs.map((element2) => (
@@ -26,23 +34,48 @@ export default function ExempleTable() {
 							</li>
 
 							{voiture.valeurs.map((element2) => (
-								<li>
+								<li key={element2.titre}>
 									{formatValue(
 										engine
 											.setSituation({
 												...element.situation,
 												...element2.situation,
+												'trajet . voyageurs': passengers,
 											})
 											.evaluate(objective).nodeValue,
 										{ precision: 0 }
 									)}
-									&nbsp; €
+									&nbsp; € / <PersonImage />
 								</li>
 							))}
 						</HorizontalOl>
 					</li>
 				))}
 			</VerticalOl>
+			<Explanation {...{ distances, voiture, engine, objective, passengers }} />
 		</div>
+	)
+}
+
+const plural = (integer) => (integer > 1 ? 's' : '')
+export const Explanation = ({
+	distances,
+	voiture,
+	engine,
+	objective,
+	passengers,
+}) => {
+	const { titre, 'sous-titre': subTitle } = distances.valeurs[0]
+	return (
+		<ExplanationBlock>
+			<Emoji e="🧑‍🏫" />
+			<p>
+				Interprétation : pour un trajet <strong>{subTitle}</strong> de{' '}
+				<strong>{titre}</strong> , en citadine diesel, pour {passengers}{' '}
+				voyageur{plural(passengers)} (soit 1 conducteur et {passengers - 1}{' '}
+				passager{plural(passengers)}, le coût du trajet par personne est de x €,
+				la valeur indiquée dans le tableau.
+			</p>
+		</ExplanationBlock>
 	)
 }
