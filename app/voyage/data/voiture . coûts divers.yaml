@@ -37,6 +37,19 @@ voiture . coûts divers . pv . excès de vitesse: 68 €
 voiture . coûts divers . pv . stationnement interdit: 15 €
 
 voiture . coûts divers . permis de conduire:
+  formule: permis de conduire . obtention / durée d'utilisation
+
+voiture . coûts divers . permis de conduire . durée d'utilisation:
+  formule: durée de vie en bonne santé - âge d'obtention
+durée de vie en bonne santé:
+  formule: 66
+  références:
+    - https://www.vie-publique.fr/en-bref/288403-esperance-de-vie-en-bonne-sante-67-ans-femmes-656-ans-hommes
+voiture . coûts divers . permis de conduire . âge d'obtention:
+  formule: 19
+  références:
+    - https://www.preventionroutiere.asso.fr/wp-content/uploads/2016/04/Etude_Les_jeunes_Français_et_le_permis-_B-10-06-2013.pdf
+voiture . coûts divers . permis de conduire . obtention:
   formule: 1804 €
   description: |
     Sans conducteur avec permis, pas de km parcourus en voiture individuelle !

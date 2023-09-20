@@ -29,7 +29,6 @@ dimensions:
     valeurs:
       - titre: citadine diesel
         situation:
-          voiture . consommation thermique: 5
           voiture . prix d'achat: 18000 €
       - titre: SUV diesel
         situation:
