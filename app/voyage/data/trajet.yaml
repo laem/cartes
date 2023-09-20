@@ -170,4 +170,6 @@ trajet voiture . péages par km:
   note: |
     Les prix sont très variables ! D'après [cette source](https://www.auto-moto.com/en-bref/prix-autoroutes-2021-peages-plus-chers-chers-10567), l'autoroute A14 coûte 55 centimes par km, quand l'autoroute A68 coûte 2 centimes par km.
 
+    Il faudrait donc poser la question du coût pour les experts, ou segmenter par localisation du trajet, mais ce n'est pas trivial.
+
     La source de notre chiffre est [cet article](https://www.pourleco.com/consommation/combien-coute-lautoroute) (avez-vous mieux ?), qui nous donne 10 centimes en 2020, que nous [réactualisons avec l'inflation](https://france-inflation.com/calculateur_inflation.php).
