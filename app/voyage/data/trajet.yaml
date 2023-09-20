@@ -145,8 +145,25 @@ trajet voiture . péages:
   formule: distance en voiture * péages par km * part autoroute
 
 trajet voiture . part autoroute:
-  formule: 15 %
+  question: Quelle part de votre trajet est faite sur autoroute ?
+  par défaut: par défaut
+  suggestions:
+    aucune: 0 %
+    la moitié: 50 %
+    tout autoroute: 90 %
   note: Nous cherchons une source pour ce chiffre. Nous n'avons pas mieux que [celle-ci](https://fr.statista.com/statistiques/899236/frequence-utilisation-voiture-en-autoroute-france/), mais ce n'est pas ce qu'on cherche.
+
+trajet voiture . part autoroute . par défaut:
+  note: Ce barème est très approximatif.
+  formule:
+    variations:
+      - si: distance > 500
+        alors: 90 %
+      - si: distance > 200
+        alors: 50 %
+      - si: distance > 100
+        alors: 10 %
+      - sinon: 0 %
 
 trajet voiture . péages par km:
   formule: 0.113 €/km
