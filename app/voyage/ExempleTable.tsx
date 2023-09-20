@@ -2,7 +2,12 @@
 import Publicodes, { formatValue } from 'publicodes'
 import rules from './data/rules'
 import exemples from './data/exemples.yaml'
-import { ExplanationBlock, HorizontalOl, VerticalOl } from './ExempleTableUI'
+import {
+	ExplanationBlock,
+	HorizontalOl,
+	Table,
+	VerticalOl,
+} from './ExempleTableUI'
 import { useState } from 'react'
 import Passengers, { PersonImage } from './Passengers'
 import Emoji from '@/components/Emoji'
@@ -18,40 +23,44 @@ export default function ExempleTable() {
 	return (
 		<div>
 			<Passengers {...{ passengers, setPassengers }} />
-			<HorizontalOl $header>
-				<li key={'distance'}>Distance</li>
-				{voiture.valeurs.map((element2) => (
-					<li key={element2.titre}>{element2.titre}</li>
-				))}
-			</HorizontalOl>
-			<VerticalOl>
-				{distances.valeurs.map((element) => (
-					<li key={element.titre}>
-						<HorizontalOl>
-							<li>
-								{element.titre}
-								<small>{element['sous-titre']}</small>
-							</li>
-
-							{voiture.valeurs.map((element2) => (
-								<li key={element2.titre}>
-									{formatValue(
-										engine
-											.setSituation({
-												...element.situation,
-												...element2.situation,
-												'trajet . voyageurs': passengers,
-											})
-											.evaluate(objective).nodeValue,
-										{ precision: 0 }
-									)}
-									&nbsp; € / <PersonImage />
+			<Table>
+				<HorizontalOl $header>
+					<li key={'distance'}>Distance</li>
+					{voiture.valeurs.map((element2) => (
+						<li key={element2.titre}>{element2.titre}</li>
+					))}
+				</HorizontalOl>
+				<VerticalOl>
+					{distances.valeurs.map((element) => (
+						<li key={element.titre}>
+							<HorizontalOl>
+								<li>
+									{element.titre}
+									<small>{element['sous-titre']}</small>
 								</li>
-							))}
-						</HorizontalOl>
-					</li>
-				))}
-			</VerticalOl>
+
+								{voiture.valeurs.map((element2) => (
+									<li key={element2.titre}>
+										{formatValue(
+											engine
+												.setSituation({
+													...element.situation,
+													...element2.situation,
+													'trajet . voyageurs': passengers,
+												})
+												.evaluate(objective).nodeValue,
+											{ precision: 0 }
+										)}
+										<small>
+											&nbsp; € / <PersonImage />
+										</small>
+									</li>
+								))}
+							</HorizontalOl>
+						</li>
+					))}
+				</VerticalOl>
+			</Table>
 			<Explanation {...{ distances, voiture, engine, objective, passengers }} />
 		</div>
 	)

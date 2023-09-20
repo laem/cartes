@@ -1,13 +1,16 @@
 'use client'
 
 import styled from 'styled-components'
+export const Table = styled.div`
+	min-width: 25rem;
+`
 
 export const VerticalOl = styled.ol`
 	display: flex;
 	flex-direction: column;
 	list-style-type: none;
 	img {
-		width: 1.5rem;
+		width: 1rem;
 		height: auto;
 		filter: invert(1);
 		vertical-align: text-bottom;
@@ -31,9 +34,16 @@ export const HorizontalOl = styled.ol`
 	justify-content: space-evenly;
 	li {
 		flex: 1;
+		text-align: right;
+	}
+	li:first-child {
+		text-align: left;
+		line-height: 1.3rem;
+		small {
+			display: block;
+		}
 	}
 	li small {
-		display: block;
 	}
 `
 
