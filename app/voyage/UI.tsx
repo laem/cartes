@@ -11,11 +11,11 @@ export const Header = styled.header`
 	justify-content: space-evenly;
 	align-items: center;
 	> div {
-		margin-left: 2rem;
+		margin-left: 1rem;
 		max-width: 600px;
 	}
 	img {
-		max-width: 6vw;
+		max-width: 12vw;
 		height: auto;
 		border-radius: 0.6rem;
 	}
