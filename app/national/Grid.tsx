@@ -7,24 +7,45 @@ import Card from './Card'
 
 const undefinedIsZero = (figure) => (figure == null ? 0 : figure)
 
-const Grid = ({ state, setState }) => (
-	<ul
-		id="shareImage"
-		css={`
-			display: flex;
-			align-items: center;
-			justify-content: center;
-			flex-wrap: wrap;
-			touch-action: manipulation;
-			margin-top: 2rem;
-		`}
-	>
-		{data
-			.sort((a, b) => undefinedIsZero(b.formule) - undefinedIsZero(a.formule))
-			.map((el) => (
-				<Card {...{ data: el, state, setState }} />
-			))}
-	</ul>
-)
+const Grid = ({ state, setState }) => {
+	const sorted = data.sort(
+			(a, b) => undefinedIsZero(b.formule) - undefinedIsZero(a.formule)
+		),
+		evaluated = sorted.filter((el) => el.formule),
+		notEvaluated = sorted.filter((el) => !el.formule)
+
+	return (
+		<ul
+			id="shareImage"
+			css={`
+				margin-top: 3rem;
+				h2 {
+					text-align: center;
+				}
+				> div {
+					display: flex;
+					align-items: center;
+					justify-content: center;
+					flex-wrap: wrap;
+					touch-action: manipulation;
+					margin-top: 2rem;
+				}
+			`}
+		>
+			<h2>Action chiffrées</h2>
+			<div>
+				{evaluated.map((el) => (
+					<Card {...{ data: el, state, setState }} />
+				))}
+			</div>
+			<h2>Action pas encore chiffrées</h2>
+			<div>
+				{notEvaluated.map((el) => (
+					<Card {...{ data: el, state, setState }} />
+				))}
+			</div>
+		</ul>
+	)
+}
 
 export default Grid

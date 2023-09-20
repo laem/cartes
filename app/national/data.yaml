@@ -201,15 +201,21 @@
 - titre: Fin de la vente des voitures thermiques
   catégorie: transport
   icônes: 🚗♨
-- titre: Diviser par 2 le nombre de voitures en circulation
   notes: |
-    Tiré de https://www.bl-evolution.com/wp-content/uploads/2021/11/Infographie-15°C.pdf
+    Une fois n'est pas coutume, voici une mesure peu ambitieuse : en effet, seul 1 % du parc est renouvelé chaque année, et les acheteurs de voitures neuves sont les gens aisés et les entreprises.
+
+    Malgré la très faible ambition de cette mesure, elle n'est prévue que pour 2035. C'est un marqueur très net du manque d'ambition des villes, de la France, de l'Union Européenne. De l'Allemagne, en particulier, qui [a forcé à plusieurs reprises l'UE à restreindre ses ambitions](https://www.francetvinfo.fr/monde/environnement/crise-climatique/automobile-l-union-europeenne-accepte-d-assouplir-l-interdiction-sur-les-moteurs-thermiques-apres-2035-sous-la-pression-de-berlin_5731955.html), forte de son électorat passionné de voitures et de grosses voitures, et de son industrie puissante et lourde.
+
+- titre: Diviser par 2 le nombre de voitures en circulation
   catégorie: transport
   icônes: 🚗
+  notes: |
+    Cette mesure prend le contrepied de l'autre mesure "Électrifier le parc de voitures", en assumant qu'il est irréaliste de renouveler tout le parc en électrique, et qu'il est surtout ruineux et inutile de garder autant de véhicules en circulation en France, face à toutes les alternatives. 
+
+    Cette action est tirée du rapport "1,5°" par B&L Evolution https://www.bl-evolution.com/wp-content/uploads/2021/11/Infographie-15°C.pdf
 - titre: Électrifier le parc de voitures
   notes: |
-    Un bel exemple d'action irréaliste en un an. Il faudrait pour bien faire les choses proposer un scénario annuel, 
-    mais qui complexifierait lourdement le message envoyé au grand public.
+    Cette action est un bel exemple de ce qui est irréaliste en un an. Il faudrait pour bien faire les choses proposer un scénario annuel.
   catégorie: transport
   icônes: 🚗⚡️
 - titre: Fin des trajets en voiture de moins de 5 km
