@@ -43,8 +43,11 @@ export const HorizontalOl = styled.ol`
 			display: block;
 		}
 	}
-	li small {
-	}
+	${(p) =>
+		p.$spotlight &&
+		`
+	border: 2px solid var(--color);
+	`}
 `
 
 export const PassengersButton = styled.button`

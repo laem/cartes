@@ -1,6 +1,10 @@
 dimensions:
   - titre: distance
     valeurs:
+      - titre: 1 km
+        sous-titre: Valeur de référence
+        situation:
+          trajet voiture . distance: 1
       - titre: 1000 km
         sous-titre: Brest→Nice
         situation:

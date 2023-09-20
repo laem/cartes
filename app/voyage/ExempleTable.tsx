@@ -31,9 +31,9 @@ export default function ExempleTable() {
 					))}
 				</HorizontalOl>
 				<VerticalOl>
-					{distances.valeurs.map((element) => (
+					{distances.valeurs.map((element, i) => (
 						<li key={element.titre}>
-							<HorizontalOl>
+							<HorizontalOl $spotlight={i === 0}>
 								<li>
 									{element.titre}
 									<small>{element['sous-titre']}</small>
@@ -49,7 +49,7 @@ export default function ExempleTable() {
 													'trajet . voyageurs': passengers,
 												})
 												.evaluate(objective).nodeValue,
-											{ precision: 0 }
+											{ precision: i === 0 ? 2 : 0 }
 										)}
 										<small>
 											&nbsp; € / <PersonImage />
