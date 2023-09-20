@@ -133,9 +133,32 @@
 - titre: Remplacer toutes les chaudières à gaz
   catégorie: logement
   icônes: 🔥
+  notes: |
+    Cette action est on ne peut plus simple : faire passer une loi et lancer une grande initiative nationale de remplacement des chaudières à gaz. 
+
+    Les alternatives sont très matures : dans les logements les mieux isolés, une combinaison de chauffage électrique, de sobriété et de pompes à chaleur air-air peuvent remplacer le gaz pour un moindre coût. En particulier, il est évident que passer les jours les plus froids de l'année à 24° au lieu de 19 est un luxe que nous devons mettre immédiatement de côté. 
+
+    Les logements les moins bien isolés doivent évidemment l'être. C'est l'objet d'une autre action. 
+
+    Entre les deux, la pompe à chaleur air-eau n'est pas une solution donnée, mais elle est très efficace, car dans de nombreux cas elle peut réutiliser les canalisations et parfois les chauffages en fonte qui diffusent déjà la chaleur de l'eau chauffée par la chaudière à gaz. La pompe à chaleur chauffe l'eau à une température plus faible que la chaudière au gaz : ainsi souvent, elle doit être combinée à des travaux d'isolation pour que la surface de diffusion disponible suffise à chauffer la pièce à 19°.
+
+    Enfin, n'oublions pas les réseaux de chaleur urbains, qui se déploient comme on peut le voir sur [France chaleur urbaine](https://france-chaleur-urbaine.beta.gouv.fr/carte).
+
+    Dans une certaines mesure, n'oublions pas non plus le biogaz : il pourra être utile pour ne pas remplacer une minorité des équipements gaz. Mais il y a fort à parier qu'il soit surtout utile dans l'industrie. Il est en tout cas impossible que le biogaz remplace le gaz fossile en France, sauf à diviser par deux notre production alimentaire, pour faire pousser du maïs énergétique, comme c'est déjà le cas en Allemagne.
+
+    En termes politiques, notons que la mesure d'interdiction des nouvelles chaudières à gaz ne suffit pas : comme d'habitude, et en particulier dans le logement, le rythme de renouvellement du parc, de 1 % en ordre de grandeur, ne suffit absolument pas à répondre à l'urgence climatique.
+
+    Enfin, l'évolution de l'empreinte climat d'un kWh de gaz inquiète de plus en plus : nombres de nouvelles études ont documenté les massives fuites de méthanes de l'extraction de gaz. L'empreinte du gaz a donc été très certainement sous-estimée par le passé, et l'est toujours.
+
 - titre: Remplacer toutes les chaudières à fioul
   catégorie: logement
   icônes: 🔥
+  notes: |
+    Cette action est la même que [Remplacer toutes les chaudières à gaz](/national/action/remplacer-toutes-les-chaudières-à-gaz), sauf qu'**elle est encore plus urgente**.
+
+    L'absence de grand plan national de remplacement des chaudières à fioul est un témoin très fiable du manque cruel d'engagement du gouvernement et de ses électeurs.
+
+    Comme pour le gaz, la mesure d'interdiction des nouvelles chaudières au fioul ne suffit pas : comme d'habitude, et en particulier dans le logement, le rythme de renouvellement du parc, de 1 % en ordre de grandeur, ne suffit absolument pas à répondre à l'urgence climatique.
 - titre: Construire une ligne de tram ou métro dans toutes les villes
   notes: |
     Le titre de cette action peut vous paraitre provocateur. Il ne s'agit évidemment pas d'équipe toutes les communes de France d'un tram. Les bourgs et villages n'en seront jamais le centre. 
