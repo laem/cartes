@@ -2,6 +2,10 @@ voiture:
   icônes: 🚗
 
 voiture . coûts au km:
+  description: |
+    Le coût d'un mode de transport est souvent estimé au km.
+
+    <Plop/>
   formule:
     somme:
       - coût instantané au km
@@ -96,18 +100,37 @@ voiture . motorisation . électrique . consommation:
     TODO: Il sera donc essentiel de faire varier les prix en fonction des choix de l'utilisateur.
 
 voiture . durée de vie:
-  note: source à trouver (durée de vie moyenne d'une voiture)
-  formule: 20
+  description: |
+    Attention à ne pas confondre durée de possession et durée de vie ! Un citoyen peut garder une voiture 5 ans en moyenne, mais elle continue d'exister et de rouler. 
+
+    Ainsi la durée de vie (durée avant d'aller à la casse) est estimée à 19 ans.
+  note: |
+    Notre source est un article de [l'Argus](https://www.largus.fr/actualite-automobile/le-top-15-des-voitures-envoyees-a-la-casse-10348407.html) qui cite un rapport de l'ADEME de 2018.
+
+  formule:
+    variations:
+      - si: motorisation = 'électrique'
+        alors: 40
+      - sinon: 19
   unité: an
 
 voiture . km annuels:
   titre: Kilomètres annuels
-  formule: km prévisionnels / durée de vie
+  formule: 12223 km/an
+  description: |
+    En 2019, d'après le [SDES](<https://www.statistiques.developpement-durable.gouv.fr/sites/default/files/2021-12/08_partie_g_bilan_circulation_2020_0.pdf>), une voiture particulière française a parcouru ce nombre de km en moyenne.
+
+    À noter, les diesel en ont parcouru 14 392 et les essences 8 920. Cependant, il faudrait que nous ayons des données sur la durée de vie à la casse différenciées par motorisation pour pouvoir faire la distinction.
+
+    Les données existent pour 2020, mais nous privilégions celles de 2019, vu l'impact temporaire des confinements sur les déplacements. Le nombre de km avait baissé de 17 % en 2020.
 
 voiture . km prévisionnels:
   titre: Kilomètres prévisionnels sur toute la durée de vie
-  note: source à trouver
-  formule: 250000 km
+  note: |
+    Il existe de nombreuses sources qui parlent de façon très approximative et peu sourcée d'une durée comprise entre 150 000 et 500 000 km. Nous sommes nombreux à avoir en tête la durée de vie de 250 000 km.
+
+    Faut de données sur les km des voitures à la casse, nous l'estimons via cette formule.
+  formule: durée de vie * km annuels
 
 voiture . coût de possession au km:
   formule: coût de possession / km annuels

@@ -111,8 +111,8 @@ function InnerStackedBarChart({ data, precision }: InnerStackedBarChartProps) {
 					))}
 			</BarStack>
 			<BarStackLegend className="print-background-force">
-				{dataWithPercentage.map(({ value, key, percentage, color, legend }) => (
-					<BarStackLegendItem key={key}>
+				{dataWithPercentage.map(({ key, percentage, color, legend, value }) => (
+					<BarStackLegendItem key={key} title={value}>
 						<SmallCircle style={{ backgroundColor: color }} />
 						{legend}
 						<strong title={value}>
@@ -143,9 +143,7 @@ export default function StackedRulesChart({
 			key: dottedName,
 			value: engine.evaluate({ valeur: dottedName, unité: targetUnit })
 				.nodeValue,
-			legend: (
-				<Link href={'/carburants/' + dottedName}>{title || rule.title}</Link>
-			),
+			legend: <span>{title || rule.title}</span>,
 			color,
 		}
 	})

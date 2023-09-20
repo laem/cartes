@@ -33,8 +33,7 @@ export default function Questions({
 		<ul>
 			<div
 				css={`
-					display: ${answeredQuestions.length !== 0 ? 'block' : 'none'};
-					opacity: ${answeredQuestions.length /
+					opacity: ${(answeredQuestions.length + 2) /
 					(answeredQuestions.length + nextQuestions.length)};
 				`}
 			>
