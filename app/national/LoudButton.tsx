@@ -33,22 +33,19 @@ export default function LoudButton({
 				-webkit-tap-highlight-color: transparent;
 
 				font-size: 120%;
-				color: #666666;
 				position: relative;
 
 				padding: 0;
 				width: 13rem;
 				height: 13rem;
 
-				background: #f4f5f6;
-				border: 4px solid #888888;
+				background: var(--lightestColor);
+				border: 4px solid var(--darkerColor);
 				${isChecked &&
 				`border: 6px solid var(--color); 
-				background: var(--lightestColor);`}
+				background: var(--lighterColor);`}
 				outline: none;
 				border-radius: 40px;
-				box-shadow: -6px -20px 35px #ffffff20, -6px -10px 15px #ffffff20,
-					-20px 0px 30px #ffffff20, 6px 20px 25px rgba(0, 0, 0, 0.2);
 				transition: 0.13s ease-in-out;
 				cursor: pointer;
 				&:active {
@@ -68,7 +65,6 @@ export default function LoudButton({
 					width: 100%;
 					height: 100%;
 
-					box-shadow: inset 0px -8px 0px #dddddd, 0px -8px 0px #f4f5f6;
 					border-radius: 40px;
 					transition: 0.13s ease-in-out;
 
@@ -99,12 +95,7 @@ export default function LoudButton({
 
 					text-align: center;
 					font-size: 100%;
-					background-color: #4f4f4f;
-					color: transparent;
-					text-shadow: 2px 2px 3px rgba(255, 255, 255, 0.5);
-					-webkit-background-clip: text;
-					-moz-background-clip: text;
-					background-clip: text;
+					color: var(--darkestColor);
 					transition: 0.13s ease-in-out;
 				}
 				.button__figure {
