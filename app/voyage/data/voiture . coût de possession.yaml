@@ -16,8 +16,23 @@ voiture . coût de possession:
       situation:
         voiture . coût de possession . assurance: 850 €
 
+voiture . prix d'achat . moyen:
+  formule: 20000
+  note: |
+    Nous prenons le prix moyen d'achat d'une voiture neuve en 2000. 
+
+    Nous l'estimons sur la base du graphique "Evolution prix moyen des autos" de [cet article](https://www.fiches-auto.fr/articles-auto/argent-economie/s-2499-l-incroyable-inflation-du-secteur-automobile.php) basé sur des données de l'Argus.
+
 voiture . prix d'achat:
-  question: Quel est le prix d'achat de la voiture, prime écologique déduite ?
+  question: Quel est le prix d'achat neuf de la voiture, prime écologique déduite ?
+  description: |
+    Il est important de **prendre le prix d'achat neuf** de la voiture, car nous estimons le prix au km en nous basant sur le kilométrage total de la voiture sur sa durée de vie.
+
+    Peu importe si vous achetez votre voiture d'occasion : cela baisserait son prix d'achat (par exemple de 30 000 à 20 000 en 2023, environ), mais cela réduirait aussi sa durée de vie. 
+
+    Vous l'aurez compris, ce calculateur ne vous permet donc pas de prendre en compte l'optimisation de l'âge d'achat de la voiture ni les bons plans que vous faites lors de l'achat. 
+
+    Ce n'est pas très important : si votre achat de voiture d'occasion est un bon plan pour vous, c'est un mauvais plan pour le vendeur, qui aura vu son coût au km augmenter d'autant que le votre a diminué.
   note: |
     Nous n'avons pas inclus dans les prix la prime à la conversion pour une voiture électrique, d'environ 2500 €.
 
@@ -26,10 +41,8 @@ voiture . prix d'achat:
     - pour la Tesla model 3 https://www.phonandroid.com/combien-coute-une-tesla-en-france-voici-les-prix-de-chaque-modele.html
     - pour les thermiques : https://www.caroom.fr
     - pour les occasions: https://occasion.largus.fr/auto/renault/clio-iv/
-  par défaut: 15000€
+  par défaut: moyen
   suggestions:
-    Clio occasion: 12000 €
-    Zoé occasion: 15000 €
     Dacia Spring Essential: 15800 €
     Clio V / Peugeot 208: 18000 €
     SUV Peugeot 3008: 29000 €
