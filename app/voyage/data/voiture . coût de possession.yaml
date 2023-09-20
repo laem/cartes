@@ -81,7 +81,7 @@ voiture . coût de possession . assurance:
 voiture . coût de possession . entretien thermique:
   question: Quel est le coût annuel d'entretien de la voiture ?
   description: |
-    Le Mag de l'auto nous dit entre 840 € et 1000 € selon les modèles pour les "petits" rouleurs. Pour les gros rouleurs, ils l'estiment à 1700 €.
+    Le [Mag de l'auto nous dit](https://www.lemagdelauto.com/dossier-1-combien-coute-voiture-annee.html) entre 840 € et 1000 € selon les modèles pour les "petits" rouleurs. Pour les gros rouleurs, ils l'estiment à 1700 €.
 
     Un certain nombre d'entretiens sont imposés par la loi, tels que le contrôle technique. 
 
