@@ -1,3 +1,5 @@
+import nationalData from '@/app/national/data.yaml'
+import { utils } from 'publicodes'
 const lines = [
 	'https://futur.eco',
 	'https://futur.eco/a-propos',
@@ -6,6 +8,12 @@ const lines = [
 	'https://futur.eco/national',
 	'https://futur.eco/carburants/prix-a-la-pompe',
 ]
+
+const nationalLines = nationalData.map(
+	(element) =>
+		'https://futur.eco/national/action/' +
+		utils.encodeRuleName(element.titre.toLowerCase())
+)
 
 const getResults = () =>
 	fetch('https://futureco-data.netlify.app/co2.json')
@@ -36,7 +44,11 @@ const encodeRuleName = (name) =>
 		.replace(/\s/g, '-')
 
 export default async function sitemap() {
-	const results = await getResults()
+	const asyncResults = await getResults(),
+		results = [...asyncResults, ...nationalLines]
+
+	console.log(nationalLines)
+
 	return results.map((el) => ({ url: el }))
 	return [
 		{

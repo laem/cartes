@@ -166,7 +166,7 @@ const Card = ({ data: { titre, icônes, formule }, state, setState }) => {
 			</button>
 
 			<Link
-				href={`/national/action/${encodeRuleName(titre)}`}
+				href={`/national/action/${encodeRuleName(titre.toLowerCase())}`}
 				css={`
 					text-decoration: none;
 					visibility: ${formule != null ? 'visible' : 'hidden'};

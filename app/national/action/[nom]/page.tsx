@@ -8,7 +8,9 @@ const Page = ({ params }) => {
 
 	const nom = decodeRuleName(raw)
 
-	const rule = data.find((r) => r.titre === decodeURIComponent(nom))
+	const rule = data.find(
+		(r) => r.titre.toLowerCase() === decodeURIComponent(nom)
+	)
 
 	if (!rule) return <p>Cette action n'existe pas.</p>
 	return (
