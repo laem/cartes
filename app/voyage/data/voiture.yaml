@@ -5,12 +5,27 @@ voiture . coûts au km:
   description: |
     Le coût d'un mode de transport est souvent estimé au km.
 
-    <Plop/>
   formule:
     somme:
       - coût instantané au km
       - coût de possession au km
       - coûts divers au km
+  exemples:
+    - titre: Citadine diesel
+      situation:
+        trajet . voyageurs: 1
+        voiture . prix d'achat: 18000
+    - titre: Citadine essence
+      situation:
+        voiture . motorisation: "'essence'"
+        trajet . voyageurs: 1
+        voiture . prix d'achat: 18000
+    - titre: Citadine électrique
+      situation:
+        trajet . voyageurs: 1
+        voiture . motorisation: "'électrique'"
+        voiture . prix d'achat: 30000
+
 voiture . coût instantané au km:
   description: |
     C'est le coût qui remplace souvent de faion erronée le coût complet d'un km en voiture. 
