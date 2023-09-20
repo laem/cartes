@@ -47,14 +47,14 @@ voiture . motorisation:
       choix obligatoire: oui
       possibilités:
         - électrique
-        - hybride
+          #- hybride
         - essence
         - diesel
         - biocarburant
 
 voiture . motorisation . électrique:
   icônes: ⚡️
-voiture . motorisation . hybride:
+#voiture . motorisation . hybride:
 voiture . motorisation . essence:
 voiture . motorisation . diesel:
 voiture . motorisation . biocarburant:
@@ -110,7 +110,7 @@ voiture . durée de vie:
   formule:
     variations:
       - si: motorisation = 'électrique'
-        alors: 40
+        alors: 30
       - sinon: 19
   unité: an
 

@@ -76,9 +76,10 @@ trajet voiture . prix carburant:
       - si: voiture . motorisation = 'diesel'
         alors: 1.908
       - si: voiture . motorisation = 'biocarburant'
-        alors: 1.043
-      - si: voiture . motorisation = 'hybride'
-        alors: 1.80
+        alors:
+          1.043
+          ##      - si: voiture . motorisation = 'hybride'
+          ## alors: 1.80
   description: |
     Source : https://prix-carburants-info.fr
     Données du 14 septembre 2023.
