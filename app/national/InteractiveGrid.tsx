@@ -26,11 +26,6 @@ export default function Home() {
 					</p>
 				</>
 			)}
-			<p>
-				Respecter l'accord, c'est réduire de <strong>5 % chaque année</strong>{' '}
-				nos émissions de CO₂ₑ.
-			</p>
-			<p>À vous de jouer 🔽 : activez des actions, découvrez leur impact.</p>
 			<Grid {...{ state, setState }} />
 		</div>
 	)
