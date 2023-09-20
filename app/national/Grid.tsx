@@ -34,7 +34,7 @@ const Grid = ({ state, setState }) => (
 
 export default Grid
 
-const Card = ({ data: { titre, icônes, formule }, state, setState }) => {
+const Card = ({ data: { titre, icônes, formule, notes }, state, setState }) => {
 	const [playActive] = useSound('/national/sounds/pop-down.mp3', {
 		volume: 0.25,
 	})
@@ -169,7 +169,7 @@ const Card = ({ data: { titre, icônes, formule }, state, setState }) => {
 				href={`/national/action/${encodeRuleName(titre.toLowerCase())}`}
 				css={`
 					text-decoration: none;
-					visibility: ${formule != null ? 'visible' : 'hidden'};
+					visibility: ${(formule || notes) != null ? 'visible' : 'hidden'};
 					text-align: center;
 					color: var(--color);
 				`}

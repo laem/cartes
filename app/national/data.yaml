@@ -108,12 +108,55 @@
 - titre: Relier toutes les métropole en LGV
   catégorie: transport
   icônes: 🚄
+  notes: |
+    La France a un réseau de lignes de train à grandes vitesse (LGV, l'infrastructure sur laquelle les TGV roulent) relativement développé. Relativement, car nos voisins espagnols, et c'est méconnu, en ont davantage. Le champion du monde, c'est la Chine, et de très loin : elle a construit plus de LGV que l'ensemble du monde, en un temps record.
+
+    Aujourd'hui, les LGV permettent de relier Paris à l'essentiel des régions de France, avec quelques exceptions : Toulouse, Nice, Brest, entre autres.
+
+    > En effet, bien que Brest soit relié à Paris via des TGV, ils ne roulent pas sur une LGV de Brest à Rennes : ainsi les trains sont limités à une vitesse comprise entre 100 et 200 km/h, en fonction de la qualité du segment parcouru.
+
+
+    La LGV Bordeaux Toulouse est sur les rails, mais il reste donc beaucoup de territoire à couvrir, **surtout si l'on veut éviter l'effet étoile de Paris**. 
+
+    En réalité, le centre du rail français, le hub principal, aurait davantage sa place bien plus au sud de Paris, à Bourges. Bourges et Vierzon sont en effet les dernières villes avant le grand massif central, dont la topologie complexifie la construction de LGV : il faut mettre des tunnels coûteux partout. C'est d'ailleurs bien pour ça que Nice n'est pas reliée à Marseille en LGV. En tout cas, c'est la deuxième raison après le manque cruel de volonté politique.
+
+    À titre d'exemple, il parait fou de se dire que la diagonale ouest-sud-ouest française, de Brest à Toulouse, forte de 10 millions d'habitants et d'un mouvement de population massif ces dernières decennies, [soit totalement dénuée de LGV](https://twitter.com/maeool/status/1548726187932934148/).  
+
+    ![](/LGV-ouest.jpeg)
+
+    Relier toutes les régions de France entre elles via la LGV, c'est un investissement important à moyen-terme, mais qui permettrait d'aider grandement à décarboner les trajets longue distance en France et en Europe : de Paris à Lyon, l'empreinte climat d'un trajet en TGV est de 2 kgCO2e pour environ 400 km. Il suffit de parcourir 10 km en voiture thermique pour exploser ce chiffre ! La différence est colossale.
+
+    Relier toutes les régions de France en LGV ne veut absolument pas dire abandonner les trains moins rapides (TER, Intercités) ni les trains de nuits ! Au contraire : par exemple en coeur Bretagne, il n'y aura jamais de LGV, mais des lignes de train de proximité sont nécessaires. De même, même s'il était possible de relier Brest et Nice en LGV, il est évident pour des raisons de temps de trajet qu'un train de nuit a également sa place, reliant au passage Rennes à Nice et Brest à Marseille en une nuit plutôt que 6h de TGV de jour.
+
+    L'argument consistant à prétendre que l'argent du train va intégralement dans le TGV est faux : l'opération de ce dernier est rentable, non subventionné; à l'inverse les TER sont lourdement subventionnés par les régions. L'argent qui manque pour les LGV et les petites lignes, il se trouve dans le système voiture, qui consomme aujourd'hui 80 % de l'argent des services de transport en France.
+
 - titre: Remplacer toutes les chaudières à gaz
   catégorie: logement
   icônes: 🔥
 - titre: Remplacer toutes les chaudières à fioul
   catégorie: logement
   icônes: 🔥
+- titre: Construire une ligne de tram ou métro dans toutes les villes
+  notes: |
+    Le titre de cette action peut vous paraitre provocateur. Il ne s'agit évidemment pas d'équipe toutes les communes de France d'un tram. Les bourgs et villages n'en seront jamais le centre. 
+
+    Pourtant, si on retient comme définition de la "ville" une population de 30 000 habitants au minimum, construire un tram est tout à fait possible, comme vous allez le découvrir ici. 
+
+    Il y a [280 villes de plus de 30 000 habitants](https://fr.wikipedia.org/wiki/Liste_des_communes_de_France_les_plus_peuplées#Communes_de_plus_de_30_000_habitants) en France.
+
+    En moyenne, une voiture coûte 400 € / mois à son propriétaire, soit environ 5000 € / an. On peut considérer qu'en ordre de grandeur, la moitié de la population d'une ville dispose d'une voiture: certains ménages n'en ont pas, certains en ont 2.
+      
+    Ainsi, sans compter les dépenses publiques dans l'infrastructure du système voiture (routes, police, accidents, dépenses de santé, etc), le système voiture coûte pour une ville de 30 000 habitants, 75 millions d'€ par an.
+
+    Quel est le coût d'un tramway ? 200 millions pour la deuxième ligne de Brest dont les travaux ont commencé à l'été 2023.
+
+    Évidemment, l'objet n'est pas d'allouer 100 % du coût de la voiture individuelle à la construction d'un tramway, il est de même évident qu'une commune de 30 000 habitants n'a pas besoin d'un tramway tous les 3 ans.
+
+  Ni même peut-être d'un tramway: un réseau de bus électriques à haut niveau de service, comme Rennes va en déployer 5 d'ici 2030 pour compléter ses deux lignes de métro, est une alternative très sérieuse au tram et à la voiture.
+
+    Mais il est donc évident que l'argent est disponible, même dans les "petites villes". Alors ne parlons pas des communes de 100 000 habitants. Son allocation n'est que politique.
+  catégorie: transport
+  icônes: 🚗🌆
 - titre: Interdire la voiture dans les métropoles
   notes: |
     Ou en zone dense. C'est probablement une meilleure idée, une métropole rassemble des lieux assez éloignés et beaucoup de zones rurales.
@@ -212,8 +255,4 @@
 - titre: 2x moins de viande mangée
   catégorie: alimentation
   icônes: 🥩
-- titre: yo
-  catégorie: alimentation
-  icônes: 🥩
-  notes: Lalala
 # Je mettrais bien des choses comme "TVA 0% sur le train" ou "300€ offerts à chacun sur le train" mais l'estimation du surplus d'usage n'est pas aisée, et surtout le rail sature aux moments où les gens veulent voyager. Donc le gain serait sans doute faible ? À estimer.

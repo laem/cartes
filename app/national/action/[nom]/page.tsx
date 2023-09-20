@@ -2,6 +2,7 @@ import data from '../../data.yaml'
 import { utils } from 'publicodes'
 const { decodeRuleName } = utils
 import { MDXRemote } from 'next-mdx-remote/rsc'
+import Article from '@/components/Article'
 
 const Page = ({ params }) => {
 	const { nom: raw } = params
@@ -16,7 +17,9 @@ const Page = ({ params }) => {
 	return (
 		<main>
 			<h1>{rule.titre}</h1>
-			<MDXRemote source={rule.notes} />
+			<Article>
+				<MDXRemote source={rule.notes} />
+			</Article>
 		</main>
 	)
 }
