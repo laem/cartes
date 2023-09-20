@@ -103,9 +103,19 @@ voiture . durée de vie:
   description: |
     Attention à ne pas confondre durée de possession et durée de vie ! Un citoyen peut garder une voiture 5 ans en moyenne, mais elle continue d'exister et de rouler. 
 
-    Ainsi la durée de vie (durée avant d'aller à la casse) est estimée à 19 ans.
+    Ainsi la durée de vie (durée avant d'aller à la casse) est estimée à 19 ans pour une thermique, et bien plus pour une électrique.
   note: |
-    Notre source est un article de [l'Argus](https://www.largus.fr/actualite-automobile/le-top-15-des-voitures-envoyees-a-la-casse-10348407.html) qui cite un rapport de l'ADEME de 2018.
+    Notre source pour la voiture thermique est un article de [l'Argus](https://www.largus.fr/actualite-automobile/le-top-15-des-voitures-envoyees-a-la-casse-10348407.html) qui cite un rapport de l'ADEME de 2018.
+
+    Concernant la voiture thermique, le critère limitant est souvent le moteur. Par définition du moteur thermique à explosion, ce composant est soumis à des pressions physiques énormes, le moteur électrique lui étant bien plus durable.
+
+    La voiture électrique a aussi sa faiblesse : la batterie. Il est compliqué d'obtenir des informations sur la durée de vie des batteries de voiture, notamment car les modèles actuels n'ont en général pas encore 10 ans. Cela dit, il semblerait que leur durée de vie prenne à défaut les prévisions pessimistes. 
+
+    [Ainsi](https://www.caranddriver.com/research/a31875141/electric-car-battery-life/) Tesla estime la durée de vie de ses batteries à 300 000 km environ. Hyundai propose une garantie de 10 ans ou 180 000 km. La batterie ne semble donc pas un facteur limitant par rapport au thermique, mais un facteur limitant par rapport à la durée de vie de la voiture elle-même. 
+
+    Or, la batterie ne coûte qu'un tiers du prix neuf de la voiture, selon l'exemple de la Zoé à 30 000 € dont la batterie vaut 9 000 €. Nous pourrions donc parier sur une durée de vie de la voiture électrique potentiellement deux fois plus longue que celle de la voiture thermique... mais ce serait oublier que ce secteur est fortement soumis à des modes, en plus de l'évolution technologique relative.
+
+    D'où le chiffre de durée de vie estimé à 30 ans pour une voiture électrique.
 
   formule:
     variations:
