@@ -3,14 +3,19 @@ import data from './data.yaml'
 
 export default function Total({ state }) {
 	const total = Object.keys(state).reduce((memo, next) => {
-		const found = data.find(({ titre }) => titre === next),
-			active = state[next]
-		const stillValid = !data.find(
-			({ dépasse, titre }) => dépasse && state[titre] && dépasse.includes(next)
-		)
-		const addition = active && stillValid ? found.formule : 0
-		return memo + addition
-	}, 0)
+			const found = data.find(({ titre }) => titre === next),
+				active = state[next]
+			const stillValid = !data.find(
+				({ dépasse, titre }) =>
+					dépasse && state[titre] && dépasse.includes(next)
+			)
+			const addition = active && stillValid ? found.formule : 0
+			return memo + addition
+		}, 0),
+		humanTotal = new Intl.NumberFormat('fr-FR', {
+			maximumSignificantDigits: 1,
+		}).format(total)
+
 	const explanation = `Votre planification écologique réduit l'empreinte climat de la France de ${total} %.`
 	const years = Math.round(total / 5)
 	return (
@@ -25,7 +30,7 @@ export default function Total({ state }) {
 			`}
 			title={explanation}
 		>
-			<div>Votre total : {total} %</div>
+			<div>Votre total : {humanTotal} %</div>
 
 			<small
 				css={`

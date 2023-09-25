@@ -9,11 +9,7 @@ export const metadata: Metadata = {
 	title,
 	description,
 	openGraph: {
-		images: [
-			`https://ogenerateur.osc-fr1.scalingo.io/capture/${encodeURIComponent(
-				'https://' + process.env.VERCEL_URL + '/national'
-			)}/shareImage?timeout=3000&width=800&height=530`,
-		],
+		images: ['https://' + process.env.VERCEL_URL + '/national.png'],
 	},
 }
 
