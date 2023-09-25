@@ -294,6 +294,24 @@
 - titre: Une france végétarienne
   catégorie: alimentation
   icônes: 🥩
+  notes: |
+    ## L'action
+
+    C'est très simple : les Français ne mangent plus de viande, et par extension, les animaux d'élevage sur le territoire français ne servent plus à être tués pour être mangés. Par contre, la production d'oeufs, de lait, et accessoirement de cuir restent inchangés : la France n'est ni végétalienne (manger autre chose que des produits animaux) ni végane (manger et vivre sans produits animaux) !  
+
+    Une autre complexité vient de la différence entre viande importée et viande exportée. On pourrait dire que la production française est végétarienne, mais la consommation toujours en partie carnée, ou l'inverse. Pour faire simple, nous ne nous occupons que de la consommation des Français.
+
+    Un autre élément de complexité est l'utilisation des déjections animales pour fertiliser les sols où l'on fait pousser des végétaux. C'est un sujet polémique, qui nous sera diffile à chiffrer ici dans une première version, mais qui pourra être mis à jour par la suite. Notons qu'en 2024, l'acte de composter ses déchets organiques devient une obligation pour les ménages. La quantité de déchets organiques réutilisables plutôt qu'incinérés, sera comparativement astronomique.
+
+    ## Le calcul
+
+    La composante produits animaux rend cette action non triviale à chiffrer : quand on élève une poule, une partie de son empreinte climat doit être attribuée à son usage `oeuf` et une autre partie à son usage `viande`. Le plus simple est de faire une allocation économique : comparer le prix de l'oeuf à celui de la viande.
+
+    Pour une première version de ce calcul, nous utilisons [les empreintes carbone des régimes alimentaires](https://nosgestesclimat.fr/documentation/alimentation/plats) modelisés par Nos Gestes Climat, le calculateur d'empreinte climat inviduelle de référence, et en particulier l'action [devenir végétarien](https://nosgestesclimat.fr/documentation/alimentation/devenir-végétarien), qui apporte un gain de 766 kgCO2e par an et par personne. 
+
+    Par an pour tous les français, nous obtenons donc 50 millions de tonnes de CO2e économisées, soit 8,2 % des [émissions totales françaises de 2021](https://www.statistiques.developpement-durable.gouv.fr/lempreinte-carbone-de-la-france-de-1995-2021).
+  formule: 8.2
+
 - titre: 2x moins de viande mangée
   catégorie: alimentation
   icônes: 🥩
