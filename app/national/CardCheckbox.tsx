@@ -9,11 +9,11 @@ export default function CardCheckbox({
 	setState,
 	titre,
 }) {
-	const [playActive] = useSound('/national/sounds/pop-down.mp3', {
+	const [playActive] = useSound('/sounds/pop-down.mp3', {
 		volume: 0.25,
 	})
-	const [playOn] = useSound('/national/sounds/pop-up-on.mp3', { volume: 0.25 })
-	const [playOff] = useSound('/national/sounds/pop-up-off.mp3', {
+	const [playOn] = useSound('/sounds/pop-up-on.mp3', { volume: 0.25 })
+	const [playOff] = useSound('/sounds/pop-up-off.mp3', {
 		volume: 0.25,
 	})
 
