@@ -19,18 +19,20 @@ export default function CardCheckbox({
 
 	return (
 		<div
-			onMouseDown={() => formule != null && playActive()}
+			onMouseDown={() => playActive()}
 			onMouseUp={() => {
 				isChecked ? playOff() : playOn()
 			}}
 			onClick={() => {
-				formule != null && playOn()
+				playOn()
 
-				formule != null &&
-					setState((state) => ({ ...state, [titre]: !state[titre] }))
+				setState((state) => ({ ...state, [titre]: !state[titre] }))
 			}}
 		>
-			<Checkbox checked={isChecked} title="Cocher pour activer cette mesure de planification"/>
+			<Checkbox
+				checked={isChecked || false}
+				title="Cocher pour activer cette mesure de planification"
+			/>
 		</div>
 	)
 }

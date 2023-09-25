@@ -27,7 +27,6 @@ const Grid = ({ state, setState }) => {
 					justify-content: center;
 					flex-wrap: wrap;
 					touch-action: manipulation;
-					margin-top: 2rem;
 				}
 			`}
 		>
