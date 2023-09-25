@@ -9,6 +9,7 @@ export default function Checkbox(
 			<input
 				type="checkbox"
 				className="ui__ checkbox-input"
+				readOnly
 				style={{ display: 'none' }}
 				{...props}
 			/>

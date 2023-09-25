@@ -32,13 +32,13 @@ const Grid = ({ state }) => {
 		>
 			<div>
 				{evaluated.map((el) => (
-					<Card {...{ data: el, state }} />
+					<Card {...{ data: el, state }} key={el.titre} />
 				))}
 			</div>
 			<h2>Action pas encore chiffrées</h2>
 			<div>
 				{notEvaluated.map((el) => (
-					<Card {...{ data: el, state }} />
+					<Card {...{ data: el, state }} key={el.titre} />
 				))}
 			</div>
 		</ul>
