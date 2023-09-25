@@ -20,6 +20,7 @@ export default function Total({ state }) {
 				text-align: center;
 				position: sticky;
 				top: 0;
+				z-index: 10;
 				padding: 0.6rem;
 			`}
 			title={explanation}
