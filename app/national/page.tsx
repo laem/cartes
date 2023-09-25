@@ -13,7 +13,7 @@ export const metadata: Metadata = {
 	},
 }
 
-export default function Home() {
+export default function National({ searchParams }) {
 	return (
 		<Main>
 			<header>
@@ -28,7 +28,7 @@ export default function Home() {
 				À vous de jouer : 🖱️ cliquez pour explorer l'action, ☑️ cochez-la pour
 				voir son impact.
 			</p>
-			<InteractiveGrid />
+			<InteractiveGrid state={searchParams} />
 		</Main>
 	)
 }

@@ -7,7 +7,7 @@ import Card from './Card'
 
 const undefinedIsZero = (figure) => (figure == null ? 0 : figure)
 
-const Grid = ({ state, setState }) => {
+const Grid = ({ state }) => {
 	const sorted = data.sort(
 			(a, b) => undefinedIsZero(b.formule) - undefinedIsZero(a.formule)
 		),
@@ -32,13 +32,13 @@ const Grid = ({ state, setState }) => {
 		>
 			<div>
 				{evaluated.map((el) => (
-					<Card {...{ data: el, state, setState }} />
+					<Card {...{ data: el, state }} />
 				))}
 			</div>
 			<h2>Action pas encore chiffrées</h2>
 			<div>
 				{notEvaluated.map((el) => (
-					<Card {...{ data: el, state, setState }} />
+					<Card {...{ data: el, state }} />
 				))}
 			</div>
 		</ul>
