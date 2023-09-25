@@ -134,7 +134,8 @@
   catégorie: logement
   icônes: 🔥
   notes: |
-    Cette action est on ne peut plus simple : faire passer une loi et lancer une grande initiative nationale de remplacement des chaudières à gaz. 
+    ## L'action
+    Cette action est on ne peut plus simple : faire passer une loi et lancer une grande initiative nationale de remplacement des chaudières à gaz. Pour faire simple, nous incluons en fait tout le gaz utilisé dans les logements, cela comprend donc également les plaques de cuisson au gaz.
 
     Les alternatives sont très matures : dans les logements les mieux isolés, une combinaison de chauffage électrique, de sobriété et de pompes à chaleur air-air peuvent remplacer le gaz pour un moindre coût. En particulier, il est évident que passer les jours les plus froids de l'année à 24° au lieu de 19 est un luxe que nous devons mettre immédiatement de côté. 
 
@@ -149,6 +150,16 @@
     En termes politiques, notons que la mesure d'interdiction des nouvelles chaudières à gaz ne suffit pas : comme d'habitude, et en particulier dans le logement, le rythme de renouvellement du parc, de 1 % en ordre de grandeur, ne suffit absolument pas à répondre à l'urgence climatique.
 
     Enfin, l'évolution de l'empreinte climat d'un kWh de gaz inquiète de plus en plus : nombres de nouvelles études ont documenté les massives fuites de méthanes de l'extraction de gaz. L'empreinte du gaz a donc été très certainement sous-estimée par le passé, et l'est toujours.
+
+    ## Le calcul
+
+
+    Le modèle d'empreinte carbone individuelle Nos Gestes Climat donne [la répartition statistique de l'empreinte des différents moyens de chauffer son logement](https://nosgestesclimat.fr/documentation/logement/chauffage/empreinte-par-défaut).
+
+    Le gaz représente 1021 kgCO2e plus 76 de GPL (gaz hors réseau, avec livraison dans une citerne par un camion) sur un total de 1659, soit 66 % de l'empreinte. Oui, c'est colossal.
+
+    L'empreinte du chauffage du logement est elle-même 1659 kgCO2e d'un total d'environ 9 tonnes, soit 18 %, ce qui porte le total de cette action à 11,9 %.
+  formule: 11.9
 
 - titre: Remplacer toutes les chaudières à fioul
   catégorie: logement
