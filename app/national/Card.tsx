@@ -30,7 +30,6 @@ const Card = ({ data: { titre, icônes, formule, notes }, state, setState }) => 
 				href={`/national/action/${encodeRuleName(titre.toLowerCase())}`}
 				css={`
 					text-decoration: none;
-					visibility: ${(formule || notes) != null ? 'visible' : 'hidden'};
 					text-align: center;
 					color: var(--color);
 				`}
