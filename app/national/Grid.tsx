@@ -18,7 +18,6 @@ const Grid = ({ state, setState }) => {
 		<ul
 			id="shareImage"
 			css={`
-				margin-top: 3rem;
 				h2 {
 					text-align: center;
 				}
@@ -32,7 +31,6 @@ const Grid = ({ state, setState }) => {
 				}
 			`}
 		>
-			<h2>Action chiffrées</h2>
 			<div>
 				{evaluated.map((el) => (
 					<Card {...{ data: el, state, setState }} />

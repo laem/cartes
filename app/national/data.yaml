@@ -18,6 +18,8 @@
 - titre: Ne garder que 4 aéroports commerciaux
   catégorie: transport
   icônes: ✈️
+  dépasse:
+    - Supprimer les vols métropolitains
   notes: |
 
     ## L'action
@@ -51,6 +53,9 @@
 - titre: Quota de 4 vols par personne par vie
   catégorie: transport
   icônes: ✈️
+  dépasse:
+    - Ne garder que 4 aéroports commerciaux
+    - Supprimer les vols métropolitains
   notes: |
 
     ## L'action

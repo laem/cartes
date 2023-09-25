@@ -153,6 +153,16 @@ export const Card = styled.div`
 	${(props) =>
 		props.$fullWidth &&
 		`max-width: 100%; display: block; flex: unset; text-align: left `}
+
+	${(p) =>
+		p.$spotlight &&
+		`
+background: var(--color)
+; color: var(--darkestColor);
+font-size: 150% !important;
+margin: 2rem auto !important;
+
+`}
 `
 
 export const InlineImage = styled.span`
