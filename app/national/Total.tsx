@@ -1,19 +1,13 @@
 import { Card } from 'Components/UI'
 import data from './data.yaml'
-import { utils } from 'publicodes'
 
 export default function Total({ state }) {
 	const total = Object.keys(state).reduce((memo, next) => {
-			console.log('will find', next)
-			const found = data.find(
-					({ titre }) => utils.encodeRuleName(titre) === next
-				),
+			const found = data.find(({ titre }) => titre === next),
 				active = state[next]
 			const stillValid = !data.find(
 				({ dépasse, titre }) =>
-					dépasse &&
-					state[utils.encodeRuleName(titre)] &&
-					dépasse.includes(next)
+					dépasse && state[titre] && dépasse.includes(next)
 			)
 			const addition = active && stillValid ? found.formule : 0
 			return memo + addition
