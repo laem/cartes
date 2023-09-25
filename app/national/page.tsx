@@ -2,9 +2,9 @@ import { Metadata } from 'next'
 import InteractiveGrid from './InteractiveGrid'
 import { Main } from './UI'
 
-const title = "Le tableau de bord d'une République verte",
+const title = 'Le tableau de bord de la planification écologique',
 	description =
-		"Vous êtes le pilote à bord du paquebot France. Votre objectif : respecter l'Accord de Paris, un engagement international pour garder le réchauffement climatique sous les 1,5 à 2°."
+		"Vous êtes le pilote à bord du paquebot France. Votre objectif : respecter l'Accord de Paris, un engagement international pour garder le réchauffement climatique sous les 1,5 à 2°. Vu l'urgence et l'ambition, il va falloir planifier.."
 export const metadata: Metadata = {
 	title,
 	description,
