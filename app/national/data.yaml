@@ -343,3 +343,21 @@
   catégorie: alimentation
   icônes: 🥩
 # Je mettrais bien des choses comme "TVA 0% sur le train" ou "300€ offerts à chacun sur le train" mais l'estimation du surplus d'usage n'est pas aisée, et surtout le rail sature aux moments où les gens veulent voyager. Donc le gain serait sans doute faible ? À estimer.
+- titre: Fermer les centrales à charbon françaises
+  catégorie: énergie
+  icônes: ⬛️
+  notes: |
+
+    ## L'action
+
+    C'est très simple : on ferme toutes les centrales à charbon sur le territoire français, c'est-à-dire qu'on les met physiquement dans l'impossibilité de brûler du charbon et d'injecter cette électricité très carbonée (et très dangereuse pour nos bronches) sur le réseau électrique national.
+
+    ## Le calcul
+
+    RTE a maché le travail pour nous, dans son dernier bilan prévisionnel au 25 septembre 2023 : 2,8 millions de tonnes de CO2e en 2022.
+
+    Selon RTE, ce chiffre constitue dans les faits une borne maximale : même au plus fort de la crise de disponibilité du nucléaire et de l'envolée des prix du gaz en 2022, les centrales n'ont pas atteint leurs plafonds de fonctionnement et n'ont assuré que 0,6 % de la production nationale.
+
+    2,8 millions de tonnes de CO2e, c'est 0,4 % des [émissions totales françaises](https://www.statistiques.developpement-durable.gouv.fr/lempreinte-carbone-de-la-france-de-1995-2021).
+
+  formule: 0.4
