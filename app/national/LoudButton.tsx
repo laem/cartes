@@ -29,7 +29,6 @@ export default function LoudButton({
 				isChecked ? playOff() : playOn()
 			}}
 			css={`
-				${!formule && `opacity: 0.5`};
 				-webkit-tap-highlight-color: transparent;
 
 				font-size: 120%;
@@ -40,6 +39,7 @@ export default function LoudButton({
 				height: 13rem;
 
 				background: var(--lightestColor);
+				${!formule && `background: var(--lighterColor)`};
 				border: 4px solid var(--darkerColor);
 				${isChecked &&
 				`border: 6px solid var(--color); 
