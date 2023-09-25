@@ -16,6 +16,7 @@ export default function Checkbox(
 				htmlFor={props.id}
 				tabIndex={0}
 				style={{ display: 'flex', alignItems: 'center' }}
+				title={props.title}
 			>
 				<div className="ui__ checkbox">
 					<svg width="1em" height="1em" viewBox="0 0 18 18">

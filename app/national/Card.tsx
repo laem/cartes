@@ -5,7 +5,8 @@
 import Link from 'next/link'
 
 import { utils } from 'publicodes'
-import LoudButton from './LoudButton'
+import CardCheckbox from './CardCheckbox'
+import { CardStyle } from './CardUI'
 const { encodeRuleName } = utils
 
 const Card = ({ data: { titre, icônes, formule, notes }, state, setState }) => {
@@ -17,13 +18,14 @@ const Card = ({ data: { titre, icônes, formule, notes }, state, setState }) => 
 				display: flex;
 				flex-direction: column;
 				justify-content: center;
+				align-items: center;
+				label {
+					font-size: 200%;
+					margin-top: 1rem;
+				}
 			`}
 			key={titre}
 		>
-			<LoudButton {...{ isChecked: state[titre], titre, formule, setState }}>
-				<ButtonContent {...{ icônes, titre, formule }} />
-			</LoudButton>
-
 			<Link
 				href={`/national/action/${encodeRuleName(titre.toLowerCase())}`}
 				css={`
@@ -33,8 +35,15 @@ const Card = ({ data: { titre, icônes, formule, notes }, state, setState }) => 
 					color: var(--color);
 				`}
 			>
-				Explications
+				<CardStyle {...{ isChecked: state[titre], formule }}>
+					<ButtonContent {...{ icônes, titre, formule }} />
+				</CardStyle>
 			</Link>
+			{formule != null && (
+				<CardCheckbox
+					{...{ isChecked: state[titre], titre, formule, setState }}
+				/>
+			)}
 		</li>
 	)
 }

@@ -28,7 +28,10 @@ export default function Home() {
 				Respecter l'accord, c'est réduire de <strong>5 % chaque année</strong>{' '}
 				nos émissions de CO₂ₑ.
 			</p>
-			<p>À vous de jouer 🔽 : activez des actions, découvrez leur impact.</p>
+			<p>
+				À vous de jouer : 🖱️ cliquez pour explorer l'action, ☑️ cochez-la pour
+				voir son impact.
+			</p>
 			<InteractiveGrid />
 		</Main>
 	)
