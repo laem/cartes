@@ -20,6 +20,8 @@ Alors, que donne ce calculateur sur un jeu d'exemples courants ?
 
 Souvent, l'étude du coût au km de la voiture est utilisé dans le débat voiture vs train. Avec ~ 19 centimes par kilomètre pour la SNCF sans carte de réduction (!) (source enquête [Que Choisir 2023](https://www.quechoisir.org/actualite-tarifs-sncf-au-kilometre-2023-moins-c-est-long-plus-c-est-cher-n106658/)), le train est donc en moyenne bien moins cher que la voiture et ses ~ 35 centimes par kilomètre. 
 
+Cela dit, rien n'est jamais simple : le train peut impliquer sur certains trajets des détours. C'est le cas de certains trajets longue distance, où le passage par Paris est obligatoire étant donné la forte centralisation en étoile du réseau ferré français. Ce détour n'implique un doublement des km seulement dans certains cas exceptionnels, comme le fameux Bordeaux-Lyon en passant par Paris... 
+
 Alors, comment expliquer que ces faits n'existent pas dans le débat public ? D'une, comme on l'a dit plus haut, car il est très rare que les automobilistes comptent véritablement le budget  total d'un trajet en voiture. 
 
 ## Mais j'ai déjà ma voiture ! 
@@ -37,9 +39,18 @@ Le deuxième enseignement de ce calculateur est encore plus simple : achetez une
 
 ## Les limites du calcul actuel
 
+
+### Le prix d'achat et d'entretien
+
 La principale limite de ce modèle concerne l'estimation du coût d'achat de la voiture ramené au km. Il n'est pas aisé d'obtenir des données sur les km parcours des voitures à la casse, et en particulier concernant les voitures électriques, ni des informations statistiques fiables sur les frais d'entretien. Or, le coût d'achat est un des facteurs clef du coût final. Cela dit, il est peu probable que l'ordre de grandeur du coût ramené à l'année de l'achat d'une voiture soit différent des ~ 1000 €. 20 ans de durée de vie, 20 000 € d'achat.
 
+### L'occasion et la décôte
+
 Mais quid de l'occasion ? En effet, une voiture d'occasion coûte beaucoup moins cher. Mais elle dure aussi bien moins longtemps. Certes, une partie de la décôte ne représente pas une perte de durée de vie, mais une perte d'effet de mode. Ainsi, les acheteurs qui s'en foutent de rouler en dernier cri peuvent réduire in fine leur coût au km. Pourtant, si cette optimisation du coût d'achat via l'occasion bien calculée baisse le coût au km de certains, il va mécaniquement augmenter celui des autres, le coût hors optimisation représentant bien le coût moyen du km. Nous pourrons par la suite prendre en compte cette question de l'optimisation.
+
+Concrètement, nos hypothèses de [durée de vie](/voyage/documentation/voiture/durée-de-vie) et [km annuels](/voyage/documentation/voiture/km-annuels) sont explicites dans le modèle de calcul. Le modèle est entièrement ouvert, à vous de l'explorer et de l'améliorer ! 
+
+### La distance réelle du trajet
 
 Une des limites de ce calcul, c'est qu'on ne trace pas le parcours GPS exact du trajet, pour gagner du temps et éviter d'interroger Google pour améliorer un peu la précision.
 
