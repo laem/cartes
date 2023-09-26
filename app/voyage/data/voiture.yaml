@@ -115,6 +115,7 @@ voiture . motorisation . électrique . consommation:
 
     Nous retenons donc une valeur plutôt majorante de 15 kWh/km.
 
+voiture . distance totale: durée de vie * km annuels
 voiture . durée de vie:
   description: |
     Attention à ne pas confondre durée de possession et durée de vie ! Un citoyen peut garder une voiture 5 ans en moyenne, mais elle continue d'exister et de rouler. 

@@ -1,7 +1,32 @@
 'use client'
 import Image from 'next/image'
 import zoe from '@/public/voiture/zoé.jpg'
+import rules from '@/app/voyage/data/rules'
+import Publicodes, { formatValue } from 'publicodes'
+import { styled } from 'styled-components'
+
+const engine = new Publicodes(rules)
 export default function Pubs() {
+	const target = 'trajet voiture . coût trajet par personne'
+	const newEngine = engine.setSituation({
+			'trajet voiture . distance': 'voiture . distance totale',
+			'voiture . motorisation': '"électrique"',
+			"voiture . prix d'achat": 30000,
+		}),
+		total = formatValue(newEngine.evaluate(target), {
+			precision: 0,
+			displayedUnit: '€',
+		}),
+		lifeTime = newEngine.evaluate('voiture . durée de vie').nodeValue
+	const perKm = formatValue(
+		newEngine
+			.setSituation({
+				'trajet voiture . distance': 1,
+			})
+			.evaluate(target),
+		{ precision: 2, displayedUnit: '€ / km' }
+	)
+
 	return (
 		<div
 			css={`
@@ -21,6 +46,7 @@ export default function Pubs() {
 					right: 1rem;
 				}
 				p {
+					margin: 1.6rem 0;
 					text-align: right;
 					height: inherit;
 					top: 2rem;
@@ -28,16 +54,11 @@ export default function Pubs() {
 					color: black;
 					font-size: 260%;
 					max-width: 30rem;
-					line-height: 4rem;
-					small {
-						font-size: 75%;
-					}
 					em {
 						font-size: 150%;
 						font-style: normal;
 					}
 				}
-				height: ;
 			`}
 		>
 			<Image src={zoe} />
@@ -45,16 +66,41 @@ export default function Pubs() {
 				<p>
 					Nouvelle Renault <strong>ZOE</strong>
 				</p>
+				<br />
 				<p>
-					<small>Accessible dès </small>
+					<Small>Accessible dès </Small>
 				</p>
 				<p>
-					<em>88&nbsp;000 €</em>
+					<em>{total} </em>
 				</p>
 				<p>
-					<small> sur 25 ans. </small>
+					<Small> sur {lifeTime} ans </Small>
+				</p>
+				<p>
+					<Small>
+						<WhiteBackground>Soit {perKm}</WhiteBackground>
+					</Small>
+				</p>
+				<br />
+				<p>
+					<SuperSmall>
+						Essence, péages, achat, parking, assurance, entretien, lavage,
+						équipements, accidents, infractions, et bonus écologique inclus.
+					</SuperSmall>
 				</p>
 			</div>
 		</div>
 	)
 }
+const Small = styled.small`
+	font-size: 75%;
+`
+
+const SuperSmall = styled.small`
+	font-size: 40%;
+	line-height: 0.1rem;
+`
+
+const WhiteBackground = styled.span`
+	background: #ffffff90;
+`
