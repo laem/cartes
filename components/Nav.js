@@ -47,31 +47,48 @@ export default function Nav({}) {
 					/>
 				</Link>
 				{displayIntro && (
-					<p
-						id="intro"
-						css="max-width: 25rem; line-height: 1.4rem; margin-right: 1em; "
+					<div
+						css={`
+							display: flex;
+							flex-direction: column;
+							justify-items: center;
+							padding: 1rem;
+						`}
 					>
-						{displayIntro && (
-							<img
-								css={`
-									aspect-ratio: 1 / 1;
-									width: 1.4rem;
-									vertical-align: text-bottom;
-									display: inline;
-									@media (min-width: 800px) {
-										display: none;
-									}
-									margin-right: 0.4em;
-								`}
-								src={'/logo.svg'}
-								alt=""
-								width="10px"
-								height="10px"
-							/>
-						)}
-						La catastrophe climatique n'est plus une menace lointaine, c'est une
-						actualité.&nbsp;<Link href="/a-propos">En savoir plus</Link>.
-					</p>
+						<p
+							id="intro"
+							css="max-width: 25rem; line-height: 1.4rem; margin-right: 1em; "
+						>
+							{displayIntro && (
+								<img
+									css={`
+										aspect-ratio: 1 / 1;
+										width: 1.4rem;
+										height: auto;
+										vertical-align: text-bottom;
+										display: inline;
+										@media (min-width: 800px) {
+											display: none;
+										}
+										margin-right: 0.4em;
+									`}
+									src={'/logo.svg'}
+									alt=""
+									width="10px"
+									height="10px"
+								/>
+							)}
+							La catastrophe climatique n'est plus une menace lointaine, c'est
+							une actualité.&nbsp;
+						</p>
+						<p
+							css={`
+								text-align: right;
+							`}
+						>
+							<Link href="/a-propos">En savoir plus sur futureco</Link>.
+						</p>
+					</div>
 				)}
 				{displayScenariosLink && (
 					<div
@@ -97,8 +114,16 @@ export default function Nav({}) {
 
 export const NavFooter = () => (
 	<Footer>
+		<div>Futureco</div>
+		<img
+			src="/logo.svg"
+			css="width: 2rem !important; height: auto;margin-left: 1rem"
+			width="10px"
+			height="10px"
+		/>
 		<div
 			css={`
+				margin-left: 1rem;
 				display: flex;
 				justify-content: center;
 				flex-wrap: wrap;
@@ -106,11 +131,5 @@ export const NavFooter = () => (
 		>
 			<Link href="/a-propos">À propos</Link>
 		</div>
-		<img
-			src="/logo.svg"
-			css="width: 2rem !important; height: auto;margin-left: 1rem"
-			width="10px"
-			height="10px"
-		/>
 	</Footer>
 )
