@@ -118,13 +118,13 @@ const Lab = ({}) => {
 	return (
 		<div
 			css={`
+				padding: 2rem;
 				svg {
 					width: 100%;
 					height: auto;
 				}
 				max-width: 90% !important;
 			`}
-			className="ui__ container"
 		>
 			<h2>Modèle de volume du Mega Express Four</h2>
 			{computed && (
