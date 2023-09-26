@@ -42,6 +42,7 @@ voiture . prix d'achat:
     - pour les thermiques : https://www.caroom.fr
     - pour les occasions: https://occasion.largus.fr/auto/renault/clio-iv/
   par défaut: moyen
+  unité: €
   suggestions:
     Dacia Spring Essential: 15800 €
     Clio V / Peugeot 208: 18000 €
