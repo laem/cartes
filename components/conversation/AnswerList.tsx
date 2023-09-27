@@ -6,7 +6,6 @@ import { motion } from 'framer-motion'
 import { DottedName } from 'modele-social'
 import { EvaluatedNode, formatValue } from 'publicodes'
 import { useEffect } from 'react'
-import { Trans, useTranslation } from 'react-i18next'
 import { useDispatch, useSelector } from 'react-redux'
 import {
 	answeredQuestionsSelector,
@@ -96,7 +95,7 @@ export default function AnswerList({ rules, engine }) {
 					>
 						<span css="flex-grow:1">
 							<Emoji e="📋 " />
-							<Trans>Mes réponses</Trans>
+							Mes réponses
 						</span>
 						<button
 							onClick={() => dispatch({ type: 'RESET_SIMULATION' })}
@@ -113,7 +112,7 @@ export default function AnswerList({ rules, engine }) {
 				<div className="ui__ card">
 					<h2>
 						<Emoji e="🔮 " />
-						<Trans>Prochaines questions</Trans>
+						Prochaines questions
 					</h2>
 					<CategoryTable {...{ steps: nextSteps, categories }} />
 				</div>
@@ -127,7 +126,6 @@ function StepsTable({
 }: {
 	rules: Array<EvaluatedNode & { nodeKind: 'rule'; dottedName: DottedName }>
 }) {
-	const language = useTranslation().i18n.language
 	return (
 		<table
 			css={`
@@ -139,7 +137,6 @@ function StepsTable({
 					<Answer
 						{...{
 							rule,
-							language,
 						}}
 					/>
 				))}
@@ -148,7 +145,7 @@ function StepsTable({
 	)
 }
 
-const Answer = ({ rule, language }) => {
+const Answer = ({ rule }) => {
 	// Shameless exception, sometimes you've got to do things dirty
 	if (
 		[
@@ -182,7 +179,7 @@ const Answer = ({ rule, language }) => {
 								situation['transport . avion . départ']
 							)} - ${trimSituationString(
 								situation['transport . avion . arrivée']
-							)} (${formatValue(rule, { language })})`}
+							)} (${formatValue(rule, { language: 'fr-FR' })})`}
 						</span>
 					),
 				}}
