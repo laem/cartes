@@ -134,6 +134,8 @@ voiture . durée de vie:
 
     D'où le chiffre de durée de vie estimé à 30 ans pour une voiture électrique.
 
+    Pourtant, des imprévus peuvent venir perturber ces notes positives : dans [cet article de Reuters](https://www.reuters.com/business/autos-transportation/scratched-ev-battery-your-insurer-may-have-junk-whole-car-2023-03-20/), on apprend que des voitures électriques accidentées pourraient aller directement à la poubelle, en particulier les Teslas, qui ont intégré leur batterie dans le chassis, la batterie n'étant pas vraiment réparable. Quelle proportion des voitures sont ainsi lourdement accidentées ? 1 % ? 5 % ? Quelle proportion de cette proportion n'est pas réparable ?
+
   formule:
     variations:
       - si: motorisation = 'électrique'
