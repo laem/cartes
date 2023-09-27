@@ -34,12 +34,13 @@ export default function CardCheckbox({
 			}}
 		>
 			<Link
-				href={`/national?${new URLSearchParams(
-					removeNullsFromObject({
+				href={{
+					pathname: '/national',
+					query: removeNullsFromObject({
 						...state,
 						[encodedTitre]: !state[encodedTitre],
-					})
-				)}`}
+					}),
+				}}
 			>
 				<Checkbox
 					checked={isChecked || false}
