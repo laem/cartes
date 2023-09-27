@@ -26,11 +26,13 @@ function Pub({ data }) {
 	const perKm = formatValue(
 		newEngine
 			.setSituation({
+				...newSituation,
 				'trajet voiture . distance': 1,
 			})
 			.evaluate(target),
 		{ precision: 2, displayedUnit: '€ / km' }
 	)
+	const isElec = situation['voiture . motorisation'].includes('électrique')
 
 	return (
 		<div
@@ -51,7 +53,7 @@ function Pub({ data }) {
 				> div {
 					right: 1rem;
 				}
-				p {
+				div > p {
 					margin: 1.6rem 0;
 					text-align: right;
 					height: inherit;
@@ -94,13 +96,9 @@ function Pub({ data }) {
 				</p>
 			</div>
 			<Legend>
-				<small>
-					Essence, péages, achat, parking, assurance, entretien, lavage,
-					équipements, accidents, infractions
-					{situation['voiture . motorisation'].includes('électrique')
-						? ', et bonus écologique inclus.'
-						: '.'}
-				</small>
+				{isElec ? 'Électricité' : 'Carburant'}, péages, achat, parking,
+				assurance, entretien, lavage, équipements, accidents, infractions
+				{isElec ? ', et bonus écologique inclus.' : '.'}
 			</Legend>
 		</div>
 	)
@@ -110,10 +108,10 @@ const Small = styled.small`
 `
 
 const Legend = styled.p`
-	small {
-		font-style: italic;
-		font-size: 50%;
-	}
+	font-style: italic;
+	font-size: 100%;
+	text-align: right;
+	color: black;
 	line-height: 0.9rem;
 	background: #ffffff90;
 	padding: 1rem 0.4rem;
@@ -121,8 +119,13 @@ const Legend = styled.p`
 	bottom: 0;
 	right: 0 !important;
 	top: unset !important;
+	height: unset !important;
+	margin: 0;
+	max-width: 30rem;
+	padding: 0.6rem;
 `
 
 const WhiteBackground = styled.span`
 	background: #ffffff90;
+	padding: 0 0.4rem;
 `
