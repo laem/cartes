@@ -24,7 +24,7 @@ export default function Page() {
 		<main>
 			<Header>
 				<Emoji e="⛽️" />
-				<h1 css="">Prix à la pompe 2022</h1>
+				<h1 css="">Prix du carburant à la pompe en 2023</h1>
 			</Header>
 			<Carburants />
 			<P>
