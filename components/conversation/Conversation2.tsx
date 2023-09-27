@@ -5,7 +5,7 @@ import Notifications from 'Components/Notifications'
 import { splitName } from 'Components/utils/publicodesUtils'
 import React, { useState } from 'react'
 import { useDispatch } from 'react-redux'
-import { Button, LightButton } from '../UI'
+import { Button, Card, LightButton } from '../UI'
 import Aide from './Aide'
 import CategoryRespiration from './CategoryRespiration'
 import './conversation.css'
@@ -97,7 +97,6 @@ const Conversation2 = ({
 		/>
 	) : (
 		<section
-			className="ui__ container"
 			css={`
 				@media (max-width: 800px) {
 					padding: 0.4rem 0 0.4rem;
@@ -110,37 +109,39 @@ const Conversation2 = ({
 			`}
 		>
 			<div style={{ outline: 'none' }}>
-				<div className="step">
-					<header css="display: flex; justify-content: start; ">
-						<h3
-							css={`
-								margin: 0.6rem 0;
-								@media (max-width: 800px) {
-									margin: 0.4rem 0;
-								}
-							`}
-						>
-							{questionText}
-						</h3>
-						{hasDescription && (
-							<ExplicableRule
-								dottedName={
-									(mosaicQuestion && mosaicQuestion.dottedName) ||
-									currentQuestion
-								}
+				<Card $fullWidth $noHoverEffect>
+					<div className="step">
+						<header css="display: flex; justify-content: start; ">
+							<h3
+								css={`
+									margin: 0.6rem 0;
+									@media (max-width: 800px) {
+										margin: 0.4rem 0;
+									}
+								`}
+							>
+								{questionText}
+							</h3>
+							{hasDescription && (
+								<ExplicableRule
+									dottedName={
+										(mosaicQuestion && mosaicQuestion.dottedName) ||
+										currentQuestion
+									}
+								/>
+							)}
+						</header>
+						<Aide rules={rules} />
+						<Fieldset>
+							<RuleInput
+								dottedName={currentQuestion}
+								onChange={onChange}
+								onSubmit={submit}
+								engine={engine}
 							/>
-						)}
-					</header>
-					<Aide rules={rules} />
-					<Fieldset>
-						<RuleInput
-							dottedName={currentQuestion}
-							onChange={onChange}
-							onSubmit={submit}
-							engine={engine}
-						/>
-					</Fieldset>
-				</div>
+						</Fieldset>
+					</div>
+				</Card>
 				<StepButtons>
 					{previousAnswers.length > 0 && currentQuestionIndex !== 0 && (
 						<>

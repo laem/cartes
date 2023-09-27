@@ -130,26 +130,29 @@ export const Card = styled.div`
 	font-size: inherit !important;
 	margin: 0.6rem;
 	max-width: 18rem;
-	padding: 1rem;
+	padding: 0.8rem 1.2rem;
 	text-align: center;
 	text-decoration: none;
 
 	border: 4px solid var(--darkerColor);
 	border-radius: 0.3rem;
-	background: var(--darkerColor2);
+	background: var(--darkestColor);
 	box-shadow: 0 1px 3px rgba(var(--rgbColor), 0.12),
 		0 1px 2px rgba(var(--rgbColor), 0.24);
-	padding-left: 1rem;
-	padding-right: 1rem;
 	transition: box-shadow 0.15s, border-color 0.15s;
 
+	${(p) =>
+		!p.$noHoverEffect &&
+		`
 	&:hover {
 		border-color: var(--lightColor);
 		box-shadow: 0 2px 4px -1px rgba(var(--rgbColor), 0.2),
 			0 4px 5px 0 rgba(var(--rgbColor), 0.14),
 			0 1px 10px 0 rgba(var(--rgbColor), 0.12);
 		opacity: inherit !important;
+			
 	}
+	`}
 	${(props) =>
 		props.$fullWidth &&
 		`max-width: 100%; display: block; flex: unset; text-align: left `}
@@ -161,7 +164,6 @@ background: var(--color)
 ; color: var(--darkestColor);
 font-size: 150% !important;
 margin: 2rem auto !important;
-
 `}
 `
 

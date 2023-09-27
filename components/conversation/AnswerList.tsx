@@ -112,7 +112,10 @@ export default function AnswerList({ rules, engine }) {
 					<summary>
 						<Emoji e="📋 " />
 						<span>
-							{answeredQuestionsLength} réponses sur {nextQuestionsLength}
+							{answeredQuestionsLength} réponses
+							{nextQuestionsLength > 0
+								? `, ${nextQuestionsLength} restantes`
+								: ''}
 						</span>
 					</summary>
 					<div>

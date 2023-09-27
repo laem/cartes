@@ -22,17 +22,17 @@ export const metadata: Metadata = {
 
 const Page = ({ searchParams: { lu } }) => (
 	<main>
-		<Card $fullWidth>
-			<Header>
-				<Image
-					src={voitures}
-					alt="Illustration de plusieurs formes d'automobiles, de la citadine au camping car"
-					width="100"
-					height="140"
-				/>
-				<div>
-					<h1>{title}</h1>
-					{!lu && (
+		{!lu && (
+			<Card $fullWidth>
+				<Header>
+					<Image
+						src={voitures}
+						alt="Illustration de plusieurs formes d'automobiles, de la citadine au camping car"
+						width="100"
+						height="140"
+					/>
+					<div>
+						<h1>{title}</h1>
 						<>
 							<p>{description1}</p>
 							<p>{description2}</p>
@@ -43,10 +43,10 @@ const Page = ({ searchParams: { lu } }) => (
 								<LightButton>OK</LightButton>
 							</Link>
 						</>
-					)}
-				</div>
-			</Header>
-		</Card>
+					</div>
+				</Header>
+			</Card>
+		)}
 		<Voyage />
 		<Sources>
 			<hr />
