@@ -5,6 +5,7 @@ export const Header = styled.header`
 	margin-top: 0rem;
 	h1 {
 		margin-top: 0;
+		margin-bottom: 0;
 	}
 	display: flex;
 	flex-wrap: wrap;
@@ -26,6 +27,12 @@ export const Header = styled.header`
 		div {
 			margin-left: 0;
 		}
+	}
+	a {
+		float: right;
+	}
+	div > p:first-of-type {
+		margin-top: 1rem;
 	}
 `
 

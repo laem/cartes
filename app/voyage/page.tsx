@@ -1,5 +1,5 @@
 import Emoji from '@/components/Emoji'
-import { Card } from '@/components/UI'
+import { Card, LightButton } from '@/components/UI'
 import voitures from '@/public/voitures.svg'
 import { Metadata } from 'next'
 import Image from 'next/image'
@@ -20,7 +20,7 @@ export const metadata: Metadata = {
 	openGraph: { images: [`https://${process.env.VERCEL_URL}/voitures.png`] },
 }
 
-const Page = () => (
+const Page = ({ searchParams: { lu } }) => (
 	<main>
 		<Card $fullWidth>
 			<Header>
@@ -32,8 +32,18 @@ const Page = () => (
 				/>
 				<div>
 					<h1>{title}</h1>
-					<p>{description1}</p>
-					<p> {description2}</p>
+					{!lu && (
+						<>
+							<p>{description1}</p>
+							<p>{description2}</p>
+							<Link
+								href={{ pathname: '/voyage', query: { lu: true } }}
+								prefetch={false}
+							>
+								<LightButton>OK</LightButton>
+							</Link>
+						</>
+					)}
 				</div>
 			</Header>
 		</Card>
