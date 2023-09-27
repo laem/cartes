@@ -1,0 +1,10 @@
+- titre: Nouvelle Renault **ZOE**
+  image: zoé.jpg
+  situation:
+    voiture . motorisation: '"électrique"'
+    voiture . prix d'achat: 30000
+- titre: Peugeot 3008
+  image: 3008.jpg
+  situation:
+    voiture . motorisation: '"essence"'
+    voiture . prix d'achat: 29000

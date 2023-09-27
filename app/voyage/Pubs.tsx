@@ -1,18 +1,23 @@
 'use client'
 import Image from 'next/image'
-import zoe from '@/public/voiture/zoé.jpg'
 import rules from '@/app/voyage/data/rules'
 import Publicodes, { formatValue } from 'publicodes'
 import { styled } from 'styled-components'
+import pubs from './pubs.yaml'
+import Markdown from 'markdown-to-jsx'
 
 const engine = new Publicodes(rules)
+const target = 'trajet voiture . coût trajet par personne'
 export default function Pubs() {
-	const target = 'trajet voiture . coût trajet par personne'
-	const newEngine = engine.setSituation({
-			'trajet voiture . distance': 'voiture . distance totale',
-			'voiture . motorisation': '"électrique"',
-			"voiture . prix d'achat": 30000,
-		}),
+	return pubs.map((data) => <Pub data={data} key={data.titre} />)
+}
+function Pub({ data }) {
+	const { situation, titre, image } = data
+	const newSituation = {
+		...situation,
+		'trajet voiture . distance': 'voiture . distance totale',
+	}
+	const newEngine = engine.setSituation(newSituation),
 		total = formatValue(newEngine.evaluate(target), {
 			precision: 0,
 			displayedUnit: '€',
@@ -30,6 +35,7 @@ export default function Pubs() {
 	return (
 		<div
 			css={`
+				margin: 3rem auto;
 				position: relative;
 				height: 30rem;
 				> div,
@@ -39,8 +45,8 @@ export default function Pubs() {
 					right: 0;
 				}
 				img {
-					width: auto;
-					height: inherit;
+					width: 100%;
+					height: auto;
 				}
 				> div {
 					right: 1rem;
@@ -61,10 +67,15 @@ export default function Pubs() {
 				}
 			`}
 		>
-			<Image src={zoe} />
+			<Image
+				src={'/voiture/' + data.image}
+				alt={"Belle photo publicitaire d'une " + data.titre}
+				width={500}
+				height={500}
+			/>
 			<div>
 				<p>
-					Nouvelle Renault <strong>ZOE</strong>
+					<Markdown>{titre}</Markdown>
 				</p>
 				<br />
 				<p>
@@ -81,14 +92,16 @@ export default function Pubs() {
 						<WhiteBackground>Soit {perKm}</WhiteBackground>
 					</Small>
 				</p>
-				<br />
-				<p>
-					<SuperSmall>
-						Essence, péages, achat, parking, assurance, entretien, lavage,
-						équipements, accidents, infractions, et bonus écologique inclus.
-					</SuperSmall>
-				</p>
 			</div>
+			<Legend>
+				<small>
+					Essence, péages, achat, parking, assurance, entretien, lavage,
+					équipements, accidents, infractions
+					{situation['voiture . motorisation'].includes('électrique')
+						? ', et bonus écologique inclus.'
+						: '.'}
+				</small>
+			</Legend>
 		</div>
 	)
 }
@@ -96,9 +109,18 @@ const Small = styled.small`
 	font-size: 75%;
 `
 
-const SuperSmall = styled.small`
-	font-size: 40%;
-	line-height: 0.1rem;
+const Legend = styled.p`
+	small {
+		font-style: italic;
+		font-size: 50%;
+	}
+	line-height: 0.9rem;
+	background: #ffffff90;
+	padding: 1rem 0.4rem;
+	position: absolute;
+	bottom: 0;
+	right: 0 !important;
+	top: unset !important;
 `
 
 const WhiteBackground = styled.span`
