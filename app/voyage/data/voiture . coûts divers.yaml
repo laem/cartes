@@ -30,11 +30,20 @@ voiture . coûts divers . parking:
 
 voiture . coûts divers . pv:
   question: Quel est le coût annuel des contraventions que vous avez du payer ?
-  par défaut: stationnement interdit + excès de vitesse
+  description: |
+    Cette question n'est pas évidente, mais elle est néanmoins non négligeable. Pourquoi ? Car les recettes des amendes diverses de circulation [ont atteint 1,8 milliards d'€ en 2022](https://www.ccomptes.fr/system/files/2023-04/NEB-2022-Controle-circulation-et-stationnement-routiers.pdf?page=15), dont 1 milliard pour les seuls radars (excès de vitesse)... ce qui donne 45 € par personnes et par an !
+
+    Bien sûr, le respect du code de la route varie énormément d'une personne à l'autre, à vous d'estimer la votre.
+
+  par défaut: recettes annuelles / parc français
   note: Idéalement, il faudrait trouver le montant moyen payé par français par an.
 
-voiture . coûts divers . pv . excès de vitesse: 68 €
-voiture . coûts divers . pv . stationnement interdit: 15 €
+voiture . parc français:
+  formule: 38.7 millions
+  note: https://www.statistiques.developpement-durable.gouv.fr/387-millions-de-voitures-en-circulation-en-france-au-1er-janvier-2022
+voiture . coûts divers . pv . recettes annuelles:
+  formule: 1784 millions
+  note: https://www.ccomptes.fr/system/files/2023-04/NEB-2022-Controle-circulation-et-stationnement-routiers.pdf?page=15
 
 voiture . coûts divers . permis de conduire:
   formule: permis de conduire . obtention / durée d'utilisation
