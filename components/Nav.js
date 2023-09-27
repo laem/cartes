@@ -15,7 +15,11 @@ export default function Nav({}) {
 		return null
 
 	const displayScenariosLink =
-		!pathname.includes('/scenarios') && !pathname.includes('/national')
+		!pathname.includes('/scenarios') &&
+		!pathname.includes('/national') &&
+		!pathname.includes('/carburants') &&
+		!pathname.includes('/voyage')
+
 	return (
 		<nav>
 			<section
