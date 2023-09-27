@@ -1,17 +1,22 @@
 'use client'
+import destinationPoint from '@/public/destination-point.svg'
+import startPoint from '@/public/start-point.svg'
+import Emoji from 'Components/Emoji'
 import getCityData, { toThumb } from 'Components/wikidata'
 import { motion } from 'framer-motion'
 import GreatCircle from 'great-circle'
-import React, { useEffect, useState } from 'react'
-import styled from 'styled-components'
-import Emoji from 'Components/Emoji'
-import { InputStyle } from './UI'
-import GeoInputOptions from './GeoInputOptions'
-import useGeo from '../useGeo'
-import { LightButton } from '../UI'
 import Image from 'next/image'
-import startPoint from '@/public/start-point.svg'
-import destinationPoint from '@/public/destination-point.svg'
+import { useEffect, useState } from 'react'
+import { LightButton } from '../UI'
+import useGeo from '../useGeo'
+import GeoInputOptions from './GeoInputOptions'
+import { InputStyle } from './UI'
+import {
+	CityImage,
+	ImageWrapper,
+	InputWrapper,
+	VoyageWrapper,
+} from './VoyageUI'
 
 export default function VoyageInput({
 	onChange,
@@ -24,13 +29,12 @@ export default function VoyageInput({
 	updateSituation,
 }) {
 	const [state, setState] = useState({
-		depuis: { inputValue: '' },
-		vers: { inputValue: '' },
+		depuis: { inputValue: '', choice: false },
+		vers: { inputValue: '', choice: false },
 		validated: false,
 	})
 
 	const geo = useGeo()
-	console.log(geo)
 
 	const [wikidata, setWikidata] = useState(null)
 
@@ -46,12 +50,14 @@ export default function VoyageInput({
 	const { depuis, vers } = state
 
 	const distance = computeDistance(state)
+	const validDistance = typeof distance === 'number'
 	useEffect(() => {
-		if (typeof distance !== 'number') return
+		if (!validDistance) return
 		if (updateSituation) {
 			updateSituation('distance aller . orthodromique')(distance)
 		} else onChange(distance)
 	}, [distance])
+
 	const onInputChange = (whichInput) => (e) => {
 		let v = e.target.value
 		setState({
@@ -95,33 +101,9 @@ export default function VoyageInput({
 	}
 
 	return (
-		<div
-			css={`
-				margin-top: 0.6rem;
-				display: flex;
-				justify-content: end;
-				flex-wrap: wrap;
-				width: 100%;
-				@media (min-width: 800px) {
-					flex-wrap: nowrap;
-					justify-content: space-evenly;
-				}
-			`}
-		>
+		<VoyageWrapper>
 			{displayImage && (
-				<div
-					css={`
-						display: flex;
-						justify-content: space-evenly;
-						align-items: center;
-						@media (min-width: 800px) {
-							flex-direction: column;
-						}
-						img {
-							margin-right: 1rem;
-						}
-					`}
-				>
+				<ImageWrapper>
 					{versImageURL && (
 						<motion.div
 							initial={{ opacity: 0, scale: 0.8 }}
@@ -135,7 +117,7 @@ export default function VoyageInput({
 							/>
 						</motion.div>
 					)}
-					{!isNaN(distance) && (
+					{validDistance && (
 						<div
 							css={`
 								margin: 1rem 0;
@@ -144,36 +126,9 @@ export default function VoyageInput({
 							Distance : <strong>{distance + ' km'}</strong>
 						</div>
 					)}
-				</div>
+				</ImageWrapper>
 			)}
-			<div
-				css={`
-					label {
-						display: flex;
-						justify-content: space-evenly;
-						align-items: center;
-						margin: 1em 1rem 0rem;
-					}
-					input {
-						width: 9em !important;
-						font-size: 130% !important;
-					}
-					label > span {
-						display: inline-block;
-						margin-right: 0.3rem;
-					}
-					ul {
-						border-left: 1px solid #333;
-						max-width: 30em;
-						margin-left: 1rem;
-						padding: 0;
-					}
-					width: 100%;
-					@media (min-width: 800px) {
-						max-width: 30rem;
-					}
-				`}
-			>
+			<InputWrapper>
 				<div>
 					{!depuis.choice && (
 						<label>
@@ -325,13 +280,13 @@ export default function VoyageInput({
 						</div>
 					)}
 				</div>
-			</div>
+			</InputWrapper>
 			{false && distance && !state.validated && (
 				<button {...{ submit: () => setState({ ...state, validated: true }) }}>
 					àimplementer
 				</button>
 			)}
-		</div>
+		</VoyageWrapper>
 	)
 }
 
@@ -350,16 +305,3 @@ export function computeDistance({ depuis, vers }) {
 		)
 	)
 }
-
-export const CityImage = styled.img`
-	object-fit: cover;
-	border-radius: 6rem;
-	width: calc(6rem + 6vw);
-	height: calc(6rem + 6vw);
-	${(props) =>
-		props.thinner
-			? `
-	height: calc(10rem + 6vw);
-	`
-			: ``}
-`
