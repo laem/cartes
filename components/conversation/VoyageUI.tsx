@@ -41,6 +41,7 @@ export const InputWrapper = styled.div`
 		display: flex;
 		justify-content: space-evenly;
 		align-items: center;
+		flex-wrap: wrap;
 		margin: 1em 1rem 0rem;
 		> span {
 			font-size: 120%;
@@ -50,6 +51,9 @@ export const InputWrapper = styled.div`
 		width: 9em !important;
 		font-size: 130% !important;
 		margin: 0;
+		@media (max-width: 800px) {
+			margin-top: 1rem;
+		}
 	}
 	label > span {
 		display: inline-block;
