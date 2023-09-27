@@ -71,7 +71,7 @@ export default function AnswerList({ rules, engine }) {
 		}
 	}, [situation])
 
-	const answeredQuestionsLength = answeredQuestionNames.length,
+	const answeredQuestionsLength = foldedStepsToDisplay.length,
 		nextQuestionsLength = nextSteps.length
 
 	return (

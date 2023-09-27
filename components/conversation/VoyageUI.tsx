@@ -42,10 +42,14 @@ export const InputWrapper = styled.div`
 		justify-content: space-evenly;
 		align-items: center;
 		margin: 1em 1rem 0rem;
+		> span {
+			font-size: 120%;
+		}
 	}
 	input {
 		width: 9em !important;
 		font-size: 130% !important;
+		margin: 0;
 	}
 	label > span {
 		display: inline-block;
@@ -60,5 +64,20 @@ export const InputWrapper = styled.div`
 	width: 100%;
 	@media (min-width: 800px) {
 		max-width: 30rem;
+	}
+`
+export const Choice = styled.div`
+	> img {
+		filter: invert(1);
+		width: 3rem;
+		height: auto;
+		margin-bottom: 0.2rem;
+	}
+	font-size: 120%;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	> * {
+		margin: 0 0.6rem;
 	}
 `
