@@ -44,6 +44,7 @@ export default function CardCheckbox({
 					query: newQuery,
 				}}
 				prefetch={false}
+				scroll={false}
 			>
 				<Checkbox
 					checked={isChecked || false}
