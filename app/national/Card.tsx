@@ -9,7 +9,8 @@ import CardCheckbox from './CardCheckbox'
 import { CardStyle } from './CardUI'
 const { encodeRuleName } = utils
 
-const Card = ({ data: { titre, icônes, formule, notes }, state, setState }) => {
+const Card = ({ data: { titre, icônes, formule, notes }, state }) => {
+	const encodedTitre = utils.encodeRuleName(titre)
 	return (
 		<li
 			css={`
@@ -34,13 +35,13 @@ const Card = ({ data: { titre, icônes, formule, notes }, state, setState }) => 
 					color: var(--color);
 				`}
 			>
-				<CardStyle {...{ isChecked: state[titre], formule }}>
+				<CardStyle {...{ isChecked: state[encodedTitre], formule }}>
 					<ButtonContent {...{ icônes, titre, formule }} />
 				</CardStyle>
 			</Link>
 			{formule != null && (
 				<CardCheckbox
-					{...{ isChecked: state[titre], titre, formule, setState }}
+					{...{ isChecked: state[encodedTitre], titre, formule, state }}
 				/>
 			)}
 		</li>

@@ -13,7 +13,9 @@ export const metadata: Metadata = {
 	},
 }
 
-export default function National() {
+export const dynamic = 'force-dynamic'
+
+export default function National({ searchParams }) {
 	return (
 		<Main>
 			<header>
@@ -28,7 +30,7 @@ export default function National() {
 				À vous de jouer : 🖱️ cliquez pour explorer l'action, ☑️ cochez-la pour
 				voir son impact.
 			</p>
-			<InteractiveGrid />
+			<InteractiveGrid state={searchParams} />
 		</Main>
 	)
 }

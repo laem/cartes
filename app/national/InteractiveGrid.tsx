@@ -1,10 +1,10 @@
 'use client'
-import Grid from './Grid'
-import { useState } from 'react'
-import Total from './Total'
 import { LightButton } from '@/components/UI'
-export default function Home() {
-	const [state, setState] = useState({})
+import Link from 'next/link'
+import Grid from './Grid'
+import Total from './Total'
+
+export default function Home({ state }) {
 	console.log('state', state)
 	const hasActiveActions = Object.keys(state).filter((el) => el[1]).length > 2
 	return (
@@ -16,9 +16,11 @@ export default function Home() {
 					text-align: right;
 				`}
 			>
-				<LightButton onClick={() => setState({})}>Tout décocher</LightButton>
+				<Link href={'/national'}>
+					<LightButton>Tout décocher</LightButton>
+				</Link>
 			</div>
-			<Grid {...{ state, setState }} />
+			<Grid {...{ state }} />
 		</div>
 	)
 }
