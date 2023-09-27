@@ -2,7 +2,9 @@
 
 import styled from 'styled-components'
 export const Table = styled.div`
-	min-width: 25rem;
+	display: block;
+	overflow-x: auto;
+	white-space: nowrap;
 `
 
 export const VerticalOl = styled.ol`
@@ -31,6 +33,7 @@ export const HorizontalOl = styled.ol`
 	align-items: center;
 	list-style-type: none;
 	width: 100%;
+	min-width: 35rem;
 	justify-content: space-evenly;
 	li {
 		flex: 1;
