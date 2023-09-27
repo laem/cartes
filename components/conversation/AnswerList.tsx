@@ -71,32 +71,51 @@ export default function AnswerList({ rules, engine }) {
 		}
 	}, [situation])
 
+	const answeredQuestionsLength = answeredQuestionNames.length,
+		nextQuestionsLength = nextSteps.length
+
 	return (
 		<div className="answer-list">
 			{!!foldedStepsToDisplay.length && (
-				<div>
-					<h2
-						css={`
-							font-size: 120%;
-							margin-bottom: 0.2rem;
-							display: flex;
-							align-items: center;
+				<details
+					css={`
+						font-size: 120%;
+						margin-bottom: 0.2rem;
+						display: flex;
+						align-items: center;
 
-							img {
-								margin-right: 0.2rem;
-								vertical-align: bottom;
-								width: 2rem;
-								height: auto;
+						img {
+							margin-right: 0.2rem;
+							vertical-align: bottom;
+							width: 2rem;
+							height: auto;
+						}
+						button {
+							color: white;
+						}
+						margin: 1rem;
+						cursor: pointer;
+						summary {
+							display: flex;
+							justify-content: center;
+							align-items: center;
+							> * {
+								margin: 0 0.2rem;
 							}
-							button {
-								color: white;
-							}
-						`}
-					>
-						<span css="flex-grow:1">
-							<Emoji e="📋 " />
-							Mes réponses
+						}
+						> div > button {
+							margin: 0 0 0 auto;
+							display: block;
+						}
+					`}
+				>
+					<summary>
+						<Emoji e="📋 " />
+						<span>
+							{answeredQuestionsLength} réponses sur {nextQuestionsLength}
 						</span>
+					</summary>
+					<div>
 						<button
 							onClick={() => dispatch({ type: 'RESET_SIMULATION' })}
 							title="Effacer mes réponses"
@@ -104,9 +123,10 @@ export default function AnswerList({ rules, engine }) {
 							<Emoji e="♻️" />
 							Effacer
 						</button>
-					</h2>
-					<StepsTable {...{ rules: foldedStepsToDisplay }} />
-				</div>
+
+						<StepsTable {...{ rules: foldedStepsToDisplay }} />
+					</div>
+				</details>
 			)}
 			{false && !!nextSteps.length && (
 				<div className="ui__ card">
@@ -165,6 +185,7 @@ const Answer = ({ rule }) => {
 	const simulationDottedName = useSelector(objectifsSelector)[0]
 	const uselessPrefix = simulationDottedName.includes(path)
 	const situation = useSelector(situationSelector)
+	const language = 'fr-FR'
 
 	const trimSituationString = (el) => el && el.split("'")[1]
 	if (rule.dottedName === 'transport . avion . distance de vol aller') {
@@ -179,7 +200,7 @@ const Answer = ({ rule }) => {
 								situation['transport . avion . départ']
 							)} - ${trimSituationString(
 								situation['transport . avion . arrivée']
-							)} (${formatValue(rule, { language: 'fr-FR' })})`}
+							)} (${formatValue(rule, { language })})`}
 						</span>
 					),
 				}}
