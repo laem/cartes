@@ -130,56 +130,55 @@ export default function VoyageInput({
 			)}
 			<InputWrapper>
 				<div>
-					{!depuis.choice && (
-						<label>
-							<span>
-								Départ <Emoji e={fromIcon} />
-							</span>
-							<InputStyle>
-								<input
-									type="text"
-									value={depuis.inputValue}
-									placeholder={placeholder}
-									onChange={onInputChange('depuis')}
+					{!depuis.choice && vers.choice && (
+						<>
+							<label>
+								<span>
+									D'où partez-vous ? <Emoji e={fromIcon} />
+								</span>
+								<InputStyle>
+									<input
+										type="text"
+										value={depuis.inputValue}
+										placeholder={placeholder}
+										onChange={onInputChange('depuis')}
+									/>
+								</InputStyle>
+							</label>
+							{geo && (
+								<small
+									css={`
+										display: block;
+										text-align: right;
+									`}
+								>
+									<Emoji e="✨" />
+									suggestion:{' '}
+									<LightButton
+										onClick={() => {
+											const value = geo.city + ', ' + geo.country
+											onInputChange('depuis')({ target: { value } })
+										}}
+									>
+										{geo.city}
+									</LightButton>
+								</small>
+							)}
+							{depuis.results && depuis.inputValue !== '' && !state.validated && (
+								<GeoInputOptions
+									{...{
+										whichInput: 'depuis',
+										data: state['depuis'],
+										updateState: (newData) =>
+											setState((state) => ({ ...state, depuis: newData })),
+										onChange,
+										rulesPath,
+										updateSituation,
+									}}
 								/>
-							</InputStyle>
-						</label>
+							)}
+						</>
 					)}
-					{geo && !state.depuis.choice && (
-						<small
-							css={`
-								display: block;
-								text-align: right;
-							`}
-						>
-							<Emoji e="✨" />
-							suggestion:{' '}
-							<LightButton
-								onClick={() => {
-									const value = geo.city + ', ' + geo.country
-									onInputChange('depuis')({ target: { value } })
-								}}
-							>
-								{geo.city}
-							</LightButton>
-						</small>
-					)}
-					{!depuis.choice &&
-						depuis.results &&
-						depuis.inputValue !== '' &&
-						!state.validated && (
-							<GeoInputOptions
-								{...{
-									whichInput: 'depuis',
-									data: state['depuis'],
-									updateState: (newData) =>
-										setState((state) => ({ ...state, depuis: newData })),
-									onChange,
-									rulesPath,
-									updateSituation,
-								}}
-							/>
-						)}
 					{depuis.choice && (
 						<div
 							css={`
@@ -202,13 +201,12 @@ export default function VoyageInput({
 									}
 								`}
 							>
-								<Emoji e="✅" />
 								{depuis.choice.item.nom}
 								<button
 									type="button"
 									onClick={() => setState({ ...state, depuis: {} })}
 								>
-									<Emoji e="✏️" />{' '}
+									<Emoji e="✏️" title="Modifier la ville de départ" />
 								</button>
 							</div>
 						</div>
@@ -216,36 +214,35 @@ export default function VoyageInput({
 				</div>
 				<div>
 					{!vers.choice && (
-						<label>
-							<span>
-								Arrivée <Emoji e={toIcon} />
-							</span>
-							<InputStyle>
-								<input
-									type="text"
-									value={vers.inputValue}
-									placeholder={placeholder}
-									onChange={onInputChange('vers')}
+						<>
+							<label>
+								<span>
+									Où allez-vous ? <Emoji e={toIcon} />
+								</span>
+								<InputStyle>
+									<input
+										type="text"
+										value={vers.inputValue}
+										placeholder={placeholder}
+										onChange={onInputChange('vers')}
+									/>
+								</InputStyle>
+							</label>
+							{vers.results && vers.inputValue !== '' && !state.validated && (
+								<GeoInputOptions
+									{...{
+										whichInput: 'vers',
+										data: state['vers'],
+										updateState: (newData) =>
+											setState((state) => ({ ...state, vers: newData })),
+										onChange,
+										updateSituation,
+										rulesPath,
+									}}
 								/>
-							</InputStyle>
-						</label>
+							)}
+						</>
 					)}
-					{!vers.choice &&
-						vers.results &&
-						vers.inputValue !== '' &&
-						!state.validated && (
-							<GeoInputOptions
-								{...{
-									whichInput: 'vers',
-									data: state['vers'],
-									updateState: (newData) =>
-										setState((state) => ({ ...state, vers: newData })),
-									onChange,
-									updateSituation,
-									rulesPath,
-								}}
-							/>
-						)}
 					{vers.choice && (
 						<div
 							css={`
@@ -268,13 +265,12 @@ export default function VoyageInput({
 									}
 								`}
 							>
-								<Emoji e="✅" />
 								{vers.choice.item.nom}
 								<button
 									type="button"
 									onClick={() => setState({ ...state, vers: {} })}
 								>
-									<Emoji e="✏️" />{' '}
+									<Emoji e="✏️" title="Modifier la ville de destination" />
 								</button>
 							</div>
 						</div>
