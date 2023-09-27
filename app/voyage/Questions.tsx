@@ -33,6 +33,7 @@ export default function Questions({
 		<ul>
 			<div
 				css={`
+					margin: 2rem 0.4rem;
 					opacity: ${(answeredQuestions.length + 2) /
 					(answeredQuestions.length + nextQuestions.length)};
 				`}
