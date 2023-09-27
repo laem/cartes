@@ -57,14 +57,17 @@ export default function Questions({
 						data={[
 							{
 								dottedName: 'voiture . coût instantané au km',
+								title: 'Coût instantané',
 								color: '#6a89cc',
 							},
 							{
 								dottedName: 'voiture . coût de possession au km',
+								title: 'Coût de possession',
 								color: '#f8c291',
 							},
 							{
 								dottedName: 'voiture . coûts divers au km',
+								title: 'Coûts divers',
 								color: '#cf6a87',
 							},
 						]}
