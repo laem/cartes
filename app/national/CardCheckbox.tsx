@@ -23,6 +23,11 @@ export default function CardCheckbox({
 	})
 	const encodedTitre = utils.encodeRuleName(titre)
 
+	const newQuery = removeNullsFromObject({
+		...state,
+		[encodedTitre]: !state[encodedTitre],
+	})
+
 	return (
 		<div
 			onMouseDown={() => playActive()}
@@ -36,11 +41,9 @@ export default function CardCheckbox({
 			<Link
 				href={{
 					pathname: '/national',
-					query: removeNullsFromObject({
-						...state,
-						[encodedTitre]: !state[encodedTitre],
-					}),
+					query: newQuery,
 				}}
+				prefetch={false}
 			>
 				<Checkbox
 					checked={isChecked || false}
