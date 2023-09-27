@@ -1,4 +1,5 @@
 'use client'
+import DetailedBarChartIcon from '@/components/DetailsBarChartIcon'
 import Simulation from '@/components/Simulation'
 import SimulationResults from '@/components/SimulationResults'
 import StackedBarChart from '@/components/StackedBarChart'
@@ -33,32 +34,41 @@ export default function Questions({
 		<ul>
 			<div
 				css={`
-					margin: 2rem 0.4rem;
+					margin: 2rem 0.4rem 1rem;
 					opacity: ${(answeredQuestions.length + 2) /
 					(answeredQuestions.length + nextQuestions.length)};
+					summary {
+						list-style-type: none;
+						cursor: pointer;
+					}
 				`}
 			>
 				<SimulationResults
 					{...{ ...rule, ...evaluation, engine, rules, ResultsBlock }}
 				/>
 
-				<StackedBarChart
-					engine={engine}
-					data={[
-						{
-							dottedName: 'voiture . coût instantané au km',
-							color: '#6a89cc',
-						},
-						{
-							dottedName: 'voiture . coût de possession au km',
-							color: '#f8c291',
-						},
-						{
-							dottedName: 'voiture . coûts divers au km',
-							color: '#cf6a87',
-						},
-					]}
-				/>
+				<details>
+					<summary>
+						<DetailedBarChartIcon />
+					</summary>
+					<StackedBarChart
+						engine={engine}
+						data={[
+							{
+								dottedName: 'voiture . coût instantané au km',
+								color: '#6a89cc',
+							},
+							{
+								dottedName: 'voiture . coût de possession au km',
+								color: '#f8c291',
+							},
+							{
+								dottedName: 'voiture . coûts divers au km',
+								color: '#cf6a87',
+							},
+						]}
+					/>
+				</details>
 			</div>
 			<Simulation
 				rules={rules}
