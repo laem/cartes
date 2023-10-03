@@ -71,6 +71,7 @@ export default function VoyageInput({
 				fetch(`https://photon.komoot.io/api/?q=${v}&limit=6&layer=city&lang=fr`)
 					.then((res) => res.json())
 					.then((json) => {
+						console.log(json)
 						setState((state) => ({
 							...state,
 							[whichInput]: {
