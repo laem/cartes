@@ -29,35 +29,41 @@ function MapZoomer({ points }) {
 	const map = useMap()
 	useEffect(() => {
 		var bounds = new L.LatLngBounds(points)
-		map.fitBounds(bounds, { padding: [20, 20] })
+		map.fitBounds(bounds, { padding: [30, 30] })
 	}, [points])
 }
 
+const MapBoxToken =
+	'pk.eyJ1Ijoia29udCIsImEiOiJjbGY0NWlldmUwejR6M3hyMG43YmtkOXk0In0.08u_tkAXPHwikUvd2pGUtw'
+
 const MapWrapper = ({ geoJSON }) => {
-	console.log(geoJSON)
 	const points = geoJSON.features[0].geometry.coordinates,
 		geoCenter = points[0].slice().reverse()
-	console.log('P', points)
 	return (
 		<div
 			css={`
 				> div {
-					height: 30rem;
-					width: 90vw;
+					height: 15rem;
+					width: 15rem;
+					border: 6px solid var(--darkColor);
 				}
 			`}
 		>
-			<MapContainer center={geoCenter} zoom={18} scrollWheelZoom={false}>
+			<MapContainer
+				center={geoCenter}
+				zoom={18}
+				zoomSnap={0.3}
+				zoomControl={false}
+			>
 				<MapZoomer points={points.map((el) => el.slice().reverse())} />
 				<TileLayer
-					attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
-					url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
+					url={`https://api.mapbox.com/styles/v1/kont/clf45ojd3003301ln8rp5fomd/tiles/{z}/{x}/{y}?access_token=${MapBoxToken}`}
 				/>
 
 				<Polyline color={'red'} opacity={0.7} weight={20} positions={points}>
 					<Popup>Polygon</Popup>
 				</Polyline>
-				<GeoJSON data={geoJSON} />
+				<GeoJSON data={geoJSON} color={'var(--color)'} weight={6} />
 			</MapContainer>
 		</div>
 	)
