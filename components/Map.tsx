@@ -2,12 +2,14 @@
 import 'leaflet-defaulticon-compatibility'
 import 'leaflet-defaulticon-compatibility/dist/leaflet-defaulticon-compatibility.css'
 import 'leaflet/dist/leaflet.css'
+import { useEffect } from 'react'
 import {
 	GeoJSON,
 	MapContainer,
 	Polyline,
 	Popup,
 	TileLayer,
+	useMap,
 } from 'react-leaflet'
 
 const center = [52.2302, 21.01258]
@@ -23,10 +25,19 @@ const points = [
 	[52.230306438414374, 21.014378070831302],
 ]
 
+function MapZoomer({ points }) {
+	const map = useMap()
+	useEffect(() => {
+		var bounds = new L.LatLngBounds(points)
+		map.fitBounds(bounds, { padding: [20, 20] })
+	}, [points])
+}
+
 const MapWrapper = ({ geoJSON }) => {
 	console.log(geoJSON)
-	const geoCenter = geoJSON.features[0].geometry.coordinates[0]
-	console.log(geoCenter)
+	const points = geoJSON.features[0].geometry.coordinates,
+		geoCenter = points[0].slice().reverse()
+	console.log('P', points)
 	return (
 		<div
 			css={`
@@ -37,6 +48,7 @@ const MapWrapper = ({ geoJSON }) => {
 			`}
 		>
 			<MapContainer center={geoCenter} zoom={18} scrollWheelZoom={false}>
+				<MapZoomer points={points.map((el) => el.slice().reverse())} />
 				<TileLayer
 					attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
 					url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
