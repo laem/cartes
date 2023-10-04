@@ -8,6 +8,7 @@ voiture . coût de possession:
       - assurance
       - entretien
       - lavage
+      - carte grise
   exemples:
     - titre: Avec une assurance légère
       situation:
@@ -15,6 +16,23 @@ voiture . coût de possession:
     - titre: Avec une assurance luxe
       situation:
         voiture . coût de possession . assurance: 850 €
+
+voiture . carte grise:
+  formule: immatriculation / durée de vie
+  description: |
+    On ne peut rouler en France sans certificat d'immatriculation, aussi appelé carte grise. Son prix varie selon de nombreux paramètres (puissance fiscale, motorisation, département, etc).
+  note: |
+    Nous divisons le prix par la durée de vie, ce qui est probablement très optimiste, car les frais sont payés à l'acquisition. Une voiture ira dans les mains de plusieurs propriétaires, ou autrement dit, un automobiliste qui le reste devra payée plusieurs fois l'immatriculation.
+
+voiture . carte grise . immatriculation:
+  description: |
+
+    Le chiffre de 300 € correspond à une Clio diesel ou essence de 5cv fiscaux achetée 25 000 € immatriculée dans le département d'Îlle-et-Vilaine (35) sur [le calculateur officiel de l'État](https://www.service-public.fr/simulateur/calcul/cout-certificat-immatriculation#main). Il descend à 15 € pour une voiture électrique.
+  formule:
+    variations:
+      - si: motorisation = 'électrique'
+        alors: 15 €
+      - sinon: 300 €
 
 voiture . prix d'achat . moyen:
   formule: 20000
