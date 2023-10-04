@@ -57,7 +57,7 @@ function handler(req) {
 				}}
 			>
 				<img
-					src={'http://localhost:3000/voiture/' + image}
+					src={'/voiture/' + image}
 					style={{ position: 'absolute', top: 0, left: 0 }}
 				/>
 
