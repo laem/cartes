@@ -74,28 +74,97 @@ function handler(req) {
 					<img src="https://futur.eco/logo.svg" />
 					<span
 						style={convert(
-							`font-size: 20px; dispay: block; font-weight: bold; color: #185abd; background: white; padding: 0 .4rem`
+							`font-size: 20px; font-weight: bold; color: white; background: #185abd; padding: 0 .2rem 0 .4rem; text-align: center; `
 						)}
 					>
 						futur.eco
 					</span>
 				</div>
 				<h1
-					style={{
-						fontSize: 100,
-						margin: '10px 0 0 0 ',
-						padding: 0,
-						lineHeight: '6rem',
-						backgroundImage:
-							'linear-gradient(90deg, #185abd, #2988e6, #57bff5)',
-
-						backgroundClip: 'text',
-						'-webkit-background-clip': 'text',
-						color: 'transparent',
-					}}
+					style={convert(`
+						font-size: 100;
+						top: 0; right: 2rem;
+						margin: 0;
+						position: absolute;
+						${gradientText}
+`)}
 				>
 					{titre}
 				</h1>
+				<p
+					style={convert(`
+						font-size: 30;
+						top: 6rem; right: 2rem;
+						position: absolute;
+						${gradientText}
+`)}
+				>
+					Accessible dès
+				</p>
+				<p
+					style={convert(`
+						font-size: 80;
+						top: 14rem; right: 2rem;
+						margin: 0;
+						position: absolute;
+						${gradientText}
+`)}
+				>
+					{total}
+				</p>
+				<p
+					style={convert(`
+						font-size: 30;
+						top: 20rem; right: 2rem;
+						margin: 0;
+						position: absolute;
+						${gradientText}
+`)}
+				>
+					sur {lifeTime} ans
+				</p>
+				<div
+					style={convert(`
+
+	background: #ffffff90;
+						display: flex;
+						font-size: 30;
+						top: 24rem; right: 2rem;
+						margin: 0;
+						padding: 0.1rem .6rem;
+						position: absolute;
+						border: 2px solid #185abd
+						`)}
+				>
+					<span
+						style={convert(`
+						${gradientText}
+`)}
+					>
+						Soit {perKm}
+					</span>
+				</div>
+
+				<div
+					style={convert(`
+						background: #ffffff90;
+						display: flex;
+						font-size: 30;
+						top: 31rem; right: 1rem;
+						margin: 0;
+						padding: 0.1rem .6rem;
+						position: absolute;
+						font-size: 13;
+						width: 26rem;
+						text-align: right
+						`)}
+				>
+					{isElec ? 'Électricité' : 'Carburant'}, péages, achat, parking,
+					assurance, entretien, lavage, équipements, accidents, infractions,
+					carte grise
+					{isElec ? ', et bonus écologique inclus.' : '.'}
+				</div>
+
 				{false && <div style={{ fontSize: 250 }}>{emojis}</div>}
 			</div>
 		),
@@ -108,5 +177,13 @@ function handler(req) {
 		}
 	)
 }
+
+const gradientText = `
+		background-image:linear-gradient(90deg, #185abd, #2988e6, #57bff5);
+		background-clip: text;
+		-webkit-background-clip: text;
+		color: transparent
+
+`
 
 export default handler
