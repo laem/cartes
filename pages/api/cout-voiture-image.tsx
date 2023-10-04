@@ -1,6 +1,9 @@
 import rules from '@/app/voyage/data/rules'
 import { ImageResponse } from '@vercel/og'
 import Publicodes, { formatValue } from 'publicodes'
+import convertRaw from '@/components/css/convertToJs'
+
+const convert = (css) => convertRaw(`div {${css}}`).div
 
 export const config = {
 	runtime: 'edge',
@@ -43,7 +46,6 @@ function handler(req) {
 					color: 'black',
 					width: '100%',
 					height: '100%',
-					padding: '30px',
 					textAlign: 'center',
 					justifyContent: 'center',
 					alignItems: 'center',
@@ -52,7 +54,32 @@ function handler(req) {
 					background: 'white',
 				}}
 			>
-				<img src="https://futur.eco/logo.svg" style={{ width: '8rem' }} />
+				<img
+					src={'http://localhost:3000/voiture/' + image}
+					style={{ position: 'absolute', top: 0, left: 0 }}
+				/>
+
+				<div
+					style={convert(`
+						position: absolute;
+						right: .6rem;
+						bottom: .4rem;
+						display: flex;
+						width: 6rem;
+						flexDirection: column;
+						align-items: center
+
+`)}
+				>
+					<img src="https://futur.eco/logo.svg" />
+					<span
+						style={convert(
+							`font-size: 20px; dispay: block; font-weight: bold; color: #185abd; background: white; padding: 0 .4rem`
+						)}
+					>
+						futur.eco
+					</span>
+				</div>
 				<h1
 					style={{
 						fontSize: 100,
@@ -73,8 +100,8 @@ function handler(req) {
 			</div>
 		),
 		{
-			width: 1200,
-			height: 750,
+			width: 1024,
+			height: 683,
 			// Supported options: 'twemoji', 'blobmoji', 'noto', 'openmoji', 'fluent', 'fluentFlat'
 			// Default to 'twemoji'
 			emoji: 'openmoji',
