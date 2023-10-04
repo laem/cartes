@@ -68,7 +68,8 @@ const Map = ({ origin, destination }) => {
 				> div {
 					height: 15rem;
 					width: 15rem;
-					border: 6px solid var(--darkColor);
+					border: 2px solid var(--darkColor);
+					border-radius: 32rem;
 				}
 			`}
 		>
@@ -82,7 +83,7 @@ const Map = ({ origin, destination }) => {
 					<MapZoomer points={points.map((el) => el.slice().reverse())} />
 				)}
 				<TileLayer
-					url={`https://api.mapbox.com/styles/v1/kont/clf45ojd3003301ln8rp5fomd/tiles/{z}/{x}/{y}?access_token=${MapBoxToken}`}
+					url={`https://api.mapbox.com/styles/v1/kont/clnbjtwzv03jw01qu1jhp9soj/tiles/{z}/{x}/{y}?access_token=${MapBoxToken}`}
 				/>
 
 				{origin && <Marker position={origin}></Marker>}
