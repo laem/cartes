@@ -2,6 +2,7 @@ import rules from '@/app/voyage/data/rules'
 import { ImageResponse } from '@vercel/og'
 import Publicodes, { formatValue } from 'publicodes'
 import convert from '@/components/css/convertToJs'
+import pubs from '@/app/voyage/pubs.yaml'
 
 export const config = {
 	runtime: 'edge',
@@ -9,13 +10,31 @@ export const config = {
 
 const engine = new Publicodes(rules)
 const target = 'trajet voiture . coût trajet par personne'
-function handler(req) {
+
+async function handler(req) {
 	const { searchParams } = new URL(req.url)
 	const titre = searchParams.get('titre')
 	const image = searchParams.get('image')
 	const situation = JSON.parse(
 		decodeURIComponent(searchParams.get('situation'))
 	)
+
+	/* error fetch
+	const imagesArray = await Promise.all(
+			pubs.map(
+				({ image }) =>
+					new Promise((resolve) => {
+						const url = new URL(
+							'../../public/voiture/' + image,
+							import.meta.url
+						)
+						console.log('URL', url)
+						fetch(url).then((res) => resolve([image, res.arrayBuffer()]))
+					})
+			)
+		),
+		images = Object.fromEntries(imagesArray)
+		*/
 
 	console.log('SITUATION', situation)
 
@@ -57,7 +76,15 @@ function handler(req) {
 				}}
 			>
 				<img
-					src={'/voiture/' + image}
+					src={
+						(process.env.NEXT_PUBLIC_NODE_ENV === 'development'
+							? 'http://localhost:3000'
+							: 'https://' + process.env.VERCEL_URL) +
+						'/voiture/' +
+						image
+					}
+					width="1024"
+					height="683"
 					style={{ position: 'absolute', top: 0, left: 0 }}
 				/>
 
