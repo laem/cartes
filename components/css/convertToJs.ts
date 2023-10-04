@@ -62,4 +62,6 @@ const convertToJS = (input) => {
 	}
 }
 
-export default convertToJS
+const convert = (css) => convertToJS(`div {${css}}`).div
+
+export default convert

@@ -1,9 +1,7 @@
 import rules from '@/app/voyage/data/rules'
 import { ImageResponse } from '@vercel/og'
 import Publicodes, { formatValue } from 'publicodes'
-import convertRaw from '@/components/css/convertToJs'
-
-const convert = (css) => convertRaw(`div {${css}}`).div
+import convert from '@/components/css/convertToJs'
 
 export const config = {
 	runtime: 'edge',

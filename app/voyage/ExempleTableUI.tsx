@@ -33,7 +33,7 @@ export const HorizontalOl = styled.ol`
 	align-items: center;
 	list-style-type: none;
 	width: 100%;
-	min-width: 40rem;
+	min-width: 36rem;
 	justify-content: space-evenly;
 	li {
 		flex: 1;
