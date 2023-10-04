@@ -2,7 +2,7 @@
 import 'leaflet-defaulticon-compatibility'
 import 'leaflet-defaulticon-compatibility/dist/leaflet-defaulticon-compatibility.css'
 import 'leaflet/dist/leaflet.css'
-import { useEffect } from 'react'
+import { useEffect, useState } from 'react'
 import {
 	GeoJSON,
 	MapContainer,
@@ -12,15 +12,54 @@ import {
 	TileLayer,
 	useMap,
 } from 'react-leaflet'
+import { decode } from './valhalla-decode-shape'
 
 const center = [47.033, 2.395]
 
 const MapBoxToken =
 	'pk.eyJ1Ijoia29udCIsImEiOiJjbGY0NWlldmUwejR6M3hyMG43YmtkOXk0In0.08u_tkAXPHwikUvd2pGUtw'
 
-const Map = ({ geoJSON, origin, destination }) => {
+const Map = ({ origin, destination }) => {
+	const [geoJSON, setGeoJSON] = useState(null)
 	const points = geoJSON && geoJSON.features[0].geometry.coordinates,
 		geoCenter = points && points[0].slice().reverse()
+
+	useEffect(() => {
+		if (!origin || !destination) return
+		const params = {
+			locations: [
+				{ lon: origin[0], lat: origin[1], type: 'break' },
+				{ lon: destination[0], lat: destination[1], type: 'break' },
+			],
+			directions_options: { units: 'kilometers' },
+			id: 'valhalla_directions',
+		}
+		const url = `https://valhalla1.openstreetmap.de/route?json=${JSON.stringify(
+			params
+		)}`
+		fetch(url)
+			.then((res) => res.json())
+
+			.then((json) => {
+				const shape = json.trip.legs[0].shape
+				const decoded = decode(shape)
+
+				const result = {
+					type: 'FeatureCollection',
+					features: [
+						{
+							type: 'Feature',
+							properties: {},
+							geometry: {
+								coordinates: decoded,
+								type: 'LineString',
+							},
+						},
+					],
+				}
+				setGeoJSON(result)
+			})
+	}, [origin, destination])
 	return (
 		<div
 			css={`
