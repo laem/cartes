@@ -28,6 +28,10 @@ const Article = styled.article`
 		padding: 0.6rem 2rem;
 		border-radius: 1rem;
 	}
+	hr {
+		opacity: 0.3;
+		color: var(--lightColor);
+	}
 `
 
 export default Article

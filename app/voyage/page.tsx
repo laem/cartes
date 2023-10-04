@@ -1,3 +1,4 @@
+import Article from '@/components/Article'
 import Emoji from '@/components/Emoji'
 import { Card, LightButton } from '@/components/UI'
 import voitures from '@/public/voitures.svg'
@@ -48,19 +49,12 @@ const Page = ({ searchParams: { lu } }) => (
 			</Card>
 		)}
 		<Voyage />
-		<Sources>
-			<hr />
-			<h2>Le calcul</h2>
-
-			<p>
-				Vous pouvez explorer l'ensemble du calcul sur la{' '}
-				<Link href="/voyage/documentation/trajet-voiture/coût-trajet-par-personne">
-					documentation intéractive
-				</Link>
-				.
-			</p>
-			<Explanation />
-		</Sources>
+		<Article>
+			<Sources>
+				<hr />
+				<Explanation />
+			</Sources>
+		</Article>
 	</main>
 )
 

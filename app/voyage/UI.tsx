@@ -38,8 +38,4 @@ export const Header = styled.header`
 
 export const Sources = styled.aside`
 	margin-top: 6rem;
-	hr {
-		opacity: 0.3;
-		color: var(--lightColor);
-	}
 `
