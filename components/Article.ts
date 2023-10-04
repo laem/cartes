@@ -20,6 +20,14 @@ const Article = styled.article`
 		padding-left: 1.4rem;
 		border-left: 6px solid var(--color1);
 	}
+	ul {
+		padding-left: 1rem;
+	}
+	#sommaire + ul {
+		background: var(--darkestColor);
+		padding: 0.6rem 2rem;
+		border-radius: 1rem;
+	}
 `
 
 export default Article
