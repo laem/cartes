@@ -27,9 +27,11 @@ const Map = ({ origin, destination }) => {
 	useEffect(() => {
 		if (!origin || !destination) return
 		const params = {
+			costing: 'auto',
+			exclude_polygons: [],
 			locations: [
-				{ lon: origin[0], lat: origin[1], type: 'break' },
-				{ lon: destination[0], lat: destination[1], type: 'break' },
+				{ lon: origin[1], lat: origin[0], type: 'break' },
+				{ lon: destination[1], lat: destination[0], type: 'break' },
 			],
 			directions_options: { units: 'kilometers' },
 			id: 'valhalla_directions',
