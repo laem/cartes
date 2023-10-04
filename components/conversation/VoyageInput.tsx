@@ -10,6 +10,7 @@ import { useEffect, useState } from 'react'
 import { LightButton } from '../UI'
 import useGeo from '../useGeo'
 import GeoInputOptions from './GeoInputOptions'
+import Map from 'Components/Map'
 import { InputStyle } from './UI'
 import {
 	Choice,
@@ -257,6 +258,7 @@ export default function VoyageInput({
 					)}
 				</div>
 			</InputWrapper>
+			<MapWrapper state={state} />
 			{false && distance && !state.validated && (
 				<button {...{ submit: () => setState({ ...state, validated: true }) }}>
 					àimplementer
@@ -264,6 +266,19 @@ export default function VoyageInput({
 			)}
 		</VoyageWrapper>
 	)
+}
+
+const MapWrapper = ({ state: { depuis, vers } }) => {
+	const origin = depuis.choice && [
+		depuis.choice.item.latitude,
+		depuis.choice.item.longitude,
+	]
+	const destination = vers.choice && [
+		vers.choice.item.latitude,
+		vers.choice.item.longitude,
+	]
+	console.log('O', origin)
+	return <Map origin={origin} destination={destination} />
 }
 
 export function computeDistance({ depuis, vers }) {

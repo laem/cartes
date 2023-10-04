@@ -19,6 +19,7 @@ const getData = () => {
 	console.log('URL', url)
 	return fetch(url)
 }
+
 export default async function MyPage() {
 	const data = await getData()
 	const json = await data.json()
