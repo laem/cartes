@@ -19,7 +19,7 @@ const center = [47.033, 2.395]
 const MapBoxToken =
 	'pk.eyJ1Ijoia29udCIsImEiOiJjbGY0NWlldmUwejR6M3hyMG43YmtkOXk0In0.08u_tkAXPHwikUvd2pGUtw'
 
-const Map = ({ origin, destination }) => {
+const Map = ({ origin, destination, setRealDistance }) => {
 	const [geoJSON, setGeoJSON] = useState(null)
 	const points = geoJSON && geoJSON.features[0].geometry.coordinates,
 		geoCenter = points && points[0].slice().reverse()
@@ -43,8 +43,11 @@ const Map = ({ origin, destination }) => {
 			.then((res) => res.json())
 
 			.then((json) => {
+				console.log('TRIP', json.trip)
 				const shape = json.trip.legs[0].shape
 				const decoded = decode(shape)
+
+				setRealDistance(Math.round(json.trip.summary.length))
 
 				const result = {
 					type: 'FeatureCollection',
@@ -89,7 +92,12 @@ const Map = ({ origin, destination }) => {
 				{origin && <Marker position={origin}></Marker>}
 				{destination && <Marker position={destination}></Marker>}
 				{geoJSON && (
-					<GeoJSON data={geoJSON} color={'var(--color)'} weight={6} />
+					<GeoJSON
+						data={geoJSON}
+						color={'var(--color)'}
+						weight={6}
+						key={JSON.stringify({ origin, destination })}
+					/>
 				)}
 			</MapContainer>
 		</div>

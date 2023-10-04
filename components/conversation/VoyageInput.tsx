@@ -36,6 +36,7 @@ export default function VoyageInput({
 		validated: false,
 	})
 
+	const [realDistance, setRealDistance] = useState(null)
 	const geo = useGeo()
 
 	const [wikidata, setWikidata] = useState(null)
@@ -51,7 +52,8 @@ export default function VoyageInput({
 	const versImageURL = wikidata?.pic && toThumb(wikidata?.pic.value)
 	const { depuis, vers } = state
 
-	const distance = computeDistance(state)
+	const distance = realDistance || computeDistance(state)
+
 	const validDistance = typeof distance === 'number'
 	useEffect(() => {
 		if (!validDistance) return
@@ -258,7 +260,7 @@ export default function VoyageInput({
 					)}
 				</div>
 			</InputWrapper>
-			<MapWrapper state={state} />
+			<MapWrapper state={state} setRealDistance={setRealDistance} />
 			{false && distance && !state.validated && (
 				<button {...{ submit: () => setState({ ...state, validated: true }) }}>
 					àimplementer
@@ -268,7 +270,7 @@ export default function VoyageInput({
 	)
 }
 
-const MapWrapper = ({ state: { depuis, vers } }) => {
+const MapWrapper = ({ state: { depuis, vers }, setRealDistance }) => {
 	const origin = depuis.choice && [
 		depuis.choice.item.latitude,
 		depuis.choice.item.longitude,
@@ -278,7 +280,13 @@ const MapWrapper = ({ state: { depuis, vers } }) => {
 		vers.choice.item.longitude,
 	]
 	console.log('O', origin)
-	return <Map origin={origin} destination={destination} />
+	return (
+		<Map
+			origin={origin}
+			destination={destination}
+			setRealDistance={setRealDistance}
+		/>
+	)
 }
 
 export function computeDistance({ depuis, vers }) {
