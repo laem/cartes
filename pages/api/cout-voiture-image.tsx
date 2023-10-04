@@ -15,7 +15,11 @@ function handler(req) {
 	const { searchParams } = new URL(req.url)
 	const titre = searchParams.get('titre')
 	const image = searchParams.get('image')
-	const situation = JSON.parse('{}' || searchParams.get('situation'))
+	const situation = JSON.parse(
+		decodeURIComponent(searchParams.get('situation'))
+	)
+
+	console.log('SITUATION', situation)
 
 	const newSituation = {
 		...situation,

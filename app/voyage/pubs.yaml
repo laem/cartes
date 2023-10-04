@@ -1,19 +1,19 @@
-- titre: Dacia **Spring**
+- titre: Dacia Spring
   image: spring.jpg
   situation:
-    voiture . motorisation: '"électrique"'
+    voiture . motorisation: "'électrique'"
     voiture . prix d'achat: 15800
-- titre: Renault **Clio V**
+- titre: Renault Clio V
   image: clio-2.jpg
   situation:
     voiture . motorisation: '"diesel"'
     voiture . prix d'achat: 18000
-- titre: Nouvelle Renault **ZOE**
+- titre: Renault ZOE
   image: zoé.jpg
   situation:
     voiture . motorisation: '"électrique"'
     voiture . prix d'achat: 30000
-- titre: SUV Peugeot **3008**
+- titre: SUV Peugeot 3008
   image: 3008.jpg
   situation:
     voiture . motorisation: '"essence"'

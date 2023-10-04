@@ -49,9 +49,6 @@ const Page = ({ searchParams: { lu } }) => (
 			</Card>
 		)}
 		<Voyage />
-		<img
-			src={`/api/cout-voiture-image?titre=Renault Zoé&image=zoé.jpg&situation={"motorisation": "'électrique'"}`}
-		/>
 		<Article>
 			<Sources>
 				<hr />
