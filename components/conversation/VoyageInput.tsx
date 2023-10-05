@@ -12,6 +12,7 @@ import useGeo from '../useGeo'
 import GeoInputOptions from './GeoInputOptions'
 import Map from 'Components/Map'
 import { InputStyle } from './UI'
+import invertIcon from '@/public/invertIcon.svg'
 import {
 	Choice,
 	CityImage,
@@ -206,6 +207,25 @@ export default function VoyageInput({
 						</Choice>
 					)}
 				</div>
+
+				{depuis.choice && vers.choice && (
+					<LightButton
+						title="Remplacer la destination par l'origine, et vice et versa"
+						onClick={() => {
+							setState({ ...state, depuis: state.vers, vers: state.depuis })
+						}}
+						css={`
+							img {
+								width: 2rem;
+								height: 2rem;
+							}
+							text-align: right;
+							padding: 0 2rem 0 0;
+						`}
+					>
+						<Image src={invertIcon} />
+					</LightButton>
+				)}
 				<div>
 					{!vers.choice && (
 						<>
