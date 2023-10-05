@@ -79,7 +79,7 @@ export const Choice = styled.div`
 	}
 	font-size: 120%;
 	display: flex;
-	justify-content: center;
+	justify-content: start;
 	align-items: center;
 	> * {
 		margin: 0 0.6rem;
