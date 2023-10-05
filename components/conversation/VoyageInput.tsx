@@ -135,59 +135,6 @@ export default function VoyageInput({
 			)}
 			<InputWrapper>
 				<div>
-					{!vers.choice && (
-						<>
-							<label>
-								<span>
-									Où allez-vous ? <Emoji e={toIcon} />
-								</span>
-								<InputStyle>
-									<input
-										type="text"
-										value={vers.inputValue}
-										placeholder={placeholder}
-										onChange={onInputChange('vers')}
-									/>
-								</InputStyle>
-							</label>
-							{vers.results && vers.inputValue !== '' && !state.validated && (
-								<GeoInputOptions
-									{...{
-										whichInput: 'vers',
-										data: state['vers'],
-										updateState: (newData) =>
-											setState((state) => ({ ...state, vers: newData })),
-										onChange,
-										updateSituation,
-										rulesPath,
-									}}
-								/>
-							)}
-						</>
-					)}
-					{vers.choice && (
-						<Choice>
-							<Image src={destinationPoint} alt="Vers" />
-							<div
-								css={`
-									text-align: right;
-									img {
-										width: 2rem;
-									}
-								`}
-							>
-								{vers.choice.item.nom}
-								<button
-									type="button"
-									onClick={() => setState({ ...state, vers: {} })}
-								>
-									<Emoji e="✏️" title="Modifier la ville de destination" />
-								</button>
-							</div>
-						</Choice>
-					)}
-				</div>
-				<div>
 					{!depuis.choice && vers.choice && (
 						<>
 							<label>
@@ -254,6 +201,59 @@ export default function VoyageInput({
 									onClick={() => setState({ ...state, depuis: {} })}
 								>
 									<Emoji e="✏️" title="Modifier la ville de départ" />
+								</button>
+							</div>
+						</Choice>
+					)}
+				</div>
+				<div>
+					{!vers.choice && (
+						<>
+							<label>
+								<span>
+									Où allez-vous ? <Emoji e={toIcon} />
+								</span>
+								<InputStyle>
+									<input
+										type="text"
+										value={vers.inputValue}
+										placeholder={placeholder}
+										onChange={onInputChange('vers')}
+									/>
+								</InputStyle>
+							</label>
+							{vers.results && vers.inputValue !== '' && !state.validated && (
+								<GeoInputOptions
+									{...{
+										whichInput: 'vers',
+										data: state['vers'],
+										updateState: (newData) =>
+											setState((state) => ({ ...state, vers: newData })),
+										onChange,
+										updateSituation,
+										rulesPath,
+									}}
+								/>
+							)}
+						</>
+					)}
+					{vers.choice && (
+						<Choice>
+							<Image src={destinationPoint} alt="Vers" />
+							<div
+								css={`
+									text-align: right;
+									img {
+										width: 2rem;
+									}
+								`}
+							>
+								{vers.choice.item.nom}
+								<button
+									type="button"
+									onClick={() => setState({ ...state, vers: {} })}
+								>
+									<Emoji e="✏️" title="Modifier la ville de destination" />
 								</button>
 							</div>
 						</Choice>
