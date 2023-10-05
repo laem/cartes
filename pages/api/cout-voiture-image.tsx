@@ -159,7 +159,7 @@ async function handler(req) {
 
 	background: #ffffff90;
 						display: flex;
-						font-size: 30;
+						font-size: 45;
 						top: 24rem; right: 2rem;
 						margin: 0;
 						padding: 0.1rem .6rem;
