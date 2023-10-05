@@ -112,6 +112,8 @@ voiture . coût de possession . entretien thermique:
     C'est une source de mauvaise qualité, qui ne décortique pas ses calculs, et ne les source pas. Nous devons trouver mieux, et probablement reconstruire nous-mêmes le prix paramétré.
 
     Cette autre source, [une étude par le cabinet ADETEC](https://mobilidoc.fr/document-407) en 2018, donne un coût d'entretien de ~ 1200 € par an. Cela confirme notre ordre de grandeur.
+
+  Une troisième source, l'étude ["Budget de l'automobiliste"](https://www.automobile-club.org/espace-presse/communiques/l-aca-publie-les-resultats-du-budget-de-l-automobiliste-2019) de l'Automobile Club nous dit que pour une Clio essence, `Le poste Entretien a progressé de 7,7 % pour atteindre 939 €, à cause de l'explosion du prix des pièces détachées`. Cela confirme à nouveau l'ordre de grandeur de 1000 € par an. 
   par défaut: 1000€
   suggestions:
     petit rouleur: 840 €
