@@ -46,6 +46,10 @@ trajet voiture . coût trajet par personne:
       situation:
         trajet voiture . distance: 8 km
         trajet . voyageurs: 1
+    - titre: Citadine diesel sur durée de vie totale
+      situation:
+        trajet voiture . distance: 'voiture . distance totale'
+        trajet . voyageurs: 1
 
 trajet voiture . coût trajet:
   titre: Coût total du trajet en voiture
@@ -63,7 +67,7 @@ trajet voiture . coût instantané:
       - péages
 
 trajet voiture . coût énergétique:
-  formule: voiture . coût instantané au km * distance en voiture
+  formule: voiture . coût instantané au km * distance
   titre: Coût direct
 
 trajet voiture . prix carburant:
@@ -101,49 +105,38 @@ trajet voiture . prix électricité:
     Aussi, il faudrait prendre en compte une part de l'abonnement proportionnelle à la consommation d'une voiture électrique dans un foyer.
 trajet voiture . coût de possession:
   titre: Coûts de possession ramenés au trajet
-  formule: voiture . coût de possession au km * distance en voiture
+  formule: voiture . coût de possession au km * distance
 
 trajet voiture . coûts divers:
   titre: Coûts divers ramenés au trajet
-  formule: voiture . coûts divers au km * distance en voiture
+  formule: voiture . coûts divers au km * distance
 
 trajet voiture . départ:
   note: Variable remplie par une interface de recherche.
 trajet voiture . arrivée:
   note: Variable remplie par une interface de recherche.
 
-trajet voiture . distance en voiture:
-  formule: distance * 1.3
-  description: |
-    Idéalement, pour chaque trajet, il faudrait calculer la trace GPS, ou plutôt différentes traces en fonction des choix de l'automobiliste (autoroute, pas d'autoroute, éviter les routes de montagne, etc.) et en mesurer la distance.
-
-    Pour l'instant, nous ne faisons qu'estimer la distance en plus qu'imposent les virages.
-
-    Pour ce faire, nous nous basons sur 3 trajets, Lille → Nice, Brest → Rennes et Bordeaux → Lyon, pour trouver un coefficient de majoration de 1,4 : pour 100 km de distance à vol d'oiseau, une voiture parcourera en moyenne 135 km.
-
-    Le calcul est fait sur 7 exemples courts, moyens, longs et disponible dans le tableur app/voyage/data/estimation-majoration-distance-voiture.ods.
-
-  note: |
-    Bien sûr, la méthode est contestable : quid des trajets au bord d'une côte accidentée où de longs détours sont nécessaires ? La France étant héxagonale, ce problème est en moyenne mitigé.
-
-    > Le modèle s'applique donc très mal à des trajets pénisulaires comme Brest -> Camaret, ou d'autres qui traversent des grandes fleuves avec peu de ponts, comme l'estuaire de la Seine au Havre.
-
-    Quid d'une différence entre trajets courts, moyens, longs ? Il faudrait en effet l'intégrer. 
-
-    Le plus simpe cependant, sera bien sûr d'utiliser un calculateur d'itinéraire dans le futur.
-
 trajet voiture . distance:
   titre: Distance trajet en voiture
   question: Quel est votre trajet ?
   description: Saisissez une ville de départ et une ville de destination.
   note: |
-    La distance est pour l'instant calculée de façon basique : on regarde la distance à vol d'oiseau entre la ville de départ et d'arrivée, puis on applique une majoration pour prendre en compte le fait qu'un trajet en voiture est loin d'être une ligne droite.
+    Dans un premier temps, nous calculions la distance de façon basique : on prenait la distance à vol d'oiseau entre la ville de départ et d'arrivée, puis on appliquait une majoration pour prendre en compte le fait qu'un trajet en voiture est loin d'être une ligne droite. 
+
+    Bien sûr, la méthode était contestable : quid des trajets au bord d'une côte accidentée où de longs détours sont nécessaires ? La France étant héxagonale, ce problème est en moyenne mitigé.
+
+    > Le modèle s'appliquait donc très mal à des trajets pénisulaires comme Brest -> Camaret, ou d'autres qui traversent des grandes fleuves avec peu de ponts, comme l'estuaire de la Seine au Havre.
+
+    Maintenant, **nous utilisons un vrai calculateur d'itinéraire voiture** pour plus de précision.
+
+
+    Idéalement, pour chaque trajet, il faudrait proposer à l'automobiliste de choisir parmi plusieurs traces GPS (autoroute, pas d'autoroute, éviter les routes de montagne, etc.) pour avoir une distance plus fiable, et un montant des péages plus spécialisé, les montants étant très variables en fonction des routes empruntées.
   par défaut: 335 km
   unité: km
 
 trajet voiture . péages:
   titre: Les péages
-  formule: distance en voiture * péages par km * part autoroute
+  formule: distance * péages par km * part autoroute
 
 trajet voiture . part autoroute:
   question: Quelle part de votre trajet est faite sur autoroute ?

@@ -48,6 +48,7 @@ async function handler(req) {
 			displayedUnit: '€',
 		}),
 		lifeTime = newEngine.evaluate('voiture . durée de vie').nodeValue
+	const distance = newEngine.evaluate('trajet voiture . distance').nodeValue
 	const perKm = formatValue(
 		newEngine
 			.setSituation({
@@ -101,6 +102,7 @@ async function handler(req) {
 `)}
 				>
 					<img src="https://futur.eco/logo.svg" />
+
 					<span
 						style={convert(
 							`font-size: 20px; font-weight: bold; color: white; background: #185abd; padding: 0 .2rem 0 .4rem; text-align: center; `
