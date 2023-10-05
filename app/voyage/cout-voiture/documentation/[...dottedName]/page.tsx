@@ -14,7 +14,7 @@ const Page = async ({ params: { dottedName: rawDottedName } }: Props) => {
 			<QuickDocumentationPage
 				dottedName={decoded}
 				rules={rules}
-				pathPrefix="/voyage"
+				pathPrefix="/voyage/cout-voiture"
 				spotlight={['trajet voiture . coût trajet par personne']}
 			/>
 		</main>
