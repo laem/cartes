@@ -5,6 +5,9 @@ voiture . coûts au km:
   description: |
     Le coût d'un mode de transport est souvent estimé au km.
 
+  note: |
+    [Cette page de WWF](https://www.wwf.fr/agir-au-quotidien/le-prix-de-revient-au-kilometre-dun-vehicule-quest-ce-que-cest) cite des coûts bien plus élevés que ceux calculés ici. Malheureusement, ils n'ont mis en lien aucune source, rendant leurs chiffres inutiles.
+
   formule:
     somme:
       - coût instantané au km
