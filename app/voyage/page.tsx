@@ -18,7 +18,11 @@ const description1 =
 export const metadata: Metadata = {
 	title,
 	description: description1 + ' ' + description2,
-	openGraph: { images: [`https://${process.env.VERCEL_URL}/voitures.png`] },
+	openGraph: {
+		images: [`https://${process.env.VERCEL_URL}/voitures.png`],
+		type: 'article',
+		publishedTime: '2023-10-10T00:00:00.000Z',
+	},
 }
 
 const Page = ({ searchParams: { lu } }) => (
