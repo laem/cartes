@@ -1,4 +1,4 @@
-import rules from '@/app/voyage/data/rules.ts'
+import rules from '@/app/voyage/cout-voiture/data/rules.ts'
 import QuickDocumentationPage from '@/components/documentation/QuickDocumentationPage'
 import { utils } from 'publicodes'
 import Link from 'next/link'

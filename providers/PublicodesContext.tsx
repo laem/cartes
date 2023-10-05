@@ -1,11 +1,11 @@
 'use client'
 
-import React, { useContext, useEffect, useMemo, useState } from 'react'
+import React, { useContext, useMemo, useState } from 'react'
 
-import rules from '@/app/voyage/data/rules'
+import rules from '@/app/voyage/cout-voiture/data/rules'
+import { situationSelector } from '@/selectors/simulationSelectors'
 import Engine from 'publicodes'
 import { useSelector } from 'react-redux'
-import { situationSelector } from '@/selectors/simulationSelectors'
 
 const PublicodesContext = React.createContext()
 

@@ -8,7 +8,7 @@ import { useNextQuestions } from '@/components/utils/useNextQuestion'
 import { answeredQuestionsSelector } from '@/selectors/simulationSelectors'
 import { formatValue } from 'publicodes'
 import { useSelector } from 'react-redux'
-import { EndingCongratulations } from '../simulateur/[...dottedName]/SimulateurContent'
+import { EndingCongratulations } from '@/app/simulateur/[...dottedName]/SimulateurContent'
 
 export default function Questions({
 	rules,

@@ -2,7 +2,7 @@
 import rules from './data/rules.ts'
 
 import { useEngine2 } from '@/providers/EngineWrapper'
-import { useSimulationConfig } from '../simulateur/[...dottedName]/configBuilder'
+import { useSimulationConfig } from '@/app/simulateur/[...dottedName]/configBuilder'
 import Questions from './Questions'
 
 export default function Voyage() {

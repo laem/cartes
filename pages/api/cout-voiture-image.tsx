@@ -1,8 +1,7 @@
-import rules from '@/app/voyage/data/rules'
+import rules from '@/app/voyage/cout-voiture/data/rules'
+import convert from '@/components/css/convertToJs'
 import { ImageResponse } from '@vercel/og'
 import Publicodes, { formatValue } from 'publicodes'
-import convert from '@/components/css/convertToJs'
-import pubs from '@/app/voyage/pubs.yaml'
 
 export const config = {
 	runtime: 'edge',
