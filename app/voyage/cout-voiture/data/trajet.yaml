@@ -21,6 +21,7 @@ trajet voiture . coût trajet par personne:
   note: |
     Ne sont pas inclus pour l'instant : 
       - le coût immobilier d'un garage, qui peut être énorme dans certaines villes
+      - le coût du crédit pour acheter la voiture neuve. Il semblerait d'après le Ministère des Finances que 60 % des automobilistes feraient un prêt de 80 % à 4 ans... À creuser.
       - sûrement bien d'autres coûts plus mineurs qui viennent saler la facture
 
     Faire une variation du modèle pour une voiture de location.

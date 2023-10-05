@@ -8,6 +8,10 @@ voiture . coûts au km:
   note: |
     [Cette page de WWF](https://www.wwf.fr/agir-au-quotidien/le-prix-de-revient-au-kilometre-dun-vehicule-quest-ce-que-cest) cite des coûts bien plus élevés que ceux calculés ici. Malheureusement, ils n'ont mis en lien aucune source, rendant leurs chiffres inutiles.
 
+    [Ce rapport de l'Automobile Club](https://www.automobile-club.org/actualites/la-vie-de-l-aca/budget-de-l-automobiliste-de-l-aca-avril-2020) est intéressant. Mais outre le fait qu'il soit avant tout conçu pour être un plaidoyer anti-taxes, il semble considérer le coût d'une voiture sur sa première année d'achat neuf. C'est ce que je comprends de la ligne "achat moins repris" dans le [communiqué de presse](https://www.automobile-club.org/espace-presse/communiques/l-aca-publie-les-resultats-du-budget-de-l-automobiliste-2019) qui représente plus d'1/10ème du prix d'achat neuf du véhicule, donc prenant en compte la décôte maximale des premières années. Ce n'est pas ce qui nous intéresse ici.
+
+  C'est confirmé dans le rapport complet : "Achat d’un véhicule neuf, concomitamment à la revente (reprise) de l’ancien véhicule âgé de 4 ans". Il s'agit donc d'un comportement d'achat très dépensier et très polluant.
+
   formule:
     somme:
       - coût instantané au km
