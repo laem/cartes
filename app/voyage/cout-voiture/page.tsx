@@ -1,5 +1,5 @@
 import Article from '@/components/Article'
-import convert from '@/components/css/convertToJs'
+import css from '@/components/css/convertToJs'
 import { Card, LightButton } from '@/components/UI'
 import voitures from '@/public/voitures.svg'
 import { Metadata } from 'next'
@@ -52,9 +52,25 @@ const Page = ({ searchParams: { lu } }) => (
 				</Header>
 			</Card>
 		)}
+		<p
+			style={css`
+				text-align: center;
+			`}
+		>
+			Vous utilisez une{' '}
+			<strong
+				style={css`
+					background: purple;
+					padding: 0rem 0.4rem;
+				`}
+			>
+				version beta
+			</strong>{' '}
+			de l'outil.
+		</p>
 		<Voyage />
 		<Article>
-			<div style={convert(`margin-top: 6rem`)}>
+			<div style={css(`margin-top: 6rem`)}>
 				<hr />
 				<Explanation />
 			</div>
