@@ -38,14 +38,20 @@ const Emoji = ({ e, black, extra, alt, hasText, white }) => {
 
 	const items = replace(e, regex, function (emoji) {
 		const src = findOpenmoji(emoji, useBlack)
-		return <Image {...{ src, alt: emoji, imageSize, white }} key={src} />
+		return <Image {...{ src, alt: alt || emoji, imageSize, white }} key={src} />
 	})
 	if (hasText) return items
 	return <Text>{items}</Text>
 }
 
 const Image = ({ src, alt, imageSize, white }) => (
-	<ImageStyle src={src} alt={alt} $imageSize={imageSize} $white={white} />
+	<ImageStyle
+		src={src}
+		alt={alt}
+		$imageSize={imageSize}
+		$white={white}
+		title={alt}
+	/>
 )
 
 export const getEmojiImageUrls = (emojis) =>

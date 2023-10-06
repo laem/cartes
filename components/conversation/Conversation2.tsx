@@ -5,10 +5,11 @@ import Notifications from 'Components/Notifications'
 import { splitName } from 'Components/utils/publicodesUtils'
 import React, { useState } from 'react'
 import { useDispatch } from 'react-redux'
-import { Button, LightButton } from '../UI'
+import { Button, Card, LightButton } from '../UI'
 import Aide from './Aide'
 import CategoryRespiration from './CategoryRespiration'
 import './conversation.css'
+import { isVoyageQuestion } from './customQuestions/voyageInput'
 import { ExplicableRule } from './Explicable'
 import { isMosaic } from './mosaicQuestions'
 import SimulationEnding from './SimulationEnding'
@@ -31,6 +32,7 @@ const Conversation2 = ({
 	submit,
 	situation,
 	unfoldedStep,
+	setDefault,
 }) => {
 	const dispatch = useDispatch()
 	const [dismissedRespirations, dismissRespiration] = useState([])
@@ -95,7 +97,6 @@ const Conversation2 = ({
 		/>
 	) : (
 		<section
-			className="ui__ container"
 			css={`
 				@media (max-width: 800px) {
 					padding: 0.4rem 0 0.4rem;
@@ -108,47 +109,62 @@ const Conversation2 = ({
 			`}
 		>
 			<div style={{ outline: 'none' }}>
-				<div className="step">
-					<header css="display: flex; justify-content: start; ">
-						<h3
-							css={`
-								@media (max-width: 800px) {
-									margin: 0.4rem 0;
-								}
-							`}
-						>
-							{questionText}
-						</h3>
-						{hasDescription && (
-							<ExplicableRule
-								dottedName={
-									(mosaicQuestion && mosaicQuestion.dottedName) ||
-									currentQuestion
-								}
+				<Card $fullWidth $noHoverEffect>
+					<div className="step">
+						<header css="display: flex; justify-content: start; ">
+							<h3
+								css={`
+									margin: 0.6rem 0;
+									@media (max-width: 800px) {
+										margin: 0.4rem 0;
+									}
+								`}
+							>
+								{questionText}
+							</h3>
+							{hasDescription && (
+								<ExplicableRule
+									dottedName={
+										(mosaicQuestion && mosaicQuestion.dottedName) ||
+										currentQuestion
+									}
+								/>
+							)}
+						</header>
+						<Aide rules={rules} />
+						<Fieldset>
+							<RuleInput
+								dottedName={currentQuestion}
+								onChange={onChange}
+								onSubmit={submit}
+								engine={engine}
 							/>
-						)}
-					</header>
-					<Aide rules={rules} />
-					<Fieldset>
-						<RuleInput
-							dottedName={currentQuestion}
-							onChange={onChange}
-							onSubmit={submit}
-							engine={engine}
-						/>
-					</Fieldset>
-				</div>
+						</Fieldset>
+					</div>
+				</Card>
 				<StepButtons>
 					{previousAnswers.length > 0 && currentQuestionIndex !== 0 && (
 						<>
 							<LightButton onClick={goToPrevious}>← Précédent</LightButton>
 						</>
 					)}
+					{console.log(RuleInput)}
 					{currentQuestionIsAnswered ? (
 						<Button onClick={() => submit('accept')}>
 							<span className="text">Suivant →</span>
 						</Button>
-					) : null}
+					) : (
+						!isVoyageQuestion(currentQuestion) && (
+							<Button
+								onClick={() => {
+									setDefault()
+								}}
+								type="button"
+							>
+								Je ne sais pas
+							</Button>
+						)
+					)}
 				</StepButtons>
 				<Notifications currentQuestion={currentQuestion} engine={engine} />
 			</div>

@@ -29,7 +29,9 @@ export const BarStackLegend = styled.div`
 `
 
 export const BarStackLegendItem = styled.div`
-	color: #555;
+	display: flex;
+	align-items: center;
+	color: #96b3d0;
 	strong {
 		display: inline-block;
 		color: #fff;
@@ -42,8 +44,8 @@ export const BarStackLegendItem = styled.div`
 
 export const SmallCircle = styled.span`
 	display: inline-block;
-	height: 1rem;
-	width: 1rem;
+	height: 1.4rem;
+	width: 1.4rem;
 	margin-right: 10px;
 	border-radius: 100%;
 `

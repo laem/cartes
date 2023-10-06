@@ -1,5 +1,4 @@
 import Article from 'Components/Article'
-import { Metadata } from 'next'
 import Content from './about.mdx'
 
 const Page = () => (

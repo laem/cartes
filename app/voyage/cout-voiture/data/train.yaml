@@ -1,0 +1,21 @@
+train:
+train . prix au km:
+  formule: 0.16 €/km
+  description: https://www.quechoisir.org/actualite-tarifs-sncf-au-kilometre-2019-une-evolution-en-dents-de-scie-n65643/#:~:text=Le%20co%C3%BBt%20au%20kilom%C3%A8tre%20des%20courts%20trajets%20en%20baisse&text=Tous%20TGV%20confondus%2C%20la%20moyenne,la%20moiti%C3%A9%20de%20l'%C3%A9chantillon.
+
+train . réduction:
+  formule:
+    variations:
+      - si: carte réduction
+        alors: 1 - pourcentage réduction
+      - sinon: 1
+
+train . carte réduction:
+  question: Bénéficiez-vous d'une carte de réduction ?
+  par défaut: non
+
+train . pourcentage réduction:
+  question: Quelle réduction ?
+  description: 30% pour la carte avantage
+  par défaut: 30
+  unité: '%'

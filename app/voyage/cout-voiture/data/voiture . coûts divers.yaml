@@ -1,0 +1,67 @@
+voiture . coûts divers:
+  titre: Coûts divers annuels voiture
+  description: |
+    Tout ce qui n'est pas instantané et inévitable, ni lié à la possession d'une voiture. 
+
+    Par exemple, quand on loue une voiture, on peut conduire en infraction et les PV seront évidemment pour notre pomme. En général, on n'a pas à laver l'extérieur de la voiture, mais cela dépend.
+
+  formule:
+    somme:
+      - parking
+      - pv
+      - permis de conduire
+
+voiture . coûts divers . parking:
+  question: Quel est le coût annuel de l'ensemble des frais de parking ?
+  description: |
+    En fonction de l'usage, des trajets, les coûts de parking peuvent être énormes. 
+
+    On pense bien sûr à la fameuse place gratuite qu'on ne trouve pas en ville, réduits à payer un parking au sous-sol. 
+
+    Mais le coût le plus important reste la location du parking pour votre voiture quand elle dort chez vous, unutilisée, chaque nuit.
+
+    À Paris, ce montant dépasse les 100 €/mois. Dans des métropoles comme Rennes, ils peuvent dépasser les 50 € / mois.
+
+  note: |
+    Cette composante "à demeure" devrait être intégrée dans la catégorie "possession" et devrait inclure le coût immobilier (location ou achat) du garage.
+
+    Quand une maison vaut 500 000 € à l'achat, le garage n'est aucunement gratuit. Supposons qu'il coûte 1/5 ème du prix, et que la maison n'est jamais cédée. Cela représente par exemple 100 000 € pour 50 ans, donc 600 000 km, soit 17 centimes par km parcouru. Aïe.
+  par défaut: 100€
+
+voiture . coûts divers . pv:
+  question: Quel est le coût annuel des contraventions que vous avez du payer ?
+  description: |
+    Cette question n'est pas évidente, mais elle est néanmoins non négligeable. Pourquoi ? Car les recettes des amendes diverses de circulation [ont atteint 1,8 milliards d'€ en 2022](https://www.ccomptes.fr/system/files/2023-04/NEB-2022-Controle-circulation-et-stationnement-routiers.pdf?page=15), dont 1 milliard pour les seuls radars (excès de vitesse)... ce qui donne 45 € par personnes et par an !
+
+    Bien sûr, le respect du code de la route varie énormément d'une personne à l'autre, à vous d'estimer la votre.
+
+  par défaut: recettes annuelles / parc français
+  note: Idéalement, il faudrait trouver le montant moyen payé par français par an.
+
+voiture . parc français:
+  formule: 38.7 millions
+  note: https://www.statistiques.developpement-durable.gouv.fr/387-millions-de-voitures-en-circulation-en-france-au-1er-janvier-2022
+voiture . coûts divers . pv . recettes annuelles:
+  formule: 1784 millions
+  note: https://www.ccomptes.fr/system/files/2023-04/NEB-2022-Controle-circulation-et-stationnement-routiers.pdf?page=15
+
+voiture . coûts divers . permis de conduire:
+  formule: permis de conduire . obtention / durée d'utilisation
+
+voiture . coûts divers . permis de conduire . durée d'utilisation:
+  formule: durée de vie en bonne santé - âge d'obtention
+durée de vie en bonne santé:
+  formule: 66
+  références:
+    - https://www.vie-publique.fr/en-bref/288403-esperance-de-vie-en-bonne-sante-67-ans-femmes-656-ans-hommes
+voiture . coûts divers . permis de conduire . âge d'obtention:
+  formule: 19
+  références:
+    - https://www.preventionroutiere.asso.fr/wp-content/uploads/2016/04/Etude_Les_jeunes_Français_et_le_permis-_B-10-06-2013.pdf
+voiture . coûts divers . permis de conduire . obtention:
+  formule: 1804 €
+  description: |
+    Sans conducteur avec permis, pas de km parcourus en voiture individuelle !
+
+    Bien sûr, on peut se dire "Non mais tous les Français passent le permis de toutes façon". Certes, une majorité le passe, mais avec le même raisonnement, on prétend que tous les Français ont une voiture de toute façon... et on en revient à un coût totalement sous-estimé.
+  note: Le prix est tiré de cette [enquête d'une association de consommateurs 2023](https://hauteloire.ufcquechoisir.fr/2016/10/05/enquete-auto-ecoles/).

@@ -20,4 +20,6 @@ export const Wrapper = styled.div`
 	border: 1px solid var(--darkColor);
 	padding: 0.2rem 1rem;
 	border-radius: 0.2rem;
+	padding: 0.4rem 0rem;
+	background: var(--darkestColor);
 `

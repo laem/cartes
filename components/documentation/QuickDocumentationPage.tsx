@@ -8,11 +8,13 @@ import { Markdown } from 'Components/utils/ClientMarkdown'
 import { omit } from 'Components/utils/utils'
 import FriendlyObjectViewer from '../FriendlyObjectViewer'
 import { Breadcrumb } from './Breadcrumb'
+import ComputeButton from './ComputeButton'
 import DocumentationStyle, {
 	QuestionRuleSectionStyle,
 	QuestionStyle,
 	Wrapper,
 } from './DocumentationStyle'
+import Exemples from './Exemples'
 import { GithubContributionLink } from './GithubContributionLink'
 import { NamespaceRules } from './NamespaceRules'
 import OperationVariables, { isExpressionRule } from './OperationVariables'
@@ -37,8 +39,9 @@ const QuestionRuleSection = ({ title, children }) => (
 
 export default function QuickDocumentationPage({
 	dottedName,
-	setLoadEngine,
 	rules,
+	pathPrefix = '',
+	spotlight = [],
 }: {
 	rule: NGCRule
 	dottedName: DottedName
@@ -46,7 +49,6 @@ export default function QuickDocumentationPage({
 	rules: NGCRules
 }) {
 	const rule = rules[dottedName] || {}
-	console.log('Display QUICKDOC for ', rule)
 
 	const title = ruleTitle({ ...rule, dottedName })
 
@@ -67,6 +69,7 @@ export default function QuickDocumentationPage({
 			'inactive',
 			// specific to NGC form generation, could be cool to visualize, but in a <details> tag, since it's big
 			'mosaique',
+			'exemples',
 		],
 		rule
 	)
@@ -75,9 +78,13 @@ export default function QuickDocumentationPage({
 		<Wrapper>
 			<DocumentationStyle>
 				<header id="shareImage">
-					<Breadcrumb dottedName={dottedName} rules={rules} />
+					<Breadcrumb
+						dottedName={dottedName}
+						rules={rules}
+						pathPrefix={pathPrefix}
+					/>
 					<h1>
-						{rule.icônes ?? ''} {title}&gt;
+						{rule.icônes ?? ''} {title}
 					</h1>
 				</header>
 				{Object.keys(rule).length < 1 && (
@@ -105,14 +112,7 @@ export default function QuickDocumentationPage({
 						{rule.description && <Markdown>{rule.description}</Markdown>}
 					</section>
 				)}
-				{false && (
-					<button
-						onClick={() => setLoadEngine(true)}
-						className="ui__ button cta plain attention"
-					>
-						🧮 Lancer le calcul
-					</button>
-				)}
+				<ComputeButton dottedName={dottedName} />
 				{Object.keys(yamlAttributesToDisplay).length > 0 && (
 					<div>
 						<h2>Comment cette donnée est-elle calculée ?</h2>
@@ -120,20 +120,25 @@ export default function QuickDocumentationPage({
 							<FriendlyObjectViewer
 								data={rule}
 								context={{ dottedName, rules }}
+								pathPrefix={pathPrefix}
 							/>
 						) : (
 							<FriendlyObjectViewer
 								data={yamlAttributesToDisplay}
 								context={{ dottedName, rules }}
+								pathPrefix={pathPrefix}
 							/>
 						)}
 					</div>
 				)}
-
+				<Exemples exemples={rule.exemples} />
 				{isExpressionRule(rule) && (
 					<div>
 						<h2>Explorer le calcul</h2>
-						<OperationVariables {...{ rule, rules, dottedName }} />
+						<OperationVariables
+							{...{ rule, rules, dottedName }}
+							pathPrefix={pathPrefix}
+						/>
 					</div>
 				)}
 				{rule.note && (
@@ -150,7 +155,7 @@ export default function QuickDocumentationPage({
 				)}
 
 				<GithubContributionLink dottedName={dottedName} />
-				<NamespaceRules {...{ rules, dottedName }} />
+				<NamespaceRules {...{ rules, dottedName, pathPrefix, spotlight }} />
 			</DocumentationStyle>
 		</Wrapper>
 	)

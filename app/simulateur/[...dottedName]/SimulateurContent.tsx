@@ -73,6 +73,7 @@ const SimulateurContent = ({ objective, rules }) => {
 			return <Almost answeredRatio={answeredRatio} />
 		if (!nextQuestions.length) return <Done />
 	}
+
 	return (
 		<div className="ui__ container">
 			{isMainSimulation && (
@@ -182,7 +183,7 @@ const SimulateurContent = ({ objective, rules }) => {
 //
 export default SimulateurContent
 
-const EndingCongratulations = () => (
+export const EndingCongratulations = () => (
 	<h3>
 		<Emoji e="🌟" /> Vous avez complété cette simulation
 	</h3>

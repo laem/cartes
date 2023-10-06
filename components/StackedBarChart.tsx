@@ -111,8 +111,8 @@ function InnerStackedBarChart({ data, precision }: InnerStackedBarChartProps) {
 					))}
 			</BarStack>
 			<BarStackLegend className="print-background-force">
-				{dataWithPercentage.map(({ value, key, percentage, color, legend }) => (
-					<BarStackLegendItem key={key}>
+				{dataWithPercentage.map(({ key, percentage, color, legend, value }) => (
+					<BarStackLegendItem key={key} title={value}>
 						<SmallCircle style={{ backgroundColor: color }} />
 						{legend}
 						<strong title={value}>
@@ -135,14 +135,18 @@ export default function StackedRulesChart({
 	precision = 0.1,
 	engine,
 }: StackedRulesChartProps) {
-	console.log('TA', engine.evaluate('taxes'))
 	const targetUnit = useSelector(targetUnitSelector)
-	const evaluatedData = data.map(({ dottedName, title, color }) => ({
-		key: dottedName,
-		value: engine.evaluate({ valeur: dottedName, unité: targetUnit }).nodeValue,
-		legend: <Link href={'/carburants/' + dottedName}>{title}</Link>,
-		color,
-	}))
+	const evaluatedData = data.map(({ dottedName, title, color }) => {
+		const rule = engine.getRule(dottedName)
+
+		return {
+			key: dottedName,
+			value: engine.evaluate({ valeur: dottedName, unité: targetUnit })
+				.nodeValue,
+			legend: <span>{title || rule.title}</span>,
+			color,
+		}
+	})
 	console.log('EV', evaluatedData)
 	return <StackedBarChart precision={precision} data={evaluatedData} />
 }

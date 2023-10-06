@@ -14,7 +14,7 @@ const SvgMegaExpressFour = (props, ref) => (
 	>
 		<g id="layer1">
 			<image
-				xlinkHref="public/megaexpressfour.png"
+				xlinkHref="/megaexpressfour.png"
 				id="image11915"
 				width={558.8}
 				height={745.067}
@@ -317,4 +317,3 @@ const SvgMegaExpressFour = (props, ref) => (
 )
 const ForwardRef = forwardRef(SvgMegaExpressFour)
 export default ForwardRef
-

@@ -45,7 +45,7 @@ const CategoryView = ({ exposedRules, rules }) => {
 	const categories = byCategory(exposedRules)
 	return (
 		<CategoryList>
-			<li>
+			<li key="actualités">
 				<h2>
 					<Emoji e="🔥" /> Actualités
 				</h2>
@@ -60,7 +60,7 @@ const CategoryView = ({ exposedRules, rules }) => {
 				/>
 			</li>
 			{categories.map(([category, rules], i) => (
-				<li>
+				<li key={category}>
 					<h2>{category}</h2>
 					<RuleList {...{ rules }} />
 					{false && i === 0 && (
@@ -96,7 +96,7 @@ const RuleList = ({ rules, input }) => (
 						: ['CO2e'])
 
 			return (
-				<li key={dottedName}>
+				<li key={dottedName || rule.titre}>
 					<Link href={rule.url || '/simulateur/' + encodeRuleName(dottedName)}>
 						<WikiCard $inversedColor={rule.inversedColor}>
 							<Emoji e={icônes} />

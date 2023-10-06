@@ -1,4 +1,3 @@
-import emoji from 'react-easy-emoji'
 import HumanCarbonImpact, { ProgressCircle } from 'Components/HumanCarbonImpact'
 import Emoji from './Emoji'
 
@@ -9,6 +8,7 @@ const SimulationResults = ({
 	icônes,
 	nodeValue,
 	engine,
+	ResultsBlock,
 }) => {
 	return (
 		<div
@@ -72,14 +72,18 @@ const SimulationResults = ({
 						font-size: 80%;
 					`}
 				>
-					<HumanCarbonImpact
-						{...{
-							nodeValue,
-							formule,
-							dottedName,
-							engine,
-						}}
-					/>
+					{ResultsBlock ? (
+						<ResultsBlock />
+					) : (
+						<HumanCarbonImpact
+							{...{
+								nodeValue,
+								formule,
+								dottedName,
+								engine,
+							}}
+						/>
+					)}
 				</div>
 			</>
 		</div>

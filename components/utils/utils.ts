@@ -109,3 +109,6 @@ export const pipe =
 
 export const defaultTo = (defaultValue, arg) =>
 	arg == null ? defaultValue : arg
+
+export const intersection = (arr1, arr2) => arr1.filter((x) => arr2.includes(x))
+export const difference = (arr1, arr2) => arr1.filter((x) => !arr2.includes(x))

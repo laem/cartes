@@ -1,22 +1,25 @@
 'use client'
 
-import dynamic from 'next/dynamic'
 import { useEngine2 } from '@/providers/EngineWrapper'
 import Input from 'Components/conversation/Input'
 import Question, { Choice } from 'Components/conversation/Question'
 import ToggleSwitch from 'Components/ui/ToggleSwitch'
 import { parentName } from 'Components/utils/publicodesUtils'
+import dynamic from 'next/dynamic'
 import { ASTNode, EvaluatedRule, reduceAST, utils } from 'publicodes'
 import { Evaluation } from 'publicodes/dist/types/AST/types'
 import React, { Suspense } from 'react'
 import { useTranslation } from 'react-i18next'
+import {
+	airportsQuestions,
+	ferryQuestions,
+	voyageQuestions,
+} from './customQuestions/voyageInput'
 import { isMosaic } from './mosaicQuestions'
-import { airportsQuestions } from './customQuestions/airport'
-import { ferryQuestions } from './customQuestions/ferry'
 import TravelTimeSpanInput from './TravelTimeSpanInput'
 
-const SelectTwoAirports = dynamic(
-	() => import('Components/conversation/select/SelectTwoAirports'),
+const VoyageInput = dynamic(
+	() => import('Components/conversation/VoyageInput'),
 
 	{
 		loading: () => <p>Chargement des aéroports...</p>,
@@ -138,8 +141,8 @@ export default function RuleInput<Name extends string = DottedName>({
 
 	if (airportsQuestions.includes(rule.dottedName)) {
 		return (
-			<Suspense fallback={<div>Chargement des cartes ...</div>}>
-				<SelectTwoAirports
+			<Suspense fallback={<div>Chargement des aéroports ...</div>}>
+				<VoyageInput
 					{...{
 						...commonProps,
 						placeholder: 'Aéroport ou ville ',
@@ -148,6 +151,7 @@ export default function RuleInput<Name extends string = DottedName>({
 						fromIcon: '🛫',
 						toIcon: '🛬',
 						displayImage: 'plane',
+						orthodromic: true,
 					}}
 				/>
 			</Suspense>
@@ -156,14 +160,31 @@ export default function RuleInput<Name extends string = DottedName>({
 
 	if (ferryQuestions.includes(rule.dottedName)) {
 		return (
-			<Suspense fallback={<div>Chargement des cartes ...</div>}>
-				<SelectTwoAirports
+			<Suspense fallback={<div>Chargement du globe ...</div>}>
+				<VoyageInput
 					{...{
 						...commonProps,
 						placeholder: 'Port ou ville',
 						db: 'osm',
 						rulesPath: 'transport . ferry',
 						displayImage: 'boat',
+						orthodromic: true,
+					}}
+				/>
+			</Suspense>
+		)
+	}
+
+	if (voyageQuestions.includes(rule.dottedName)) {
+		return (
+			<Suspense fallback={<div>Chargement du globe ...</div>}>
+				<VoyageInput
+					{...{
+						...commonProps,
+						placeholder: 'Ville',
+						db: 'osm',
+						rulesPath: 'trajet voiture',
+						displayImage: true,
 					}}
 				/>
 			</Suspense>

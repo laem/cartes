@@ -6,7 +6,6 @@ import { motion } from 'framer-motion'
 import { DottedName } from 'modele-social'
 import { EvaluatedNode, formatValue } from 'publicodes'
 import { useEffect } from 'react'
-import { Trans, useTranslation } from 'react-i18next'
 import { useDispatch, useSelector } from 'react-redux'
 import {
 	answeredQuestionsSelector,
@@ -25,7 +24,6 @@ export default function AnswerList({ rules, engine }) {
 			const rule = safeGetRule(engine, dottedName)
 
 			const evaluated = rule && engine.evaluate(rule)
-			if (dottedName.includes('ferry')) console.log('R', evaluated)
 			return evaluated
 		})
 		.filter(Boolean)
@@ -72,32 +70,54 @@ export default function AnswerList({ rules, engine }) {
 		}
 	}, [situation])
 
+	const answeredQuestionsLength = foldedStepsToDisplay.length,
+		nextQuestionsLength = nextSteps.length
+
 	return (
 		<div className="answer-list">
 			{!!foldedStepsToDisplay.length && (
-				<div>
-					<h2
-						css={`
-							font-size: 120%;
-							margin-bottom: 0.2rem;
-							display: flex;
-							align-items: center;
+				<details
+					css={`
+						font-size: 120%;
+						margin-bottom: 0.2rem;
+						display: flex;
+						align-items: center;
 
-							img {
-								margin-right: 0.2rem;
-								vertical-align: bottom;
-								width: 2rem;
-								height: auto;
+						img {
+							margin-right: 0.2rem;
+							vertical-align: bottom;
+							width: 2rem;
+							height: auto;
+						}
+						button {
+							color: white;
+						}
+						margin: 1rem;
+						cursor: pointer;
+						summary {
+							display: flex;
+							justify-content: center;
+							align-items: center;
+							> * {
+								margin: 0 0.2rem;
 							}
-							button {
-								color: white;
-							}
-						`}
-					>
-						<span css="flex-grow:1">
-							<Emoji e="📋 " />
-							<Trans>Mes réponses</Trans>
+						}
+						> div > button {
+							margin: 0 0 0 auto;
+							display: block;
+						}
+					`}
+				>
+					<summary>
+						<Emoji e="📋 " />
+						<span>
+							{answeredQuestionsLength} réponses
+							{nextQuestionsLength > 0
+								? `, ${nextQuestionsLength} restantes`
+								: ''}
 						</span>
+					</summary>
+					<div>
 						<button
 							onClick={() => dispatch({ type: 'RESET_SIMULATION' })}
 							title="Effacer mes réponses"
@@ -105,15 +125,16 @@ export default function AnswerList({ rules, engine }) {
 							<Emoji e="♻️" />
 							Effacer
 						</button>
-					</h2>
-					<StepsTable {...{ rules: foldedStepsToDisplay }} />
-				</div>
+
+						<StepsTable {...{ rules: foldedStepsToDisplay }} />
+					</div>
+				</details>
 			)}
 			{false && !!nextSteps.length && (
 				<div className="ui__ card">
 					<h2>
 						<Emoji e="🔮 " />
-						<Trans>Prochaines questions</Trans>
+						Prochaines questions
 					</h2>
 					<CategoryTable {...{ steps: nextSteps, categories }} />
 				</div>
@@ -127,7 +148,6 @@ function StepsTable({
 }: {
 	rules: Array<EvaluatedNode & { nodeKind: 'rule'; dottedName: DottedName }>
 }) {
-	const language = useTranslation().i18n.language
 	return (
 		<table
 			css={`
@@ -139,7 +159,6 @@ function StepsTable({
 					<Answer
 						{...{
 							rule,
-							language,
 						}}
 					/>
 				))}
@@ -148,7 +167,7 @@ function StepsTable({
 	)
 }
 
-const Answer = ({ rule, language }) => {
+const Answer = ({ rule }) => {
 	// Shameless exception, sometimes you've got to do things dirty
 	if (
 		[
@@ -157,6 +176,9 @@ const Answer = ({ rule, language }) => {
 
 			'transport . ferry . départ',
 			'transport . ferry . arrivée',
+
+			'trajet voiture . départ',
+			'trajet voiture . arrivée',
 		].includes(rule.dottedName)
 	)
 		return null
@@ -165,6 +187,7 @@ const Answer = ({ rule, language }) => {
 	const simulationDottedName = useSelector(objectifsSelector)[0]
 	const uselessPrefix = simulationDottedName.includes(path)
 	const situation = useSelector(situationSelector)
+	const language = 'fr-FR'
 
 	const trimSituationString = (el) => el && el.split("'")[1]
 	if (rule.dottedName === 'transport . avion . distance de vol aller') {
@@ -207,6 +230,25 @@ const Answer = ({ rule, language }) => {
 			/>
 		)
 	}
+	if (rule.dottedName === 'trajet voiture . distance') {
+		return (
+			<AnswerComponent
+				{...{
+					dottedName: rule.dottedName,
+					NameComponent: <div>Votre trajet</div>,
+					ValueComponent: (
+						<span className="answerContent">
+							{`${trimSituationString(
+								situation['trajet voiture . départ']
+							)} - ${trimSituationString(
+								situation['trajet voiture . arrivée']
+							)} (${formatValue(rule, { language })})`}
+						</span>
+					),
+				}}
+			/>
+		)
+	}
 
 	const NameComponent = (
 		<div>
@@ -227,7 +269,9 @@ const Answer = ({ rule, language }) => {
 			`}
 		>
 			{formatValue(rule, { language })}
-			{rule.passedQuestion && emoji(' 🤷🏻')}
+			{rule.passedQuestion && (
+				<Emoji e={' 🤷🏻'} alt="Je ne sais pas : réponse par défaut" />
+			)}
 		</span>
 	)
 	return (

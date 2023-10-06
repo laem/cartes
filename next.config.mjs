@@ -1,7 +1,8 @@
-import remarkFrontmatter from 'remark-frontmatter'
-import nextMdx from '@next/mdx'
-import remarkMdxFrontmatter from 'remark-mdx-frontmatter'
+import createMDX from '@next/mdx'
 import path from 'path'
+import rehypeSlug from 'rehype-slug'
+import rehypeAutolinkHeadings from 'rehype-autolink-headings'
+import remarkToc from 'remark-toc'
 import { fileURLToPath } from 'url'
 const __filename = fileURLToPath(import.meta.url)
 
@@ -11,7 +12,6 @@ const __dirname = path.dirname(__filename)
 
 const nextConfig = {
 	experimental: {
-		mdxRs: true,
 		serverComponentsExternalPackages: ['publicodes'],
 	},
 	compiler: {
@@ -31,6 +31,11 @@ const nextConfig = {
 	},
 	async redirects() {
 		return [
+			{
+				source: '/voyage',
+				destination: '/voyage/cout-voiture',
+				permanent: false,
+			},
 			{
 				source: '/ferry',
 				destination: '/simulateur/transport/ferry/empreinte-du-voyage',
@@ -72,8 +77,30 @@ const nextConfig = {
 
 		return config
 	},
+	pageExtensions: ['js', 'jsx', 'mdx', 'ts', 'tsx'],
 }
 
-const withMDX = nextMdx()
+const withMDX = createMDX({
+	// Add markdown plugins here, as desired
+	options: {
+		remarkPlugins: [
+			[remarkToc, { heading: '(table[ -]of[ -])?contents?|toc|Sommaire' }],
+		],
+		rehypePlugins: [
+			rehypeSlug,
+			[
+				rehypeAutolinkHeadings,
+				{
+					behaviour: 'append',
+					properties: {
+						ariaHidden: true,
+						tabIndex: -1,
+						className: 'hash-link',
+					},
+				},
+			],
+		],
+	},
+})
 
 export default withMDX(nextConfig)

@@ -1,0 +1,170 @@
+# Temps, €, carbone
+
+trajet:
+
+trajet . voyageurs:
+  question: Combien de voyageurs ?
+  par défaut: 1
+  unité: voyageurs
+
+trajet voiture:
+
+trajet voiture . coût trajet par personne:
+  titre: Coût du trajet en voiture
+  icônes: 💸🚗
+  description: |
+    Voici un modèle de calcul du coût d'un trajet en voiture par personne.
+
+    Le coût inclut la plupart des frais principaux : carburant, taxes, péages, parking, assurance, entretien, équipements, services, accidents, etc.
+
+    Attention, il n'est a priori pas valable pour une voiture de location. Cela dit, il se pourrait bien que le résultat final soit le même. Les locations de voiture sont plus chères, car vous payez la marge du loueur et d'autres services, mais en échange, celui-ci rentabilise beaucoup plus la voiture et rationnalise leur entretien sur un immense parc.
+  note: |
+    Ne sont pas inclus pour l'instant : 
+      - le coût immobilier d'un garage, qui peut être énorme dans certaines villes
+      - le coût du crédit pour acheter la voiture neuve. Il semblerait d'après le Ministère des Finances que 60 % des automobilistes feraient un prêt de 80 % à 4 ans... À creuser.
+      - sûrement bien d'autres coûts plus mineurs qui viennent saler la facture
+
+    Faire une variation du modèle pour une voiture de location.
+  formule: coût trajet / trajet . voyageurs
+  similaires:
+    - voiture . coûts au km
+  exemples:
+    - titre: Lille->Nice en essence à 7l/100 à deux
+      situation:
+        trajet voiture . distance: 834 km
+        voiture . motorisation: "'essence'"
+        trajet . voyageurs: 2
+    - titre: Bordeaux->Lyon en diesel tout seul
+      situation:
+        trajet voiture . distance: 435 km
+        trajet . voyageurs: 3
+    - titre: Brest->Rennes en covoiturage à 3 en électrique
+      situation:
+        trajet voiture . distance: 250 km
+        trajet . voyageurs: 3
+        voiture . motorisation: "'électrique'"
+    - titre: Domicile travail 8 km en diesel tout seul
+      situation:
+        trajet voiture . distance: 8 km
+        trajet . voyageurs: 1
+    - titre: Citadine diesel sur durée de vie totale
+      situation:
+        trajet voiture . distance: 'voiture . distance totale'
+        trajet . voyageurs: 1
+
+trajet voiture . coût trajet:
+  titre: Coût total du trajet en voiture
+  formule:
+    somme:
+      - coût instantané
+      - coût de possession
+      - coûts divers
+    unité: €
+
+trajet voiture . coût instantané:
+  formule:
+    somme:
+      - coût énergétique
+      - péages
+
+trajet voiture . coût énergétique:
+  formule: voiture . coût instantané au km * distance
+  titre: Coût direct
+
+trajet voiture . prix carburant:
+  question: Quel est le prix du carburant ?
+  unité: €/l
+  par défaut:
+    variations:
+      - si: voiture . motorisation = 'essence'
+        alors: (1.956 + 1.988) / 2
+      - si: voiture . motorisation = 'diesel'
+        alors: 1.908
+      - si: voiture . motorisation = 'biocarburant'
+        alors:
+          1.043
+          ##      - si: voiture . motorisation = 'hybride'
+          ## alors: 1.80
+  description: |
+    Source : https://prix-carburants-info.fr
+    Données du 14 septembre 2023.
+
+  note: |
+    À mettre à jour régulièrement, ou trouver une API.
+
+    TODO Trouver la bonne source pour l'hybride.
+
+trajet voiture . prix électricité:
+  question: Quel est le prix de l'électricité ?
+  par défaut: 0.2276
+  unité: € / kWh
+  description: |
+    Nous prenons ici le prix d'EDF tarif bleu reglementé, disponible [sur cette page](https://www.hellowatt.fr/contrat-electricite/prix-electricite).
+  note: |
+    Pour bien faire les choses, il faudrait prendre un prix représentatif du choix des français dans leur abonnement : le prix du kWh des fournisseurs concurrent d'EDF a explosé en 2021.
+
+    Aussi, il faudrait prendre en compte une part de l'abonnement proportionnelle à la consommation d'une voiture électrique dans un foyer.
+trajet voiture . coût de possession:
+  titre: Coûts de possession ramenés au trajet
+  formule: voiture . coût de possession au km * distance
+
+trajet voiture . coûts divers:
+  titre: Coûts divers ramenés au trajet
+  formule: voiture . coûts divers au km * distance
+
+trajet voiture . départ:
+  note: Variable remplie par une interface de recherche.
+trajet voiture . arrivée:
+  note: Variable remplie par une interface de recherche.
+
+trajet voiture . distance:
+  titre: Distance trajet en voiture
+  question: Quel est votre trajet ?
+  description: Saisissez une ville de départ et une ville de destination.
+  note: |
+    Dans un premier temps, nous calculions la distance de façon basique : on prenait la distance à vol d'oiseau entre la ville de départ et d'arrivée, puis on appliquait une majoration pour prendre en compte le fait qu'un trajet en voiture est loin d'être une ligne droite. 
+
+    Bien sûr, la méthode était contestable : quid des trajets au bord d'une côte accidentée où de longs détours sont nécessaires ? La France étant héxagonale, ce problème est en moyenne mitigé.
+
+    > Le modèle s'appliquait donc très mal à des trajets pénisulaires comme Brest -> Camaret, ou d'autres qui traversent des grandes fleuves avec peu de ponts, comme l'estuaire de la Seine au Havre.
+
+    Maintenant, **nous utilisons un vrai calculateur d'itinéraire voiture** pour plus de précision.
+
+
+    Idéalement, pour chaque trajet, il faudrait proposer à l'automobiliste de choisir parmi plusieurs traces GPS (autoroute, pas d'autoroute, éviter les routes de montagne, etc.) pour avoir une distance plus fiable, et un montant des péages plus spécialisé, les montants étant très variables en fonction des routes empruntées.
+  par défaut: 335 km
+  unité: km
+
+trajet voiture . péages:
+  titre: Les péages
+  formule: distance * péages par km * part autoroute
+
+trajet voiture . part autoroute:
+  question: Quelle part de votre trajet est faite sur autoroute ?
+  par défaut: par défaut
+  suggestions:
+    aucune: 0 %
+    la moitié: 50 %
+    tout autoroute: 90 %
+  note: Nous cherchons une source pour ce chiffre. Nous n'avons pas mieux que [celle-ci](https://fr.statista.com/statistiques/899236/frequence-utilisation-voiture-en-autoroute-france/), mais ce n'est pas ce qu'on cherche.
+
+trajet voiture . part autoroute . par défaut:
+  note: Ce barème est très approximatif.
+  formule:
+    variations:
+      - si: distance > 500
+        alors: 90 %
+      - si: distance > 200
+        alors: 50 %
+      - si: distance > 100
+        alors: 10 %
+      - sinon: 0 %
+
+trajet voiture . péages par km:
+  formule: 0.113 €/km
+  note: |
+    Les prix sont très variables ! D'après [cette source](https://www.auto-moto.com/en-bref/prix-autoroutes-2021-peages-plus-chers-chers-10567), l'autoroute A14 coûte 55 centimes par km, quand l'autoroute A68 coûte 2 centimes par km.
+
+    Il faudrait donc poser la question du coût pour les experts, ou segmenter par localisation du trajet, mais ce n'est pas trivial.
+
+    La source de notre chiffre est [cet article](https://www.pourleco.com/consommation/combien-coute-lautoroute) (avez-vous mieux ?), qui nous donne 10 centimes en 2020, que nous [réactualisons avec l'inflation](https://france-inflation.com/calculateur_inflation.php).

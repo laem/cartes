@@ -1,0 +1,175 @@
+voiture:
+  icônes: 🚗
+
+voiture . coûts au km:
+  description: |
+    Le coût d'un mode de transport est souvent estimé au km.
+
+  note: |
+    [Cette page de WWF](https://www.wwf.fr/agir-au-quotidien/le-prix-de-revient-au-kilometre-dun-vehicule-quest-ce-que-cest) cite des coûts bien plus élevés que ceux calculés ici. Malheureusement, ils n'ont mis en lien aucune source, rendant leurs chiffres inutiles.
+
+    [Ce rapport de l'Automobile Club](https://www.automobile-club.org/actualites/la-vie-de-l-aca/budget-de-l-automobiliste-de-l-aca-avril-2020) est intéressant. Mais outre le fait qu'il soit avant tout conçu pour être un plaidoyer anti-taxes, il semble considérer le coût d'une voiture sur sa première année d'achat neuf. C'est ce que je comprends de la ligne "achat moins repris" dans le [communiqué de presse](https://www.automobile-club.org/espace-presse/communiques/l-aca-publie-les-resultats-du-budget-de-l-automobiliste-2019) qui représente plus d'1/10ème du prix d'achat neuf du véhicule, donc prenant en compte la décôte maximale des premières années. Ce n'est pas ce qui nous intéresse ici.
+
+    C'est confirmé dans le rapport complet : "Achat d’un véhicule neuf, concomitamment à la revente (reprise) de l’ancien véhicule âgé de 4 ans". Il s'agit donc d'un comportement d'achat très dépensier et très polluant.
+
+  formule:
+    somme:
+      - coût instantané au km
+      - coût de possession au km
+      - coûts divers au km
+  exemples:
+    - titre: Citadine diesel
+      situation:
+        trajet . voyageurs: 1
+        voiture . prix d'achat: 18000
+    - titre: Citadine essence
+      situation:
+        voiture . motorisation: "'essence'"
+        trajet . voyageurs: 1
+        voiture . prix d'achat: 18000
+    - titre: Citadine électrique
+      situation:
+        trajet . voyageurs: 1
+        voiture . motorisation: "'électrique'"
+        voiture . prix d'achat: 30000
+
+voiture . coût instantané au km:
+  description: |
+    C'est le coût qui remplace souvent de faion erronée le coût complet d'un km en voiture. 
+
+    Le coût instantané représente le coût que l'on a l'impression de payer, car on le paie le jour même où dans la semaine (si le plein d'essence ou d'électricité a été auparavant).
+  formule:
+    variations:
+      - si: motorisation = 'électrique'
+        alors: trajet voiture . prix électricité * motorisation . électrique . consommation / 100
+      - sinon: trajet voiture . prix carburant * consommation thermique / 100
+  unité: € / km
+  exemples:
+    - titre: Clio diesel
+      situation:
+        voiture . motorisation: "'diesel'"
+        voiture . prix d'achat: 29000 €
+    - titre: SUV essence à 2€ le litre
+      situation:
+        voiture . consommation thermique: 9
+        trajet voiture . prix carburant: 2 €/l
+        voiture . motorisation: "'essence'"
+        voiture . prix d'achat: 29000 €
+    - titre: électrique
+      situation:
+        trajet voiture . prix carburant: 2 €/l
+        voiture . motorisation: "'électrique'"
+
+voiture . motorisation:
+  icônes: ⚙️
+  question: Quelle est la motorisation du véhicule ?
+  par défaut: "'diesel'"
+  formule:
+    une possibilité:
+      choix obligatoire: oui
+      possibilités:
+        - électrique
+          #- hybride
+        - essence
+        - diesel
+        - biocarburant
+
+voiture . motorisation . électrique:
+  icônes: ⚡️
+#voiture . motorisation . hybride:
+voiture . motorisation . essence:
+voiture . motorisation . diesel:
+voiture . motorisation . biocarburant:
+  titre: Biocarburant E85
+
+voiture . consommation thermique:
+  question: Quelle est la consommation de la voiture ?
+  par défaut: par défaut
+  unité: l / 100 km
+
+voiture . consommation thermique . par défaut:
+  formule:
+    variations:
+      - si: motorisation = 'essence'
+        alors: 6.8
+      - si: motorisation = 'diesel'
+        alors: 5
+      - si: motorisation = 'biocarburant'
+        alors: 6.8 * 1.25
+      - si: motorisation = 'hybride'
+        alors: 4.5
+
+  description: |
+    Pour l'essence et le diesel, la source est Carlabelling par l'ADEME : https://carlabelling.ademe.fr/chiffrescles/r/evolutionConsoMoyenne
+
+    Pour l'hybride, on prend +25% par rapport à l'essence. Quelle est la source ?
+
+  note: |
+    Quid des consommations réelles ? Celles-ci sont probablement des consommations théoriques fournies par les constructeurs après des tests sur banc d'essai. 
+
+    En particulier pour l'hybride, une ONG avait publié une étude sur le sujet...
+
+voiture . motorisation . électrique . consommation:
+  question: Quelle est la consommation de la voiture ?
+  par défaut: 15
+  unité: kWh / 100 km
+  description: |
+    Pour calculer la consommation, nous nous basons sur les données d'un test de la Renault Zoé, l'une des voitures électriques les plus présentes en France.
+  note: |
+    Ici, [un test intéressant en conditions réelle de la Renault Zoé](https://fr.motor1.com/reviews/518916/renault-zoe-test-consommation-reelle/), une des voitures électriques les plus vendues en Europe. Sa moyenne réelle calculée est de 11 kWh/100km/
+
+    Pourtant, [cet autre test](https://www.automobile-propre.com/supertest-renault-zoe-r135-les-consommations-autonomies-et-performances-mesurees/) trouve une valeur totalement différente : 16,5 kWh/100km ! La différence est vraiment étonnante.
+
+    Nous retenons donc une valeur plutôt majorante de 15 kWh/km.
+
+voiture . distance totale: durée de vie * km annuels
+voiture . durée de vie:
+  description: |
+    Attention à ne pas confondre durée de possession et durée de vie ! Un citoyen peut garder une voiture 5 ans en moyenne, mais elle continue d'exister et de rouler. 
+
+    Ainsi la durée de vie (durée avant d'aller à la casse) est estimée à 19 ans pour une thermique, et bien plus pour une électrique.
+  note: |
+    Notre source pour la voiture thermique est un article de [l'Argus](https://www.largus.fr/actualite-automobile/le-top-15-des-voitures-envoyees-a-la-casse-10348407.html) qui cite un rapport de l'ADEME de 2018.
+
+    Concernant la voiture thermique, le critère limitant est souvent le moteur. Par définition du moteur thermique à explosion, ce composant est soumis à des pressions physiques énormes, le moteur électrique lui étant bien plus durable.
+
+    La voiture électrique a aussi sa faiblesse : la batterie. Il est compliqué d'obtenir des informations sur la durée de vie des batteries de voiture, notamment car les modèles actuels n'ont en général pas encore 10 ans. Cela dit, il semblerait que leur durée de vie prenne à défaut les prévisions pessimistes. 
+
+    [Ainsi](https://www.caranddriver.com/research/a31875141/electric-car-battery-life/) Tesla estime la durée de vie de ses batteries à 300 000 km environ. Hyundai propose une garantie de 10 ans ou 180 000 km. La batterie ne semble donc pas un facteur limitant par rapport au thermique, mais un facteur limitant par rapport à la durée de vie de la voiture elle-même. Carbone4 [estime que la durée de vie de la batterie est de 15 à 20 ans](https://www.carbone4.com/analyse-faq-voiture-electrique).
+
+    Or, la batterie ne coûte qu'un tiers du prix neuf de la voiture, selon l'exemple de la Zoé à 30 000 € dont la batterie vaut 9 000 €. Nous pourrions donc parier sur une durée de vie de la voiture électrique potentiellement deux fois plus longue que celle de la voiture thermique... mais ce serait oublier que ce secteur est fortement soumis à des modes, en plus de l'évolution technologique relative.
+
+    D'où le chiffre de durée de vie estimé à 30 ans pour une voiture électrique.
+
+    Pourtant, des imprévus peuvent venir perturber ces notes positives : dans [cet article de Reuters](https://www.reuters.com/business/autos-transportation/scratched-ev-battery-your-insurer-may-have-junk-whole-car-2023-03-20/), on apprend que des voitures électriques accidentées pourraient aller directement à la poubelle, en particulier les Teslas, qui ont intégré leur batterie dans le chassis, la batterie n'étant pas vraiment réparable. Quelle proportion des voitures sont ainsi lourdement accidentées ? 1 % ? 5 % ? Quelle proportion de cette proportion n'est pas réparable ?
+
+  formule:
+    variations:
+      - si: motorisation = 'électrique'
+        alors: 30
+      - sinon: 19
+  unité: an
+
+voiture . km annuels:
+  titre: Kilomètres annuels
+  formule: 12223 km/an
+  description: |
+    En 2019, d'après le [SDES](<https://www.statistiques.developpement-durable.gouv.fr/sites/default/files/2021-12/08_partie_g_bilan_circulation_2020_0.pdf>), une voiture particulière française a parcouru ce nombre de km en moyenne.
+
+    À noter, les diesel en ont parcouru 14 392 et les essences 8 920. Cependant, il faudrait que nous ayons des données sur la durée de vie à la casse différenciées par motorisation pour pouvoir faire la distinction.
+
+    Les données existent pour 2020, mais nous privilégions celles de 2019, vu l'impact temporaire des confinements sur les déplacements. Le nombre de km avait baissé de 17 % en 2020.
+
+voiture . km prévisionnels:
+  titre: Kilomètres prévisionnels sur toute la durée de vie
+  note: |
+    Il existe de nombreuses sources qui parlent de façon très approximative et peu sourcée d'une durée comprise entre 150 000 et 500 000 km. Nous sommes nombreux à avoir en tête la durée de vie de 250 000 km.
+
+    Faut de données sur les km des voitures à la casse, nous l'estimons via cette formule.
+  formule: durée de vie * km annuels
+
+voiture . coût de possession au km:
+  formule: coût de possession / km annuels
+voiture . coûts divers au km:
+  formule: coûts divers / km annuels
+  unité: €/km
