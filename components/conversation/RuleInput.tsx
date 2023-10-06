@@ -151,6 +151,7 @@ export default function RuleInput<Name extends string = DottedName>({
 						fromIcon: '🛫',
 						toIcon: '🛬',
 						displayImage: 'plane',
+						orthodromic: true,
 					}}
 				/>
 			</Suspense>
@@ -167,6 +168,7 @@ export default function RuleInput<Name extends string = DottedName>({
 						db: 'osm',
 						rulesPath: 'transport . ferry',
 						displayImage: 'boat',
+						orthodromic: true,
 					}}
 				/>
 			</Suspense>

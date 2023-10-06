@@ -1,7 +1,9 @@
 'use client'
 import destinationPoint from '@/public/destination-point.svg'
+import invertIcon from '@/public/invertIcon.svg'
 import startPoint from '@/public/start-point.svg'
 import Emoji from 'Components/Emoji'
+import Map from 'Components/Map'
 import getCityData, { toThumb } from 'Components/wikidata'
 import { motion } from 'framer-motion'
 import GreatCircle from 'great-circle'
@@ -10,9 +12,7 @@ import { useEffect, useState } from 'react'
 import { LightButton } from '../UI'
 import useGeo from '../useGeo'
 import GeoInputOptions from './GeoInputOptions'
-import Map from 'Components/Map'
 import { InputStyle } from './UI'
-import invertIcon from '@/public/invertIcon.svg'
 import {
 	Choice,
 	CityImage,
@@ -30,6 +30,7 @@ export default function VoyageInput({
 	toIcon = '',
 	displayImage = true,
 	updateSituation,
+	orthodromic, // wether to use valhalla to estimate the driving route distance, or not
 }) {
 	const [state, setState] = useState({
 		depuis: { inputValue: '', choice: false },
@@ -280,7 +281,11 @@ export default function VoyageInput({
 					)}
 				</div>
 			</InputWrapper>
-			<MapWrapper state={state} setRealDistance={setRealDistance} />
+			<MapWrapper
+				state={state}
+				setRealDistance={setRealDistance}
+				orthodromic={orthodromic}
+			/>
 			{false && distance && !state.validated && (
 				<button {...{ submit: () => setState({ ...state, validated: true }) }}>
 					àimplementer
@@ -290,7 +295,11 @@ export default function VoyageInput({
 	)
 }
 
-const MapWrapper = ({ state: { depuis, vers }, setRealDistance }) => {
+const MapWrapper = ({
+	state: { depuis, vers },
+	setRealDistance,
+	orthodromic,
+}) => {
 	const origin = depuis.choice && [
 		depuis.choice.item.latitude,
 		depuis.choice.item.longitude,
@@ -305,6 +314,7 @@ const MapWrapper = ({ state: { depuis, vers }, setRealDistance }) => {
 			origin={origin}
 			destination={destination}
 			setRealDistance={setRealDistance}
+			orthodromic={orthodromic}
 		/>
 	)
 }
