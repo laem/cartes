@@ -3,15 +3,8 @@ import 'leaflet-defaulticon-compatibility'
 import 'leaflet-defaulticon-compatibility/dist/leaflet-defaulticon-compatibility.css'
 import 'leaflet/dist/leaflet.css'
 import { useEffect, useState } from 'react'
-import {
-	GeoJSON,
-	MapContainer,
-	Marker,
-	Polyline,
-	Popup,
-	TileLayer,
-	useMap,
-} from 'react-leaflet'
+import { GeoJSON, MapContainer, Marker, TileLayer, useMap } from 'react-leaflet'
+import { CityImageWrapper, MapSizer } from './conversation/VoyageUI'
 import { decode } from './valhalla-decode-shape'
 
 const center = [47.033, 2.395]
@@ -77,16 +70,7 @@ const Map = ({ origin, destination, setRealDistance, orthodromic }) => {
 			})
 	}, [origin, destination])
 	return (
-		<div
-			css={`
-				> div {
-					height: 15rem;
-					width: 15rem;
-					border: 2px solid var(--darkColor);
-					border-radius: 32rem;
-				}
-			`}
-		>
+		<MapSizer>
 			<MapContainer
 				center={geoCenter || center}
 				zoom={4.5}
@@ -111,7 +95,7 @@ const Map = ({ origin, destination, setRealDistance, orthodromic }) => {
 					/>
 				)}
 			</MapContainer>
-		</div>
+		</MapSizer>
 	)
 }
 

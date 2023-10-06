@@ -35,6 +35,14 @@ export const CityImage = styled.img`
 	`
 			: ``}
 `
+export const MapSizer = styled.div`
+	> div {
+		border: 2px solid var(--darkColor);
+		border-radius: 32rem;
+		width: calc(6rem + 6vw);
+		height: calc(6rem + 6vw);
+	}
+`
 
 export const InputWrapper = styled.div`
 	label {
