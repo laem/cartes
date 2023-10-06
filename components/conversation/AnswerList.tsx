@@ -187,7 +187,7 @@ const Answer = ({ rule }) => {
 	const simulationDottedName = useSelector(objectifsSelector)[0]
 	const uselessPrefix = simulationDottedName.includes(path)
 	const situation = useSelector(situationSelector)
-	const language = 'fr-FR'
+	const language = 'fr'
 
 	const trimSituationString = (el) => el && el.split("'")[1]
 	if (rule.dottedName === 'transport . avion . distance de vol aller') {
