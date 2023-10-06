@@ -1,12 +1,12 @@
 import Article from '@/components/Article'
-import Emoji from '@/components/Emoji'
+import convert from '@/components/css/convertToJs'
 import { Card, LightButton } from '@/components/UI'
 import voitures from '@/public/voitures.svg'
 import { Metadata } from 'next'
 import Image from 'next/image'
 import Link from 'next/link'
 import Explanation from './Explanation.mdx'
-import { Header, Sources } from './UI'
+import { Header } from './UI'
 import Voyage from './Voyage'
 
 const title = `Quel est le vrai coût d'une voiture ?`
@@ -54,10 +54,10 @@ const Page = ({ searchParams: { lu } }) => (
 		)}
 		<Voyage />
 		<Article>
-			<Sources>
+			<div style={convert(`margin-top: 6rem`)}>
 				<hr />
 				<Explanation />
-			</Sources>
+			</div>
 		</Article>
 	</main>
 )

@@ -4,6 +4,9 @@ import { title as ruleTitle } from '@/components/utils/publicodesUtils'
 import { getRulesFromDottedName } from '@/providers/getRules'
 import { utils } from 'publicodes'
 import Simulateur from './Simulateur'
+import Article from '@/components/Article'
+import convert from '@/components/css/convertToJs'
+import { Markdown } from '@/components/utils/markdown'
 
 type Props = {
 	params: { dottedName: string[] }
@@ -42,9 +45,19 @@ const Page = async ({ params: { dottedName: rawDottedName } }: Props) => {
 	const dottedName = decodeURIComponent(rawDottedName.join('/'))
 	const decoded = utils.decodeRuleName(dottedName)
 	const rules = await getRulesFromDottedName(dottedName)
+	const rule = rules[decoded]
+	const text = rule.exposé?.description || rule.description
+	const title = rule.exposé?.titre || rule.titre
 	return (
 		<main>
 			<Simulateur dottedName={decoded} rules={rules} />
+			<Article>
+				<div style={convert(`margin-top: 6rem`)}>
+					<hr />
+					<h2>{title}</h2>
+					<Markdown>{text}</Markdown>
+				</div>
+			</Article>
 		</main>
 	)
 }

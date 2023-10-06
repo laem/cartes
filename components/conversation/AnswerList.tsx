@@ -24,7 +24,6 @@ export default function AnswerList({ rules, engine }) {
 			const rule = safeGetRule(engine, dottedName)
 
 			const evaluated = rule && engine.evaluate(rule)
-			if (dottedName.includes('ferry')) console.log('R', evaluated)
 			return evaluated
 		})
 		.filter(Boolean)

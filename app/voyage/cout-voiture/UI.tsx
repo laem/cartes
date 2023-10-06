@@ -35,7 +35,3 @@ export const Header = styled.header`
 		margin-top: 1rem;
 	}
 `
-
-export const Sources = styled.aside`
-	margin-top: 6rem;
-`
