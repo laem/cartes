@@ -152,13 +152,24 @@ voiture . durée de vie:
 
 voiture . km annuels:
   titre: Kilomètres annuels
-  formule: 12223 km/an
+  par défaut: 12223 km/an
   description: |
     En 2019, d'après le [SDES](<https://www.statistiques.developpement-durable.gouv.fr/sites/default/files/2021-12/08_partie_g_bilan_circulation_2020_0.pdf>), une voiture particulière française a parcouru ce nombre de km en moyenne.
 
     À noter, les diesel en ont parcouru 14 392 et les essences 8 920. Cependant, il faudrait que nous ayons des données sur la durée de vie à la casse différenciées par motorisation pour pouvoir faire la distinction.
 
     Les données existent pour 2020, mais nous privilégions celles de 2019, vu l'impact temporaire des confinements sur les déplacements. Le nombre de km avait baissé de 17 % en 2020.
+  note: |
+
+    Cette question est importante : quand on possède une voiture, on a des frais fixes, en premier lieu l'achat de la voiture. Plus on fait de km, plus cela fait baisser le prix d'achat au km. Si vous faites un nombre de km éloigné de la moyenne. Cela dit, plus on fait de km, plus on use la voiture, par exemple le moteur et donc plus on "consomme" le prix d'achat et accélère la mise à la casse, ou plus on augmente les frais d'entretien (par exemple, les pneus). 
+
+    Dans un premier temps, nous n'avons donc pas pris en compte ce paramètre, pour rester sur les chiffres français moyens. 
+
+    Ainsi, **pour les gens qui n'utilisent que très peu leur voiture (< 5000 km par an), le coût calculé est probablement très sous-estimé**.
+
+    ### Voitures de location
+
+    Ce modèle n'est pas encore adapté aux voitures de location, mais il peut quand même être utilisé pour en estimer le prix. Mais les voitures de location sont a priori bien plus rentabilisées que les voitures particulières : leur distance parcourue à l'année devrait être bien supérieure, ce qui rentabilise beaucoup plus le prix d'achat notamment.
 
 voiture . km prévisionnels:
   titre: Kilomètres prévisionnels sur toute la durée de vie
