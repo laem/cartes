@@ -14,6 +14,7 @@ import { ExplicableRule } from './Explicable'
 import { isMosaic } from './mosaicQuestions'
 import SimulationEnding from './SimulationEnding'
 import { Fieldset, StepButtons } from './UI'
+import Link from 'next/link'
 
 export type ConversationProps = {
 	customEndMessages?: React.ReactNode
@@ -21,21 +22,20 @@ export type ConversationProps = {
 }
 
 const Conversation2 = ({
+	query,
 	currentQuestion,
 	customEnd,
 	customEndMessages,
-	orderByCategories,
 	previousAnswers,
 	mosaicQuestion,
 	rules,
 	engine,
-	submit,
 	situation,
 	unfoldedStep,
 	setDefault,
 }) => {
 	const dispatch = useDispatch()
-	const [dismissedRespirations, dismissRespiration] = useState([])
+
 	const onChange: RuleInputProps['onChange'] = (value) => {
 		dispatch(updateSituation(currentQuestion, value))
 	}
@@ -47,25 +47,13 @@ const Conversation2 = ({
 			currentQuestionIndex < 0 && previousAnswers.length > 0
 				? previousAnswers[previousAnswers.length - 1]
 				: previousAnswers[currentQuestionIndex - 1]
+
 	const questionText = mosaicQuestion
 		? mosaicQuestion.question
 		: rules[currentQuestion]?.rawNode?.question
 
 	if (!currentQuestion)
 		return <SimulationEnding {...{ customEnd, customEndMessages }} />
-
-	const questionCategoryName = splitName(currentQuestion)[0],
-		questionCategory =
-			orderByCategories &&
-			orderByCategories.find(
-				({ dottedName }) => dottedName === questionCategoryName
-			)
-
-	const isCategoryFirstQuestion =
-		questionCategory &&
-		previousAnswers.find(
-			(a) => splitName(a)[0] === questionCategory.dottedName
-		) === undefined
 
 	const hasDescription =
 		((mosaicQuestion &&
@@ -78,24 +66,7 @@ const Conversation2 = ({
 			? true
 			: situation[currentQuestion] != null
 
-	const goToPrevious = () => {
-		return dispatch(goToQuestion(previousQuestion))
-	}
-
-	return false &&
-		orderByCategories &&
-		isCategoryFirstQuestion &&
-		!dismissedRespirations.includes(questionCategory.dottedName) ? (
-		<CategoryRespiration
-			questionCategory={questionCategory}
-			dismiss={() =>
-				dismissRespiration([
-					...dismissedRespirations,
-					questionCategory.dottedName,
-				])
-			}
-		/>
-	) : (
+	return (
 		<section
 			css={`
 				@media (max-width: 800px) {
@@ -136,7 +107,7 @@ const Conversation2 = ({
 							<RuleInput
 								dottedName={currentQuestion}
 								onChange={onChange}
-								onSubmit={submit}
+								query={query}
 								engine={engine}
 							/>
 						</Fieldset>
@@ -144,25 +115,29 @@ const Conversation2 = ({
 				</Card>
 				<StepButtons>
 					{previousAnswers.length > 0 && currentQuestionIndex !== 0 && (
-						<>
-							<LightButton onClick={goToPrevious}>← Précédent</LightButton>
-						</>
+						<>Précédent</>
 					)}
-					{console.log(RuleInput)}
 					{currentQuestionIsAnswered ? (
-						<Button onClick={() => submit('accept')}>
+						<Link
+							href={{
+								query,
+							}}
+							prefetch={false}
+							scroll={false}
+						>
 							<span className="text">Suivant →</span>
-						</Button>
+						</Link>
 					) : (
 						!isVoyageQuestion(currentQuestion) && (
-							<Button
-								onClick={() => {
-									setDefault()
+							<Link
+								href={{
+									query,
 								}}
-								type="button"
+								prefetch={false}
+								scroll={false}
 							>
 								Je ne sais pas
-							</Button>
+							</Link>
 						)
 					)}
 				</StepButtons>

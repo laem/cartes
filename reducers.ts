@@ -12,8 +12,6 @@ function explainedVariable(
 	switch (action.type) {
 		case 'EXPLAIN_VARIABLE':
 			return action.variableName || null
-		case 'STEP_ACTION':
-			return null
 		default:
 			return state
 	}
@@ -115,27 +113,6 @@ function simulation(
 						  },
 			}
 		}
-		case 'STEP_ACTION': {
-			const { name, step } = action
-			if (name === 'fold')
-				return {
-					...state,
-					foldedSteps: state.foldedSteps.includes(step)
-						? state.foldedSteps
-						: [...state.foldedSteps, step],
-
-					unfoldedStep: null,
-				}
-			if (name === 'unfold') {
-				const previousUnfolded = state.unfoldedStep
-				return {
-					...state,
-					foldedSteps: state.foldedSteps,
-					unfoldedStep: step,
-				}
-			}
-			return state
-		}
 		case 'UPDATE_TARGET_UNIT':
 			return {
 				...state,
@@ -170,19 +147,11 @@ function batchUpdateSituationReducer(state: RootState, action: Action) {
 	}
 	return Object.entries(action.situation).reduce<RootState | null>(
 		(newState, [fieldName, value]) => {
-			const withSituationUpdate = mainReducer(newState ?? undefined, {
+			mainReducer(newState ?? undefined, {
 				type: 'UPDATE_SITUATION',
 				fieldName,
 				value,
 			})
-			return (
-				!action.doNotFold &&
-				mainReducer(withSituationUpdate ?? undefined, {
-					type: 'STEP_ACTION',
-					name: 'fold',
-					step: fieldName,
-				})
-			)
 		},
 		state
 	)

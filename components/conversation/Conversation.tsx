@@ -1,6 +1,6 @@
 'use client'
 
-import { goToQuestion, updateSituation, validateStepWithValue } from '@/actions'
+import { goToQuestion, updateSituation } from '@/actions'
 import { useNextQuestions } from 'Components/utils/useNextQuestion'
 import { sortBy } from 'Components/utils/utils'
 import React, { useEffect } from 'react'
@@ -87,29 +87,15 @@ export default function Conversation({
 				.map(([dottedName]) => dottedName)
 		: [currentQuestion]
 
-	const submit = (source: string) => {
-		if (mosaicQuestion?.options?.defaultsToFalse) {
-			questionsToSubmit.map((question) =>
-				dispatch(updateSituation(question, situation[question] || 'non'))
-			)
-		}
+	const query = Object.fromEntries(
+		questionsToSubmit.map((question) => [question, situation[question]])
+	)
 
-		questionsToSubmit.map((question) =>
-			dispatch({
-				type: 'STEP_ACTION',
-				name: 'fold',
-				step: question,
-				source,
-			})
-		)
-	}
 	const setDefault = () =>
 		// TODO: Skiping a question shouldn't be equivalent to answering the
 		// default value (for instance the question shouldn't appear in the
 		// answered questions).
-		questionsToSubmit.map((question) =>
-			dispatch(validateStepWithValue(question, undefined))
-		)
+		null
 
 	useKeypress('Escape', setDefault, [currentQuestion])
 	useKeypress('Enter', () => submit('enter'), [currentQuestion])
@@ -117,6 +103,7 @@ export default function Conversation({
 	return (
 		<Conversation2
 			{...{
+				query,
 				currentQuestion,
 				customEnd,
 				customEndMessages,
@@ -125,7 +112,6 @@ export default function Conversation({
 				mosaicQuestion,
 				rules,
 				engine,
-				submit,
 				situation,
 				unfoldedStep,
 				setDefault,
