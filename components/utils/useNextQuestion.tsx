@@ -129,12 +129,15 @@ export function getNextQuestions(
 	}, nextQuestions)
 }
 
-export const useNextQuestions = function (engine): Array<DottedName> {
+export const useNextQuestions = function (
+	engine,
+	validatedSituation
+): Array<DottedName> {
 	const objectifs = useSelector(objectifsSelector)
 	const answeredQuestions = useSelector(answeredQuestionsSelector)
 	const currentQuestion = useSelector(currentQuestionSelector)
 	const questionsConfig = useSelector(configSelector).questions ?? {}
-	const situation = useSelector(situationSelector)
+	const situation = validatedSituation
 	const missingVariables = objectifs.map(
 		(node) => engine.evaluate(node).missingVariables ?? {}
 	)

@@ -8,7 +8,6 @@ import { InputStyle } from './UI'
 type DateInputProps = {
 	onChange: RuleInputProps['onChange']
 	id: RuleInputProps['id']
-	onSubmit: RuleInputProps['onSubmit']
 	value: RuleInputProps['value']
 	suggestions: Rule['suggestions']
 }
@@ -17,7 +16,6 @@ export default function DateInput({
 	suggestions,
 	onChange,
 	id,
-	onSubmit,
 	value,
 }: DateInputProps) {
 	const dateValue = useMemo(() => {

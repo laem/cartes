@@ -12,7 +12,6 @@ import { InputStyle } from './UI'
 export default function Input({
 	suggestions,
 	onChange,
-	onSubmit,
 	id,
 	value,
 	missing,
@@ -20,7 +19,6 @@ export default function Input({
 	autoFocus,
 	noSuggestions,
 }: InputCommonProps & {
-	onSubmit: (source: string) => void
 	unit: Unit | undefined
 	value: Evaluation<number>
 }) {
@@ -39,7 +37,11 @@ export default function Input({
 							onFirstClick={(value) => {
 								onChange(value)
 							}}
-							onSecondClick={() => onSubmit?.('suggestion')}
+							onSecondClick={() =>
+								console.log(
+									'double click submit deactivated for the switch to storing answers in the URL query instead of redux state'
+								)
+							}
 						/>
 					)}
 

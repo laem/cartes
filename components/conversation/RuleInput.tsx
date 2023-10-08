@@ -35,7 +35,6 @@ export type RuleInputProps<Name extends string = DottedName> = {
 	autoFocus?: boolean
 	id?: string
 	className?: string
-	onSubmit?: (source: string) => void
 }
 
 export type InputCommonProps<Name extends string = string> = Pick<
@@ -67,7 +66,6 @@ export default function RuleInput<Name extends string = DottedName>({
 	isTarget = false,
 	autoFocus = false,
 	className,
-	onSubmit = () => null,
 	engine: givenEngine,
 	noSuggestions = false,
 	updateSituation,
@@ -121,7 +119,6 @@ export default function RuleInput<Name extends string = DottedName>({
 		return (
 			<Question
 				{...commonProps}
-				onSubmit={onSubmit}
 				choices={buildVariantTree(engine, dottedName)}
 			/>
 		)
@@ -197,7 +194,6 @@ export default function RuleInput<Name extends string = DottedName>({
 				{...commonProps}
 				value={commonProps.value}
 				onChange={commonProps.onChange}
-				onSubmit={onSubmit}
 				suggestions={commonProps.suggestions}
 			/>
 		)
@@ -236,7 +232,6 @@ export default function RuleInput<Name extends string = DottedName>({
 					{ value: 'oui', label: 'Oui' },
 					{ value: 'non', label: 'Non' },
 				]}
-				onSubmit={onSubmit}
 			/>
 		)
 	}
@@ -281,7 +276,6 @@ export default function RuleInput<Name extends string = DottedName>({
 	return (
 		<Input
 			{...commonProps}
-			onSubmit={onSubmit}
 			unit={evaluation.unit}
 			value={value as Evaluation<number>}
 			noSuggestions={noSuggestions}

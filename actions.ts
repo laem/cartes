@@ -1,17 +1,3 @@
-export const setSimulationConfig =
-	(config: Object, url: string): ThunkResult<void> =>
-	(dispatch, getState): void => {
-		const pastSimulationConfig = getState().simulation?.config
-		if (pastSimulationConfig === config) {
-			return
-		}
-		dispatch({
-			type: 'SET_SIMULATION',
-			url,
-			config,
-		})
-	}
-
 export const updateSituation = (fieldName: DottedName, value: unknown) =>
 	({
 		type: 'UPDATE_SITUATION',

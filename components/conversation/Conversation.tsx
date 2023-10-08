@@ -1,6 +1,5 @@
 'use client'
 
-import { goToQuestion, updateSituation } from '@/actions'
 import { useNextQuestions } from 'Components/utils/useNextQuestion'
 import { sortBy } from 'Components/utils/utils'
 import React, { useEffect } from 'react'
@@ -35,7 +34,9 @@ export default function Conversation({
 }: ConversationProps) {
 	const dispatch = useDispatch()
 	const rules = engine.getParsedRules()
-	const nextQuestions = useNextQuestions(engine)
+
+	const validatedSituation = searchParams
+	const nextQuestions = useNextQuestions(engine, validatedSituation)
 	const situation = useSelector(situationSelector)
 	const previousAnswers = useSelector(answeredQuestionsSelector)
 	const objectifs = useSelector(objectifsSelector)
@@ -49,24 +50,8 @@ export default function Conversation({
 				return categoryIndex * 1000 + nextQuestions.indexOf(question)
 		  }, nextQuestions)
 		: nextQuestions
-	const unfoldedStep = useSelector((state) => state.simulation.unfoldedStep)
-	const isMainSimulation = objectifs.length === 1 && objectifs[0] === 'bilan',
-		currentQuestion = !isMainSimulation
-			? nextQuestions[0]
-			: unfoldedStep || sortedQuestions[0]
 
-	useEffect(() => {
-		// It is important to test for "previousSimulation" : if it exists, it's not loadedYet. Then currentQuestion could be the wrong one, already answered, don't put it as the unfoldedStep
-		// TODO this is really unclear
-		if (
-			currentQuestion &&
-			!previousSimulation &&
-			currentQuestion !== unfoldedStep
-		) {
-			console.log('gotoq', currentQuestion)
-			dispatch(goToQuestion(currentQuestion))
-		}
-	}, [dispatch, currentQuestion, previousAnswers, unfoldedStep, objectifs])
+	const currentQuestion = nextQuestions[0]
 
 	// Some questions are grouped in an artifical questions, called mosaic questions,  not present in publicodes
 	// here we need to submit all of them when the one that triggered the UI (we don't care which) is submitted, in order to see them in the response list and to avoid repeating the same n times
@@ -113,7 +98,6 @@ export default function Conversation({
 				rules,
 				engine,
 				situation,
-				unfoldedStep,
 				setDefault,
 			}}
 		/>

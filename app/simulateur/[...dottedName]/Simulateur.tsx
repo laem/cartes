@@ -1,14 +1,11 @@
-'use client'
-import { setSimulationConfig } from '@/actions'
 import { questionEcoDimensions } from 'Components/questionEcoDimensions'
 import { parentName } from 'Components/utils/publicodesUtils'
 import { usePathname } from 'next/navigation'
-import { useEffect } from 'react'
-import { useDispatch, useSelector } from 'react-redux'
-import configBuilder, { eqValues } from './configBuilder'
+import { useDispatch } from 'react-redux'
+import questionsConfig from './configBuilder'
 import SimulateurContent from './SimulateurContent'
 
-const Simulateur = ({ dottedName, rules }) => {
+const Simulateur = ({ dottedName, rules, searchParams }) => {
 	const dispatch = useDispatch()
 	const pathname = usePathname()
 
@@ -16,6 +13,7 @@ const Simulateur = ({ dottedName, rules }) => {
 	const decodedRule = rules[dottedName]
 
 	if (!decodedRule) return 'Règle non trouvée'
+
 	const objectifs =
 		decodedRule.exposé?.type === 'question éco'
 			? questionEcoDimensions.map(
@@ -23,20 +21,9 @@ const Simulateur = ({ dottedName, rules }) => {
 			  )
 			: [dottedName]
 
-	const config = configBuilder(objectifs, dottedName),
-		configSet = useSelector((state) => state.simulation?.config)
-	const wrongConfig = !eqValues(config.objectifs, configSet?.objectifs || [])
-	useEffect(
-		() =>
-			wrongConfig
-				? dispatch(setSimulationConfig(config, pathname))
-				: () => null,
-		[]
-	)
+	const config = { objectifs, questions: questionsConfig(dottedName) }
 
-	if (!configSet || wrongConfig) return null
-
-	return <SimulateurContent objective={dottedName} rules={rules} />
+	return <SimulateurContent {...{ objective: dottedName, rules, config }} />
 }
 
 export default Simulateur

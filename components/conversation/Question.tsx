@@ -37,13 +37,11 @@ export type Choice = ASTNode & { nodeKind: 'rule' } & {
 }
 
 type QuestionProps = InputCommonProps & {
-	onSubmit: (source: string) => void
 	choices: Choice | typeof binaryQuestion
 }
 
 export default function Question({
 	choices,
-	onSubmit,
 	dottedName: questionDottedName,
 	missing,
 	onChange,
@@ -57,14 +55,6 @@ export default function Question({
 			setCurrentSelection(value)
 		},
 		[setCurrentSelection]
-	)
-	const handleSubmit = useCallback(
-		(src, value) => {
-			setCurrentSelection(value)
-			onChange(value)
-			onSubmit(src)
-		},
-		[onSubmit, onChange, setCurrentSelection]
 	)
 	useEffect(() => {
 		if (currentSelection != null) {
@@ -81,7 +71,6 @@ export default function Question({
 						value,
 						label,
 						currentSelection,
-						onSubmit: handleSubmit,
 						name: questionDottedName,
 						onChange: handleChange,
 					}}
@@ -104,7 +93,6 @@ export default function Question({
 								label: 'Aucun',
 								currentSelection,
 								name: questionDottedName,
-								onSubmit: handleSubmit,
 								dottedName: null,
 								onChange: handleChange,
 							}}
@@ -134,7 +122,6 @@ export default function Question({
 											currentSelection,
 											name: questionDottedName,
 											icônes,
-											onSubmit: handleSubmit,
 											description,
 											références,
 											onChange: handleChange,
@@ -206,7 +193,6 @@ type RadioLabelContentProps = {
 	currentSelection?: null | string
 	icônes?: string
 	onChange: RuleInputProps['onChange']
-	onSubmit: (src: string, value: string) => void
 }
 
 function RadioLabelContent({
@@ -216,7 +202,6 @@ function RadioLabelContent({
 	currentSelection,
 	icônes,
 	onChange,
-	onSubmit,
 }: RadioLabelContentProps) {
 	const labelStyle = value === '_' ? ({ fontWeight: 'bold' } as const) : {}
 	const selected = value === currentSelection
@@ -225,7 +210,9 @@ function RadioLabelContent({
 		<RadioLabelStyle
 			key={value}
 			onDoubleClick={() => {
-				onSubmit('dblClick', value)
+				console.log(
+					'double click submit deactivated for the switch to storing answers in the URL query instead of redux state'
+				)
 			}}
 			style={labelStyle}
 			$selected={selected}

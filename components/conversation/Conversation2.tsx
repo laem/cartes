@@ -1,20 +1,18 @@
 'use client'
-import { goToQuestion, updateSituation } from '@/actions'
+import { updateSituation } from '@/actions'
 import RuleInput, { RuleInputProps } from 'Components/conversation/RuleInput'
 import Notifications from 'Components/Notifications'
-import { splitName } from 'Components/utils/publicodesUtils'
-import React, { useState } from 'react'
+import Link from 'next/link'
+import React from 'react'
 import { useDispatch } from 'react-redux'
-import { Button, Card, LightButton } from '../UI'
+import { Card } from '../UI'
 import Aide from './Aide'
-import CategoryRespiration from './CategoryRespiration'
 import './conversation.css'
 import { isVoyageQuestion } from './customQuestions/voyageInput'
 import { ExplicableRule } from './Explicable'
 import { isMosaic } from './mosaicQuestions'
 import SimulationEnding from './SimulationEnding'
 import { Fieldset, StepButtons } from './UI'
-import Link from 'next/link'
 
 export type ConversationProps = {
 	customEndMessages?: React.ReactNode
@@ -31,7 +29,6 @@ const Conversation2 = ({
 	rules,
 	engine,
 	situation,
-	unfoldedStep,
 	setDefault,
 }) => {
 	const dispatch = useDispatch()
@@ -39,14 +36,6 @@ const Conversation2 = ({
 	const onChange: RuleInputProps['onChange'] = (value) => {
 		dispatch(updateSituation(currentQuestion, value))
 	}
-
-	const currentQuestionIndex = previousAnswers.findIndex(
-			(a) => a === unfoldedStep
-		),
-		previousQuestion =
-			currentQuestionIndex < 0 && previousAnswers.length > 0
-				? previousAnswers[previousAnswers.length - 1]
-				: previousAnswers[currentQuestionIndex - 1]
 
 	const questionText = mosaicQuestion
 		? mosaicQuestion.question

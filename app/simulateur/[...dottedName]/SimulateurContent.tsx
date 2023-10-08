@@ -23,8 +23,7 @@ import { utils } from 'publicodes'
 import { useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 
-const SimulateurContent = ({ objective, rules }) => {
-	console.log('OBJ', objective)
+const SimulateurContent = ({ objective, rules, config, searchParams }) => {
 	const rule = rules[objective]
 
 	const engine = useEngine2(rules)

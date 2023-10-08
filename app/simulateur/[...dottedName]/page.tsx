@@ -41,7 +41,10 @@ export async function generateMetadata(
 	}
 }
 
-const Page = async ({ params: { dottedName: rawDottedName } }: Props) => {
+const Page = async ({
+	params: { dottedName: rawDottedName },
+	searchParams,
+}: Props) => {
 	const dottedName = decodeURIComponent(rawDottedName.join('/'))
 	const decoded = utils.decodeRuleName(dottedName)
 	const rules = await getRulesFromDottedName(dottedName)
@@ -50,7 +53,11 @@ const Page = async ({ params: { dottedName: rawDottedName } }: Props) => {
 	const title = rule.exposé?.titre || rule.titre
 	return (
 		<main>
-			<Simulateur dottedName={decoded} rules={rules} />
+			<Simulateur
+				dottedName={decoded}
+				rules={rules}
+				searchParams={searchParams}
+			/>
 			<Article>
 				<div style={convert(`margin-top: 6rem`)}>
 					<hr />
