@@ -9,6 +9,8 @@ const SimulationResults = ({
 	nodeValue,
 	engine,
 	ResultsBlock,
+	searchParams,
+	objectives,
 }) => {
 	return (
 		<div
@@ -32,7 +34,7 @@ const SimulationResults = ({
 				border-radius: 0.3rem;
 			`}
 		>
-			<ProgressCircle engine={engine} />
+			<ProgressCircle {...{ engine, searchParams, objectives }} />
 			<div
 				id="shareImage"
 				css={`
@@ -81,6 +83,8 @@ const SimulationResults = ({
 								formule,
 								dottedName,
 								engine,
+								objectives,
+								searchParams,
 							}}
 						/>
 					)}

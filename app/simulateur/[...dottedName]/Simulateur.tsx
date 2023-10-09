@@ -1,6 +1,6 @@
 import { questionEcoDimensions } from 'Components/questionEcoDimensions'
 import { parentName } from 'Components/utils/publicodesUtils'
-import questionsConfig from './configBuilder'
+import getQuestionsConfig from './configBuilder'
 import SimulateurContent from './SimulateurContent'
 
 const Simulateur = ({ dottedName, rules, searchParams }) => {
@@ -9,16 +9,19 @@ const Simulateur = ({ dottedName, rules, searchParams }) => {
 
 	if (!decodedRule) return 'Règle non trouvée'
 
-	const objectifs =
+	const objectives =
 		decodedRule.exposé?.type === 'question éco'
 			? questionEcoDimensions.map(
 					(dimension) => parentName(dottedName) + ' . ' + dimension
 			  )
 			: [dottedName]
 
-	const config = { objectifs, questions: questionsConfig(dottedName) }
+	const config = {
+		objectifs: objectives,
+		questions: getQuestionsConfig(dottedName),
+	}
 
-	return <SimulateurContent {...{ objective: dottedName, rules, config }} />
+	return <SimulateurContent {...{ objectives, rules, config, searchParams }} />
 }
 
 export default Simulateur

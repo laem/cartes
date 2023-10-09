@@ -24,29 +24,31 @@ export default function Simulation({
 	customEndMessages,
 	customEnd,
 	orderByCategories,
-	showPeriodSwitch,
 	animation = 'appear',
+	searchParams,
+	objectives,
 	rules,
 	engine,
 }: SimulationProps) {
 	const Animation = animate[animation]
-	//const situation = useSelector(situationSelector)
-	//const searchParams = useParamsFromSituation(situation)
-	// TODO syncSearchParams()
 	return (
 		<>
-			<AnswerList engine={engine} rules={rules} />
+			<AnswerList {...{ engine, searchParams, objectives }} />
 			<SearchButton invisibleButton />
 			<Animation delay={0.3}>
 				{results}
 
 				<Conversation
-					engine={engine}
-					rules={rules}
-					orderByCategories={orderByCategories}
-					customEnd={customEnd}
-					customEndMessages={customEndMessages}
+					{...{
+						engine,
+						rules,
+						orderByCategories,
+						customEnd,
+						customEndMessages,
+						objectives,
+					}}
 				/>
+
 				{explanations}
 			</Animation>
 		</>

@@ -1,7 +1,6 @@
 import { defaultTo, omit } from 'Components/utils/utils'
 import reduceReducers from 'reduce-reducers'
 import { combineReducers, Reducer } from 'redux'
-import { objectifsSelector } from '@/selectors/simulationSelectors'
 
 type DottedName = string
 
@@ -24,10 +23,6 @@ type QuestionsKind =
 	| 'liste noire'
 
 export type SimulationConfig = {
-	objectifs:
-		| Array<DottedName>
-		| Array<{ icône: string; nom: string; objectifs: Array<DottedName> }>
-	'objectifs cachés': Array<DottedName>
 	situation: Simulation['situation']
 	bloquant?: Array<DottedName>
 	questions?: Partial<Record<QuestionsKind, Array<DottedName>>>
@@ -60,7 +55,6 @@ function simulation(
 	}
 	if (action.type === 'SET_SIMULATION') {
 		const { config, url } = action
-		const newTargets = config.objectifs
 		if (state && state.config && !action.situation === config) {
 			return state
 		}
@@ -91,13 +85,10 @@ function simulation(
 				...state,
 				hiddenNotifications: [],
 				situation: state.initialSituation,
-				foldedSteps: [],
-				unfoldedStep: null,
 				persona: null,
 				messages: {},
 			}
 		case 'UPDATE_SITUATION': {
-			const targets = objectifsSelector({ simulation: state } as RootState)
 			const situation = state.situation
 			const { fieldName: dottedName, value } = action
 			return {
@@ -106,9 +97,7 @@ function simulation(
 					value === undefined
 						? omit([dottedName], situation)
 						: {
-								...(targets.includes(dottedName)
-									? omit(targets, situation)
-									: situation),
+								...situation,
 								[dottedName]: value,
 						  },
 			}

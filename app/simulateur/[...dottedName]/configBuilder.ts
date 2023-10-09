@@ -1,4 +1,4 @@
-const questionsConfig = (dottedName) => ({
+const getQuestionsConfig = (dottedName) => ({
 	'non prioritaires':
 		dottedName === 'transport . avion . impact'
 			? ['transport . avion . forçage radiatif']
@@ -10,6 +10,6 @@ const questionsConfig = (dottedName) => ({
 			? ['trajet voiture . distance', 'trajet . voyageurs']
 			: null,
 })
-export default questionsConfig
+export default getQuestionsConfig
 
 export const eqValues = (a, b) => JSON.stringify(a) === JSON.stringify(b) // arrays are very small, we don't care about perf here

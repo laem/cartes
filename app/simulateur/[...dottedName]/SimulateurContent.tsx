@@ -15,13 +15,15 @@ import { utils } from 'publicodes'
 import { useEffect } from 'react'
 import { useDispatch } from 'react-redux'
 
-const SimulateurContent = ({ objective, rules, config, searchParams }) => {
+const SimulateurContent = ({ objectives, rules, config, searchParams }) => {
+	const objective = objectives[0]
 	const rule = rules[objective]
 
 	const engine = useEngine2(rules)
+	const isMainSimulation = objective === 'bilan'
 	const evaluation = engine.evaluate(objective),
 		dispatch = useDispatch(),
-		categories = objective === 'bilan' && extractCategories(rules, engine)
+		categories = isMainSimulation && extractCategories(rules, engine)
 
 	useEffect(() => {
 		const handleKeyDown = (e) => {
@@ -37,8 +39,6 @@ const SimulateurContent = ({ objective, rules, config, searchParams }) => {
 			window.removeEventListener('keydown', handleKeyDown)
 		}
 	}, [])
-
-	const isMainSimulation = objective === 'bilan'
 
 	const gameOver = evaluation.nodeValue > limit
 
@@ -78,29 +78,39 @@ const SimulateurContent = ({ objective, rules, config, searchParams }) => {
 				`}
 			>
 				{!isMainSimulation && (
-					<SimulationResults {...{ ...rule, ...evaluation, engine, rules }} />
+					<SimulationResults
+						{...{
+							...rule,
+							...evaluation,
+							engine,
+							rules,
+							searchParams,
+							objectives,
+						}}
+					/>
 				)}
 
 				{isMainSimulation && gameOver ? (
 					<Navigate to="/fin" />
 				) : (
 					<Simulation
-						rules={rules}
-						engine={engine}
-						noFeedback
-						orderByCategories={categories}
-						customEnd={
-							rule.description ? (
+						{...{
+							rules,
+							engine,
+							noFeedback: true,
+							orderByCategories: categories,
+							objectives,
+							customEnd: rule.description ? (
 								<CustomSimulateurEnding
 									rule={rule}
-									dottedName={objective}
+									dottedName={objectives}
 									engine={engine}
 								/>
 							) : (
 								<EndingCongratulations />
-							)
-						}
-						explanations={null}
+							),
+							explanation: null,
+						}}
 					/>
 				)}
 			</div>

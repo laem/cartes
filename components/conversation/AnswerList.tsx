@@ -6,19 +6,17 @@ import { motion } from 'framer-motion'
 import { DottedName } from 'modele-social'
 import { EvaluatedNode, formatValue } from 'publicodes'
 import { useEffect } from 'react'
-import { useDispatch, useSelector } from 'react-redux'
-import {
-	answeredQuestionsSelector,
-	objectifsSelector,
-	situationSelector,
-} from 'Selectors/simulationSelectors'
+import { useDispatch } from 'react-redux'
+import { getFoldedSteps, getSituation } from '../utils/simulationUtils'
 import './AnswerList.css'
 
-export default function AnswerList({ rules, engine }) {
+export default function AnswerList({ searchParams, objectives, engine }) {
+	console.log('TATA', objectives)
 	const dispatch = useDispatch()
-	const situation = useSelector(situationSelector)
-	const foldedQuestionNames = useSelector(answeredQuestionsSelector)
-	const answeredQuestionNames = Object.keys(situation)
+	const rules = engine.getParsedRules()
+	const validatedSituation = getSituation(searchParams, rules)
+	const foldedQuestionNames = getFoldedSteps(searchParams, rules)
+	const answeredQuestionNames = Object.keys(validatedSituation)
 	const foldedQuestions = foldedQuestionNames
 		.map((dottedName) => {
 			const rule = safeGetRule(engine, dottedName)
@@ -38,8 +36,8 @@ export default function AnswerList({ rules, engine }) {
 		.filter((node) => !JSON.stringify(node).includes('"injecté":"oui"')) // Very strange, should just be rule.rawNode, instead we've got to search for a deeply nested final value, hence the stringified search
 	// Engine evaluated multiple times ? TODO
 
-	const nextSteps = useNextQuestions(engine).map((dottedName) =>
-		engine.evaluate(engine.getRule(dottedName))
+	const nextSteps = useNextQuestions(objectives, engine, searchParams).map(
+		(dottedName) => engine.evaluate(engine.getRule(dottedName))
 	)
 
 	useEffect(() => {
@@ -48,7 +46,7 @@ export default function AnswerList({ rules, engine }) {
 			console.log('VOILA VOTRE SITUATION')
 			console.log(
 				JSON.stringify({
-					data: { situation, foldedSteps: foldedQuestionNames },
+					data: { validatedSituation, foldedSteps: foldedQuestionNames },
 				})
 			)
 			/* MARCHE PAS : 
@@ -68,7 +66,7 @@ export default function AnswerList({ rules, engine }) {
 		return () => {
 			window.removeEventListener('keydown', handleKeyDown)
 		}
-	}, [situation])
+	}, [validatedSituation])
 
 	const answeredQuestionsLength = foldedStepsToDisplay.length,
 		nextQuestionsLength = nextSteps.length
@@ -159,6 +157,8 @@ function StepsTable({
 					<Answer
 						{...{
 							rule,
+							validatedSituation,
+							objectives,
 						}}
 					/>
 				))}
@@ -167,7 +167,7 @@ function StepsTable({
 	)
 }
 
-const Answer = ({ rule }) => {
+const Answer = ({ rule, validatedSituation, objectives }) => {
 	// Shameless exception, sometimes you've got to do things dirty
 	if (
 		[
@@ -184,9 +184,7 @@ const Answer = ({ rule }) => {
 		return null
 
 	const path = parentName(rule.dottedName, ' · ', 1)
-	const simulationDottedName = useSelector(objectifsSelector)[0]
 	const uselessPrefix = simulationDottedName.includes(path)
-	const situation = useSelector(situationSelector)
 	const language = 'fr'
 
 	const trimSituationString = (el) => el && el.split("'")[1]
@@ -199,9 +197,9 @@ const Answer = ({ rule }) => {
 					ValueComponent: (
 						<span className="answerContent">
 							{`${trimSituationString(
-								situation['transport . avion . départ']
+								validatedSituation['transport . avion . départ']
 							)} - ${trimSituationString(
-								situation['transport . avion . arrivée']
+								validatedSituation['transport . avion . arrivée']
 							)} (${formatValue(rule, { language })})`}
 						</span>
 					),
@@ -220,9 +218,9 @@ const Answer = ({ rule }) => {
 					ValueComponent: (
 						<span className="answerContent">
 							{`${trimSituationString(
-								situation['transport . ferry . départ']
+								validatedSituation['transport . ferry . départ']
 							)} - ${trimSituationString(
-								situation['transport . ferry . arrivée']
+								validatedSituation['transport . ferry . arrivée']
 							)} (${formatValue(rule, { language })})`}
 						</span>
 					),
@@ -239,9 +237,9 @@ const Answer = ({ rule }) => {
 					ValueComponent: (
 						<span className="answerContent">
 							{`${trimSituationString(
-								situation['trajet voiture . départ']
+								validatedSituation['trajet voiture . départ']
 							)} - ${trimSituationString(
-								situation['trajet voiture . arrivée']
+								validatedSituation['trajet voiture . arrivée']
 							)} (${formatValue(rule, { language })})`}
 						</span>
 					),

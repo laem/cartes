@@ -1,9 +1,6 @@
 'use client'
 
-import {
-	configSituationSelector,
-	situationSelector,
-} from 'Selectors/simulationSelectors'
+import { situationSelector } from 'Selectors/simulationSelectors'
 
 import Engine from 'publicodes'
 import { useMemo } from 'react'
@@ -15,13 +12,13 @@ export const useEngine2 = (rules) => {
 			[rules]
 		),
 		userSituation = useSelector(situationSelector),
-		configSituation = useSelector(configSituationSelector),
+		//		configSituation = useSelector(configSituationSelector), //unsupported in this new version where config is not stored in the state
+
 		situation = useMemo(
 			() => ({
-				...configSituation,
 				...userSituation,
 			}),
-			[configSituation, userSituation]
+			[userSituation]
 		)
 	engine.setSituation(situation)
 

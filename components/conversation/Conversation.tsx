@@ -2,13 +2,9 @@
 
 import { useNextQuestions } from 'Components/utils/useNextQuestion'
 import { sortBy } from 'Components/utils/utils'
-import React, { useEffect } from 'react'
-import { useDispatch, useSelector } from 'react-redux'
-import {
-	answeredQuestionsSelector,
-	situationSelector,
-} from 'Selectors/simulationSelectors'
-import { objectifsSelector } from '../../selectors/simulationSelectors'
+import React from 'react'
+import { useDispatch } from 'react-redux'
+import { getFoldedSteps, getSituation } from '../utils/simulationUtils'
 import useKeypress from '../utils/useKeyPress'
 import './conversation.css'
 import Conversation2 from './Conversation2'
@@ -31,16 +27,15 @@ export default function Conversation({
 	orderByCategories,
 	rules: rawRules,
 	engine,
+	searchParams,
+	objectives,
 }: ConversationProps) {
 	const dispatch = useDispatch()
 	const rules = engine.getParsedRules()
 
-	const validatedSituation = searchParams
-	const nextQuestions = useNextQuestions(engine, validatedSituation)
-	const situation = useSelector(situationSelector)
-	const previousAnswers = useSelector(answeredQuestionsSelector)
-	const objectifs = useSelector(objectifsSelector)
-	const previousSimulation = useSelector((state) => state.previousSimulation)
+	const nextQuestions = useNextQuestions(objectives, engine, searchParams)
+	const validatedSituation = getSituation(searchParams, rules)
+	const foldedSteps = getFoldedSteps(searchParams, rules)
 
 	const sortedQuestions = orderByCategories
 		? sortBy((question) => {
@@ -73,7 +68,10 @@ export default function Conversation({
 		: [currentQuestion]
 
 	const query = Object.fromEntries(
-		questionsToSubmit.map((question) => [question, situation[question]])
+		questionsToSubmit.map((question) => [
+			question,
+			validatedSituation[question],
+		])
 	)
 
 	const setDefault = () =>
@@ -93,11 +91,11 @@ export default function Conversation({
 				customEnd,
 				customEndMessages,
 				orderByCategories,
-				previousAnswers,
+				previousAnswers: [], //TODO
 				mosaicQuestion,
 				rules,
 				engine,
-				situation,
+				situation: validatedSituation,
 				setDefault,
 			}}
 		/>

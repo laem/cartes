@@ -1,6 +1,5 @@
 'use client'
 
-import { useEngine2 } from '@/providers/EngineWrapper'
 import Input from 'Components/conversation/Input'
 import Question, { Choice } from 'Components/conversation/Question'
 import ToggleSwitch from 'Components/ui/ToggleSwitch'
@@ -66,11 +65,10 @@ export default function RuleInput<Name extends string = DottedName>({
 	isTarget = false,
 	autoFocus = false,
 	className,
-	engine: givenEngine,
+	engine,
 	noSuggestions = false,
 	updateSituation,
 }: RuleInputProps<Name>) {
-	const engine = givenEngine || useEngine2()
 	const rule = engine.getRule(dottedName)
 	const evaluation = engine.evaluate(dottedName)
 	const rules = engine.getParsedRules()

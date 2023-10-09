@@ -4,21 +4,26 @@ import { useNextQuestions } from 'Components/utils/useNextQuestion'
 import { motion, useMotionValue, useSpring } from 'framer-motion'
 import { useEffect } from 'react'
 import { useSelector } from 'react-redux'
-import {
-	answeredQuestionsSelector,
-	situationSelector,
-} from 'Selectors/simulationSelectors'
+import { situationSelector } from 'Selectors/simulationSelectors'
 import styled from 'styled-components'
 import ImpactCard from './ImpactCard'
+import { getFoldedSteps } from 'Components/utils/simulationUtils'
 
-const HumanCarbonImpact = ({ nodeValue, formule, dottedName, engine }) => {
+const HumanCarbonImpact = ({
+	nodeValue,
+	formule,
+	dottedName,
+	engine,
+	searchParams,
+	objectives,
+}) => {
 	const rules = engine.getParsedRules(),
 		rule = rules[dottedName],
 		examplesSource = rule.rawNode.exposé?.['exemples via suggestions'],
 		questionEco = rule.rawNode.exposé?.type === 'question éco'
 
-	const nextQuestions = useNextQuestions(engine),
-		foldedSteps = useSelector(answeredQuestionsSelector),
+	const nextQuestions = useNextQuestions(objectives, engine, searchParams),
+		foldedSteps = getFoldedSteps(searchParams, engine.getParsedRules()),
 		situation = useSelector(situationSelector),
 		dirtySituation = Object.keys(situation).find((question) => {
 			try {
@@ -102,10 +107,10 @@ const CardList = styled.ul`
 	}
 `
 
-export const ProgressCircle = ({ engine }) => {
-	const nextSteps = useNextQuestions(engine),
+export const ProgressCircle = ({ engine, searchParams, objectives }) => {
+	const nextSteps = useNextQuestions(objectives, engine, searchParams),
 		rules = engine.getParsedRules()
-	const foldedStepsRaw = useSelector((state) => state.simulation?.foldedSteps),
+	const foldedStepsRaw = getFoldedSteps(searchParams, rules),
 		foldedSteps = foldedStepsRaw.filter((step) => !rules[step]?.rawNode.injecté)
 	const progress = foldedSteps.length / (nextSteps.length + foldedSteps.length)
 	const motionProgress = useMotionValue(0)
