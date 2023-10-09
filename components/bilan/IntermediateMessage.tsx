@@ -1,9 +1,4 @@
-import {
-	answeredQuestionsSelector,
-	answeredQuestionsSelector,
-} from '@/selectors/simulationSelectors'
-import { useSelector } from 'react-redux'
-import { useNextQuestions } from '../utils/useNextQuestion'
+import { answeredQuestionsSelector } from '@/selectors/simulationSelectors'
 import {
 	Almost,
 	Done,
@@ -11,6 +6,8 @@ import {
 	NotBad,
 	QuiteGood,
 } from 'Components/Congratulations'
+import { useSelector } from 'react-redux'
+import { useNextQuestions } from '../utils/useNextQuestion'
 
 export default function IntermediateMessage({ engine }) {
 	const messages = useSelector((state) => state.simulation?.messages)

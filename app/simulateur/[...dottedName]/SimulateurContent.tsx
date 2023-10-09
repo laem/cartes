@@ -68,22 +68,6 @@ const SimulateurContent = ({ objective, rules, config, searchParams }) => {
 					</div>
 				</Link>
 			)}
-			{isMainSimulation && false && (
-				<div
-					css={`
-						padding: 0.6rem 1rem;
-						margin: 2rem auto;
-						max-width: 30rem;
-						border: 10px solid red;
-					`}
-				>
-					<p>⚠️ Ce calculateur n'est pas encore prêt ni publié.</p>
-					<p>
-						L'idée est là, mais l'expérience utilisateur n'est pas testée
-						encore.
-					</p>
-				</div>
-			)}
 			<div
 				css={`
 					height: 90%;
@@ -120,17 +104,6 @@ const SimulateurContent = ({ objective, rules, config, searchParams }) => {
 					/>
 				)}
 			</div>
-			{objective === 'transport . ferry . empreinte du voyage' && (
-				<details
-					css={`
-						visibility: hidden;
-					`}
-				>
-					<summary>Modèle de volume du bateau type</summary>
-
-					<Lab />
-				</details>
-			)}
 			<div
 				css={`
 					margin-top: 2rem;
