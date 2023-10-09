@@ -73,9 +73,12 @@ export default function Conversation({
 				.map(([dottedName]) => dottedName)
 		: [currentQuestion]
 
+	console.log(situation)
+	const value = situation[currentQuestion]
 	const query = {
 		...searchParams,
-		[currentQuestion]: situation[currentQuestion]?.valeur,
+		[currentQuestion]:
+			value == null ? '∅' : typeof value === 'string' ? value : value.valeur, //TODO units should be handled, this is dangerous
 	}
 
 	const setDefault = () =>
