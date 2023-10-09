@@ -7,6 +7,7 @@ import React from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import {
 	encodeDottedName,
+	encodeValue,
 	getFoldedSteps,
 	getSituation,
 } from '../utils/simulationUtils'
@@ -75,15 +76,20 @@ export default function Conversation({
 					mosaicQuestion.isApplicable(dottedName)
 				)
 				.map(([dottedName]) => dottedName)
+		: currentQuestion === undefined
+		? []
 		: [currentQuestion]
 
 	console.log(situation)
-	const value = situation[currentQuestion],
-		encodedDottedName = encodeDottedName(currentQuestion)
+	const newSituation = Object.fromEntries(
+		questionsToSubmit.map((q) => [
+			encodeDottedName(q),
+			encodeValue(situation[q]),
+		])
+	)
 	const query = {
 		...searchParams,
-		[encodedDottedName]:
-			value == null ? '∅' : typeof value === 'string' ? value : value.valeur, //TODO units should be handled, this is dangerous
+		...newSituation,
 	}
 
 	const setDefault = () =>
