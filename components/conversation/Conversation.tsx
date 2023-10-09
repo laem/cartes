@@ -5,7 +5,11 @@ import { useNextQuestions } from 'Components/utils/useNextQuestion'
 import { sortBy } from 'Components/utils/utils'
 import React from 'react'
 import { useDispatch, useSelector } from 'react-redux'
-import { getFoldedSteps, getSituation } from '../utils/simulationUtils'
+import {
+	encodeDottedName,
+	getFoldedSteps,
+	getSituation,
+} from '../utils/simulationUtils'
 import useKeypress from '../utils/useKeyPress'
 import './conversation.css'
 import Conversation2 from './Conversation2'
@@ -74,10 +78,11 @@ export default function Conversation({
 		: [currentQuestion]
 
 	console.log(situation)
-	const value = situation[currentQuestion]
+	const value = situation[currentQuestion],
+		encodedDottedName = encodeDottedName(currentQuestion)
 	const query = {
 		...searchParams,
-		[currentQuestion]:
+		[encodedDottedName]:
 			value == null ? '∅' : typeof value === 'string' ? value : value.valeur, //TODO units should be handled, this is dangerous
 	}
 
