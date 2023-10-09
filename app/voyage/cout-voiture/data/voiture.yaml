@@ -143,6 +143,10 @@ voiture . durée de vie:
 
     Pourtant, des imprévus peuvent venir perturber ces notes positives : dans [cet article de Reuters](https://www.reuters.com/business/autos-transportation/scratched-ev-battery-your-insurer-may-have-junk-whole-car-2023-03-20/), on apprend que des voitures électriques accidentées pourraient aller directement à la poubelle, en particulier les Teslas, qui ont intégré leur batterie dans le chassis, la batterie n'étant pas vraiment réparable. Quelle proportion des voitures sont ainsi lourdement accidentées ? 1 % ? 5 % ? Quelle proportion de cette proportion n'est pas réparable ?
 
+    ### Durée de vie et distribution des km par tranche d'âge
+
+    Il est fort probable que plus les voitures sont récentes, plus elles font des km. Ainsi, notre calcul est biaisé : les voitures les plus rentabilisées, les plus vieilles, sont les moins actives, et le km est sous-estimé. À creuser.
+
   formule:
     variations:
       - si: motorisation = 'électrique'
