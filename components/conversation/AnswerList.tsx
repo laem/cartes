@@ -9,6 +9,8 @@ import { useEffect } from 'react'
 import { useDispatch } from 'react-redux'
 import { getFoldedSteps, getSituation } from '../utils/simulationUtils'
 import './AnswerList.css'
+import Link from 'next/link'
+import css from '../css/convertToJs'
 
 export default function AnswerList({ searchParams, objectives, engine }) {
 	const dispatch = useDispatch()
@@ -99,9 +101,10 @@ export default function AnswerList({ searchParams, objectives, engine }) {
 								margin: 0 0.2rem;
 							}
 						}
-						> div > button {
-							margin: 0 0 0 auto;
-							display: block;
+						> div {
+							display: flex;
+							flex-direction: column;
+							align-items: end;
 						}
 					`}
 				>
@@ -115,13 +118,18 @@ export default function AnswerList({ searchParams, objectives, engine }) {
 						</span>
 					</summary>
 					<div>
-						<button
+						<Link
+							href={{
+								query: { _action: 'reset' },
+							}}
+							prefetch={false}
+							scroll={false}
 							onClick={() => dispatch({ type: 'RESET_SIMULATION' })}
 							title="Effacer mes réponses"
 						>
 							<Emoji e="♻️" />
 							Effacer
-						</button>
+						</Link>
 
 						<StepsTable
 							{...{

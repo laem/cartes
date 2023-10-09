@@ -6,7 +6,7 @@ import Engine from 'publicodes'
 import { useMemo } from 'react'
 import { useSelector } from 'react-redux'
 
-export const useEngine2 = (rules) => {
+export const useEngine2 = (rules, baseSituation) => {
 	const engine = useMemo(
 			() => console.log('new engine') || new Engine(rules),
 			[rules]
@@ -16,6 +16,7 @@ export const useEngine2 = (rules) => {
 
 		situation = useMemo(
 			() => ({
+				...baseSituation,
 				...userSituation,
 			}),
 			[userSituation]

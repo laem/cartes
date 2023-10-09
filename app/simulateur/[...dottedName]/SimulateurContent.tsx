@@ -1,5 +1,6 @@
 'use client'
 import IntermediateMessage from '@/components/bilan/IntermediateMessage'
+import { getSituation } from '@/components/utils/simulationUtils'
 import { useEngine2 } from '@/providers/EngineWrapper'
 import CustomSimulateurEnding from 'Components/CustomSimulateurEnding'
 import Emoji from 'Components/Emoji'
@@ -19,7 +20,8 @@ const SimulateurContent = ({ objectives, rules, config, searchParams }) => {
 	const objective = objectives[0]
 	const rule = rules[objective]
 
-	const engine = useEngine2(rules)
+	const validatedSituation = getSituation(searchParams, rules)
+	const engine = useEngine2(rules, validatedSituation)
 	const isMainSimulation = objective === 'bilan'
 	const evaluation = engine.evaluate(objective),
 		dispatch = useDispatch(),
