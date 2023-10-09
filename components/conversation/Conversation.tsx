@@ -1,9 +1,10 @@
 'use client'
 
+import { situationSelector } from '@/selectors/simulationSelectors'
 import { useNextQuestions } from 'Components/utils/useNextQuestion'
 import { sortBy } from 'Components/utils/utils'
 import React from 'react'
-import { useDispatch } from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux'
 import { getFoldedSteps, getSituation } from '../utils/simulationUtils'
 import useKeypress from '../utils/useKeyPress'
 import './conversation.css'
@@ -34,7 +35,9 @@ export default function Conversation({
 	const rules = engine.getParsedRules()
 
 	const nextQuestions = useNextQuestions(objectives, engine, searchParams)
+	console.log('SP from conv', searchParams)
 	const validatedSituation = getSituation(searchParams, rules)
+	const situation = useSelector(situationSelector)
 	const foldedSteps = getFoldedSteps(searchParams, rules)
 
 	const sortedQuestions = orderByCategories
@@ -46,6 +49,9 @@ export default function Conversation({
 		  }, nextQuestions)
 		: nextQuestions
 
+	console.log('NEXTQ', nextQuestions)
+	console.log('situation', situation)
+	console.log('validatedSituation', validatedSituation)
 	const currentQuestion = nextQuestions[0]
 
 	// Some questions are grouped in an artifical questions, called mosaic questions,  not present in publicodes
@@ -67,12 +73,10 @@ export default function Conversation({
 				.map(([dottedName]) => dottedName)
 		: [currentQuestion]
 
-	const query = Object.fromEntries(
-		questionsToSubmit.map((question) => [
-			question,
-			validatedSituation[question],
-		])
-	)
+	const query = {
+		...searchParams,
+		[currentQuestion]: situation[currentQuestion]?.valeur,
+	}
 
 	const setDefault = () =>
 		// TODO: Skiping a question shouldn't be equivalent to answering the
@@ -95,7 +99,8 @@ export default function Conversation({
 				mosaicQuestion,
 				rules,
 				engine,
-				situation: validatedSituation,
+				validatedSituation,
+				situation,
 				setDefault,
 			}}
 		/>

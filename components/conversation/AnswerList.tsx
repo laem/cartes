@@ -11,7 +11,6 @@ import { getFoldedSteps, getSituation } from '../utils/simulationUtils'
 import './AnswerList.css'
 
 export default function AnswerList({ searchParams, objectives, engine }) {
-	console.log('TATA', objectives)
 	const dispatch = useDispatch()
 	const rules = engine.getParsedRules()
 	const validatedSituation = getSituation(searchParams, rules)
@@ -66,7 +65,7 @@ export default function AnswerList({ searchParams, objectives, engine }) {
 		return () => {
 			window.removeEventListener('keydown', handleKeyDown)
 		}
-	}, [validatedSituation])
+	}, [validatedSituation, foldedQuestionNames])
 
 	const answeredQuestionsLength = foldedStepsToDisplay.length,
 		nextQuestionsLength = nextSteps.length
@@ -124,7 +123,13 @@ export default function AnswerList({ searchParams, objectives, engine }) {
 							Effacer
 						</button>
 
-						<StepsTable {...{ rules: foldedStepsToDisplay }} />
+						<StepsTable
+							{...{
+								rules: foldedStepsToDisplay,
+								validatedSituation,
+								objectives,
+							}}
+						/>
 					</div>
 				</details>
 			)}
@@ -143,6 +148,8 @@ export default function AnswerList({ searchParams, objectives, engine }) {
 
 function StepsTable({
 	rules,
+	validatedSituation,
+	objectives,
 }: {
 	rules: Array<EvaluatedNode & { nodeKind: 'rule'; dottedName: DottedName }>
 }) {
@@ -184,7 +191,7 @@ const Answer = ({ rule, validatedSituation, objectives }) => {
 		return null
 
 	const path = parentName(rule.dottedName, ' · ', 1)
-	const uselessPrefix = simulationDottedName.includes(path)
+	const uselessPrefix = objectives[0].includes(path)
 	const language = 'fr'
 
 	const trimSituationString = (el) => el && el.split("'")[1]

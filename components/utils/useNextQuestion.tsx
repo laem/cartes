@@ -128,11 +128,10 @@ export const useNextQuestions = function (
 	engine,
 	searchParams
 ): Array<DottedName> {
-	console.log('OBJECTIVES', objectives)
 	const rules = engine.getParsedRules()
 	const answeredQuestions = getFoldedSteps(searchParams, rules)
 	const questionsConfig = getQuestionsConfig(objectives)
-	const situation = getSituation(searchParams, rules)
+	const validatedSituation = getSituation(searchParams, rules)
 	const missingVariables = objectives.map(
 		(node) => engine.evaluate(node).missingVariables ?? {}
 	)
@@ -171,10 +170,10 @@ export const useNextQuestions = function (
 			missingVariables,
 			questionsConfig,
 			answeredQuestions,
-			situation,
-			engine
+			validatedSituation,
+			engine.setSituation(validatedSituation)
 		)
-	}, [missingVariables, questionsConfig, answeredQuestions, situation])
+	}, [missingVariables, questionsConfig, answeredQuestions, validatedSituation])
 	/* see comment above
 	if (currentQuestion && currentQuestion !== nextQuestions[0]) {
 		return [currentQuestion, ...nextQuestions]

@@ -100,6 +100,7 @@ const SimulateurContent = ({ objectives, rules, config, searchParams }) => {
 							noFeedback: true,
 							orderByCategories: categories,
 							objectives,
+							searchParams,
 							customEnd: rule.description ? (
 								<CustomSimulateurEnding
 									rule={rule}

@@ -46,6 +46,7 @@ export default function Simulation({
 						customEnd,
 						customEndMessages,
 						objectives,
+						searchParams,
 					}}
 				/>
 

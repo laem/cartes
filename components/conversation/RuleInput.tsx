@@ -77,7 +77,6 @@ export default function RuleInput<Name extends string = DottedName>({
 	const value = evaluation.nodeValue
 
 	const commonProps: InputCommonProps<Name> = {
-		key: dottedName,
 		dottedName,
 		value,
 		missing: !!evaluation.missingVariables[dottedName],
@@ -104,6 +103,7 @@ export default function RuleInput<Name extends string = DottedName>({
 
 		return (
 			<question.component
+				key={dottedName}
 				{...{
 					...commonProps,
 					selectedRules,
@@ -116,6 +116,7 @@ export default function RuleInput<Name extends string = DottedName>({
 	if (getVariant(engine.getRule(dottedName))) {
 		return (
 			<Question
+				key={dottedName}
 				{...commonProps}
 				choices={buildVariantTree(engine, dottedName)}
 			/>
@@ -138,6 +139,7 @@ export default function RuleInput<Name extends string = DottedName>({
 		return (
 			<Suspense fallback={<div>Chargement des aéroports ...</div>}>
 				<VoyageInput
+					key={dottedName}
 					{...{
 						...commonProps,
 						placeholder: 'Aéroport ou ville ',
@@ -157,6 +159,7 @@ export default function RuleInput<Name extends string = DottedName>({
 		return (
 			<Suspense fallback={<div>Chargement du globe ...</div>}>
 				<VoyageInput
+					key={dottedName}
 					{...{
 						...commonProps,
 						placeholder: 'Port ou ville',
@@ -174,6 +177,7 @@ export default function RuleInput<Name extends string = DottedName>({
 		return (
 			<Suspense fallback={<div>Chargement du globe ...</div>}>
 				<VoyageInput
+					key={dottedName}
 					{...{
 						...commonProps,
 						placeholder: 'Ville',
@@ -189,6 +193,7 @@ export default function RuleInput<Name extends string = DottedName>({
 	if (rule.dottedName === 'transport . ferry . durée du voyage')
 		return (
 			<TravelTimeSpanInput
+				key={dottedName}
 				{...commonProps}
 				value={commonProps.value}
 				onChange={commonProps.onChange}
@@ -225,6 +230,7 @@ export default function RuleInput<Name extends string = DottedName>({
 			/>
 		) : (
 			<Question
+				key={dottedName}
 				{...commonProps}
 				choices={[
 					{ value: 'oui', label: 'Oui' },
@@ -273,6 +279,7 @@ export default function RuleInput<Name extends string = DottedName>({
 
 	return (
 		<Input
+			key={dottedName}
 			{...commonProps}
 			unit={evaluation.unit}
 			value={value as Evaluation<number>}

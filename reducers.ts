@@ -37,41 +37,21 @@ export type Simulation = {
 	hiddenNotifications: Array<string>
 	situation: Situation
 	initialSituation: Situation
-	targetUnit: string
 	foldedSteps: Array<DottedName>
 	unfoldedStep?: DottedName | null
 	messages: Object
 }
 
 function simulation(
-	state: Simulation | null = null,
+	stateRaw: Simulation | null = {},
 	action: Action
 ): Simulation | null {
+	const state = stateRaw || {}
 	if (action.type === 'SET_MESSAGE_READ') {
 		return {
 			...state,
 			messages: { ...state.messages, [action.message]: true },
 		}
-	}
-	if (action.type === 'SET_SIMULATION') {
-		const { config, url } = action
-		if (state && state.config && !action.situation === config) {
-			return state
-		}
-		return {
-			config,
-			url,
-			hiddenNotifications: state?.hiddenControls || [],
-			situation: action.situation || {},
-			targetUnit: config['unité par défaut'] || '€/mois',
-			foldedSteps: action.foldedSteps || [],
-			unfoldedStep: null,
-			persona: action.persona,
-			messages: state?.messages || {},
-		}
-	}
-	if (state === null) {
-		return state
 	}
 
 	switch (action.type) {
@@ -85,7 +65,6 @@ function simulation(
 				...state,
 				hiddenNotifications: [],
 				situation: state.initialSituation,
-				persona: null,
 				messages: {},
 			}
 		case 'UPDATE_SITUATION': {
@@ -102,11 +81,6 @@ function simulation(
 						  },
 			}
 		}
-		case 'UPDATE_TARGET_UNIT':
-			return {
-				...state,
-				targetUnit: action.targetUnit,
-			}
 	}
 	return state
 }

@@ -28,6 +28,7 @@ const Conversation2 = ({
 	mosaicQuestion,
 	rules,
 	engine,
+	validatedSituation,
 	situation,
 	setDefault,
 }) => {
