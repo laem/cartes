@@ -1,14 +1,9 @@
 import { questionEcoDimensions } from 'Components/questionEcoDimensions'
 import { parentName } from 'Components/utils/publicodesUtils'
-import { usePathname } from 'next/navigation'
-import { useDispatch } from 'react-redux'
 import questionsConfig from './configBuilder'
 import SimulateurContent from './SimulateurContent'
 
 const Simulateur = ({ dottedName, rules, searchParams }) => {
-	const dispatch = useDispatch()
-	const pathname = usePathname()
-
 	if (!rules) return 'Les règles ne sont pas chargées'
 	const decodedRule = rules[dottedName]
 

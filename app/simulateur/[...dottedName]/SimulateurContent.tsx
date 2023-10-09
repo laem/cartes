@@ -1,13 +1,6 @@
 'use client'
+import IntermediateMessage from '@/components/bilan/IntermediateMessage'
 import { useEngine2 } from '@/providers/EngineWrapper'
-import { answeredQuestionsSelector } from '@/selectors/simulationSelectors'
-import {
-	Almost,
-	Done,
-	Half,
-	NotBad,
-	QuiteGood,
-} from 'Components/Congratulations'
 import CustomSimulateurEnding from 'Components/CustomSimulateurEnding'
 import Emoji from 'Components/Emoji'
 import Lab from 'Components/ferry/Lab'
@@ -16,12 +9,11 @@ import Simulation from 'Components/Simulation'
 import SimulationResults from 'Components/SimulationResults'
 import { getBackgroundColor, limit } from 'Components/testColors'
 import { extractCategories } from 'Components/utils/publicodesUtils'
-import { useNextQuestions } from 'Components/utils/useNextQuestion'
 import Link from 'next/link'
 import { useRouter } from 'next/router'
 import { utils } from 'publicodes'
 import { useEffect } from 'react'
-import { useDispatch, useSelector } from 'react-redux'
+import { useDispatch } from 'react-redux'
 
 const SimulateurContent = ({ objective, rules, config, searchParams }) => {
 	const rule = rules[objective]
@@ -46,31 +38,16 @@ const SimulateurContent = ({ objective, rules, config, searchParams }) => {
 		}
 	}, [])
 
-	const nextQuestions = useNextQuestions(engine),
-		answeredQuestions = useSelector(answeredQuestionsSelector)
-
-	const messages = useSelector((state) => state.simulation?.messages)
-
 	const isMainSimulation = objective === 'bilan'
 
 	const gameOver = evaluation.nodeValue > limit
-	const answeredRatio =
-		answeredQuestions.length / (answeredQuestions.length + nextQuestions.length)
 
 	const doomColor =
 		evaluation.nodeValue &&
 		getBackgroundColor(evaluation.nodeValue).toHexString()
 
 	if (isMainSimulation) {
-		if (answeredRatio >= 0.1 && !messages['notBad'])
-			return <NotBad answeredRatio={answeredRatio} />
-		if (answeredRatio >= 0.3 && !messages['quiteGood'])
-			return <QuiteGood answeredRatio={answeredRatio} />
-		if (answeredRatio >= 0.5 && !messages['half'])
-			return <Half answeredRatio={answeredRatio} />
-		if (answeredRatio >= 0.75 && !messages['almost'])
-			return <Almost answeredRatio={answeredRatio} />
-		if (!nextQuestions.length) return <Done />
+		return <IntermediateMessage engine={engine} />
 	}
 
 	return (
