@@ -5,7 +5,7 @@ import Notifications from 'Components/Notifications'
 import Link from 'next/link'
 import React from 'react'
 import { useDispatch } from 'react-redux'
-import { Card } from '../UI'
+import { Button, Card, LightButton } from '../UI'
 import Aide from './Aide'
 import './conversation.css'
 import { isVoyageQuestion } from './customQuestions/voyageInput'
@@ -115,7 +115,7 @@ const Conversation2 = ({
 							prefetch={false}
 							scroll={false}
 						>
-							<span className="text">Suivant →</span>
+							<Button>Suivant →</Button>
 						</Link>
 					) : (
 						!isVoyageQuestion(currentQuestion) && (
@@ -126,7 +126,7 @@ const Conversation2 = ({
 								prefetch={false}
 								scroll={false}
 							>
-								Je ne sais pas
+								<LightButton>Je ne sais pas</LightButton>
 							</Link>
 						)
 					)}
