@@ -1,5 +1,6 @@
 'use client'
 
+import { situationSelector } from '@/selectors/simulationSelectors'
 import Input from 'Components/conversation/Input'
 import Question, { Choice } from 'Components/conversation/Question'
 import ToggleSwitch from 'Components/ui/ToggleSwitch'
@@ -7,8 +8,8 @@ import { parentName } from 'Components/utils/publicodesUtils'
 import dynamic from 'next/dynamic'
 import { ASTNode, EvaluatedRule, reduceAST, utils } from 'publicodes'
 import { Evaluation } from 'publicodes/dist/types/AST/types'
-import React, { Suspense } from 'react'
-import { useTranslation } from 'react-i18next'
+import React, { Suspense, useEffect } from 'react'
+import { useSelector } from 'react-redux'
 import {
 	airportsQuestions,
 	ferryQuestions,
@@ -70,10 +71,10 @@ export default function RuleInput<Name extends string = DottedName>({
 	updateSituation,
 }: RuleInputProps<Name>) {
 	const rule = engine.getRule(dottedName)
-	const evaluation = engine.evaluate(dottedName)
+	const situation = useSelector(situationSelector)
+	const evaluation = engine.setSituation(situation).evaluate(dottedName)
 	const rules = engine.getParsedRules()
 
-	const language = useTranslation().i18n.language
 	const value = evaluation.nodeValue
 
 	const commonProps: InputCommonProps<Name> = {

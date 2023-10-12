@@ -41,7 +41,7 @@ export default function InputSuggestions({
 							}
 						`}
 						onClick={() => {
-							onFirstClick(value)
+							onFirstClick(value.nodeValue)
 							if (suggestion !== value) setSuggestion(value)
 							else onSecondClick && onSecondClick(value)
 						}}

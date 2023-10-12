@@ -40,7 +40,6 @@ export default function Conversation({
 	const rules = engine.getParsedRules()
 
 	const nextQuestions = useNextQuestions(objectives, engine, searchParams)
-	console.log('SP from conv', searchParams)
 	const validatedSituation = getSituation(searchParams, rules)
 	const situation = useSelector(situationSelector)
 	const foldedSteps = getFoldedSteps(searchParams, rules)
@@ -54,9 +53,11 @@ export default function Conversation({
 		  }, nextQuestions)
 		: nextQuestions
 
+	/*
 	console.log('NEXTQ', nextQuestions)
 	console.log('situation', situation)
 	console.log('validatedSituation', validatedSituation)
+	*/
 	const currentQuestion = nextQuestions[0]
 
 	// Some questions are grouped in an artifical questions, called mosaic questions,  not present in publicodes

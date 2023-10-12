@@ -27,6 +27,8 @@ const SimulateurContent = ({ objectives, rules, config, searchParams }) => {
 		dispatch = useDispatch(),
 		categories = isMainSimulation && extractCategories(rules, engine)
 
+	console.log('eval from SimuConten', evaluation.nodeValue)
+
 	useEffect(() => {
 		const handleKeyDown = (e) => {
 			return null

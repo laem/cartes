@@ -25,9 +25,9 @@ export const metadata: Metadata = {
 	},
 }
 
-const Page = ({ searchParams: { lu } }) => (
+const Page = ({ searchParams }) => (
 	<main>
-		{!lu && (
+		{!searchParams.lu && (
 			<Card $fullWidth>
 				<Header>
 					<Image
@@ -68,7 +68,7 @@ const Page = ({ searchParams: { lu } }) => (
 			</strong>{' '}
 			de l'outil.
 		</p>
-		<Voyage />
+		<Voyage searchParams={searchParams} />
 		<Article>
 			<div style={css(`margin-top: 6rem`)}>
 				<hr />

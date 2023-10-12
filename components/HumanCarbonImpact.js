@@ -22,9 +22,9 @@ const HumanCarbonImpact = ({
 		examplesSource = rule.rawNode.exposé?.['exemples via suggestions'],
 		questionEco = rule.rawNode.exposé?.type === 'question éco'
 
+	const situation = useSelector(situationSelector)
 	const nextQuestions = useNextQuestions(objectives, engine, searchParams),
 		foldedSteps = getFoldedSteps(searchParams, engine.getParsedRules()),
-		situation = useSelector(situationSelector),
 		dirtySituation = Object.keys(situation).find((question) => {
 			try {
 				return (

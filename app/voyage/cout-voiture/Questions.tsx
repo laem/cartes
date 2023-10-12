@@ -14,8 +14,8 @@ export default function Questions({
 	rules,
 	objective,
 	engine,
-	config,
 	evaluation,
+	searchParams,
 }) {
 	const nextQuestions = useNextQuestions(engine),
 		answeredQuestions = useSelector(answeredQuestionsSelector)
@@ -75,6 +75,7 @@ export default function Questions({
 				</details>
 			</div>
 			<Simulation
+				searchParams={searchParams}
 				rules={rules}
 				engine={engine}
 				noFeedback

@@ -22,6 +22,7 @@ export default function Input({
 	unit: Unit | undefined
 	value: Evaluation<number>
 }) {
+	console.log('value', value)
 	const debouncedOnChange = useCallback(debounce(550, onChange), [])
 	const { language } = useTranslation().i18n
 	const unité = serializeUnit(unit)

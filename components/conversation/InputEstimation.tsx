@@ -10,7 +10,7 @@ import emoji from 'react-easy-emoji'
  * but it could easily be made into a generic input helper */
 
 export default function InputEstimation({ inputEstimation, setFinalValue }) {
-	const engine = useEngine2(),
+	const engine = null || useEngine2(), //TODO
 		evaluation = engine.evaluate(inputEstimation),
 		nodeValue = evaluation.nodeValue || 1000
 

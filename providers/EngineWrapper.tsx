@@ -12,14 +12,12 @@ export const useEngine2 = (rules, baseSituation) => {
 			[rules]
 		),
 		userSituation = useSelector(situationSelector),
-		//		configSituation = useSelector(configSituationSelector), //unsupported in this new version where config is not stored in the state
-
 		situation = useMemo(
 			() => ({
 				...baseSituation,
 				...userSituation,
 			}),
-			[userSituation]
+			[baseSituation, userSituation]
 		)
 	engine.setSituation(situation)
 
