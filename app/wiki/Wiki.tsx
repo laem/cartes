@@ -63,20 +63,6 @@ const CategoryView = ({ exposedRules, rules }) => {
 				<li key={category}>
 					<h2>{category}</h2>
 					<RuleList {...{ rules }} />
-					{false && i === 0 && (
-						<div
-							css={`
-								display: none;
-								height: 3em;
-								margin: 1em auto;
-								@media (max-width: 600px) {
-									display: block;
-								}
-							`}
-						>
-							<Emoji extra="E105" alt="glisser horizontalement" />
-						</div>
-					)}
 				</li>
 			))}
 		</CategoryList>
@@ -86,6 +72,7 @@ const RuleList = ({ rules, input }) => (
 	<RuleListStyle>
 		{rules.map((rule) => {
 			const dottedName = rule.dottedName
+			if (dottedName === 'lave-linge . renouveler') return null // TODO deactivated for our switch to searchParams. To be reactivated
 
 			const title = ruleTitle(rule),
 				icônes = rule.icônes || rule.rawNode?.icônes,
