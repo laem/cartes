@@ -28,8 +28,7 @@ export async function generateMetadata(
 	const image =
 		rule.exposé?.image && Object.keys(searchParams).length === 0
 			? rule.exposé.image
-			: (process.env.URL || 'https://' + process.env.VERCEL_URL) +
-			  `/voyage/cout-voiture/og?dottedName=${dottedName}&title=${
+			: `/voyage/cout-voiture/og?dottedName=${dottedName}&title=${
 					rule.titre
 			  }&emojis=${rule.icônes}&${new URLSearchParams(searchParams).toString()}`
 	return {

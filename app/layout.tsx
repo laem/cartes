@@ -18,7 +18,6 @@ className={inter.className}>
 export const metadata = {
 	title: 'Futureco',
 	description: "L'empreinte climat de notre quotidien",
-	metadataBase: new URL('https://futur.eco'),
 	openGraph: {
 		images: ['https://futur.eco/logo.svg'],
 	},

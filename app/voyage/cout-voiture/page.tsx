@@ -25,12 +25,11 @@ export async function generateMetadata(
 ): Promise<Metadata> {
 	const dottedName = objectives[0]
 	const image =
-		(process.env.URL || 'https://' + process.env.VERCEL_URL) +
-		(Object.keys(searchParams).length === 0
+		Object.keys(searchParams).length === 0
 			? `/voitures.png`
 			: `/voyage/cout-voiture/og?dottedName=${dottedName}&title=${`Coût du trajet en voiture`}&emojis=${
 					rule.icônes
-			  }&${new URLSearchParams(searchParams).toString()}`)
+			  }&${new URLSearchParams(searchParams).toString()}`
 	return {
 		title,
 		description: description1 + ' ' + description2,
