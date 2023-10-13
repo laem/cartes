@@ -4,13 +4,17 @@ import { parentName, safeGetRule } from 'Components/utils/publicodesUtils'
 import { useNextQuestions } from 'Components/utils/useNextQuestion'
 import { motion } from 'framer-motion'
 import { DottedName } from 'modele-social'
+import Link from 'next/link'
 import { EvaluatedNode, formatValue } from 'publicodes'
 import { useEffect } from 'react'
 import { useDispatch } from 'react-redux'
-import { getFoldedSteps, getSituation } from '../utils/simulationUtils'
+import {
+	encodeSituation,
+	getFoldedSteps,
+	getSituation,
+} from '../utils/simulationUtils'
+import { omit } from '../utils/utils'
 import './AnswerList.css'
-import Link from 'next/link'
-import css from '../css/convertToJs'
 
 export default function AnswerList({ searchParams, objectives, engine }) {
 	const dispatch = useDispatch()
@@ -172,8 +176,8 @@ function StepsTable({
 					<Answer
 						{...{
 							rule,
-							validatedSituation,
 							objectives,
+							validatedSituation,
 						}}
 					/>
 				))}
@@ -203,10 +207,16 @@ const Answer = ({ rule, validatedSituation, objectives }) => {
 	const language = 'fr'
 
 	const trimSituationString = (el) => el && el.split("'")[1]
+
+	const queryWithout = encodeSituation(
+		omit([rule.dottedName], validatedSituation)
+	)
+
 	if (rule.dottedName === 'transport . avion . distance de vol aller') {
 		return (
 			<AnswerComponent
 				{...{
+					queryWithout,
 					dottedName: rule.dottedName,
 					NameComponent: <div>Votre vol</div>,
 					ValueComponent: (
@@ -228,6 +238,7 @@ const Answer = ({ rule, validatedSituation, objectives }) => {
 		return (
 			<AnswerComponent
 				{...{
+					queryWithout,
 					dottedName: rule.dottedName,
 					NameComponent: <div>Votre traversée</div>,
 					ValueComponent: (
@@ -247,6 +258,7 @@ const Answer = ({ rule, validatedSituation, objectives }) => {
 		return (
 			<AnswerComponent
 				{...{
+					queryWithout,
 					dottedName: rule.dottedName,
 					NameComponent: <div>Votre trajet</div>,
 					ValueComponent: (
@@ -287,14 +299,25 @@ const Answer = ({ rule, validatedSituation, objectives }) => {
 			)}
 		</span>
 	)
+
 	return (
 		<AnswerComponent
-			{...{ dottedName: rule.dottedName, NameComponent, ValueComponent }}
+			{...{
+				dottedName: rule.dottedName,
+				NameComponent,
+				ValueComponent,
+				queryWithout,
+			}}
 		/>
 	)
 }
 
-const AnswerComponent = ({ dottedName, NameComponent, ValueComponent }) => {
+const AnswerComponent = ({
+	dottedName,
+	NameComponent,
+	ValueComponent,
+	queryWithout,
+}) => {
 	const dispatch = useDispatch()
 	return (
 		<motion.tr
@@ -309,8 +332,10 @@ const AnswerComponent = ({ dottedName, NameComponent, ValueComponent }) => {
 		>
 			<td>{NameComponent}</td>
 			<td>
-				<button
-					className="answer"
+				<Link
+					href={{ query: queryWithout }}
+					prefetch={false}
+					scroll={false}
 					css={`
 						display: inline-block;
 						padding: 0.6rem;
@@ -327,16 +352,9 @@ const AnswerComponent = ({ dottedName, NameComponent, ValueComponent }) => {
 							display: inline-block;
 						}
 					`}
-					onClick={() => {
-						dispatch({
-							type: 'STEP_ACTION',
-							name: 'unfold',
-							step: dottedName,
-						})
-					}}
 				>
 					{ValueComponent}
-				</button>
+				</Link>
 			</td>
 		</motion.tr>
 	)

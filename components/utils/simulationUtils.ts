@@ -1,3 +1,5 @@
+import { objectMap } from './utils'
+
 export const encodeDottedName = (decoded) => decoded.replace(/\s\.\s/g, '.')
 const decodeDottedName = (encoded) => encoded.replace(/\./g, ' . ')
 
@@ -21,3 +23,11 @@ export const encodeValue = (value) => {
 
 	if (value.valeur) return value.valeur //TODO units should be handled, this is dangerous
 }
+
+export const encodeSituation = (situation, doEncodeValue = false) =>
+	Object.fromEntries(
+		Object.entries(situation).map(([k, v]) => [
+			encodeDottedName(k),
+			doEncodeValue ? encodeValue(v) : v,
+		])
+	)

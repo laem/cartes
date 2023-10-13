@@ -112,3 +112,6 @@ export const defaultTo = (defaultValue, arg) =>
 
 export const intersection = (arr1, arr2) => arr1.filter((x) => arr2.includes(x))
 export const difference = (arr1, arr2) => arr1.filter((x) => !arr2.includes(x))
+
+export const objectMap = (obj, fn) =>
+	Object.fromEntries(Object.entries(obj).map(([k, v], i) => [k, fn(v, k, i)]))

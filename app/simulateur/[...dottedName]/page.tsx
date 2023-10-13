@@ -51,6 +51,7 @@ const Page = async ({
 	const rule = rules[decoded]
 	const text = rule.exposé?.description || rule.description
 	const title = rule.exposé?.titre || rule.titre
+	console.log('got these search params from simu/page', searchParams)
 	return (
 		<main>
 			<Simulateur
