@@ -17,3 +17,5 @@ node_modules/
 
 source/data
 .next/**
+
+.env.local

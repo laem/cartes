@@ -3,6 +3,7 @@ import { ImageResponse } from 'next/server'
 import Publicodes, { formatValue } from 'publicodes'
 import coutRules from '@/app/voyage/cout-voiture/data/rules'
 import css from '@/components/css/convertToJs'
+import BeautifulSituation from '@/components/BeautifulSituation'
 
 const futurecoRules = 'https://futureco-data.netlify.app/co2.json'
 
@@ -59,6 +60,15 @@ export async function GET(request) {
 					}}
 				>
 					{title}
+				</div>
+				<div
+					style={css`
+						font-size: 30;
+						display: flex;
+						margin-top: 1rem;
+					`}
+				>
+					<BeautifulSituation {...{ validatedSituation, rules }} />
 				</div>
 				<div
 					style={css`
