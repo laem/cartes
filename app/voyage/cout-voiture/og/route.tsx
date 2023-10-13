@@ -4,20 +4,29 @@ import Publicodes, { formatValue } from 'publicodes'
 import coutRules from '@/app/voyage/cout-voiture/data/rules'
 import css from '@/components/css/convertToJs'
 import BeautifulSituation from '@/components/BeautifulSituation'
+import voitureRules from '../data/rules'
 
 const futurecoRules = 'https://futureco-data.netlify.app/co2.json'
 
 export const runtime = 'edge'
 
-export async function GET(request) {
+const getRules = async (dottedName) => {
+	if (dottedName === 'trajet voiture . coût trajet par personne')
+		return voitureRules
+
 	const rulesRequest = await fetch(futurecoRules, { mode: 'cors' }),
 		rules = await rulesRequest.json()
-
-	const engine = new Publicodes(rules)
+	return rules
+}
+export async function GET(request) {
 	const { searchParams } = new URL(request.url)
 
 	const params = Object.fromEntries(searchParams)
 	const { dottedName, title, emojis, ...encodedSituation } = params
+
+	const rules = await getRules(dottedName)
+	const engine = new Publicodes(rules)
+
 	const validatedSituation = getSituation(encodedSituation, rules)
 	console.log(title, emojis, validatedSituation)
 	const nodeValue = engine

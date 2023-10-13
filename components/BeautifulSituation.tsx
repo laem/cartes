@@ -20,8 +20,7 @@ export default function BeautifulSituation({ validatedSituation, rules }) {
 					`}
 					key={k}
 				>
-					{title({ ...rules[k], dottedName: k })} :{' '}
-					{title({ ...rules[v], dottedName: v })}
+					{title({ ...rules[k], dottedName: k })} : {v} {rules[k].unité}
 					{i < entries.length - 1 && (
 						<span
 							style={css`
