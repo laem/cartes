@@ -10,16 +10,24 @@ export default function BeautifulSituation({ validatedSituation, rules }) {
 			`}
 		>
 			{entries.map(([k, v], i) => (
-				<li style={css``} key={k}>
+				<li
+					style={css`
+						display: flex;
+						align-items: center;
+					`}
+					key={k}
+				>
 					{title({ ...rules[k], dottedName: k })} :{' '}
 					{title({ ...rules[v], dottedName: v })}
 					{i < entries.length - 1 && (
 						<span
 							style={css`
+								font-size: 50;
+								color: #007ef0;
 								margin: 0 0.6rem;
 							`}
 						>
-							-
+							/
 						</span>
 					)}
 				</li>
