@@ -22,7 +22,7 @@ export async function GET(request) {
 	const nodeValue = engine
 			.setSituation(validatedSituation)
 			.evaluate(dottedName).nodeValue,
-		value = formatValue(nodeValue, { precision: 1, displayedUnit: 'kg CO2e' })
+		value = formatValue(nodeValue, { precision: 1 })
 
 	return new ImageResponse(
 		(
@@ -35,13 +35,20 @@ export async function GET(request) {
 					justifyContent: 'center',
 					flexDirection: 'column',
 					backgroundImage: 'linear-gradient(to bottom, #dbf4ff, #fff1f1)',
-					fontSize: 60,
+					fontSize: 110,
 					letterSpacing: -2,
 					fontWeight: 700,
 					textAlign: 'center',
+					lineHeight: 0.8,
 				}}
 			>
-				{value}
+				<div
+					style={css(`
+					 font-size: 180;
+					`)}
+				>
+					{emojis}
+				</div>
 				<div
 					style={{
 						backgroundImage:
@@ -51,14 +58,24 @@ export async function GET(request) {
 						color: 'transparent',
 					}}
 				>
-					Develop
+					{title}
 				</div>
 				<div
-					style={css(`
-					background: red; font-size: 300px
-					`)}
+					style={css`
+						display: flex;
+						align-items: center;
+						margin-top: 3rem;
+					`}
 				>
-					{emojis}
+					<span>{value}</span>
+					<small
+						style={css`
+							font-size: 60;
+							margin-left: 1rem;
+						`}
+					>
+						kg CO2e
+					</small>
 				</div>
 			</div>
 		),
