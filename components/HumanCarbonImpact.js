@@ -8,6 +8,7 @@ import { situationSelector } from 'Selectors/simulationSelectors'
 import styled from 'styled-components'
 import ImpactCard from './ImpactCard'
 import { getFoldedSteps } from 'Components/utils/simulationUtils'
+import { getSituation } from 'Components/utils/simulationUtils'
 
 const HumanCarbonImpact = ({
 	nodeValue,
@@ -22,19 +23,22 @@ const HumanCarbonImpact = ({
 		examplesSource = rule.rawNode.exposé?.['exemples via suggestions'],
 		questionEco = rule.rawNode.exposé?.type === 'question éco'
 
-	const situation = useSelector(situationSelector)
+	const situation = useSelector(situationSelector),
+		validatedSituation = getSituation(searchParams, rules)
 	const nextQuestions = useNextQuestions(objectives, engine, searchParams),
 		foldedSteps = getFoldedSteps(searchParams, engine.getParsedRules()),
-		dirtySituation = Object.keys(situation).find((question) => {
-			try {
-				return (
-					[...nextQuestions, ...foldedSteps].includes(question) &&
-					!engine.getRule(question).rawNode.injecté
-				)
-			} catch (e) {
-				return false
+		dirtySituation = Object.keys({ ...validatedSituation, ...situation }).find(
+			(question) => {
+				try {
+					return (
+						[...nextQuestions, ...foldedSteps].includes(question) &&
+						!engine.getRule(question).rawNode.injecté
+					)
+				} catch (e) {
+					return false
+				}
 			}
-		})
+		)
 
 	if (!questionEco && (!examplesSource || dirtySituation))
 		return <ImpactCard {...{ nodeValue, dottedName }} />
