@@ -12,13 +12,6 @@ const SimulationResults = ({
 	searchParams,
 	objectives,
 }) => {
-	console.log('nodeValue from SimuResults', nodeValue)
-	console.log(
-		'eval from SimuResults',
-		engine.evaluate('plaque de cuisson . impact').nodeValue,
-		'situation',
-		engine.evaluate(`plaque de cuisson . nombre d'habitants`).nodeValue
-	)
 	return (
 		<div
 			key={dottedName}

@@ -9,17 +9,18 @@ import { answeredQuestionsSelector } from '@/selectors/simulationSelectors'
 import { formatValue } from 'publicodes'
 import { useSelector } from 'react-redux'
 import { EndingCongratulations } from '@/app/simulateur/[...dottedName]/SimulateurContent'
+import { getFoldedSteps } from '@/components/utils/simulationUtils'
 
 export default function Questions({
 	rules,
-	objective,
+	objectives,
 	engine,
 	evaluation,
 	searchParams,
 }) {
-	const nextQuestions = useNextQuestions(engine),
-		answeredQuestions = useSelector(answeredQuestionsSelector)
-	const rule = rules[objective]
+	const nextQuestions = useNextQuestions(objectives, engine, searchParams),
+		answeredQuestions = getFoldedSteps(searchParams, rules)
+	const rule = rules[objectives[0]]
 
 	const ResultsBlock = () => (
 		<div css="padding: 1.6rem; font-size: 140%">
@@ -45,7 +46,15 @@ export default function Questions({
 				`}
 			>
 				<SimulationResults
-					{...{ ...rule, ...evaluation, engine, rules, ResultsBlock }}
+					{...{
+						...rule,
+						...evaluation,
+						engine,
+						rules,
+						ResultsBlock,
+						objectives,
+						searchParams,
+					}}
 				/>
 
 				<details>
@@ -75,12 +84,15 @@ export default function Questions({
 				</details>
 			</div>
 			<Simulation
-				searchParams={searchParams}
-				rules={rules}
-				engine={engine}
-				noFeedback
-				customEnd={<EndingCongratulations />}
-				explanations={null}
+				{...{
+					searchParams,
+					rules,
+					engine,
+					noFeedback: true,
+					customEnd: <EndingCongratulations />,
+					explanations: null,
+					objectives,
+				}}
 			/>
 		</ul>
 	)
