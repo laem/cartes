@@ -156,7 +156,7 @@ voiture . durée de vie:
 
 voiture . km annuels:
   titre: Kilomètres annuels
-  par défaut: 12223 km/an
+  formule: 12223 km/an
   description: |
     En 2019, d'après le [SDES](<https://www.statistiques.developpement-durable.gouv.fr/sites/default/files/2021-12/08_partie_g_bilan_circulation_2020_0.pdf>), une voiture particulière française a parcouru ce nombre de km en moyenne.
 
