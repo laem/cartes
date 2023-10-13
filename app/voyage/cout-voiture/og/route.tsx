@@ -36,7 +36,7 @@ export async function GET(request) {
 					justifyContent: 'center',
 					flexDirection: 'column',
 					backgroundImage: 'linear-gradient(to bottom, #dbf4ff, #fff1f1)',
-					fontSize: 110,
+					fontSize: 100,
 					letterSpacing: -2,
 					fontWeight: 700,
 					textAlign: 'center',
@@ -74,7 +74,7 @@ export async function GET(request) {
 					style={css`
 						display: flex;
 						align-items: center;
-						margin-top: 3rem;
+						margin-top: 1rem;
 					`}
 				>
 					<span>{value}</span>

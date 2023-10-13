@@ -7,6 +7,9 @@ export default function BeautifulSituation({ validatedSituation, rules }) {
 		<ul
 			style={css`
 				display: flex;
+				max-width: 80vw;
+				flex-wrap: wrap;
+				justify-content: center;
 			`}
 		>
 			{entries.map(([k, v], i) => (

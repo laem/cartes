@@ -26,11 +26,12 @@ export async function generateMetadata(
 	const description = rule.exposé?.description || rule.description
 
 	const image =
-		rule.exposé?.image ||
-		(process.env.URL || 'https://' + process.env.VERCEL_URL) +
-			`/voyage/cout-voiture/og?dottedName=${dottedName}&title=${
-				rule.exposé?.titre || rule.titre
-			}&emojis=${rule.icônes}&${new URLSearchParams(searchParams).toString()}`
+		rule.exposé?.image && Object.keys(searchParams).length === 0
+			? rule.exposé.image
+			: (process.env.URL || 'https://' + process.env.VERCEL_URL) +
+			  `/voyage/cout-voiture/og?dottedName=${dottedName}&title=${
+					rule.titre
+			  }&emojis=${rule.icônes}&${new URLSearchParams(searchParams).toString()}`
 	return {
 		title,
 		description,
@@ -51,7 +52,6 @@ const Page = async ({
 	const rule = rules[decoded]
 	const text = rule.exposé?.description || rule.description
 	const title = rule.exposé?.titre || rule.titre
-	console.log('got these search params from simu/page', searchParams)
 	return (
 		<main>
 			<Simulateur
