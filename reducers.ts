@@ -68,6 +68,7 @@ function simulation(
 				messages: {},
 			}
 		case 'UPDATE_SITUATION': {
+			console.log('SALUTOI', action)
 			const situation = state.situation
 			const { fieldName: dottedName, value } = action
 			return {
@@ -110,7 +111,7 @@ function batchUpdateSituationReducer(state: RootState, action: Action) {
 	}
 	return Object.entries(action.situation).reduce<RootState | null>(
 		(newState, [fieldName, value]) => {
-			mainReducer(newState ?? undefined, {
+			return mainReducer(newState ?? undefined, {
 				type: 'UPDATE_SITUATION',
 				fieldName,
 				value,

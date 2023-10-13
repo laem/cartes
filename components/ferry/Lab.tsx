@@ -1,7 +1,6 @@
 'use client'
 import { useEffect, useRef, useState } from 'react'
-import { useDispatch, useSelector } from 'react-redux'
-import { batchUpdateSituation } from '@/actions'
+import { useSelector } from 'react-redux'
 import { situationSelector } from 'Selectors/simulationSelectors'
 import Mega from './Mega'
 import pathDataToPolys, { calcPolygonArea } from './svgPathToPolygons'
@@ -19,12 +18,11 @@ const sumAreas = (elements, filter = () => true) =>
 const Lab = ({}) => {
 	const ref = useRef(null)
 	const [elements, setElements] = useState([])
-	const dispatch = useDispatch()
-	const setData = (data) => dispatch(batchUpdateSituation(data), true)
 	const [computed, setComputed] = useState(null)
 	const situation = useSelector(situationSelector)
 
 	useEffect(() => {
+		console.log('situation', situation)
 		//rerun this on situation RESET
 		if (Object.keys(situation).length > 0) return
 		const el = ref.current
@@ -109,7 +107,7 @@ const Lab = ({}) => {
 		// Considering a 1*2m bed, another one, 1m between them, plus a 4m entrance + toilets, we've got 18m²
 		// Which makes a good order of magnitude, but still subject to some errors until we get a precise plan of the cabine
 
-		setData(newData)
+		console.log(JSON.stringify(newData))
 		return () => {
 			console.log('This will be logged on unmount')
 		}
