@@ -1,14 +1,28 @@
+import { getSituation } from '@/components/utils/simulationUtils'
 import { ImageResponse } from 'next/server'
 import Publicodes from 'publicodes'
-// App router includes @vercel/og.
-// No need to install it.
-//
-const engine = new Publicodes({ a: 'b + 2', b: '27' })
-const value = engine.evaluate('a').nodeValue
+import coutRules from '@/app/voyage/cout-voiture/data/rules'
+
+const futurecoRules = 'https://futureco-data.netlify.app/co2.json'
 
 export const runtime = 'edge'
 
-export async function GET() {
+export async function GET(request) {
+	console.log('SALUT')
+	const rulesRequest = await fetch(futurecoRules, { mode: 'cors' }),
+		rules = await rulesRequest.json()
+
+	const engine = new Publicodes(rules)
+	const { searchParams } = new URL(request.url)
+
+	const params = Object.fromEntries(searchParams)
+	const { dottedName, title, emojis, ...encodedSituation } = params
+	const validatedSituation = getSituation(encodedSituation, rules)
+	console.log(title, emojis, validatedSituation)
+	const value = engine
+		.setSituation(validatedSituation)
+		.evaluate(dottedName).nodeValue
+
 	return new ImageResponse(
 		(
 			<div

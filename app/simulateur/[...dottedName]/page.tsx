@@ -27,10 +27,10 @@ export async function generateMetadata(
 
 	const image =
 		rule.exposé?.image ||
-		'https://futur.eco' +
-			`/api/og-image?title=${rule.exposé?.titre || rule.titre}&emojis=${
-				rule.icônes
-			}`
+		'http://localhost:3000' +
+			`/voyage/cout-voiture/og?dottedName=${dottedName}&title=${
+				rule.exposé?.titre || rule.titre
+			}&emojis=${rule.icônes}&${new URLSearchParams(searchParams).toString()}`
 	return {
 		title,
 		description,
