@@ -2,13 +2,11 @@
 
 import { situationSelector } from '@/selectors/simulationSelectors'
 import { useNextQuestions } from 'Components/utils/useNextQuestion'
-import { sortBy } from 'Components/utils/utils'
 import React from 'react'
-import { useDispatch, useSelector } from 'react-redux'
+import { useSelector } from 'react-redux'
 import {
 	encodeDottedName,
 	encodeValue,
-	getFoldedSteps,
 	getSituation,
 } from '../utils/simulationUtils'
 import useKeypress from '../utils/useKeyPress'
@@ -30,34 +28,19 @@ export type ConversationProps = {
 export default function Conversation({
 	customEndMessages,
 	customEnd,
-	orderByCategories,
-	rules: rawRules,
 	engine,
 	searchParams,
 	objectives,
 }: ConversationProps) {
-	const dispatch = useDispatch()
 	const rules = engine.getParsedRules()
 
 	const nextQuestions = useNextQuestions(objectives, engine, searchParams)
 	const validatedSituation = getSituation(searchParams, rules)
 	const situation = useSelector(situationSelector)
-	const foldedSteps = getFoldedSteps(searchParams, rules)
 
-	const sortedQuestions = orderByCategories
-		? sortBy((question) => {
-				const categoryIndex = orderByCategories.findIndex(
-					(c) => question.indexOf(c.dottedName) === 0
-				)
-				return categoryIndex * 1000 + nextQuestions.indexOf(question)
-		  }, nextQuestions)
-		: nextQuestions
-
-	/*
 	console.log('NEXTQ', nextQuestions)
 	console.log('situation', situation)
 	console.log('validatedSituation', validatedSituation)
-	*/
 	const currentQuestion = nextQuestions[0]
 
 	// Some questions are grouped in an artifical questions, called mosaic questions,  not present in publicodes
@@ -109,7 +92,6 @@ export default function Conversation({
 				currentQuestion,
 				customEnd,
 				customEndMessages,
-				orderByCategories,
 				previousAnswers: [], //TODO
 				mosaicQuestion,
 				rules,

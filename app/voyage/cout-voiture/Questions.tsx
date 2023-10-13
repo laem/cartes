@@ -1,15 +1,12 @@
 'use client'
+import { EndingCongratulations } from '@/app/simulateur/[...dottedName]/SimulateurContent'
 import DetailedBarChartIcon from '@/components/DetailsBarChartIcon'
 import Simulation from '@/components/Simulation'
 import SimulationResults from '@/components/SimulationResults'
 import StackedBarChart from '@/components/StackedBarChart'
-import { Card } from '@/components/UI'
-import { useNextQuestions } from '@/components/utils/useNextQuestion'
-import { answeredQuestionsSelector } from '@/selectors/simulationSelectors'
-import { formatValue } from 'publicodes'
-import { useSelector } from 'react-redux'
-import { EndingCongratulations } from '@/app/simulateur/[...dottedName]/SimulateurContent'
 import { getFoldedSteps } from '@/components/utils/simulationUtils'
+import { useNextQuestions } from '@/components/utils/useNextQuestion'
+import { formatValue } from 'publicodes'
 
 export default function Questions({
 	rules,
@@ -88,9 +85,7 @@ export default function Questions({
 					searchParams,
 					rules,
 					engine,
-					noFeedback: true,
 					customEnd: <EndingCongratulations />,
-					explanations: null,
 					objectives,
 				}}
 			/>

@@ -4,12 +4,10 @@ import { getSituation } from '@/components/utils/simulationUtils'
 import { useEngine2 } from '@/providers/EngineWrapper'
 import CustomSimulateurEnding from 'Components/CustomSimulateurEnding'
 import Emoji from 'Components/Emoji'
-import Lab from 'Components/ferry/Lab'
 import FuturecoMonochrome from 'Components/FuturecoMonochrome'
 import Simulation from 'Components/Simulation'
 import SimulationResults from 'Components/SimulationResults'
 import { getBackgroundColor, limit } from 'Components/testColors'
-import { extractCategories } from 'Components/utils/publicodesUtils'
 import Link from 'next/link'
 import { useRouter } from 'next/router'
 import { utils } from 'publicodes'
@@ -24,8 +22,7 @@ const SimulateurContent = ({ objectives, rules, config, searchParams }) => {
 	const engine = useEngine2(rules, validatedSituation)
 	const isMainSimulation = objective === 'bilan'
 	const evaluation = engine.evaluate(objective),
-		dispatch = useDispatch(),
-		categories = isMainSimulation && extractCategories(rules, engine)
+		dispatch = useDispatch()
 
 	console.log('eval from SimuConten', evaluation.nodeValue)
 
@@ -101,8 +98,6 @@ const SimulateurContent = ({ objectives, rules, config, searchParams }) => {
 						{...{
 							rules,
 							engine,
-							noFeedback: true,
-							orderByCategories: categories,
 							objectives,
 							searchParams,
 							customEnd: rule.description ? (
@@ -114,7 +109,6 @@ const SimulateurContent = ({ objectives, rules, config, searchParams }) => {
 							) : (
 								<EndingCongratulations />
 							),
-							explanation: null,
 						}}
 					/>
 				)}

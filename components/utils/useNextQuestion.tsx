@@ -132,8 +132,9 @@ export const useNextQuestions = function (
 	const answeredQuestions = getFoldedSteps(searchParams, rules)
 	const questionsConfig = getQuestionsConfig(objectives[0])
 	const validatedSituation = getSituation(searchParams, rules)
+	const validatedEngine = engine.setSituation(validatedSituation)
 	const missingVariables = objectives.map(
-		(node) => engine.evaluate(node).missingVariables ?? {}
+		(node) => validatedEngine.evaluate(node).missingVariables ?? {}
 	)
 	if (
 		objectives.length === 1 &&
@@ -171,7 +172,7 @@ export const useNextQuestions = function (
 			questionsConfig,
 			answeredQuestions,
 			validatedSituation,
-			engine.setSituation(validatedSituation)
+			validatedEngine
 		)
 	}, [missingVariables, questionsConfig, answeredQuestions, validatedSituation])
 	/* see comment above

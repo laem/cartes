@@ -10,20 +10,16 @@ import Conversation, {
 //TODO import { syncSearchParams } from './utils/useSearchParamsSimulationSharing'
 
 type SimulationProps = {
-	explanations?: React.ReactNode
 	results?: React.ReactNode
 	customEndMessages?: ConversationProps['customEndMessages']
 	showPeriodSwitch?: boolean
 	showLinkToForm?: boolean
-	orderByCategories: Array<Object>
 }
 
 export default function Simulation({
-	explanations,
 	results,
 	customEndMessages,
 	customEnd,
-	orderByCategories,
 	animation = 'appear',
 	searchParams,
 	objectives,
@@ -42,15 +38,12 @@ export default function Simulation({
 					{...{
 						engine,
 						rules,
-						orderByCategories,
 						customEnd,
 						customEndMessages,
 						objectives,
 						searchParams,
 					}}
 				/>
-
-				{explanations}
 			</Animation>
 		</>
 	)
