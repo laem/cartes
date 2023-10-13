@@ -69,6 +69,7 @@
 		"yaml-loader": "^0.8.0"
 	},
 	"dependencies": {
+		"@adobe/css-tools": "^4.3.1",
 		"@babel/runtime": "^7.22.6",
 		"@mdx-js/loader": "^2.3.0",
 		"@mdx-js/react": "^2.3.0",
@@ -84,7 +85,6 @@
 		"chrome-aws-lambda": "^10.1.0",
 		"color-convert": "^2.0.1",
 		"core-js": "^3.31.1",
-		"css": "^3.0.0",
 		"css-to-js": "^0.0.2",
 		"dotenv": "^16.0.0",
 		"emoji-regex": "^10.2.1",

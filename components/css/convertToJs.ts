@@ -16,8 +16,7 @@ import { addProperty } from './utils'
 import fontface from './fontface'
 import keyframes from './keyframes'
 import standard from './standard'
-
-const cssLib = require('css')
+import { parse, stringify } from '@adobe/css-tools'
 
 const convertRules = (rules, res = {}) => {
 	let result = res
@@ -54,7 +53,7 @@ const convertToJS = (input) => {
 	// Parse CSS string into rules array
 
 	try {
-		const parsedCss = cssLib.parse(input)
+		const parsedCss = parse(input)
 		const { rules } = parsedCss.stylesheet
 		return convertRules(rules)
 	} catch (err) {

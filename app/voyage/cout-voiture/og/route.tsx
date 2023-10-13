@@ -1,14 +1,14 @@
 import { getSituation } from '@/components/utils/simulationUtils'
 import { ImageResponse } from 'next/server'
-import Publicodes from 'publicodes'
+import Publicodes, { formatValue } from 'publicodes'
 import coutRules from '@/app/voyage/cout-voiture/data/rules'
+import css from '@/components/css/convertToJs'
 
 const futurecoRules = 'https://futureco-data.netlify.app/co2.json'
 
 export const runtime = 'edge'
 
 export async function GET(request) {
-	console.log('SALUT')
 	const rulesRequest = await fetch(futurecoRules, { mode: 'cors' }),
 		rules = await rulesRequest.json()
 
@@ -19,9 +19,10 @@ export async function GET(request) {
 	const { dottedName, title, emojis, ...encodedSituation } = params
 	const validatedSituation = getSituation(encodedSituation, rules)
 	console.log(title, emojis, validatedSituation)
-	const value = engine
-		.setSituation(validatedSituation)
-		.evaluate(dottedName).nodeValue
+	const nodeValue = engine
+			.setSituation(validatedSituation)
+			.evaluate(dottedName).nodeValue,
+		value = formatValue(nodeValue, { precision: 1, displayedUnit: 'kg CO2e' })
 
 	return new ImageResponse(
 		(
@@ -53,26 +54,11 @@ export async function GET(request) {
 					Develop
 				</div>
 				<div
-					style={{
-						backgroundImage:
-							'linear-gradient(90deg, rgb(121, 40, 202), rgb(255, 0, 128))',
-						backgroundClip: 'text',
-						'-webkit-background-clip': 'text',
-						color: 'transparent',
-					}}
+					style={css(`
+					background: red; font-size: 300px
+					`)}
 				>
-					Preview
-				</div>
-				<div
-					style={{
-						backgroundImage:
-							'linear-gradient(90deg, rgb(255, 77, 77), rgb(249, 203, 40))',
-						backgroundClip: 'text',
-						'-webkit-background-clip': 'text',
-						color: 'transparent',
-					}}
-				>
-					Ship
+					{emojis}
 				</div>
 			</div>
 		),
@@ -81,7 +67,7 @@ export async function GET(request) {
 			height: 630,
 			// Supported options: 'twemoji', 'blobmoji', 'noto', 'openmoji', 'fluent' and 'fluentFlat'
 			// Default to 'twemoji'
-			emoji: 'twemoji',
+			emoji: 'openmoji',
 		}
 	)
 }
