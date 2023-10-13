@@ -4,6 +4,7 @@ import Nav, { NavFooter } from 'Components/Nav'
 import { Inter } from 'next/font/google'
 import Script from 'next/script'
 import Providers from '@/providers/Providers'
+import { Analytics } from '@vercel/analytics/react'
 
 /*
 // If loading a variable font, you don't need to specify the font weight
@@ -48,6 +49,7 @@ export default function RootLayout({
 						<NavFooter />
 					</Providers>
 				</StyledComponentsRegistry>
+				<Analytics />
 			</body>
 		</html>
 	)
