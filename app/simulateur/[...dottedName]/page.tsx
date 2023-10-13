@@ -27,7 +27,7 @@ export async function generateMetadata(
 
 	const image =
 		rule.exposé?.image ||
-		'http://localhost:3000' +
+		(process.env.URL || 'https://' + process.env.VERCEL_URL) +
 			`/voyage/cout-voiture/og?dottedName=${dottedName}&title=${
 				rule.exposé?.titre || rule.titre
 			}&emojis=${rule.icônes}&${new URLSearchParams(searchParams).toString()}`
