@@ -10,9 +10,10 @@ const futurecoRules = 'https://futureco-data.netlify.app/co2.json'
 
 export const runtime = 'edge'
 
+const isVoiture = (dottedName) =>
+	dottedName === 'trajet voiture . coût trajet par personne'
 const getRules = async (dottedName) => {
-	if (dottedName === 'trajet voiture . coût trajet par personne')
-		return voitureRules
+	if (isVoiture(dottedName)) return voitureRules
 
 	const rulesRequest = await fetch(futurecoRules, { mode: 'cors' }),
 		rules = await rulesRequest.json()
@@ -29,10 +30,15 @@ export async function GET(request) {
 
 	const validatedSituation = getSituation(encodedSituation, rules)
 	console.log(title, emojis, validatedSituation)
-	const nodeValue = engine
+	const evaluation = engine
 			.setSituation(validatedSituation)
-			.evaluate(dottedName).nodeValue,
-		value = formatValue(nodeValue, { precision: 1 })
+			.evaluate(dottedName),
+		value = formatValue(evaluation, { precision: 1 }),
+		valueWithoutUnit = formatValue(evaluation, {
+			precision: 1,
+			displayedUnit: '',
+		}),
+		unit = value.split(valueWithoutUnit)[1]
 
 	return new ImageResponse(
 		(
@@ -86,14 +92,14 @@ export async function GET(request) {
 						margin-top: 1rem;
 					`}
 				>
-					<span>{value}</span>
+					<span>{valueWithoutUnit}</span>
 					<small
 						style={css`
 							font-size: 60;
 							margin-left: 1rem;
 						`}
 					>
-						kg CO2e
+						{unit}
 					</small>
 				</div>
 			</div>
