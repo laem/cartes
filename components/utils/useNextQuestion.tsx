@@ -130,7 +130,7 @@ export const useNextQuestions = function (
 ): Array<DottedName> {
 	const rules = engine.getParsedRules()
 	const answeredQuestions = getFoldedSteps(searchParams, rules)
-	const questionsConfig = getQuestionsConfig(objectives)
+	const questionsConfig = getQuestionsConfig(objectives[0])
 	const validatedSituation = getSituation(searchParams, rules)
 	const missingVariables = objectives.map(
 		(node) => engine.evaluate(node).missingVariables ?? {}

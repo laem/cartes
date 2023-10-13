@@ -108,7 +108,7 @@ const SimulateurContent = ({ objectives, rules, config, searchParams }) => {
 							customEnd: rule.description ? (
 								<CustomSimulateurEnding
 									rule={rule}
-									dottedName={objectives}
+									dottedName={objectives[0]}
 									engine={engine}
 								/>
 							) : (
