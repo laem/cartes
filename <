@@ -1,0 +1,11 @@
+import rules from './data/rules'
+
+export default function CalculSummary() {
+	return (
+		<ul>
+			{rules['trajet voiture . coût trajet'].somme.map((el) => (
+				<li>{el}</li>
+			))}
+		</ul>
+	)
+}

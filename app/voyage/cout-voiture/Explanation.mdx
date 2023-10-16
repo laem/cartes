@@ -1,22 +1,31 @@
 import ExempleTable from './ExempleTable'
 import PubImages from './PubImages'
 import Link from 'next/link'
+import CalculSummary from './CalculSummary'
 
 
 ## Sommaire
 
 ## Introduction
 
-Ce calculateur vous propose une estimation du coût d'un trajet en voiture. Il n'est donc pas exact, mais c'est simplement le meilleur qui existe à ce jour. 
+Ce calculateur vous propose une estimation du coût d'un trajet en voiture. Il n'est donc pas exact, mais c'est simplement le meilleur qui existe à ce jour, à notre connaissance. 
 
-L'erreur la plus courante quand on parle du coût de la voiture, c'est de ne prendre en compte que le coût du carburant, le réflexe naturel de la plupart des automobilistes. Bien sûr, il est naturel de se dire "mais la voiture de toutes façons je l'ai déjà", mais qu'on le veuille ou non, ça a surtout pour effet de cacher le vrai coût d'un trajet en voiture, car comme vous pourrez le constater, le carburant n'est que la face visible de l'iceberg du système voiture en 2023.
+La plupart du temps, quand on parle du coût de la voiture dans la vie quotidienne et les articles de presse, on ne prendre en compte que le coût du carburant et parfois les péages. C'est un réflexe compréhensible, car c'est ce qu'on appelle le *coût instantané*, qui est très visible car on le paie dans la journée ou la semaine du trajet. 
 
-> Sans surprise, d'après plusieurs études, [le coût réel d'une voiture est sous-estimé d'un facteur deux](https://www.nature.com/articles/s41893-021-00731-5).
+Or, comme vous pourrez le constater avec ce calculateur, le carburant n'est que la face visible de l'iceberg du système voiture en 2023. En ordre de grandeur, il ne représente qu'un tiers du coût d'un trajet en voiture en 2023.
+
+> Sans surprise, les études qui s'intéressent au prix perçu de la voiture ont découvert que [le coût réel d'une voiture est sous-estimé d'un facteur deux par les automobilistes](https://www.nature.com/articles/s41893-021-00731-5).
 
 ### Le calcul 
 
 
 Vous pouvez explorer l'ensemble du calcul sur la <Link href="/voyage/cout-voiture/documentation/trajet-voiture/coût-trajet-par-personne">documentation intéractive</Link>.
+
+Quels postes de dépense sont pris en compte à ce jour ? 
+
+<CalculSummary/>
+
+
 
 ## Les résultats
 
