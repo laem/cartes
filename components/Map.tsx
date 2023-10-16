@@ -6,6 +6,8 @@ import { useEffect, useState } from 'react'
 import { GeoJSON, MapContainer, Marker, TileLayer, useMap } from 'react-leaflet'
 import { MapSizer } from './conversation/VoyageUI'
 import { decode } from './valhalla-decode-shape'
+import prixAutoroutes from 'Components/prixAutoroutes'
+console.log('Dada', prixAutoroutes)
 
 const center = [47.033, 2.395]
 
