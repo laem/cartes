@@ -57,6 +57,8 @@ export default function VoyageInput({
 
 	const distance = realDistance || computeDistance(state)
 
+	console.log('distance', realDistance, distance)
+
 	const validDistance = typeof distance === 'number'
 	useEffect(() => {
 		if (!validDistance) return
