@@ -138,7 +138,36 @@ trajet voiture . distance:
 
 trajet voiture . péages:
   titre: Les péages
-  formule: distance * péages par km * part autoroute
+  description: |
+    Cette variable peut être directement renseignée par notre algorithme de calcul du prix de l'autoroute. Il se base sur le tracé GPS et calcule pour chaque
+  formule:
+    variations:
+      - si: calcul GPS
+        alors: prix calculé
+      - sinon: distance * péages par km * part autoroute
+
+trajet voiture . péages . calcul GPS:
+  question technique: Le calcul du prix de l'autoroute a-t-il été fait par un calculateur d'itinéraire ?
+  par défaut: non
+
+trajet voiture . péages . prix calculé:
+  formule: prix 2018 * inflation depuis 2018
+  description: |
+    Le prix quand il est calculé par un calculateur d'itinéraire qui segmente le trajet en portion d'autoroute et multiplie leur distance par le prix précis de l'autoroute en question.
+
+trajet voiture . péages . prix calculé . prix 2018:
+  par défaut: 0
+  description: |
+    Le prix est calculé en utilisant les données compilées par Pierre-Olivier Simonard sur [cette étude du prix des autoroutes en 2018](https://public.tableau.com/app/profile/pierre.olivier.simonard/viz/AutoroutesV2/Vuedensemble).
+  unité: €
+
+trajet voiture . péages . prix calculé . inflation depuis 2018:
+  formule: 1.019 * 1.008 * 1.004 * 1.02 * 1.0475
+  description: |
+    Nous calculons ici la valeur de l'inflation des prix des péages des autoroutes françaises sur la base de la lecture du tableau en image présenté dans [cet article de Que Choisir](https://www.quechoisir.org/actualite-peages-d-autoroute-hausse-spectaculaire-des-tarifs-en-2023-n104499/).
+
+  note: |
+    À noter, des réductions pour les voitures électriques viennent compenser cette inflation. À intégrer plus tard, car il s'agit d'une modification de second ordre.
 
 trajet voiture . part autoroute:
   question: Quelle part de votre trajet est faite sur autoroute ?

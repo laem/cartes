@@ -39,6 +39,7 @@ export default function VoyageInput({
 	})
 
 	const [realDistance, setRealDistance] = useState(null)
+	const [realHighwayPrice, setRealHighwayPrice] = useState(null)
 	const geo = useGeo()
 
 	const [wikidata, setWikidata] = useState(null)
@@ -61,6 +62,12 @@ export default function VoyageInput({
 		if (!validDistance) return
 		if (updateSituation) {
 			updateSituation('distance aller . orthodromique')(distance)
+			if (realHighwayPrice) {
+				updateSituation('trajet voiture . péages . prix calculé')(
+					realHighwayPrice
+				)
+				updateSituation('trajet voiture . péages . calcul GPS')('oui')
+			}
 		} else onChange(distance)
 	}, [distance])
 
@@ -284,6 +291,7 @@ export default function VoyageInput({
 			<MapWrapper
 				state={state}
 				setRealDistance={setRealDistance}
+				setRealHighwayPrice={setRealHighwayPrice}
 				orthodromic={orthodromic}
 			/>
 			{false && distance && !state.validated && (

@@ -30,7 +30,13 @@ const buildGeoJSON = (coordinates) => ({
 
 const reverse = (array) => array.slice().reverse()
 
-const Map = ({ origin, destination, setRealDistance, orthodromic }) => {
+const Map = ({
+	origin,
+	destination,
+	setRealDistance,
+	setRealHighwayPrice,
+	orthodromic,
+}) => {
 	const [trip, setTrip] = useState(null)
 
 	const shape = trip && trip.legs[0].shape
@@ -108,6 +114,7 @@ const Map = ({ origin, destination, setRealDistance, orthodromic }) => {
 				console.log('Prix', prices, price)
 
 				setRealDistance(distance)
+				setRealHighwayPrice(price)
 
 				setTrip(json.trip)
 			})
