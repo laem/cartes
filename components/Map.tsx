@@ -83,10 +83,29 @@ const Map = ({ origin, destination, setRealDistance, orthodromic }) => {
 						]
 					)
 
+				const testNames = 'A 8, A 89, A 7N, A 784N, A 74N'
+				const removeSpace = (name) => name.replace(/A\s/g, 'A')
+				const regex = /A\d+N?/g
+
 				console.log({ paidHighwaySegments, paidDistance, highwayLengthMap })
-				const price = paidHighwaySegments.map((segment) =>
-					segment.street_names.find((street) => street)
-				)
+				const prices = paidHighwaySegments.map((segment) => {
+						const results = segment.street_names.filter((street) =>
+							removeSpace(street).match(regex)
+						)
+						if (results.length !== 1) {
+							console.log(segment)
+							throw new Error('Multiple autoroutes found in this segment')
+						}
+						const segmentHighwayName = removeSpace(results[0])
+						const segmentPrice = prixAutoroutes[segmentHighwayName]
+						if (segmentPrice == null) {
+							console.log(segmentHighwayName, segment)
+							throw new Error('Segment not found in the price table')
+						}
+						return segmentPrice * segment.length
+					}),
+					price = prices.reduce((memo, next) => memo + next, 0)
+				console.log('Prix', prices, price)
 
 				setRealDistance(distance)
 
