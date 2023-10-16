@@ -306,6 +306,7 @@ export default function VoyageInput({
 const MapWrapper = ({
 	state: { depuis, vers },
 	setRealDistance,
+	setRealHighwayPrice,
 	orthodromic,
 }) => {
 	const origin = depuis.choice && [
@@ -322,6 +323,7 @@ const MapWrapper = ({
 			origin={origin}
 			destination={destination}
 			setRealDistance={setRealDistance}
+			setRealHighwayPrice={setRealHighwayPrice}
 			orthodromic={orthodromic}
 		/>
 	)

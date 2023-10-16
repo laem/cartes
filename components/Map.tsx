@@ -98,16 +98,29 @@ const Map = ({
 						const results = segment.street_names.filter((street) =>
 							removeSpace(street).match(regex)
 						)
-						if (results.length !== 1) {
-							console.log(segment)
-							throw new Error('Multiple autoroutes found in this segment')
+						if (results.length > 1) {
+							console.log('Multiple autoroutes found in this segment', segment)
 						}
-						const segmentHighwayName = removeSpace(results[0])
-						const segmentPrice = prixAutoroutes[segmentHighwayName]
-						if (segmentPrice == null) {
-							console.log(segmentHighwayName, segment)
-							throw new Error('Segment not found in the price table')
-						}
+						if (results.length === 0) return 0
+						// Sometimes some segments have multiple highway names. We don't really what that means or to which distance they apply, so we average their price
+						/*  0: "A 71"
+    						1: "A 89"
+							2: "E 11"
+							3: "E 70"
+							4: "L'Arverne"
+						*/
+						const segmentPrices = results.map((result) => {
+							const segmentPrice = prixAutoroutes[removeSpace(result)]
+
+							if (segmentPrice == null) {
+								console.log(segmentHighwayName, segment)
+								throw new Error('Segment not found in the price table')
+							}
+							return segmentPrice
+						})
+						const segmentPrice =
+							segmentPrices.reduce((memo, next) => memo + next, 0) /
+							segmentPrices.length
 						return segmentPrice * segment.length
 					}),
 					price = prices.reduce((memo, next) => memo + next, 0)
