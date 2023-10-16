@@ -10,9 +10,9 @@ import CalculSummary from './CalculSummary'
 
 Ce calculateur vous propose une estimation du coût d'un trajet en voiture. Il n'est donc pas exact, mais c'est simplement le meilleur qui existe à ce jour, à notre connaissance. 
 
-La plupart du temps, quand on parle du coût de la voiture dans la vie quotidienne et les articles de presse, on ne prendre en compte que le coût du carburant et parfois les péages. C'est un réflexe compréhensible, car c'est ce qu'on appelle le *coût instantané*, qui est très visible car on le paie dans la journée ou la semaine du trajet. 
+La plupart du temps, quand on parle du coût de la voiture dans la vie quotidienne et les articles de presse, on ne prend en compte que le coût du carburant et parfois les péages. C'est un réflexe compréhensible, car c'est ce qu'on appelle le *coût instantané*, qui est très visible car on le paie dans la journée ou la semaine du trajet, le reste étant dilué dans le temps, de l'année à la décennie.
 
-Or, comme vous pourrez le constater avec ce calculateur, le carburant n'est que la face visible de l'iceberg du système voiture en 2023. En ordre de grandeur, il ne représente qu'un tiers du coût d'un trajet en voiture en 2023.
+Or, comme vous pourrez le constater dans ce calculateur, le carburant n'est que la face visible de l'iceberg des dépenses de la voiture en 2023. En ordre de grandeur, il ne représente qu'un tiers du coût d'un trajet en voiture en 2023.
 
 > Sans surprise, les études qui s'intéressent au prix perçu de la voiture ont découvert que [le coût réel d'une voiture est sous-estimé d'un facteur deux par les automobilistes](https://www.nature.com/articles/s41893-021-00731-5).
 
@@ -43,17 +43,22 @@ Alors, que donne ce calculateur sur un jeu d'exemples courants ?
 
 ## Questions fréquentes
 
-### Voiture vs train
+### La voiture est-elle moins chère que le train ?
 
-Souvent, l'étude du coût au km de la voiture est utilisé dans le débat voiture vs train. Avec ~ 19 centimes par kilomètre pour la SNCF sans carte de réduction (!) (source enquête [Que Choisir 2023](https://www.quechoisir.org/actualite-tarifs-sncf-au-kilometre-2023-moins-c-est-long-plus-c-est-cher-n106658/)), le train est donc en moyenne bien moins cher que la voiture et ses ~ 35 centimes par kilomètre. 
+Souvent, l'étude du coût au km de la voiture est utilisé dans le débat voiture vs train. Avec ~ 19 centimes par kilomètre pour la SNCF sans carte de réduction (source enquête [Que Choisir 2023](https://www.quechoisir.org/actualite-tarifs-sncf-au-kilometre-2023-moins-c-est-long-plus-c-est-cher-n106658/)), le train est donc en moyenne bien moins cher que la voiture et ses ~ 35 centimes par kilomètre pour les entrées de gamme. 
 
-Cela dit, rien n'est jamais simple : le train peut impliquer sur certains trajets des détours. C'est le cas de certains trajets longue distance, où le passage par Paris est obligatoire étant donné la forte centralisation en étoile du réseau ferré français. Ce détour n'implique un doublement des km seulement dans certains cas exceptionnels, comme le fameux Bordeaux-Lyon en passant par Paris... 
+Bien sûr, la première évidence c'est que plus on remplit la voiture, plus le coût par personne baisse. Ainsi, même si au niveau nationale en moyenne les voitures sont très peu remplies, chacun a la possibilité d'en diviser le prix par 2, par 3, voir par 5.
 
-Alors, comment expliquer que ces faits n'existent pas dans le débat public ? D'une, comme on l'a dit plus haut, car il est très rare que les automobilistes comptent véritablement le budget  total d'un trajet en voiture. 
+Revenons à la comparaison train / voiture. Rien n'est jamais simple : le train implique sur certains trajets des détours. C'est le cas de certains trajets longue distance, où le passage par Paris est obligatoire étant donné la forte centralisation en étoile du réseau ferré français. Ce détour n'implique un doublement des km seulement dans certains cas exceptionnels, mais quand c'est le cas, par exemple le fameux Bordeaux-Lyon en passant par Paris, la voiture devient très compétitive. À l'inverse, un Paris-Rennes ou Paris-Brest en train fera parcourir moins de kilomètres qu'en voiture : le train est dans le cas de ce trajet très compétitif.
+
+Pour véritablement comparer train et voiture, les chiffres moyens ne sont donc pas convainquants : il faut faire le match trajet par trajet. Les prix de la SNCF ne sont pas facilement accessibles... mais nous y travaillons !
+
 
 ### Mais j'ai déjà ma voiture ! 
 
-De deux, car l'argument "mais j'ai déjà ma voiture" est utilisé pour justifier que les trajets longs ne coûtent que leur coût instantané. D'abord, rappelons qu'il est dans une certaine mesure faux : faire des milliers de km par exemple pour les vacances, ça use évidemment la voiture. 
+Comme nous l'avons vu, quand on compare le prix en moyenne d'une voiture par rapport au train, ce dernier est souvent bien moins cher. Pourtant, ce n'est pas ce qui ressort des débats publics, car les automobilistes ne comptent que très rarement le *cout complet* d'un trajet, alors que le billet SNCF lui inclut tout. 
+
+La raison principale qui conduit à ce décompte partiel, c'est l'argument "mais j'ai déjà ma voiture". D'abord, rappelons qu'il est dans une certaine mesure faux : faire des milliers de km par exemple pour les vacances, ça use évidemment la voiture qui en ressort dégradée. 
 
 Mais surtout, si l'on considère qu'un trajet long coûte O% des frais non instantanés (achat, entretien, équipement, ...), alors les trajets du quotidien prennent 100% de ces frais, ce qui permet de les chiffrer non pas à 35 centimes le kilomètre, mais plutôt 50 centimes. À ce tarif, un aller-retour de 10 km (pour aller au boulot par exemple) coûte 10 €, faisant de la voiture du quotidien plutôt hors de prix...
 
