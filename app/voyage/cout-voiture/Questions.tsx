@@ -7,6 +7,7 @@ import StackedBarChart from '@/components/StackedBarChart'
 import { getFoldedSteps } from '@/components/utils/simulationUtils'
 import { useNextQuestions } from '@/components/utils/useNextQuestion'
 import { formatValue } from 'publicodes'
+import CalculSummary from './CalculSummary'
 
 export default function Questions({
 	rules,
@@ -80,6 +81,7 @@ export default function Questions({
 							},
 						]}
 					/>
+					<CalculSummary engine={engine} horizontal={true} />
 				</details>
 			</div>
 			<Simulation

@@ -70,7 +70,7 @@ trajet voiture . coût instantané:
 
 trajet voiture . coût énergétique:
   formule: voiture . coût instantané au km * distance
-  titre: Coût direct
+  titre: Coût de l'énergie
 
 trajet voiture . prix carburant:
   question: Quel est le prix du carburant ?
@@ -137,7 +137,7 @@ trajet voiture . distance:
   unité: km
 
 trajet voiture . péages:
-  titre: Les péages
+  titre: Péages d'autoroute
   description: |
     Cette variable peut être directement renseignée par notre algorithme de calcul du prix de l'autoroute. Il se base sur le tracé GPS et calcule pour chaque
   formule:
