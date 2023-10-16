@@ -4,7 +4,7 @@ import 'leaflet-defaulticon-compatibility/dist/leaflet-defaulticon-compatibility
 import 'leaflet/dist/leaflet.css'
 import { useEffect, useState } from 'react'
 import { GeoJSON, MapContainer, Marker, TileLayer, useMap } from 'react-leaflet'
-import { CityImageWrapper, MapSizer } from './conversation/VoyageUI'
+import { MapSizer } from './conversation/VoyageUI'
 import { decode } from './valhalla-decode-shape'
 
 const center = [47.033, 2.395]
@@ -64,7 +64,29 @@ const Map = ({ origin, destination, setRealDistance, orthodromic }) => {
 			.then((json) => {
 				console.log('TRIP', json.trip)
 
-				setRealDistance(Math.round(json.trip.summary.length))
+				const distance = Math.round(json.trip.summary.length)
+				console.log('distance', distance)
+				const manoeuvers = json.trip.legs[0].maneuvers,
+					paidHighwaySegments = manoeuvers.filter(
+						(segment) => segment.highway && segment.toll
+					),
+					paidDistance = paidHighwaySegments.reduce(
+						(memo, next) => next.length + memo,
+						0
+					),
+					highwayLengthMap = paidHighwaySegments.map(
+						({ street_names, length }) => [
+							street_names.join(' + '),
+							length + ' km',
+						]
+					)
+
+				console.log({ paidHighwaySegments, paidDistance, highwayLengthMap })
+				const price = paidHighwaySegments.map((segment) =>
+					segment.street_names.find((street) => street)
+				)
+
+				setRealDistance(distance)
 
 				setTrip(json.trip)
 			})
