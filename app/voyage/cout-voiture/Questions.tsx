@@ -54,25 +54,27 @@ export default function Questions({
 					}}
 				/>
 
-				<details>
+				<details open={answeredQuestions.length > 1}>
 					<summary>
 						<DetailedBarChartIcon />
 					</summary>
 					<StackedBarChart
 						engine={engine}
+						percentageFirst={false}
+						precision={0.1}
 						data={[
 							{
-								dottedName: 'voiture . coût instantané au km',
+								dottedName: 'trajet voiture . coût instantané',
 								title: 'Coût instantané',
 								color: '#6a89cc',
 							},
 							{
-								dottedName: 'voiture . coût de possession au km',
+								dottedName: 'trajet voiture . coût de possession',
 								title: 'Coût de possession',
 								color: '#f8c291',
 							},
 							{
-								dottedName: 'voiture . coûts divers au km',
+								dottedName: 'trajet voiture . coûts divers',
 								title: 'Coûts divers',
 								color: '#cf6a87',
 							},

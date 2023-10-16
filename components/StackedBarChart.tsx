@@ -75,15 +75,8 @@ type InnerStackedBarChartProps = {
 export function StackedBarChart({
 	data,
 	precision,
+	percentageFirst = true,
 }: InnerStackedBarChartProps) {
-	const [, displayChart] = useDisplayOnIntersecting({
-		threshold: 0.5,
-	})
-
-	return <InnerStackedBarChart data={data} precision={precision} />
-}
-
-function InnerStackedBarChart({ data, precision }: InnerStackedBarChartProps) {
 	const percentages = roundedPercentages(
 		data.map((d) => (typeof d.value === 'number' && d.value) || 0),
 		precision
@@ -111,15 +104,25 @@ function InnerStackedBarChart({ data, precision }: InnerStackedBarChartProps) {
 					))}
 			</BarStack>
 			<BarStackLegend className="print-background-force">
-				{dataWithPercentage.map(({ key, percentage, color, legend, value }) => (
-					<BarStackLegendItem key={key} title={value}>
-						<SmallCircle style={{ backgroundColor: color }} />
-						{legend}
-						<strong title={value}>
-							{Intl.NumberFormat().format(percentage)} %
-						</strong>
-					</BarStackLegendItem>
-				))}
+				{dataWithPercentage.map(({ key, percentage, color, legend, value }) => {
+					const formatter = (val) =>
+							Intl.NumberFormat('fr-FR', {
+								maximumSignificantDigits: ('' + precision).length - 1,
+							}).format(val),
+						displayValue = formatter(value) + ' €', // TODO to genericize one day, easy
+						displayPercentage = formatter(percentage) + ' %'
+					return (
+						<BarStackLegendItem key={key} title={value}>
+							<SmallCircle style={{ backgroundColor: color }} />
+							{legend}
+							<strong
+								title={percentageFirst ? displayValue : displayPercentage}
+							>
+								{percentageFirst ? displayPercentage : displayValue}
+							</strong>
+						</BarStackLegendItem>
+					)
+				})}
 			</BarStackLegend>
 		</>
 	)
@@ -134,6 +137,7 @@ export default function StackedRulesChart({
 	data,
 	precision = 0.1,
 	engine,
+	percentageFirst,
 }: StackedRulesChartProps) {
 	const targetUnit = useSelector(targetUnitSelector)
 	const evaluatedData = data.map(({ dottedName, title, color }) => {
@@ -148,5 +152,11 @@ export default function StackedRulesChart({
 		}
 	})
 	console.log('EV', evaluatedData)
-	return <StackedBarChart precision={precision} data={evaluatedData} />
+	return (
+		<StackedBarChart
+			precision={precision}
+			data={evaluatedData}
+			percentageFirst={percentageFirst}
+		/>
+	)
 }
