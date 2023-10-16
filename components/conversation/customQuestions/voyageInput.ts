@@ -1,3 +1,5 @@
+// Some questions are handled by the UI, they're custom complex questions that trigger multiple fields and API calls. We need to store theses fields too
+
 export const ferryQuestions = [
 	'transport . ferry . départ',
 	'transport . ferry . arrivée',
@@ -7,6 +9,8 @@ export const voyageQuestions = [
 	'trajet voiture . départ',
 	'trajet voiture . arrivée',
 	'trajet voiture . distance',
+	'trajet voiture . péages . prix calculé',
+	'trajet voiture . péages . calcul GPS',
 ]
 
 export const airportsQuestions = [

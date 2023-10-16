@@ -2,6 +2,7 @@
 import { updateSituation } from '@/actions'
 import RuleInput, { RuleInputProps } from 'Components/conversation/RuleInput'
 import Notifications from 'Components/Notifications'
+import { detectContentType } from 'next/dist/server/image-optimizer'
 import Link from 'next/link'
 import React from 'react'
 import { useDispatch } from 'react-redux'
@@ -37,6 +38,8 @@ const Conversation2 = ({
 	const onChange: RuleInputProps['onChange'] = (value) => {
 		dispatch(updateSituation(currentQuestion, value))
 	}
+	const dispatchUpdateSituation = (dottedName) => (value) =>
+		dispatch(updateSituation(dottedName, value))
 
 	const questionText = mosaicQuestion
 		? mosaicQuestion.question
@@ -95,6 +98,7 @@ const Conversation2 = ({
 						<Aide rules={rules} />
 						<Fieldset>
 							<RuleInput
+								dispatchUpdateSituation={dispatchUpdateSituation}
 								dottedName={currentQuestion}
 								onChange={onChange}
 								query={query}

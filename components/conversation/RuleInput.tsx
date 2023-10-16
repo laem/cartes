@@ -68,7 +68,7 @@ export default function RuleInput<Name extends string = DottedName>({
 	className,
 	engine,
 	noSuggestions = false,
-	updateSituation,
+	dispatchUpdateSituation,
 }: RuleInputProps<Name>) {
 	const rule = engine.getRule(dottedName)
 	const situation = useSelector(situationSelector)
@@ -89,7 +89,6 @@ export default function RuleInput<Name extends string = DottedName>({
 		question: rule.rawNode.question,
 		suggestions: rule.suggestions,
 		required: true,
-		updateSituation,
 	}
 
 	if (isMosaic(rule.dottedName)) {
@@ -150,6 +149,7 @@ export default function RuleInput<Name extends string = DottedName>({
 						toIcon: '🛬',
 						displayImage: 'plane',
 						orthodromic: true,
+						dispatchUpdateSituation,
 					}}
 				/>
 			</Suspense>
@@ -168,6 +168,7 @@ export default function RuleInput<Name extends string = DottedName>({
 						rulesPath: 'transport . ferry',
 						displayImage: 'boat',
 						orthodromic: true,
+						dispatchUpdateSituation,
 					}}
 				/>
 			</Suspense>
@@ -185,6 +186,7 @@ export default function RuleInput<Name extends string = DottedName>({
 						db: 'osm',
 						rulesPath: 'trajet voiture',
 						displayImage: true,
+						dispatchUpdateSituation,
 					}}
 				/>
 			</Suspense>

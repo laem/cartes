@@ -29,7 +29,7 @@ export default function VoyageInput({
 	fromIcon = '',
 	toIcon = '',
 	displayImage = true,
-	updateSituation,
+	dispatchUpdateSituation,
 	orthodromic, // wether to use valhalla to estimate the driving route distance, or not
 }) {
 	const [state, setState] = useState({
@@ -62,16 +62,22 @@ export default function VoyageInput({
 	const validDistance = typeof distance === 'number'
 	useEffect(() => {
 		if (!validDistance) return
-		if (updateSituation) {
-			updateSituation('distance aller . orthodromique')(distance)
+		onChange(distance)
+		if (dispatchUpdateSituation) {
 			if (realHighwayPrice) {
-				updateSituation('trajet voiture . péages . prix calculé')(
+				dispatchUpdateSituation('trajet voiture . péages . prix calculé')(
 					realHighwayPrice
 				)
-				updateSituation('trajet voiture . péages . calcul GPS')('oui')
+				dispatchUpdateSituation('trajet voiture . péages . calcul GPS')('oui')
 			}
-		} else onChange(distance)
-	}, [distance])
+		}
+	}, [
+		distance,
+		onChange,
+		realHighwayPrice,
+		dispatchUpdateSituation,
+		validDistance,
+	])
 
 	const onInputChange = (whichInput) => (e) => {
 		let v = e.target.value
@@ -189,7 +195,7 @@ export default function VoyageInput({
 											setState((state) => ({ ...state, depuis: newData })),
 										onChange,
 										rulesPath,
-										updateSituation,
+										dispatchUpdateSituation,
 									}}
 								/>
 							)}
@@ -260,7 +266,7 @@ export default function VoyageInput({
 										updateState: (newData) =>
 											setState((state) => ({ ...state, vers: newData })),
 										onChange,
-										updateSituation,
+										dispatchUpdateSituation,
 										rulesPath,
 									}}
 								/>

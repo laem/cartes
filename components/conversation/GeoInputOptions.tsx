@@ -14,9 +14,8 @@ export default ({
 	whichInput,
 	data,
 	updateState,
-	onChange,
 	rulesPath,
-	updateSituation,
+	dispatchUpdateSituation,
 }) =>
 	data?.results.length > 0 ? (
 		<ul>
@@ -26,10 +25,9 @@ export default ({
 						whichInput,
 						option,
 						updateState,
-						onChange,
 						rulesPath,
 						data,
-						updateSituation,
+						dispatchUpdateSituation,
 					}}
 				/>
 			))}
@@ -42,8 +40,7 @@ const Option = ({
 	whichInput,
 	option,
 	updateState,
-	onChange,
-	updateSituation,
+	dispatchUpdateSituation,
 	rulesPath,
 	data,
 }) => {
@@ -96,8 +93,8 @@ const Option = ({
 						`'${ville}'`,
 					]
 
-					updateSituation
-						? updateSituation(entry[0])(entry[1])
+					dispatchUpdateSituation
+						? dispatchUpdateSituation(entry[0])(entry[1])
 						: dispatch(updateGlobalSituation(...entry))
 					updateState(newState)
 				}}
