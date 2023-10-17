@@ -71,6 +71,9 @@ const SimulationResults = ({
 						background: var(--color);
 						color: white;
 						font-size: 80%;
+						position: sticky;
+						top: 0px;
+						z-index: 10;
 					`}
 				>
 					{ResultsBlock ? (

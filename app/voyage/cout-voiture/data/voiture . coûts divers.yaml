@@ -36,7 +36,9 @@ voiture . coûts divers . pv:
 
     Bien sûr, le respect du code de la route varie énormément d'une personne à l'autre, à vous d'estimer la votre.
 
-  par défaut: recettes annuelles / parc français
+  par défaut:
+    arrondi: oui
+    valeur: recettes annuelles / parc français
   note: Idéalement, il faudrait trouver le montant moyen payé par français par an.
   unité: €/an
 

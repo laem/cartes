@@ -63,9 +63,7 @@ export default function Input({
 							}}
 							autoComplete="off"
 							{...{
-								[missing ? 'placeholder' : 'value']: missing
-									? Math.round(value)
-									: value ?? '',
+								[missing ? 'placeholder' : 'value']: value ?? '',
 							}}
 						/>
 					</InputStyle>
