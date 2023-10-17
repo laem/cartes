@@ -10,9 +10,9 @@ import { Header } from './UI'
 import Voyage from './Voyage'
 import rules from './data/rules.ts'
 
-const title = `Quel est le vrai coût d'une voiture ?`
+const title = `Quel est le vrai coût d'un trajet en voiture ?`
 const description1 =
-		"Le coût d'un trajet en voiture est souvent réduit à celui du carburant et des péages d'autoroute. Mais alors qui paie l'achat, l'entretien, le parking, l'assurance ?",
+		"Le coût d'un trajet en voiture est souvent réduit à celui du carburant et des péages d'autoroute. Mais alors qui paie l'achat, l'entretien, le parking, l'assurance ? Le coût total d'une voiture est la plupart du temps sous-estimé.",
 	description2 =
 		"On fait le point en quelques clics avec le simulateur de référence du coût d'un trajet en voiture."
 
