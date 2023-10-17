@@ -39,14 +39,14 @@ async function handler(req) {
 
 	const newSituation = {
 		...situation,
-		'trajet voiture . distance': 'voiture . distance totale',
+		'trajet voiture . distance': 'voiture . distance standardisée',
 	}
 	const newEngine = engine.setSituation(newSituation),
 		total = formatValue(newEngine.evaluate(target), {
 			precision: 0,
 			displayedUnit: '€',
 		}),
-		lifeTime = newEngine.evaluate('voiture . durée de vie').nodeValue
+		lifeTime = newEngine.evaluate('voiture . durée standardisée').nodeValue
 	const distance = newEngine.evaluate('trajet voiture . distance').nodeValue
 	const perKm = formatValue(
 		newEngine
