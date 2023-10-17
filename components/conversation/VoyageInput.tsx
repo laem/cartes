@@ -60,6 +60,7 @@ export default function VoyageInput({
 	console.log('distance', realDistance, distance)
 
 	const validDistance = typeof distance === 'number'
+	console.log('OYOIAZDNOAIZND', distance, validDistance, realHighwayPrice)
 	useEffect(() => {
 		if (!validDistance) return
 		onChange(distance)
@@ -193,7 +194,6 @@ export default function VoyageInput({
 										data: state['depuis'],
 										updateState: (newData) =>
 											setState((state) => ({ ...state, depuis: newData })),
-										onChange,
 										rulesPath,
 										dispatchUpdateSituation,
 									}}
@@ -265,7 +265,6 @@ export default function VoyageInput({
 										data: state['vers'],
 										updateState: (newData) =>
 											setState((state) => ({ ...state, vers: newData })),
-										onChange,
 										dispatchUpdateSituation,
 										rulesPath,
 									}}

@@ -50,6 +50,7 @@ const SimulateurContent = ({ objectives, rules, config, searchParams }) => {
 	if (isMainSimulation) {
 		return <IntermediateMessage engine={engine} />
 	}
+	console.log('OYOIAZDNOAIZND', 'rerender SimulateurContent')
 
 	return (
 		<div className="ui__ container">

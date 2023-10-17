@@ -10,17 +10,18 @@ const removeDuplicates = (elements) =>
 		return [...memo, ...(duplicate ? [] : [next])]
 	}, [])
 
-export default ({
+export default function GeoInputOptions({
 	whichInput,
 	data,
 	updateState,
 	rulesPath,
 	dispatchUpdateSituation,
-}) =>
-	data?.results.length > 0 ? (
+}) {
+	return data?.results.length > 0 ? (
 		<ul>
 			{removeDuplicates(data.results.slice(0, 5)).map((option) => (
 				<Option
+					key={option}
 					{...{
 						whichInput,
 						option,
@@ -35,6 +36,7 @@ export default ({
 	) : (
 		<p>Chargement en cours</p>
 	)
+}
 
 const Option = ({
 	whichInput,

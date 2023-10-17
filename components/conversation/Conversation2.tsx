@@ -39,7 +39,7 @@ const Conversation2 = ({
 		dispatch(updateSituation(currentQuestion, value))
 	}
 	const dispatchUpdateSituation = (dottedName) => (value) =>
-		dispatch(updateSituation(dottedName, value))
+		false && dispatch(updateSituation(dottedName, value))
 
 	const questionText = mosaicQuestion
 		? mosaicQuestion.question

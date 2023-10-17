@@ -22,7 +22,7 @@ const VoyageInput = dynamic(
 	() => import('Components/conversation/VoyageInput'),
 
 	{
-		loading: () => <p>Chargement des aéroports...</p>,
+		loading: () => <p>Chargement des cartes...</p>,
 	}
 )
 

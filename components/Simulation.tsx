@@ -7,7 +7,6 @@ import AnswerList from './conversation/AnswerList'
 import Conversation, {
 	ConversationProps,
 } from 'Components/conversation/Conversation'
-//TODO import { syncSearchParams } from './utils/useSearchParamsSimulationSharing'
 
 type SimulationProps = {
 	results?: React.ReactNode
@@ -26,25 +25,29 @@ export default function Simulation({
 	rules,
 	engine,
 }: SimulationProps) {
-	const Animation = animate[animation]
+	//const Animation = animate[animation]
+	console.log('OYOIAZDNOAIZND', 'rerender Simulation')
 	return (
 		<>
 			<AnswerList {...{ engine, searchParams, objectives }} />
 			<SearchButton invisibleButton />
+			{/*
 			<Animation delay={0.3}>
-				{results}
-
-				<Conversation
-					{...{
-						engine,
-						rules,
-						customEnd,
-						customEndMessages,
-						objectives,
-						searchParams,
-					}}
-				/>
+				*/}
+			{results}
+			<Conversation
+				{...{
+					engine,
+					rules,
+					customEnd,
+					customEndMessages,
+					objectives,
+					searchParams,
+				}}
+			/>
+			{/*
 			</Animation>
+			*/}
 		</>
 	)
 }
