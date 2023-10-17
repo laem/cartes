@@ -69,7 +69,8 @@ export const InputStyle = styled.span`
 		width: 100%;
 	}
 
-	input[inputmode='numeric'] {
+	input[inputmode='numeric'],
+	.conversationInput {
 		width: 10rem;
 		text-align: right;
 	}

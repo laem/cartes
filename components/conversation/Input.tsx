@@ -48,6 +48,7 @@ export default function Input({
 
 					<InputStyle>
 						<NumericFormat
+							className="conversationInput"
 							autoFocus={autoFocus}
 							id={id}
 							thousandSeparator={thousandSeparator}
