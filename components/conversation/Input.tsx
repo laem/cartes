@@ -58,7 +58,9 @@ export default function Input({
 							// re-render with a new "value" prop from the outside.
 							onValueChange={({ floatValue }) => {
 								debouncedOnChange(
-									floatValue != undefined ? { valeur: floatValue, unité } : {}
+									floatValue != undefined
+										? { valeur: floatValue, unité }
+										: undefined
 								)
 							}}
 							autoComplete="off"
