@@ -62,7 +62,11 @@ export default function Input({
 								)
 							}}
 							autoComplete="off"
-							{...{ [missing ? 'placeholder' : 'value']: value ?? '' }}
+							{...{
+								[missing ? 'placeholder' : 'value']: missing
+									? Math.round(value)
+									: value ?? '',
+							}}
 						/>
 					</InputStyle>
 					<span className="suffix">&nbsp;{unité}</span>
