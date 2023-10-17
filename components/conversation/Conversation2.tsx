@@ -2,7 +2,6 @@
 import { updateSituation } from '@/actions'
 import RuleInput, { RuleInputProps } from 'Components/conversation/RuleInput'
 import Notifications from 'Components/Notifications'
-import { detectContentType } from 'next/dist/server/image-optimizer'
 import Link from 'next/link'
 import React from 'react'
 import { useDispatch } from 'react-redux'
@@ -36,10 +35,13 @@ const Conversation2 = ({
 	const dispatch = useDispatch()
 
 	const onChange: RuleInputProps['onChange'] = (value) => {
+		console.log('will distach onChange', currentQuestion, value)
 		dispatch(updateSituation(currentQuestion, value))
 	}
-	const dispatchUpdateSituation = (dottedName) => (value) =>
-		false && dispatch(updateSituation(dottedName, value))
+	const dispatchUpdateSituation = (dottedName) => (value) => {
+		console.log('will distach updateSituation', dottedName, value)
+		dispatch(updateSituation(dottedName, value))
+	}
 
 	const questionText = mosaicQuestion
 		? mosaicQuestion.question

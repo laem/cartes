@@ -20,99 +20,47 @@ const SimulateurContent = ({ objectives, rules, config, searchParams }) => {
 
 	const validatedSituation = getSituation(searchParams, rules)
 	const engine = useEngine2(rules, validatedSituation)
-	const isMainSimulation = objective === 'bilan'
-	const evaluation = engine.evaluate(objective),
-		dispatch = useDispatch()
+	const evaluation = engine.evaluate(objective)
 
 	console.log('eval from SimuConten', evaluation.nodeValue)
 
-	useEffect(() => {
-		const handleKeyDown = (e) => {
-			return null
-			if (!(e.ctrlKey && e.key === 'c')) return
-			dispatch(resetSimulation())
-			dispatch(deletePreviousSimulation())
-			e.preventDefault()
-			return false
-		}
-		window.addEventListener('keydown', handleKeyDown)
-		return () => {
-			window.removeEventListener('keydown', handleKeyDown)
-		}
-	}, [])
-
-	const gameOver = evaluation.nodeValue > limit
-
-	const doomColor =
-		evaluation.nodeValue &&
-		getBackgroundColor(evaluation.nodeValue).toHexString()
-
-	if (isMainSimulation) {
-		return <IntermediateMessage engine={engine} />
-	}
 	console.log('OYOIAZDNOAIZND', 'rerender SimulateurContent')
 
 	return (
 		<div className="ui__ container">
-			{isMainSimulation && (
-				<Link href="/">
-					<div
-						css={`
-							display: flex;
-							justify-content: center;
-							height: 10%;
-							svg {
-								height: 4rem;
-							}
-						`}
-					>
-						<FuturecoMonochrome color={doomColor} />
-					</div>
-				</Link>
-			)}
 			<div
 				css={`
 					height: 90%;
-					${isMainSimulation &&
-					`
-					border: 1.4rem solid ${doomColor};
-					`}
 				`}
 			>
-				{!isMainSimulation && (
-					<SimulationResults
-						{...{
-							...rule,
-							...evaluation,
-							engine,
-							rules,
-							searchParams,
-							objectives,
-						}}
-					/>
-				)}
+				<SimulationResults
+					{...{
+						rule,
+						evaluation,
+						engine,
+						rules,
+						searchParams,
+						objectives,
+					}}
+				/>
 
-				{isMainSimulation && gameOver ? (
-					<Navigate to="/fin" />
-				) : (
-					<Simulation
-						{...{
-							rules,
-							engine,
-							objectives,
-							searchParams,
-							customEnd: rule.description ? (
-								<CustomSimulateurEnding
-									rule={rule}
-									dottedName={objectives[0]}
-									engine={engine}
-								/>
-							) : (
-								<EndingCongratulations />
-							),
-						}}
-					/>
-				)}
+				<Simulation
+					{...{
+						rules,
+						engine,
+						objectives,
+						searchParams,
+						customEnd: rule.description ? (
+							<CustomSimulateurEnding
+								rule={rule}
+								dottedName={objectives[0]}
+								engine={engine}
+							/>
+						) : (
+							<EndingCongratulations />
+						),
+					}}
+				/>
 			</div>
 			<div
 				css={`
@@ -147,13 +95,3 @@ export const EndingCongratulations = () => (
 		<Emoji e="🌟" /> Vous avez complété cette simulation
 	</h3>
 )
-
-const Navigate = ({ to }) => {
-	const router = useRouter()
-
-	useEffect(() => {
-		router.push(to)
-	}, [to])
-
-	return null
-}

@@ -25,29 +25,24 @@ export default function Simulation({
 	rules,
 	engine,
 }: SimulationProps) {
-	//const Animation = animate[animation]
-	console.log('OYOIAZDNOAIZND', 'rerender Simulation')
+	const Animation = animate[animation]
 	return (
 		<>
 			<AnswerList {...{ engine, searchParams, objectives }} />
 			<SearchButton invisibleButton />
-			{/*
 			<Animation delay={0.3}>
-				*/}
-			{results}
-			<Conversation
-				{...{
-					engine,
-					rules,
-					customEnd,
-					customEndMessages,
-					objectives,
-					searchParams,
-				}}
-			/>
-			{/*
+				{results}
+				<Conversation
+					{...{
+						engine,
+						rules,
+						customEnd,
+						customEndMessages,
+						objectives,
+						searchParams,
+					}}
+				/>
 			</Animation>
-			*/}
 		</>
 	)
 }

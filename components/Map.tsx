@@ -7,7 +7,6 @@ import { GeoJSON, MapContainer, Marker, TileLayer, useMap } from 'react-leaflet'
 import { MapSizer } from './conversation/VoyageUI'
 import { decode } from './valhalla-decode-shape'
 import prixAutoroutes from 'Components/prixAutoroutes'
-console.log('Dada', prixAutoroutes)
 
 const center = [47.033, 2.395]
 
@@ -70,10 +69,7 @@ const Map = ({
 			.then((res) => res.json())
 
 			.then((json) => {
-				console.log('TRIP', json.trip)
-
 				const distance = Math.round(json.trip.summary.length)
-				console.log('distance', distance)
 				const manoeuvers = json.trip.legs[0].maneuvers,
 					paidHighwaySegments = manoeuvers.filter(
 						(segment) => segment.highway && segment.toll
@@ -93,13 +89,12 @@ const Map = ({
 				const removeSpace = (name) => name.replace(/A\s/g, 'A')
 				const regex = /A\d+N?/g
 
-				console.log({ paidHighwaySegments, paidDistance, highwayLengthMap })
 				const prices = paidHighwaySegments.map((segment) => {
 						const results = segment.street_names.filter((street) =>
 							removeSpace(street).match(regex)
 						)
 						if (results.length > 1) {
-							console.log('Multiple autoroutes found in this segment', segment)
+							console.warn('Multiple autoroutes found in this segment', segment)
 						}
 						if (results.length === 0) return 0
 						// Sometimes some segments have multiple highway names. We don't really what that means or to which distance they apply, so we average their price
@@ -113,7 +108,7 @@ const Map = ({
 							const segmentPrice = prixAutoroutes[removeSpace(result)]
 
 							if (segmentPrice == null) {
-								console.log(segmentHighwayName, segment)
+								console.warn(segmentHighwayName, segment)
 								throw new Error('Segment not found in the price table')
 							}
 							return segmentPrice
@@ -124,7 +119,6 @@ const Map = ({
 						return segmentPrice * segment.length
 					}),
 					price = prices.reduce((memo, next) => memo + next, 0)
-				console.log('Prix', prices, price)
 
 				setRealDistance(distance)
 				setRealHighwayPrice(price)

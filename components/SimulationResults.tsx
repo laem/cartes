@@ -2,16 +2,15 @@ import HumanCarbonImpact, { ProgressCircle } from 'Components/HumanCarbonImpact'
 import Emoji from './Emoji'
 
 const SimulationResults = ({
-	dottedName,
-	formule,
-	title,
-	icônes,
-	nodeValue,
 	engine,
 	ResultsBlock,
 	searchParams,
 	objectives,
+	evaluation,
+	rule,
 }) => {
+	const { dottedName, title, nodeValue } = evaluation
+	const { icônes, formule } = rule
 	return (
 		<div
 			key={dottedName}

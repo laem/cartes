@@ -2,6 +2,7 @@
 import destinationPoint from '@/public/destination-point.svg'
 import invertIcon from '@/public/invertIcon.svg'
 import startPoint from '@/public/start-point.svg'
+import { situationSelector } from '@/selectors/simulationSelectors'
 import Emoji from 'Components/Emoji'
 import Map from 'Components/Map'
 import getCityData, { toThumb } from 'Components/wikidata'
@@ -9,6 +10,7 @@ import { motion } from 'framer-motion'
 import GreatCircle from 'great-circle'
 import Image from 'next/image'
 import { useEffect, useState } from 'react'
+import { useSelector } from 'react-redux'
 import { LightButton } from '../UI'
 import useGeo from '../useGeo'
 import GeoInputOptions from './GeoInputOptions'
@@ -31,6 +33,7 @@ export default function VoyageInput({
 	displayImage = true,
 	dispatchUpdateSituation,
 	orthodromic, // wether to use valhalla to estimate the driving route distance, or not
+	dottedName,
 }) {
 	const [state, setState] = useState({
 		depuis: { inputValue: '', choice: false },
@@ -61,8 +64,12 @@ export default function VoyageInput({
 
 	const validDistance = typeof distance === 'number'
 	console.log('OYOIAZDNOAIZND', distance, validDistance, realHighwayPrice)
+	const situation = useSelector(situationSelector),
+		situationDistance = situation[dottedName]
+	console.log('OYOIAZDNOAIZND', situationDistance)
 	useEffect(() => {
-		if (!validDistance) return
+		// I don't get why we need this check. Without it, this component goes wild in an infinite loop. doesn't happen to other RuleInput comps
+		if (!validDistance || distance === situationDistance) return
 		onChange(distance)
 		if (dispatchUpdateSituation) {
 			if (realHighwayPrice) {
@@ -73,6 +80,7 @@ export default function VoyageInput({
 			}
 		}
 	}, [
+		situationDistance,
 		distance,
 		onChange,
 		realHighwayPrice,
