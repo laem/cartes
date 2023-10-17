@@ -20,7 +20,7 @@ export const useEngine2 = (rules, baseSituation) => {
 				},
 			[baseSituation, userSituation]
 		)
-	console.log('will setSituation changed', userSituation)
+	console.log('will setSituation changed sbs', userSituation)
 	engine.setSituation(situation)
 
 	return engine

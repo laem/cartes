@@ -1,9 +1,12 @@
 'use client'
-import { targetUnitSelector } from '@/selectors/simulationSelectors'
+import {
+	situationSelector,
+	targetUnitSelector,
+} from '@/selectors/simulationSelectors'
 import useDisplayOnIntersecting from 'Components/utils/useDisplayOnIntersecting'
 import Link from 'next/link'
 import { EvaluatedNode } from 'publicodes'
-import React, { useEffect, useState } from 'react'
+import React, { useEffect, useMemo, useState } from 'react'
 import { useSelector } from 'react-redux'
 import {
 	BarItem,
@@ -131,6 +134,9 @@ export function StackedBarChart({
 type StackedRulesChartProps = {
 	data: Array<{ color?: string; dottedName: string; title?: string }>
 	precision?: Precision
+	engine: object
+	situation: object
+	percentageFirst: boolean
 }
 
 export default function StackedRulesChart({
@@ -138,30 +144,22 @@ export default function StackedRulesChart({
 	precision = 0.1,
 	engine,
 	percentageFirst,
-	situation,
 }: StackedRulesChartProps) {
-	console.log('SI', situation)
-	const [ready, setReady] = useState(false)
-	useEffect(() => {
-		setReady(false)
-
-		setTimeout(() => setReady(true), 1000)
-	}, [situation])
 	const targetUnit = useSelector(targetUnitSelector)
-	if (!ready) return null
+	const situation = useSelector(situationSelector)
 	const evaluatedData = data.map(({ dottedName, title, color }) => {
 		const rule = engine.getRule(dottedName)
 
 		return {
 			key: dottedName,
-			value: engine.evaluate({ valeur: dottedName, unité: targetUnit })
-				.nodeValue,
+			value: engine
+				.setSituation(situation)
+				.evaluate({ valeur: dottedName, unité: targetUnit }).nodeValue,
 			legend: <span>{title || rule.title}</span>,
 			color,
 		}
 	})
 
-	console.log('EV', evaluatedData)
 	return (
 		<StackedBarChart
 			precision={precision}
