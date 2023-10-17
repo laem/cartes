@@ -9,10 +9,11 @@ import Explanation from './Explanation.mdx'
 import { Header } from './UI'
 import Voyage from './Voyage'
 import rules from './data/rules.ts'
+import BetaBanner from '@/components/BetaBanner'
 
 const title = `Quel est le vrai coût d'un trajet en voiture ?`
 const description1 =
-		"Le coût d'un trajet en voiture est souvent réduit à celui du carburant et des péages d'autoroute. Mais alors qui paie l'achat, l'entretien, le parking, l'assurance ? Le coût total d'une voiture est la plupart du temps sous-estimé.",
+		"Le coût d'un trajet en voiture est souvent réduit à celui du carburant et des péages d'autoroute. Mais alors qui paie l'achat, l'entretien, le parking, l'assurance ?",
 	description2 =
 		"On fait le point en quelques clics avec le simulateur de référence du coût d'un trajet en voiture."
 
@@ -58,6 +59,7 @@ const Page = ({ searchParams }) => (
 						<>
 							<p>{description1}</p>
 							<p>{description2}</p>
+							<BetaBanner />
 							<Link
 								href={{ pathname: '/voyage', query: { lu: true } }}
 								prefetch={false}
@@ -69,22 +71,6 @@ const Page = ({ searchParams }) => (
 				</Header>
 			</Card>
 		)}
-		<p
-			style={css`
-				text-align: center;
-			`}
-		>
-			Vous utilisez une{' '}
-			<strong
-				style={css`
-					background: purple;
-					padding: 0rem 0.4rem;
-				`}
-			>
-				version beta
-			</strong>{' '}
-			de l'outil.
-		</p>
 		<Voyage searchParams={searchParams} />
 		<Article>
 			<div style={css(`margin-top: 6rem`)}>
