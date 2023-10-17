@@ -8,20 +8,22 @@ const rulesEntries = Object.entries(rules)
 export default function CalculSummary({ engine, horizontal = false }) {
 	return (
 		<CalculSummaryWrapper $horizontal={horizontal}>
-			{rules['trajet voiture . coût trajet'].formule.somme.map((el) => (
-				<li key={el}>
-					<details open={true}>
-						<summary>{el}</summary>
+			<ul>
+				{rules['trajet voiture . coût trajet'].formule.somme.map((el) => (
+					<li key={el}>
+						<details open={true}>
+							<summary>{el}</summary>
 
-						<Sum
-							engine={engine}
-							data={rulesEntries.find(
-								([k, v]) => k.includes(el) && v.formule.somme
-							)}
-						/>
-					</details>
-				</li>
-			))}
+							<Sum
+								engine={engine}
+								data={rulesEntries.find(
+									([k, v]) => k.includes(el) && v.formule.somme
+								)}
+							/>
+						</details>
+					</li>
+				))}
+			</ul>
 		</CalculSummaryWrapper>
 	)
 }

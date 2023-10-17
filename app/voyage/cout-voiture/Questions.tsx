@@ -1,9 +1,12 @@
 'use client'
 import { EndingCongratulations } from '@/app/simulateur/[...dottedName]/SimulateurContent'
+import css from '@/components/css/convertToJs'
 import DetailedBarChartIcon from '@/components/DetailsBarChartIcon'
+import Emoji from '@/components/Emoji'
 import Simulation from '@/components/Simulation'
 import SimulationResults from '@/components/SimulationResults'
 import StackedBarChart from '@/components/StackedBarChart'
+import { LightButton } from '@/components/UI'
 import { getFoldedSteps } from '@/components/utils/simulationUtils'
 import { useNextQuestions } from '@/components/utils/useNextQuestion'
 import { situationSelector } from '@/selectors/simulationSelectors'
@@ -86,7 +89,17 @@ export default function Questions({
 							},
 						]}
 					/>
-					<CalculSummary engine={engine} horizontal={true} />
+					<details
+						style={css`
+							text-align: right;
+							margin-top: 0.4rem;
+						`}
+					>
+						<summary>
+							<Emoji e="➕" /> Voir le détail
+						</summary>
+						<CalculSummary engine={engine} horizontal={true} />
+					</details>
 				</details>
 			</div>
 			<Simulation
