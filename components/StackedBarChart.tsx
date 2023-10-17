@@ -3,7 +3,7 @@ import { targetUnitSelector } from '@/selectors/simulationSelectors'
 import useDisplayOnIntersecting from 'Components/utils/useDisplayOnIntersecting'
 import Link from 'next/link'
 import { EvaluatedNode } from 'publicodes'
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import { useSelector } from 'react-redux'
 import {
 	BarItem,
@@ -138,8 +138,17 @@ export default function StackedRulesChart({
 	precision = 0.1,
 	engine,
 	percentageFirst,
+	situation,
 }: StackedRulesChartProps) {
+	console.log('SI', situation)
+	const [ready, setReady] = useState(false)
+	useEffect(() => {
+		setReady(false)
+
+		setTimeout(() => setReady(true), 1000)
+	}, [situation])
 	const targetUnit = useSelector(targetUnitSelector)
+	if (!ready) return null
 	const evaluatedData = data.map(({ dottedName, title, color }) => {
 		const rule = engine.getRule(dottedName)
 
@@ -151,6 +160,7 @@ export default function StackedRulesChart({
 			color,
 		}
 	})
+
 	console.log('EV', evaluatedData)
 	return (
 		<StackedBarChart

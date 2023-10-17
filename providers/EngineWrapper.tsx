@@ -13,12 +13,14 @@ export const useEngine2 = (rules, baseSituation) => {
 		),
 		userSituation = useSelector(situationSelector),
 		situation = useMemo(
-			() => ({
-				...baseSituation,
-				...userSituation,
-			}),
+			() =>
+				console.log('situation changed', userSituation) || {
+					...baseSituation,
+					...userSituation,
+				},
 			[baseSituation, userSituation]
 		)
+	console.log('will setSituation changed', userSituation)
 	engine.setSituation(situation)
 
 	return engine

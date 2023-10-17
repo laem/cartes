@@ -6,7 +6,9 @@ import SimulationResults from '@/components/SimulationResults'
 import StackedBarChart from '@/components/StackedBarChart'
 import { getFoldedSteps } from '@/components/utils/simulationUtils'
 import { useNextQuestions } from '@/components/utils/useNextQuestion'
+import { situationSelector } from '@/selectors/simulationSelectors'
 import { formatValue } from 'publicodes'
+import { useSelector } from 'react-redux'
 import CalculSummary from './CalculSummary'
 
 export default function Questions({
@@ -20,6 +22,8 @@ export default function Questions({
 	const nextQuestions = useNextQuestions(objectives, engine, searchParams),
 		answeredQuestions = getFoldedSteps(searchParams, rules)
 	const rule = rules[objectives[0]]
+	//just to update the engine object
+	const situation = useSelector(situationSelector)
 
 	const ResultsBlock = () => (
 		<div css="padding: 1.6rem; font-size: 140%">
@@ -63,6 +67,7 @@ export default function Questions({
 					<StackedBarChart
 						engine={engine}
 						percentageFirst={false}
+						situation={situation}
 						precision={0.1}
 						data={[
 							{
