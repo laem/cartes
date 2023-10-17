@@ -60,19 +60,15 @@ export default function VoyageInput({
 
 	const distance = realDistance || computeDistance(state)
 
-	console.log('distance', realDistance, distance)
-
 	const validDistance = typeof distance === 'number'
-	console.log('OYOIAZDNOAIZND', distance, validDistance, realHighwayPrice)
 	const situation = useSelector(situationSelector),
 		situationDistance = situation[dottedName]
-	console.log('OYOIAZDNOAIZND', situationDistance)
 	useEffect(() => {
 		// I don't get why we need this check. Without it, this component goes wild in an infinite loop. doesn't happen to other RuleInput comps
 		if (!validDistance || distance === situationDistance) return
 		onChange(distance)
 		if (dispatchUpdateSituation) {
-			if (realHighwayPrice) {
+			if (realHighwayPrice != null) {
 				dispatchUpdateSituation('trajet voiture . péages . prix calculé')(
 					realHighwayPrice
 				)
@@ -100,7 +96,6 @@ export default function VoyageInput({
 				fetch(`https://photon.komoot.io/api/?q=${v}&limit=6&layer=city&lang=fr`)
 					.then((res) => res.json())
 					.then((json) => {
-						console.log(json)
 						setState((state) => ({
 							...state,
 							[whichInput]: {
@@ -332,7 +327,6 @@ const MapWrapper = ({
 		vers.choice.item.latitude,
 		vers.choice.item.longitude,
 	]
-	console.log('O', origin)
 	return (
 		<Map
 			origin={origin}

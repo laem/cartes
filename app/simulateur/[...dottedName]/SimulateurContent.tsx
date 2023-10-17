@@ -22,10 +22,6 @@ const SimulateurContent = ({ objectives, rules, config, searchParams }) => {
 	const engine = useEngine2(rules, validatedSituation)
 	const evaluation = engine.evaluate(objective)
 
-	console.log('eval from SimuConten', evaluation.nodeValue)
-
-	console.log('OYOIAZDNOAIZND', 'rerender SimulateurContent')
-
 	return (
 		<div className="ui__ container">
 			<div

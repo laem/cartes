@@ -1,7 +1,5 @@
 import data from '@/app/voyage/cout-voiture/prix-autoroutes.csv'
 
-console.log('Dada', data)
-
 const result = data.reduce((memo, next) => {
 	if (
 		memo[next.Autoroute] &&

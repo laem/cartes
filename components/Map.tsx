@@ -70,6 +70,9 @@ const Map = ({
 
 			.then((json) => {
 				const distance = Math.round(json.trip.summary.length)
+
+				setRealDistance(distance)
+				setTrip(json.trip)
 				const manoeuvers = json.trip.legs[0].maneuvers,
 					paidHighwaySegments = manoeuvers.filter(
 						(segment) => segment.highway && segment.toll
@@ -108,8 +111,12 @@ const Map = ({
 							const segmentPrice = prixAutoroutes[removeSpace(result)]
 
 							if (segmentPrice == null) {
-								console.warn(segmentHighwayName, segment)
-								throw new Error('Segment not found in the price table')
+								console.warn(
+									'Segment not found in the price table',
+									result,
+									segment
+								)
+								return 0
 							}
 							return segmentPrice
 						})
@@ -120,10 +127,8 @@ const Map = ({
 					}),
 					price = prices.reduce((memo, next) => memo + next, 0)
 
-				setRealDistance(distance)
+				console.log("Prix de l'autoroute", price, 'pour km ', paidDistance)
 				setRealHighwayPrice(price)
-
-				setTrip(json.trip)
 			})
 	}, [origin, destination])
 	return (

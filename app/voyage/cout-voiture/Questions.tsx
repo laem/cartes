@@ -18,7 +18,6 @@ export default function Questions({
 	evaluation,
 	searchParams,
 }) {
-	console.log('OYOIAZDNOAIZND', 'rerender Questions')
 	const nextQuestions = useNextQuestions(objectives, engine, searchParams),
 		answeredQuestions = getFoldedSteps(searchParams, rules)
 	const rule = rules[objectives[0]]

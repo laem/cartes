@@ -38,9 +38,11 @@ export default function Conversation({
 	const validatedSituation = getSituation(searchParams, rules)
 	const situation = useSelector(situationSelector)
 
+	/*
 	console.log('NEXTQ', nextQuestions)
 	console.log('situation', situation)
 	console.log('validatedSituation', validatedSituation)
+	*/
 	const currentQuestion = nextQuestions[0]
 
 	// Some questions are grouped in an artifical questions, called mosaic questions,  not present in publicodes
@@ -64,7 +66,6 @@ export default function Conversation({
 		? []
 		: [currentQuestion]
 
-	console.log(situation)
 	const newSituation = Object.fromEntries(
 		questionsToSubmit.map((q) => [
 			encodeDottedName(q),
