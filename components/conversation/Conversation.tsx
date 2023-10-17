@@ -82,8 +82,11 @@ export default function Conversation({
 		// answered questions).
 		null
 
+	/*
+		 * TODO désactivés pour l'instant
 	useKeypress('Escape', setDefault, [currentQuestion])
 	useKeypress('Enter', () => submit('enter'), [currentQuestion])
+	*/
 
 	return (
 		<Conversation2
