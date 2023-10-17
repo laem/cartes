@@ -2,7 +2,7 @@ import styled from 'styled-components'
 export const VoyageWrapper = styled.div`
 	margin-top: 0.6rem;
 	display: flex;
-	justify-content: end;
+	justify-content: center;
 	flex-wrap: wrap;
 	width: 100%;
 	@media (min-width: 800px) {
@@ -36,6 +36,7 @@ export const CityImage = styled.img`
 			: ``}
 `
 export const MapSizer = styled.div`
+	margin: 1rem 0;
 	> div {
 		border: 2px solid var(--darkColor);
 		border-radius: 32rem;
