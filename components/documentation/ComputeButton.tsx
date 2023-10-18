@@ -5,7 +5,7 @@ import { formatValue } from 'publicodes'
 import styled from 'styled-components'
 import { Button, Card } from '../UI'
 
-export default function ComputeButton({ dottedName }) {
+export default function ComputeButton({ dottedName, objective }) {
 	const context = usePublicodes()
 	console.log('cont', context)
 	if (!context) return null
@@ -16,7 +16,7 @@ export default function ComputeButton({ dottedName }) {
 			<Wrapper>
 				<h2>Valeur</h2>
 				<Button
-					onClick={() => requestPublicodes('common')}
+					onClick={() => requestPublicodes({ objective })}
 					className="ui__ button cta plain attention"
 				>
 					🧮 Lancer le calcul

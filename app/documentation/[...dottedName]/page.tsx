@@ -38,13 +38,20 @@ export async function generateMetadata(
 	}
 }
 
-const Page = async ({ params: { dottedName: rawDottedName } }: Props) => {
+const Page = async ({
+	params: { dottedName: rawDottedName },
+	searchParams,
+}: Props) => {
 	const dottedName = decodeURIComponent(rawDottedName.join('/'))
 	const decoded = utils.decodeRuleName(dottedName)
 	const rules = await getRulesFromDottedName(dottedName)
 	return (
 		<main>
-			<QuickDocumentationPage dottedName={decoded} rules={rules} />
+			<QuickDocumentationPage
+				dottedName={decoded}
+				rules={rules}
+				searchParams={searchParams}
+			/>
 		</main>
 	)
 }

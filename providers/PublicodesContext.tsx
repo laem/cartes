@@ -22,7 +22,7 @@ export default function PublicodesProvider({ children }) {
 		return
 	}, [request])
 
-	const situation = useSelector(situationSelector)
+	const situation = useSelector(situationSelector(request.objective))
 	const exemple = useSelector((state) => state.exemple),
 		exempleSituation = exemple?.situation || {}
 	const updatedEngine = useMemo(() => {
