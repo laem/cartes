@@ -103,6 +103,7 @@ export default function Conversation({
 				validatedSituation,
 				situation,
 				setDefault,
+				objectives,
 			}}
 		/>
 	)

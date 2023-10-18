@@ -42,44 +42,53 @@ export type Simulation = {
 	messages: Object
 }
 
-function simulation(
-	stateRaw: Simulation | null = {},
-	action: Action
-): Simulation | null {
+function simulation(stateRaw = {}, action: Action) {
 	const state = stateRaw || {}
+	const { objectives } = action
+	const objective = objectives[0], //TODO limiting, should be serialized for multiple objective simulations
+		objectiveSituation = state[objective].situation || {}
+	/*
 	if (action.type === 'SET_MESSAGE_READ') {
 		return {
 			...state,
 			messages: { ...state.messages, [action.message]: true },
 		}
 	}
+	*/
 
 	switch (action.type) {
 		case 'HIDE_NOTIFICATION':
 			return {
 				...state,
-				hiddenNotifications: [...state.hiddenNotifications, action.id],
+				[objective]: {
+					...state[objective],
+					hiddenNotifications: [
+						...state[objective].hiddenNotifications,
+						action.id,
+					],
+				},
 			}
 		case 'RESET_SIMULATION':
 			return {
 				...state,
-				hiddenNotifications: [],
-				situation: state.initialSituation,
-				messages: {},
+				[objective]: {
+					hiddenNotifications: [],
+					situation: {},
+					messages: {},
+				},
 			}
 		case 'UPDATE_SITUATION': {
-			console.log('SALUTOI', action)
-			const situation = state.situation
-			const { fieldName: dottedName, value } = action
+			const { fieldName: dottedName, value, objectives } = action
+			const newSituation =
+				value === undefined
+					? omit([dottedName], objectiveSituation)
+					: {
+							...objectiveSituation,
+							[dottedName]: value,
+					  }
 			return {
 				...state,
-				situation:
-					value === undefined
-						? omit([dottedName], situation)
-						: {
-								...situation,
-								[dottedName]: value,
-						  },
+				[objective]: { situation: newSituation },
 			}
 		}
 	}
@@ -110,11 +119,12 @@ function batchUpdateSituationReducer(state: RootState, action: Action) {
 		return state
 	}
 	return Object.entries(action.situation).reduce<RootState | null>(
-		(newState, [fieldName, value]) => {
+		(newState, [fieldName, value, objectives]) => {
 			return mainReducer(newState ?? undefined, {
 				type: 'UPDATE_SITUATION',
 				fieldName,
 				value,
+				objectives,
 			})
 		},
 		state

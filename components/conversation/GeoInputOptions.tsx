@@ -1,7 +1,6 @@
 'use client'
 import Highlighter from 'react-highlight-words'
 import { useDispatch } from 'react-redux'
-import { updateSituation as updateGlobalSituation } from '@/actions'
 
 const hash = ({ item: { nom, ville, pays } }) => '' + nom + ville + pays
 const removeDuplicates = (elements) =>
@@ -95,9 +94,7 @@ const Option = ({
 						`'${ville}'`,
 					]
 
-					dispatchUpdateSituation
-						? dispatchUpdateSituation(entry[0])(entry[1])
-						: dispatch(updateGlobalSituation(...entry))
+					dispatchUpdateSituation(entry[0])(entry[1])
 					updateState(newState)
 				}}
 			>

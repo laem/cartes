@@ -31,16 +31,17 @@ const Conversation2 = ({
 	validatedSituation,
 	situation,
 	setDefault,
+	objectives,
 }) => {
 	const dispatch = useDispatch()
 
 	const onChange: RuleInputProps['onChange'] = (value) => {
 		console.log('will distach onChange', currentQuestion, value)
-		dispatch(updateSituation(currentQuestion, value))
+		dispatch(updateSituation(currentQuestion, value, objectives))
 	}
 	const dispatchUpdateSituation = (dottedName) => (value) => {
 		console.log('will distach updateSituation', dottedName, value)
-		dispatch(updateSituation(dottedName, value))
+		dispatch(updateSituation(dottedName, value, objectives))
 	}
 
 	const questionText = mosaicQuestion

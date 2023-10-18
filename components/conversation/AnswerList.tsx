@@ -128,7 +128,7 @@ export default function AnswerList({ searchParams, objectives, engine }) {
 							}}
 							prefetch={false}
 							scroll={false}
-							onClick={() => dispatch({ type: 'RESET_SIMULATION' })}
+							onClick={() => dispatch({ type: 'RESET_SIMULATION', objectives })}
 							title="Effacer mes réponses"
 						>
 							<Emoji e="♻️" />
