@@ -22,6 +22,11 @@ export const encodeValue = (value) => {
 	if (typeof value === 'number') return value
 
 	if (value.valeur) return value.valeur //TODO units should be handled, this is dangerous
+	if (value.nodeKind === 'constant' && typeof value.nodeValue === 'number')
+		return value.nodeValue
+
+	console.log('ENCODEVALUE', value)
+	throw new Error('Unhandled value format')
 }
 
 export const encodeSituation = (situation, doEncodeValue = false) =>
