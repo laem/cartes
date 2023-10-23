@@ -141,7 +141,7 @@ const Conversation2 = ({
 						)
 					)}
 				</StepButtons>
-				<Notifications currentQuestion={currentQuestion} engine={engine} />
+				<Notifications {...{ currentQuestion, engine, objectives }} />
 			</div>
 		</section>
 	)

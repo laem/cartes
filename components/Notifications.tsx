@@ -54,9 +54,9 @@ export function getCurrentNotification(
 	return filteredMessages
 }
 
-export default function Notifications({ currentQuestion, engine }) {
+export default function Notifications({ currentQuestion, engine, objectives }) {
 	const hiddenNotifications = useSelector(
-		(state: RootState) => state.simulation?.hiddenNotifications
+		(state: RootState) => state.simulation[objectives[0]]?.hiddenNotifications
 	)
 
 	const dispatch = useDispatch()
@@ -92,6 +92,7 @@ export default function Notifications({ currentQuestion, engine }) {
 													dispatch({
 														type: 'HIDE_NOTIFICATION',
 														id: dottedName,
+														objectives,
 													})
 												}
 											>

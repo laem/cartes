@@ -66,7 +66,7 @@ function simulation(stateRaw = {}, action: Action) {
 				[objective]: {
 					...objectiveSimulation,
 					hiddenNotifications: [
-						...objectiveSimulation.hiddenNotifications,
+						...(objectiveSimulation.hiddenNotifications || []),
 						action.id,
 					],
 				},
