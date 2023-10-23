@@ -79,6 +79,12 @@ export const InputWrapper = styled.div`
 		max-width: 30rem;
 	}
 `
+export const ChoiceText = styled.span`
+	max-width: 10rem;
+	overflow-x: scroll;
+	white-space: nowrap;
+	display: inline-block;
+`
 export const Choice = styled.div`
 	> img {
 		filter: invert(1);

@@ -17,6 +17,7 @@ import GeoInputOptions from './GeoInputOptions'
 import { InputStyle } from './UI'
 import {
 	Choice,
+	ChoiceText,
 	CityImage,
 	ImageWrapper,
 	InputWrapper,
@@ -215,7 +216,7 @@ export default function VoyageInput({
 									}
 								`}
 							>
-								{depuis.choice.item.nom}
+								<ChoiceText>{depuis.choice.item.nom}</ChoiceText>
 								<button
 									type="button"
 									onClick={() => setState({ ...state, depuis: {} })}
@@ -286,7 +287,7 @@ export default function VoyageInput({
 									}
 								`}
 							>
-								{vers.choice.item.nom}
+								<ChoiceText>{vers.choice.item.nom}</ChoiceText>
 								<button
 									type="button"
 									onClick={() => setState({ ...state, vers: {} })}
