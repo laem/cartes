@@ -62,7 +62,13 @@ const CategoryView = ({ exposedRules, rules }) => {
 			{categories.map(([category, rules], i) => (
 				<li key={category}>
 					<h2>{category}</h2>
-					<RuleList {...{ rules }} />
+					<RuleList
+						{...{
+							rules: rules.filter(
+								(rule) => !topElements.includes(rule.dottedName)
+							),
+						}}
+					/>
 				</li>
 			))}
 		</CategoryList>
