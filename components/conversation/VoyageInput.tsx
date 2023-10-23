@@ -34,6 +34,7 @@ export default function VoyageInput({
 	dispatchUpdateSituation,
 	orthodromic, // wether to use valhalla to estimate the driving route distance, or not
 	dottedName,
+	situation,
 }) {
 	const [state, setState] = useState({
 		depuis: { inputValue: '', choice: false },
@@ -61,8 +62,7 @@ export default function VoyageInput({
 	const distance = realDistance || computeDistance(state)
 
 	const validDistance = typeof distance === 'number'
-	const situation = useSelector(situationSelector),
-		situationDistance = situation[dottedName]
+	const situationDistance = situation[dottedName]
 	useEffect(() => {
 		// I don't get why we need this check. Without it, this component goes wild in an infinite loop. doesn't happen to other RuleInput comps
 		if (!validDistance || distance === situationDistance) return

@@ -1,12 +1,7 @@
 'use client'
-import {
-	situationSelector,
-	targetUnitSelector,
-} from '@/selectors/simulationSelectors'
-import useDisplayOnIntersecting from 'Components/utils/useDisplayOnIntersecting'
-import Link from 'next/link'
+import { targetUnitSelector } from '@/selectors/simulationSelectors'
 import { EvaluatedNode } from 'publicodes'
-import React, { useEffect, useMemo, useState } from 'react'
+import React from 'react'
 import { useSelector } from 'react-redux'
 import {
 	BarItem,
@@ -144,9 +139,9 @@ export default function StackedRulesChart({
 	precision = 0.1,
 	engine,
 	percentageFirst,
+	situation,
 }: StackedRulesChartProps) {
 	const targetUnit = useSelector(targetUnitSelector)
-	const situation = useSelector(situationSelector)
 	const evaluatedData = data.map(({ dottedName, title, color }) => {
 		const rule = engine.getRule(dottedName)
 

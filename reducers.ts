@@ -45,8 +45,11 @@ export type Simulation = {
 function simulation(stateRaw = {}, action: Action) {
 	const state = stateRaw || {}
 	const { objectives } = action
+	if (!objectives) return state
 	const objective = objectives[0], //TODO limiting, should be serialized for multiple objective simulations
-		objectiveSituation = state[objective].situation || {}
+		objectiveSimulation = state[objective] || {},
+		objectiveSituation = objectiveSimulation.situation || {}
+	console.log('ACTION', action)
 	/*
 	if (action.type === 'SET_MESSAGE_READ') {
 		return {
@@ -61,9 +64,9 @@ function simulation(stateRaw = {}, action: Action) {
 			return {
 				...state,
 				[objective]: {
-					...state[objective],
+					...objectiveSimulation,
 					hiddenNotifications: [
-						...state[objective].hiddenNotifications,
+						...objectiveSimulation.hiddenNotifications,
 						action.id,
 					],
 				},

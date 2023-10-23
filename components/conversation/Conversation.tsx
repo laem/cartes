@@ -36,7 +36,7 @@ export default function Conversation({
 
 	const nextQuestions = useNextQuestions(objectives, engine, searchParams)
 	const validatedSituation = getSituation(searchParams, rules)
-	const situation = useSelector(situationSelector)
+	const situation = useSelector(situationSelector(objectives[0]))
 
 	/*
 	console.log('NEXTQ', nextQuestions)

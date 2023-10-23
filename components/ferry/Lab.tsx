@@ -19,7 +19,9 @@ const Lab = ({}) => {
 	const ref = useRef(null)
 	const [elements, setElements] = useState([])
 	const [computed, setComputed] = useState(null)
-	const situation = useSelector(situationSelector)
+	const situation = useSelector(
+		situationSelector('transport . ferry . empreinte du voyage')
+	)
 
 	useEffect(() => {
 		console.log('situation', situation)

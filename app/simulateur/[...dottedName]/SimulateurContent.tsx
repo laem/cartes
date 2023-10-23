@@ -1,25 +1,19 @@
 'use client'
-import IntermediateMessage from '@/components/bilan/IntermediateMessage'
 import { getSituation } from '@/components/utils/simulationUtils'
 import { useEngine2 } from '@/providers/EngineWrapper'
 import CustomSimulateurEnding from 'Components/CustomSimulateurEnding'
 import Emoji from 'Components/Emoji'
-import FuturecoMonochrome from 'Components/FuturecoMonochrome'
 import Simulation from 'Components/Simulation'
 import SimulationResults from 'Components/SimulationResults'
-import { getBackgroundColor, limit } from 'Components/testColors'
 import Link from 'next/link'
-import { useRouter } from 'next/router'
 import { utils } from 'publicodes'
-import { useEffect } from 'react'
-import { useDispatch } from 'react-redux'
 
 const SimulateurContent = ({ objectives, rules, config, searchParams }) => {
 	const objective = objectives[0]
 	const rule = rules[objective]
 
 	const validatedSituation = getSituation(searchParams, rules)
-	const engine = useEngine2(rules, validatedSituation)
+	const engine = useEngine2(rules, validatedSituation, objective)
 	const evaluation = engine.evaluate(objective)
 
 	return (

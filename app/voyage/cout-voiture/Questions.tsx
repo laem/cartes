@@ -25,7 +25,9 @@ export default function Questions({
 		answeredQuestions = getFoldedSteps(searchParams, rules)
 	const rule = rules[objectives[0]]
 	//just to update the engine object
-	const situation = useSelector(situationSelector)
+	const situation = useSelector(
+		situationSelector('trajet voiture . distance', 'trajet . voyageurs')
+	)
 
 	const ResultsBlock = () => (
 		<div css="padding: 1.6rem; font-size: 140%">

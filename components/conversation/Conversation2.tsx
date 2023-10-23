@@ -101,11 +101,14 @@ const Conversation2 = ({
 						<Aide rules={rules} />
 						<Fieldset>
 							<RuleInput
-								dispatchUpdateSituation={dispatchUpdateSituation}
-								dottedName={currentQuestion}
-								onChange={onChange}
-								query={query}
-								engine={engine}
+								{...{
+									situation,
+									dispatchUpdateSituation,
+									dottedName: currentQuestion,
+									onChange,
+									query,
+									engine,
+								}}
 							/>
 						</Fieldset>
 					</div>
