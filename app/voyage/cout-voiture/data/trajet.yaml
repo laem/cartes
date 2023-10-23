@@ -139,15 +139,22 @@ trajet voiture . distance:
 trajet voiture . péages:
   titre: Péages d'autoroute
   description: |
-    Cette variable peut être directement renseignée par notre algorithme de calcul du prix de l'autoroute. Il se base sur le tracé GPS et calcule pour chaque
+    Cette variable peut être directement renseignée précisément par notre algorithme de calcul du prix de l'autoroute. Il se base sur le tracé GPS et calcule pour chaque
+
+    Sinon, c'est à l'utilisateur de saisir la part des autoroutes qu'il utilise, et nous en déduisons le coût total sur la base d'une moyenne. Il peut aussi forcer
   formule:
     variations:
-      - si: calcul GPS
+      - si: part autoroute . réduite
+        alors: calcul simpliste
+      - si:
+          est défini: prix calculé . prix 2018
         alors: prix calculé
-      - sinon: distance * péages par km * part autoroute
+      - sinon: calcul simpliste
+
+trajet voiture . péages . calcul simpliste: distance * péages par km * part autoroute
 
 trajet voiture . péages . calcul GPS:
-  question technique: Le calcul du prix de l'autoroute a-t-il été fait par un calculateur d'itinéraire ?
+  question technique: Le calcul du prix de l'autoroute a-t-il été fait précisément par un calculateur d'itinéraire ?
   par défaut: non
 
 trajet voiture . péages . prix calculé:
@@ -156,7 +163,6 @@ trajet voiture . péages . prix calculé:
     Le prix quand il est calculé par un calculateur d'itinéraire qui segmente le trajet en portion d'autoroute et multiplie leur distance par le prix précis de l'autoroute en question.
 
 trajet voiture . péages . prix calculé . prix 2018:
-  par défaut: 0
   description: |
     Le prix est calculé en utilisant les données compilées par Pierre-Olivier Simonard sur [cette étude du prix des autoroutes en 2018](https://public.tableau.com/app/profile/pierre.olivier.simonard/viz/AutoroutesV2/Vuedensemble).
   unité: €
@@ -168,6 +174,11 @@ trajet voiture . péages . prix calculé . inflation depuis 2018:
 
   note: |
     À noter, des réductions pour les voitures électriques viennent compenser cette inflation. À intégrer plus tard, car il s'agit d'une modification de second ordre.
+
+trajet voiture . part autoroute . réduite:
+  titre: Part autoroute réduite
+  question: Contournez-vous les autoroutes payantes ?
+  par défaut: non
 
 trajet voiture . part autoroute:
   question: Quelle part de votre trajet est faite sur autoroute ?

@@ -85,6 +85,14 @@ export const ChoiceText = styled.span`
 	white-space: nowrap;
 	display: inline-block;
 `
+export const ChoiceContent = styled.div`
+	display: flex;
+	align-items: center;
+	text-align: right;
+	img {
+		width: 2rem;
+	}
+`
 export const Choice = styled.div`
 	> img {
 		filter: invert(1);

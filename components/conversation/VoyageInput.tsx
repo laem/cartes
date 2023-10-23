@@ -17,6 +17,7 @@ import GeoInputOptions from './GeoInputOptions'
 import { InputStyle } from './UI'
 import {
 	Choice,
+	ChoiceContent,
 	ChoiceText,
 	CityImage,
 	ImageWrapper,
@@ -208,14 +209,7 @@ export default function VoyageInput({
 					{depuis.choice && (
 						<Choice>
 							<Image src={startPoint} alt="Depuis" />
-							<div
-								css={`
-									text-align: right;
-									img {
-										width: 2rem;
-									}
-								`}
-							>
+							<ChoiceContent>
 								<ChoiceText>{depuis.choice.item.nom}</ChoiceText>
 								<button
 									type="button"
@@ -223,7 +217,7 @@ export default function VoyageInput({
 								>
 									<Emoji e="✏️" title="Modifier la ville de départ" />
 								</button>
-							</div>
+							</ChoiceContent>
 						</Choice>
 					)}
 				</div>
@@ -279,14 +273,7 @@ export default function VoyageInput({
 					{vers.choice && (
 						<Choice>
 							<Image src={destinationPoint} alt="Vers" />
-							<div
-								css={`
-									text-align: right;
-									img {
-										width: 2rem;
-									}
-								`}
-							>
+							<ChoiceContent>
 								<ChoiceText>{vers.choice.item.nom}</ChoiceText>
 								<button
 									type="button"
@@ -294,7 +281,7 @@ export default function VoyageInput({
 								>
 									<Emoji e="✏️" title="Modifier la ville de destination" />
 								</button>
-							</div>
+							</ChoiceContent>
 						</Choice>
 					)}
 				</div>
