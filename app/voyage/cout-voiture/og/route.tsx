@@ -38,7 +38,7 @@ export async function GET(request) {
 			precision: 1,
 			displayedUnit: '',
 		}),
-		unit = value.split(valueWithoutUnit)[1]
+		unit = value.split(valueWithoutUnit)[1].replace(/CO₂/g, 'CO2')
 
 	return new ImageResponse(
 		(
