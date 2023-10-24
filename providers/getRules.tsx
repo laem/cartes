@@ -1,8 +1,9 @@
 import setDefaultsToZero from './setDefaultsToZero'
 import transformRules from './transformRules'
-import { utils } from 'publicodes'
+import voyageRules from '@/app/voyage/cout-voiture/data/rules'
 
-export async function getRules(ruleSet: 'NGC' | 'futureco') {
+export async function getRules(ruleSet: 'NGC' | 'futureco' | 'voyage') {
+	if (ruleSet === 'voyage') return voyageRules
 	const rulesDomain =
 		ruleSet === 'NGC'
 			? 'data.nosgestesclimat.fr/co2-model.FR-lang.fr.json'
@@ -26,7 +27,12 @@ export async function getRules(ruleSet: 'NGC' | 'futureco') {
 }
 
 export async function getRulesFromDottedName(dottedName) {
-	const ruleSet = dottedName === 'bilan' ? 'NGC' : 'futureco'
+	const ruleSet =
+		dottedName === 'bilan'
+			? 'NGC'
+			: dottedName.startsWith('voyage')
+			? 'voyage'
+			: 'futureco'
 	const rules = await getRules(ruleSet)
 	return rules
 }

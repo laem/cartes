@@ -9,20 +9,22 @@ export default function CalculSummary({ engine, horizontal = false }) {
 	return (
 		<CalculSummaryWrapper $horizontal={horizontal}>
 			<ul>
-				{rules['trajet voiture . coût trajet'].formule.somme.map((el) => (
-					<li key={el}>
-						<details open={true}>
-							<summary>{el}</summary>
+				{rules['voyage . trajet voiture . coût trajet'].formule.somme.map(
+					(el) => (
+						<li key={el}>
+							<details open={true}>
+								<summary>{el}</summary>
 
-							<Sum
-								engine={engine}
-								data={rulesEntries.find(
-									([k, v]) => k.includes(el) && v.formule.somme
-								)}
-							/>
-						</details>
-					</li>
-				))}
+								<Sum
+									engine={engine}
+									data={rulesEntries.find(
+										([k, v]) => k.includes(el) && v.formule.somme
+									)}
+								/>
+							</details>
+						</li>
+					)
+				)}
 			</ul>
 		</CalculSummaryWrapper>
 	)

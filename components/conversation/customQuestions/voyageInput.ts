@@ -6,11 +6,11 @@ export const ferryQuestions = [
 	'transport . ferry . distance aller . orthodromique',
 ]
 export const voyageQuestions = [
-	'trajet voiture . départ',
-	'trajet voiture . arrivée',
-	'trajet voiture . distance',
-	'trajet voiture . péages . prix calculé',
-	'trajet voiture . péages . calcul GPS',
+	'voyage . trajet voiture . départ',
+	'voyage . trajet voiture . arrivée',
+	'voyage . trajet voiture . distance',
+	'voyage . trajet voiture . péages . prix calculé',
+	'voyage . trajet voiture . péages . calcul GPS',
 ]
 
 export const airportsQuestions = [

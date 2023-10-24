@@ -12,7 +12,7 @@ const futurecoRules = 'https://futureco-data.netlify.app/co2.json'
 export const runtime = 'edge'
 
 const isVoiture = (dottedName) =>
-	dottedName === 'trajet voiture . coût trajet par personne'
+	dottedName === 'voyage . trajet voiture . coût trajet par personne'
 const getRules = async (dottedName) => {
 	if (isVoiture(dottedName)) return voitureRules
 

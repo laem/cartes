@@ -6,8 +6,8 @@ const getQuestionsConfig = (dottedName) => ({
 	prioritaires:
 		dottedName === 'transport . ferry . empreinte du voyage'
 			? ['transport . ferry . distance aller . orthodromique']
-			: dottedName === 'trajet voiture . coût trajet par personne'
-			? ['trajet voiture . distance', 'trajet . voyageurs']
+			: dottedName === 'voyage . trajet voiture . coût trajet par personne'
+			? ['voyage . trajet voiture . distance', 'trajet . voyageurs']
 			: null,
 })
 export default getQuestionsConfig

@@ -73,17 +73,17 @@ export default function Questions({
 						precision={0.1}
 						data={[
 							{
-								dottedName: 'trajet voiture . coût instantané',
+								dottedName: 'voyage . trajet voiture . coût instantané',
 								title: 'Coût instantané',
 								color: '#6a89cc',
 							},
 							{
-								dottedName: 'trajet voiture . coût de possession',
+								dottedName: 'voyage . trajet voiture . coût de possession',
 								title: 'Coût de possession',
 								color: '#f8c291',
 							},
 							{
-								dottedName: 'trajet voiture . coûts divers',
+								dottedName: 'voyage . trajet voiture . coûts divers',
 								title: 'Coûts divers',
 								color: '#cf6a87',
 							},

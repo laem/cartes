@@ -20,7 +20,7 @@ const CustomSimulateurEnding = ({ dottedName, rule, engine }) => {
 			{dottedName === 'transport . avion . impact' && (
 				<AvionExplanation engine={engine} />
 			)}
-			{dottedName === 'trajet voiture . coût trajet par personne' && (
+			{dottedName === 'voyage . trajet voiture . coût trajet par personne' && (
 				<div>Salut</div>
 			)}
 		</div>

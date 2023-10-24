@@ -196,8 +196,8 @@ const Answer = ({ rule, validatedSituation, objectives }) => {
 			'transport . ferry . départ',
 			'transport . ferry . arrivée',
 
-			'trajet voiture . départ',
-			'trajet voiture . arrivée',
+			'voyage . trajet voiture . départ',
+			'voyage . trajet voiture . arrivée',
 		].includes(rule.dottedName)
 	)
 		return null
@@ -254,7 +254,7 @@ const Answer = ({ rule, validatedSituation, objectives }) => {
 			/>
 		)
 	}
-	if (rule.dottedName === 'trajet voiture . distance') {
+	if (rule.dottedName === 'voyage . trajet voiture . distance') {
 		return (
 			<AnswerComponent
 				{...{
@@ -264,9 +264,9 @@ const Answer = ({ rule, validatedSituation, objectives }) => {
 					ValueComponent: (
 						<span className="answerContent">
 							{`${trimSituationString(
-								validatedSituation['trajet voiture . départ']
+								validatedSituation['voyage . trajet voiture . départ']
 							)} - ${trimSituationString(
-								validatedSituation['trajet voiture . arrivée']
+								validatedSituation['voyage . trajet voiture . arrivée']
 							)} (${formatValue(rule, { language })})`}
 						</span>
 					),

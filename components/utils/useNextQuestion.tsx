@@ -138,7 +138,7 @@ export const useNextQuestions = function (
 	)
 	if (
 		objectives.length === 1 &&
-		objectives[0] === 'trajet voiture . coût trajet par personne'
+		objectives[0] === 'voyage . trajet voiture . coût trajet par personne'
 	) {
 		//This is a new rewrite of the getNextQuestions function, I wonder why we left this simplicity...
 		const allMissingEntries = Object.entries(missingVariables[0]),

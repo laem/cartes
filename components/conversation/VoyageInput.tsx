@@ -71,10 +71,12 @@ export default function VoyageInput({
 		onChange(distance)
 		if (dispatchUpdateSituation) {
 			if (realHighwayPrice != null) {
-				dispatchUpdateSituation('trajet voiture . péages . prix calculé')(
-					realHighwayPrice
-				)
-				dispatchUpdateSituation('trajet voiture . péages . calcul GPS')('oui')
+				dispatchUpdateSituation(
+					'voyage . trajet voiture . péages . prix calculé'
+				)(realHighwayPrice)
+				dispatchUpdateSituation(
+					'voyage . trajet voiture . péages . calcul GPS'
+				)('oui')
 			}
 		}
 	}, [
