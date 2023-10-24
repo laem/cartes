@@ -19,6 +19,7 @@ import { GithubContributionLink } from './GithubContributionLink'
 import { NamespaceRules } from './NamespaceRules'
 import OperationVariables, { isExpressionRule } from './OperationVariables'
 import References from './References'
+import ValueBlock from './ValueBlock'
 
 /*
  * This page can be seen as a rewrite of publicodes-react's DocPage.
@@ -39,6 +40,7 @@ const QuestionRuleSection = ({ title, children }) => (
 
 export default function QuickDocumentationPage({
 	dottedName,
+	engine,
 	rules,
 	pathPrefix = '', //probably useless now that the /documentation path can load different rule bases
 }: {
@@ -114,6 +116,8 @@ export default function QuickDocumentationPage({
 						{rule.description && <Markdown>{rule.description}</Markdown>}
 					</section>
 				)}
+
+				<ValueBlock engine={engine} dottedName={dottedName} />
 				{Object.keys(yamlAttributesToDisplay).length > 0 && (
 					<div>
 						<h2>Comment cette donnée est-elle calculée ?</h2>

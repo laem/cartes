@@ -6,10 +6,11 @@ import {
 	title as ruleTitle,
 } from '@/components/utils/publicodesUtils'
 import { getRulesFromDottedName } from '@/providers/getRules'
-import { utils } from 'publicodes'
+import Publicodes, { utils } from 'publicodes'
 import Link from 'next/link'
 import ExempleHeader from '@/components/documentation/ExempleHeader'
 import Emoji from '@/components/Emoji'
+import { getSituation } from '@/components/utils/simulationUtils'
 
 type Props = {
 	params: { dottedName: string[] }
@@ -52,12 +53,15 @@ const Page = async ({
 	const decoded = utils.decodeRuleName(dottedName)
 	const rules = await getRulesFromDottedName(dottedName)
 	const url = findClosestSimulateurUrl(rules, decoded)
+	const validatedSituation = getSituation(searchParams, rules)
+	const engine = new Publicodes(rules).setSituation(validatedSituation)
 	return (
 		<main>
 			<Back url={url} />
 			<QuickDocumentationPage
 				dottedName={decoded}
 				rules={rules}
+				engine={engine}
 				searchParams={searchParams}
 			/>
 		</main>
