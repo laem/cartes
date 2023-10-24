@@ -1,20 +1,20 @@
 - titre: Dacia Spring
   image: spring.jpg
   situation:
-    voiture . motorisation: "'électrique'"
-    voiture . prix d'achat: 15800
+    voyage . voiture . motorisation: "'électrique'"
+    voyage . voiture . prix d'achat: 15800
 - titre: Renault Clio V
   image: clio-2.jpg
   situation:
-    voiture . motorisation: '"diesel"'
-    voiture . prix d'achat: 18000
+    voyage . voiture . motorisation: '"diesel"'
+    voyage . voiture . prix d'achat: 18000
 - titre: Renault ZOE
   image: zoé.jpg
   situation:
-    voiture . motorisation: '"électrique"'
-    voiture . prix d'achat: 30000
+    voyage . voiture . motorisation: '"électrique"'
+    voyage . voiture . prix d'achat: 30000
 - titre: SUV Peugeot 3008
   image: 3008.jpg
   situation:
-    voiture . motorisation: '"essence"'
-    voiture . prix d'achat: 29000
+    voyage . voiture . motorisation: '"essence"'
+    voyage . voiture . prix d'achat: 29000

@@ -39,25 +39,31 @@ async function handler(req) {
 
 	const newSituation = {
 		...situation,
-		'trajet voiture . distance': 'voiture . distance standardisée',
+		'voyage . trajet voiture . distance':
+			'voyage . voiture . distance standardisée',
 	}
 	const newEngine = engine.setSituation(newSituation),
 		total = formatValue(newEngine.evaluate(target), {
 			precision: 0,
 			displayedUnit: '€',
 		}),
-		lifeTime = newEngine.evaluate('voiture . durée standardisée').nodeValue
-	const distance = newEngine.evaluate('trajet voiture . distance').nodeValue
+		lifeTime = newEngine.evaluate(
+			'voyage . voiture . durée standardisée'
+		).nodeValue
+	const distance = newEngine.evaluate(
+		'voyage . trajet voiture . distance'
+	).nodeValue
 	const perKm = formatValue(
 		newEngine
 			.setSituation({
 				...newSituation,
-				'trajet voiture . distance': 1,
+				'voyage . trajet voiture . distance': 1,
 			})
 			.evaluate(target),
 		{ precision: 2, displayedUnit: '€ / km' }
 	)
-	const isElec = situation['voiture . motorisation']?.includes('électrique')
+	const isElec =
+		situation['voyage . voiture . motorisation']?.includes('électrique')
 
 	return new ImageResponse(
 		(
@@ -78,7 +84,7 @@ async function handler(req) {
 				<img
 					src={
 						(process.env.NEXT_PUBLIC_NODE_ENV === 'development'
-							? 'http://localhost:3000'
+							? 'http://localhost:8080'
 							: 'https://' + process.env.VERCEL_URL) +
 						'/voiture/' +
 						image

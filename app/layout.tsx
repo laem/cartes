@@ -1,9 +1,7 @@
-import './globals.css'
-import StyledComponentsRegistry from '../lib/registry'
-import Nav, { NavFooter } from 'Components/Nav'
-import { Inter } from 'next/font/google'
-import Script from 'next/script'
 import Providers from '@/providers/Providers'
+import Nav, { NavFooter } from 'Components/Nav'
+import StyledComponentsRegistry from '../lib/registry'
+import './globals.css'
 
 /*
 // If loading a variable font, you don't need to specify the font weight
@@ -33,12 +31,6 @@ export default function RootLayout({
 }) {
 	return (
 		<html lang="fr">
-			<Script
-				defer
-				strategy="lazyOnload"
-				data-domain="futur.eco"
-				src="https://plausible.io/js/script.js"
-			/>
 			<body>
 				<StyledComponentsRegistry>
 					<Providers>

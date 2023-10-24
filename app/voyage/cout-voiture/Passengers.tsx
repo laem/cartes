@@ -11,12 +11,14 @@ export default function Passengers({ passengers, setPassengers }) {
 				onClick={() => setPassengers(passengers >= limit ? 1 : passengers + 1)}
 			>
 				{passengers}{' '}
-				{[...Array(passengers).keys()].map(() => (
-					<PersonImage />
+				{[...Array(passengers).keys()].map((i) => (
+					<PersonImage key={i} />
 				))}
 			</PassengersButton>
 		</div>
 	)
 }
 
-export const PersonImage = () => <Image src={personSitting} />
+export const PersonImage = () => (
+	<Image src={personSitting} alt="Une personne assise dans la voiture" />
+)

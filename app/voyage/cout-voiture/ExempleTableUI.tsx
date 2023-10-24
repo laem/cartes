@@ -69,7 +69,7 @@ export const PassengersButton = styled.button`
 	}
 `
 
-export const ExplanationBlock = styled.p`
+export const ExplanationBlock = styled.div`
 	img {
 		width: 3rem;
 		height: auto;
