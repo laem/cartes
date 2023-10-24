@@ -46,7 +46,7 @@ export default function ExempleTable() {
 												.setSituation({
 													...element.situation,
 													...element2.situation,
-													'trajet . voyageurs': passengers,
+													'voyage . trajet . voyageurs': passengers,
 												})
 												.evaluate(objective).nodeValue,
 											{ precision: i === 0 ? 2 : 0 }

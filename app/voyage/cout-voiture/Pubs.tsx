@@ -15,24 +15,25 @@ function Pub({ data }) {
 	const { situation, titre, image } = data
 	const newSituation = {
 		...situation,
-		'trajet voiture . distance': 'voiture . distance totale',
+		'voyage . trajet voiture . distance': 'voyage . voiture . distance totale',
 	}
 	const newEngine = engine.setSituation(newSituation),
 		total = formatValue(newEngine.evaluate(target), {
 			precision: 0,
 			displayedUnit: '€',
 		}),
-		lifeTime = newEngine.evaluate('voiture . durée de vie').nodeValue
+		lifeTime = newEngine.evaluate('voyage . voiture . durée de vie').nodeValue
 	const perKm = formatValue(
 		newEngine
 			.setSituation({
 				...newSituation,
-				'trajet voiture . distance': 1,
+				'voyage . trajet voiture . distance': 1,
 			})
 			.evaluate(target),
 		{ precision: 2, displayedUnit: '€ / km' }
 	)
-	const isElec = situation['voiture . motorisation'].includes('électrique')
+	const isElec =
+		situation['voyage . voiture . motorisation'].includes('électrique')
 
 	return (
 		<div

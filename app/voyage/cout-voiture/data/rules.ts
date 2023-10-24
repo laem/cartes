@@ -7,6 +7,7 @@ import voiture from './voiture.yaml'
 const rules = {
 	//	...train,
 
+	voyage: null,
 	...voiture,
 	...trajet,
 	...possession,
@@ -14,6 +15,10 @@ const rules = {
 }
 
 const prefixedRules = Object.fromEntries(
-	Object.entries(rules).map(([k, v]) => ['voyage . ' + k, v])
+	Object.entries(rules).map(([k, v]) => [
+		k === 'voyage' ? k : 'voyage . ' + k,
+		v,
+	])
 )
+
 export default prefixedRules
