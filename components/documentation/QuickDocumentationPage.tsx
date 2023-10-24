@@ -40,14 +40,16 @@ const QuestionRuleSection = ({ title, children }) => (
 export default function QuickDocumentationPage({
 	dottedName,
 	rules,
-	pathPrefix = '',
-	spotlight = [],
+	pathPrefix = '', //probably useless now that the /documentation path can load different rule bases
 }: {
 	rule: NGCRule
 	dottedName: DottedName
 	setLoadEngine: (value: boolean) => void
 	rules: NGCRules
 }) {
+	const spotlight = rules['voyage']
+		? ['voyage . trajet voiture . coût trajet par personne']
+		: []
 	const rule = rules[dottedName] || {}
 
 	const title = ruleTitle({ ...rule, dottedName })
