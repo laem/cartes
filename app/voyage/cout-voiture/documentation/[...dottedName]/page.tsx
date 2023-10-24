@@ -23,12 +23,3 @@ const Page = async ({ params: { dottedName: rawDottedName } }: Props) => {
 }
 
 export default Page
-
-const Back = () => (
-	<div>
-		<Link href="/voyage/">
-			<Emoji e=" 	⬅" /> Revenir au calculateur
-		</Link>
-		<ExempleHeader />
-	</div>
-)

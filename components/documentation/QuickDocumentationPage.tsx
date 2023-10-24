@@ -9,7 +9,6 @@ import { omit } from 'Components/utils/utils'
 import FriendlyObjectViewer from '../FriendlyObjectViewer'
 import { objectMap } from '../utils/utils'
 import { Breadcrumb } from './Breadcrumb'
-import ComputeButton from './ComputeButton'
 import DocumentationStyle, {
 	QuestionRuleSectionStyle,
 	QuestionStyle,
@@ -113,7 +112,6 @@ export default function QuickDocumentationPage({
 						{rule.description && <Markdown>{rule.description}</Markdown>}
 					</section>
 				)}
-				<ComputeButton dottedName={dottedName} />
 				{Object.keys(yamlAttributesToDisplay).length > 0 && (
 					<div>
 						<h2>Comment cette donnée est-elle calculée ?</h2>
