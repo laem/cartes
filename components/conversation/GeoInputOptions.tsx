@@ -75,6 +75,7 @@ const Option = ({
 					align-items: center;
 					text-align: left;
 					width: 100%;
+					padding: 0;
 				}
 
 				button:hover {

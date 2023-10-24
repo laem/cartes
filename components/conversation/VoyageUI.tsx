@@ -71,12 +71,12 @@ export const InputWrapper = styled.div`
 	ul {
 		border-left: 1px solid #333;
 		max-width: 30em;
-		margin-left: 1rem;
+		margin-left: 0.2rem;
 		padding: 0;
 	}
 	width: 100%;
 	@media (min-width: 800px) {
-		max-width: 30rem;
+		max-width: 20rem;
 	}
 `
 export const ChoiceText = styled.span`
