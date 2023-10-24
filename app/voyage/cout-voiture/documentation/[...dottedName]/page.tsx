@@ -15,7 +15,7 @@ const Page = async ({ params: { dottedName: rawDottedName } }: Props) => {
 				dottedName={decoded}
 				rules={rules}
 				pathPrefix="/voyage/cout-voiture"
-				spotlight={['trajet voiture . coût trajet par personne']}
+				spotlight={['voyage . trajet voiture . coût trajet par personne']}
 				objective="trajet voiture . coût trajet par personne"
 			/>
 		</main>

@@ -7,7 +7,7 @@ import pubs from './pubs.yaml'
 import Markdown from 'markdown-to-jsx'
 
 const engine = new Publicodes(rules)
-const target = 'trajet voiture . coût trajet par personne'
+const target = 'voyage . trajet voiture . coût trajet par personne'
 export default function Pubs() {
 	return pubs.map((data) => <Pub data={data} key={data.titre} />)
 }

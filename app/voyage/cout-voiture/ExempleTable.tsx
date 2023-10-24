@@ -14,7 +14,7 @@ import Emoji from '@/components/Emoji'
 
 export default function ExempleTable() {
 	const engine = new Publicodes(rules),
-		objective = 'trajet voiture . coût trajet par personne'
+		objective = 'voyage . trajet voiture . coût trajet par personne'
 	const distances = exemples.dimensions[0],
 		voiture = exemples.dimensions[1]
 

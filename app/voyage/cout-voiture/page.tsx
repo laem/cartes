@@ -17,7 +17,7 @@ const description1 =
 	description2 =
 		"On fait le point en quelques clics avec le simulateur de référence du coût d'un trajet en voiture."
 
-export const objectives = ['trajet voiture . coût trajet par personne']
+export const objectives = ['voyage . trajet voiture . coût trajet par personne']
 const rule = rules[objectives[0]]
 
 export async function generateMetadata(

@@ -6,7 +6,7 @@ import Questions from './Questions'
 import { getSituation } from '@/components/utils/simulationUtils'
 
 export default function Voyage({ searchParams }) {
-	const objectives = ['trajet voiture . coût trajet par personne']
+	const objectives = ['voyage . trajet voiture . coût trajet par personne']
 
 	const engine = useEngine2(
 		rules,

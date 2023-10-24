@@ -8,7 +8,7 @@ export const config = {
 }
 
 const engine = new Publicodes(rules)
-const target = 'trajet voiture . coût trajet par personne'
+const target = 'voyage . trajet voiture . coût trajet par personne'
 
 async function handler(req) {
 	const { searchParams } = new URL(req.url)
