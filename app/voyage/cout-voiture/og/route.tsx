@@ -5,6 +5,7 @@ import coutRules from '@/app/voyage/cout-voiture/data/rules'
 import css from '@/components/css/convertToJs'
 import BeautifulSituation from '@/components/BeautifulSituation'
 import voitureRules from '../data/rules'
+import { humanWeight } from '@/components/HumanWeight'
 
 const futurecoRules = 'https://futureco-data.netlify.app/co2.json'
 
@@ -19,6 +20,16 @@ const getRules = async (dottedName) => {
 		rules = await rulesRequest.json()
 	return rules
 }
+
+const formatUnit = (rawUnit, nodeValue, formattedValue) => {
+	console.log('|' + rawUnit + '|')
+	if (rawUnit === ' kgCO₂e') {
+		const [v, u] = humanWeight(nodeValue)
+		return [v, u + ' de CO2e']
+	}
+	return [formattedValue, rawUnit]
+}
+
 export async function GET(request) {
 	const { searchParams } = new URL(request.url)
 
@@ -33,12 +44,13 @@ export async function GET(request) {
 	const evaluation = engine
 			.setSituation(validatedSituation)
 			.evaluate(dottedName),
-		value = formatValue(evaluation, { precision: 1 }),
+		rawValue = formatValue(evaluation, { precision: 1 }),
 		valueWithoutUnit = formatValue(evaluation, {
 			precision: 1,
 			displayedUnit: '',
 		}),
-		unit = value.split(valueWithoutUnit)[1].replace(/CO₂/g, 'CO2')
+		rawUnit = rawValue.split(valueWithoutUnit)[1],
+		[value, unit] = formatUnit(rawUnit, evaluation.nodeValue, valueWithoutUnit)
 
 	return new ImageResponse(
 		(
@@ -92,7 +104,7 @@ export async function GET(request) {
 						margin-top: 1rem;
 					`}
 				>
-					<span>{valueWithoutUnit}</span>
+					<span>{value}</span>
 					<small
 						style={css`
 							font-size: 60;
