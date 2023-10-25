@@ -54,7 +54,18 @@ const Page = async ({
 	const rules = await getRulesFromDottedName(dottedName)
 	const url = findClosestSimulateurUrl(rules, decoded)
 	const validatedSituation = getSituation(searchParams, rules)
-	const engine = new Publicodes(rules).setSituation(validatedSituation)
+
+	const exemple = searchParams.docExemple
+	const ruleExemples = rules[decoded].exemples
+	const exempleSituation = exemple
+		? ruleExemples.find(({ titre }) => titre === exemple)?.situation
+		: {}
+	const situationWithExemple = {
+		...validatedSituation,
+		...exempleSituation,
+	}
+	console.log({ situationWithExemple })
+	const engine = new Publicodes(rules).setSituation(situationWithExemple)
 	return (
 		<main>
 			<Back url={url} searchParams={searchParams} />

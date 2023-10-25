@@ -115,3 +115,5 @@ export const difference = (arr1, arr2) => arr1.filter((x) => !arr2.includes(x))
 
 export const objectMap = (obj, fn) =>
 	Object.fromEntries(Object.entries(obj).map(([k, v], i) => [k, fn(v, k, i)]))
+export const objectMapKeys = (obj, fn) =>
+	Object.fromEntries(Object.entries(obj).map(([k, v], i) => [fn(k, v, i), v]))

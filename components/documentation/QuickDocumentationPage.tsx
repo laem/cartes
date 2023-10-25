@@ -139,7 +139,7 @@ export default function QuickDocumentationPage({
 						)}
 					</div>
 				)}
-				<Exemples exemples={rule.exemples} />
+				<Exemples exemples={rule.exemples} searchParams={searchParams} />
 				{isExpressionRule(rule) && (
 					<div>
 						<h2>Explorer le calcul</h2>
