@@ -57,7 +57,7 @@ const Page = async ({
 	const engine = new Publicodes(rules).setSituation(validatedSituation)
 	return (
 		<main>
-			<Back url={url} />
+			<Back url={url} searchParams={searchParams} />
 			<QuickDocumentationPage
 				dottedName={decoded}
 				rules={rules}
@@ -83,10 +83,10 @@ const findClosestSimulateurUrl = (rules, dottedName) => {
 	if (anySimulator) return getEntryURL(anySimulator)
 	return null
 }
-const Back = ({ url }) =>
+const Back = ({ url, searchParams }) =>
 	url && (
 		<div>
-			<Link href={url}>
+			<Link href={{ pathname: url, query: searchParams }}>
 				<Emoji e=" 	⬅" /> Revenir au calculateur
 			</Link>
 			<ExempleHeader />

@@ -90,7 +90,7 @@
 		"emoji-regex": "^10.2.1",
 		"eslint-config-next": "^13.5.3",
 		"eslint-plugin-next": "^0.0.0",
-		"framer-motion": "^10.15.1",
+		"framer-motion": "^10.16.4",
 		"fuse.js": "6.6.2",
 		"great-circle": "^0.2.8",
 		"html-webpack-plugin": "^5.5.0",
