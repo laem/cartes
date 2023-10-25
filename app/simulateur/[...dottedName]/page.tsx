@@ -7,6 +7,7 @@ import Simulateur from './Simulateur'
 import Article from '@/components/Article'
 import convert from '@/components/css/convertToJs'
 import { Markdown } from '@/components/utils/markdown'
+import BaseCarboneReference from '@/components/BaseCarboneReference'
 
 type Props = {
 	params: { dottedName: string[] }
@@ -63,6 +64,7 @@ const Page = async ({
 					<hr />
 					<h2>{title}</h2>
 					<Markdown>{text}</Markdown>
+					<BaseCarboneReference rule={rule} />
 				</div>
 			</Article>
 		</main>

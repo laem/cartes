@@ -1,5 +1,4 @@
 'use client'
-import { EndingCongratulations } from '@/app/simulateur/[...dottedName]/SimulateurContent'
 import css from '@/components/css/convertToJs'
 import DetailedBarChartIcon from '@/components/DetailsBarChartIcon'
 import Emoji from '@/components/Emoji'
@@ -107,7 +106,6 @@ export default function Questions({
 					searchParams,
 					rules,
 					engine,
-					customEnd: <EndingCongratulations />,
 					objectives,
 				}}
 			/>

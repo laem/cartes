@@ -14,16 +14,9 @@ import { isMosaic } from './mosaicQuestions'
 import SimulationEnding from './SimulationEnding'
 import { Fieldset, StepButtons } from './UI'
 
-export type ConversationProps = {
-	customEndMessages?: React.ReactNode
-	customEnd?: React.ReactNode
-}
-
 const Conversation2 = ({
 	query,
 	currentQuestion,
-	customEnd,
-	customEndMessages,
 	previousAnswers,
 	mosaicQuestion,
 	rules,
@@ -49,7 +42,11 @@ const Conversation2 = ({
 		: rules[currentQuestion]?.rawNode?.question
 
 	if (!currentQuestion)
-		return <SimulationEnding {...{ customEnd, customEndMessages }} />
+		return (
+			<SimulationEnding
+				{...{ engine, rule: rules[objectives[0]], objectives }}
+			/>
+		)
 
 	const hasDescription =
 		((mosaicQuestion &&

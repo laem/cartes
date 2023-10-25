@@ -20,14 +20,10 @@ import {
 import { isMosaic } from './mosaicQuestions'
 
 export type ConversationProps = {
-	customEndMessages?: React.ReactNode
-	customEnd?: React.ReactNode
 	rules: object
 }
 
 export default function Conversation({
-	customEndMessages,
-	customEnd,
 	engine,
 	searchParams,
 	objectives,
@@ -94,8 +90,6 @@ export default function Conversation({
 			{...{
 				query,
 				currentQuestion,
-				customEnd,
-				customEndMessages,
 				previousAnswers: [], //TODO
 				mosaicQuestion,
 				rules,

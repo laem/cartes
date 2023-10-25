@@ -40,15 +40,6 @@ const SimulateurContent = ({ objectives, rules, config, searchParams }) => {
 						engine,
 						objectives,
 						searchParams,
-						customEnd: rule.description ? (
-							<CustomSimulateurEnding
-								rule={rule}
-								dottedName={objectives[0]}
-								engine={engine}
-							/>
-						) : (
-							<EndingCongratulations />
-						),
 					}}
 				/>
 			</div>
@@ -84,9 +75,3 @@ const SimulateurContent = ({ objectives, rules, config, searchParams }) => {
 //TODO add metadata https://nextjs.org/docs/app/building-your-application/optimizing/metadata
 //
 export default SimulateurContent
-
-export const EndingCongratulations = () => (
-	<h3>
-		<Emoji e="🌟" /> Vous avez complété cette simulation
-	</h3>
-)

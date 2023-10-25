@@ -17,8 +17,6 @@ type SimulationProps = {
 
 export default function Simulation({
 	results,
-	customEndMessages,
-	customEnd,
 	animation = 'appear',
 	searchParams,
 	objectives,
@@ -36,8 +34,6 @@ export default function Simulation({
 					{...{
 						engine,
 						rules,
-						customEnd,
-						customEndMessages,
 						objectives,
 						searchParams,
 					}}
