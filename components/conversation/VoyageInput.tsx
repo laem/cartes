@@ -2,15 +2,15 @@
 import destinationPoint from '@/public/destination-point.svg'
 import invertIcon from '@/public/invertIcon.svg'
 import startPoint from '@/public/start-point.svg'
-import { situationSelector } from '@/selectors/simulationSelectors'
 import Emoji from 'Components/Emoji'
-import Map from 'Components/Map'
+const Map = dynamic(() => import('Components/Map'), { ssr: false })
+
 import getCityData, { toThumb } from 'Components/wikidata'
 import { motion } from 'framer-motion'
 import GreatCircle from 'great-circle'
+import dynamic from 'next/dynamic'
 import Image from 'next/image'
 import { useEffect, useState } from 'react'
-import { useSelector } from 'react-redux'
 import { LightButton } from '../UI'
 import useGeo from '../useGeo'
 import GeoInputOptions from './GeoInputOptions'

@@ -1,6 +1,5 @@
 'use client'
 
-import { situationSelector } from '@/selectors/simulationSelectors'
 import Input from 'Components/conversation/Input'
 import Question, { Choice } from 'Components/conversation/Question'
 import ToggleSwitch from 'Components/ui/ToggleSwitch'
@@ -8,8 +7,7 @@ import { parentName } from 'Components/utils/publicodesUtils'
 import dynamic from 'next/dynamic'
 import { ASTNode, EvaluatedRule, reduceAST, utils } from 'publicodes'
 import { Evaluation } from 'publicodes/dist/types/AST/types'
-import React, { Suspense, useEffect } from 'react'
-import { useSelector } from 'react-redux'
+import React from 'react'
 import {
 	airportsQuestions,
 	ferryQuestions,
@@ -138,59 +136,53 @@ export default function RuleInput<Name extends string = DottedName>({
 
 	if (airportsQuestions.includes(rule.dottedName)) {
 		return (
-			<Suspense fallback={<div>Chargement des aéroports ...</div>}>
-				<VoyageInput
-					key={dottedName}
-					{...{
-						...commonProps,
-						placeholder: 'Aéroport ou ville ',
-						db: 'airports',
-						rulesPath: 'transport . avion',
-						fromIcon: '🛫',
-						toIcon: '🛬',
-						displayImage: 'plane',
-						orthodromic: true,
-						dispatchUpdateSituation,
-					}}
-				/>
-			</Suspense>
+			<VoyageInput
+				key={dottedName}
+				{...{
+					...commonProps,
+					placeholder: 'Aéroport ou ville ',
+					db: 'airports',
+					rulesPath: 'transport . avion',
+					fromIcon: '🛫',
+					toIcon: '🛬',
+					displayImage: 'plane',
+					orthodromic: true,
+					dispatchUpdateSituation,
+				}}
+			/>
 		)
 	}
 
 	if (ferryQuestions.includes(rule.dottedName)) {
 		return (
-			<Suspense fallback={<div>Chargement du globe ...</div>}>
-				<VoyageInput
-					key={dottedName}
-					{...{
-						...commonProps,
-						placeholder: 'Port ou ville',
-						db: 'osm',
-						rulesPath: 'transport . ferry',
-						displayImage: 'boat',
-						orthodromic: true,
-						dispatchUpdateSituation,
-					}}
-				/>
-			</Suspense>
+			<VoyageInput
+				key={dottedName}
+				{...{
+					...commonProps,
+					placeholder: 'Port ou ville',
+					db: 'osm',
+					rulesPath: 'transport . ferry',
+					displayImage: 'boat',
+					orthodromic: true,
+					dispatchUpdateSituation,
+				}}
+			/>
 		)
 	}
 
 	if (voyageQuestions.includes(rule.dottedName)) {
 		return (
-			<Suspense fallback={<div>Chargement du globe ...</div>}>
-				<VoyageInput
-					key={dottedName}
-					{...{
-						...commonProps,
-						placeholder: 'Ville',
-						db: 'osm',
-						rulesPath: 'trajet voiture',
-						displayImage: true,
-						dispatchUpdateSituation,
-					}}
-				/>
-			</Suspense>
+			<VoyageInput
+				key={dottedName}
+				{...{
+					...commonProps,
+					placeholder: 'Ville',
+					db: 'osm',
+					rulesPath: 'trajet voiture',
+					displayImage: true,
+					dispatchUpdateSituation,
+				}}
+			/>
 		)
 	}
 
