@@ -178,7 +178,7 @@ export default function RuleInput<Name extends string = DottedName>({
 					...commonProps,
 					placeholder: 'Ville',
 					db: 'osm',
-					rulesPath: 'trajet voiture',
+					rulesPath: 'voyage . trajet voiture',
 					displayImage: true,
 					dispatchUpdateSituation,
 				}}

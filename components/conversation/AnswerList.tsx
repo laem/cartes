@@ -174,6 +174,7 @@ function StepsTable({
 			<tbody>
 				{rules.map((rule) => (
 					<Answer
+						key={rule.dottedName}
 						{...{
 							rule,
 							objectives,

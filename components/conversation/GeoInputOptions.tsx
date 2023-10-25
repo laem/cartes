@@ -20,7 +20,7 @@ export default function GeoInputOptions({
 		<ul>
 			{removeDuplicates(data.results.slice(0, 5)).map((option) => (
 				<Option
-					key={option}
+					key={JSON.stringify(option.item)}
 					{...{
 						whichInput,
 						option,
