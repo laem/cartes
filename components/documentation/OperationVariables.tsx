@@ -37,6 +37,7 @@ export default function OperationVariables({
 	rules,
 	dottedName,
 	pathPrefix,
+	searchParams,
 }) {
 	const isExpression = isExpressionRule(rule)
 	if (!isExpression) return null
@@ -49,7 +50,11 @@ export default function OperationVariables({
 			{references.map((el) => (
 				<li key={el}>
 					<Link
-						href={pathPrefix + `/documentation/` + utils.encodeRuleName(el)}
+						href={{
+							pathname:
+								pathPrefix + `/documentation/` + utils.encodeRuleName(el),
+							query: searchParams,
+						}}
 					>
 						{ruleTitle({ dottedName: el, ...rules[el] })}
 					</Link>

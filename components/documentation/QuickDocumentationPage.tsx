@@ -43,6 +43,7 @@ export default function QuickDocumentationPage({
 	engine,
 	rules,
 	pathPrefix = '', //probably useless now that the /documentation path can load different rule bases
+	searchParams,
 }: {
 	rule: NGCRule
 	dottedName: DottedName
@@ -126,12 +127,14 @@ export default function QuickDocumentationPage({
 								data={rule}
 								context={{ dottedName, rules }}
 								pathPrefix={pathPrefix}
+								searchParams={searchParams}
 							/>
 						) : (
 							<FriendlyObjectViewer
 								data={yamlAttributesToDisplay}
 								context={{ dottedName, rules }}
 								pathPrefix={pathPrefix}
+								searchParams={searchParams}
 							/>
 						)}
 					</div>
@@ -143,6 +146,7 @@ export default function QuickDocumentationPage({
 						<OperationVariables
 							{...{ rule, rules, dottedName }}
 							pathPrefix={pathPrefix}
+							searchParams={searchParams}
 						/>
 					</div>
 				)}
@@ -160,7 +164,9 @@ export default function QuickDocumentationPage({
 				)}
 
 				<GithubContributionLink dottedName={dottedName} />
-				<NamespaceRules {...{ rules, dottedName, pathPrefix, spotlight }} />
+				<NamespaceRules
+					{...{ rules, dottedName, pathPrefix, spotlight, searchParams }}
+				/>
 			</DocumentationStyle>
 		</Wrapper>
 	)
