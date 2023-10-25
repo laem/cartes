@@ -12,7 +12,7 @@
   unités:
     - CO2e
 - piscine . empreinte
-- lave-linge . renouveler
+  #- lave-linge . renouveler # Désactivé, car on ne gère plus les [objectives] pour l'instant
 - plaque de cuisson . impact
 - url: /carburants/prix-a-la-pompe
   titre: Prix et origine du carburant à la pompe
