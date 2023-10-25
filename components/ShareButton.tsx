@@ -1,27 +1,64 @@
 'use client'
+import { useSearchParams, usePathname } from 'next/navigation'
 import React, { useRef, useState } from 'react'
 
-export default (props) =>
-	navigator.share ? (
-		<button
-			css={`
-				margin: 0 auto !important;
-			`}
-			title="Cliquez pour partager le lien"
-			onClick={() =>
-				navigator
-					.share(props)
-					.then(() => console.log('Successful share'))
-					.catch((error) => console.log('Error sharing', error))
-			}
-		>
-			<Icon />
-			{props.label && <span>{props.label}</span>}
-			{/* Created by Barracuda from the Noun Project */}
-		</button>
-	) : (
-		<DesktopShareButton {...props} />
+export default function ShareButton({
+	text,
+	url: givenUrl,
+	title,
+	color,
+	label,
+}: {
+	text: string
+	url: string
+	title: string
+	color: string
+	label: string
+}) {
+	const pathname = usePathname(),
+		searchParams = useSearchParams()
+
+	const [withAnswers, setWithAnswers] = useState(true)
+
+	const url =
+		givenUrl ||
+		'https://futur.eco' +
+			pathname +
+			(withAnswers ? '?' + searchParams.toString() : '')
+
+	return (
+		<div>
+			{navigator.share ? (
+				<button
+					css={`
+						margin: 0 auto !important;
+					`}
+					title="Cliquez pour partager le lien"
+					onClick={() => {
+						navigator
+							.share({ text, url, title, color, label })
+							.then(() => console.log('Successful share'))
+							.catch((error) => console.log('Error sharing', error))
+					}}
+				>
+					<Icon />
+					{label && <span>{label}</span>}
+					{/* Created by Barracuda from the Noun Project */}
+				</button>
+			) : (
+				<DesktopShareButton {...{ text, url, title, color, label }} />
+			)}
+			<input
+				type="checkbox"
+				id="withAnswers"
+				name="withAnswers"
+				checked={withAnswers}
+				onChange={() => setWithAnswers(!withAnswers)}
+			/>{' '}
+			<label for="withAnswers">Partager mes données de simulation</label>
+		</div>
 	)
+}
 
 export const DesktopShareButton = (props) => {
 	const [copySuccess, setCopySuccess] = useState(false)
@@ -41,8 +78,7 @@ export const DesktopShareButton = (props) => {
 	return (
 		<div
 			css={`
-				max-width: 800px;
-				margin: 0 auto;
+				margin: 1rem auto;
 			`}
 		>
 			<div
@@ -56,22 +92,25 @@ export const DesktopShareButton = (props) => {
 				<Icon />
 				{props.label && <span>{props.label}</span>}
 			</div>
-			<form css="text-align: center">
+			<form
+				css={`
+					text-align: center;
+					margin: 0 0 1rem;
+				`}
+			>
 				<input
 					css={`
+						vertical-align: middle;
 						box-shadow: inset 0 1px 2px rgba(27, 31, 35, 0.075);
 						border-radius: 0.3rem;
 						border-top-right-radius: 0;
 						border-bottom-right-radius: 0;
-    border: 1px solid var(--color);
-    padding: 0.2rem 0.4rem;
-    width: 60%;
-    margin: 0 0 0.4rem;
-    background: transparent;
-	color: white;
-	height: 1.6rem;
-	
-}
+						border: 1px solid var(--color);
+						padding: 0.2rem 0.4rem;
+						width: 60%;
+						background: transparent;
+						color: white;
+						height: 1.6rem;
 					`}
 					readOnly
 					ref={textAreaRef}
