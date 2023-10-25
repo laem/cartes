@@ -1,9 +1,13 @@
 import AvionExplanation from '../AvionExplanation'
 import Emoji from '../Emoji'
 
-import ShareButton from 'Components/ShareButton'
+const ShareButton = dynamic(() => import('Components/ShareButton'), {
+	ssr: false,
+})
+
 import { title } from '../utils/publicodesUtils'
 import { Suspense } from 'react'
+import dynamic from 'next/dynamic'
 
 const SimulationEnding = ({ rule, engine, objectives }) => {
 	const avion = objectives[0] === 'transport . avion . impact'
@@ -18,9 +22,7 @@ const SimulationEnding = ({ rule, engine, objectives }) => {
 						Vous avez maintenant accès à l'estimation la plus précise possible.
 					</p>
 				)}
-				<Suspense fallback={<span>Chargement du bouton de partage...</span>}>
-					<ShareButton {...{ text: title(rule) }} />
-				</Suspense>
+				<ShareButton {...{ text: title(rule) }} />
 				{avion && <AvionExplanation engine={engine} />}{' '}
 			</>
 		</div>
