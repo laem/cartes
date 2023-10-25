@@ -90,7 +90,7 @@ const findClosestSimulateurUrl = (rules, dottedName) => {
 		v.exposé?.url || '/simulateur/' + utils.encodeRuleName(k)
 
 	if (rootSimulator) return getEntryURL(rootSimulator)
-	const anySimulator = entries.find(([k, v]) => v.exposé)
+	const anySimulator = entries.find(([k, v]) => v && v.exposé)
 	if (anySimulator) return getEntryURL(anySimulator)
 	return null
 }

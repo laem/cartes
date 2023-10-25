@@ -1,20 +1,12 @@
-//import train from './train.yaml'
 import { objectMapKeys } from '@/components/utils/utils'
-import trajet from './trajet.yaml'
-import possession from './voiture . coût de possession.yaml'
-import divers from './voiture . coûts divers.yaml'
-import voiture from './voiture.yaml'
+import data from './rules.yaml'
 
+const prefix = 'carburants'
 const rules = {
-	//	...train,
-
-	voyage: null,
-	...voiture,
-	...trajet,
-	...possession,
-	...divers,
+	[prefix]: null,
+	...data,
 }
-const prefix = 'voyage'
+
 const setPrefix = (dottedName) => `${prefix} . ${dottedName}`
 
 const prefixExemplesSituation = (v) => {

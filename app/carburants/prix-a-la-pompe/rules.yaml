@@ -1,4 +1,7 @@
 prix à la pompe:
+  exposé:
+    titre: Explication du prix à la pompe du carburant en France
+    url: /carburants/prix-a-la-pompe
   formule:
     somme:
       - pétrole brut
