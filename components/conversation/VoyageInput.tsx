@@ -72,7 +72,7 @@ export default function VoyageInput({
 		if (dispatchUpdateSituation) {
 			if (realHighwayPrice != null) {
 				dispatchUpdateSituation(
-					'voyage . trajet voiture . péages . prix calculé'
+					'voyage . trajet voiture . péages . prix calculé . prix 2018'
 				)(realHighwayPrice)
 				dispatchUpdateSituation(
 					'voyage . trajet voiture . péages . calcul GPS'
@@ -142,8 +142,9 @@ export default function VoyageInput({
 							exit={{ opacity: 0, scale: 0.5, transition: { duration: 0.2 } }}
 						>
 							<CityImage
-								thinner={displayImage === 'plane'}
+								$thinner={displayImage === 'plane'}
 								src={versImageURL}
+								alt={`Une photo emblématique de la destination, ${vers.choice.item.nom}`}
 							/>
 						</motion.div>
 					)}

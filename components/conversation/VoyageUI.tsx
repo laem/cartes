@@ -29,7 +29,7 @@ export const CityImage = styled.img`
 	width: calc(6rem + 6vw);
 	height: calc(6rem + 6vw);
 	${(props) =>
-		props.thinner
+		props.$thinner
 			? `
 	height: calc(10rem + 6vw);
 	`

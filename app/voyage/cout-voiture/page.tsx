@@ -61,7 +61,10 @@ const Page = ({ searchParams }) => (
 							<p>{description2}</p>
 							<BetaBanner />
 							<Link
-								href={{ pathname: '/voyage', query: { lu: true } }}
+								href={{
+									pathname: '/voyage',
+									query: { ...searchParams, lu: true },
+								}}
 								prefetch={false}
 							>
 								<LightButton>OK</LightButton>

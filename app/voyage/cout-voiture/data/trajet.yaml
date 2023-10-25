@@ -166,6 +166,7 @@ trajet voiture . péages . prix calculé:
     Le prix quand il est calculé par un calculateur d'itinéraire qui segmente le trajet en portion d'autoroute et multiplie leur distance par le prix précis de l'autoroute en question.
 
 trajet voiture . péages . prix calculé . prix 2018:
+  injecté: oui
   description: |
     Le prix est calculé en utilisant les données compilées par Pierre-Olivier Simonard sur [cette étude du prix des autoroutes en 2018](https://public.tableau.com/app/profile/pierre.olivier.simonard/viz/AutoroutesV2/Vuedensemble).
   unité: €

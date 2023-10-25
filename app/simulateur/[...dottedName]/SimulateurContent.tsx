@@ -68,7 +68,12 @@ const SimulateurContent = ({ objectives, rules, config, searchParams }) => {
 					}
 				`}
 			>
-				<Link href={'/documentation/' + utils.encodeRuleName(objective)}>
+				<Link
+					href={{
+						pathname: '/documentation/' + utils.encodeRuleName(objective),
+						query: searchParams,
+					}}
+				>
 					<Emoji e="⚙️" /> Comprendre le calcul
 				</Link>
 			</div>
