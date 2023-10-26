@@ -4,6 +4,7 @@ import { Evaluation, serializeUnit, Unit } from 'publicodes'
 import { useCallback } from 'react'
 import { useTranslation } from 'react-i18next'
 import { NumericFormat } from 'react-number-format'
+import css from '../css/convertToJs'
 import InputSuggestions from './InputSuggestions'
 import { InputCommonProps } from './RuleInput'
 import { InputStyle } from './UI'
@@ -46,29 +47,35 @@ export default function Input({
 						/>
 					)}
 
-					<InputStyle>
-						<NumericFormat
-							className="conversationInput"
-							autoFocus={autoFocus}
-							id={id}
-							thousandSeparator={thousandSeparator}
-							decimalSeparator={decimalSeparator}
-							// We don't want to call `onValueChange` in case this component is
-							// re-render with a new "value" prop from the outside.
-							onValueChange={({ floatValue }) => {
-								debouncedOnChange(
-									floatValue != undefined
-										? { valeur: floatValue, unité }
-										: undefined
-								)
-							}}
-							autoComplete="off"
-							{...{
-								[missing ? 'placeholder' : 'value']: value ?? '',
-							}}
-						/>
-					</InputStyle>
-					<span className="suffix">&nbsp;{unité}</span>
+					<div
+						style={css`
+							text-align: right;
+						`}
+					>
+						<InputStyle>
+							<NumericFormat
+								className="conversationInput"
+								autoFocus={autoFocus}
+								id={id}
+								thousandSeparator={thousandSeparator}
+								decimalSeparator={decimalSeparator}
+								// We don't want to call `onValueChange` in case this component is
+								// re-render with a new "value" prop from the outside.
+								onValueChange={({ floatValue }) => {
+									debouncedOnChange(
+										floatValue != undefined
+											? { valeur: floatValue, unité }
+											: undefined
+									)
+								}}
+								autoComplete="off"
+								{...{
+									[missing ? 'placeholder' : 'value']: value ?? '',
+								}}
+							/>
+						</InputStyle>
+						<span className="suffix">&nbsp;{unité}</span>
+					</div>
 				</div>
 			</div>
 		</>
