@@ -6,7 +6,7 @@ import { motion } from 'framer-motion'
 import { DottedName } from 'modele-social'
 import Link from 'next/link'
 import { EvaluatedNode, formatValue } from 'publicodes'
-import { useEffect } from 'react'
+import { useEffect, useState } from 'react'
 import { useDispatch } from 'react-redux'
 import {
 	encodeSituation,
@@ -22,6 +22,7 @@ export default function AnswerList({ searchParams, objectives, engine }) {
 	const validatedSituation = getSituation(searchParams, rules)
 	const foldedQuestionNames = getFoldedSteps(searchParams, rules)
 	const answeredQuestionNames = Object.keys(validatedSituation)
+	const [isOpen, setOpen] = useState(false)
 	const foldedQuestions = foldedQuestionNames
 		.map((dottedName) => {
 			const rule = safeGetRule(engine, dottedName)
@@ -76,10 +77,16 @@ export default function AnswerList({ searchParams, objectives, engine }) {
 	const answeredQuestionsLength = foldedStepsToDisplay.length,
 		nextQuestionsLength = nextSteps.length
 
+	console.log('isOpen', isOpen)
 	return (
 		<div className="answer-list">
 			{!!foldedStepsToDisplay.length && (
 				<details
+					open={isOpen}
+					onClick={(event) => {
+						event.preventDefault()
+						setOpen(!isOpen)
+					}}
 					css={`
 						font-size: 120%;
 						margin-bottom: 0.2rem;
@@ -128,7 +135,9 @@ export default function AnswerList({ searchParams, objectives, engine }) {
 							}}
 							prefetch={false}
 							scroll={false}
-							onClick={() => dispatch({ type: 'RESET_SIMULATION', objectives })}
+							onClick={() => {
+								dispatch({ type: 'RESET_SIMULATION', objectives })
+							}}
 							title="Effacer mes réponses"
 						>
 							<Emoji e="♻️" />
@@ -140,6 +149,7 @@ export default function AnswerList({ searchParams, objectives, engine }) {
 								rules: foldedStepsToDisplay,
 								validatedSituation,
 								objectives,
+								setOpen,
 							}}
 						/>
 					</div>
@@ -162,6 +172,7 @@ function StepsTable({
 	rules,
 	validatedSituation,
 	objectives,
+	setOpen,
 }: {
 	rules: Array<EvaluatedNode & { nodeKind: 'rule'; dottedName: DottedName }>
 }) {
@@ -179,6 +190,7 @@ function StepsTable({
 							rule,
 							objectives,
 							validatedSituation,
+							setOpen,
 						}}
 					/>
 				))}
@@ -187,7 +199,7 @@ function StepsTable({
 	)
 }
 
-const Answer = ({ rule, validatedSituation, objectives }) => {
+const Answer = ({ rule, validatedSituation, objectives, setOpen }) => {
 	// Shameless exception, sometimes you've got to do things dirty
 	if (
 		[
@@ -229,6 +241,7 @@ const Answer = ({ rule, validatedSituation, objectives }) => {
 							)} (${formatValue(rule, { language })})`}
 						</span>
 					),
+					setOpen,
 				}}
 			/>
 		)
@@ -251,6 +264,7 @@ const Answer = ({ rule, validatedSituation, objectives }) => {
 							)} (${formatValue(rule, { language })})`}
 						</span>
 					),
+					setOpen,
 				}}
 			/>
 		)
@@ -271,6 +285,7 @@ const Answer = ({ rule, validatedSituation, objectives }) => {
 							)} (${formatValue(rule, { language })})`}
 						</span>
 					),
+					setOpen,
 				}}
 			/>
 		)
@@ -308,6 +323,7 @@ const Answer = ({ rule, validatedSituation, objectives }) => {
 				NameComponent,
 				ValueComponent,
 				queryWithout,
+				setOpen,
 			}}
 		/>
 	)
@@ -318,8 +334,8 @@ const AnswerComponent = ({
 	NameComponent,
 	ValueComponent,
 	queryWithout,
+	setOpen,
 }) => {
-	const dispatch = useDispatch()
 	return (
 		<motion.tr
 			initial={{ opacity: 0, y: -50, scale: 0.3 }}
@@ -337,6 +353,7 @@ const AnswerComponent = ({
 					href={{ query: queryWithout }}
 					prefetch={false}
 					scroll={false}
+					onClick={() => setOpen(false)}
 					css={`
 						display: inline-block;
 						padding: 0.6rem;
