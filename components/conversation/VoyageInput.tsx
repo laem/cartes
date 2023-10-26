@@ -144,7 +144,7 @@ export default function VoyageInput({
 							<CityImage
 								$thinner={displayImage === 'plane'}
 								src={versImageURL}
-								alt={`Une photo emblématique de la destination, ${vers.choice.item.nom}`}
+								alt={`Une photo emblématique de la destination, ${vers.choice?.item?.nom}`}
 							/>
 						</motion.div>
 					)}

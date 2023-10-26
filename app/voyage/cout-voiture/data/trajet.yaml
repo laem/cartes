@@ -27,6 +27,7 @@ trajet voiture . coût trajet par personne:
       - le coût du crédit pour acheter la voiture neuve. Il semblerait d'après le Ministère des Finances que 60 % des automobilistes feraient un prêt de 80 % à 4 ans... À creuser.
       - sûrement bien d'autres coûts plus mineurs qui viennent saler la facture
       - le surcoût qui découle de l'utilisation très faible de la voiture à l'année, qui rentabilise très peu les coûts d'achat au km
+      - le surcoût contextuel à certains départements, par exemple l'obligation des [équipements hivernaux](https://www.securite-routiere.gouv.fr/chacun-son-mode-de-deplacement/dangers-de-la-route-en-voiture/equipement-de-la-voiture/nouveaux) dans 34 départements de montagne. Des roues hiver c'est environ 1000 € à ajouter au prix de la voiture, ou des pneus à faire changer chaque hiver par un garagiste, ou des chaînes moins chères mais peu pratiques. 
 
     Faire une variation du modèle pour une voiture de location.
   formule: coût trajet / trajet . voyageurs
