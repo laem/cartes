@@ -2,6 +2,7 @@
 import css from '@/components/css/convertToJs'
 import DetailedBarChartIcon from '@/components/DetailsBarChartIcon'
 import Emoji from '@/components/Emoji'
+import GraphicDetails from '@/components/GraphicDetails'
 import Simulation from '@/components/Simulation'
 import SimulationResults from '@/components/SimulationResults'
 import StackedBarChart from '@/components/StackedBarChart'
@@ -36,20 +37,18 @@ export default function Questions({
 			</strong>
 		</div>
 	)
+
+	const opacity =
+		(answeredQuestions.length + 2) /
+		(answeredQuestions.length + nextQuestions.length)
 	return (
-		<ul>
+		<>
 			<div
-				css={`
-					margin: 2rem 0.4rem 1rem;
-					opacity: ${(answeredQuestions.length + 2) /
-					(answeredQuestions.length + nextQuestions.length)};
-					summary {
-						list-style-type: none;
-						cursor: pointer;
-					}
-					summary::-webkit-details-marker {
-						display: none;
-					}
+				style={css`
+					opacity: ${opacity};
+					top: -8rem;
+					position: sticky;
+					z-index: 10;
 				`}
 			>
 				<SimulationResults
@@ -63,8 +62,10 @@ export default function Questions({
 						searchParams,
 					}}
 				/>
+			</div>
 
-				<details open={answeredQuestions.length > 1}>
+			<div style={{ opacity }}>
+				<GraphicDetails open={answeredQuestions.length > 1}>
 					<summary>
 						<DetailedBarChartIcon />
 					</summary>
@@ -91,7 +92,7 @@ export default function Questions({
 							},
 						]}
 					/>
-					<details
+					<GraphicDetails
 						style={css`
 							text-align: right;
 							margin-top: 0.4rem;
@@ -101,8 +102,8 @@ export default function Questions({
 							<Emoji e="➕" /> Voir le détail
 						</summary>
 						<CalculSummary engine={engine} horizontal={true} />
-					</details>
-				</details>
+					</GraphicDetails>
+				</GraphicDetails>
 			</div>
 			<Simulation
 				{...{
@@ -112,6 +113,6 @@ export default function Questions({
 					objectives,
 				}}
 			/>
-		</ul>
+		</>
 	)
 }
