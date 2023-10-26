@@ -3,9 +3,19 @@
 trajet:
 
 trajet . voyageurs:
-  question: Combien de voyageurs ?
+  question: Combien de voyageurs profitent du trajet ?
+  description: |
+    C'est évidemment un paramètre clef du calcul, qui est fait par tête. Que ce soit en covoiturage entre amis, en famille, pour amener les enfants au collège ou via une application comme Blablacar, chaque personne en plus réduit le coût par personne du trajet proprtionnellement. 
+
+    À noter : si vous conduisez deux personnes par exemple à un endroit, mais que vous jouez le rôle d'un taxi, répondez 2, pas 3. Vous ne profitez pas du trajet personnellement.
   par défaut: 1
   unité: voyageurs
+  suggestions:
+    1: 1
+    2: 2
+    3: 3
+    4: 4
+    5: 5
 
 trajet voiture:
 

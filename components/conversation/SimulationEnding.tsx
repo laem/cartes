@@ -19,7 +19,7 @@ const SimulationEnding = ({ rule, engine, objectives }) => {
 				</h3>
 				{!avion && (
 					<p>
-						Vous avez maintenant accès à l'estimation la plus précise possible.
+						Vous avez maintenant accès à l'estimation la plus précise possible. Partagez-là ! 
 					</p>
 				)}
 				<ShareButton {...{ text: title(rule) }} />
