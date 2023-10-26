@@ -27,6 +27,7 @@ export default function Simulation({
 	return (
 		<>
 			<SearchButton invisibleButton />
+			<AnswerList {...{ engine, searchParams, objectives }} />
 			<Animation delay={0.3}>
 				{results}
 				<Conversation
@@ -38,7 +39,6 @@ export default function Simulation({
 					}}
 				/>
 			</Animation>
-			<AnswerList {...{ engine, searchParams, objectives }} />
 		</>
 	)
 }
