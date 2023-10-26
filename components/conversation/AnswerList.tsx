@@ -124,7 +124,7 @@ export default function AnswerList({ searchParams, objectives, engine }) {
 					<div>
 						<Link
 							href={{
-								query: { _action: 'reset' },
+								query: { _action: 'reset', lu: true },
 							}}
 							prefetch={false}
 							scroll={false}
