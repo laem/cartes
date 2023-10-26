@@ -26,7 +26,6 @@ export default function Simulation({
 	const Animation = animate[animation]
 	return (
 		<>
-			<AnswerList {...{ engine, searchParams, objectives }} />
 			<SearchButton invisibleButton />
 			<Animation delay={0.3}>
 				{results}
@@ -39,6 +38,7 @@ export default function Simulation({
 					}}
 				/>
 			</Animation>
+			<AnswerList {...{ engine, searchParams, objectives }} />
 		</>
 	)
 }
