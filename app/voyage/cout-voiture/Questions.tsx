@@ -47,6 +47,9 @@ export default function Questions({
 						list-style-type: none;
 						cursor: pointer;
 					}
+					summary::-webkit-details-marker {
+						display: none;
+					}
 				`}
 			>
 				<SimulationResults

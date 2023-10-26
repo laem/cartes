@@ -27,6 +27,10 @@ voiture . coûts divers . parking:
 
     Quand une maison vaut 500 000 € à l'achat, le garage n'est aucunement gratuit. Supposons qu'il coûte 1/5 ème du prix, et que la maison n'est jamais cédée. Cela représente par exemple 100 000 € pour 50 ans, donc 600 000 km, soit 17 centimes par km parcouru. Aïe.
   par défaut: 100 €/an
+  suggestions:
+    Occasionnel: 50 €/an
+    Rennes: 600 €/an
+    Paris: 1500 €/an
 
 voiture . coûts divers . pv:
   titre: PV et amendes
