@@ -36,6 +36,8 @@ voiture . coûts divers . pv:
   titre: PV et amendes
   question: Quel est le coût annuel des contraventions que vous avez du payer ?
   description: |
+    Il s'agit ici de toutes les contraventions qui surviennent : parking, vitesse, ivresse, feu cassé, stop grillé, etc.
+
     Cette question n'est pas évidente, mais elle est néanmoins non négligeable. Pourquoi ? Car les recettes des amendes diverses de circulation [ont atteint 1,8 milliards d'€ en 2022](https://www.ccomptes.fr/system/files/2023-04/NEB-2022-Controle-circulation-et-stationnement-routiers.pdf?page=15), dont 1 milliard pour les seuls radars (excès de vitesse)... ce qui donne 45 € par personnes et par an !
 
     Bien sûr, le respect du code de la route varie énormément d'une personne à l'autre, à vous d'estimer la votre.
@@ -45,6 +47,9 @@ voiture . coûts divers . pv:
     valeur: recettes annuelles / parc français
   note: Idéalement, il faudrait trouver le montant moyen payé par français par an.
   unité: €/an
+  suggestions:
+    👼 conducteur idéal: 0 €/an
+    ☠️  chauffard: 200 €/an
 
 voiture . parc français:
   formule: 38.7 millions
