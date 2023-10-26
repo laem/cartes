@@ -27,11 +27,12 @@ export default function Questions({
 	//just to update the engine object
 	const situation = useSelector(situationSelector(objectives[0]))
 
+	const voyageurs = searchParams['voyage.trajet.voyageurs']
 	const ResultsBlock = () => (
 		<div css="padding: 1.6rem; font-size: 140%">
 			<strong>
 				{formatValue(evaluation, {
-					displayedUnit: '€ / personne',
+					displayedUnit: voyageurs && voyageurs > 1 ? '€ / personne' : '€',
 					precision: 0,
 				})}
 			</strong>
