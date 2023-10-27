@@ -98,7 +98,6 @@ export const Choice = styled.div`
 		filter: invert(1);
 		width: 3rem;
 		height: auto;
-		margin-bottom: 0.2rem;
 	}
 	font-size: 120%;
 	display: flex;
