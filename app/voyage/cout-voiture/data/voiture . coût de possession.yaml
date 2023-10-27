@@ -38,7 +38,7 @@ voiture . occasion:
   question: Avez-vous acheté votre voiture d'occasion ?
   par défaut: non
   description: |
-    L'achat d'occasion d'une voiture est très courant, car il est onéreux et leur durée de vie est longue, 20 ans en moyenne. 
+    L'achat d'occasion d'une voiture est très courant, car un achat neuf est onéreux et leur durée de vie est longue, 20 ans en moyenne. 
 
     L'occasion permet de diminuer fortement le prix d'achat. Cela dit, au fur et à mesure que le prix neuf explose, atteignant 33 000 € en moyenne en 2023, les prix de l'occasion suivent mécaniquement la tendance. 
 

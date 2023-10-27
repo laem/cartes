@@ -158,8 +158,10 @@ trajet voiture . péages:
     Sinon, c'est à l'utilisateur de saisir la part des autoroutes qu'il utilise, et nous en déduisons le coût total sur la base d'une moyenne. Il peut aussi forcer
   formule:
     variations:
+      - si: prix calculé . prix 2018 = 0
+        alors: 0
       - si: part autoroute . réduite
-        alors: calcul simpliste
+        alors: 0
       - si:
           est défini: prix calculé . prix 2018
         alors: prix calculé
