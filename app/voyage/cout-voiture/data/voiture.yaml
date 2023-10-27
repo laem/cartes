@@ -203,6 +203,12 @@ voiture . km annuels . par défaut:
 voiture . ratio d'usage:
   description: À quel point votre usage en km s'éloigne de la moyenne française.
   formule: km annuels / km annuels . par défaut
+voiture . problème km annuels:
+  type: notification
+  sévérité: avertissement
+  formule: km annuels < (trajet voiture . distance * 2)
+  description: |
+    Vos km annuels ne peuvent pas être inférieurs à la distance du trajet que vous simulez ici.
 voiture . km annuels:
   titre: Kilomètres annuels
   question: Combien de kilomètres environ faites-vous à l'année ?
