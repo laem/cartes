@@ -51,18 +51,27 @@ voiture . occasion . année de fabrication:
     2010: 2010
     2015: 2015
     2019: 2019
-  par défaut: 2015
+  par défaut: 2018
   description: |
     Chaque année d'âge d'une voiture en diminue le prix, avec une forte décôte les premières années. 
 
     En parallèle, chaque année d'âge en diminue la durée de vie, en lien également avec son utilisation et son entretien. Nous prenons ce paramètre essentiel en compte pour estimer sa durée de vie restante et donc son prix d'achat amorti.
+  note: |
+    La valeur par moyenne ne nous est pas connue à ce stade. Nous prenons 2018 pour refleter le fait que beaucoup d'achats d'occasion sont des achats d'optimisation : j'achète du presque neuf après la décôte initiale importante.
 
 voiture . prix d'achat occasion:
   question: Quel est le prix d'achat d'occasion de la voiture ?
+  par défaut: 15000 €
+  description: |
+    Les prix de l'occasion ont explosé dans les années 2020. Le [prix médian atteint 22 000](https://www.lefigaro.fr/conjoncture/les-prix-des-vehicules-d-occasion-ont-flambe-de-43-7-depuis-2020-20230125) en 2022.
+
+    La [côte Argus a du être changée](https://www.largus.fr/pros/actualite-automobile/occasion-la-cote-argus-r-evolue-pour-s-adapter-a-l-inflation-du-prix-des-voitures-30024370.html), ce qui n'était pas arrivé depuis 1930. 
+
+    Dans les suggestions, nous donnons cependant des prix plus bas pour prendre en compte que l'achat a été fait il y a plusieurs années.
   suggestions:
-    faible: 5000 €
-    moyen: 15000 €
-    élevé: 20000 €
+    très faible: 5000 €
+    médian: 15000 €
+    élevé: 25000 €
 voiture . prix d'achat:
   formule:
     variations:
