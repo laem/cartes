@@ -79,7 +79,7 @@ export default function Questions({
 							{
 								dottedName: 'voyage . trajet voiture . coût instantané',
 								title: 'Coût instantané',
-								color: '#6a89cc',
+								color: 'rgb(163, 146, 199)',
 							},
 							{
 								dottedName: 'voyage . trajet voiture . coût de possession',
