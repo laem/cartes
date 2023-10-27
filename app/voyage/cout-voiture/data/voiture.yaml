@@ -5,6 +5,8 @@ voiture . coûts au km:
   description: |
     Le coût d'un mode de transport est souvent estimé au km.
 
+    Une fois calculé pour une voiture, il permet d'avoir le coût du trajet en un clin d'oeil. Par exemple pour une trajet de 100 km, on peut rapidement savoir qu'il coûte entre 30 € et 50 €.
+
   note: |
     [Cette page de WWF](https://www.wwf.fr/agir-au-quotidien/le-prix-de-revient-au-kilometre-dun-vehicule-quest-ce-que-cest) cite des coûts bien plus élevés que ceux calculés ici. Malheureusement, ils n'ont mis en lien aucune source, rendant leurs chiffres inutiles.
 
@@ -190,22 +192,27 @@ voiture . durée de vie:
       - sinon: 19
   unité: an
 
-voiture . km annuels:
-  titre: Kilomètres annuels
-  formule: 12223 km/an
+voiture . km annuels . par défaut:
+  valeur: 12223 km/an
   description: |
     En 2019, d'après le [SDES](<https://www.statistiques.developpement-durable.gouv.fr/sites/default/files/2021-12/08_partie_g_bilan_circulation_2020_0.pdf>), une voiture particulière française a parcouru ce nombre de km en moyenne.
 
     À noter, les diesel en ont parcouru 14 392 et les essences 8 920. Cependant, il faudrait que nous ayons des données sur la durée de vie à la casse différenciées par motorisation pour pouvoir faire la distinction.
 
     Les données existent pour 2020, mais nous privilégions celles de 2019, vu l'impact temporaire des confinements sur les déplacements. Le nombre de km avait baissé de 17 % en 2020.
+voiture . ratio d'usage:
+  description: À quel point votre usage en km s'éloigne de la moyenne française.
+  formule: km annuels / km annuels . par défaut
+voiture . km annuels:
+  titre: Kilomètres annuels
+  question: Combien de kilomètres environ faites-vous à l'année ?
+  par défaut: par défaut
   note: |
+    Cette question est importante : quand on possède une voiture, on a des frais fixes, en premier lieu l'achat de la voiture. Plus on fait de km, plus cela fait baisser le prix d'achat au km. Si vous faites un nombre de km bien plus bas que la moyenne, votre coût au km augmente fortement, car vous amortissez beaucoup moins un nombre important de frais fixes... jusqu'à ce que la location de voiture devienne rentable, pour supprimer ces frais fixes. 
 
-    Cette question est importante : quand on possède une voiture, on a des frais fixes, en premier lieu l'achat de la voiture. Plus on fait de km, plus cela fait baisser le prix d'achat au km. Si vous faites un nombre de km éloigné de la moyenne. Cela dit, plus on fait de km, plus on use la voiture, par exemple le moteur et donc plus on "consomme" le prix d'achat et accélère la mise à la casse, ou plus on augmente les frais d'entretien (par exemple, les pneus). 
+    Cela dit, plus on fait de km, plus on use la voiture, par exemple le moteur et donc plus on "consomme" le prix d'achat et accélère la mise à la casse, ou plus on augmente les frais d'entretien (par exemple, les pneus). Nous prenons pour l'instant en compte cet effet d'usure augmentée via un ratio au niveau de l'entretien du véhicule.
 
-    Dans un premier temps, nous n'avons donc pas pris en compte ce paramètre, pour rester sur les chiffres français moyens. 
-
-    Ainsi, **pour les gens qui n'utilisent que très peu leur voiture (< 5000 km par an), le coût calculé est probablement très sous-estimé**.
+    Il peut être compliqué de répondre si chaque année, votre usage de la voiture change radicalement. Entrez alors une valeur moyenne approximative. 
 
     ### Voitures de location
 

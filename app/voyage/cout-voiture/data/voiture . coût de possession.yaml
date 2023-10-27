@@ -137,12 +137,15 @@ voiture . coût de possession . lavage:
     Faut de trouver des prix moyens de lavage, la prestation en soi étant très variable, nous prenons simplement un forfait minorant de 10€. 
 
     Le lavage à domicile est également compté à ce prix minorant, car il consomme beaucoup d'eau, de produits souvent dédiés et... de temps.
-  formule: 6 * 10
+
+    Nous considérons que moins une voiture est utilisée en km à l'année, moins elle est lavée.
+  formule: 6 * 10 * ratio d'usage
   unité: € / an
 
 voiture . coût de possession . assurance:
   question: Quel est le coût annuel de l'assurance ?
-  note: Aide à la saisie mensuelle ?
+  note: |
+    Certains contrats offrent probablement des prix plus bas pour les petits rouleurs. La valeur moyenne pourrait donc être proratisée. Libre à chacun de renseigner son prix précis en attendant.
   description: |
     Le prix moyen et les suggestions de prix d'assurance voiture sont listés ici https://selectra.info/assurance/assurance-auto/tarif.
   par défaut: 610 €/an
@@ -171,6 +174,21 @@ voiture . coût de possession . entretien thermique:
     gros rouleur: 1700 €
 
 voiture . coût de possession . entretien:
+  description: |
+    Nous considérons pour l'instant que l'entretien est proportionnel à l'usage de la voiture(composante linéaire), mais avec une certaine charge fixe qui n'en dépend pas.
+
+    La composante linéaire est parfaitement compréhensible pour toute une liste de consommables : moins on roule, moins on vidange, moins on use les pneus, les freins, la batterie (qui devient très importante pour l'électrique, son usure dépendant du nombre de cycles de charge), les essuie-glace, moins on risque des dommages à la carosserie, moins on consomme d'huiles, etc.
+
+    À l'inverse, une autre liste de postes d'entretien sont fixes : quel que soit le nombre de kilomètres à l'année, on doit faire le contrôle technique par exemple.
+
+    On entend souvent qu'un moteur thermique a besoin de rouler pour ne pas risquer la panne : nous devrons dans une seconde version confirmer cet aspect avec des études qualifiées.
+
+    Dans un premier temps, au vu de l'[impressionnante liste de postes d'entretien qui dépendent directement des km roulés](https://www.entretien-auto.com/dossiers-thematiques/cout-entretien), nous estimons ce "entretien plancher" au quart de l'entretien pour une voiture moyenne. La décomposaition des postes d'entretien nous aidera par la suite à préciser cette somme.
+
+  formule:
+    valeur: ratio d'usage * entretien moyen
+    plancher: entretien moyen / 4
+voiture . coût de possession . entretien moyen:
   unité: €/an
   formule:
     variations:
