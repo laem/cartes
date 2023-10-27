@@ -18,11 +18,11 @@ voiture . coût de possession:
         voiture . coût de possession . assurance: 850 €
 
 voiture . carte grise:
-  formule: immatriculation / durée de vie
+  formule: immatriculation / durée de vie . relative
   description: |
     On ne peut rouler en France sans certificat d'immatriculation, aussi appelé carte grise. Son prix varie selon de nombreux paramètres (puissance fiscale, motorisation, département, etc).
-  note: |
-    Nous divisons le prix par la durée de vie, ce qui est probablement très optimiste, car les frais sont payés à l'acquisition. Une voiture ira dans les mains de plusieurs propriétaires, ou autrement dit, un automobiliste qui le reste devra payée plusieurs fois l'immatriculation.
+
+    Il semble qu'elle doivent être payée même pour un achat d'occasion.
 
 voiture . carte grise . immatriculation:
   description: |
@@ -33,6 +33,29 @@ voiture . carte grise . immatriculation:
       - si: motorisation = 'électrique'
         alors: 15 €
       - sinon: 300 €
+
+voiture . occasion:
+  question: Avez-vous acheté votre voiture d'occasion ?
+  par défaut: non
+  description: |
+    L'achat d'occasion d'une voiture est très courant, car il est onéreux et leur durée de vie est longue, 20 ans en moyenne. 
+
+    L'occasion permet de diminuer fortement le prix d'achat. Cela dit, au fur et à mesure que le prix neuf explose, atteignant 33 000 € en moyenne en 2023, les prix de l'occasion suivent mécaniquement la tendance. 
+
+    À noter : l'achat d'occasion réduit la durée de vie, surtout pour les voitures thermiques. Il est donc très important de renseigner la date de fabrication d'une voiture achetée d'occasion.
+
+voiture . occasion . année de fabrication:
+  question: Quelle est l'année de fabrication de votre voiture achetée d'occasion ?
+  suggestions:
+    2005: 2005
+    2010: 2010
+    2015: 2015
+    2019: 2019
+  par défaut: 2015
+  description: |
+    Chaque année d'âge d'une voiture en diminue le prix, avec une forte décôte les premières années. 
+
+    En parallèle, chaque année d'âge en diminue la durée de vie, en lien également avec son utilisation et son entretien. Nous prenons ce paramètre essentiel en compte pour estimer sa durée de vie restante et donc son prix d'achat amorti.
 
 voiture . prix d'achat neuf . moyen en 2015:
   formule: 25000
@@ -73,7 +96,7 @@ voiture . prix d'achat neuf:
     Tesla Model 3: 38000 €
 
 voiture . coût de possession . achat amorti:
-  formule: prix d'achat neuf / durée de vie
+  formule: prix d'achat neuf / durée de vie . relative
   description: |
     Cette méthode de calcul nous permet de ne pas devoir retrancher le prix de revente. C'est une autre méthode possible. Ici, nous considérons donc, et c'est théorique bien sûr, que chacun garde sa voiture jusqu'au bout de sa vie. C'est vrai pour la moyenne française, mais faux à titre individuel.
 

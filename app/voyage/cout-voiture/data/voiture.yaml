@@ -132,7 +132,7 @@ voiture . motorisation . électrique . consommation:
 
     Nous retenons donc une valeur plutôt majorante de 15 kWh/km.
 
-voiture . distance totale: durée de vie * km annuels
+voiture . distance totale: durée de vie . relative * km annuels
 voiture . distance standardisée: durée standardisée * km annuels
 voiture . durée standardisée:
   formule: 20 ans
@@ -140,6 +140,25 @@ voiture . durée standardisée:
     Une durée de vie qu'on pourrait qualifier de standard pour faire des comparaisons entre voiture électrique et thermique. 
 
     On prend simplement la durée minorante de la thermique, et on l'arrondit à 20 ans pour plus de simplicité.
+
+voiture . durée de vie . relative:
+  titre: Durée de vie estimée depuis le dernier achat
+  description: |
+    Si le propriétaire actuel a acheté la voiture neuve, sa durée de vie relative est la durée de vie moyenne d'une voiture. 
+
+    S'il l'a achetée d'occasion, on retranche la durée de possession d'un ancien propriétaire pour estimer le coût amorti de possession du propriétaire actuel, dans l'hypothèse où il la garderait jusqu'à sa fin de vie.
+
+    Si vous avez acheté une voiture fabriquée en 2000, qui a donc 23 ans, nous estimons qu'elle n'a qu'un an à vivre, statistiquement. Bien sûr, de nombreuses voitures tiennent plus longtemps. Mais à l'inverse, de nombreuses tiennent moins longtemps, c'est le principe de la moyenne. Une extension du modèle pour ces cas-là pourra être envisagée.
+
+  note: |
+    Pour simplifier, nous prenons l'année la plus proche. En octobre 2023, c'est donc 2024. À mettre à jour dans 8 mois.
+  formule:
+    variations:
+      - si: occasion
+        alors:
+          valeur: durée de vie - (2024 - occasion . année de fabrication)
+          plancher: 1
+      - sinon: durée de vie
 voiture . durée de vie:
   description: |
     Attention à ne pas confondre durée de possession et durée de vie ! Un citoyen peut garder une voiture 5 ans en moyenne, mais elle continue d'exister et de rouler. 

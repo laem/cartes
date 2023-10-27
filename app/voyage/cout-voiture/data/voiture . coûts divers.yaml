@@ -64,6 +64,7 @@ voiture . coûts divers . permis de conduire:
 
 voiture . coûts divers . permis de conduire . durée d'utilisation:
   formule: durée de vie en bonne santé - âge d'obtention
+
 durée de vie en bonne santé:
   formule: 66
   références:
