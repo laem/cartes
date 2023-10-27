@@ -57,6 +57,18 @@ voiture . occasion . année de fabrication:
 
     En parallèle, chaque année d'âge en diminue la durée de vie, en lien également avec son utilisation et son entretien. Nous prenons ce paramètre essentiel en compte pour estimer sa durée de vie restante et donc son prix d'achat amorti.
 
+voiture . prix d'achat occasion:
+  question: Quel est le prix d'achat d'occasion de la voiture ?
+  suggestions:
+    faible: 5000 €
+    moyen: 15000 €
+    élevé: 20000 €
+voiture . prix d'achat:
+  formule:
+    variations:
+      - si: occasion
+        alors: prix d'achat occasion
+      - sinon: prix d'achat neuf
 voiture . prix d'achat neuf . moyen en 2015:
   formule: 25000
   note: |
@@ -96,7 +108,7 @@ voiture . prix d'achat neuf:
     Tesla Model 3: 38000 €
 
 voiture . coût de possession . achat amorti:
-  formule: prix d'achat neuf / durée de vie . relative
+  formule: prix d'achat / durée de vie . relative
   description: |
     Cette méthode de calcul nous permet de ne pas devoir retrancher le prix de revente. C'est une autre méthode possible. Ici, nous considérons donc, et c'est théorique bien sûr, que chacun garde sa voiture jusqu'au bout de sa vie. C'est vrai pour la moyenne française, mais faux à titre individuel.
 
