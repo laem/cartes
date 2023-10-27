@@ -60,9 +60,13 @@ voiture . occasion . année de fabrication:
   note: |
     La valeur par moyenne ne nous est pas connue à ce stade. Nous prenons 2018 pour refleter le fait que beaucoup d'achats d'occasion sont des achats d'optimisation : j'achète du presque neuf après la décôte initiale importante.
 
-voiture . prix d'achat occasion:
+voiture . occasion . prix d'achat:
   question: Quel est le prix d'achat d'occasion de la voiture ?
-  par défaut: 15000 €
+  par défaut:
+    variations:
+      - si: année de fabrication < 2010
+        alors: 5000 €
+      - sinon: 15000 €
   description: |
     Les prix de l'occasion ont explosé dans les années 2020. Le [prix médian atteint 22 000](https://www.lefigaro.fr/conjoncture/les-prix-des-vehicules-d-occasion-ont-flambe-de-43-7-depuis-2020-20230125) en 2022.
 
@@ -77,7 +81,7 @@ voiture . prix d'achat:
   formule:
     variations:
       - si: occasion
-        alors: prix d'achat occasion
+        alors: occasion . prix d'achat
       - sinon: prix d'achat neuf
 voiture . prix d'achat neuf . moyen en 2015:
   formule: 25000
