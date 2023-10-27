@@ -52,6 +52,7 @@ voiture . occasion . année de fabrication:
     2015: 2015
     2019: 2019
   par défaut: 2018
+  unité: ''
   description: |
     Chaque année d'âge d'une voiture en diminue le prix, avec une forte décôte les premières années. 
 

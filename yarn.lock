@@ -8187,17 +8187,10 @@ proxy-from-env@^1.1.0:
   resolved "https://registry.yarnpkg.com/proxy-from-env/-/proxy-from-env-1.1.0.tgz#e102f16ca355424865755d2c9e8ea4f24d58c3e2"
   integrity sha512-D+zkORCbA9f1tdWRK0RaCR3GPv50cMxcrz4X8k5LTSUD1Dkw47mKJEZQNunItRTkWwgtaUSo1RVFRIG9ZXiFYg==
 
-publicodes-react@^1.0.0-beta.74:
-  version "1.0.0-beta.74"
-  resolved "https://registry.yarnpkg.com/publicodes-react/-/publicodes-react-1.0.0-beta.74.tgz#5aea1cd23c6b3496fc8e5ed704ebe82f7aa5c57f"
-  integrity sha512-eELoNCzIfircEEg+1ob3UacSGG0+xIA4E8b+iwuZwV7xAOwQIpD9zzOVikBrO0m7uT+U+fKiIdXGf5x1QsiLxA==
-  dependencies:
-    styled-components "^6.0.7"
-
-publicodes@^1.0.0-beta.74:
-  version "1.0.0-beta.74"
-  resolved "https://registry.yarnpkg.com/publicodes/-/publicodes-1.0.0-beta.74.tgz#4b0cc408ae98352a3f66308bea063337e06b3b2e"
-  integrity sha512-j9zMUlZ9Gs/kbxLI6159RAxihaPuO6fUvpEjQmWj7m85heVH8VB2YERBffAPR2GRuMrYxUMh8R4ZmWALTuY8FA==
+publicodes@^1.0.0-beta.77:
+  version "1.0.0-beta.77"
+  resolved "https://registry.yarnpkg.com/publicodes/-/publicodes-1.0.0-beta.77.tgz#45e3c4d2a46bfadcc932e1405ea037e659c28134"
+  integrity sha512-F8U3WGUWMo3/rxhWYS1gWIiG20g1Yy/+PpXdHM99d6ZHKWnnyh/4txVEuyVE75glgDs+mTjwZPnmoKWsTMXluA==
 
 pump@^2.0.0:
   version "2.0.1"
