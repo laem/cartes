@@ -29,13 +29,13 @@ dimensions:
     valeurs:
       - titre: citadine diesel
         situation:
-          voyage . voiture . prix d'achat: 18000 €
+          voyage . voiture . prix d'achat neuf: 18000 €
       - titre: SUV diesel
         situation:
           voyage . voiture . consommation thermique: 7
-          voyage . voiture . prix d'achat: 29000 €
+          voyage . voiture . prix d'achat neuf: 29000 €
 
       - titre: citadine électrique
         situation:
           voyage . voiture . motorisation: "'électrique'"
-          voyage . voiture . prix d'achat: 30100 €
+          voyage . voiture . prix d'achat neuf: 30100 €

@@ -23,17 +23,17 @@ voiture . coûts au km:
     - titre: Citadine diesel
       situation:
         trajet . voyageurs: 1
-        voiture . prix d'achat: 18000
+        voiture . prix d'achat neuf: 18000
     - titre: Citadine essence
       situation:
         voiture . motorisation: "'essence'"
         trajet . voyageurs: 1
-        voiture . prix d'achat: 18000
+        voiture . prix d'achat neuf: 18000
     - titre: Citadine électrique
       situation:
         trajet . voyageurs: 1
         voiture . motorisation: "'électrique'"
-        voiture . prix d'achat: 30000
+        voiture . prix d'achat neuf: 30000
 
 voiture . coût instantané au km:
   description: |
@@ -50,13 +50,13 @@ voiture . coût instantané au km:
     - titre: Clio diesel
       situation:
         voiture . motorisation: "'diesel'"
-        voiture . prix d'achat: 29000 €
+        voiture . prix d'achat neuf: 29000 €
     - titre: SUV essence à 2€ le litre
       situation:
         voiture . consommation thermique: 9
         trajet voiture . prix carburant: 2 €/l
         voiture . motorisation: "'essence'"
-        voiture . prix d'achat: 29000 €
+        voiture . prix d'achat neuf: 29000 €
     - titre: électrique
       situation:
         trajet voiture . prix carburant: 2 €/l

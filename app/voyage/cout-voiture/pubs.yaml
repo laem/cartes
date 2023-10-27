@@ -2,19 +2,19 @@
   image: spring.jpg
   situation:
     voyage . voiture . motorisation: "'électrique'"
-    voyage . voiture . prix d'achat: 15800
+    voyage . voiture . prix d'achat neuf: 15800
 - titre: Renault Clio V
   image: clio-2.jpg
   situation:
     voyage . voiture . motorisation: '"diesel"'
-    voyage . voiture . prix d'achat: 18000
+    voyage . voiture . prix d'achat neuf: 18000
 - titre: Renault ZOE
   image: zoé.jpg
   situation:
     voyage . voiture . motorisation: '"électrique"'
-    voyage . voiture . prix d'achat: 30000
+    voyage . voiture . prix d'achat neuf: 30000
 - titre: SUV Peugeot 3008
   image: 3008.jpg
   situation:
     voyage . voiture . motorisation: '"essence"'
-    voyage . voiture . prix d'achat: 29000
+    voyage . voiture . prix d'achat neuf: 29000
