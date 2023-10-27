@@ -193,6 +193,12 @@ trajet voiture . péages . prix calculé . inflation depuis 2018:
 trajet voiture . part autoroute . réduite:
   titre: Part autoroute réduite
   question: Contournez-vous les autoroutes payantes ?
+  description: |
+    Les autoroutes, gérées par des entreprises privées, rendent un trajet plus cher, c'est incontestable. 
+
+    Pourtant, ne pas les prendre, c'est rediriger une partie du cout de votre trajet sur les finances publiques : les routes nationales et départementales coutent également cher à entretenir. Une partie du cout de votre trajet est ainsi effacée de votre porte-monnaie, pour être payée par vos impôts et ceux de vos concitoyens. 
+
+    Rouler hors autoroute, c'est aussi s'exposer à [un risque d'accident bien plus élevés](https://www.onisr.securite-routiere.gouv.fr/etat-de-l-insecurite-routiere/les-indicateurs-de-mon-departement-ou-de-ma-region/indicateurs-d-accidentalite-sur-routes-bidirectionnelles-hors-agglo).
   par défaut: non
 
 trajet voiture . part autoroute:

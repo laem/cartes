@@ -350,7 +350,7 @@ const AnswerComponent = ({
 			<td>{NameComponent}</td>
 			<td>
 				<Link
-					href={{ query: queryWithout }}
+					href={{ query: { ...queryWithout, lu: true } }}
 					prefetch={false}
 					scroll={false}
 					onClick={() => setOpen(false)}
