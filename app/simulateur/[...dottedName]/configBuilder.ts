@@ -7,7 +7,7 @@ const getQuestionsConfig = (dottedName) => ({
 		dottedName === 'transport . ferry . empreinte du voyage'
 			? ['transport . ferry . distance aller . orthodromique']
 			: dottedName === 'voyage . trajet voiture . coût trajet par personne'
-			? ['voyage . trajet voiture . distance', 'trajet . voyageurs']
+			? ['voyage . trajet voiture . distance', 'voyage . trajet . voyageurs']
 			: null,
 })
 export default getQuestionsConfig
