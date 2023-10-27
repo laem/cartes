@@ -10,7 +10,7 @@ export default function Passengers({ passengers, setPassengers }) {
 				title={`Pour ${passengers} voyageurs. Cliquez pour augmenter !`}
 				onClick={() => setPassengers(passengers >= limit ? 1 : passengers + 1)}
 			>
-				{passengers}{' '}
+				<small>pour</small>&nbsp;{passengers}{' '}
 				{[...Array(passengers).keys()].map((i) => (
 					<PersonImage key={i} />
 				))}
