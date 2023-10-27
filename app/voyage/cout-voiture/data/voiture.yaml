@@ -88,6 +88,14 @@ voiture . consommation thermique:
   question: Quelle est la consommation de la voiture ?
   par défaut: par défaut
   unité: l / 100 km
+  note: |
+    Les suggestions sont tirées de ce graphique ADEME https://carlabelling.ademe.fr/chiffrescles/r/evolutionConsoMoyenne.
+
+    Il faudrait les faire évoluer en fonction de la motorisation essence / diesel.
+  suggestions:
+    faible: 5
+    moyenne: 6
+    élevée: 8
 
 voiture . consommation thermique . par défaut:
   formule:
