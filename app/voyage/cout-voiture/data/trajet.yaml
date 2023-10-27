@@ -158,9 +158,7 @@ trajet voiture . péages:
     Sinon, c'est à l'utilisateur de saisir la part des autoroutes qu'il utilise, et nous en déduisons le coût total sur la base d'une moyenne. Il peut aussi forcer
   formule:
     variations:
-      - si: prix calculé . prix 2018 = 0
-        alors: 0
-      - si: part autoroute . réduite
+      - si: part autoroute . nulle
         alors: 0
       - si:
           est défini: prix calculé . prix 2018
@@ -179,6 +177,7 @@ trajet voiture . péages . prix calculé:
     Le prix quand il est calculé par un calculateur d'itinéraire qui segmente le trajet en portion d'autoroute et multiplie leur distance par le prix précis de l'autoroute en question.
 
 trajet voiture . péages . prix calculé . prix 2018:
+  titre: Péages autoroutes
   injecté: oui
   description: |
     Le prix est calculé en utilisant les données compilées par Pierre-Olivier Simonard sur [cette étude du prix des autoroutes en 2018](https://public.tableau.com/app/profile/pierre.olivier.simonard/viz/AutoroutesV2/Vuedensemble).
@@ -192,9 +191,13 @@ trajet voiture . péages . prix calculé . inflation depuis 2018:
   note: |
     À noter, des réductions pour les voitures électriques viennent compenser cette inflation. À intégrer plus tard, car il s'agit d'une modification de second ordre.
 
-trajet voiture . part autoroute . réduite:
-  titre: Part autoroute réduite
+trajet voiture . part autoroute . nulle:
+  titre: Autoroutes contournées
   question: Contournez-vous les autoroutes payantes ?
+  non applicable si:
+    toutes ces conditions:
+      - est défini: péages . prix calculé . prix 2018
+      - péages . prix calculé . prix 2018 = 0
   description: |
     Les autoroutes, gérées par des entreprises privées, rendent un trajet plus cher, c'est incontestable. 
 
