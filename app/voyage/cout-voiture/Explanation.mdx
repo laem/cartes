@@ -32,7 +32,7 @@ Quels postes de dépense sont pris en compte à ce jour ?
 ## Les résultats
 
 
-Alors, que donne ce calculateur sur un jeu d'exemples courants ? 
+Alors, que donne ce calculateur sur un jeu d'exemples courants pour des véhicules achetés neufs ? 
 
 <ExempleTable />
 
@@ -105,25 +105,26 @@ Encore une fois, si l'on compare uniquement les coûts instantanés d'une voitur
 
 ### Le prix d'achat et d'entretien
 
-La principale limite de ce modèle concerne l'estimation du coût d'achat de la voiture ramené au km. Il n'est pas aisé d'obtenir des données sur les km parcourus par les voitures amenées la casse, et en particulier concernant les voitures électriques, ni des informations statistiques fiables sur les frais d'entretien. Or, le coût d'achat est un des facteurs clef du coût final. 
+Vous l'aurez constaté, l'une des principales sensibilités de ce modèle concerne l'estimation du coût d'achat de la voiture ramené au km. Il n'est pas aisé d'obtenir des données sur les km parcourus par les voitures amenées la casse, et en particulier concernant les voitures électriques, ni des informations statistiques fiables sur les frais d'entretien. Or, le coût d'achat est un des facteurs clef du coût final. 
 
-Cela dit, l'ordre de grandeur est quand même connu : une voiture dure environ 20 ans, et coûte [environ 30 000 €](https://www.automobile-magazine.fr/toute-l-actualite/article/38263-prix-moyen-dune-voiture-neuve-en-france-ca-pique). Il est donc très rare que l'ordre de grandeur du coût d'achat d'une voiture ramené à l'année soit différent de 1000 à 1500 €.
-
+Cela dit, l'ordre de grandeur est quand même connu : une voiture dure environ 20 ans, et coûte [environ 30 000 €](https://www.automobile-magazine.fr/toute-l-actualite/article/38263-prix-moyen-dune-voiture-neuve-en-france-ca-pique). Il est donc très rare que l'ordre de grandeur du coût d'achat d'une voiture ramené à l'année soit différent de 1000 à 1500 €, même s'il varie effectivement en fonction du soin apporté à l'entretien par exemple. Entretien qui lui aussi, coûte cher.
 
 
 ### L'occasion et la décôte
 
-Mais quid de l'occasion ? En effet, une voiture d'occasion coûte beaucoup moins cher. Mais elle dure aussi bien moins longtemps. Certes, une partie de la décôte ne représente pas une perte de durée de vie, mais une perte d'effet de mode. Ainsi, les acheteurs qui ne voient pas d'intérêt à rouler avec le dernier cri peuvent réduire in fine leur coût au km. 
+Mais quid de l'occasion ? En effet, une voiture d'occasion coûte beaucoup moins cher à l'achat. Sa durée de vie est réduite. Certes, une partie de la décôte ne représente pas une perte de durée de vie, mais une perte d'effet de mode. Ainsi, les acheteurs qui ne voient pas d'intérêt à rouler avec le dernier cri peuvent réduire in fine leur coût au km. 
 
-Pourtant, si cette optimisation financière via l'achat *au bon moment d'une occasion bon marché* baisse le coût au km de certains, il va mécaniquement augmenter celui des autres, le coût hors optimisation représentant bien le coût moyen du km. C'est un jeu à somme nulle : si j'achète une voiture qui neuve coutait 30 000 € pour 25 000 € après 1 an d'âge, je peux peut-être considérer avoir gagné 3 000 € (selon des critères difficiles à objectiver)... mais l'acheteur aura alors perdu 3 000 € selon ces mêmes critères, et la moyenne nationale ne changera pas.
+Pourtant, si cette optimisation financière via l'achat *au bon moment d'une occasion bon marché* baisse le coût au km de certains, il va mécaniquement augmenter celui des autres, le coût hors optimisation représentant bien le coût moyen du km. 
 
-Nous pourrons par la suite prendre en compte cette question de l'optimisation.
+C'est un jeu à somme nulle : si j'achète une voiture qui neuve coutait 30 000 € pour 20 000 € après 5 ans d'âge, je peux peut-être considérer avoir gagné 5 000 € (selon des critères difficiles à objectiver, ici je considère que 5 ans ne font pas perdre 1/3 du prix)... mais l'acheteur aura alors perdu ces 5 000 € selon ces mêmes critères, et la moyenne nationale du cout d'achat amorti ne changera pas.
 
-Concrètement, nos hypothèses de [durée de vie](/documentation/voyage/voiture/durée-de-vie) et [km annuels](/documentation/voyage/voiture/km-annuels) sont explicites dans le modèle de calcul. Le modèle est entièrement ouvert, à vous de l'explorer et de l'améliorer ! 
+Cela dit, l'achat d'occasion est un fait majeur : en 2023, une grosse proportion des voitures neuves sont achetées par les entreprises, dont les entreprises de leasing, et les retraités. Nous avons donc inclus la possibilité de renseigner dans le calculateur le prix d'achat d'occasion ainsi que l'année de fabrication de la voiture, pour en estimer la durée de vie restante et donc le cout d'achat amorti.
+
+Nos hypothèses de [durée de vie](/documentation/voyage/voiture/durée-de-vie) et [km annuels](/documentation/voyage/voiture/km-annuels) sont explicites dans le modèle de calcul. Le modèle est entièrement ouvert, à vous de l'explorer et de l'améliorer ! 
 
 ### Les externalités négatives que vous ne payez pas
 
-N'oublions pas non plus que ce coût ne représente que ce qui sort *volontairement* de votre poche : ne sont pas inclus les impôts qui servent à construire et entretenir le coûteux réseau routier français (hors autoroute, que vous payez sauf en Bretagne); les externalités négatives de la voiture, c'est-à-dire les effets de la pollution : par exemple, les dégats climatiques de votre voiture thermique; les cancers et maladies cardiovasculaires induits de la combustion du carburant et le freinage des pneus d'une lourde voiture électrique; etc
+N'oublions pas non plus que ce coût ne représente que ce qui sort *volontairement* de votre poche : ne sont pas inclus les impôts qui servent à construire et entretenir le coûteux réseau routier français (hors autoroute, que vous payez sauf en Bretagne); en particulier, chaque kilomètre fait sur route publique plutôt que sur autoroute invisibilise une partie du coût au km, assumé par les services de voirie publics sur nos impôts ; les externalités négatives de la voiture, c'est-à-dire les effets de la pollution : par exemple, les dégats climatiques de votre voiture thermique; les cancers et maladies cardiovasculaires induits de la combustion du carburant et le freinage des pneus d'une lourde voiture électrique; etc
 
 Pour cette raison, **voyez ce coût comme un minimum**.
 
