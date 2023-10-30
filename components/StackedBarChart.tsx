@@ -10,6 +10,7 @@ import {
 	BarStackLegendItem,
 	SmallCircle,
 } from './StackedBarChartUI'
+import { sortBy } from './utils/utils'
 
 type Precision = 1 | 0.1 | 0.01
 
@@ -132,6 +133,7 @@ type StackedRulesChartProps = {
 	engine: object
 	situation: object
 	percentageFirst: boolean
+	largerFirst: boolean
 }
 
 export default function StackedRulesChart({
@@ -140,6 +142,7 @@ export default function StackedRulesChart({
 	engine,
 	percentageFirst,
 	situation,
+	largerFirst,
 }: StackedRulesChartProps) {
 	const targetUnit = useSelector(targetUnitSelector)
 	const evaluatedData = data.map(({ dottedName, title, color }) => {
@@ -158,7 +161,9 @@ export default function StackedRulesChart({
 	return (
 		<StackedBarChart
 			precision={precision}
-			data={evaluatedData}
+			data={
+				largerFirst ? sortBy((d) => -d.value)(evaluatedData) : evaluatedData
+			}
 			percentageFirst={percentageFirst}
 		/>
 	)

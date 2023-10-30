@@ -75,20 +75,21 @@ export default function Questions({
 						percentageFirst={false}
 						situation={situation}
 						precision={0.1}
+						largerFirst={true}
 						data={[
 							{
 								dottedName: 'voyage . trajet voiture . coût instantané',
-								title: 'Coût instantané',
+								title: 'Instantané ⛽️',
 								color: 'rgb(163, 146, 199)',
 							},
 							{
 								dottedName: 'voyage . trajet voiture . coût de possession',
-								title: 'Coût de possession',
+								title: 'Possession 🚘️',
 								color: '#f8c291',
 							},
 							{
 								dottedName: 'voyage . trajet voiture . coûts divers',
-								title: 'Coûts divers',
+								title: 'Divers',
 								color: '#cf6a87',
 							},
 						]}
