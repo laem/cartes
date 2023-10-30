@@ -200,19 +200,26 @@ voiture . km annuels . par défaut:
     À noter, les diesel en ont parcouru 14 392 et les essences 8 920. Cependant, il faudrait que nous ayons des données sur la durée de vie à la casse différenciées par motorisation pour pouvoir faire la distinction.
 
     Les données existent pour 2020, mais nous privilégions celles de 2019, vu l'impact temporaire des confinements sur les déplacements. Le nombre de km avait baissé de 17 % en 2020.
+
 voiture . ratio d'usage:
   description: À quel point votre usage en km s'éloigne de la moyenne française.
   formule: km annuels / km annuels . par défaut
+
 voiture . problème km annuels:
   type: notification
   sévérité: avertissement
   formule: km annuels < (trajet voiture . distance * 2)
   description: |
     Vos km annuels ne peuvent pas être inférieurs à la distance du trajet que vous simulez ici.
+
 voiture . km annuels:
   titre: Kilomètres annuels
   question: Combien de kilomètres environ faites-vous à l'année ?
   par défaut: par défaut
+  suggestions:
+    très occasionnel: 1000 km
+    petit rouleur: 5000 km
+    gros rouleur: 15000 km
   note: |
     Cette question est importante : quand on possède une voiture, on a des frais fixes, en premier lieu l'achat de la voiture. Plus on fait de km, plus cela fait baisser le prix d'achat au km. Si vous faites un nombre de km bien plus bas que la moyenne, votre coût au km augmente fortement, car vous amortissez beaucoup moins un nombre important de frais fixes... jusqu'à ce que la location de voiture devienne rentable, pour supprimer ces frais fixes. 
 
