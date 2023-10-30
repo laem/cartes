@@ -139,6 +139,8 @@ const VerticalBarItem = ({ color, width, label }) => (
 				width: 7rem;
 			}
 			transform: translateX(-6rem);
+			display: flex;
+			align-items: center;
 		`}
 	>
 		{label}
@@ -149,7 +151,8 @@ const VerticalBarItem = ({ color, width, label }) => (
 				display: inline-block;
 				width: ${(width * 16) / 100}rem;
 				background: ${color};
-				height: 1.3rem;
+				height: 1rem;
+				border-radius: 0.2rem;
 			`}
 		></span>
 	</li>
