@@ -83,12 +83,12 @@ export default function Questions({
 								},
 								{
 									dottedName: 'voyage . trajet voiture . coût de possession',
-									title: 'Possession 🚘️',
+									title: 'Possession 🚗',
 									color: '#f8c291',
 								},
 								{
 									dottedName: 'voyage . trajet voiture . coûts divers',
-									title: 'Divers',
+									title: 'Divers ◽️',
 									color: '#cf6a87',
 								},
 							]}

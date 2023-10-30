@@ -132,7 +132,7 @@ const VerticalBarItem = ({ color, width, label }) => (
 	<li
 		css={`
 			position: relative;
-			margin: 0.2rem 0;
+			margin: 0;
 			> span:first-child {
 				text-align: right;
 				display: inline-block;
