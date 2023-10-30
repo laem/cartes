@@ -66,45 +66,35 @@ export default function Questions({
 			</div>
 
 			<div style={{ opacity }}>
-				<GraphicDetails open={answeredQuestions.length > 1}>
+				<GraphicDetails>
 					<summary>
-						<DetailedBarChartIcon />
+						<StackedBarChart
+							engine={engine}
+							percentageFirst={false}
+							situation={situation}
+							precision={0.1}
+							largerFirst={true}
+							verticalBars={true}
+							data={[
+								{
+									dottedName: 'voyage . trajet voiture . coût instantané',
+									title: 'Instantané ⛽️',
+									color: 'rgb(163, 146, 199)',
+								},
+								{
+									dottedName: 'voyage . trajet voiture . coût de possession',
+									title: 'Possession 🚘️',
+									color: '#f8c291',
+								},
+								{
+									dottedName: 'voyage . trajet voiture . coûts divers',
+									title: 'Divers',
+									color: '#cf6a87',
+								},
+							]}
+						/>
 					</summary>
-					<StackedBarChart
-						engine={engine}
-						percentageFirst={false}
-						situation={situation}
-						precision={0.1}
-						largerFirst={true}
-						data={[
-							{
-								dottedName: 'voyage . trajet voiture . coût instantané',
-								title: 'Instantané ⛽️',
-								color: 'rgb(163, 146, 199)',
-							},
-							{
-								dottedName: 'voyage . trajet voiture . coût de possession',
-								title: 'Possession 🚘️',
-								color: '#f8c291',
-							},
-							{
-								dottedName: 'voyage . trajet voiture . coûts divers',
-								title: 'Divers',
-								color: '#cf6a87',
-							},
-						]}
-					/>
-					<GraphicDetails
-						style={css`
-							text-align: right;
-							margin-top: 0.4rem;
-						`}
-					>
-						<summary>
-							<Emoji e="➕" /> Voir le détail
-						</summary>
-						<CalculSummary engine={engine} horizontal={true} />
-					</GraphicDetails>
+					<CalculSummary engine={engine} horizontal={true} />
 				</GraphicDetails>
 			</div>
 			<Simulation
