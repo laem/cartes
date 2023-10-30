@@ -291,16 +291,7 @@ const Answer = ({ rule, validatedSituation, objectives, setOpen }) => {
 		)
 	}
 
-	const NameComponent = (
-		<div>
-			{path && !uselessPrefix && (
-				<div>
-					<small>{path}</small>
-				</div>
-			)}
-			<div css="font-size: 110%">{rule.title}</div>
-		</div>
-	)
+	const NameComponent = <div>{rule.title}</div>
 
 	const ValueComponent = (
 		<span
