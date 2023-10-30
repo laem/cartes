@@ -213,7 +213,7 @@ voiture . problème km annuels:
     Vos km annuels ne peuvent pas être inférieurs à la distance du trajet que vous simulez ici.
 
 voiture . km annuels:
-  titre: Kilomètres annuels
+  titre: Vos kilomètres annuels
   question: Combien de kilomètres environ faites-vous à l'année ?
   par défaut: par défaut
   suggestions:

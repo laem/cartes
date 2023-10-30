@@ -35,6 +35,7 @@ voiture . carte grise . immatriculation:
       - sinon: 300 €
 
 voiture . occasion:
+  titre: Achat d'occasion
   question: Avez-vous acheté votre voiture d'occasion ?
   par défaut: non
   description: |
@@ -61,6 +62,7 @@ voiture . occasion . année de fabrication:
     La valeur par moyenne ne nous est pas connue à ce stade. Nous prenons 2018 pour refleter le fait que beaucoup d'achats d'occasion sont des achats d'optimisation : j'achète du presque neuf après la décôte initiale importante.
 
 voiture . occasion . prix d'achat:
+  titre: Prix d'achat occasion
   question: Quel est le prix d'achat d'occasion de la voiture ?
   par défaut:
     variations:
@@ -151,6 +153,7 @@ voiture . coût de possession . assurance:
     haut de gamme (tous risques): 733 €/an
 
 voiture . coût de possession . entretien thermique:
+  titre: Coûts d'entretien
   question: Quel est le coût annuel d'entretien de la voiture ?
   description: |
     Le [Mag de l'auto nous dit](https://www.lemagdelauto.com/dossier-1-combien-coute-voiture-annee.html) entre 840 € et 1000 € selon les modèles pour les "petits" rouleurs. Pour les gros rouleurs, ils l'estiment à 1700 €.
