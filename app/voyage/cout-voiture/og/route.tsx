@@ -1,5 +1,5 @@
 import { getSituation } from '@/components/utils/simulationUtils'
-import { ImageResponse } from 'next/server'
+import { ImageResponse } from 'next/og'
 import Publicodes, { formatValue } from 'publicodes'
 import coutRules from '@/app/voyage/cout-voiture/data/rules'
 import css from '@/components/css/convertToJs'
