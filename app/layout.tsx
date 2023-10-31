@@ -2,6 +2,8 @@ import Providers from '@/providers/Providers'
 import Nav, { NavFooter } from 'Components/Nav'
 import StyledComponentsRegistry from '../lib/registry'
 import './globals.css'
+import { Analytics } from '@vercel/analytics/react'
+
 
 /*
 // If loading a variable font, you don't need to specify the font weight
@@ -39,6 +41,7 @@ export default function RootLayout({
 						<NavFooter />
 					</Providers>
 				</StyledComponentsRegistry>
+				<Analytics />
 			</body>
 		</html>
 	)
