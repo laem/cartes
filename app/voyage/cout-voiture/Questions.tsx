@@ -45,12 +45,12 @@ export default function Questions({
 	return (
 		<>
 			<div
-				style={css`
+				style={css(`
 					opacity: ${opacity};
 					top: -8rem;
 					position: sticky;
 					z-index: 10;
-				`}
+				`)}
 			>
 				<SimulationResults
 					{...{
