@@ -48,14 +48,16 @@ export default function ShareButton({
 			) : (
 				<DesktopShareButton {...{ text, url, title, color, label }} />
 			)}
-			<input
-				type="checkbox"
-				id="withAnswers"
-				name="withAnswers"
-				checked={withAnswers}
-				onChange={() => setWithAnswers(!withAnswers)}
-			/>{' '}
-			<label for="withAnswers">Partager mes données de simulation</label>
+			<div>
+				<input
+					type="checkbox"
+					id="withAnswers"
+					name="withAnswers"
+					checked={withAnswers}
+					onChange={() => setWithAnswers(!withAnswers)}
+				/>{' '}
+				<label htmlFor="withAnswers">Partager mes données de simulation</label>
+			</div>
 		</div>
 	)
 }
