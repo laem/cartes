@@ -170,6 +170,7 @@ export default function VoyageInput({
 								<InputStyle>
 									<input
 										type="text"
+										autoFocus={true}
 										value={depuis.inputValue}
 										placeholder={placeholder}
 										onChange={onInputChange('depuis')}
