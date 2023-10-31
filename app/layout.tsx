@@ -4,7 +4,6 @@ import StyledComponentsRegistry from '../lib/registry'
 import './globals.css'
 import { Analytics } from '@vercel/analytics/react'
 
-
 /*
 // If loading a variable font, you don't need to specify the font weight
 const inter = Inter({
@@ -18,6 +17,7 @@ className={inter.className}>
 export const metadata = {
 	title: 'Futureco',
 	description: "L'empreinte climat de notre quotidien",
+	metadataBase: new URL('https://futur.eco'),
 	openGraph: {
 		images: ['https://futur.eco/logo.svg'],
 	},
