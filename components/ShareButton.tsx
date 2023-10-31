@@ -20,11 +20,12 @@ export default function ShareButton({
 
 	const [withAnswers, setWithAnswers] = useState(true)
 
+	const searchParamsString = searchParams.toString()
 	const url =
 		givenUrl ||
 		'https://futur.eco' +
 			pathname +
-			(withAnswers ? '?' + searchParams.toString() : '')
+			(searchParamsString && withAnswers ? '?' + searchParamsString : '')
 
 	return (
 		<div>
@@ -48,16 +49,20 @@ export default function ShareButton({
 			) : (
 				<DesktopShareButton {...{ text, url, title, color, label }} />
 			)}
-			<div>
-				<input
-					type="checkbox"
-					id="withAnswers"
-					name="withAnswers"
-					checked={withAnswers}
-					onChange={() => setWithAnswers(!withAnswers)}
-				/>{' '}
-				<label htmlFor="withAnswers">Partager mes données de simulation</label>
-			</div>
+			{searchParamsString && (
+				<div>
+					<input
+						type="checkbox"
+						id="withAnswers"
+						name="withAnswers"
+						checked={withAnswers}
+						onChange={() => setWithAnswers(!withAnswers)}
+					/>{' '}
+					<label htmlFor="withAnswers">
+						Partager mes données de simulation
+					</label>
+				</div>
+			)}
 		</div>
 	)
 }

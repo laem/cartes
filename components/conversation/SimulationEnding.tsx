@@ -8,13 +8,17 @@ const ShareButton = dynamic(() => import('Components/ShareButton'), {
 import { title } from '../utils/publicodesUtils'
 import dynamic from 'next/dynamic'
 
-const SimulationEnding = ({ rule, engine, objectives }) => {
+const SimulationEnding = ({ rule, engine, objectives, query }) => {
 	const avion = objectives[0] === 'transport . avion . impact'
 	return (
 		<div style={{ textAlign: 'center' }}>
 			<>
-				<Emoji e={'🌟'} customSizeEm={3.5} />
-				<p>Vous avez terminé votre simulation. Partagez-là !</p>
+				{Object.keys(query).length > 0 && (
+					<>
+						<Emoji e={'🌟'} customSizeEm={3.5} />
+						<p>Vous avez terminé votre simulation. Partagez-là !</p>
+					</>
+				)}
 				<ShareButton {...{ text: title(rule) }} />
 				{avion && (
 					<AvionExplanation

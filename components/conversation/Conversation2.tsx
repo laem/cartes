@@ -44,7 +44,7 @@ const Conversation2 = ({
 	if (!currentQuestion)
 		return (
 			<SimulationEnding
-				{...{ engine, rule: rules[objectives[0]], objectives }}
+				{...{ engine, rule: rules[objectives[0]], objectives, query }}
 			/>
 		)
 
