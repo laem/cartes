@@ -18,13 +18,16 @@ const prefix = 'voyage'
 const setPrefix = (dottedName) => `${prefix} . ${dottedName}`
 
 const prefixExemplesSituation = (v) => {
-	if (!v || !v.exemples) return v
+	if (!v || (!v.exemples && !v.similaires)) return v
 	return {
 		...v,
-		exemples: v.exemples.map((exemple) => ({
-			...exemple,
-			situation: objectMapKeys(exemple.situation, (k) => setPrefix(k)),
-		})),
+		similaires: v.similaires && v.similaires.map(setPrefix),
+		exemples:
+			v.exemples &&
+			v.exemples.map((exemple) => ({
+				...exemple,
+				situation: objectMapKeys(exemple.situation, (k) => setPrefix(k)),
+			})),
 	}
 }
 const prefixedRules = Object.fromEntries(
