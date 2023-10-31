@@ -7,7 +7,7 @@
    viewBox="0 0 210 297"
    version="1.1"
    id="svg5"
-   inkscape:version="1.1.1 (1:1.1+202109281954+c3084ef5ed)"
+   inkscape:version="1.2.2 (732a01da63, 2022-12-09, custom)"
    sodipodi:docname="ferry.svg"
    xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
    xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
@@ -24,15 +24,17 @@
      inkscape:pagecheckerboard="0"
      inkscape:document-units="mm"
      showgrid="false"
-     inkscape:zoom="0.14469134"
-     inkscape:cx="563.268"
-     inkscape:cy="1548.1231"
+     inkscape:zoom="11.127407"
+     inkscape:cx="486.90589"
+     inkscape:cy="766.08145"
      inkscape:window-width="1920"
-     inkscape:window-height="1056"
+     inkscape:window-height="1055"
      inkscape:window-x="0"
      inkscape:window-y="0"
      inkscape:window-maximized="1"
-     inkscape:current-layer="layer1" />
+     inkscape:current-layer="layer1"
+     inkscape:showpageshadow="2"
+     inkscape:deskcolor="#d1d1d1" />
   <defs
      id="defs2">
     <linearGradient
@@ -255,7 +257,7 @@
        id="path1948" />
     <path
        style="fill:none;stroke:#a01d23;stroke-width:0.846799;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:1.6936, 0.846799;stroke-dashoffset:0;stroke-opacity:1"
-       d="m 117.15476,207.90297 13.38922,-2.94141"
+       d="m 117.15476,207.90297 11.31218,-2.43326"
        id="path2016"
        sodipodi:nodetypes="cc" />
     <path
