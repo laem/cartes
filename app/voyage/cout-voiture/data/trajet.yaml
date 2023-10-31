@@ -168,10 +168,6 @@ trajet voiture . péages:
 
 trajet voiture . péages . calcul simpliste: distance * péages par km * part autoroute
 
-trajet voiture . péages . calcul GPS:
-  question technique: Le calcul du prix de l'autoroute a-t-il été fait précisément par un calculateur d'itinéraire ?
-  par défaut: non
-
 trajet voiture . péages . prix calculé:
   formule: prix 2018 * inflation depuis 2018
   description: |

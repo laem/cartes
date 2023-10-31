@@ -74,9 +74,6 @@ export default function VoyageInput({
 				dispatchUpdateSituation(
 					'voyage . trajet voiture . péages . prix calculé . prix 2018'
 				)(realHighwayPrice)
-				dispatchUpdateSituation(
-					'voyage . trajet voiture . péages . calcul GPS'
-				)('oui')
 			}
 		}
 	}, [

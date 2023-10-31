@@ -10,7 +10,6 @@ export const voyageQuestions = [
 	'voyage . trajet voiture . arrivée',
 	'voyage . trajet voiture . distance',
 	'voyage . trajet voiture . péages . prix calculé . prix 2018',
-	'voyage . trajet voiture . péages . calcul GPS',
 ]
 
 export const airportsQuestions = [
