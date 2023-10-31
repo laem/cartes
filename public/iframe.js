@@ -68,7 +68,7 @@ text-align: center
 `
 const fullscreenButton = document.createElement('button')
 fullscreenButton.innerHTML = `
-<img width="14px" height="14px" src="https://nextfu.vercel.app/fullscreen.svg" style="filter: invert(1); vertical-align: middle; cursor: pointer"/>
+<img width="14px" height="14px" src="https://futur.eco/fullscreen.svg" style="filter: invert(1); vertical-align: middle; cursor: pointer"/>
 Passer en mode plein écran
 
 `
