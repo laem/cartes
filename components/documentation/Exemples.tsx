@@ -12,7 +12,11 @@ export default function Exemples({ exemples, searchParams }) {
 			</ExplainedHeader>
 			<ExemplesList>
 				{exemples.map((exemple) => (
-					<ExempleItem exemple={exemple} searchParams={searchParams} />
+					<ExempleItem
+						key={exemple.titre}
+						exemple={exemple}
+						searchParams={searchParams}
+					/>
 				))}
 			</ExemplesList>
 		</section>
