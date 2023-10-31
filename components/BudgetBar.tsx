@@ -33,7 +33,7 @@ const BudgetBar = ({
 			css="text-decoration: none; color: inherit"
 			href="/credit-climat-personnel"
 		>
-			<BudgetBarStyle largeText={!exampleName} color={color.toHex()}>
+			<BudgetBarStyle $largeText={!exampleName} color={color.toHex()}>
 				<div
 					css={`
 						font-weight: bold;
@@ -54,12 +54,12 @@ export const BudgetBarStyle = styled.div`
 	display: flex;
 	justify-content: center;
 	align-items: center;
-	font-size: ${({ largeText }) => (!largeText ? '140%' : '220%')};
+	font-size: ${({ $largeText }) => (!$largeText ? '140%' : '220%')};
 	background: ${(props) => '#' + props.color};
 	height: 2.6rem;
 	color: ${(props) => findContrastedTextColor(props.color)};
 	${(props) =>
-		props.largeText
+		props.$largeText
 			? `
 					padding: 2rem 0 1.8rem
 					`
