@@ -128,7 +128,7 @@ export function StackedBarChart({
 	)
 }
 
-const VerticalBarItem = ({ color, width, label }) => (
+const VerticalBarItem = ({ color, width, label, value }) => (
 	<li
 		css={`
 			position: relative;
@@ -142,6 +142,7 @@ const VerticalBarItem = ({ color, width, label }) => (
 			display: flex;
 			align-items: center;
 		`}
+		title={value}
 	>
 		{label}
 		<span
@@ -183,8 +184,9 @@ export function VerticalBarChart({
 		>
 			{dataWithPercentage
 				.filter(({ percentage }) => percentage !== 0)
-				.map(({ key, color, percentage, legend }) => (
+				.map(({ key, color, percentage, legend, value }) => (
 					<VerticalBarItem
+						value={value}
 						color={color}
 						width={percentage}
 						key={key}

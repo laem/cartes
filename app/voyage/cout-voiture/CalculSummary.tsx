@@ -1,7 +1,7 @@
 import css from '@/components/css/convertToJs'
 import { CalculSummaryWrapper } from './CalculSummaryUI'
 import rules from './data/rules'
-import { formatValue, utils } from 'publicodes'
+import { capitalise0, formatValue, utils } from 'publicodes'
 import { title } from '@/components/utils/publicodesUtils'
 
 const rulesEntries = Object.entries(rules)
@@ -13,7 +13,11 @@ export default function CalculSummary({ engine, horizontal = false }) {
 					(el) => (
 						<li key={el}>
 							<details open={true}>
-								<summary>{el}</summary>
+								<summary>
+									<h4>
+										{capitalise0(el)} {}
+									</h4>
+								</summary>
 
 								<Sum
 									engine={engine}
