@@ -46,7 +46,6 @@ export default function Questions({
 		<>
 			<div
 				style={css(`
-					opacity: ${opacity};
 					top: -8rem;
 					position: sticky;
 					z-index: 10;
@@ -54,6 +53,8 @@ export default function Questions({
 			>
 				<SimulationResults
 					{...{
+						opacity,
+						hideResults: answeredQuestions.length === 0,
 						rule,
 						evaluation,
 						engine,
@@ -65,7 +66,12 @@ export default function Questions({
 				/>
 			</div>
 
-			<div style={{ opacity }}>
+			<div
+				style={{
+					opacity,
+					display: answeredQuestions.length ? 'block' : 'none',
+				}}
+			>
 				<GraphicDetails>
 					<summary>
 						<StackedBarChart

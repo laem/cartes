@@ -8,6 +8,8 @@ const SimulationResults = ({
 	objectives,
 	evaluation,
 	rule,
+	opacity,
+	hideResults,
 }) => {
 	const { dottedName, title, nodeValue } = evaluation
 	const { icônes, formule } = rule
@@ -74,6 +76,8 @@ const SimulationResults = ({
 						position: sticky;
 						top: 0px;
 						z-index: 10;
+						opacity: ${opacity};
+						display: ${hideResults ? 'none' : 'block'};
 					`}
 				>
 					{ResultsBlock ? (
