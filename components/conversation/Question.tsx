@@ -104,7 +104,12 @@ export default function Question({
 						({
 							title,
 							dottedName,
-							rawNode: { description, icônes, références },
+							rawNode: {
+								description,
+								icônes,
+								références,
+								'sous-titre': subtitle,
+							},
 							children,
 						}) =>
 							children ? (
@@ -123,6 +128,7 @@ export default function Question({
 											name: questionDottedName,
 											icônes,
 											description,
+											subtitle,
 											références,
 											onChange: handleChange,
 										}}
@@ -145,6 +151,7 @@ type RadioLabelProps = RadioLabelContentProps & {
 	description?: string
 	label?: string
 	références?: Rule['références']
+	subtitle?: string
 }
 
 export const RadioLabel = (props: RadioLabelProps) => {
@@ -181,6 +188,11 @@ export const RadioLabel = (props: RadioLabelProps) => {
 						</animate.appear>
 					)}
 				</>
+			)}
+			{props.subtitle && (
+				<p style={{ margin: '.4rem 0 .6rem 0', width: '14rem' }}>
+					{props.subtitle}
+				</p>
 			)}
 		</div>
 	)
