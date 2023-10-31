@@ -16,6 +16,8 @@ voiture . coûts au km:
 
     L'Automobile Club Association donne des chiffres au kilomètre d'environ 0,7 € et donc des coûts annuels de possession d'une voiture de l'ordre de 6 000 €.
 
+    Le rapport RAC (Réseau Action Climat) - ADETEC 2022 confirme nos chiffres avec une estimation moyenne de 35,5 centimes d'€ par km en 2022. Il montre une hausse très importante de 12 % entre 2019 et 2022. Son résumé est [disponible ici](https://reseauactionclimat.org/ll-y-a-urgence-a-transformer-notre-mobilite-du-quotidien/).
+
   formule:
     somme:
       - coût instantané au km
