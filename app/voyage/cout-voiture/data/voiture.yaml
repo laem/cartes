@@ -223,9 +223,9 @@ voiture . km annuels:
   question: Combien de kilomètres environ faites-vous à l'année ?
   par défaut: par défaut
   suggestions:
-    très occasionnel: 1000 km
-    petit rouleur: 5000 km
-    gros rouleur: 15000 km
+    très occasionnel: 1000 km/an
+    petit rouleur: 5000 km/an
+    gros rouleur: 15000 km/an
   note: |
     Cette question est importante : quand on possède une voiture, on a des frais fixes, en premier lieu l'achat de la voiture. Plus on fait de km, plus cela fait baisser le prix d'achat au km. Si vous faites un nombre de km bien plus bas que la moyenne, votre coût au km augmente fortement, car vous amortissez beaucoup moins un nombre important de frais fixes... jusqu'à ce que la location de voiture devienne rentable, pour supprimer ces frais fixes. 
 
