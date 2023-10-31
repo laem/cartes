@@ -19,7 +19,7 @@ const findOpenmoji = (e, black) => {
 
 const sizeEm = 2
 
-const Emoji = ({ e, black, extra, alt, hasText, white }) => {
+const Emoji = ({ e, black, extra, alt, hasText, white, customSizeEm }) => {
 	const useBlack = black || white
 	if (e == null && extra == null) return null
 	if (extra)
@@ -28,13 +28,13 @@ const Emoji = ({ e, black, extra, alt, hasText, white }) => {
 				{...{
 					src: `${url}/${useBlack ? 'black' : 'color'}/svg/${extra}.svg`,
 					alt,
-					imageSize: sizeEm,
+					imageSize: customSizeEm || sizeEm,
 				}}
 			/>
 		)
 
 	const matches = [...e.matchAll(regex)]
-	const imageSize = sizeEm * (1 - (matches.length - 1) / 10)
+	const imageSize = (customSizeEm || sizeEm) * (1 - (matches.length - 1) / 10)
 
 	const items = replace(e, regex, function (emoji) {
 		const src = findOpenmoji(emoji, useBlack)

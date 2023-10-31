@@ -13,10 +13,8 @@ const SimulationEnding = ({ rule, engine, objectives }) => {
 	return (
 		<div style={{ textAlign: 'center' }}>
 			<>
-				<h3>
-					<Emoji e={'🌟'} /> Terminé !
-				</h3>
-				<p>Vous avez complété votre simulation. Partagez-là !</p>
+				<Emoji e={'🌟'} customSizeEm={3.5} />
+				<p>Vous avez terminé votre simulation. Partagez-là !</p>
 				<ShareButton {...{ text: title(rule) }} />
 				{avion && (
 					<AvionExplanation
