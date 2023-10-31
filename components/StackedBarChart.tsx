@@ -142,7 +142,11 @@ const VerticalBarItem = ({ color, width, label, value }) => (
 			display: flex;
 			align-items: center;
 		`}
-		title={value}
+		title={
+			Intl.NumberFormat('fr-FR', { maximumSignificantDigits: 2 }).format(
+				value
+			) + ' € par trajet'
+		}
 	>
 		{label}
 		<span
