@@ -8,6 +8,7 @@ const FriendlyObjectViewer = ({
 	data,
 	level = 0,
 	context,
+	searchParams,
 	options = { capitalise0: true },
 }) => {
 	if (data == null) return null
@@ -23,7 +24,11 @@ const FriendlyObjectViewer = ({
 
 			return (
 				<Link
-					href={pathPrefix + `/documentation/${utils.encodeRuleName(isRule)}`}
+					href={{
+						pathname:
+							pathPrefix + `/documentation/${utils.encodeRuleName(isRule)}`,
+						query: searchParams,
+					}}
 				>
 					{capitaliseOrNot(data)}
 				</Link>
@@ -47,6 +52,7 @@ const FriendlyObjectViewer = ({
 						context={context}
 						options={options}
 						pathPrefix={pathPrefix}
+						searchParams={searchParams}
 					/>
 				</li>
 			))}
@@ -60,6 +66,7 @@ const FriendlyObjectViewer = ({
 						<span>
 							<FriendlyObjectViewer
 								data={value}
+								searchParams={searchParams}
 								level={level + 1}
 								context={context}
 								options={options}
@@ -74,6 +81,7 @@ const FriendlyObjectViewer = ({
 							<FriendlyObjectViewer
 								data={value}
 								level={level + 1}
+								searchParams={searchParams}
 								context={context}
 								pathPrefix={pathPrefix}
 								options={options}

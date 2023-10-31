@@ -1,27 +1,23 @@
 'use client'
 
-import {
-	configSituationSelector,
-	situationSelector,
-} from 'Selectors/simulationSelectors'
+import { situationSelector } from 'Selectors/simulationSelectors'
 
 import Engine from 'publicodes'
 import { useMemo } from 'react'
 import { useSelector } from 'react-redux'
 
-export const useEngine2 = (rules) => {
+export const useEngine2 = (rules, baseSituation, objective) => {
 	const engine = useMemo(
 			() => console.log('new engine') || new Engine(rules),
 			[rules]
 		),
-		userSituation = useSelector(situationSelector),
-		configSituation = useSelector(configSituationSelector),
+		userSituation = useSelector(situationSelector(objective)),
 		situation = useMemo(
 			() => ({
-				...configSituation,
+				...baseSituation,
 				...userSituation,
 			}),
-			[configSituation, userSituation]
+			[baseSituation, userSituation]
 		)
 	engine.setSituation(situation)
 

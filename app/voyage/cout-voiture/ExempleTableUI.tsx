@@ -57,19 +57,19 @@ export const PassengersButton = styled.button`
 	padding: 0.4rem 1rem;
 	display: block;
 	margin: 1rem auto;
-	font-size: 200%;
+	font-size: 130%;
 	display: flex;
 	align-items: center;
 	border: 1px solid var(--lightColor);
 	background: var(--lightColor);
 	color: var(--darkestColor);
 	img {
-		width: 2.5rem;
-		height: 2.5rem;
+		width: 2rem;
+		height: 2rem;
 	}
 `
 
-export const ExplanationBlock = styled.p`
+export const ExplanationBlock = styled.div`
 	img {
 		width: 3rem;
 		height: auto;

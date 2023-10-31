@@ -3,10 +3,12 @@ import destinationPoint from '@/public/destination-point.svg'
 import invertIcon from '@/public/invertIcon.svg'
 import startPoint from '@/public/start-point.svg'
 import Emoji from 'Components/Emoji'
-import Map from 'Components/Map'
+const Map = dynamic(() => import('Components/Map'), { ssr: false })
+
 import getCityData, { toThumb } from 'Components/wikidata'
 import { motion } from 'framer-motion'
 import GreatCircle from 'great-circle'
+import dynamic from 'next/dynamic'
 import Image from 'next/image'
 import { useEffect, useState } from 'react'
 import { LightButton } from '../UI'
@@ -15,6 +17,8 @@ import GeoInputOptions from './GeoInputOptions'
 import { InputStyle } from './UI'
 import {
 	Choice,
+	ChoiceContent,
+	ChoiceText,
 	CityImage,
 	ImageWrapper,
 	InputWrapper,
@@ -29,8 +33,10 @@ export default function VoyageInput({
 	fromIcon = '',
 	toIcon = '',
 	displayImage = true,
-	updateSituation,
+	dispatchUpdateSituation,
 	orthodromic, // wether to use valhalla to estimate the driving route distance, or not
+	dottedName,
+	situation,
 }) {
 	const [state, setState] = useState({
 		depuis: { inputValue: '', choice: false },
@@ -39,6 +45,7 @@ export default function VoyageInput({
 	})
 
 	const [realDistance, setRealDistance] = useState(null)
+	const [realHighwayPrice, setRealHighwayPrice] = useState(null)
 	const geo = useGeo()
 
 	const [wikidata, setWikidata] = useState(null)
@@ -57,12 +64,26 @@ export default function VoyageInput({
 	const distance = realDistance || computeDistance(state)
 
 	const validDistance = typeof distance === 'number'
+	const situationDistance = situation[dottedName]
 	useEffect(() => {
-		if (!validDistance) return
-		if (updateSituation) {
-			updateSituation('distance aller . orthodromique')(distance)
-		} else onChange(distance)
-	}, [distance])
+		// I don't get why we need this check. Without it, this component goes wild in an infinite loop. doesn't happen to other RuleInput comps
+		if (!validDistance || distance === situationDistance) return
+		onChange(distance)
+		if (dispatchUpdateSituation) {
+			if (realHighwayPrice != null) {
+				dispatchUpdateSituation(
+					'voyage . trajet voiture . péages . prix calculé . prix 2018'
+				)(realHighwayPrice)
+			}
+		}
+	}, [
+		situationDistance,
+		distance,
+		onChange,
+		realHighwayPrice,
+		dispatchUpdateSituation,
+		validDistance,
+	])
 
 	const onInputChange = (whichInput) => (e) => {
 		let v = e.target.value
@@ -76,7 +97,6 @@ export default function VoyageInput({
 				fetch(`https://photon.komoot.io/api/?q=${v}&limit=6&layer=city&lang=fr`)
 					.then((res) => res.json())
 					.then((json) => {
-						console.log(json)
 						setState((state) => ({
 							...state,
 							[whichInput]: {
@@ -119,8 +139,9 @@ export default function VoyageInput({
 							exit={{ opacity: 0, scale: 0.5, transition: { duration: 0.2 } }}
 						>
 							<CityImage
-								thinner={displayImage === 'plane'}
+								$thinner={displayImage === 'plane'}
 								src={versImageURL}
+								alt={`Une photo emblématique de la destination, ${vers.choice?.item?.nom}`}
 							/>
 						</motion.div>
 					)}
@@ -146,6 +167,7 @@ export default function VoyageInput({
 								<InputStyle>
 									<input
 										type="text"
+										autoFocus={true}
 										value={depuis.inputValue}
 										placeholder={placeholder}
 										onChange={onInputChange('depuis')}
@@ -178,9 +200,8 @@ export default function VoyageInput({
 										data: state['depuis'],
 										updateState: (newData) =>
 											setState((state) => ({ ...state, depuis: newData })),
-										onChange,
 										rulesPath,
-										updateSituation,
+										dispatchUpdateSituation,
 									}}
 								/>
 							)}
@@ -189,22 +210,15 @@ export default function VoyageInput({
 					{depuis.choice && (
 						<Choice>
 							<Image src={startPoint} alt="Depuis" />
-							<div
-								css={`
-									text-align: right;
-									img {
-										width: 2rem;
-									}
-								`}
-							>
-								{depuis.choice.item.nom}
+							<ChoiceContent>
+								<ChoiceText>{depuis.choice.item.nom}</ChoiceText>
 								<button
 									type="button"
 									onClick={() => setState({ ...state, depuis: {} })}
 								>
 									<Emoji e="✏️" title="Modifier la ville de départ" />
 								</button>
-							</div>
+							</ChoiceContent>
 						</Choice>
 					)}
 				</div>
@@ -250,8 +264,7 @@ export default function VoyageInput({
 										data: state['vers'],
 										updateState: (newData) =>
 											setState((state) => ({ ...state, vers: newData })),
-										onChange,
-										updateSituation,
+										dispatchUpdateSituation,
 										rulesPath,
 									}}
 								/>
@@ -261,22 +274,15 @@ export default function VoyageInput({
 					{vers.choice && (
 						<Choice>
 							<Image src={destinationPoint} alt="Vers" />
-							<div
-								css={`
-									text-align: right;
-									img {
-										width: 2rem;
-									}
-								`}
-							>
-								{vers.choice.item.nom}
+							<ChoiceContent>
+								<ChoiceText>{vers.choice.item.nom}</ChoiceText>
 								<button
 									type="button"
 									onClick={() => setState({ ...state, vers: {} })}
 								>
 									<Emoji e="✏️" title="Modifier la ville de destination" />
 								</button>
-							</div>
+							</ChoiceContent>
 						</Choice>
 					)}
 				</div>
@@ -284,6 +290,7 @@ export default function VoyageInput({
 			<MapWrapper
 				state={state}
 				setRealDistance={setRealDistance}
+				setRealHighwayPrice={setRealHighwayPrice}
 				orthodromic={orthodromic}
 			/>
 			{false && distance && !state.validated && (
@@ -298,6 +305,7 @@ export default function VoyageInput({
 const MapWrapper = ({
 	state: { depuis, vers },
 	setRealDistance,
+	setRealHighwayPrice,
 	orthodromic,
 }) => {
 	const origin = depuis.choice && [
@@ -308,12 +316,12 @@ const MapWrapper = ({
 		vers.choice.item.latitude,
 		vers.choice.item.longitude,
 	]
-	console.log('O', origin)
 	return (
 		<Map
 			origin={origin}
 			destination={destination}
 			setRealDistance={setRealDistance}
+			setRealHighwayPrice={setRealHighwayPrice}
 			orthodromic={orthodromic}
 		/>
 	)

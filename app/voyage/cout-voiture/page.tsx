@@ -8,26 +8,44 @@ import Link from 'next/link'
 import Explanation from './Explanation.mdx'
 import { Header } from './UI'
 import Voyage from './Voyage'
+import rules from './data/rules.ts'
+import BetaBanner from '@/components/BetaBanner'
 
-const title = `Quel est le vrai coût d'une voiture ?`
+const title = `Quel est le vrai coût d'un trajet en voiture ?`
 const description1 =
 		"Le coût d'un trajet en voiture est souvent réduit à celui du carburant et des péages d'autoroute. Mais alors qui paie l'achat, l'entretien, le parking, l'assurance ?",
 	description2 =
 		"On fait le point en quelques clics avec le simulateur de référence du coût d'un trajet en voiture."
 
-export const metadata: Metadata = {
-	title,
-	description: description1 + ' ' + description2,
-	openGraph: {
-		images: [`https://${process.env.VERCEL_URL}/voitures.png`],
-		type: 'article',
-		publishedTime: '2023-10-10T00:00:00.000Z',
-	},
+export const objectives = ['voyage . trajet voiture . coût trajet par personne']
+const rule = rules[objectives[0]]
+
+export async function generateMetadata(
+	{ params, searchParams }: Props,
+	parent?: ResolvingMetadata
+): Promise<Metadata> {
+	const dottedName = objectives[0]
+	const image =
+		Object.keys(searchParams).length === 0
+			? `/voitures.png`
+			: `/voyage/cout-voiture/og?dottedName=${dottedName}&title=${`Coût du trajet en voiture`}&emojis=${
+					rule.icônes
+			  }&${new URLSearchParams(searchParams).toString()}`
+	return {
+		title,
+		description: description1 + ' ' + description2,
+		openGraph: {
+			images: [image],
+			type: 'article',
+			publishedTime: '2023-10-10T00:00:00.000Z',
+		},
+		// we could simply render SVG emojis, but SVG images don't work in og tags, we'll have to convert them
+	}
 }
 
-const Page = ({ searchParams: { lu } }) => (
+const Page = ({ searchParams }) => (
 	<main>
-		{!lu && (
+		{!searchParams.lu && (
 			<Card $fullWidth>
 				<Header>
 					<Image
@@ -41,8 +59,12 @@ const Page = ({ searchParams: { lu } }) => (
 						<>
 							<p>{description1}</p>
 							<p>{description2}</p>
+							<BetaBanner />
 							<Link
-								href={{ pathname: '/voyage', query: { lu: true } }}
+								href={{
+									pathname: '/voyage',
+									query: { ...searchParams, lu: true },
+								}}
 								prefetch={false}
 							>
 								<LightButton>OK</LightButton>
@@ -52,27 +74,11 @@ const Page = ({ searchParams: { lu } }) => (
 				</Header>
 			</Card>
 		)}
-		<p
-			style={css`
-				text-align: center;
-			`}
-		>
-			Vous utilisez une{' '}
-			<strong
-				style={css`
-					background: purple;
-					padding: 0rem 0.4rem;
-				`}
-			>
-				version beta
-			</strong>{' '}
-			de l'outil.
-		</p>
-		<Voyage />
+		<Voyage searchParams={searchParams} />
 		<Article>
 			<div style={css(`margin-top: 6rem`)}>
 				<hr />
-				<Explanation />
+				<Explanation searchParams={searchParams} />
 			</div>
 		</Article>
 	</main>

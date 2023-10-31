@@ -3,15 +3,28 @@
 trajet:
 
 trajet . voyageurs:
-  question: Combien de voyageurs ?
+  question: Combien de voyageurs profitent du trajet ?
+  description: |
+    C'est évidemment un paramètre clef du calcul, qui est fait par tête. Que ce soit en covoiturage entre amis, en famille, pour amener les enfants au collège ou via une application comme Blablacar, chaque personne en plus réduit le coût par personne du trajet proprtionnellement. 
+
+    À noter : si vous conduisez deux personnes par exemple à un endroit, mais que vous jouez le rôle d'un taxi, répondez 2, pas 3. Vous ne profitez pas du trajet personnellement.
   par défaut: 1
   unité: voyageurs
+  suggestions:
+    1: 1
+    2: 2
+    3: 3
+    4: 4
+    5: 5
 
 trajet voiture:
 
 trajet voiture . coût trajet par personne:
-  titre: Coût du trajet en voiture
-  icônes: 💸🚗
+  titre: Un trajet en voiture (aller)
+  icônes: 🪙🚗
+  exposé:
+    url: '/voyage/cout-voiture'
+    titre: Coût d'un trajet en voiture
   description: |
     Voici un modèle de calcul du coût d'un trajet en voiture par personne.
 
@@ -24,6 +37,8 @@ trajet voiture . coût trajet par personne:
       - le coût du crédit pour acheter la voiture neuve. Il semblerait d'après le Ministère des Finances que 60 % des automobilistes feraient un prêt de 80 % à 4 ans... À creuser.
       - sûrement bien d'autres coûts plus mineurs qui viennent saler la facture
       - le surcoût qui découle de l'utilisation très faible de la voiture à l'année, qui rentabilise très peu les coûts d'achat au km
+      - le surcoût contextuel à certains départements, par exemple l'obligation des [équipements hivernaux](https://www.securite-routiere.gouv.fr/chacun-son-mode-de-deplacement/dangers-de-la-route-en-voiture/equipement-de-la-voiture/nouveaux) dans 34 départements de montagne. Des roues hiver c'est environ 1000 € à ajouter au prix de la voiture, ou des pneus à faire changer chaque hiver par un garagiste, ou des chaînes moins chères mais peu pratiques. 
+      - les remboursements de l'assurance, qui peuvent faire diminuer les coûts de réparation, potentiellement inclus dans le poste entretien : pour avancer là-dessus, il faudrait un modèle de calcul complet de l'entretien
 
     Faire une variation du modèle pour une voiture de location.
   formule: coût trajet / trajet . voyageurs
@@ -70,7 +85,7 @@ trajet voiture . coût instantané:
 
 trajet voiture . coût énergétique:
   formule: voiture . coût instantané au km * distance
-  titre: Coût direct
+  titre: Coût de l'énergie
 
 trajet voiture . prix carburant:
   question: Quel est le prix du carburant ?
@@ -137,8 +152,56 @@ trajet voiture . distance:
   unité: km
 
 trajet voiture . péages:
-  titre: Les péages
-  formule: distance * péages par km * part autoroute
+  titre: Péages d'autoroute
+  description: |
+    Cette variable peut être directement renseignée précisément par notre algorithme de calcul du prix de l'autoroute. Il se base sur le tracé GPS et calcule pour chaque
+
+    Sinon, c'est à l'utilisateur de saisir la part des autoroutes qu'il utilise, et nous en déduisons le coût total sur la base d'une moyenne. Il peut aussi forcer
+  formule:
+    variations:
+      - si: part autoroute . nulle
+        alors: 0
+      - si:
+          est défini: prix calculé . prix 2018
+        alors: prix calculé
+      - sinon: calcul simpliste
+
+trajet voiture . péages . calcul simpliste: distance * péages par km * part autoroute
+
+trajet voiture . péages . prix calculé:
+  formule: prix 2018 * inflation depuis 2018
+  description: |
+    Le prix quand il est calculé par un calculateur d'itinéraire qui segmente le trajet en portion d'autoroute et multiplie leur distance par le prix précis de l'autoroute en question.
+
+trajet voiture . péages . prix calculé . prix 2018:
+  titre: Péages autoroutes
+  injecté: oui
+  description: |
+    Le prix est calculé en utilisant les données compilées par Pierre-Olivier Simonard sur [cette étude du prix des autoroutes en 2018](https://public.tableau.com/app/profile/pierre.olivier.simonard/viz/AutoroutesV2/Vuedensemble).
+  unité: €
+
+trajet voiture . péages . prix calculé . inflation depuis 2018:
+  formule: 1.019 * 1.008 * 1.004 * 1.02 * 1.0475
+  description: |
+    Nous calculons ici la valeur de l'inflation des prix des péages des autoroutes françaises sur la base de la lecture du tableau en image présenté dans [cet article de Que Choisir](https://www.quechoisir.org/actualite-peages-d-autoroute-hausse-spectaculaire-des-tarifs-en-2023-n104499/).
+
+  note: |
+    À noter, des réductions pour les voitures électriques viennent compenser cette inflation. À intégrer plus tard, car il s'agit d'une modification de second ordre.
+
+trajet voiture . part autoroute . nulle:
+  titre: Autoroutes contournées
+  question: Contournez-vous les autoroutes payantes ?
+  non applicable si:
+    toutes ces conditions:
+      - est défini: péages . prix calculé . prix 2018
+      - péages . prix calculé . prix 2018 = 0
+  description: |
+    Les autoroutes, gérées par des entreprises privées, rendent un trajet plus cher, c'est incontestable. 
+
+    Pourtant, ne pas les prendre, c'est rediriger une partie du cout de votre trajet sur les finances publiques : les routes nationales et départementales coutent également cher à entretenir. Une partie du cout de votre trajet est ainsi effacée de votre porte-monnaie, pour être payée par vos impôts et ceux de vos concitoyens. 
+
+    Rouler hors autoroute, c'est aussi s'exposer à [un risque d'accident bien plus élevés](https://www.onisr.securite-routiere.gouv.fr/etat-de-l-insecurite-routiere/les-indicateurs-de-mon-departement-ou-de-ma-region/indicateurs-d-accidentalite-sur-routes-bidirectionnelles-hors-agglo).
+  par défaut: non
 
 trajet voiture . part autoroute:
   question: Quelle part de votre trajet est faite sur autoroute ?

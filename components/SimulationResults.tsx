@@ -2,14 +2,17 @@ import HumanCarbonImpact, { ProgressCircle } from 'Components/HumanCarbonImpact'
 import Emoji from './Emoji'
 
 const SimulationResults = ({
-	dottedName,
-	formule,
-	title,
-	icônes,
-	nodeValue,
 	engine,
 	ResultsBlock,
+	searchParams,
+	objectives,
+	evaluation,
+	rule,
+	opacity,
+	hideResults,
 }) => {
+	const { dottedName, title, nodeValue } = evaluation
+	const { icônes, formule } = rule
 	return (
 		<div
 			key={dottedName}
@@ -32,7 +35,7 @@ const SimulationResults = ({
 				border-radius: 0.3rem;
 			`}
 		>
-			<ProgressCircle engine={engine} />
+			<ProgressCircle {...{ engine, searchParams, objectives }} />
 			<div
 				id="shareImage"
 				css={`
@@ -70,6 +73,11 @@ const SimulationResults = ({
 						background: var(--color);
 						color: white;
 						font-size: 80%;
+						position: sticky;
+						top: 0px;
+						z-index: 10;
+						opacity: ${opacity};
+						display: ${hideResults ? 'none' : 'block'};
 					`}
 				>
 					{ResultsBlock ? (
@@ -80,8 +88,10 @@ const SimulationResults = ({
 								nodeValue,
 								formule,
 								dottedName,
-								engine,
+								objectives,
+								searchParams,
 							}}
+							engine={engine}
 						/>
 					)}
 				</div>

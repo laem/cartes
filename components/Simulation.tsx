@@ -7,47 +7,37 @@ import AnswerList from './conversation/AnswerList'
 import Conversation, {
 	ConversationProps,
 } from 'Components/conversation/Conversation'
-//TODO import { syncSearchParams } from './utils/useSearchParamsSimulationSharing'
 
 type SimulationProps = {
-	explanations?: React.ReactNode
 	results?: React.ReactNode
 	customEndMessages?: ConversationProps['customEndMessages']
 	showPeriodSwitch?: boolean
 	showLinkToForm?: boolean
-	orderByCategories: Array<Object>
 }
 
 export default function Simulation({
-	explanations,
 	results,
-	customEndMessages,
-	customEnd,
-	orderByCategories,
-	showPeriodSwitch,
 	animation = 'appear',
+	searchParams,
+	objectives,
 	rules,
 	engine,
 }: SimulationProps) {
 	const Animation = animate[animation]
-	//const situation = useSelector(situationSelector)
-	//const searchParams = useParamsFromSituation(situation)
-	// TODO syncSearchParams()
 	return (
 		<>
-			<AnswerList engine={engine} rules={rules} />
 			<SearchButton invisibleButton />
+			<AnswerList {...{ engine, searchParams, objectives }} />
 			<Animation delay={0.3}>
 				{results}
-
 				<Conversation
-					engine={engine}
-					rules={rules}
-					orderByCategories={orderByCategories}
-					customEnd={customEnd}
-					customEndMessages={customEndMessages}
+					{...{
+						engine,
+						rules,
+						objectives,
+						searchParams,
+					}}
 				/>
-				{explanations}
 			</Animation>
 		</>
 	)

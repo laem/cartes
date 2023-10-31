@@ -1,27 +1,30 @@
-import { Trans } from 'react-i18next'
+import AvionExplanation from '../AvionExplanation'
 import Emoji from '../Emoji'
 
-const SimulationEnding = ({ customEnd, customEndMessages }) => <div style={{ textAlign: 'center' }}>
-    {customEnd || (
-        <>
-            <h3>
-                <Emoji e={'🌟'} />{' '}
-                <Trans i18nKey="simulation-end.title">
-                    Vous avez complété cette simulation
-                </Trans>
-            </h3>
-            <p>
-                {customEndMessages ? (
-                    customEndMessages
-                ) : (
-                    <Trans i18nKey="simulation-end.text">
-                        Vous avez maintenant accès à l'estimation la plus précise
-                        possible.
-                    </Trans>
-                )}
-            </p>
-        </>
-    )}
-</div>;
+const ShareButton = dynamic(() => import('Components/ShareButton'), {
+	ssr: false,
+})
 
-export default SimulationEnding;
+import { title } from '../utils/publicodesUtils'
+import dynamic from 'next/dynamic'
+
+const SimulationEnding = ({ rule, engine, objectives }) => {
+	const avion = objectives[0] === 'transport . avion . impact'
+	return (
+		<div style={{ textAlign: 'center' }}>
+			<>
+				<Emoji e={'🌟'} customSizeEm={3.5} />
+				<p>Vous avez terminé votre simulation. Partagez-là !</p>
+				<ShareButton {...{ text: title(rule) }} />
+				{avion && (
+					<AvionExplanation
+						engine={engine}
+						description={rule.rawNode.description}
+					/>
+				)}
+			</>
+		</div>
+	)
+}
+
+export default SimulationEnding

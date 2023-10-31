@@ -1,7 +1,6 @@
 'use client'
 import Highlighter from 'react-highlight-words'
 import { useDispatch } from 'react-redux'
-import { updateSituation as updateGlobalSituation } from '@/actions'
 
 const hash = ({ item: { nom, ville, pays } }) => '' + nom + ville + pays
 const removeDuplicates = (elements) =>
@@ -10,26 +9,25 @@ const removeDuplicates = (elements) =>
 		return [...memo, ...(duplicate ? [] : [next])]
 	}, [])
 
-export default ({
+export default function GeoInputOptions({
 	whichInput,
 	data,
 	updateState,
-	onChange,
 	rulesPath,
-	updateSituation,
-}) =>
-	data?.results.length > 0 ? (
+	dispatchUpdateSituation,
+}) {
+	return data?.results.length > 0 ? (
 		<ul>
 			{removeDuplicates(data.results.slice(0, 5)).map((option) => (
 				<Option
+					key={JSON.stringify(option.item)}
 					{...{
 						whichInput,
 						option,
 						updateState,
-						onChange,
 						rulesPath,
 						data,
-						updateSituation,
+						dispatchUpdateSituation,
 					}}
 				/>
 			))}
@@ -37,13 +35,13 @@ export default ({
 	) : (
 		<p>Chargement en cours</p>
 	)
+}
 
 const Option = ({
 	whichInput,
 	option,
 	updateState,
-	onChange,
-	updateSituation,
+	dispatchUpdateSituation,
 	rulesPath,
 	data,
 }) => {
@@ -77,6 +75,7 @@ const Option = ({
 					align-items: center;
 					text-align: left;
 					width: 100%;
+					padding: 0;
 				}
 
 				button:hover {
@@ -96,9 +95,7 @@ const Option = ({
 						`'${ville}'`,
 					]
 
-					updateSituation
-						? updateSituation(entry[0])(entry[1])
-						: dispatch(updateGlobalSituation(...entry))
+					dispatchUpdateSituation(entry[0])(entry[1])
 					updateState(newState)
 				}}
 			>

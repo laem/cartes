@@ -1,6 +1,6 @@
 'use client'
 
-import React, { useContext, useMemo, useState } from 'react'
+import React, { useContext, useEffect, useMemo, useState } from 'react'
 
 import rules from '@/app/voyage/cout-voiture/data/rules'
 import { situationSelector } from '@/selectors/simulationSelectors'
@@ -10,7 +10,7 @@ import { useSelector } from 'react-redux'
 const PublicodesContext = React.createContext()
 
 export default function PublicodesProvider({ children }) {
-	const [request, requestPublicodes] = useState(null)
+	const [request, requestPublicodes] = useState({ objective: null })
 	const engine = useMemo(() => {
 		if (request != null) {
 			console.log(
@@ -22,7 +22,7 @@ export default function PublicodesProvider({ children }) {
 		return
 	}, [request])
 
-	const situation = useSelector(situationSelector)
+	const situation = useSelector(situationSelector(request.objective))
 	const exemple = useSelector((state) => state.exemple),
 		exempleSituation = exemple?.situation || {}
 	const updatedEngine = useMemo(() => {
@@ -51,4 +51,16 @@ export const usePublicodes = () => {
 		)
 	}
 	return context
+}
+
+// This to provide the client engine to a server component tree,
+// the client components needing the engine being spread across the tree
+export const WithPublicodes = ({ objective, ServerComponent }) => {
+	const [requestPublicodes, engine] = useContext(PublicodesContext)
+
+	useEffect(() => {
+		requestPublicodes({ objective })
+	}, [objective])
+
+	return <ServerComponent engine={engine} />
 }

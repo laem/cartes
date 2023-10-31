@@ -1,10 +1,9 @@
 'use client'
 import { targetUnitSelector } from '@/selectors/simulationSelectors'
-import useDisplayOnIntersecting from 'Components/utils/useDisplayOnIntersecting'
-import Link from 'next/link'
 import { EvaluatedNode } from 'publicodes'
 import React from 'react'
 import { useSelector } from 'react-redux'
+import styled from 'styled-components'
 import {
 	BarItem,
 	BarStack,
@@ -12,6 +11,7 @@ import {
 	BarStackLegendItem,
 	SmallCircle,
 } from './StackedBarChartUI'
+import { sortBy } from './utils/utils'
 
 type Precision = 1 | 0.1 | 0.01
 
@@ -75,15 +75,8 @@ type InnerStackedBarChartProps = {
 export function StackedBarChart({
 	data,
 	precision,
+	percentageFirst = true,
 }: InnerStackedBarChartProps) {
-	const [, displayChart] = useDisplayOnIntersecting({
-		threshold: 0.5,
-	})
-
-	return <InnerStackedBarChart data={data} precision={precision} />
-}
-
-function InnerStackedBarChart({ data, precision }: InnerStackedBarChartProps) {
 	const percentages = roundedPercentages(
 		data.map((d) => (typeof d.value === 'number' && d.value) || 0),
 		precision
@@ -111,15 +104,139 @@ function InnerStackedBarChart({ data, precision }: InnerStackedBarChartProps) {
 					))}
 			</BarStack>
 			<BarStackLegend className="print-background-force">
-				{dataWithPercentage.map(({ key, percentage, color, legend, value }) => (
-					<BarStackLegendItem key={key} title={value}>
-						<SmallCircle style={{ backgroundColor: color }} />
-						{legend}
-						<strong title={value}>
-							{Intl.NumberFormat().format(percentage)} %
-						</strong>
-					</BarStackLegendItem>
+				{dataWithPercentage.map(({ key, percentage, color, legend, value }) => {
+					const formatter = (val) =>
+							Intl.NumberFormat('fr-FR', {
+								maximumSignificantDigits: ('' + precision).length - 1,
+							}).format(val),
+						displayValue = formatter(value) + ' €', // TODO to genericize one day, easy
+						displayPercentage = formatter(percentage) + ' %'
+					return (
+						<BarStackLegendItem key={key} title={value}>
+							<SmallCircle style={{ backgroundColor: color }} />
+							{legend}
+							<strong
+								title={percentageFirst ? displayValue : displayPercentage}
+							>
+								{percentageFirst ? displayPercentage : displayValue}
+							</strong>
+						</BarStackLegendItem>
+					)
+				})}
+			</BarStackLegend>
+		</>
+	)
+}
+
+const VerticalBarItem = ({ color, width, label, value }) => (
+	<li
+		css={`
+			position: relative;
+			margin: 0;
+			> span:first-child {
+				text-align: right;
+				display: inline-block;
+				width: 7rem;
+			}
+			transform: translateX(-6rem);
+			display: flex;
+			align-items: center;
+		`}
+		title={
+			Intl.NumberFormat('fr-FR', { maximumSignificantDigits: 2 }).format(
+				value
+			) + ' € par trajet'
+		}
+	>
+		{label}
+		<span
+			css={`
+				position: absolute;
+				left: 8rem;
+				display: inline-block;
+				width: ${(width * 16) / 100}rem;
+				background: ${color};
+				height: 1rem;
+				border-radius: 0.2rem;
+			`}
+		></span>
+	</li>
+)
+export function VerticalBarChart({
+	data,
+	precision,
+	percentageFirst = true,
+}: InnerStackedBarChartProps) {
+	const percentages = roundedPercentages(
+		data.map((d) => (typeof d.value === 'number' && d.value) || 0),
+		precision
+	)
+	const dataWithPercentage = data.map((data, index) => ({
+		...data,
+		percentage: percentages[index],
+	}))
+
+	return (
+		<ul
+			css={`
+				list-style-type: none;
+				display: flex;
+				justify-content: center;
+				flex-direction: column;
+				align-items: center;
+			`}
+		>
+			{dataWithPercentage
+				.filter(({ percentage }) => percentage !== 0)
+				.map(({ key, color, percentage, legend, value }) => (
+					<VerticalBarItem
+						value={value}
+						color={color}
+						width={percentage}
+						key={key}
+						label={legend}
+					/>
 				))}
+		</ul>
+	)
+
+	return (
+		<>
+			<BarStack className="print-background-force">
+				{dataWithPercentage
+					// <BarItem /> has a border so we don't want to display empty bars
+					// (even with width 0).
+					.filter(({ percentage }) => percentage !== 0)
+					.map(({ key, color, percentage }) => (
+						<BarItem
+							style={{
+								width: `${percentage}%`,
+								backgroundColor: color || 'green',
+							}}
+							key={key}
+						/>
+					))}
+			</BarStack>
+			<BarStackLegend className="print-background-force">
+				{dataWithPercentage.map(({ key, percentage, color, legend, value }) => {
+					const formatter = (val) =>
+							Intl.NumberFormat('fr-FR', {
+								maximumSignificantDigits: ('' + precision).length - 1,
+							}).format(val),
+						displayValue = formatter(value) + ' €', // TODO to genericize one day, easy
+						displayPercentage = formatter(percentage) + ' %'
+					return (
+						<BarStackLegendItem key={key} title={value}>
+							<SmallCircle style={{ backgroundColor: color }} />
+							{legend}
+							<strong
+								title={percentageFirst ? displayValue : displayPercentage}
+							>
+								{percentageFirst ? displayPercentage : displayValue}
+							</strong>
+						</BarStackLegendItem>
+					)
+				})}
 			</BarStackLegend>
 		</>
 	)
@@ -128,12 +245,21 @@ function InnerStackedBarChart({ data, precision }: InnerStackedBarChartProps) {
 type StackedRulesChartProps = {
 	data: Array<{ color?: string; dottedName: string; title?: string }>
 	precision?: Precision
+	engine: object
+	situation: object
+	percentageFirst: boolean
+	largerFirst: boolean
+	verticalBars: boolean
 }
 
 export default function StackedRulesChart({
 	data,
 	precision = 0.1,
 	engine,
+	percentageFirst,
+	situation,
+	largerFirst,
+	verticalBars,
 }: StackedRulesChartProps) {
 	const targetUnit = useSelector(targetUnitSelector)
 	const evaluatedData = data.map(({ dottedName, title, color }) => {
@@ -141,12 +267,31 @@ export default function StackedRulesChart({
 
 		return {
 			key: dottedName,
-			value: engine.evaluate({ valeur: dottedName, unité: targetUnit })
-				.nodeValue,
+			value: engine
+				.setSituation(situation)
+				.evaluate({ valeur: dottedName, unité: targetUnit }).nodeValue,
 			legend: <span>{title || rule.title}</span>,
 			color,
 		}
 	})
-	console.log('EV', evaluatedData)
-	return <StackedBarChart precision={precision} data={evaluatedData} />
+
+	if (verticalBars)
+		return (
+			<VerticalBarChart
+				precision={precision}
+				data={
+					largerFirst ? sortBy((d) => -d.value)(evaluatedData) : evaluatedData
+				}
+				percentageFirst={percentageFirst}
+			/>
+		)
+	return (
+		<StackedBarChart
+			precision={precision}
+			data={
+				largerFirst ? sortBy((d) => -d.value)(evaluatedData) : evaluatedData
+			}
+			percentageFirst={percentageFirst}
+		/>
+	)
 }

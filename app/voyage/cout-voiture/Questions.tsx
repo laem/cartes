@@ -1,86 +1,116 @@
 'use client'
+import css from '@/components/css/convertToJs'
 import DetailedBarChartIcon from '@/components/DetailsBarChartIcon'
+import Emoji from '@/components/Emoji'
+import GraphicDetails from '@/components/GraphicDetails'
 import Simulation from '@/components/Simulation'
 import SimulationResults from '@/components/SimulationResults'
 import StackedBarChart from '@/components/StackedBarChart'
-import { Card } from '@/components/UI'
+import { LightButton } from '@/components/UI'
+import { getFoldedSteps } from '@/components/utils/simulationUtils'
 import { useNextQuestions } from '@/components/utils/useNextQuestion'
-import { answeredQuestionsSelector } from '@/selectors/simulationSelectors'
+import { situationSelector } from '@/selectors/simulationSelectors'
 import { formatValue } from 'publicodes'
 import { useSelector } from 'react-redux'
-import { EndingCongratulations } from '@/app/simulateur/[...dottedName]/SimulateurContent'
+import CalculSummary from './CalculSummary'
 
 export default function Questions({
 	rules,
-	objective,
+	objectives,
 	engine,
-	config,
 	evaluation,
+	searchParams,
 }) {
-	const nextQuestions = useNextQuestions(engine),
-		answeredQuestions = useSelector(answeredQuestionsSelector)
-	const rule = rules[objective]
+	const nextQuestions = useNextQuestions(objectives, engine, searchParams),
+		answeredQuestions = getFoldedSteps(searchParams, rules)
+	const rule = rules[objectives[0]]
+	//just to update the engine object
+	const situation = useSelector(situationSelector(objectives[0]))
 
+	const voyageurs = searchParams['voyage.trajet.voyageurs']
 	const ResultsBlock = () => (
 		<div css="padding: 1.6rem; font-size: 140%">
 			<strong>
 				{formatValue(evaluation, {
-					displayedUnit: '€ / personne',
+					displayedUnit: voyageurs && voyageurs > 1 ? '€ / personne' : '€',
 					precision: 0,
 				})}
 			</strong>
 		</div>
 	)
+
+	const opacity =
+		(answeredQuestions.length + 2) /
+		(answeredQuestions.length + nextQuestions.length)
 	return (
-		<ul>
+		<>
 			<div
-				css={`
-					margin: 2rem 0.4rem 1rem;
-					opacity: ${(answeredQuestions.length + 2) /
-					(answeredQuestions.length + nextQuestions.length)};
-					summary {
-						list-style-type: none;
-						cursor: pointer;
-					}
-				`}
+				style={css(`
+					top: -8rem;
+					position: sticky;
+					z-index: 10;
+				`)}
 			>
 				<SimulationResults
-					{...{ ...rule, ...evaluation, engine, rules, ResultsBlock }}
+					{...{
+						opacity,
+						hideResults: answeredQuestions.length === 0,
+						rule,
+						evaluation,
+						engine,
+						rules,
+						ResultsBlock,
+						objectives,
+						searchParams,
+					}}
 				/>
+			</div>
 
-				<details>
+			<div
+				style={{
+					opacity,
+					display: answeredQuestions.length ? 'block' : 'none',
+				}}
+			>
+				<GraphicDetails>
 					<summary>
-						<DetailedBarChartIcon />
+						<StackedBarChart
+							engine={engine}
+							percentageFirst={false}
+							situation={situation}
+							precision={0.1}
+							largerFirst={true}
+							verticalBars={true}
+							data={[
+								{
+									dottedName: 'voyage . trajet voiture . coût instantané',
+									title: 'Instantané ⛽️',
+									color: 'rgb(163, 146, 199)',
+								},
+								{
+									dottedName: 'voyage . trajet voiture . coût de possession',
+									title: 'Possession 🚗',
+									color: '#f8c291',
+								},
+								{
+									dottedName: 'voyage . trajet voiture . coûts divers',
+									title: 'Divers ◽️',
+									color: '#cf6a87',
+								},
+							]}
+						/>
 					</summary>
-					<StackedBarChart
-						engine={engine}
-						data={[
-							{
-								dottedName: 'voiture . coût instantané au km',
-								title: 'Coût instantané',
-								color: '#6a89cc',
-							},
-							{
-								dottedName: 'voiture . coût de possession au km',
-								title: 'Coût de possession',
-								color: '#f8c291',
-							},
-							{
-								dottedName: 'voiture . coûts divers au km',
-								title: 'Coûts divers',
-								color: '#cf6a87',
-							},
-						]}
-					/>
-				</details>
+					<CalculSummary engine={engine} horizontal={true} />
+				</GraphicDetails>
 			</div>
 			<Simulation
-				rules={rules}
-				engine={engine}
-				noFeedback
-				customEnd={<EndingCongratulations />}
-				explanations={null}
+				{...{
+					searchParams,
+					rules,
+					engine,
+					objectives,
+				}}
 			/>
-		</ul>
+		</>
 	)
 }

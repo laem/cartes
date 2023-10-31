@@ -69,6 +69,7 @@
 		"yaml-loader": "^0.8.0"
 	},
 	"dependencies": {
+		"@adobe/css-tools": "^4.3.1",
 		"@babel/runtime": "^7.22.6",
 		"@mdx-js/loader": "^2.3.0",
 		"@mdx-js/react": "^2.3.0",
@@ -85,13 +86,12 @@
 		"chrome-aws-lambda": "^10.1.0",
 		"color-convert": "^2.0.1",
 		"core-js": "^3.31.1",
-		"css": "^3.0.0",
 		"css-to-js": "^0.0.2",
 		"dotenv": "^16.0.0",
 		"emoji-regex": "^10.2.1",
 		"eslint-config-next": "^13.5.3",
 		"eslint-plugin-next": "^0.0.0",
-		"framer-motion": "^10.15.1",
+		"framer-motion": "^10.16.4",
 		"fuse.js": "6.6.2",
 		"great-circle": "^0.2.8",
 		"html-webpack-plugin": "^5.5.0",
@@ -104,13 +104,12 @@
 		"markdown-to-jsx": "^7.3.2",
 		"mini-css-extract-plugin": "^2.6.0",
 		"moo": "^0.5.0",
-		"next": "^13.5.3",
+		"next": "^14.0.1",
 		"next-mdx-remote": "^4.4.1",
 		"openmoji": "^14.0.0",
 		"path-browserify": "^1.0.1",
 		"process": "^0.11.10",
-		"publicodes": "^1.0.0-beta.74",
-		"publicodes-react": "^1.0.0-beta.74",
+		"publicodes": "^1.0.0-beta.77",
 		"puppeteer-core": "^21.0.1",
 		"qrcode.react": "^3.0.1",
 		"ramda": "^0.29.0",
@@ -155,9 +154,9 @@
 		"yjs": "^13.5.35"
 	},
 	"scripts": {
-		"dev": "next dev",
+		"dev": "next dev -p 8080",
 		"build": "next build",
-		"start": "next start",
+		"start": "next start -p 8080",
 		"lint": "next lint",
 		"generate-ferry-svg": "npx --yes  @svgr/cli --no-svgo --ref --replace-attr-values ../1ccc23d5/megaexpressfour.png=public/megaexpressfour.png -- components/ferry/mega-express-four.svg > components/ferry/Mega.tsx"
 	}

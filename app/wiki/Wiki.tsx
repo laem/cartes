@@ -1,10 +1,10 @@
 import byCategory from 'Components/categories'
 import Emoji from 'Components/Emoji'
 import Link from 'next/link'
-import { utils } from 'publicodes'
-import Highlighter from 'react-highlight-words'
 import Image from 'next/image'
+import { utils } from 'publicodes'
 import energy from '@/public/energy.svg'
+import ferryIcon from '@/public/ferry-small.png'
 
 const { encodeRuleName } = utils
 
@@ -17,20 +17,12 @@ import {
 } from '@/components/WikiUI'
 import { Card } from '@/components/UI'
 import { title as ruleTitle } from 'Components/utils/publicodesUtils'
+import css from '@/components/css/convertToJs'
 
 export default function Wiki({ rules }) {
 	const exposedRules = Object.entries(rules)
 		.map(([dottedName, v]) => ({ ...v, dottedName }))
 		.filter((rule) => rule?.exposé)
-
-	const withCustomSimulators = [
-		...exposedRules,
-		{
-			titre: 'Prix à la pompe',
-			description:
-				'Décomposition du prix des carburants à la pompe (essence, gazole)',
-		},
-	]
 
 	return (
 		<section>
@@ -62,30 +54,23 @@ const CategoryView = ({ exposedRules, rules }) => {
 			{categories.map(([category, rules], i) => (
 				<li key={category}>
 					<h2>{category}</h2>
-					<RuleList {...{ rules }} />
-					{false && i === 0 && (
-						<div
-							css={`
-								display: none;
-								height: 3em;
-								margin: 1em auto;
-								@media (max-width: 600px) {
-									display: block;
-								}
-							`}
-						>
-							<Emoji extra="E105" alt="glisser horizontalement" />
-						</div>
-					)}
+					<RuleList
+						{...{
+							rules: rules.filter(
+								(rule) => !topElements.includes(rule.dottedName)
+							),
+						}}
+					/>
 				</li>
 			))}
 		</CategoryList>
 	)
 }
-const RuleList = ({ rules, input }) => (
+const RuleList = ({ rules }) => (
 	<RuleListStyle>
 		{rules.map((rule) => {
 			const dottedName = rule.dottedName
+			if (dottedName === 'lave-linge . renouveler') return null // TODO deactivated for our switch to searchParams. To be reactivated
 
 			const title = ruleTitle(rule),
 				icônes = rule.icônes || rule.rawNode?.icônes,
@@ -99,19 +84,19 @@ const RuleList = ({ rules, input }) => (
 				<li key={dottedName || rule.titre}>
 					<Link href={rule.url || '/simulateur/' + encodeRuleName(dottedName)}>
 						<WikiCard $inversedColor={rule.inversedColor}>
-							<Emoji e={icônes} />
-							<h3>
-								{input ? (
-									<Highlighter
-										searchWords={input.split(' ')}
-										autoEscape={true}
-										textToHighlight={title}
-										highlightClassName="highlighted"
-									/>
-								) : (
-									title
-								)}
-							</h3>
+							{false && dottedName && dottedName.includes('ferry') ? (
+								<Image
+									src={ferryIcon}
+									alt={'Un ferry dans une mer rouge'}
+									style={css`
+										width: 3rem;
+										height: auto;
+									`}
+								/>
+							) : (
+								<Emoji e={icônes} />
+							)}
+							<h3>{title}</h3>
 							<CardUnits>
 								{units.map((unit) => {
 									const { text, title } = unitRepresentations[unit]

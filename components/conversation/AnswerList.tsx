@@ -4,21 +4,25 @@ import { parentName, safeGetRule } from 'Components/utils/publicodesUtils'
 import { useNextQuestions } from 'Components/utils/useNextQuestion'
 import { motion } from 'framer-motion'
 import { DottedName } from 'modele-social'
+import Link from 'next/link'
 import { EvaluatedNode, formatValue } from 'publicodes'
-import { useEffect } from 'react'
-import { useDispatch, useSelector } from 'react-redux'
+import { useEffect, useState } from 'react'
+import { useDispatch } from 'react-redux'
 import {
-	answeredQuestionsSelector,
-	objectifsSelector,
-	situationSelector,
-} from 'Selectors/simulationSelectors'
+	encodeSituation,
+	getFoldedSteps,
+	getSituation,
+} from '../utils/simulationUtils'
+import { omit } from '../utils/utils'
 import './AnswerList.css'
 
-export default function AnswerList({ rules, engine }) {
+export default function AnswerList({ searchParams, objectives, engine }) {
 	const dispatch = useDispatch()
-	const situation = useSelector(situationSelector)
-	const foldedQuestionNames = useSelector(answeredQuestionsSelector)
-	const answeredQuestionNames = Object.keys(situation)
+	const rules = engine.getParsedRules()
+	const validatedSituation = getSituation(searchParams, rules)
+	const foldedQuestionNames = getFoldedSteps(searchParams, rules)
+	const answeredQuestionNames = Object.keys(validatedSituation)
+	const [isOpen, setOpen] = useState(false)
 	const foldedQuestions = foldedQuestionNames
 		.map((dottedName) => {
 			const rule = safeGetRule(engine, dottedName)
@@ -38,8 +42,8 @@ export default function AnswerList({ rules, engine }) {
 		.filter((node) => !JSON.stringify(node).includes('"injecté":"oui"')) // Very strange, should just be rule.rawNode, instead we've got to search for a deeply nested final value, hence the stringified search
 	// Engine evaluated multiple times ? TODO
 
-	const nextSteps = useNextQuestions(engine).map((dottedName) =>
-		engine.evaluate(engine.getRule(dottedName))
+	const nextSteps = useNextQuestions(objectives, engine, searchParams).map(
+		(dottedName) => engine.evaluate(engine.getRule(dottedName))
 	)
 
 	useEffect(() => {
@@ -48,7 +52,7 @@ export default function AnswerList({ rules, engine }) {
 			console.log('VOILA VOTRE SITUATION')
 			console.log(
 				JSON.stringify({
-					data: { situation, foldedSteps: foldedQuestionNames },
+					data: { validatedSituation, foldedSteps: foldedQuestionNames },
 				})
 			)
 			/* MARCHE PAS : 
@@ -68,15 +72,21 @@ export default function AnswerList({ rules, engine }) {
 		return () => {
 			window.removeEventListener('keydown', handleKeyDown)
 		}
-	}, [situation])
+	}, [validatedSituation, foldedQuestionNames])
 
 	const answeredQuestionsLength = foldedStepsToDisplay.length,
 		nextQuestionsLength = nextSteps.length
 
+	console.log('isOpen', isOpen)
 	return (
 		<div className="answer-list">
 			{!!foldedStepsToDisplay.length && (
 				<details
+					open={isOpen}
+					onClick={(event) => {
+						event.preventDefault()
+						setOpen(!isOpen)
+					}}
 					css={`
 						font-size: 120%;
 						margin-bottom: 0.2rem;
@@ -102,9 +112,10 @@ export default function AnswerList({ rules, engine }) {
 								margin: 0 0.2rem;
 							}
 						}
-						> div > button {
-							margin: 0 0 0 auto;
-							display: block;
+						> div {
+							display: flex;
+							flex-direction: column;
+							align-items: end;
 						}
 					`}
 				>
@@ -118,15 +129,29 @@ export default function AnswerList({ rules, engine }) {
 						</span>
 					</summary>
 					<div>
-						<button
-							onClick={() => dispatch({ type: 'RESET_SIMULATION' })}
+						<Link
+							href={{
+								query: { _action: 'reset', lu: true },
+							}}
+							prefetch={false}
+							scroll={false}
+							onClick={() => {
+								dispatch({ type: 'RESET_SIMULATION', objectives })
+							}}
 							title="Effacer mes réponses"
 						>
 							<Emoji e="♻️" />
 							Effacer
-						</button>
+						</Link>
 
-						<StepsTable {...{ rules: foldedStepsToDisplay }} />
+						<StepsTable
+							{...{
+								rules: foldedStepsToDisplay,
+								validatedSituation,
+								objectives,
+								setOpen,
+							}}
+						/>
 					</div>
 				</details>
 			)}
@@ -145,6 +170,9 @@ export default function AnswerList({ rules, engine }) {
 
 function StepsTable({
 	rules,
+	validatedSituation,
+	objectives,
+	setOpen,
 }: {
 	rules: Array<EvaluatedNode & { nodeKind: 'rule'; dottedName: DottedName }>
 }) {
@@ -157,8 +185,12 @@ function StepsTable({
 			<tbody>
 				{rules.map((rule) => (
 					<Answer
+						key={rule.dottedName}
 						{...{
 							rule,
+							objectives,
+							validatedSituation,
+							setOpen,
 						}}
 					/>
 				))}
@@ -167,7 +199,7 @@ function StepsTable({
 	)
 }
 
-const Answer = ({ rule }) => {
+const Answer = ({ rule, validatedSituation, objectives, setOpen }) => {
 	// Shameless exception, sometimes you've got to do things dirty
 	if (
 		[
@@ -177,34 +209,39 @@ const Answer = ({ rule }) => {
 			'transport . ferry . départ',
 			'transport . ferry . arrivée',
 
-			'trajet voiture . départ',
-			'trajet voiture . arrivée',
+			'voyage . trajet voiture . départ',
+			'voyage . trajet voiture . arrivée',
 		].includes(rule.dottedName)
 	)
 		return null
 
 	const path = parentName(rule.dottedName, ' · ', 1)
-	const simulationDottedName = useSelector(objectifsSelector)[0]
-	const uselessPrefix = simulationDottedName.includes(path)
-	const situation = useSelector(situationSelector)
+	const uselessPrefix = objectives[0].includes(path)
 	const language = 'fr'
 
 	const trimSituationString = (el) => el && el.split("'")[1]
+
+	const queryWithout = encodeSituation(
+		omit([rule.dottedName], validatedSituation)
+	)
+
 	if (rule.dottedName === 'transport . avion . distance de vol aller') {
 		return (
 			<AnswerComponent
 				{...{
+					queryWithout,
 					dottedName: rule.dottedName,
 					NameComponent: <div>Votre vol</div>,
 					ValueComponent: (
 						<span className="answerContent">
 							{`${trimSituationString(
-								situation['transport . avion . départ']
+								validatedSituation['transport . avion . départ']
 							)} - ${trimSituationString(
-								situation['transport . avion . arrivée']
+								validatedSituation['transport . avion . arrivée']
 							)} (${formatValue(rule, { language })})`}
 						</span>
 					),
+					setOpen,
 				}}
 			/>
 		)
@@ -215,51 +252,46 @@ const Answer = ({ rule }) => {
 		return (
 			<AnswerComponent
 				{...{
+					queryWithout,
 					dottedName: rule.dottedName,
 					NameComponent: <div>Votre traversée</div>,
 					ValueComponent: (
 						<span className="answerContent">
 							{`${trimSituationString(
-								situation['transport . ferry . départ']
+								validatedSituation['transport . ferry . départ']
 							)} - ${trimSituationString(
-								situation['transport . ferry . arrivée']
+								validatedSituation['transport . ferry . arrivée']
 							)} (${formatValue(rule, { language })})`}
 						</span>
 					),
+					setOpen,
 				}}
 			/>
 		)
 	}
-	if (rule.dottedName === 'trajet voiture . distance') {
+	if (rule.dottedName === 'voyage . trajet voiture . distance') {
 		return (
 			<AnswerComponent
 				{...{
+					queryWithout,
 					dottedName: rule.dottedName,
 					NameComponent: <div>Votre trajet</div>,
 					ValueComponent: (
 						<span className="answerContent">
 							{`${trimSituationString(
-								situation['trajet voiture . départ']
+								validatedSituation['voyage . trajet voiture . départ']
 							)} - ${trimSituationString(
-								situation['trajet voiture . arrivée']
+								validatedSituation['voyage . trajet voiture . arrivée']
 							)} (${formatValue(rule, { language })})`}
 						</span>
 					),
+					setOpen,
 				}}
 			/>
 		)
 	}
 
-	const NameComponent = (
-		<div>
-			{path && !uselessPrefix && (
-				<div>
-					<small>{path}</small>
-				</div>
-			)}
-			<div css="font-size: 110%">{rule.title}</div>
-		</div>
-	)
+	const NameComponent = <div>{rule.title}</div>
 
 	const ValueComponent = (
 		<span
@@ -274,15 +306,27 @@ const Answer = ({ rule }) => {
 			)}
 		</span>
 	)
+
 	return (
 		<AnswerComponent
-			{...{ dottedName: rule.dottedName, NameComponent, ValueComponent }}
+			{...{
+				dottedName: rule.dottedName,
+				NameComponent,
+				ValueComponent,
+				queryWithout,
+				setOpen,
+			}}
 		/>
 	)
 }
 
-const AnswerComponent = ({ dottedName, NameComponent, ValueComponent }) => {
-	const dispatch = useDispatch()
+const AnswerComponent = ({
+	dottedName,
+	NameComponent,
+	ValueComponent,
+	queryWithout,
+	setOpen,
+}) => {
 	return (
 		<motion.tr
 			initial={{ opacity: 0, y: -50, scale: 0.3 }}
@@ -296,8 +340,11 @@ const AnswerComponent = ({ dottedName, NameComponent, ValueComponent }) => {
 		>
 			<td>{NameComponent}</td>
 			<td>
-				<button
-					className="answer"
+				<Link
+					href={{ query: { ...queryWithout, lu: true } }}
+					prefetch={false}
+					scroll={false}
+					onClick={() => setOpen(false)}
 					css={`
 						display: inline-block;
 						padding: 0.6rem;
@@ -314,16 +361,9 @@ const AnswerComponent = ({ dottedName, NameComponent, ValueComponent }) => {
 							display: inline-block;
 						}
 					`}
-					onClick={() => {
-						dispatch({
-							type: 'STEP_ACTION',
-							name: 'unfold',
-							step: dottedName,
-						})
-					}}
 				>
 					{ValueComponent}
-				</button>
+				</Link>
 			</td>
 		</motion.tr>
 	)

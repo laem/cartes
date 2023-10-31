@@ -1,13 +1,12 @@
 'use client'
-import { goToQuestion, updateSituation } from '@/actions'
+import { updateSituation } from '@/actions'
 import RuleInput, { RuleInputProps } from 'Components/conversation/RuleInput'
 import Notifications from 'Components/Notifications'
-import { splitName } from 'Components/utils/publicodesUtils'
-import React, { useState } from 'react'
+import Link from 'next/link'
+import React from 'react'
 import { useDispatch } from 'react-redux'
 import { Button, Card, LightButton } from '../UI'
 import Aide from './Aide'
-import CategoryRespiration from './CategoryRespiration'
 import './conversation.css'
 import { isVoyageQuestion } from './customQuestions/voyageInput'
 import { ExplicableRule } from './Explicable'
@@ -15,57 +14,39 @@ import { isMosaic } from './mosaicQuestions'
 import SimulationEnding from './SimulationEnding'
 import { Fieldset, StepButtons } from './UI'
 
-export type ConversationProps = {
-	customEndMessages?: React.ReactNode
-	customEnd?: React.ReactNode
-}
-
 const Conversation2 = ({
+	query,
 	currentQuestion,
-	customEnd,
-	customEndMessages,
-	orderByCategories,
 	previousAnswers,
 	mosaicQuestion,
 	rules,
 	engine,
-	submit,
+	validatedSituation,
 	situation,
-	unfoldedStep,
 	setDefault,
+	objectives,
 }) => {
 	const dispatch = useDispatch()
-	const [dismissedRespirations, dismissRespiration] = useState([])
+
 	const onChange: RuleInputProps['onChange'] = (value) => {
-		dispatch(updateSituation(currentQuestion, value))
+		console.log('will distach onChange', currentQuestion, value)
+		dispatch(updateSituation(currentQuestion, value, objectives))
+	}
+	const dispatchUpdateSituation = (dottedName) => (value) => {
+		console.log('will distach updateSituation', dottedName, value)
+		dispatch(updateSituation(dottedName, value, objectives))
 	}
 
-	const currentQuestionIndex = previousAnswers.findIndex(
-			(a) => a === unfoldedStep
-		),
-		previousQuestion =
-			currentQuestionIndex < 0 && previousAnswers.length > 0
-				? previousAnswers[previousAnswers.length - 1]
-				: previousAnswers[currentQuestionIndex - 1]
 	const questionText = mosaicQuestion
 		? mosaicQuestion.question
 		: rules[currentQuestion]?.rawNode?.question
 
 	if (!currentQuestion)
-		return <SimulationEnding {...{ customEnd, customEndMessages }} />
-
-	const questionCategoryName = splitName(currentQuestion)[0],
-		questionCategory =
-			orderByCategories &&
-			orderByCategories.find(
-				({ dottedName }) => dottedName === questionCategoryName
-			)
-
-	const isCategoryFirstQuestion =
-		questionCategory &&
-		previousAnswers.find(
-			(a) => splitName(a)[0] === questionCategory.dottedName
-		) === undefined
+		return (
+			<SimulationEnding
+				{...{ engine, rule: rules[objectives[0]], objectives }}
+			/>
+		)
 
 	const hasDescription =
 		((mosaicQuestion &&
@@ -78,24 +59,7 @@ const Conversation2 = ({
 			? true
 			: situation[currentQuestion] != null
 
-	const goToPrevious = () => {
-		return dispatch(goToQuestion(previousQuestion))
-	}
-
-	return false &&
-		orderByCategories &&
-		isCategoryFirstQuestion &&
-		!dismissedRespirations.includes(questionCategory.dottedName) ? (
-		<CategoryRespiration
-			questionCategory={questionCategory}
-			dismiss={() =>
-				dismissRespiration([
-					...dismissedRespirations,
-					questionCategory.dottedName,
-				])
-			}
-		/>
-	) : (
+	return (
 		<section
 			css={`
 				@media (max-width: 800px) {
@@ -134,39 +98,47 @@ const Conversation2 = ({
 						<Aide rules={rules} />
 						<Fieldset>
 							<RuleInput
-								dottedName={currentQuestion}
-								onChange={onChange}
-								onSubmit={submit}
-								engine={engine}
+								{...{
+									situation,
+									dispatchUpdateSituation,
+									dottedName: currentQuestion,
+									onChange,
+									query,
+									engine,
+								}}
 							/>
 						</Fieldset>
 					</div>
 				</Card>
 				<StepButtons>
 					{previousAnswers.length > 0 && currentQuestionIndex !== 0 && (
-						<>
-							<LightButton onClick={goToPrevious}>← Précédent</LightButton>
-						</>
+						<>Précédent</>
 					)}
-					{console.log(RuleInput)}
 					{currentQuestionIsAnswered ? (
-						<Button onClick={() => submit('accept')}>
-							<span className="text">Suivant →</span>
-						</Button>
+						<Link
+							href={{
+								query,
+							}}
+							prefetch={false}
+							scroll={false}
+						>
+							<Button>Suivant →</Button>
+						</Link>
 					) : (
 						!isVoyageQuestion(currentQuestion) && (
-							<Button
-								onClick={() => {
-									setDefault()
+							<Link
+								href={{
+									query,
 								}}
-								type="button"
+								prefetch={false}
+								scroll={false}
 							>
-								Je ne sais pas
-							</Button>
+								<LightButton>Je ne sais pas</LightButton>
+							</Link>
 						)
 					)}
 				</StepButtons>
-				<Notifications currentQuestion={currentQuestion} engine={engine} />
+				<Notifications {...{ currentQuestion, engine, objectives }} />
 			</div>
 		</section>
 	)

@@ -1,5 +1,6 @@
 import Emoji from '@/components/Emoji'
 import { Metadata } from 'next'
+import Link from 'next/link'
 import Carburants from './Carburants'
 import { Header, P } from './UI'
 
@@ -31,9 +32,16 @@ export default function Page() {
 				Comprendre le calcul <Emoji e="⬇️" />
 			</P>
 			<P>
-				Détail du calcul à venir. En attendant,{' '}
+				Le calcul est entièrement disponible sur la{' '}
+				<Link href="/documentation/carburants/prix-à-la-pompe">
+					documentation intéractive
+				</Link>
+				.
+			</P>
+			<P>
+				Vous pouvez aussi consulter{' '}
 				<a href="https://github.com/laem/futureco/blob/master/app/carburants/prix-a-la-pompe/rules.yaml">
-					le calcul est disponible ici
+					le code source complet du modèle de calcul
 				</a>
 				.
 			</P>

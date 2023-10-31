@@ -2,16 +2,20 @@
 import rules from './data/rules.ts'
 
 import { useEngine2 } from '@/providers/EngineWrapper'
-import { useSimulationConfig } from '@/app/simulateur/[...dottedName]/configBuilder'
 import Questions from './Questions'
+import { getSituation } from '@/components/utils/simulationUtils'
 
-export default function Voyage() {
-	const objective = 'trajet voiture . coût trajet par personne'
-	const config = useSimulationConfig(rules, objective)
+export default function Voyage({ searchParams }) {
+	const objectives = ['voyage . trajet voiture . coût trajet par personne']
 
-	const engine = useEngine2(rules)
-	const evaluation = engine.evaluate(objective)
+	const engine = useEngine2(
+		rules,
+		getSituation(searchParams, rules),
+		objectives[0]
+	)
+	const evaluation = engine.evaluate(objectives[0])
 
-	if (!config) return null
-	return <Questions {...{ objective, rules, engine, config, evaluation }} />
+	return (
+		<Questions {...{ objectives, rules, engine, evaluation, searchParams }} />
+	)
 }

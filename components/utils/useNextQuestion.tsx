@@ -1,10 +1,4 @@
-import {
-	answeredQuestionsSelector,
-	configSelector,
-	currentQuestionSelector,
-	objectifsSelector,
-	situationSelector,
-} from '@/selectors/simulationSelectors'
+import getQuestionsConfig from '@/app/simulateur/[...dottedName]/configBuilder'
 import { DottedName } from 'modele-social'
 import Engine from 'publicodes'
 import {
@@ -31,8 +25,8 @@ import {
 	zipWith,
 } from 'ramda'
 import { useMemo } from 'react'
-import { useSelector } from 'react-redux'
 import { Simulation, SimulationConfig } from 'Reducers/rootReducer'
+import { getFoldedSteps, getSituation } from './simulationUtils'
 
 type MissingVariables = Partial<Record<DottedName, number>>
 export function getNextSteps(
@@ -129,19 +123,24 @@ export function getNextQuestions(
 	}, nextQuestions)
 }
 
-export const useNextQuestions = function (engine): Array<DottedName> {
-	const objectifs = useSelector(objectifsSelector)
-	const answeredQuestions = useSelector(answeredQuestionsSelector)
-	const currentQuestion = useSelector(currentQuestionSelector)
-	const questionsConfig = useSelector(configSelector).questions ?? {}
-	const situation = useSelector(situationSelector)
-	const missingVariables = objectifs.map(
-		(node) => engine.evaluate(node).missingVariables ?? {}
+export const useNextQuestions = function (
+	objectives,
+	engine,
+	searchParams
+): Array<DottedName> {
+	const rules = engine.getParsedRules()
+	const answeredQuestions = getFoldedSteps(searchParams, rules)
+	const questionsConfig = getQuestionsConfig(objectives[0])
+	const validatedSituation = getSituation(searchParams, rules)
+	const validatedEngine = engine.setSituation(validatedSituation)
+	const missingVariables = objectives.map(
+		(node) => validatedEngine.evaluate(node).missingVariables ?? {}
 	)
 	if (
-		objectifs.length === 1 &&
-		objectifs[0] === 'trajet voiture . coût trajet par personne'
+		objectives.length === 1 &&
+		objectives[0] === 'voyage . trajet voiture . coût trajet par personne'
 	) {
+		console.log('MV', missingVariables[0])
 		//This is a new rewrite of the getNextQuestions function, I wonder why we left this simplicity...
 		const allMissingEntries = Object.entries(missingVariables[0]),
 			missingEntries = allMissingEntries.filter(
@@ -160,9 +159,11 @@ export const useNextQuestions = function (engine): Array<DottedName> {
 			).reverse()
 
 		const nextQuestions = artificialOrdered.map(([k, v]) => k)
+		/* not sure if not an old hook problem when foldedSteps in state
 		if (currentQuestion && currentQuestion !== nextQuestions[0]) {
 			return [currentQuestion, ...nextQuestions]
 		}
+		*/
 
 		return nextQuestions
 	}
@@ -171,20 +172,14 @@ export const useNextQuestions = function (engine): Array<DottedName> {
 			missingVariables,
 			questionsConfig,
 			answeredQuestions,
-			situation,
-			engine
+			validatedSituation,
+			validatedEngine
 		)
-	}, [missingVariables, questionsConfig, answeredQuestions, situation])
+	}, [missingVariables, questionsConfig, answeredQuestions, validatedSituation])
+	/* see comment above
 	if (currentQuestion && currentQuestion !== nextQuestions[0]) {
 		return [currentQuestion, ...nextQuestions]
 	}
+	*/
 	return nextQuestions
-}
-
-export function useSimulationProgress(engine): number {
-	const objectifs = useSelector(objectifsSelector)
-	const numberQuestionAnswered = useSelector(answeredQuestionsSelector).length
-	const numberQuestionLeft = useNextQuestions(engine).length
-
-	return numberQuestionAnswered / (numberQuestionAnswered + numberQuestionLeft)
 }

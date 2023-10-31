@@ -8,6 +8,7 @@ export default function RuleListItem({
 	item,
 	matches = null,
 	pathPrefix,
+	searchParams,
 }: {
 	rules: NGCRules
 	item: SearchItem
@@ -18,9 +19,12 @@ export default function RuleListItem({
 	return (
 		<Item key={item.dottedName}>
 			<Link
-				href={
-					pathPrefix + `/documentation/${utils.encodeRuleName(item.dottedName)}`
-				}
+				href={{
+					pathname:
+						pathPrefix +
+						`/documentation/${utils.encodeRuleName(item.dottedName)}`,
+					query: searchParams,
+				}}
 			>
 				{parents.length > 0 && (
 					<small>

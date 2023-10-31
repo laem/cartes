@@ -4,6 +4,7 @@ import { Evaluation, serializeUnit, Unit } from 'publicodes'
 import { useCallback } from 'react'
 import { useTranslation } from 'react-i18next'
 import { NumericFormat } from 'react-number-format'
+import css from '../css/convertToJs'
 import InputSuggestions from './InputSuggestions'
 import { InputCommonProps } from './RuleInput'
 import { InputStyle } from './UI'
@@ -12,7 +13,6 @@ import { InputStyle } from './UI'
 export default function Input({
 	suggestions,
 	onChange,
-	onSubmit,
 	id,
 	value,
 	missing,
@@ -20,10 +20,10 @@ export default function Input({
 	autoFocus,
 	noSuggestions,
 }: InputCommonProps & {
-	onSubmit: (source: string) => void
 	unit: Unit | undefined
 	value: Evaluation<number>
 }) {
+	console.log('value', value)
 	const debouncedOnChange = useCallback(debounce(550, onChange), [])
 	const { language } = useTranslation().i18n
 	const unité = serializeUnit(unit)
@@ -39,29 +39,43 @@ export default function Input({
 							onFirstClick={(value) => {
 								onChange(value)
 							}}
-							onSecondClick={() => onSubmit?.('suggestion')}
+							onSecondClick={() =>
+								console.log(
+									'double click submit deactivated for the switch to storing answers in the URL query instead of redux state'
+								)
+							}
 						/>
 					)}
 
-					<InputStyle>
-						<NumericFormat
-							autoFocus={autoFocus}
-							id={id}
-							thousandSeparator={thousandSeparator}
-							decimalSeparator={decimalSeparator}
-							allowEmptyFormatting={true}
-							// We don't want to call `onValueChange` in case this component is
-							// re-render with a new "value" prop from the outside.
-							onValueChange={({ floatValue }) => {
-								debouncedOnChange(
-									floatValue != undefined ? { valeur: floatValue, unité } : {}
-								)
-							}}
-							autoComplete="off"
-							{...{ [missing ? 'placeholder' : 'value']: value ?? '' }}
-						/>
-					</InputStyle>
-					<span className="suffix">&nbsp;{unité}</span>
+					<div
+						style={css`
+							text-align: right;
+						`}
+					>
+						<InputStyle>
+							<NumericFormat
+								className="conversationInput"
+								autoFocus={autoFocus}
+								id={id}
+								thousandSeparator={thousandSeparator}
+								decimalSeparator={decimalSeparator}
+								// We don't want to call `onValueChange` in case this component is
+								// re-render with a new "value" prop from the outside.
+								onValueChange={({ floatValue }) => {
+									debouncedOnChange(
+										floatValue != undefined
+											? { valeur: floatValue, unité }
+											: undefined
+									)
+								}}
+								autoComplete="off"
+								{...{
+									[missing ? 'placeholder' : 'value']: value ?? '',
+								}}
+							/>
+						</InputStyle>
+						<span className="suffix">&nbsp;{unité}</span>
+					</div>
 				</div>
 			</div>
 		</>

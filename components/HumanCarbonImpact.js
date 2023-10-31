@@ -4,32 +4,41 @@ import { useNextQuestions } from 'Components/utils/useNextQuestion'
 import { motion, useMotionValue, useSpring } from 'framer-motion'
 import { useEffect } from 'react'
 import { useSelector } from 'react-redux'
-import {
-	answeredQuestionsSelector,
-	situationSelector,
-} from 'Selectors/simulationSelectors'
+import { situationSelector } from 'Selectors/simulationSelectors'
 import styled from 'styled-components'
 import ImpactCard from './ImpactCard'
+import { getFoldedSteps } from 'Components/utils/simulationUtils'
+import { getSituation } from 'Components/utils/simulationUtils'
 
-const HumanCarbonImpact = ({ nodeValue, formule, dottedName, engine }) => {
+const HumanCarbonImpact = ({
+	nodeValue,
+	formule,
+	dottedName,
+	engine,
+	searchParams,
+	objectives,
+}) => {
 	const rules = engine.getParsedRules(),
 		rule = rules[dottedName],
 		examplesSource = rule.rawNode.exposé?.['exemples via suggestions'],
 		questionEco = rule.rawNode.exposé?.type === 'question éco'
 
-	const nextQuestions = useNextQuestions(engine),
-		foldedSteps = useSelector(answeredQuestionsSelector),
-		situation = useSelector(situationSelector),
-		dirtySituation = Object.keys(situation).find((question) => {
-			try {
-				return (
-					[...nextQuestions, ...foldedSteps].includes(question) &&
-					!engine.getRule(question).rawNode.injecté
-				)
-			} catch (e) {
-				return false
+	const situation = useSelector(situationSelector),
+		validatedSituation = getSituation(searchParams, rules)
+	const nextQuestions = useNextQuestions(objectives, engine, searchParams),
+		foldedSteps = getFoldedSteps(searchParams, engine.getParsedRules()),
+		dirtySituation = Object.keys({ ...validatedSituation, ...situation }).find(
+			(question) => {
+				try {
+					return (
+						[...nextQuestions, ...foldedSteps].includes(question) &&
+						!engine.getRule(question).rawNode.injecté
+					)
+				} catch (e) {
+					return false
+				}
 			}
-		})
+		)
 
 	if (!questionEco && (!examplesSource || dirtySituation))
 		return <ImpactCard {...{ nodeValue, dottedName }} />
@@ -102,10 +111,10 @@ const CardList = styled.ul`
 	}
 `
 
-export const ProgressCircle = ({ engine }) => {
-	const nextSteps = useNextQuestions(engine),
+export const ProgressCircle = ({ engine, searchParams, objectives }) => {
+	const nextSteps = useNextQuestions(objectives, engine, searchParams),
 		rules = engine.getParsedRules()
-	const foldedStepsRaw = useSelector((state) => state.simulation?.foldedSteps),
+	const foldedStepsRaw = getFoldedSteps(searchParams, rules),
 		foldedSteps = foldedStepsRaw.filter((step) => !rules[step]?.rawNode.injecté)
 	const progress = foldedSteps.length / (nextSteps.length + foldedSteps.length)
 	const motionProgress = useMotionValue(0)
@@ -129,6 +138,19 @@ export const ProgressCircle = ({ engine }) => {
 				d="M 0, 20 a 20, 20 0 1,0 40,0 a 20, 20 0 1,0 -40,0"
 				style={{
 					pathLength,
+					rotate: 90,
+					translateX: 5,
+					translateY: 5,
+					scaleX: -1, // Reverse direction of line animation
+				}}
+			/>
+			<motion.path
+				fill="none"
+				strokeWidth={progress > 0 ? '1' : '0'}
+				stroke="var(--color)"
+				strokeDasharray="1 1"
+				d="M 0, 20 a 20, 20 0 1,0 40,0 a 20, 20 0 1,0 -40,0"
+				style={{
 					rotate: 90,
 					translateX: 5,
 					translateY: 5,

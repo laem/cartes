@@ -2,7 +2,7 @@ import styled from 'styled-components'
 export const VoyageWrapper = styled.div`
 	margin-top: 0.6rem;
 	display: flex;
-	justify-content: end;
+	justify-content: center;
 	flex-wrap: wrap;
 	width: 100%;
 	@media (min-width: 800px) {
@@ -29,13 +29,14 @@ export const CityImage = styled.img`
 	width: calc(6rem + 6vw);
 	height: calc(6rem + 6vw);
 	${(props) =>
-		props.thinner
+		props.$thinner
 			? `
 	height: calc(10rem + 6vw);
 	`
 			: ``}
 `
 export const MapSizer = styled.div`
+	margin: 1rem 0;
 	> div {
 		border: 2px solid var(--darkColor);
 		border-radius: 32rem;
@@ -70,12 +71,26 @@ export const InputWrapper = styled.div`
 	ul {
 		border-left: 1px solid #333;
 		max-width: 30em;
-		margin-left: 1rem;
+		margin-left: 0.2rem;
 		padding: 0;
 	}
 	width: 100%;
 	@media (min-width: 800px) {
-		max-width: 30rem;
+		max-width: 20rem;
+	}
+`
+export const ChoiceText = styled.span`
+	max-width: 10rem;
+	overflow-x: scroll;
+	white-space: nowrap;
+	display: inline-block;
+`
+export const ChoiceContent = styled.div`
+	display: flex;
+	align-items: center;
+	text-align: right;
+	img {
+		width: 2rem;
 	}
 `
 export const Choice = styled.div`
@@ -83,7 +98,6 @@ export const Choice = styled.div`
 		filter: invert(1);
 		width: 3rem;
 		height: auto;
-		margin-bottom: 0.2rem;
 	}
 	font-size: 120%;
 	display: flex;

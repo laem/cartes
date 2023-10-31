@@ -11,6 +11,7 @@ export const NamespaceRules = ({
 	dottedName,
 	pathPrefix,
 	spotlight,
+	searchParams,
 }) => {
 	const parent = parentName(dottedName)
 	const namespaceRules = Object.keys(rules).filter(
@@ -42,6 +43,7 @@ export const NamespaceRules = ({
 							{...{
 								rules,
 								item: titledItem,
+								searchParams,
 							}}
 						/>
 					)

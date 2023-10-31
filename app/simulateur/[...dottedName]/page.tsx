@@ -7,6 +7,7 @@ import Simulateur from './Simulateur'
 import Article from '@/components/Article'
 import convert from '@/components/css/convertToJs'
 import { Markdown } from '@/components/utils/markdown'
+import BaseCarboneReference from '@/components/BaseCarboneReference'
 
 type Props = {
 	params: { dottedName: string[] }
@@ -26,11 +27,11 @@ export async function generateMetadata(
 	const description = rule.exposé?.description || rule.description
 
 	const image =
-		rule.exposé?.image ||
-		'https://futur.eco' +
-			`/api/og-image?title=${rule.exposé?.titre || rule.titre}&emojis=${
-				rule.icônes
-			}`
+		rule.exposé?.image && Object.keys(searchParams).length === 0
+			? rule.exposé.image
+			: `/voyage/cout-voiture/og?dottedName=${dottedName}&title=${
+					rule.titre
+			  }&emojis=${rule.icônes}&${new URLSearchParams(searchParams).toString()}`
 	return {
 		title,
 		description,
@@ -41,7 +42,10 @@ export async function generateMetadata(
 	}
 }
 
-const Page = async ({ params: { dottedName: rawDottedName } }: Props) => {
+const Page = async ({
+	params: { dottedName: rawDottedName },
+	searchParams,
+}: Props) => {
 	const dottedName = decodeURIComponent(rawDottedName.join('/'))
 	const decoded = utils.decodeRuleName(dottedName)
 	const rules = await getRulesFromDottedName(dottedName)
@@ -50,12 +54,17 @@ const Page = async ({ params: { dottedName: rawDottedName } }: Props) => {
 	const title = rule.exposé?.titre || rule.titre
 	return (
 		<main>
-			<Simulateur dottedName={decoded} rules={rules} />
+			<Simulateur
+				dottedName={decoded}
+				rules={rules}
+				searchParams={searchParams}
+			/>
 			<Article>
 				<div style={convert(`margin-top: 6rem`)}>
 					<hr />
 					<h2>{title}</h2>
 					<Markdown>{text}</Markdown>
+					<BaseCarboneReference rule={rule} />
 				</div>
 			</Article>
 		</main>

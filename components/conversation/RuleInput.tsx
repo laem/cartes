@@ -1,6 +1,5 @@
 'use client'
 
-import { useEngine2 } from '@/providers/EngineWrapper'
 import Input from 'Components/conversation/Input'
 import Question, { Choice } from 'Components/conversation/Question'
 import ToggleSwitch from 'Components/ui/ToggleSwitch'
@@ -8,8 +7,7 @@ import { parentName } from 'Components/utils/publicodesUtils'
 import dynamic from 'next/dynamic'
 import { ASTNode, EvaluatedRule, reduceAST, utils } from 'publicodes'
 import { Evaluation } from 'publicodes/dist/types/AST/types'
-import React, { Suspense } from 'react'
-import { useTranslation } from 'react-i18next'
+import React from 'react'
 import {
 	airportsQuestions,
 	ferryQuestions,
@@ -22,7 +20,7 @@ const VoyageInput = dynamic(
 	() => import('Components/conversation/VoyageInput'),
 
 	{
-		loading: () => <p>Chargement des aéroports...</p>,
+		loading: () => <p>Chargement des cartes...</p>,
 	}
 )
 
@@ -35,7 +33,6 @@ export type RuleInputProps<Name extends string = DottedName> = {
 	autoFocus?: boolean
 	id?: string
 	className?: string
-	onSubmit?: (source: string) => void
 }
 
 export type InputCommonProps<Name extends string = string> = Pick<
@@ -67,21 +64,18 @@ export default function RuleInput<Name extends string = DottedName>({
 	isTarget = false,
 	autoFocus = false,
 	className,
-	onSubmit = () => null,
-	engine: givenEngine,
+	engine,
 	noSuggestions = false,
-	updateSituation,
+	dispatchUpdateSituation,
+	situation,
 }: RuleInputProps<Name>) {
-	const engine = givenEngine || useEngine2()
 	const rule = engine.getRule(dottedName)
-	const evaluation = engine.evaluate(dottedName)
+	const evaluation = engine.setSituation(situation).evaluate(dottedName)
 	const rules = engine.getParsedRules()
 
-	const language = useTranslation().i18n.language
 	const value = evaluation.nodeValue
 
 	const commonProps: InputCommonProps<Name> = {
-		key: dottedName,
 		dottedName,
 		value,
 		missing: !!evaluation.missingVariables[dottedName],
@@ -93,7 +87,7 @@ export default function RuleInput<Name extends string = DottedName>({
 		question: rule.rawNode.question,
 		suggestions: rule.suggestions,
 		required: true,
-		updateSituation,
+		situation,
 	}
 
 	if (isMosaic(rule.dottedName)) {
@@ -108,6 +102,7 @@ export default function RuleInput<Name extends string = DottedName>({
 
 		return (
 			<question.component
+				key={dottedName}
 				{...{
 					...commonProps,
 					selectedRules,
@@ -120,8 +115,8 @@ export default function RuleInput<Name extends string = DottedName>({
 	if (getVariant(engine.getRule(dottedName))) {
 		return (
 			<Question
+				key={dottedName}
 				{...commonProps}
-				onSubmit={onSubmit}
 				choices={buildVariantTree(engine, dottedName)}
 			/>
 		)
@@ -141,63 +136,63 @@ export default function RuleInput<Name extends string = DottedName>({
 
 	if (airportsQuestions.includes(rule.dottedName)) {
 		return (
-			<Suspense fallback={<div>Chargement des aéroports ...</div>}>
-				<VoyageInput
-					{...{
-						...commonProps,
-						placeholder: 'Aéroport ou ville ',
-						db: 'airports',
-						rulesPath: 'transport . avion',
-						fromIcon: '🛫',
-						toIcon: '🛬',
-						displayImage: 'plane',
-						orthodromic: true,
-					}}
-				/>
-			</Suspense>
+			<VoyageInput
+				key={dottedName}
+				{...{
+					...commonProps,
+					placeholder: 'Aéroport ou ville ',
+					db: 'airports',
+					rulesPath: 'transport . avion',
+					fromIcon: '🛫',
+					toIcon: '🛬',
+					displayImage: 'plane',
+					orthodromic: true,
+					dispatchUpdateSituation,
+				}}
+			/>
 		)
 	}
 
 	if (ferryQuestions.includes(rule.dottedName)) {
 		return (
-			<Suspense fallback={<div>Chargement du globe ...</div>}>
-				<VoyageInput
-					{...{
-						...commonProps,
-						placeholder: 'Port ou ville',
-						db: 'osm',
-						rulesPath: 'transport . ferry',
-						displayImage: 'boat',
-						orthodromic: true,
-					}}
-				/>
-			</Suspense>
+			<VoyageInput
+				key={dottedName}
+				{...{
+					...commonProps,
+					placeholder: 'Port ou ville',
+					db: 'osm',
+					rulesPath: 'transport . ferry',
+					displayImage: 'boat',
+					orthodromic: true,
+					dispatchUpdateSituation,
+				}}
+			/>
 		)
 	}
 
 	if (voyageQuestions.includes(rule.dottedName)) {
 		return (
-			<Suspense fallback={<div>Chargement du globe ...</div>}>
-				<VoyageInput
-					{...{
-						...commonProps,
-						placeholder: 'Ville',
-						db: 'osm',
-						rulesPath: 'trajet voiture',
-						displayImage: true,
-					}}
-				/>
-			</Suspense>
+			<VoyageInput
+				key={dottedName}
+				{...{
+					...commonProps,
+					placeholder: 'Ville',
+					db: 'osm',
+					rulesPath: 'voyage . trajet voiture',
+					displayImage: true,
+					dispatchUpdateSituation,
+				}}
+			/>
 		)
 	}
 
 	if (rule.dottedName === 'transport . ferry . durée du voyage')
 		return (
 			<TravelTimeSpanInput
+				key={dottedName}
 				{...commonProps}
 				value={commonProps.value}
 				onChange={commonProps.onChange}
-				onSubmit={onSubmit}
 				suggestions={commonProps.suggestions}
 			/>
 		)
@@ -231,12 +226,12 @@ export default function RuleInput<Name extends string = DottedName>({
 			/>
 		) : (
 			<Question
+				key={dottedName}
 				{...commonProps}
 				choices={[
 					{ value: 'oui', label: 'Oui' },
 					{ value: 'non', label: 'Non' },
 				]}
-				onSubmit={onSubmit}
 			/>
 		)
 	}
@@ -280,8 +275,8 @@ export default function RuleInput<Name extends string = DottedName>({
 
 	return (
 		<Input
+			key={dottedName}
 			{...commonProps}
-			onSubmit={onSubmit}
 			unit={evaluation.unit}
 			value={value as Evaluation<number>}
 			noSuggestions={noSuggestions}

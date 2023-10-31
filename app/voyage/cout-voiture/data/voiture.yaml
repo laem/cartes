@@ -5,12 +5,18 @@ voiture . coûts au km:
   description: |
     Le coût d'un mode de transport est souvent estimé au km.
 
+    Une fois calculé pour une voiture, il permet d'avoir le coût du trajet en un clin d'oeil. Par exemple pour une trajet de 100 km, on peut rapidement savoir qu'il coûte entre 30 € et 50 €.
+
   note: |
     [Cette page de WWF](https://www.wwf.fr/agir-au-quotidien/le-prix-de-revient-au-kilometre-dun-vehicule-quest-ce-que-cest) cite des coûts bien plus élevés que ceux calculés ici. Malheureusement, ils n'ont mis en lien aucune source, rendant leurs chiffres inutiles.
 
-    [Ce rapport de l'Automobile Club](https://www.automobile-club.org/actualites/la-vie-de-l-aca/budget-de-l-automobiliste-de-l-aca-avril-2020) est intéressant. Mais outre le fait qu'il soit avant tout conçu pour être un plaidoyer anti-taxes, il semble considérer le coût d'une voiture sur sa première année d'achat neuf. C'est ce que je comprends de la ligne "achat moins repris" dans le [communiqué de presse](https://www.automobile-club.org/espace-presse/communiques/l-aca-publie-les-resultats-du-budget-de-l-automobiliste-2019) qui représente plus d'1/10ème du prix d'achat neuf du véhicule, donc prenant en compte la décôte maximale des premières années. Ce n'est pas ce qui nous intéresse ici.
+    [Ce rapport de l'Automobile Club](https://www.automobile-club.org/actualites/la-vie-de-l-aca/budget-de-l-automobiliste-de-l-aca-avril-2020) est intéressant. Mais outre le fait qu'il soit avant tout conçu pour être un plaidoyer anti-taxes, il semble considérer le coût d'une voiture sur sa première année d'achat neuf. C'est ce que je comprends de la ligne "achat moins repris" dans le [communiqué de presse](https://www.automobile-club.org/espace-presse/communiques/l-aca-publie-les-resultats-du-budget-de-l-automobiliste-2019) qui représente plus d'1/10ème du prix d'achat neuf du véhicule, donc prenant en compte la décôte maximale des premières années. Ce n'est pas ce qui nous intéresse ici. 
 
     C'est confirmé dans le rapport complet : "Achat d’un véhicule neuf, concomitamment à la revente (reprise) de l’ancien véhicule âgé de 4 ans". Il s'agit donc d'un comportement d'achat très dépensier et très polluant.
+
+    L'Automobile Club Association donne des chiffres au kilomètre d'environ 0,7 € et donc des coûts annuels de possession d'une voiture de l'ordre de 6 000 €.
+
+    Le rapport RAC (Réseau Action Climat) - ADETEC 2022 confirme nos chiffres avec une estimation moyenne de 35,5 centimes d'€ par km en 2022. Il montre une hausse très importante de 12 % entre 2019 et 2022. Son résumé est [disponible ici](https://reseauactionclimat.org/ll-y-a-urgence-a-transformer-notre-mobilite-du-quotidien/).
 
   formule:
     somme:
@@ -21,17 +27,17 @@ voiture . coûts au km:
     - titre: Citadine diesel
       situation:
         trajet . voyageurs: 1
-        voiture . prix d'achat: 18000
+        voiture . prix d'achat neuf: 18000
     - titre: Citadine essence
       situation:
         voiture . motorisation: "'essence'"
         trajet . voyageurs: 1
-        voiture . prix d'achat: 18000
+        voiture . prix d'achat neuf: 18000
     - titre: Citadine électrique
       situation:
         trajet . voyageurs: 1
         voiture . motorisation: "'électrique'"
-        voiture . prix d'achat: 30000
+        voiture . prix d'achat neuf: 30000
 
 voiture . coût instantané au km:
   description: |
@@ -48,13 +54,13 @@ voiture . coût instantané au km:
     - titre: Clio diesel
       situation:
         voiture . motorisation: "'diesel'"
-        voiture . prix d'achat: 29000 €
+        voiture . prix d'achat neuf: 29000 €
     - titre: SUV essence à 2€ le litre
       situation:
         voiture . consommation thermique: 9
         trajet voiture . prix carburant: 2 €/l
         voiture . motorisation: "'essence'"
-        voiture . prix d'achat: 29000 €
+        voiture . prix d'achat neuf: 29000 €
     - titre: électrique
       situation:
         trajet voiture . prix carburant: 2 €/l
@@ -86,6 +92,14 @@ voiture . consommation thermique:
   question: Quelle est la consommation de la voiture ?
   par défaut: par défaut
   unité: l / 100 km
+  note: |
+    Les suggestions sont tirées de ce graphique ADEME https://carlabelling.ademe.fr/chiffrescles/r/evolutionConsoMoyenne.
+
+    Il faudrait les faire évoluer en fonction de la motorisation essence / diesel.
+  suggestions:
+    faible: 5
+    moyenne: 6
+    élevée: 8
 
 voiture . consommation thermique . par défaut:
   formule:
@@ -122,7 +136,33 @@ voiture . motorisation . électrique . consommation:
 
     Nous retenons donc une valeur plutôt majorante de 15 kWh/km.
 
-voiture . distance totale: durée de vie * km annuels
+voiture . distance totale: durée de vie . relative * km annuels
+voiture . distance standardisée: durée standardisée * km annuels
+voiture . durée standardisée:
+  formule: 20 ans
+  description: |
+    Une durée de vie qu'on pourrait qualifier de standard pour faire des comparaisons entre voiture électrique et thermique. 
+
+    On prend simplement la durée minorante de la thermique, et on l'arrondit à 20 ans pour plus de simplicité.
+
+voiture . durée de vie . relative:
+  titre: Durée de vie estimée depuis le dernier achat
+  description: |
+    Si le propriétaire actuel a acheté la voiture neuve, sa durée de vie relative est la durée de vie moyenne d'une voiture. 
+
+    S'il l'a achetée d'occasion, on retranche la durée de possession d'un ancien propriétaire pour estimer le coût amorti de possession du propriétaire actuel, dans l'hypothèse où il la garderait jusqu'à sa fin de vie.
+
+    Si vous avez acheté une voiture fabriquée en 2000, qui a donc 23 ans, nous estimons qu'elle n'a qu'un an à vivre, statistiquement. Bien sûr, de nombreuses voitures tiennent plus longtemps. Mais à l'inverse, de nombreuses tiennent moins longtemps, c'est le principe de la moyenne. Une extension du modèle pour ces cas-là pourra être envisagée.
+
+  note: |
+    Pour simplifier, nous prenons l'année la plus proche. En octobre 2023, c'est donc 2024. À mettre à jour dans 8 mois.
+  formule:
+    variations:
+      - si: occasion
+        alors:
+          valeur: durée de vie - (2024 - occasion . année de fabrication)
+          plancher: 1
+      - sinon: durée de vie
 voiture . durée de vie:
   description: |
     Attention à ne pas confondre durée de possession et durée de vie ! Un citoyen peut garder une voiture 5 ans en moyenne, mais elle continue d'exister et de rouler. 
@@ -132,6 +172,10 @@ voiture . durée de vie:
     Notre source pour la voiture thermique est un article de [l'Argus](https://www.largus.fr/actualite-automobile/le-top-15-des-voitures-envoyees-a-la-casse-10348407.html) qui cite un rapport de l'ADEME de 2018.
 
     Concernant la voiture thermique, le critère limitant est souvent le moteur. Par définition du moteur thermique à explosion, ce composant est soumis à des pressions physiques énormes, le moteur électrique lui étant bien plus durable.
+
+    À noter, il y a des chances que les voitures au faible kilométrage annuel durent plus longtemps. Comme on le dit dans la section `km annuels`, certains prétendent pourtant qu'une voiture qui ne roule pas, s'use aussi. On pourrait cependant intégrer un bonus de durée de vie aux voitures peu utilisées... mais cela entre en contradiction avec d'autres arguments : quid des Zones à Faible Émission, qui accélèrent l'obsolescence légale des vieilles voitures, qui sont par définition toutes thermiques ? Quid de l'obsolescence des pièces de rechange pour des voitures de 25 ans d'âge ? Si vous disposez de réponses qualifiées à ces questions, contactez-nous !
+
+    ### Voiture électrique
 
     La voiture électrique a aussi sa faiblesse : la batterie. Il est compliqué d'obtenir des informations sur la durée de vie des batteries de voiture, notamment car les modèles actuels n'ont en général pas encore 10 ans. Cela dit, il semblerait que leur durée de vie prenne à défaut les prévisions pessimistes. 
 
@@ -143,6 +187,10 @@ voiture . durée de vie:
 
     Pourtant, des imprévus peuvent venir perturber ces notes positives : dans [cet article de Reuters](https://www.reuters.com/business/autos-transportation/scratched-ev-battery-your-insurer-may-have-junk-whole-car-2023-03-20/), on apprend que des voitures électriques accidentées pourraient aller directement à la poubelle, en particulier les Teslas, qui ont intégré leur batterie dans le chassis, la batterie n'étant pas vraiment réparable. Quelle proportion des voitures sont ainsi lourdement accidentées ? 1 % ? 5 % ? Quelle proportion de cette proportion n'est pas réparable ?
 
+    ### Durée de vie et distribution des km par tranche d'âge
+
+    Il est fort probable que plus les voitures sont récentes, plus elles font des km. Ainsi, notre calcul est biaisé : les voitures les plus rentabilisées, les plus vieilles, sont les moins actives, et le km est sous-estimé. À creuser.
+
   formule:
     variations:
       - si: motorisation = 'électrique'
@@ -150,22 +198,40 @@ voiture . durée de vie:
       - sinon: 19
   unité: an
 
-voiture . km annuels:
-  titre: Kilomètres annuels
-  par défaut: 12223 km/an
+voiture . km annuels . par défaut:
+  valeur: 12223 km/an
   description: |
     En 2019, d'après le [SDES](<https://www.statistiques.developpement-durable.gouv.fr/sites/default/files/2021-12/08_partie_g_bilan_circulation_2020_0.pdf>), une voiture particulière française a parcouru ce nombre de km en moyenne.
 
     À noter, les diesel en ont parcouru 14 392 et les essences 8 920. Cependant, il faudrait que nous ayons des données sur la durée de vie à la casse différenciées par motorisation pour pouvoir faire la distinction.
 
     Les données existent pour 2020, mais nous privilégions celles de 2019, vu l'impact temporaire des confinements sur les déplacements. Le nombre de km avait baissé de 17 % en 2020.
+
+voiture . ratio d'usage:
+  description: À quel point votre usage en km s'éloigne de la moyenne française.
+  formule: km annuels / km annuels . par défaut
+
+voiture . problème km annuels:
+  type: notification
+  sévérité: avertissement
+  formule: km annuels < (trajet voiture . distance * 2)
+  description: |
+    Vos km annuels ne peuvent pas être inférieurs à la distance du trajet que vous simulez ici.
+
+voiture . km annuels:
+  titre: Vos kilomètres annuels
+  question: Combien de kilomètres environ faites-vous à l'année ?
+  par défaut: par défaut
+  suggestions:
+    très occasionnel: 1000 km/an
+    petit rouleur: 5000 km/an
+    gros rouleur: 15000 km/an
   note: |
+    Cette question est importante : quand on possède une voiture, on a des frais fixes, en premier lieu l'achat de la voiture. Plus on fait de km, plus cela fait baisser le prix d'achat au km. Si vous faites un nombre de km bien plus bas que la moyenne, votre coût au km augmente fortement, car vous amortissez beaucoup moins un nombre important de frais fixes... jusqu'à ce que la location de voiture devienne rentable, pour supprimer ces frais fixes. 
 
-    Cette question est importante : quand on possède une voiture, on a des frais fixes, en premier lieu l'achat de la voiture. Plus on fait de km, plus cela fait baisser le prix d'achat au km. Si vous faites un nombre de km éloigné de la moyenne. Cela dit, plus on fait de km, plus on use la voiture, par exemple le moteur et donc plus on "consomme" le prix d'achat et accélère la mise à la casse, ou plus on augmente les frais d'entretien (par exemple, les pneus). 
+    Cela dit, plus on fait de km, plus on use la voiture, par exemple le moteur et donc plus on "consomme" le prix d'achat et accélère la mise à la casse, ou plus on augmente les frais d'entretien (par exemple, les pneus). Nous prenons pour l'instant en compte cet effet d'usure augmentée via un ratio au niveau de l'entretien du véhicule.
 
-    Dans un premier temps, nous n'avons donc pas pris en compte ce paramètre, pour rester sur les chiffres français moyens. 
-
-    Ainsi, **pour les gens qui n'utilisent que très peu leur voiture (< 5000 km par an), le coût calculé est probablement très sous-estimé**.
+    Il peut être compliqué de répondre si chaque année, votre usage de la voiture change radicalement. Entrez alors une valeur moyenne approximative. 
 
     ### Voitures de location
 

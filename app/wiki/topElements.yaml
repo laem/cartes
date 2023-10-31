@@ -12,10 +12,10 @@
   unités:
     - CO2e
 - piscine . empreinte
-- lave-linge . renouveler
-- plaque de cuisson . impact
+  #- lave-linge . renouveler # Désactivé, car on ne gère plus les [objectives] pour l'instant
 - url: /carburants/prix-a-la-pompe
   titre: Prix et origine du carburant à la pompe
   icônes: ⛽️🗺️
   unités:
     - €
+- plaque de cuisson . impact

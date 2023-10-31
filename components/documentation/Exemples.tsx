@@ -1,14 +1,7 @@
-import { useDispatch, useSelector } from 'react-redux'
-import FriendlyObjectViewer from '../FriendlyObjectViewer'
-import {
-	Circle,
-	ExemplesList,
-	ExempleTitle,
-	ExplainedHeader,
-} from './DocumentationStyle'
+import { ExemplesList, ExplainedHeader } from './DocumentationStyle'
 import ExempleItem from './ExempleItem'
 
-export default function Exemples({ exemples }) {
+export default function Exemples({ exemples, searchParams }) {
 	if (!exemples) return null
 
 	return (
@@ -19,7 +12,11 @@ export default function Exemples({ exemples }) {
 			</ExplainedHeader>
 			<ExemplesList>
 				{exemples.map((exemple) => (
-					<ExempleItem exemple={exemple} />
+					<ExempleItem
+						key={exemple.titre}
+						exemple={exemple}
+						searchParams={searchParams}
+					/>
 				))}
 			</ExemplesList>
 		</section>

@@ -1,7 +1,6 @@
 import { defaultTo, omit } from 'Components/utils/utils'
 import reduceReducers from 'reduce-reducers'
 import { combineReducers, Reducer } from 'redux'
-import { objectifsSelector } from '@/selectors/simulationSelectors'
 
 type DottedName = string
 
@@ -12,8 +11,6 @@ function explainedVariable(
 	switch (action.type) {
 		case 'EXPLAIN_VARIABLE':
 			return action.variableName || null
-		case 'STEP_ACTION':
-			return null
 		default:
 			return state
 	}
@@ -26,10 +23,6 @@ type QuestionsKind =
 	| 'liste noire'
 
 export type SimulationConfig = {
-	objectifs:
-		| Array<DottedName>
-		| Array<{ icône: string; nom: string; objectifs: Array<DottedName> }>
-	'objectifs cachés': Array<DottedName>
 	situation: Simulation['situation']
 	bloquant?: Array<DottedName>
 	questions?: Partial<Record<QuestionsKind, Array<DottedName>>>
@@ -44,103 +37,63 @@ export type Simulation = {
 	hiddenNotifications: Array<string>
 	situation: Situation
 	initialSituation: Situation
-	targetUnit: string
 	foldedSteps: Array<DottedName>
 	unfoldedStep?: DottedName | null
 	messages: Object
 }
 
-function simulation(
-	state: Simulation | null = null,
-	action: Action
-): Simulation | null {
+function simulation(stateRaw = {}, action: Action) {
+	const state = stateRaw || {}
+	const { objectives } = action
+	if (!objectives) return state
+	const objective = objectives[0], //TODO limiting, should be serialized for multiple objective simulations
+		objectiveSimulation = state[objective] || {},
+		objectiveSituation = objectiveSimulation.situation || {}
+	console.log('ACTION', action)
+	/*
 	if (action.type === 'SET_MESSAGE_READ') {
 		return {
 			...state,
 			messages: { ...state.messages, [action.message]: true },
 		}
 	}
-	if (action.type === 'SET_SIMULATION') {
-		const { config, url } = action
-		const newTargets = config.objectifs
-		if (state && state.config && !action.situation === config) {
-			return state
-		}
-		return {
-			config,
-			url,
-			hiddenNotifications: state?.hiddenControls || [],
-			situation: action.situation || {},
-			targetUnit: config['unité par défaut'] || '€/mois',
-			foldedSteps: action.foldedSteps || [],
-			unfoldedStep: null,
-			persona: action.persona,
-			messages: state?.messages || {},
-		}
-	}
-	if (state === null) {
-		return state
-	}
+	*/
 
 	switch (action.type) {
 		case 'HIDE_NOTIFICATION':
 			return {
 				...state,
-				hiddenNotifications: [...state.hiddenNotifications, action.id],
+				[objective]: {
+					...objectiveSimulation,
+					hiddenNotifications: [
+						...(objectiveSimulation.hiddenNotifications || []),
+						action.id,
+					],
+				},
 			}
 		case 'RESET_SIMULATION':
 			return {
 				...state,
-				hiddenNotifications: [],
-				situation: state.initialSituation,
-				foldedSteps: [],
-				unfoldedStep: null,
-				persona: null,
-				messages: {},
+				[objective]: {
+					hiddenNotifications: [],
+					situation: {},
+					messages: {},
+				},
 			}
 		case 'UPDATE_SITUATION': {
-			const targets = objectifsSelector({ simulation: state } as RootState)
-			const situation = state.situation
-			const { fieldName: dottedName, value } = action
+			const { fieldName: dottedName, value, objectives } = action
+			const newSituation =
+				value === undefined
+					? omit([dottedName], objectiveSituation)
+					: {
+							...objectiveSituation,
+							[dottedName]: value,
+					  }
 			return {
 				...state,
-				situation:
-					value === undefined
-						? omit([dottedName], situation)
-						: {
-								...(targets.includes(dottedName)
-									? omit(targets, situation)
-									: situation),
-								[dottedName]: value,
-						  },
+				[objective]: { situation: newSituation },
 			}
 		}
-		case 'STEP_ACTION': {
-			const { name, step } = action
-			if (name === 'fold')
-				return {
-					...state,
-					foldedSteps: state.foldedSteps.includes(step)
-						? state.foldedSteps
-						: [...state.foldedSteps, step],
-
-					unfoldedStep: null,
-				}
-			if (name === 'unfold') {
-				const previousUnfolded = state.unfoldedStep
-				return {
-					...state,
-					foldedSteps: state.foldedSteps,
-					unfoldedStep: step,
-				}
-			}
-			return state
-		}
-		case 'UPDATE_TARGET_UNIT':
-			return {
-				...state,
-				targetUnit: action.targetUnit,
-			}
 	}
 	return state
 }
@@ -169,20 +122,13 @@ function batchUpdateSituationReducer(state: RootState, action: Action) {
 		return state
 	}
 	return Object.entries(action.situation).reduce<RootState | null>(
-		(newState, [fieldName, value]) => {
-			const withSituationUpdate = mainReducer(newState ?? undefined, {
+		(newState, [fieldName, value, objectives]) => {
+			return mainReducer(newState ?? undefined, {
 				type: 'UPDATE_SITUATION',
 				fieldName,
 				value,
+				objectives,
 			})
-			return (
-				!action.doNotFold &&
-				mainReducer(withSituationUpdate ?? undefined, {
-					type: 'STEP_ACTION',
-					name: 'fold',
-					step: fieldName,
-				})
-			)
 		},
 		state
 	)

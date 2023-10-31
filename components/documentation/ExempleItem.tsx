@@ -1,25 +1,24 @@
-'use client'
-import { useDispatch, useSelector } from 'react-redux'
-import FriendlyObjectViewer from '../FriendlyObjectViewer'
+import Link from 'next//link'
+import { omit } from '../utils/utils'
 import { Circle, ExempleTitle } from './DocumentationStyle'
-export default function ExempleItem({ exemple }) {
-	const stateExemple = useSelector((state) => state.exemple) || {}
-	const clicked = stateExemple.titre === exemple.titre
-	const dispatch = useDispatch()
+
+export default function ExempleItem({ exemple, searchParams }) {
+	const stateExemple = searchParams.docExemple
+	const clicked = stateExemple === exemple.titre
 
 	return (
 		<li key={exemple.titre}>
-			<button
-				onClick={() =>
-					dispatch({
-						type: 'SET_EXEMPLE',
-						exemple: stateExemple.titre === exemple.titre ? null : exemple,
-					})
-				}
+			<Link
+				href={{
+					query: clicked
+						? omit(['docExemple'], searchParams)
+						: { ...searchParams, docExemple: exemple.titre },
+				}}
+				scroll={false}
 			>
 				<Circle $clicked={clicked} />
 				<ExempleTitle $clicked={clicked}>{exemple.titre}</ExempleTitle>
-			</button>
+			</Link>
 		</li>
 	)
 }

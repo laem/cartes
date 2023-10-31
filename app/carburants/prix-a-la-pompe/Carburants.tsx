@@ -7,7 +7,7 @@ import StackedBarChart from 'Components/StackedBarChart'
 import Engine from 'publicodes'
 import { createContext, useContext, useEffect, useState } from 'react'
 import fetchBrentPrice from './fetchBrentPrices'
-import rules from './rules.yaml'
+import rules from './rules'
 
 const engine = new Engine(rules)
 const SituationContext = createContext({})
@@ -22,7 +22,7 @@ export default function Carburants({}) {
 }
 
 const Questions = ({}) => {
-	const questions = ['type']
+	const questions = ['carburants . type']
 	const [situation, setSituation] = useContext(SituationContext)
 	engine.setSituation(situation) // I don't understand why putting this in a useeffect produces a loop when the input components, due to Input's debounce function I guess.
 	const onChange = (dottedName) => (value) => {
@@ -34,10 +34,10 @@ const Questions = ({}) => {
 			setSituation((situation) => newSituation(situation))
 		},
 		onSubmit = () => null
-	const evaluation = engine.evaluate('prix à la pompe')
+	const evaluation = engine.evaluate('carburants . prix à la pompe')
 	console.log('E', evaluation)
 	const [brentPrice, setBrentPrice] = useState(null)
-	const brentName = 'baril de brent . dollars'
+	const brentName = 'carburants . baril de brent . dollars'
 	useEffect(() => {
 		fetchBrentPrice().then((res) => {
 			setBrentPrice(res)
@@ -230,17 +230,17 @@ const Questions = ({}) => {
 				engine={engine}
 				data={[
 					{
-						dottedName: 'taxes',
+						dottedName: 'carburants . taxes',
 						title: 'Taxes 🇫🇷',
 						color: '#6a89cc',
 					},
 					{
-						dottedName: 'raffinage et distribution',
+						dottedName: 'carburants . raffinage et distribution',
 						title: 'Raffinage et distribution',
 						color: '#f8c291',
 					},
 					{
-						dottedName: 'pétrole brut',
+						dottedName: 'carburants . pétrole brut',
 						title: 'Pétrole brut',
 						color: '#cf6a87',
 					},

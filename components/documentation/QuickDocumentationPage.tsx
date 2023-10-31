@@ -7,8 +7,8 @@ import {
 import { Markdown } from 'Components/utils/ClientMarkdown'
 import { omit } from 'Components/utils/utils'
 import FriendlyObjectViewer from '../FriendlyObjectViewer'
+import { objectMap } from '../utils/utils'
 import { Breadcrumb } from './Breadcrumb'
-import ComputeButton from './ComputeButton'
 import DocumentationStyle, {
 	QuestionRuleSectionStyle,
 	QuestionStyle,
@@ -19,6 +19,7 @@ import { GithubContributionLink } from './GithubContributionLink'
 import { NamespaceRules } from './NamespaceRules'
 import OperationVariables, { isExpressionRule } from './OperationVariables'
 import References from './References'
+import ValueBlock from './ValueBlock'
 
 /*
  * This page can be seen as a rewrite of publicodes-react's DocPage.
@@ -39,15 +40,19 @@ const QuestionRuleSection = ({ title, children }) => (
 
 export default function QuickDocumentationPage({
 	dottedName,
+	engine,
 	rules,
-	pathPrefix = '',
-	spotlight = [],
+	pathPrefix = '', //probably useless now that the /documentation path can load different rule bases
+	searchParams,
 }: {
 	rule: NGCRule
 	dottedName: DottedName
 	setLoadEngine: (value: boolean) => void
 	rules: NGCRules
 }) {
+	const spotlight = rules['voyage']
+		? ['voyage . trajet voiture . coût trajet par personne']
+		: []
 	const rule = rules[dottedName] || {}
 
 	const title = ruleTitle({ ...rule, dottedName })
@@ -112,7 +117,8 @@ export default function QuickDocumentationPage({
 						{rule.description && <Markdown>{rule.description}</Markdown>}
 					</section>
 				)}
-				<ComputeButton dottedName={dottedName} />
+
+				<ValueBlock engine={engine} dottedName={dottedName} />
 				{Object.keys(yamlAttributesToDisplay).length > 0 && (
 					<div>
 						<h2>Comment cette donnée est-elle calculée ?</h2>
@@ -121,23 +127,26 @@ export default function QuickDocumentationPage({
 								data={rule}
 								context={{ dottedName, rules }}
 								pathPrefix={pathPrefix}
+								searchParams={searchParams}
 							/>
 						) : (
 							<FriendlyObjectViewer
 								data={yamlAttributesToDisplay}
 								context={{ dottedName, rules }}
 								pathPrefix={pathPrefix}
+								searchParams={searchParams}
 							/>
 						)}
 					</div>
 				)}
-				<Exemples exemples={rule.exemples} />
+				<Exemples exemples={rule.exemples} searchParams={searchParams} />
 				{isExpressionRule(rule) && (
 					<div>
 						<h2>Explorer le calcul</h2>
 						<OperationVariables
 							{...{ rule, rules, dottedName }}
 							pathPrefix={pathPrefix}
+							searchParams={searchParams}
 						/>
 					</div>
 				)}
@@ -155,7 +164,9 @@ export default function QuickDocumentationPage({
 				)}
 
 				<GithubContributionLink dottedName={dottedName} />
-				<NamespaceRules {...{ rules, dottedName, pathPrefix, spotlight }} />
+				<NamespaceRules
+					{...{ rules, dottedName, pathPrefix, spotlight, searchParams }}
+				/>
 			</DocumentationStyle>
 		</Wrapper>
 	)

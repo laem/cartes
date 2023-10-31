@@ -1,5 +1,7 @@
 import nationalData from '@/app/national/data.yaml'
 import { utils } from 'publicodes'
+import voyageRules from '@/app/voyage/cout-voiture/data/rules.ts'
+
 const lines = [
 	'https://futur.eco',
 	'https://futur.eco/a-propos',
@@ -7,7 +9,12 @@ const lines = [
 	'https://futur.eco/scenarios',
 	'https://futur.eco/national',
 	'https://futur.eco/carburants/prix-a-la-pompe',
+	'https://futur.eco/voyage/cout-voiture',
 ]
+
+const voyageLines = Object.entries(voyageRules).map(
+	([k, v]) => `https://futur.eco/documentation/` + utils.encodeRuleName(k)
+)
 
 const nationalLines = nationalData.map(
 	(element) =>
@@ -45,9 +52,7 @@ const encodeRuleName = (name) =>
 
 export default async function sitemap() {
 	const asyncResults = await getResults(),
-		results = [...asyncResults, ...nationalLines]
-
-	console.log(nationalLines)
+		results = [...asyncResults, ...nationalLines, ...voyageLines]
 
 	return results.map((el) => ({ url: el }))
 	return [
