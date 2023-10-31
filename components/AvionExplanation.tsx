@@ -1,7 +1,7 @@
-'use client'
 import { motion } from 'framer-motion'
+import { Markdown } from 'Components/utils/ClientMarkdown'
 
-const AvionExplanation = ({ engine }) => {
+const AvionExplanation = ({ engine, description }) => {
 	const impact = engine.evaluate('transport . avion . impact').nodeValue,
 		forcingFactor = engine.evaluate(
 			'transport . avion . forçage radiatif . coefficient'
@@ -21,6 +21,7 @@ const AvionExplanation = ({ engine }) => {
 				}
 			`}
 		>
+			<Markdown>{description}</Markdown>
 			<h3>
 				Le réchauffement climatique de l'aviation ne se limite pas au seul CO₂
 			</h3>
