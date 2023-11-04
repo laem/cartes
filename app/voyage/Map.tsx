@@ -132,23 +132,14 @@ export default function Map() {
 							align-items: center;
 						`}
 					>
-						<h2
-							style={css`
-								color: var(--darkestColor);
-							`}
-						>
-							Gare de {gare.libelle}
-						</h2>
 						<img src="/gare.svg" style={{ width: '30px', height: '30px' }} />
 					</div>
 				)
 			})
 
-			/*
 			el.addEventListener('click', () => {
-				window.alert(JSON.stringify(gare))
+				window.alert(`Gare de ${gare.libelle}`)
 			})
-			*/
 
 			new maplibregl.Marker({ element: el })
 				.setLngLat([...gare.coordonnées].reverse())
