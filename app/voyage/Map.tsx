@@ -84,6 +84,7 @@ export default function Map() {
 
 	const [gares, setGares] = useState(null)
 	const [map, setMap] = useState(null)
+	const [clickedGare, clickGare] = useState(null)
 	useEffect(() => {
 		async function fetchGares() {
 			const res = await fetch('/gares.json')
@@ -125,7 +126,7 @@ export default function Map() {
 
 	const lesGaresProches =
 		center && gares && sortGares(gares, center).slice(0, 30)
-	console.log({ lesGaresProches })
+	console.log({ lesGaresProches, clickedGare })
 
 	useEffect(() => {
 		if (!lesGaresProches) return
@@ -140,6 +141,7 @@ export default function Map() {
 							display: flex;
 							flex-direction: column;
 							align-items: center;
+							cursor: help;
 						`}
 					>
 						<img
@@ -152,7 +154,7 @@ export default function Map() {
 			})
 
 			el.addEventListener('click', () => {
-				window.alert(`Gare de ${gare.nom}, niveau ${gare.niveau}`)
+				clickGare(gare.uic === clickedGare?.uic ? null : gare)
 			})
 
 			new maplibregl.Marker({ element: el })
@@ -219,6 +221,43 @@ export default function Map() {
 						</motion.div>
 					)}
 				</ImageWithNameWrapper>
+				{clickedGare && (
+					<div
+						css={`
+							position: fixed;
+							right: 1rem;
+							top: 50%;
+							transform: translateY(-50%);
+							display: flex;
+							flex-direction: column;
+							align-items: center;
+
+							iframe {
+								width: 20rem;
+								height: 30rem;
+								max-width: 90vw;
+								border: 6px solid var(--color);
+							}
+							h2 {
+								margin-bottom: 0rem;
+								font-size: 120%;
+								background: var(--color);
+								width: 100%;
+								text-align: center;
+								padding: 0.2rem 0;
+								max-width: 20rem;
+							}
+						`}
+					>
+						<h2>Gare de {clickedGare.nom}</h2>
+						<iframe
+							src={`https://tableau-sncf.vercel.app/station/stop_area:SNCF:${clickedGare.uic.slice(
+								2
+							)}`}
+							css={``}
+						/>
+					</div>
+				)}
 			</div>
 			<a href="https://www.maptiler.com">
 				<img
