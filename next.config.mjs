@@ -32,11 +32,6 @@ const nextConfig = {
 	async redirects() {
 		return [
 			{
-				source: '/voyage',
-				destination: '/voyage/cout-voiture',
-				permanent: false,
-			},
-			{
 				source: '/ferry',
 				destination: '/simulateur/transport/ferry/empreinte-du-voyage',
 				permanent: true,
