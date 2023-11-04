@@ -107,7 +107,7 @@ export default function Map() {
 		if (!map || !center) return
 		map.flyTo({
 			center,
-			zoom: 14,
+			zoom: 10,
 		})
 		new maplibregl.Marker({ color: 'var(--lightColor)' })
 			.setLngLat(center)
