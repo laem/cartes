@@ -6,7 +6,14 @@ import maplibregl from 'maplibre-gl'
 import 'maplibre-gl/dist/maplibre-gl.css'
 import PlaceSearch from './PlaceSearch'
 import getCityData, { toThumb } from 'Components/wikidata'
-import { CityImage, ImageWrapper } from '@/components/conversation/VoyageUI'
+import Image from 'next/image'
+import destinationPoint from '@/public/destination-point.svg'
+import {
+	CityImage,
+	Destination,
+	ImageWithNameWrapper,
+	ImageWrapper,
+} from '@/components/conversation/VoyageUI'
 import { motion } from 'framer-motion'
 import { garesProches, sortGares } from './gares'
 import css from '@/components/css/convertToJs'
@@ -111,7 +118,7 @@ export default function Map() {
 			pitch: 50, // pitch in degrees
 			bearing: 20, // bearing in degrees
 		})
-		new maplibregl.Marker({ color: 'var(--lightColor)' })
+		new maplibregl.Marker({ color: 'var(--darkerColor)' })
 			.setLngLat(center)
 			.addTo(map)
 	}, [center, map])
@@ -178,7 +185,7 @@ export default function Map() {
 			<div
 				css={`
 					position: absolute;
-					top: 6vh;
+					top: 2vh;
 					left: 4vw;
 					z-index: 10;
 					h1 {
@@ -191,22 +198,27 @@ export default function Map() {
 				`}
 			>
 				<h1>Où allez-vous ?</h1>
-				<ImageWrapper>
+				<PlaceSearch {...{ onInputChange, state, setState }} />
+				<ImageWithNameWrapper>
 					{versImageURL && (
 						<motion.div
 							initial={{ opacity: 0, scale: 0.8 }}
 							animate={{ opacity: 1, scale: 1 }}
 							transition={{}}
+							key={versImageURL}
 							exit={{ opacity: 0, scale: 0.5, transition: { duration: 0.2 } }}
 						>
+							<Destination>
+								<Image src={destinationPoint} alt="Vers" />
+								<h2>{state.vers.choice.item.nom}</h2>
+							</Destination>
 							<CityImage
 								src={versImageURL}
 								alt={`Une photo emblématique de la destination, ${state.vers.choice?.item?.nom}`}
 							/>
 						</motion.div>
 					)}
-				</ImageWrapper>
-				<PlaceSearch {...{ onInputChange, state, setState }} />
+				</ImageWithNameWrapper>
 			</div>
 			<a href="https://www.maptiler.com">
 				<img
