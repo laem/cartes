@@ -64,6 +64,7 @@ export const InputStyle = styled.span`
 	}
 	input {
 		width: 25rem;
+		max-width: 80vw;
 	}
 	textarea {
 		width: 100%;
