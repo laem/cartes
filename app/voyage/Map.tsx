@@ -1,33 +1,97 @@
 'use client'
-import React, { useEffect, useRef } from 'react'
+import React, { useEffect, useRef, useState } from 'react'
 import maplibregl from 'maplibre-gl'
 import 'maplibre-gl/dist/maplibre-gl.css'
 import PlaceSearch from './PlaceSearch'
+import getCityData, { toThumb } from 'Components/wikidata'
+import { CityImage, ImageWrapper } from '@/components/conversation/VoyageUI'
+import { motion } from 'framer-motion'
 
-const center = [-1.9890417068124002, 48.66284934737089]
+const defaultCenter = [-1.9890417068124002, 48.66284934737089]
 export default function Map() {
+	const [state, setState] = useState({
+		depuis: { inputValue: '', choice: false },
+		vers: { inputValue: '', choice: false },
+		validated: false,
+	})
+	const [wikidata, setWikidata] = useState(null)
+	const versImageURL = wikidata?.pic && toThumb(wikidata?.pic.value)
+	useEffect(() => {
+		if (!state.vers.choice) return undefined
+
+		getCityData(state.vers.choice.item.ville).then((json) =>
+			setWikidata(json?.results?.bindings[0])
+		)
+	}, [state.vers])
+
+	const onInputChange = (whichInput) => (e) => {
+		let v = e.target.value
+		setState({
+			...state,
+			[whichInput]: { ...state[whichInput], inputValue: v },
+			validated: false,
+		})
+		if (v.length > 2) {
+			fetch(`https://photon.komoot.io/api/?q=${v}&limit=6&layer=city&lang=fr`)
+				.then((res) => res.json())
+				.then((json) => {
+					setState((state) => ({
+						...state,
+						[whichInput]: {
+							...state[whichInput],
+							results: json.features.map((f) => ({
+								item: {
+									longitude: f.geometry.coordinates[0],
+									latitude: f.geometry.coordinates[1],
+									nom: f.properties.name,
+									ville: f.properties.cities || f.properties.name,
+									pays: f.properties.country,
+								},
+							})),
+						},
+					}))
+				})
+		}
+	}
+
 	if (process.env.NEXT_PUBLIC_MAPTILER == null) {
 		throw new Error('You have to configure env REACT_APP_API_KEY, see README')
 	}
 
 	const mapContainerRef = useRef()
 
+	const center = state.vers.choice
+		? [state.vers.choice.item.longitude, state.vers.choice.item.latitude]
+		: defaultCenter
+
+	const [map, setMap] = useState(null)
 	useEffect(() => {
-		const map = new maplibregl.Map({
+		const newMap = new maplibregl.Map({
 			container: mapContainerRef.current,
 			style: `https://api.maptiler.com/maps/streets/style.json?key=${process.env.NEXT_PUBLIC_MAPTILER}`,
 			center: center,
 			zoom: 14,
 		})
+		setMap(newMap)
 
-		map.addControl(new maplibregl.NavigationControl(), 'top-right')
+		newMap.addControl(new maplibregl.NavigationControl(), 'top-right')
 
-		new maplibregl.Marker({ color: '#FF0000' }).setLngLat(center).addTo(map)
+		new maplibregl.Marker({ color: '#FF0000' }).setLngLat(center).addTo(newMap)
 
 		return () => {
-			map.remove()
+			newMap.remove()
 		}
-	}, [])
+	}, [setMap])
+
+	useEffect(() => {
+		if (!map) return
+		map.flyTo({
+			center,
+		})
+		new maplibregl.Marker({ color: 'var(--lightColor)' })
+			.setLngLat(center)
+			.addTo(map)
+	}, [center, map])
 
 	return (
 		<div
@@ -62,7 +126,22 @@ export default function Map() {
 				`}
 			>
 				<h1>Où allez-vous ?</h1>
-				<PlaceSearch />
+				<ImageWrapper>
+					{versImageURL && (
+						<motion.div
+							initial={{ opacity: 0, scale: 0.8 }}
+							animate={{ opacity: 1, scale: 1 }}
+							transition={{}}
+							exit={{ opacity: 0, scale: 0.5, transition: { duration: 0.2 } }}
+						>
+							<CityImage
+								src={versImageURL}
+								alt={`Une photo emblématique de la destination, ${state.vers.choice?.item?.nom}`}
+							/>
+						</motion.div>
+					)}
+				</ImageWrapper>
+				<PlaceSearch {...{ onInputChange, state, setState }} />
 			</div>
 			<a href="https://www.maptiler.com">
 				<img
