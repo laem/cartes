@@ -88,7 +88,7 @@ export default function Map() {
 	useEffect(() => {
 		const newMap = new maplibregl.Map({
 			container: mapContainerRef.current,
-			style: `https://api.maptiler.com/maps/streets/style.json?key=${process.env.NEXT_PUBLIC_MAPTILER}`,
+			style: `https://api.maptiler.com/maps/2f80a9c4-e0dd-437d-ae35-2b6c212f830b/style.json?key=${process.env.NEXT_PUBLIC_MAPTILER}`,
 			center: defaultCenter,
 			zoom: 8,
 		})
@@ -134,7 +134,11 @@ export default function Map() {
 							align-items: center;
 						`}
 					>
-						<img src="/gare.svg" style={{ width: '30px', height: '30px' }} />
+						<img
+							src="/gare.svg"
+							style={{ width: '30px', height: '30px' }}
+							alt="Icône d'une gare"
+						/>
 					</div>
 				)
 			})
