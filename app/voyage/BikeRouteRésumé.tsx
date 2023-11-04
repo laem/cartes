@@ -6,6 +6,8 @@ export default function BikeRouteRésumé({ data }) {
 	if (!feature) return
 
 	const seconds = feature.properties['total-time'],
+		distance = feature.properties['track-length'],
+		km = Math.round(distance / 1000),
 		date = new Date(1000 * seconds).toISOString().substr(11, 8).split(':'),
 		heures = +date[0],
 		minutes = date[1]
@@ -31,7 +33,7 @@ export default function BikeRouteRésumé({ data }) {
 			{' '}
 			<Emoji e="🚲️" />
 			<p>
-				Le trajet jusqu'à la gare vous prendra{' '}
+				Le trajet de <strong>{km} km</strong> jusqu'à la gare vous prendra{' '}
 				<strong>
 					{heures ? heures + ` heure${heures > 1 ? 's' : ''} et ` : ''}
 					{minutes} minutes
