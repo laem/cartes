@@ -17,6 +17,7 @@ import {
 import { motion } from 'framer-motion'
 import { garesProches, sortGares } from './gares'
 import css from '@/components/css/convertToJs'
+import BikeRouteRésumé from './BikeRouteRésumé'
 
 const defaultCenter =
 	// Saint Malo [-1.9890417068124002, 48.66284934737089]
@@ -260,6 +261,7 @@ export default function Map() {
 								src={versImageURL}
 								alt={`Une photo emblématique de la destination, ${state.vers.choice?.item?.nom}`}
 							/>
+							{bikeRoute && <BikeRouteRésumé data={bikeRoute} />}
 						</motion.div>
 					)}
 				</ImageWithNameWrapper>
