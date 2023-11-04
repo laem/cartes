@@ -126,6 +126,10 @@ export default function Map() {
 					z-index: 10;
 					h1 {
 						color: var(--darkerColor);
+						border-bottom: 6px solid var(--color);
+						display: inline-block;
+						padding: 0;
+						line-height: 1.6rem;
 					}
 				`}
 			>
