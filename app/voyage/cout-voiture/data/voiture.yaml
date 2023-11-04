@@ -18,6 +18,8 @@ voiture . coûts au km:
 
     Le rapport RAC (Réseau Action Climat) - ADETEC 2022 confirme nos chiffres avec une estimation moyenne de 35,5 centimes d'€ par km en 2022. Il montre une hausse très importante de 12 % entre 2019 et 2022. Son résumé est [disponible ici](https://reseauactionclimat.org/ll-y-a-urgence-a-transformer-notre-mobilite-du-quotidien/).
 
+    Notons enfin que le site ViaMichelin.fr [a lancé en 2021 un calculateur de coût complet de la voiture](https://www.auto-moto.com/en-bref/viamichelin-nouvel-outil-calculer-cout-dusure-de-voiture-10029), mais il a été retiré, pour des raisons que l'on ignore, revenant à la comptabilité partielle du carburant et des péages.
+
   formule:
     somme:
       - coût instantané au km
