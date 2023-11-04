@@ -86,7 +86,7 @@ const Option = ({
 		>
 			<button
 				onClick={(e) => {
-					const newState = { ...data, choice: option }
+					const newState = { ...data, choice: { ...option, inputValue } }
 
 					const entry = [
 						rulesPath +
