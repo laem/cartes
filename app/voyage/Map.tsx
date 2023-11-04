@@ -73,18 +73,32 @@ export default function Map() {
 
 	const mapContainerRef = useRef()
 
+	const choice = state.vers.choice
 	const center = useMemo(
-		() =>
-			state.vers.choice && [
-				state.vers.choice.item.longitude,
-				state.vers.choice.item.latitude,
-			],
-		[state.vers.choice]
+		() => choice && [choice.item.longitude, choice.item.latitude],
+		[choice]
 	)
 
 	const [gares, setGares] = useState(null)
 	const [map, setMap] = useState(null)
 	const [clickedGare, clickGare] = useState(null)
+	const [bikeRoute, setBikeRoute] = useState(null)
+
+	useEffect(() => {
+		if (!center || !clickedGare) return
+
+		const [lon1, lat1] = center,
+			[lon2, lat2] = clickedGare.coordonnées
+
+		async function fetchBikeRoute() {
+			const url = `https://brouter.osc-fr1.scalingo.io/brouter?lonlats=${lon1},${lat1}|${lon2},${lat2}&profile=safety&alternativeidx=0&format=geojson`
+			const res = await fetch(url)
+			const json = await res.json()
+			setBikeRoute(json)
+		}
+
+		fetchBikeRoute()
+	}, [center, clickedGare])
 	useEffect(() => {
 		async function fetchGares() {
 			const res = await fetch('/gares.json')
@@ -93,6 +107,7 @@ export default function Map() {
 		}
 		fetchGares()
 	}, [setGares])
+
 	useEffect(() => {
 		const newMap = new maplibregl.Map({
 			container: mapContainerRef.current,
@@ -112,6 +127,33 @@ export default function Map() {
 	}, [setMap])
 
 	useEffect(() => {
+		if (!map || !bikeRoute || !bikeRoute.features) return
+
+		map.addSource('bikeRoute', {
+			type: 'geojson',
+			data: bikeRoute.features[0],
+		})
+		map.addLayer({
+			id: 'bikeRoute',
+			type: 'line',
+			source: 'bikeRoute',
+			layout: {
+				'line-join': 'round',
+				'line-cap': 'round',
+			},
+			paint: {
+				'line-color': '#5B099F',
+				'line-width': 8,
+			},
+		})
+
+		return () => {
+			map.removeLayer('bikeRoute')
+			map.removeSource('bikeRoute')
+		}
+	}, [bikeRoute, map])
+
+	useEffect(() => {
 		if (!map || !center) return
 		map.flyTo({
 			center,
@@ -126,7 +168,7 @@ export default function Map() {
 
 	const lesGaresProches =
 		center && gares && sortGares(gares, center).slice(0, 30)
-	console.log({ lesGaresProches, clickedGare })
+	console.log({ lesGaresProches, clickedGare, bikeRoute })
 
 	useEffect(() => {
 		if (!lesGaresProches) return
