@@ -1,11 +1,12 @@
 'use client'
-import React, { useEffect, useRef, useState } from 'react'
+import React, { useEffect, useMemo, useRef, useState } from 'react'
 import maplibregl from 'maplibre-gl'
 import 'maplibre-gl/dist/maplibre-gl.css'
 import PlaceSearch from './PlaceSearch'
 import getCityData, { toThumb } from 'Components/wikidata'
 import { CityImage, ImageWrapper } from '@/components/conversation/VoyageUI'
 import { motion } from 'framer-motion'
+import { garesProches, sortGares } from './gares'
 
 const defaultCenter =
 	// Saint Malo [-1.9890417068124002, 48.66284934737089]
@@ -62,12 +63,25 @@ export default function Map() {
 
 	const mapContainerRef = useRef()
 
-	const center = state.vers.choice && [
-		state.vers.choice.item.longitude,
-		state.vers.choice.item.latitude,
-	]
+	const center = useMemo(
+		() =>
+			state.vers.choice && [
+				state.vers.choice.item.longitude,
+				state.vers.choice.item.latitude,
+			],
+		[state.vers.choice]
+	)
 
+	const [gares, setGares] = useState(null)
 	const [map, setMap] = useState(null)
+	useEffect(() => {
+		async function fetchGares() {
+			const res = await fetch('/gares.json')
+			const json = await res.json()
+			setGares(json)
+		}
+		fetchGares()
+	}, [setGares])
 	useEffect(() => {
 		const newMap = new maplibregl.Map({
 			container: mapContainerRef.current,
@@ -96,6 +110,19 @@ export default function Map() {
 			.setLngLat(center)
 			.addTo(map)
 	}, [center, map])
+
+	const lesGaresProches =
+		center && gares && sortGares(gares, center).slice(0, 30)
+	console.log({ lesGaresProches })
+
+	useEffect(() => {
+		if (!lesGaresProches) return
+		lesGaresProches.map((gare) =>
+			new maplibregl.Marker({ color: 'purple' })
+				.setLngLat([...gare.coordonnées].reverse())
+				.addTo(map)
+		)
+	}, [lesGaresProches, map])
 
 	return (
 		<div
