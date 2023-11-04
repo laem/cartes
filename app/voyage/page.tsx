@@ -1,5 +1,5 @@
 import { Metadata } from 'next'
-import Voyage from './Voyage2'
+import Voyage from './Voyage'
 
 const title = `Voyagez, autrement.`
 const description1 =
@@ -23,10 +23,6 @@ export async function generateMetadata(
 	}
 }
 
-const Page = ({ searchParams }) => (
-	<main>
-		<Voyage />
-	</main>
-)
+const Page = ({ searchParams }) => <Voyage />
 
 export default Page
