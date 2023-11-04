@@ -7,7 +7,9 @@ import getCityData, { toThumb } from 'Components/wikidata'
 import { CityImage, ImageWrapper } from '@/components/conversation/VoyageUI'
 import { motion } from 'framer-motion'
 
-const defaultCenter = [-1.9890417068124002, 48.66284934737089]
+const defaultCenter =
+	// Saint Malo [-1.9890417068124002, 48.66284934737089]
+	[-1.6776317608896583, 48.10983044383964]
 export default function Map() {
 	const [state, setState] = useState({
 		depuis: { inputValue: '', choice: false },
@@ -60,23 +62,24 @@ export default function Map() {
 
 	const mapContainerRef = useRef()
 
-	const center = state.vers.choice
-		? [state.vers.choice.item.longitude, state.vers.choice.item.latitude]
-		: defaultCenter
+	const center = state.vers.choice && [
+		state.vers.choice.item.longitude,
+		state.vers.choice.item.latitude,
+	]
 
 	const [map, setMap] = useState(null)
 	useEffect(() => {
 		const newMap = new maplibregl.Map({
 			container: mapContainerRef.current,
 			style: `https://api.maptiler.com/maps/streets/style.json?key=${process.env.NEXT_PUBLIC_MAPTILER}`,
-			center: center,
-			zoom: 14,
+			center: defaultCenter,
+			zoom: 8,
 		})
 		setMap(newMap)
 
 		newMap.addControl(new maplibregl.NavigationControl(), 'top-right')
 
-		new maplibregl.Marker({ color: '#FF0000' }).setLngLat(center).addTo(newMap)
+		//new maplibregl.Marker({ color: '#FF0000' }).setLngLat(defaultCenter).addTo(newMap)
 
 		return () => {
 			newMap.remove()
@@ -84,9 +87,10 @@ export default function Map() {
 	}, [setMap])
 
 	useEffect(() => {
-		if (!map) return
+		if (!map || !center) return
 		map.flyTo({
 			center,
+			zoom: 14,
 		})
 		new maplibregl.Marker({ color: 'var(--lightColor)' })
 			.setLngLat(center)
