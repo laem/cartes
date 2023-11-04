@@ -108,6 +108,8 @@ export default function Map() {
 		map.flyTo({
 			center,
 			zoom: 10,
+			pitch: 50, // pitch in degrees
+			bearing: 20, // bearing in degrees
 		})
 		new maplibregl.Marker({ color: 'var(--lightColor)' })
 			.setLngLat(center)
