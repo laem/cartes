@@ -17,8 +17,8 @@ const result = data
 
 		return {
 			coordonnées: [
-				longitude_entreeprincipale_wgs84,
-				latitude_entreeprincipale_wgs84,
+				+longitude_entreeprincipale_wgs84,
+				+latitude_entreeprincipale_wgs84,
 			],
 			commune,
 			nom,
@@ -35,3 +35,4 @@ const result = data
 fs.writeFileSync('gares.json', JSON.stringify(result))
 
 console.log('first two results', result[1], result[2])
+//mv gares.json ~/futureco/public/gares.json
