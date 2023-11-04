@@ -125,6 +125,7 @@ export default function Map() {
 		lesGaresProches.map((gare) => {
 			const el = document.createElement('div')
 			const root = createRoot(el)
+			const size = { 1: '25px', 2: '35px', 3: '45px' }[gare.niveau]
 			flushSync(() => {
 				root.render(
 					<div
@@ -136,7 +137,7 @@ export default function Map() {
 					>
 						<img
 							src="/gare.svg"
-							style={{ width: '30px', height: '30px' }}
+							style={{ width: size, height: size }}
 							alt="Icône d'une gare"
 						/>
 					</div>
@@ -144,11 +145,11 @@ export default function Map() {
 			})
 
 			el.addEventListener('click', () => {
-				window.alert(`Gare de ${gare.libelle}`)
+				window.alert(`Gare de ${gare.nom}, niveau ${gare.niveau}`)
 			})
 
 			new maplibregl.Marker({ element: el })
-				.setLngLat([...gare.coordonnées].reverse())
+				.setLngLat(gare.coordonnées)
 				.addTo(map)
 		})
 	}, [lesGaresProches, map])

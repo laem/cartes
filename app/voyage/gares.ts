@@ -15,7 +15,7 @@ export const sortGares = (gares, destination) =>
 		)
 
 const gareDistance = (station, destination) => {
-	const [lat, lon] = station.coordonnées
+	const [lon, lat] = station.coordonnées
 
 	const A = point([Number(destination[0]), Number(destination[1])])
 	const B = point([lon, lat])
