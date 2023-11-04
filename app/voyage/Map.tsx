@@ -1,5 +1,7 @@
 'use client'
 import React, { useEffect, useMemo, useRef, useState } from 'react'
+import { createRoot } from 'react-dom/client'
+import { flushSync } from 'react-dom'
 import maplibregl from 'maplibre-gl'
 import 'maplibre-gl/dist/maplibre-gl.css'
 import PlaceSearch from './PlaceSearch'
@@ -7,6 +9,7 @@ import getCityData, { toThumb } from 'Components/wikidata'
 import { CityImage, ImageWrapper } from '@/components/conversation/VoyageUI'
 import { motion } from 'framer-motion'
 import { garesProches, sortGares } from './gares'
+import css from '@/components/css/convertToJs'
 
 const defaultCenter =
 	// Saint Malo [-1.9890417068124002, 48.66284934737089]
@@ -117,11 +120,40 @@ export default function Map() {
 
 	useEffect(() => {
 		if (!lesGaresProches) return
-		lesGaresProches.map((gare) =>
-			new maplibregl.Marker({ color: 'purple' })
+		lesGaresProches.map((gare) => {
+			const el = document.createElement('div')
+			const root = createRoot(el)
+			flushSync(() => {
+				root.render(
+					<div
+						style={css`
+							display: flex;
+							flex-direction: column;
+							align-items: center;
+						`}
+					>
+						<h2
+							style={css`
+								color: var(--darkestColor);
+							`}
+						>
+							Gare de {gare.libelle}
+						</h2>
+						<img src="/gare.svg" style={{ width: '30px', height: '30px' }} />
+					</div>
+				)
+			})
+
+			/*
+			el.addEventListener('click', () => {
+				window.alert(JSON.stringify(gare))
+			})
+			*/
+
+			new maplibregl.Marker({ element: el })
 				.setLngLat([...gare.coordonnées].reverse())
 				.addTo(map)
-		)
+		})
 	}, [lesGaresProches, map])
 
 	return (
