@@ -16,14 +16,24 @@ export default function PlaceSearch({ onInputChange, state, setState }) {
 			</InputStyle>
 
 			{vers.results && vers.inputValue !== '' && !state.vers.choice && (
-				<GeoInputOptions
-					{...{
-						whichInput: 'vers',
-						data: state['vers'],
-						updateState: (newData) =>
-							setState((state) => ({ ...state, vers: newData })),
-					}}
-				/>
+				<div
+					css={`
+						ul {
+							background: var(--darkestColor);
+							border-radius: 0.4rem;
+							padding: 0.6rem 0;
+						}
+					`}
+				>
+					<GeoInputOptions
+						{...{
+							whichInput: 'vers',
+							data: state['vers'],
+							updateState: (newData) =>
+								setState((state) => ({ ...state, vers: newData })),
+						}}
+					/>
+				</div>
 			)}
 		</div>
 	)
