@@ -125,7 +125,10 @@ const Map = ({
 							segmentPrices.length
 						return segmentPrice * segment.length
 					}),
-					price = prices.reduce((memo, next) => memo + next, 0)
+					rawPrice = prices.reduce((memo, next) => memo + next, 0),
+					price = new Intl.NumberFormat('fr-FR', {
+						maximumFractionDigits: 1,
+					}).format(rawPrice)
 
 				console.log("Prix de l'autoroute", price, 'pour km ', paidDistance)
 				setRealHighwayPrice(price)
