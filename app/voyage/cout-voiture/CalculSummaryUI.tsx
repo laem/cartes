@@ -18,4 +18,8 @@ export const CalculSummaryWrapper = styled.div`
 	overflow-x: auto;
   white-space: nowrap;
 	`}
+
+	summary > h4 {
+		display: inline;
+	}
 `
