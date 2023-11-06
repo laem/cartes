@@ -150,3 +150,7 @@ button {
 button:enabled {
 	cursor: pointer;
 }
+
+details > summary {
+	cursor: pointer;
+}

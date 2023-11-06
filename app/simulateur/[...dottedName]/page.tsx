@@ -8,6 +8,9 @@ import Article from '@/components/Article'
 import convert from '@/components/css/convertToJs'
 import { Markdown } from '@/components/utils/markdown'
 import BaseCarboneReference from '@/components/BaseCarboneReference'
+import css from '@/components/css/convertToJs'
+import Link from 'next/link'
+import Emoji from '@/components/Emoji'
 
 type Props = {
 	params: { dottedName: string[] }
@@ -52,6 +55,7 @@ const Page = async ({
 	const rule = rules[decoded]
 	const text = rule.exposé?.description || rule.description
 	const title = rule.exposé?.titre || rule.titre
+	const iframe = searchParams.iframe != null
 	return (
 		<main>
 			<Simulateur
@@ -59,14 +63,40 @@ const Page = async ({
 				rules={rules}
 				searchParams={searchParams}
 			/>
-			<Article>
-				<div style={convert(`margin-top: 6rem`)}>
-					<hr />
-					<h2>{title}</h2>
-					<Markdown>{text}</Markdown>
-					<BaseCarboneReference rule={rule} />
-				</div>
-			</Article>
+			<details
+				open={!iframe}
+				style={css`
+					margin-top: 1rem;
+				`}
+			>
+				<summary
+					style={css`
+						text-align: center;
+					`}
+				>
+					Explications
+				</summary>
+				<Article>
+					<div style={convert(`margin-top: 2rem`)}>
+						<hr />
+						<h2>{title}</h2>
+						<Markdown>{text}</Markdown>
+						<h2>⚙️ Comprendre le calcul</h2>
+						<p>
+							Le modèle de calcul est entièrement ouvert et expliqué{' '}
+							<Link
+								href={{
+									pathname: '/documentation/' + utils.encodeRuleName(decoded),
+									query: searchParams,
+								}}
+							>
+								dans la documentation intéractive.
+							</Link>
+						</p>
+						<BaseCarboneReference rule={rule} />
+					</div>
+				</Article>
+			</details>
 		</main>
 	)
 }

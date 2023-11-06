@@ -43,31 +43,6 @@ const SimulateurContent = ({ objectives, rules, config, searchParams }) => {
 					}}
 				/>
 			</div>
-			<div
-				css={`
-					margin-top: 2rem;
-					text-align: center;
-					a {
-						display: flex;
-						align-items: center;
-						justify-content: center;
-						text-decoration: none;
-						color: var(--lighterColor);
-						opacity: 0.5;
-						font-size: 90%;
-						text-transform: uppercase;
-					}
-				`}
-			>
-				<Link
-					href={{
-						pathname: '/documentation/' + utils.encodeRuleName(objective),
-						query: searchParams,
-					}}
-				>
-					<Emoji e="⚙️" /> Comprendre le calcul
-				</Link>
-			</div>
 		</div>
 	)
 }
