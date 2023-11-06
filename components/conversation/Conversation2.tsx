@@ -25,6 +25,7 @@ const Conversation2 = ({
 	situation,
 	setDefault,
 	objectives,
+	searchParams,
 }) => {
 	const dispatch = useDispatch()
 
@@ -44,7 +45,13 @@ const Conversation2 = ({
 	if (!currentQuestion)
 		return (
 			<SimulationEnding
-				{...{ engine, rule: rules[objectives[0]], objectives, query }}
+				{...{
+					engine,
+					rule: rules[objectives[0]],
+					objectives,
+					query,
+					searchParams,
+				}}
 			/>
 		)
 

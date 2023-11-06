@@ -98,6 +98,7 @@ export default function Conversation({
 				situation,
 				setDefault,
 				objectives,
+				searchParams,
 			}}
 		/>
 	)

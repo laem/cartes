@@ -10,6 +10,7 @@ import { Header } from './UI'
 import Voyage from './Voyage'
 import rules from './data/rules.ts'
 import BetaBanner from '@/components/BetaBanner'
+import { ogImageURL } from './ogImageUrl'
 
 const title = `Quel est le vrai coût d'un trajet en voiture ?`
 const description1 =
@@ -28,9 +29,8 @@ export async function generateMetadata(
 	const image =
 		Object.keys(searchParams).length === 0
 			? `/voitures.png`
-			: `/voyage/cout-voiture/og?dottedName=${dottedName}&title=${`Coût du trajet en voiture`}&emojis=${
-					rule.icônes
-			  }&${new URLSearchParams(searchParams).toString()}`
+			: ogImageURL(dottedName, rule.icônes, searchParams)
+
 	return {
 		title,
 		description: description1 + ' ' + description2,
