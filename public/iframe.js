@@ -81,7 +81,7 @@ border-radius: .4rem;
 background: ${color};
 font-weight: bold;
 color: white;
-
+${!iframe.requestFullscreen && `display: none`}
 `
 fullscreenButton.addEventListener('click', (event) => {
 	iframe.requestFullscreen()
