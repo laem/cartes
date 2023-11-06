@@ -21,10 +21,10 @@ export const encodeValue = (value) => {
 	if (typeof value === 'string') return value
 	if (typeof value === 'number') return value
 
-	if (value.valeur) return value.valeur //TODO units should be handled, this is dangerous
+	if (value.valeur != null) return value.valeur //TODO units should be handled, this is dangerous
 	if (value.nodeKind === 'constant' && typeof value.nodeValue === 'number')
 		return value.nodeValue
-	if (value.nodeKind === 'unité' && typeof value.rawNode==='string')
+	if (value.nodeKind === 'unité' && typeof value.rawNode === 'string')
 		return value.rawNode
 
 	console.log('ENCODEVALUE', value)
