@@ -63,7 +63,7 @@ const Page = ({ searchParams }) => (
 							<Link
 								href={{
 									pathname: '/voyage',
-									query: { ...searchParams, lu: true },
+									query: { ...searchParams, lu: 'oui' },
 								}}
 								prefetch={false}
 							>

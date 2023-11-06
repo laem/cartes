@@ -5,7 +5,9 @@ const script = document.getElementById('futureco'),
 const srcURL = new URL(script.src)
 const hostname = srcURL.hostname || 'futur.eco'
 
-const src = `https://${hostname}/${path}?iframe&integratorUrl=${integratorUrl}`
+const src = `https://${hostname}/${path}${
+	path.includes('?') ? '&' : '?'
+}iframe&integratorUrl=${integratorUrl}`
 
 const iframe = document.createElement('iframe')
 
