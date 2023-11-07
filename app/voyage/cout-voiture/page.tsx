@@ -91,7 +91,7 @@ const Page = ({ searchParams }) => {
 					Explications
 				</summary>
 				<Article>
-					<div style={css(`margin-top: 6rem`)}>
+					<div style={css(`margin-top: 2rem`)}>
 						<hr />
 						<Explanation searchParams={searchParams} />
 					</div>

@@ -3,9 +3,20 @@ import { CalculSummaryWrapper } from './CalculSummaryUI'
 import rules from './data/rules'
 import { capitalise0, formatValue, utils } from 'publicodes'
 import { title } from '@/components/utils/publicodesUtils'
+import Publicodes from 'publicodes'
 
 const rulesEntries = Object.entries(rules)
-export default function CalculSummary({ engine, horizontal = false }) {
+export default function CalculSummary({
+	engine: givenEngine,
+	horizontal = false,
+}) {
+	const engine =
+		givenEngine ||
+		new Publicodes(rules).setSituation({
+			'voyage . trajet voiture . distance': 'voiture . km annuels . par défaut',
+			'voyage . trajet voiture . péages': `moyens par an`,
+		})
+
 	return (
 		<CalculSummaryWrapper $horizontal={horizontal}>
 			<ul>
@@ -67,4 +78,3 @@ const Sum = ({ data: [parentDottedName, parentRule], engine }) => (
 		})}
 	</ul>
 )
-

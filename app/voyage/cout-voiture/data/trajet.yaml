@@ -151,6 +151,19 @@ trajet voiture . distance:
   par défaut: 335 km
   unité: km
 
+parc de voitures:
+  valeur: 38700000
+  description: |
+    D'après [le Ministère de l'Écologie](https://www.statistiques.developpement-durable.gouv.fr/387-millions-de-voitures-en-circulation-en-france-au-1er-janvier-2022) il y a environ 39 millions de voitures en circulation en France.
+
+CA autoroutes:
+  valeur: 6700000000 €
+  description: |
+    D'après cette source officielle [vie-publique.fr](https://www.vie-publique.fr/en-bref/290275-societes-dautoroutes-sca-quelle-est-leur-rentabilite).
+trajet voiture . péages . moyens par an:
+  formule: CA autoroutes / parc de voitures
+  unit: €/an
+
 trajet voiture . péages:
   titre: Péages d'autoroute
   description: |
