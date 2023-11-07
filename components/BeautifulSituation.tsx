@@ -63,6 +63,7 @@ export default function BeautifulSituation({ validatedSituation, rules }) {
 			))}
 			{entries.map(([k, v], i) => {
 				const unit = rules[k]?.unité,
+					displayUnit = v.includes(unit) ? '' : unit,
 					ruleTitle = rules[k]?.abrégé || title({ ...rules[k], dottedName: k })
 				const uselessKey =
 					unit && ruleTitle.toLowerCase() === unit.toLowerCase()
