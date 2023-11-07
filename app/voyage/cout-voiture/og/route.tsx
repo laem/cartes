@@ -1,11 +1,10 @@
-import { getSituation } from '@/components/utils/simulationUtils'
-import { ImageResponse } from 'next/og'
-import Publicodes, { formatValue } from 'publicodes'
-import coutRules from '@/app/voyage/cout-voiture/data/rules'
-import css from '@/components/css/convertToJs'
 import BeautifulSituation from '@/components/BeautifulSituation'
+import css from '@/components/css/convertToJs'
+import {humanWeight} from '@/components/HumanWeight'
+import {getSituation} from '@/components/utils/simulationUtils'
+import {ImageResponse} from 'next/og'
+import Publicodes, {formatValue} from 'publicodes'
 import voitureRules from '../data/rules'
-import { humanWeight } from '@/components/HumanWeight'
 
 const futurecoRules = 'https://futureco-data.netlify.app/co2.json'
 
