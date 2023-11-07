@@ -1,3 +1,4 @@
+import dimensions from '@/components/simulationImageDimensions'
 import { ImageResponse } from '@vercel/og'
 
 export const config = {
@@ -47,8 +48,7 @@ function handler(req) {
 			</div>
 		),
 		{
-			width: 1200,
-			height: 750,
+			...dimensions,
 			// Supported options: 'twemoji', 'blobmoji', 'noto', 'openmoji', 'fluent', 'fluentFlat'
 			// Default to 'twemoji'
 			emoji: 'openmoji',

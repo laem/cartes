@@ -9,6 +9,7 @@ import { title } from '../utils/publicodesUtils'
 import dynamic from 'next/dynamic'
 import { ogImageURL } from '@/app/voyage/cout-voiture/ogImageUrl'
 import Image from 'next/image'
+import dimensions from '../simulationImageDimensions'
 
 const SimulationEnding = ({
 	rule,
@@ -37,8 +38,12 @@ const SimulationEnding = ({
 							rule.rawNode.icônes,
 							searchParams
 						)}
-						width="300"
-						height="200"
+						{...dimensions}
+						style={{
+							height: 'min(30vh, 45vw)',
+							width: 'auto',
+							borderRadius: '1rem',
+						}}
 					/>
 				)}
 				<ShareButton {...{ text: title(rule) }} />
