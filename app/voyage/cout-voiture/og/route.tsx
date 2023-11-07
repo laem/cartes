@@ -1,10 +1,12 @@
 import BeautifulSituation from '@/components/BeautifulSituation'
 import css from '@/components/css/convertToJs'
-import {humanWeight} from '@/components/HumanWeight'
-import {getSituation} from '@/components/utils/simulationUtils'
-import {ImageResponse} from 'next/og'
-import Publicodes, {formatValue} from 'publicodes'
+import { humanWeight } from '@/components/HumanWeight'
+import { getSituation } from '@/components/utils/simulationUtils'
+import { ImageResponse } from 'next/og'
+import Publicodes, { formatValue } from 'publicodes'
+import CostIllustration from '../CostIllustration'
 import voitureRules from '../data/rules'
+import Piece from '../Piece'
 
 const futurecoRules = 'https://futureco-data.netlify.app/co2.json'
 
@@ -69,13 +71,17 @@ export async function GET(request) {
 					lineHeight: 0.8,
 				}}
 			>
-				<div
-					style={css(`
-					 font-size: 180;
+				{false && isVoiture(dottedName) ? (
+					<Piece />
+				) : (
+					<div
+						style={css(`
+					 font-size: 160;
 					`)}
-				>
-					{emojis}
-				</div>
+					>
+						{emojis}
+					</div>
+				)}
 				<div
 					style={{
 						backgroundImage:
