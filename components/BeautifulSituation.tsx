@@ -61,10 +61,9 @@ export default function BeautifulSituation({ validatedSituation, rules }) {
 					<Separator />
 				</Entry>
 			))}
-			<Separator />
 			{entries.map(([k, v], i) => {
 				const unit = rules[k]?.unité,
-					ruleTitle = title({ ...rules[k], dottedName: k })
+					ruleTitle = rules[k]?.abrégé || title({ ...rules[k], dottedName: k })
 				const uselessKey =
 					unit && ruleTitle.toLowerCase() === unit.toLowerCase()
 				return (

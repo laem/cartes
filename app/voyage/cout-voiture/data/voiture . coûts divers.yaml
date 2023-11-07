@@ -34,6 +34,7 @@ voiture . coûts divers . parking:
 
 voiture . coûts divers . pv:
   titre: PV et amendes
+  abrégé: PV
   question: Quel est le coût annuel des contraventions que vous avez du payer ?
   description: |
     Il s'agit ici de toutes les contraventions qui surviennent : parking, vitesse, ivresse, feu cassé, stop grillé, etc.

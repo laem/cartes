@@ -92,6 +92,7 @@ voiture . motorisation . biocarburant:
 
 voiture . consommation thermique:
   question: Quelle est la consommation de la voiture ?
+  abrégé: conso
   par défaut: par défaut
   unité: l / 100 km
   note: |
@@ -222,6 +223,8 @@ voiture . problème km annuels:
 
 voiture . km annuels:
   titre: Vos kilomètres annuels
+  abrégé: km/an
+  unité: km/an
   question: Combien de kilomètres environ faites-vous à l'année ?
   par défaut: par défaut
   suggestions:
