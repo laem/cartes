@@ -43,45 +43,62 @@ export async function generateMetadata(
 	}
 }
 
-const Page = ({ searchParams }) => (
-	<main>
-		{!searchParams.lu && (
-			<Card $fullWidth>
-				<Header>
-					<Image
-						src={voitures}
-						alt="Illustration de plusieurs formes d'automobiles, de la citadine au camping car"
-						width="100"
-						height="140"
-					/>
-					<div>
-						<h1>{title}</h1>
-						<>
-							<p>{description1}</p>
-							<p>{description2}</p>
-							<BetaBanner />
-							<Link
-								href={{
-									pathname: '/voyage',
-									query: { ...searchParams, lu: 'oui' },
-								}}
-								prefetch={false}
-							>
-								<LightButton>OK</LightButton>
-							</Link>
-						</>
+const Page = ({ searchParams }) => {
+	const iframe = searchParams.iframe != null
+	return (
+		<main>
+			{!searchParams.lu && (
+				<Card $fullWidth>
+					<Header>
+						<Image
+							src={voitures}
+							alt="Illustration de plusieurs formes d'automobiles, de la citadine au camping car"
+							width="100"
+							height="140"
+						/>
+						<div>
+							<h1>{title}</h1>
+							<>
+								<p>{description1}</p>
+								<p>{description2}</p>
+								<BetaBanner />
+								<Link
+									href={{
+										pathname: '/voyage',
+										query: { ...searchParams, lu: 'oui' },
+									}}
+									prefetch={false}
+								>
+									<LightButton>OK</LightButton>
+								</Link>
+							</>
+						</div>
+					</Header>
+				</Card>
+			)}
+			<Voyage searchParams={searchParams} />
+			<details
+				open={!iframe}
+				style={css`
+					margin-top: 1rem;
+				`}
+			>
+				<summary
+					style={css`
+						text-align: center;
+					`}
+				>
+					Explications
+				</summary>
+				<Article>
+					<div style={css(`margin-top: 6rem`)}>
+						<hr />
+						<Explanation searchParams={searchParams} />
 					</div>
-				</Header>
-			</Card>
-		)}
-		<Voyage searchParams={searchParams} />
-		<Article>
-			<div style={css(`margin-top: 6rem`)}>
-				<hr />
-				<Explanation searchParams={searchParams} />
-			</div>
-		</Article>
-	</main>
-)
+				</Article>
+			</details>
+		</main>
+	)
+}
 
 export default Page
