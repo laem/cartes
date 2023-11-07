@@ -11,6 +11,8 @@ import {
 import { useState } from 'react'
 import Passengers, { PersonImage } from './Passengers'
 import Emoji from '@/components/Emoji'
+import Link from 'next/link'
+import { encodeSituation } from '@/components/utils/simulationUtils'
 
 export default function ExempleTable() {
 	const engine = new Publicodes(rules),
@@ -39,23 +41,37 @@ export default function ExempleTable() {
 									<small>{element['sous-titre']}</small>
 								</li>
 
-								{voiture.valeurs.map((element2) => (
-									<li key={element2.titre}>
-										{formatValue(
-											engine
-												.setSituation({
-													...element.situation,
-													...element2.situation,
-													'voyage . trajet . voyageurs': passengers,
-												})
-												.evaluate(objective).nodeValue,
-											{ precision: i === 0 ? 2 : 0 }
-										)}
-										<small>
-											&nbsp; € / <PersonImage />
-										</small>
-									</li>
-								))}
+								{voiture.valeurs.map((element2) => {
+									const finalSituation = {
+										...element.situation,
+										...element2.situation,
+										'voyage . trajet . voyageurs': passengers,
+									}
+
+									return (
+										<li key={element2.titre}>
+											<Link
+												href={{
+													pathname: '/voyage/cout-voiture',
+													query: {
+														lu: 'oui',
+														...encodeSituation(finalSituation),
+													},
+												}}
+											>
+												{formatValue(
+													engine
+														.setSituation(finalSituation)
+														.evaluate(objective).nodeValue,
+													{ precision: i === 0 ? 2 : 0 }
+												)}
+												<small>
+													&nbsp; € / <PersonImage />
+												</small>
+											</Link>
+										</li>
+									)
+								})}
 							</HorizontalOl>
 						</li>
 					))}

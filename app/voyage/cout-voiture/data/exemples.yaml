@@ -9,33 +9,45 @@ dimensions:
         sous-titre: Brest→Nice
         situation:
           voyage . trajet voiture . distance: 1000
+          voyage . trajet voiture . départ: "'Brest'"
+          voyage . trajet voiture . arrivée: "'Nice'"
       - titre: 500 km
         sous-titre: Bordeaux→Lyon
         situation:
           voyage . trajet voiture . distance: 500
+          voyage . trajet voiture . départ: "'Bordeaux'"
+          voyage . trajet voiture . arrivée: "'Lyon'"
       - titre: 150 km
         sous-titre: Brest→Rennes
         situation:
           voyage . trajet voiture . distance: 150
+          voyage . trajet voiture . départ: "'Brest'"
+          voyage . trajet voiture . arrivée: "'Rennes'"
       - titre: 15 km
         sous-titre: Puteaux → Montreuil
         situation:
           voyage . trajet voiture . distance: 15
+          voyage . trajet voiture . départ: "'Puteaux'"
+          voyage . trajet voiture . arrivée: "'Montreuil'"
       - titre: 4 km
         sous-titre: Nancy → Vandoeuvre
         situation:
           voyage . trajet voiture . distance: 4
+          voyage . trajet voiture . départ: "'Nancy'"
+          voyage . trajet voiture . arrivée: "'Vandoeuvre'"
   - titre: voiture
     valeurs:
       - titre: citadine diesel
         situation:
           voyage . voiture . prix d'achat neuf: 18000 €
+          voyage . voiture . motorisation: "'diesel'"
       - titre: SUV diesel
         situation:
           voyage . voiture . consommation thermique: 7
           voyage . voiture . prix d'achat neuf: 29000 €
+          voyage . voiture . motorisation: "'diesel'"
 
-      - titre: citadine électrique
+      - titre: citadine ⚡️
         situation:
           voyage . voiture . motorisation: "'électrique'"
           voyage . voiture . prix d'achat neuf: 30100 €
