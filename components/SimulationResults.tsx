@@ -18,7 +18,7 @@ const SimulationResults = ({
 			key={dottedName}
 			css={`
 				font-size: 120%;
-				padding: 1rem 0 0;
+				padding: 0;
 				width: 18rem;
 				min-height: 7em;
 				position: relative;
@@ -53,23 +53,6 @@ const SimulationResults = ({
 					}
 				`}
 			>
-				<div css="width: 100%; img { font-size: 150%}}">
-					{icônes && <Emoji e={icônes} />}
-				</div>
-				<h1
-					css={`
-						width: 100%;
-						font-size: 100%;
-						color: var(--darkerColor);
-						margin: 0;
-						margin-bottom: 1rem;
-						width: 80%;
-						background: white;
-						line-height: 1.4rem;
-					`}
-				>
-					{title}
-				</h1>
 				<img
 					src="https://upload.wikimedia.org/wikipedia/commons/thumb/a/a3/Marité.jpg/400px-Marité.jpg"
 					css={`
@@ -83,6 +66,31 @@ const SimulationResults = ({
 						object-fit: cover;
 					`}
 				/>
+				<div css="width: 100%; img { font-size: 150%}}">
+					{icônes && <Emoji e={icônes} />}
+				</div>
+				<h1
+					css={`
+						width: 100%;
+						font-size: 100%;
+						color: var(--darkerColor);
+						margin: 0;
+						margin-bottom: 1rem;
+						width: 80%;
+						background: white;
+						border-radius: 0.15rem;
+						line-height: 1.4rem;
+						--shadow-color: 0deg 0% 63%;
+						--shadow-elevation-medium: 0.3px 0.5px 0.7px
+								hsl(var(--shadow-color) / 0.36),
+							0.8px 1.6px 2px -0.8px hsl(var(--shadow-color) / 0.36),
+							2.1px 4.1px 5.2px -1.7px hsl(var(--shadow-color) / 0.36),
+							5px 10px 12.6px -2.5px hsl(var(--shadow-color) / 0.36);
+						box-shadow: var(--shadow-elevation-medium);
+					`}
+				>
+					{title}
+				</h1>
 			</div>
 			<>
 				<div
