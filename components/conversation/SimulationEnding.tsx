@@ -33,11 +33,14 @@ const SimulationEnding = ({
 				)}
 				{coutVoiture && (
 					<Image
-						src={ogImageURL(
-							coutVoitureDottedName,
-							rule.rawNode.icônes,
-							searchParams
-						)}
+						src={
+							'https://futur.eco' +
+							ogImageURL(
+								coutVoitureDottedName,
+								rule.rawNode.icônes,
+								searchParams
+							)
+						}
 						{...dimensions}
 						style={{
 							height: 'min(30vh, 45vw)',
