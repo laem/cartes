@@ -34,14 +34,17 @@ const findRuleEndingWith = (entries, ending) =>
 		(entry) =>
 			entry[0] === ending || entry[0].split(' . ').slice(-1)[0] === ending
 	)
-export default function BeautifulSituation({ validatedSituation, rules }) {
-	const entriesRaw = Object.entries(validatedSituation)
+export default function BeautifulSituation({ situation, rules }) {
+	const entriesRaw = Object.entries(situation)
 	const entries = entriesRaw.filter(
 		(entry) =>
 			!displayHandlers.find(({ replaces }) =>
 				replaces.some((ending) => findRuleEndingWith([entry], ending))
 			)
 	)
+
+	if (!entries.length) return null
+
 	return (
 		<ul
 			style={css`
@@ -54,9 +57,12 @@ export default function BeautifulSituation({ validatedSituation, rules }) {
 			{displayHandlers.map((handler) => (
 				<Entry>
 					{handler.jsx(
-						...handler.replaces.map(
-							(ending) => findRuleEndingWith(entriesRaw, ending)[1]
-						)
+						...handler.replaces.map((ending) => {
+							const found = findRuleEndingWith(entriesRaw, ending)
+
+							if (!found) return null
+							return found[1]
+						})
 					)}
 					<Separator />
 				</Entry>

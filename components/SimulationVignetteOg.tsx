@@ -5,18 +5,15 @@ import Publicodes, { formatValue } from 'publicodes'
 const futurecoRules = 'https://futureco-data.netlify.app/co2.json'
 import voitureRules from '@/app/voyage/cout-voiture/data/rules'
 
-export default async function SimulationVignetteOg({ searchParams }) {
-	const params = Object.fromEntries(searchParams)
-	const { dottedName, title, emojis, ...encodedSituation } = params
-
-	const rules = await getRules(dottedName)
-	const engine = new Publicodes(rules)
-
-	const validatedSituation = getSituation(encodedSituation, rules)
-	console.log(title, emojis, validatedSituation)
-	const evaluation = engine
-			.setSituation(validatedSituation)
-			.evaluate(dottedName),
+export default function SimulationVignetteOg({
+	engine,
+	situation,
+	rules,
+	title,
+	emojis,
+	dottedName,
+}) {
+	const evaluation = engine.setSituation(situation).evaluate(dottedName),
 		rawValue = formatValue(evaluation, { precision: 1 }),
 		valueWithoutUnit = formatValue(evaluation, {
 			precision: 1,
@@ -71,7 +68,7 @@ export default async function SimulationVignetteOg({ searchParams }) {
 					margin-top: 1rem;
 				`}
 			>
-				<BeautifulSituation {...{ validatedSituation, rules }} />
+				<BeautifulSituation {...{ situation, rules }} />
 			</div>
 			<div
 				style={css`
@@ -95,13 +92,6 @@ export default async function SimulationVignetteOg({ searchParams }) {
 }
 const isVoiture = (dottedName) =>
 	dottedName === 'voyage . trajet voiture . coût trajet par personne'
-const getRules = async (dottedName) => {
-	if (isVoiture(dottedName)) return voitureRules
-
-	const rulesRequest = await fetch(futurecoRules, { mode: 'cors' }),
-		rules = await rulesRequest.json()
-	return rules
-}
 
 const formatUnit = (rawUnit, nodeValue, formattedValue) => {
 	console.log('|' + rawUnit + '|')

@@ -5,6 +5,7 @@ import Emoji from '@/components/Emoji'
 import GraphicDetails from '@/components/GraphicDetails'
 import Simulation from '@/components/Simulation'
 import SimulationResults from '@/components/SimulationResults'
+import SimulationVignetteOg from '@/components/SimulationVignetteOg'
 import StackedBarChart from '@/components/StackedBarChart'
 import { LightButton } from '@/components/UI'
 import {
@@ -57,6 +58,16 @@ export default function Questions({
 					z-index: 10;
 				`)}
 			>
+				<SimulationVignetteOg
+					{...{
+						rules,
+						situation,
+						engine,
+						title: 'Salut',
+						emojis: '🥁',
+						dottedName: objectives[0],
+					}}
+				/>
 				<SimulationResults
 					{...{
 						opacity,
