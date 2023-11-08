@@ -58,16 +58,6 @@ export default function Questions({
 					z-index: 10;
 				`)}
 			>
-				<SimulationVignetteOg
-					{...{
-						rules,
-						situation,
-						engine,
-						title: 'Salut',
-						emojis: '🥁',
-						dottedName: objectives[0],
-					}}
-				/>
 				<SimulationResults
 					{...{
 						opacity,

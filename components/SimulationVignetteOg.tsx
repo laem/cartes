@@ -2,8 +2,6 @@ import BeautifulSituation from '@/components/BeautifulSituation'
 import css from '@/components/css/convertToJs'
 import { getSituation } from '@/components/utils/simulationUtils'
 import Publicodes, { formatValue } from 'publicodes'
-const futurecoRules = 'https://futureco-data.netlify.app/co2.json'
-import voitureRules from '@/app/voyage/cout-voiture/data/rules'
 
 export default function SimulationVignetteOg({
 	engine,
@@ -33,7 +31,7 @@ export default function SimulationVignetteOg({
 				backgroundImage: 'linear-gradient(to bottom, #dbf4ff, #fff1f1)',
 				fontSize: 100,
 				letterSpacing: -2,
-				fontWeight: 700,
+				fontWeight: 400,
 				textAlign: 'center',
 				lineHeight: 0.8,
 			}}
@@ -75,6 +73,7 @@ export default function SimulationVignetteOg({
 					display: flex;
 					align-items: center;
 					margin-top: 1rem;
+					color: black;
 				`}
 			>
 				<span>{value}</span>
@@ -90,8 +89,6 @@ export default function SimulationVignetteOg({
 		</div>
 	)
 }
-const isVoiture = (dottedName) =>
-	dottedName === 'voyage . trajet voiture . coût trajet par personne'
 
 const formatUnit = (rawUnit, nodeValue, formattedValue) => {
 	console.log('|' + rawUnit + '|')

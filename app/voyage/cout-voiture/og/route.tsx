@@ -2,9 +2,13 @@ import SimulationVignetteOg from '@/components/SimulationVignetteOg'
 import { getSituation } from '@/components/utils/simulationUtils'
 import { ImageResponse } from 'next/og'
 import Publicodes from 'publicodes'
+const futurecoRules = 'https://futureco-data.netlify.app/co2.json'
+import voitureRules from '@/app/voyage/cout-voiture/data/rules'
 
 export const runtime = 'edge'
 
+const isVoiture = (dottedName) =>
+	dottedName === 'voyage . trajet voiture . coût trajet par personne'
 const getRules = async (dottedName) => {
 	if (isVoiture(dottedName)) return voitureRules
 
