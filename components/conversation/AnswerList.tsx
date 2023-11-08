@@ -8,6 +8,7 @@ import Link from 'next/link'
 import { EvaluatedNode, formatValue } from 'publicodes'
 import { useEffect, useState } from 'react'
 import { useDispatch } from 'react-redux'
+import ProgressCircle from '../ProgressCircle'
 import {
 	encodeSituation,
 	getFoldedSteps,
@@ -126,6 +127,7 @@ export default function AnswerList({ searchParams, objectives, engine }) {
 								? `, ${nextQuestionsLength} restantes`
 								: ''}
 						</span>
+						<ProgressCircle {...{ engine, searchParams, objectives }} />
 					</summary>
 					<div>
 						<Link

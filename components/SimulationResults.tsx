@@ -35,7 +35,6 @@ const SimulationResults = ({
 				border-radius: 0.3rem;
 			`}
 		>
-			<ProgressCircle {...{ engine, searchParams, objectives }} />
 			<div
 				id="shareImage"
 				css={`
