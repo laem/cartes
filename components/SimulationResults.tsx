@@ -10,6 +10,7 @@ const SimulationResults = ({
 	rule,
 	opacity,
 	hideResults,
+	image,
 }) => {
 	const { dottedName, title, nodeValue } = evaluation
 	const { icônes, formule } = rule
@@ -20,14 +21,14 @@ const SimulationResults = ({
 				font-size: 120%;
 				padding: 0;
 				width: 18rem;
-				min-height: 7em;
+
+				min-height: 7rem;
 				position: relative;
 				display: flex;
 				align-items: center;
 				justify-content: middle;
 				text-align: center;
 				flex-wrap: wrap;
-				line-height: 1.2em;
 				${formule != null ? '' : 'filter: grayscale(70%); opacity: 0.6;'}
 				background-color: var(--lightestColor);
 				color: var(--darkColor);
@@ -45,6 +46,7 @@ const SimulationResults = ({
 					flex-wrap: wrap;
 					width: 100%;
 					overflow: hidden;
+					height: 8rem;
 					> *:first-child {
 						z-index: 0;
 					}
@@ -53,29 +55,35 @@ const SimulationResults = ({
 					}
 				`}
 			>
-				<img
-					src="https://upload.wikimedia.org/wikipedia/commons/thumb/a/a3/Marité.jpg/400px-Marité.jpg"
-					css={`
-						position: absolute;
-						top: 50%;
-						transform: translateY(-50%);
-						opacity: 0.8;
-						left: 0;
-						width: 100%;
-						height: auto;
-						object-fit: cover;
-					`}
-				/>
+				{image && (
+					<img
+						src={image}
+						css={`
+							position: absolute;
+							top: 50%;
+							transform: translateY(-50%);
+							opacity: 0.8;
+							left: 0;
+							width: 100%;
+							height: auto;
+							object-fit: cover;
+							border-radius: 3.8rem;
+						`}
+					/>
+				)}
 				<div css="width: 100%; img { font-size: 150%}}">
 					{icônes && <Emoji e={icônes} />}
 				</div>
 				<h1
 					css={`
 						width: 100%;
-						font-size: 100%;
+						font-size: ${!hideResults || image ? '100%' : '120%'};
+						line-height: 1.4rem;
 						color: var(--darkerColor);
 						margin: 0;
 						margin-bottom: 1rem;
+						${image &&
+						`
 						width: 80%;
 						background: white;
 						border-radius: 0.15rem;
@@ -87,6 +95,7 @@ const SimulationResults = ({
 							2.1px 4.1px 5.2px -1.7px hsl(var(--shadow-color) / 0.36),
 							5px 10px 12.6px -2.5px hsl(var(--shadow-color) / 0.36);
 						box-shadow: var(--shadow-elevation-medium);
+								`}
 					`}
 				>
 					{title}

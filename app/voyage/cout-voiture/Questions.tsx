@@ -35,7 +35,7 @@ export default function Questions({
 
 	const voyageurs = searchParams['voyage.trajet.voyageurs']
 	const ResultsBlock = () => (
-		<div css="padding: 1.6rem; font-size: 140%">
+		<div css="padding: .4rem; font-size: 140%">
 			<strong>
 				{formatValue(evaluation, {
 					displayedUnit: voyageurs && voyageurs > 1 ? '€ / personne' : '€',
@@ -68,6 +68,8 @@ export default function Questions({
 						ResultsBlock,
 						objectives,
 						searchParams,
+						image:
+							'https://upload.wikimedia.org/wikipedia/commons/thumb/a/a3/Marité.jpg/400px-Marité.jpg',
 					}}
 				/>
 			</div>
