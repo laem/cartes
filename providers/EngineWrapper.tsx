@@ -19,6 +19,7 @@ export const useEngine2 = (rules, baseSituation, objective) => {
 			}),
 			[baseSituation, userSituation]
 		)
+	console.log('situation in useEngine2', situation)
 	engine.setSituation(situation)
 
 	return engine

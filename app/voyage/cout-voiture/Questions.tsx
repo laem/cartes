@@ -7,7 +7,10 @@ import Simulation from '@/components/Simulation'
 import SimulationResults from '@/components/SimulationResults'
 import StackedBarChart from '@/components/StackedBarChart'
 import { LightButton } from '@/components/UI'
-import { getFoldedSteps } from '@/components/utils/simulationUtils'
+import {
+	getFoldedSteps,
+	getSituation,
+} from '@/components/utils/simulationUtils'
 import { useNextQuestions } from '@/components/utils/useNextQuestion'
 import { situationSelector } from '@/selectors/simulationSelectors'
 import { formatValue } from 'publicodes'
@@ -25,7 +28,10 @@ export default function Questions({
 		answeredQuestions = getFoldedSteps(searchParams, rules)
 	const rule = rules[objectives[0]]
 	//just to update the engine object
-	const situation = useSelector(situationSelector(objectives[0]))
+
+	const validatedSituation = getSituation(searchParams, rules)
+	const userSituation = useSelector(situationSelector(objectives[0]))
+	const situation = { ...validatedSituation, ...userSituation }
 
 	const voyageurs = searchParams['voyage.trajet.voyageurs']
 	const ResultsBlock = () => (

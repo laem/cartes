@@ -8,11 +8,9 @@ import { getSituation } from '@/components/utils/simulationUtils'
 export default function Voyage({ searchParams }) {
 	const objectives = ['voyage . trajet voiture . coût trajet par personne']
 
-	const engine = useEngine2(
-		rules,
-		getSituation(searchParams, rules),
-		objectives[0]
-	)
+	const validatedSituation = getSituation(searchParams, rules)
+	console.log('validatedSituation in Voyage', validatedSituation)
+	const engine = useEngine2(rules, validatedSituation, objectives[0])
 	const evaluation = engine.evaluate(objectives[0])
 
 	return (
