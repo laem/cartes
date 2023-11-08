@@ -47,7 +47,6 @@ voiture . coûts divers . pv:
     arrondi: oui
     valeur: recettes annuelles / parc français
   note: Idéalement, il faudrait trouver le montant moyen payé par français par an.
-  unité: €/an
   suggestions:
     👼 conducteur idéal: 0 €/an
     ☠️  chauffard: 200 €/an
@@ -56,7 +55,7 @@ voiture . parc français:
   formule: 38.7 millions
   note: https://www.statistiques.developpement-durable.gouv.fr/387-millions-de-voitures-en-circulation-en-france-au-1er-janvier-2022
 voiture . coûts divers . pv . recettes annuelles:
-  formule: 1784 millions
+  formule: 1784 millions.€/an
   note: https://www.ccomptes.fr/system/files/2023-04/NEB-2022-Controle-circulation-et-stationnement-routiers.pdf?page=15
 
 voiture . coûts divers . permis de conduire:
@@ -67,11 +66,11 @@ voiture . coûts divers . permis de conduire . durée d'utilisation:
   formule: durée de vie en bonne santé - âge d'obtention
 
 durée de vie en bonne santé:
-  formule: 66
+  formule: 66 an
   références:
     - https://www.vie-publique.fr/en-bref/288403-esperance-de-vie-en-bonne-sante-67-ans-femmes-656-ans-hommes
 voiture . coûts divers . permis de conduire . âge d'obtention:
-  formule: 19
+  formule: 19 an
   références:
     - https://www.preventionroutiere.asso.fr/wp-content/uploads/2016/04/Etude_Les_jeunes_Français_et_le_permis-_B-10-06-2013.pdf
 voiture . coûts divers . permis de conduire . obtention:

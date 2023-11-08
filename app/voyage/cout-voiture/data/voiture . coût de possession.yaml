@@ -138,8 +138,7 @@ voiture . coût de possession . lavage:
     Le lavage à domicile est également compté à ce prix minorant, car il consomme beaucoup d'eau, de produits souvent dédiés et... de temps.
 
     Nous considérons que moins une voiture est utilisée en km à l'année, moins elle est lavée.
-  formule: 6 * 10 * ratio d'usage
-  unité: € / an
+  formule: 10 € * 6 /an * ratio d'usage
 
 voiture . coût de possession . assurance:
   question: Quel est le coût annuel de l'assurance ?
@@ -168,10 +167,10 @@ voiture . coût de possession . entretien thermique:
     Cette autre source, [une étude par le cabinet ADETEC](https://mobilidoc.fr/document-407) en 2018, donne un coût d'entretien de ~ 1200 € par an. Cela confirme notre ordre de grandeur.
 
     Une troisième source, l'étude ["Budget de l'automobiliste"](https://www.automobile-club.org/espace-presse/communiques/l-aca-publie-les-resultats-du-budget-de-l-automobiliste-2019) de l'Automobile Club nous dit que pour une Clio essence, `Le poste Entretien a progressé de 7,7 % pour atteindre 939 €, à cause de l'explosion du prix des pièces détachées`. Cela confirme à nouveau l'ordre de grandeur de 1000 € par an.
-  par défaut: 1000€
+  par défaut: 1000 €/an
   suggestions:
-    petit rouleur: 840 €
-    gros rouleur: 1700 €
+    petit rouleur: 840 €/an
+    gros rouleur: 1700 €/an
 
 voiture . coût de possession . entretien:
   description: |
