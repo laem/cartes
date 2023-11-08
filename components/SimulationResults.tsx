@@ -34,6 +34,7 @@ const SimulationResults = ({
 				color: var(--darkColor);
 				margin: 1rem auto;
 				border-radius: 0.3rem;
+				overflow: hidden;
 			`}
 		>
 			<div
@@ -67,7 +68,6 @@ const SimulationResults = ({
 							width: 100%;
 							height: auto;
 							object-fit: cover;
-							border-radius: 3.8rem;
 						`}
 					/>
 				)}
@@ -78,7 +78,7 @@ const SimulationResults = ({
 					css={`
 						width: 100%;
 						font-size: ${!hideResults || image ? '100%' : '120%'};
-						line-height: 1.4rem;
+						line-height: 1.5rem;
 						color: var(--darkerColor);
 						margin: 0;
 						margin-bottom: 1rem;
@@ -87,7 +87,6 @@ const SimulationResults = ({
 						width: 80%;
 						background: white;
 						border-radius: 0.15rem;
-						line-height: 1.4rem;
 						--shadow-color: 0deg 0% 63%;
 						--shadow-elevation-medium: 0.3px 0.5px 0.7px
 								hsl(var(--shadow-color) / 0.36),

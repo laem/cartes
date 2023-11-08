@@ -69,7 +69,7 @@ export default function Questions({
 						objectives,
 						searchParams,
 						image:
-							'https://upload.wikimedia.org/wikipedia/commons/thumb/a/a3/Marité.jpg/400px-Marité.jpg',
+							'https://upload.wikimedia.org/wikipedia/commons/thumb/4/49/Vue_sud-ouest_de_la_place_du_parlement_de_Bretagne,_Rennes,_France.jpg/400px-Vue%20sud-ouest%20de%20la%20place%20du%20parlement%20de%20Bretagne%2C%20Rennes%2C%20France.jpg',
 					}}
 				/>
 			</div>
