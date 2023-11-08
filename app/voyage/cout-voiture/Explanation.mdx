@@ -120,11 +120,13 @@ Cela dit, l'ordre de grandeur est quand même connu : une voiture dure environ 2
 
 Mais quid de l'occasion ? En effet, une voiture d'occasion coûte beaucoup moins cher à l'achat. Sa durée de vie est réduite. Certes, une partie de la décôte ne représente pas une perte de durée de vie, mais une perte d'effet de mode. Ainsi, les acheteurs qui ne voient pas d'intérêt à rouler avec le dernier cri peuvent réduire in fine leur coût au km. 
 
-Pourtant, si cette optimisation financière via l'achat *au bon moment d'une occasion bon marché* baisse le coût au km de certains, il va mécaniquement augmenter celui des autres, le coût hors optimisation représentant bien le coût moyen du km. 
+Pourtant, si cette optimisation financière via l'achat *au bon moment d'une occasion bon marché* baisse le coût au km pour les "bons" acheteurs d'occasion, il va mécaniquement augmenter celui des "mauvais" vendeurs, le coût hors optimisation représentant bien le coût moyen du km. 
 
 C'est un jeu à somme nulle : si j'achète une voiture qui neuve coutait 30 000 € pour 20 000 € après 5 ans d'âge, je peux peut-être considérer avoir gagné 5 000 € (selon des critères difficiles à objectiver, ici je considère que 5 ans ne font pas perdre 1/3 du prix)... mais l'acheteur aura alors perdu ces 5 000 € selon ces mêmes critères, et la moyenne nationale du cout d'achat amorti ne changera pas.
 
 Cela dit, l'achat d'occasion est un fait majeur : en 2023, une grosse proportion des voitures neuves sont achetées par les entreprises, dont les entreprises de leasing, et les retraités. Nous avons donc inclus la possibilité de renseigner dans le calculateur le prix d'achat d'occasion ainsi que l'année de fabrication de la voiture, pour en estimer la durée de vie restante et donc le cout d'achat amorti.
+
+Un autre aspect n'a pas (encore) été intégré dans le calculateur : les premières années, la voiture voit son prix de revente baisser de façon plus importantes que les dernières années. C'est ce qu'on appelle une décote non linéaire. Ainsi, pour une voiture achetée neuve en 2020, en prenant en compte cette décote, votre Agen->Bordeaux coûtera bien plus cher que si vous faites le même trajet 3 ans plus tard. Pour simplifier, nous n'avons pas intégré cet aspect dans le calcul... Cela dit, comme nous l'avons vu plus haut, il est en partie déjà pris en compte via le prix de l'achat d'occasion, le cas échéant !
 
 Nos hypothèses de [durée de vie](/documentation/voyage/voiture/durée-de-vie) et [km annuels](/documentation/voyage/voiture/km-annuels) sont explicites dans le modèle de calcul. Le modèle est entièrement ouvert, à vous de l'explorer et de l'améliorer ! 
 
