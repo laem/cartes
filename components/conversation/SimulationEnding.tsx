@@ -32,12 +32,13 @@ const SimulationEnding = ({
 					</>
 				)}
 				{coutVoiture && (
-					<Image
+					<img
 						src={ogImageURL(
 							coutVoitureDottedName,
 							rule.rawNode.icônes,
 							searchParams
 						)}
+						alt="Une illustration du coût de la voiture incluant le résultat du calcul et les paramètres saisis pour partager sur les réseaux sociaux"
 						{...dimensions}
 						style={{
 							height: 'min(30vh, 45vw)',
