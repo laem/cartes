@@ -77,7 +77,6 @@ export default function AnswerList({ searchParams, objectives, engine }) {
 	const answeredQuestionsLength = foldedStepsToDisplay.length,
 		nextQuestionsLength = nextSteps.length
 
-	console.log('isOpen', isOpen)
 	return (
 		<div className="answer-list">
 			{!!foldedStepsToDisplay.length && (

@@ -140,7 +140,6 @@ export const useNextQuestions = function (
 		objectives.length === 1 &&
 		objectives[0] === 'voyage . trajet voiture . coût trajet par personne'
 	) {
-		console.log('MV', missingVariables[0])
 		//This is a new rewrite of the getNextQuestions function, I wonder why we left this simplicity...
 		const allMissingEntries = Object.entries(missingVariables[0]),
 			missingEntries = allMissingEntries.filter(
