@@ -114,12 +114,19 @@ trajet voiture . prix électricité:
   question: Quel est le prix de l'électricité ?
   par défaut: 0.2276
   unité: € / kWh
+  suggestions:
+    bornes publiques: 0.5
+    tarif heures creuses: 0.1828
   description: |
     Nous prenons ici le prix d'EDF tarif bleu reglementé, disponible [sur cette page](https://www.hellowatt.fr/contrat-electricite/prix-electricite).
   note: |
     Pour bien faire les choses, il faudrait prendre un prix représentatif du choix des français dans leur abonnement : le prix du kWh des fournisseurs concurrent d'EDF a explosé en 2021.
 
     Aussi, il faudrait prendre en compte une part de l'abonnement proportionnelle à la consommation d'une voiture électrique dans un foyer.
+
+    La tarification des bornes publiques varie grandement suivant les fournisseurs, les puissances et les abonnements souscrits. Quelques chiffres [ici](https://www.automobile-propre.com/dossiers/cout-prix-recharge-voiture-electrique/#:~:text=prix%20heures%20creuses%20!-,Les%20exemples%20de%20prix%20sur%20une%20borne%20publique,-Quoi%20qu%E2%80%99il%20en)
+
+    Pour une recharge à domicile, mieux vaut privilégier un tarif adapté, comme le tarif réglementé heures creuses ou l'offre Tempo d'EDF.
 trajet voiture . coût de possession:
   titre: Coûts de possession ramenés au trajet
   formule: voiture . coût de possession au km * distance
