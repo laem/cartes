@@ -11,30 +11,35 @@ dimensions:
           voyage . trajet voiture . distance: 1000
           voyage . trajet voiture . départ: "'Brest'"
           voyage . trajet voiture . arrivée: "'Nice'"
+          voyage . trajet voiture . péages . prix calculé . prix 2018: 96.1
       - titre: 500 km
         sous-titre: Bordeaux→Lyon
         situation:
           voyage . trajet voiture . distance: 500
           voyage . trajet voiture . départ: "'Bordeaux'"
           voyage . trajet voiture . arrivée: "'Lyon'"
+          voyage . trajet voiture . péages . prix calculé . prix 2018: 37.1
       - titre: 150 km
         sous-titre: Brest→Rennes
         situation:
           voyage . trajet voiture . distance: 150
           voyage . trajet voiture . départ: "'Brest'"
           voyage . trajet voiture . arrivée: "'Rennes'"
+          voyage . trajet voiture . péages . prix calculé . prix 2018: 0
       - titre: 15 km
         sous-titre: Puteaux → Montreuil
         situation:
           voyage . trajet voiture . distance: 15
           voyage . trajet voiture . départ: "'Puteaux'"
           voyage . trajet voiture . arrivée: "'Montreuil'"
+          voyage . trajet voiture . péages . prix calculé . prix 2018: 0
       - titre: 4 km
         sous-titre: Nancy → Vandoeuvre
         situation:
           voyage . trajet voiture . distance: 4
           voyage . trajet voiture . départ: "'Nancy'"
           voyage . trajet voiture . arrivée: "'Vandoeuvre'"
+          voyage . trajet voiture . péages . prix calculé . prix 2018: 0
   - titre: voiture
     valeurs:
       - titre: citadine diesel
