@@ -108,6 +108,8 @@ export default function VoyageInput({
 										nom: f.properties.name,
 										ville: f.properties.cities || f.properties.name,
 										pays: f.properties.country,
+										région: f.properties.state,
+										département: f.properties.county,
 									},
 								})),
 							},

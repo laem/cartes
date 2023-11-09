@@ -2,7 +2,8 @@
 import Highlighter from 'react-highlight-words'
 import { useDispatch } from 'react-redux'
 
-const hash = ({ item: { nom, ville, pays } }) => '' + nom + ville + pays
+const hash = ({ item: { nom, ville, pays, région, département } }) =>
+	'' + nom + ville + pays + région + département
 const removeDuplicates = (elements) =>
 	elements.reduce((memo, next) => {
 		const duplicate = memo.find((el) => hash(el) === hash(next))
@@ -46,7 +47,7 @@ const Option = ({
 	data,
 }) => {
 	const dispatch = useDispatch()
-	const { nom, ville, pays } = option.item,
+	const { nom, ville, pays, région, département } = option.item,
 		choice = option.choice,
 		inputValue = data.inputValue
 
@@ -56,11 +57,13 @@ const Option = ({
 		displayCountry = !nameIncludes(pays)
 	const locationText =
 		(displayCity ? ville + (displayCountry ? ' - ' : '') : '') +
+		département +
+		région +
 		(displayCountry ? pays : '')
 
 	return (
 		<li
-			key={nom + ville + pays}
+			key={nom + ville + pays + région + département}
 			css={`
 				padding: 0.2rem 0.6rem;
 				border-radius: 0.3rem;
