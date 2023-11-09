@@ -3,16 +3,17 @@ import { objectMap } from './utils'
 export const encodeDottedName = (decoded) => decoded.replace(/\s\.\s/g, '.')
 const decodeDottedName = (encoded) => encoded.replace(/\./g, ' . ')
 
-const ruleKeysFromSearchParams = (searchParams, rules) =>
+const entriesFromSearchParams = (searchParams, rules) =>
 	Object.entries(searchParams || {})
 		.map(([k, v]) => [decodeDottedName(k), v])
 		.filter(([k, v]) => rules[k] !== undefined)
+
 export const getFoldedSteps = (searchParams, rules) =>
-	ruleKeysFromSearchParams(searchParams, rules).map(([k, v]) => k)
+	entriesFromSearchParams(searchParams, rules).map(([k, v]) => k)
 
 export const getSituation = (searchParams, rules) =>
 	Object.fromEntries(
-		ruleKeysFromSearchParams(searchParams, rules).filter(([k, v]) => v !== '∅')
+		entriesFromSearchParams(searchParams, rules).filter(([k, v]) => v !== '∅')
 	) //should be changed to clearly handle defaultValues
 
 export const encodeValue = (value) => {

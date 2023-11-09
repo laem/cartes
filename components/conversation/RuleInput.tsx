@@ -67,8 +67,10 @@ export default function RuleInput<Name extends string = DottedName>({
 	engine,
 	noSuggestions = false,
 	dispatchUpdateSituation,
-	situation,
+	userSituation,
+	validatedSituation,
 }: RuleInputProps<Name>) {
+	const situation = { ...validatedSituation, ...userSituation }
 	const rule = engine.getRule(dottedName)
 	const evaluation = engine.setSituation(situation).evaluate(dottedName)
 	const rules = engine.getParsedRules()

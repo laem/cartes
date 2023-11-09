@@ -22,7 +22,7 @@ const Conversation2 = ({
 	rules,
 	engine,
 	validatedSituation,
-	situation,
+	userSituation,
 	setDefault,
 	objectives,
 	searchParams,
@@ -64,7 +64,7 @@ const Conversation2 = ({
 	const currentQuestionIsAnswered =
 		currentQuestion && isMosaic(currentQuestion)
 			? true
-			: situation[currentQuestion] != null
+			: userSituation[currentQuestion] != null
 
 	return (
 		<section
@@ -106,7 +106,8 @@ const Conversation2 = ({
 						<Fieldset>
 							<RuleInput
 								{...{
-									situation,
+									validatedSituation,
+									userSituation,
 									dispatchUpdateSituation,
 									dottedName: currentQuestion,
 									onChange,

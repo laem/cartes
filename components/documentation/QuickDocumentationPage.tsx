@@ -87,6 +87,7 @@ export default function QuickDocumentationPage({
 						dottedName={dottedName}
 						rules={rules}
 						pathPrefix={pathPrefix}
+						searchParams={searchParams}
 					/>
 					<h1>
 						{rule.icônes ?? ''} {title}
