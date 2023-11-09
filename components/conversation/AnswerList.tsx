@@ -346,7 +346,6 @@ const AnswerComponent = ({
 					onClick={() => setOpen(false)}
 					css={`
 						display: inline-block;
-						padding: 0.6rem;
 						color: inherit;
 						font-size: inherit;
 						width: 100%;
