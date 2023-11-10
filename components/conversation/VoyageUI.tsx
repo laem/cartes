@@ -32,6 +32,7 @@ export const ImageWithNameWrapper = styled.div`
 	overflow: hidden;
 	height: 8rem;
 	border-radius: 0.6rem;
+	width: 20rem;
 	> img {
 		position: absolute;
 		transform: translateY(-50%);
@@ -43,12 +44,7 @@ export const ImageWithNameWrapper = styled.div`
 		border-radius: 0;
 	}
 	@media (max-width: 800px) {
-		display: flex;
-		flex-direction: row;
-		img {
-			width: 3rem;
-			height: 3rem;
-		}
+		height: 6rem;
 	}
 `
 
@@ -74,6 +70,7 @@ export const Destination = styled.div`
 		margin: 0;
 		color: var(--darkerColor);
 		font-weight: bold;
+		line-height: 1.4rem;
 	}
 `
 
