@@ -176,7 +176,7 @@ export default function Map() {
 		lesGaresProches.map((gare) => {
 			const el = document.createElement('div')
 			const root = createRoot(el)
-			const size = { 1: '25px', 2: '35px', 3: '45px' }[gare.niveau]
+			const size = { 1: '25px', 2: '35px', 3: '45px' }[gare.niveau] || '15px'
 			flushSync(() => {
 				root.render(
 					<div
