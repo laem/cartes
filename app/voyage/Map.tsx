@@ -308,7 +308,14 @@ https://swipable-modal.vercel.app
 						<Sheet.Content>
 							<SheetContentWrapper>
 								{clickedGare ? (
-									<div>
+									<div
+										css={`
+											@media (min-width: 1200px) {
+												display: flex;
+												justify-content: space-evenly;
+											}
+										`}
+									>
 										{bikeRoute && <BikeRouteRésumé data={bikeRoute} />}
 										<GareInfo clickedGare={clickedGare} />
 									</div>

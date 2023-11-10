@@ -24,10 +24,7 @@ export default function GareInfo({ clickedGare }) {
 					border-top-right-radius: 0.4rem;
 				}
 				@media (min-width: 1200px) {
-					position: fixed;
-					right: 1rem;
-					top: 50%;
-					transform: translateY(-50%);
+					width: 35rem;
 				}
 			`}
 		>

@@ -17,6 +17,7 @@ export default function BikeRouteRésumé({ data }) {
 		<div
 			css={`
 				display: flex;
+				align-items: center;
 				background: var(--lightestColor);
 				padding: 0.6rem;
 				max-width: 20rem;
@@ -28,12 +29,13 @@ export default function BikeRouteRésumé({ data }) {
 					width: 2.5rem;
 					height: auto;
 				}
-				@media (max-width: 800px) {
-					max-width: 100%;
+				@media (min-width: 1200px) {
+					margin-top: 6rem;
+					max-width: 35rem;
+					height: 6rem;
 				}
 			`}
 		>
-			{' '}
 			<Emoji e="🚲️" />
 			<p>
 				Le trajet de <strong>{km} km</strong> jusqu'à la gare vous prendra{' '}
