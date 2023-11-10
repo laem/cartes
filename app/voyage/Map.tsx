@@ -1,27 +1,27 @@
 'use client'
-import React, { useEffect, useMemo, useRef, useState } from 'react'
-import { createRoot } from 'react-dom/client'
-import { flushSync } from 'react-dom'
-import maplibregl from 'maplibre-gl'
-import 'maplibre-gl/dist/maplibre-gl.css'
-import PlaceSearch from './PlaceSearch'
-import getCityData, { toThumb } from 'Components/wikidata'
-import Image from 'next/image'
-import destinationPoint from '@/public/destination-point.svg'
 import {
 	CityImage,
 	Destination,
 	ImageWithNameWrapper,
-	ImageWrapper,
 } from '@/components/conversation/VoyageUI'
-import { motion } from 'framer-motion'
-import { garesProches, sortGares } from './gares'
 import css from '@/components/css/convertToJs'
-import BikeRouteRésumé from './BikeRouteRésumé'
-import GareInfo from './GareInfo'
-import Sheet from 'react-modal-sheet'
-import styled from 'styled-components'
 import Emoji from '@/components/Emoji'
+import destinationPoint from '@/public/destination-point.svg'
+import getCityData, { toThumb } from 'Components/wikidata'
+import { motion } from 'framer-motion'
+import maplibregl from 'maplibre-gl'
+import 'maplibre-gl/dist/maplibre-gl.css'
+import dynamic from 'next/dynamic'
+import Image from 'next/image'
+import { useEffect, useMemo, useRef, useState } from 'react'
+import { flushSync } from 'react-dom'
+import { createRoot } from 'react-dom/client'
+import { sortGares } from './gares'
+
+const ModalSheet = dynamic(() => import('./ModalSheet'), {
+	ssr: false,
+})
+import PlaceSearch from './PlaceSearch'
 
 const defaultCenter =
 	// Saint Malo [-1.9890417068124002, 48.66284934737089]
@@ -317,56 +317,16 @@ https://swipable-modal.vercel.app
 
 
 			*/}
-				<Sheet
-					isOpen={isSheetOpen}
-					onClose={() => setSheetOpen(false)}
-					snapPoints={[-50, 0.5, 100, 0]}
-					initialSnap={1}
-					mountPoint={document.querySelector('main')}
-				>
-					<Sheet.Container
-						css={`
-							background-color: var(--lightestColor) !important;
-						`}
-					>
-						<Sheet.Header
-							css={`
-								span {
-									background-color: var(--lighterColor) !important;
-								}
-							`}
-						/>
-						<Sheet.Content>
-							<SheetContentWrapper>
-								{clickedGare ? (
-									<div
-										css={`
-											@media (min-width: 1200px) {
-												display: flex;
-												justify-content: space-evenly;
-											}
-										`}
-									>
-										{bikeRoute && <BikeRouteRésumé data={bikeRoute} />}
-										<GareInfo clickedGare={clickedGare} />
-									</div>
-								) : (
-									<p>Cliquez sur une gare pour obtenir ses horaires.</p>
-								)}
-							</SheetContentWrapper>
-						</Sheet.Content>
-					</Sheet.Container>
-					<Sheet.Backdrop />
-				</Sheet>
+				<ModalSheet
+					{...{
+						isSheetOpen,
+						setSheetOpen,
+						clickedGare,
+						bikeRoute,
+					}}
+				/>
 			</div>
 			<div ref={mapContainerRef} />
 		</div>
 	)
 }
-
-const SheetContentWrapper = styled.div`
-	height: 100%;
-	display: flex;
-	flex-direction: column;
-	padding: 16px;
-`
