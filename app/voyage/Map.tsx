@@ -20,6 +20,7 @@ import css from '@/components/css/convertToJs'
 import BikeRouteRésumé from './BikeRouteRésumé'
 import GareInfo from './GareInfo'
 import Sheet from 'react-modal-sheet'
+import styled from 'styled-components'
 
 const defaultCenter =
 	// Saint Malo [-1.9890417068124002, 48.66284934737089]
@@ -290,15 +291,18 @@ https://swipable-modal.vercel.app
 					isOpen={isSheetOpen}
 					onClose={() => setSheetOpen(false)}
 					snapPoints={[-50, 0.5, 100, 0]}
+					initialSnap={1}
 				>
 					<Sheet.Container>
 						<Sheet.Header />
 						<Sheet.Content>
-							{clickedGare ? (
-								<GareInfo clickedGare={clickedGare} />
-							) : (
-								<p>Cliquez sur une gare pour obtenir ses horaires.</p>
-							)}
+							<SheetContentWrapper>
+								{clickedGare ? (
+									<GareInfo clickedGare={clickedGare} />
+								) : (
+									<p>Cliquez sur une gare pour obtenir ses horaires.</p>
+								)}
+							</SheetContentWrapper>
 						</Sheet.Content>
 					</Sheet.Container>
 					<Sheet.Backdrop />
@@ -308,3 +312,10 @@ https://swipable-modal.vercel.app
 		</div>
 	)
 }
+
+const SheetContentWrapper = styled.div`
+	height: 100%;
+	display: flex;
+	flex-direction: column;
+	padding: 16px;
+`

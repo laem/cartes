@@ -2,10 +2,6 @@ export default function GareInfo({ clickedGare }) {
 	return (
 		<div
 			css={`
-				position: fixed;
-				right: 1rem;
-				top: 50%;
-				transform: translateY(-50%);
 				display: flex;
 				flex-direction: column;
 				align-items: center;
@@ -26,12 +22,11 @@ export default function GareInfo({ clickedGare }) {
 					padding: 0.2rem 0;
 					max-width: 20rem;
 				}
-				@media (max-width: 800px) {
-					bottom: 0;
-					left: 0;
-					transform: initial;
-					width: 100vw;
-					height: 14rem;
+				@media (min-width: 1200px) {
+					position: fixed;
+					right: 1rem;
+					top: 50%;
+					transform: translateY(-50%);
 				}
 			`}
 		>
