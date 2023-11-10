@@ -23,6 +23,38 @@ export const ImageWrapper = styled.div`
 	}
 `
 
+export const ImageWithNameWrapper = styled.div`
+	position: relative;
+	display: flex;
+	flex-direction: column;
+	justify-content: space-evenly;
+	align-items: start;
+	> img {
+		margin-right: 1rem;
+		object-fit: cover;
+		border-radius: 12rem;
+		width: calc(6rem + 6vw);
+		height: calc(6rem + 6vw);
+	}
+`
+
+export const Destination = styled.div`
+	display: flex;
+	align-items: center;
+	flex-direction: row;
+	margin-bottom: 0.6rem;
+	img {
+		width: 2.5rem;
+		height: auto;
+		margin-right: 0.4rem;
+	}
+	h2 {
+		margin: 0;
+		color: var(--darkerColor);
+		font-weight: bold;
+	}
+`
+
 export const CityImage = styled.img`
 	object-fit: cover;
 	border-radius: 6rem;

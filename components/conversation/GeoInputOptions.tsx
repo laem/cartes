@@ -13,8 +13,8 @@ export default function GeoInputOptions({
 	whichInput,
 	data,
 	updateState,
-	rulesPath,
-	dispatchUpdateSituation,
+	rulesPath = '',
+	dispatchUpdateSituation = () => () => null,
 }) {
 	return data?.results.length > 0 ? (
 		<ul>
@@ -86,7 +86,7 @@ const Option = ({
 		>
 			<button
 				onClick={(e) => {
-					const newState = { ...data, choice: option }
+					const newState = { ...data, choice: { ...option, inputValue } }
 
 					const entry = [
 						rulesPath +
