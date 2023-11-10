@@ -21,16 +21,19 @@ import BikeRouteRésumé from './BikeRouteRésumé'
 import GareInfo from './GareInfo'
 import Sheet from 'react-modal-sheet'
 import styled from 'styled-components'
+import Emoji from '@/components/Emoji'
 
 const defaultCenter =
 	// Saint Malo [-1.9890417068124002, 48.66284934737089]
 	[-1.6776317608896583, 48.10983044383964]
+
+const defaultState = {
+	depuis: { inputValue: '', choice: false },
+	vers: { inputValue: '', choice: false },
+	validated: false,
+}
 export default function Map() {
-	const [state, setState] = useState({
-		depuis: { inputValue: '', choice: false },
-		vers: { inputValue: '', choice: false },
-		validated: false,
-	})
+	const [state, setState] = useState(defaultState)
 	const [isSheetOpen, setSheetOpen] = useState(false)
 	const [wikidata, setWikidata] = useState(null)
 	const versImageURL = wikidata?.pic && toThumb(wikidata?.pic.value)
@@ -78,7 +81,7 @@ export default function Map() {
 
 	const mapContainerRef = useRef()
 
-	const choice = state.vers.choice
+	const choice = state.vers?.choice
 	const center = useMemo(
 		() => choice && [choice.item.longitude, choice.item.latitude],
 		[choice]
@@ -244,12 +247,39 @@ export default function Map() {
 						display: inline-block;
 						padding: 0;
 						line-height: 1.6rem;
+						margin-top: 1rem;
 					}
 				`}
 			>
-				<h1>Où allez-vous ?</h1>
-				<PlaceSearch {...{ onInputChange, state, setState }} />
-				{versImageURL && (
+				<div
+					css={`
+						display: flex;
+						align-items: center;
+					`}
+				>
+					<h1>Où allez-vous ?</h1>
+
+					{choice && (
+						<button
+							onClick={() => setState(defaultState)}
+							css={`
+								background: white;
+								border: 3px solid var(--color);
+								width: 2.5rem;
+								height: 2.5rem;
+								border-radius: 3rem;
+								display: inline-flex;
+								margin: 0 0.6rem;
+								align-items: center;
+								justify-content: center;
+							`}
+						>
+							<Emoji e="✏️" />
+						</button>
+					)}
+				</div>
+				{!choice && <PlaceSearch {...{ onInputChange, state, setState }} />}
+				{choice && versImageURL && (
 					<motion.div
 						initial={{ opacity: 0, scale: 0.8 }}
 						animate={{ opacity: 1, scale: 1 }}
@@ -258,14 +288,14 @@ export default function Map() {
 						exit={{ opacity: 0, scale: 0.5, transition: { duration: 0.2 } }}
 					>
 						<ImageWithNameWrapper>
-							<Destination>
-								<Image src={destinationPoint} alt="Vers" />
-								<h2>{state.vers.choice.item.nom}</h2>
-							</Destination>
 							<CityImage
 								src={versImageURL}
 								alt={`Une photo emblématique de la destination, ${state.vers.choice?.item?.nom}`}
 							/>
+							<Destination>
+								<Image src={destinationPoint} alt="Vers" />
+								<h2>{state.vers.choice.item.nom}</h2>
+							</Destination>
 						</ImageWithNameWrapper>
 					</motion.div>
 				)}

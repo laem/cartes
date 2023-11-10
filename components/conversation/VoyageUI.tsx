@@ -29,12 +29,18 @@ export const ImageWithNameWrapper = styled.div`
 	flex-direction: column;
 	justify-content: space-evenly;
 	align-items: start;
+	overflow: hidden;
+	height: 8rem;
+	border-radius: 0.6rem;
 	> img {
-		margin-right: 1rem;
+		position: absolute;
+		transform: translateY(-50%);
+		top: 50%;
+		left: 0;
 		object-fit: cover;
-		border-radius: 12rem;
-		width: calc(6rem + 6vw);
-		height: calc(6rem + 6vw);
+		width: 100%;
+		height: auto;
+		border-radius: 0;
 	}
 	@media (max-width: 800px) {
 		display: flex;
@@ -47,6 +53,14 @@ export const ImageWithNameWrapper = styled.div`
 `
 
 export const Destination = styled.div`
+	background: #ffffffd1;
+	border-radius: 0.2rem;
+	line-height: 1.2rem;
+	padding: 0 0.4rem;
+	position: absolute;
+	transform: translateY(-50%) translateX(-50%);
+	top: 50%;
+	left: 50%;
 	display: flex;
 	align-items: center;
 	flex-direction: row;
