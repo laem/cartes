@@ -267,7 +267,6 @@ export default function Map() {
 								alt={`Une photo emblématique de la destination, ${state.vers.choice?.item?.nom}`}
 							/>
 						</ImageWithNameWrapper>
-						{bikeRoute && <BikeRouteRésumé data={bikeRoute} />}
 					</motion.div>
 				)}
 
@@ -292,13 +291,27 @@ https://swipable-modal.vercel.app
 					onClose={() => setSheetOpen(false)}
 					snapPoints={[-50, 0.5, 100, 0]}
 					initialSnap={1}
+					mountPoint={document.querySelector('main')}
 				>
-					<Sheet.Container>
-						<Sheet.Header />
+					<Sheet.Container
+						css={`
+							background-color: var(--lightestColor) !important;
+						`}
+					>
+						<Sheet.Header
+							css={`
+								span {
+									background-color: var(--lighterColor) !important;
+								}
+							`}
+						/>
 						<Sheet.Content>
 							<SheetContentWrapper>
 								{clickedGare ? (
-									<GareInfo clickedGare={clickedGare} />
+									<div>
+										{bikeRoute && <BikeRouteRésumé data={bikeRoute} />}
+										<GareInfo clickedGare={clickedGare} />
+									</div>
 								) : (
 									<p>Cliquez sur une gare pour obtenir ses horaires.</p>
 								)}

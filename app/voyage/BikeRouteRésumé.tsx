@@ -29,13 +29,7 @@ export default function BikeRouteRésumé({ data }) {
 					height: auto;
 				}
 				@media (max-width: 800px) {
-					height: 4rem;
-					overflow: scroll;
-					width: 100vw;
-					p {
-						width: 200vw;
-						white-space: nowrap;
-					}
+					max-width: 100%;
 				}
 			`}
 		>

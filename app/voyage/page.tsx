@@ -23,6 +23,10 @@ export async function generateMetadata(
 	}
 }
 
-const Page = ({ searchParams }) => <Voyage />
+const Page = ({ searchParams }) => (
+	<main id="voyage">
+		<Voyage />
+	</main>
+)
 
 export default Page

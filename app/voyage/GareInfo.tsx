@@ -5,7 +5,7 @@ export default function GareInfo({ clickedGare }) {
 				display: flex;
 				flex-direction: column;
 				align-items: center;
-				height: 65vh;
+				height: 70vh;
 
 				iframe {
 					width: 100%;
@@ -20,6 +20,8 @@ export default function GareInfo({ clickedGare }) {
 					text-align: center;
 					padding: 0.2rem 0;
 					max-width: 20rem;
+					border-top-left-radius: 0.4rem;
+					border-top-right-radius: 0.4rem;
 				}
 				@media (min-width: 1200px) {
 					position: fixed;
@@ -34,7 +36,6 @@ export default function GareInfo({ clickedGare }) {
 				src={`https://tableau-sncf.vercel.app/station/stop_area:SNCF:${clickedGare.uic.slice(
 					2
 				)}`}
-				css={``}
 			/>
 		</div>
 	)
