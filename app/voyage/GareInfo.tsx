@@ -5,8 +5,7 @@ export default function GareInfo({ clickedGare }) {
 				display: flex;
 				flex-direction: column;
 				align-items: center;
-				width: 20rem;
-				height: 30rem;
+				height: 65vh;
 
 				iframe {
 					width: 100%;
