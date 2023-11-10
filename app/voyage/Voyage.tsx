@@ -1,7 +1,9 @@
 import Map from './Map'
 
-export default () => (
-	<div>
-		<Map />
-	</div>
-)
+export default function Voyage() {
+	return (
+		<div style={{ height: '100%' }}>
+			<Map />
+		</div>
+	)
+}

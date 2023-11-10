@@ -222,6 +222,7 @@ export default function Map() {
 				left: 0;
 				width: 100%;
 				height: 100%;
+				background: #faf5e4;
 				> div:last-child {
 					position: absolute;
 					width: 100%;
