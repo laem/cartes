@@ -36,6 +36,14 @@ export const ImageWithNameWrapper = styled.div`
 		width: calc(6rem + 6vw);
 		height: calc(6rem + 6vw);
 	}
+	@media (max-width: 800px) {
+		display: flex;
+		flex-direction: row;
+		img {
+			width: 3rem;
+			height: 3rem;
+		}
+	}
 `
 
 export const Destination = styled.div`

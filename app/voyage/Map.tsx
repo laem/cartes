@@ -244,15 +244,15 @@ export default function Map() {
 			>
 				<h1>Où allez-vous ?</h1>
 				<PlaceSearch {...{ onInputChange, state, setState }} />
-				<ImageWithNameWrapper>
-					{versImageURL && (
-						<motion.div
-							initial={{ opacity: 0, scale: 0.8 }}
-							animate={{ opacity: 1, scale: 1 }}
-							transition={{}}
-							key={versImageURL}
-							exit={{ opacity: 0, scale: 0.5, transition: { duration: 0.2 } }}
-						>
+				{versImageURL && (
+					<motion.div
+						initial={{ opacity: 0, scale: 0.8 }}
+						animate={{ opacity: 1, scale: 1 }}
+						transition={{}}
+						key={versImageURL}
+						exit={{ opacity: 0, scale: 0.5, transition: { duration: 0.2 } }}
+					>
+						<ImageWithNameWrapper>
 							<Destination>
 								<Image src={destinationPoint} alt="Vers" />
 								<h2>{state.vers.choice.item.nom}</h2>
@@ -261,10 +261,10 @@ export default function Map() {
 								src={versImageURL}
 								alt={`Une photo emblématique de la destination, ${state.vers.choice?.item?.nom}`}
 							/>
-							{bikeRoute && <BikeRouteRésumé data={bikeRoute} />}
-						</motion.div>
-					)}
-				</ImageWithNameWrapper>
+						</ImageWithNameWrapper>
+						{bikeRoute && <BikeRouteRésumé data={bikeRoute} />}
+					</motion.div>
+				)}
 				{clickedGare && (
 					<div
 						css={`
@@ -275,12 +275,13 @@ export default function Map() {
 							display: flex;
 							flex-direction: column;
 							align-items: center;
+							width: 20rem;
+							height: 30rem;
 
 							iframe {
-								width: 20rem;
-								height: 30rem;
-								max-width: 90vw;
+								width: 100%;
 								border: 6px solid var(--color);
+								height: 100%;
 							}
 							h2 {
 								margin-bottom: 0rem;
@@ -290,6 +291,13 @@ export default function Map() {
 								text-align: center;
 								padding: 0.2rem 0;
 								max-width: 20rem;
+							}
+							@media (max-width: 800px) {
+								bottom: 0;
+								left: 0;
+								transform: initial;
+								width: 100vw;
+								height: 14rem;
 							}
 						`}
 					>
@@ -303,12 +311,6 @@ export default function Map() {
 					</div>
 				)}
 			</div>
-			<a href="https://www.maptiler.com">
-				<img
-					src="https://api.maptiler.com/resources/logo.svg"
-					alt="MapTiler logo"
-				/>
-			</a>
 			<div ref={mapContainerRef} />
 		</div>
 	)
