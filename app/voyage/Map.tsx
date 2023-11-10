@@ -18,6 +18,8 @@ import { motion } from 'framer-motion'
 import { garesProches, sortGares } from './gares'
 import css from '@/components/css/convertToJs'
 import BikeRouteRésumé from './BikeRouteRésumé'
+import GareInfo from './GareInfo'
+import Sheet from 'react-modal-sheet'
 
 const defaultCenter =
 	// Saint Malo [-1.9890417068124002, 48.66284934737089]
@@ -28,6 +30,7 @@ export default function Map() {
 		vers: { inputValue: '', choice: false },
 		validated: false,
 	})
+	const [isSheetOpen, setSheetOpen] = useState(false)
 	const [wikidata, setWikidata] = useState(null)
 	const versImageURL = wikidata?.pic && toThumb(wikidata?.pic.value)
 	useEffect(() => {
@@ -198,6 +201,7 @@ export default function Map() {
 
 			el.addEventListener('click', () => {
 				clickGare(gare.uic === clickedGare?.uic ? null : gare)
+				setSheetOpen(true)
 			})
 
 			new maplibregl.Marker({ element: el })
@@ -265,51 +269,40 @@ export default function Map() {
 						{bikeRoute && <BikeRouteRésumé data={bikeRoute} />}
 					</motion.div>
 				)}
-				{clickedGare && (
-					<div
-						css={`
-							position: fixed;
-							right: 1rem;
-							top: 50%;
-							transform: translateY(-50%);
-							display: flex;
-							flex-direction: column;
-							align-items: center;
-							width: 20rem;
-							height: 30rem;
 
-							iframe {
-								width: 100%;
-								border: 6px solid var(--color);
-								height: 100%;
-							}
-							h2 {
-								margin-bottom: 0rem;
-								font-size: 120%;
-								background: var(--color);
-								width: 100%;
-								text-align: center;
-								padding: 0.2rem 0;
-								max-width: 20rem;
-							}
-							@media (max-width: 800px) {
-								bottom: 0;
-								left: 0;
-								transform: initial;
-								width: 100vw;
-								height: 14rem;
-							}
-						`}
-					>
-						<h2>Gare de {clickedGare.nom}</h2>
-						<iframe
-							src={`https://tableau-sncf.vercel.app/station/stop_area:SNCF:${clickedGare.uic.slice(
-								2
-							)}`}
-							css={``}
-						/>
-					</div>
-				)}
+				{/* 
+
+
+Alternatives : https://github.com/helgastogova/react-stateful-bottom-sheet?ref=hackernoon.com
+https://github.com/helgastogova/react-stateful-bottom-sheet?ref=hackernoon.com
+bof
+
+mieux : https://github.com/plrs9816/slick-bottom-sheet/
+
+https://codesandbox.io/s/framer-motion-bottom-sheet-for-desktop-with-drag-handle-ov8e0o
+
+https://swipable-modal.vercel.app
+
+
+
+			*/}
+				<Sheet
+					isOpen={isSheetOpen}
+					onClose={() => setSheetOpen(false)}
+					snapPoints={[-50, 0.5, 100, 0]}
+				>
+					<Sheet.Container>
+						<Sheet.Header />
+						<Sheet.Content>
+							{clickedGare ? (
+								<GareInfo clickedGare={clickedGare} />
+							) : (
+								<p>Cliquez sur une gare pour obtenir ses horaires.</p>
+							)}
+						</Sheet.Content>
+					</Sheet.Container>
+					<Sheet.Backdrop />
+				</Sheet>
 			</div>
 			<div ref={mapContainerRef} />
 		</div>
