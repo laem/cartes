@@ -11,6 +11,7 @@ cypress/screenshots
 package-lock.json
 node_modules/
 .env
+.env.local
 
 # Local Netlify folder
 .netlify
