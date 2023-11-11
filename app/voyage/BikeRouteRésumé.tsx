@@ -38,7 +38,7 @@ export default function BikeRouteRésumé({ data }) {
 		>
 			<Emoji e="🚲️" />
 			<p>
-				Le trajet de <strong>{km} km</strong> jusqu'à la gare vous prendra{' '}
+				Le trajet de <strong>{km} km</strong> depuis la gare vous prendra{' '}
 				<strong>
 					{heures ? heures + ` heure${heures > 1 ? 's' : ''} et ` : ''}
 					{minutes} minutes

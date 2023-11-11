@@ -95,8 +95,8 @@ export default function Map() {
 	useEffect(() => {
 		if (!center || !clickedGare) return
 
-		const [lon1, lat1] = center,
-			[lon2, lat2] = clickedGare.coordonnées
+		const [lon1, lat1] = clickedGare.coordonnées,
+			[lon2, lat2] = center
 
 		async function fetchBikeRoute() {
 			const url = `https://brouter.osc-fr1.scalingo.io/brouter?lonlats=${lon1},${lat1}|${lon2},${lat2}&profile=safety&alternativeidx=0&format=geojson`
