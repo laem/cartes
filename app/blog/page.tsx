@@ -1,7 +1,7 @@
-import { Metadata } from 'next'
+import { allArticles } from 'contentlayer/generated'
+import { compareDesc } from 'date-fns'
 import Link from 'next/link'
-
-import { getSortedPostsData } from './getPosts'
+import { dateCool } from './utils'
 
 const title = `Le blog - Futureco`
 const description =
@@ -13,17 +13,20 @@ export const metadata: metadata = {
 }
 
 const Page = () => {
-	const allPostsData = getSortedPostsData()
+	const articles = allArticles.sort((a, b) =>
+		compareDesc(new Date(a.date), new Date(b.date))
+	)
+	console.log('AA', allArticles)
 	return (
 		<main>
 			<h1>Le blog</h1>
 			<ul>
-				{allPostsData.map(({ id, date, title }) => (
-					<li key={id}>
+				{articles.map(({ url, date, titre }) => (
+					<li key={url}>
 						<div>
-							<Link href={`/blog/${id}`}>{title}</Link>
+							<Link href={url}>{titre}</Link>
 						</div>
-						<small>{date}</small>
+						<small>{dateCool(date)}</small>
 					</li>
 				))}
 			</ul>

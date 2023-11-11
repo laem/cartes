@@ -1,7 +1,8 @@
-import createMDX from '@next/mdx'
+import { withContentlayer } from 'next-contentlayer'
 import path from 'path'
 import { fileURLToPath } from 'url'
 const __filename = fileURLToPath(import.meta.url)
+
 import mdxOptions from './mdxOptions.mjs'
 
 const __dirname = path.dirname(__filename)
@@ -73,8 +74,4 @@ const nextConfig = {
 	pageExtensions: ['js', 'jsx', 'mdx', 'ts', 'tsx'],
 }
 
-const withMDX = createMDX({
-	// Add markdown plugins here, as desired
-	options: mdxOptions,
-})
-export default withMDX(nextConfig)
+export default withContentlayer(nextConfig)
