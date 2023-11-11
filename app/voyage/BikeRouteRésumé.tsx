@@ -12,6 +12,7 @@ export default function BikeRouteRésumé({ data }) {
 		heures = +date[0],
 		minutes = date[1]
 
+	const déniveléCumulé = feature.properties['filtered ascend']
 	const dénivelé = feature.properties['plain-ascend']
 	return (
 		<div
@@ -43,7 +44,8 @@ export default function BikeRouteRésumé({ data }) {
 					{heures ? heures + ` heure${heures > 1 ? 's' : ''} et ` : ''}
 					{minutes} minutes
 				</strong>{' '}
-				pour un total de <strong>{dénivelé} m de dénivelé</strong>.
+				pour <strong>{déniveléCumulé} m de dénivelé cumulé</strong> et{' '}
+				{dénivelé} m en absolu.
 			</p>
 		</div>
 	)
