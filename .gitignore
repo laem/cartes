@@ -20,3 +20,5 @@ source/data
 .next/**
 
 .env.local
+
+.contentlayer

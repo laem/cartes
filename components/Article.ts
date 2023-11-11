@@ -16,8 +16,10 @@ const Article = styled.article`
 		font-size: 140%;
 	}
 	img {
-		width: 700px;
 		max-width: 90vw;
+		max-height: 30rem;
+		display: block;
+		margin: 1rem auto;
 	}
 	blockquote {
 		margin-left: 0;
