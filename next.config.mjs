@@ -1,10 +1,8 @@
 import createMDX from '@next/mdx'
 import path from 'path'
-import rehypeSlug from 'rehype-slug'
-import rehypeAutolinkHeadings from 'rehype-autolink-headings'
-import remarkToc from 'remark-toc'
 import { fileURLToPath } from 'url'
 const __filename = fileURLToPath(import.meta.url)
+import mdxOptions from './mdxOptions.mjs'
 
 const __dirname = path.dirname(__filename)
 
@@ -77,25 +75,6 @@ const nextConfig = {
 
 const withMDX = createMDX({
 	// Add markdown plugins here, as desired
-	options: {
-		remarkPlugins: [
-			[remarkToc, { heading: '(table[ -]of[ -])?contents?|toc|Sommaire' }],
-		],
-		rehypePlugins: [
-			rehypeSlug,
-			[
-				rehypeAutolinkHeadings,
-				{
-					behaviour: 'append',
-					properties: {
-						ariaHidden: true,
-						tabIndex: -1,
-						className: 'hash-link',
-					},
-				},
-			],
-		],
-	},
+	options: mdxOptions,
 })
-
 export default withMDX(nextConfig)
