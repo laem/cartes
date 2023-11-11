@@ -5,8 +5,12 @@ const Article = styled.article`
 	max-width: 700px;
 	margin: 0 auto;
 	padding: 0 0.6rem;
+	header {
+		margin-bottom: 2rem;
+	}
 	h1 {
 		font-size: 160%;
+		margin-bottom: 0;
 	}
 	h2 {
 		font-size: 140%;

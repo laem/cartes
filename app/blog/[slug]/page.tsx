@@ -16,9 +16,10 @@ export default async function Post({ params }: Props) {
 
 	return (
 		<Article>
-			<h1>{postData.title}</h1>
-
-			<div>{dateCool(postData.date)}</div>
+			<header>
+				<h1>{postData.title}</h1>
+				<small>{dateCool(postData.date)}</small>
+			</header>
 
 			<Markdown>{postData.contentHtml}</Markdown>
 		</Article>
