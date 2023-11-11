@@ -1,4 +1,5 @@
 import { withContentlayer } from 'next-contentlayer'
+import createMDX from '@next/mdx'
 import path from 'path'
 import { fileURLToPath } from 'url'
 const __filename = fileURLToPath(import.meta.url)
@@ -74,4 +75,6 @@ const nextConfig = {
 	pageExtensions: ['js', 'jsx', 'mdx', 'ts', 'tsx'],
 }
 
-export default withContentlayer(nextConfig)
+const withMDX = createMDX({ options: mdxOptions })
+
+export default withContentlayer(withMDX(nextConfig))
