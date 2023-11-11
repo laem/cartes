@@ -1,3 +1,4 @@
+import css from '@/components/css/convertToJs'
 import Emoji from '@/components/Emoji'
 
 export default function BikeRouteRésumé({ data }) {
@@ -44,9 +45,25 @@ export default function BikeRouteRésumé({ data }) {
 					{heures ? heures + ` heure${heures > 1 ? 's' : ''} et ` : ''}
 					{minutes} minutes
 				</strong>{' '}
-				pour <strong>{déniveléCumulé} m de dénivelé cumulé</strong> et{' '}
-				{dénivelé} m en absolu.
+				pour{' '}
+				<strong
+					style={css(
+						`background: ${deniveléColor(déniveléCumulé)}; padding: 0 .2rem;`
+					)}
+				>
+					{déniveléCumulé} m de dénivelé cumulé
+				</strong>{' '}
+				et {dénivelé} m en absolu.
 			</p>
 		</div>
 	)
 }
+
+const deniveléColor = (height) =>
+	height > 600
+		? 'red'
+		: height > 300
+		? 'orange'
+		: height > 150
+		? 'yellow'
+		: 'green'
