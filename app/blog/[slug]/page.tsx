@@ -1,6 +1,7 @@
 import Article from '@/components/Article'
 import { Markdown } from '@/components/utils/markdown'
 import { getPostData } from '../getPosts'
+import { dateCool } from '../utils'
 
 export async function generateMetadata({ params }: Props) {
 	const postData = await getPostData(params.slug)
@@ -17,7 +18,7 @@ export default async function Post({ params }: Props) {
 		<Article>
 			<h1>{postData.title}</h1>
 
-			<div>{postData.date}</div>
+			<div>{dateCool(postData.date)}</div>
 
 			<Markdown>{postData.contentHtml}</Markdown>
 		</Article>
