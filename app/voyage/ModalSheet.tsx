@@ -9,7 +9,7 @@ export default function ModalSheet({
 	bikeRoute,
 }) {
 	return (
-		<Sheet
+		<CustomSheet
 			isOpen={isSheetOpen}
 			onClose={() => setSheetOpen(false)}
 			snapPoints={[-50, 0.5, 100, 0]}
@@ -49,7 +49,7 @@ export default function ModalSheet({
 				</Sheet.Content>
 			</Sheet.Container>
 			<Sheet.Backdrop />
-		</Sheet>
+		</CustomSheet>
 	)
 }
 const SheetContentWrapper = styled.div`
@@ -57,4 +57,21 @@ const SheetContentWrapper = styled.div`
 	display: flex;
 	flex-direction: column;
 	padding: 16px;
+`
+const CustomSheet = styled(Sheet)`
+	.react-modal-sheet-backdrop {
+		background-color: unset !important;
+	}
+	.react-modal-sheet-container {
+		/* custom styles */
+	}
+	.react-modal-sheet-header {
+		/* custom styles */
+	}
+	.react-modal-sheet-drag-indicator {
+		/* custom styles */
+	}
+	.react-modal-sheet-content {
+		/* custom styles */
+	}
 `

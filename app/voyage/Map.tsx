@@ -16,6 +16,7 @@ import Image from 'next/image'
 import { useEffect, useMemo, useRef, useState } from 'react'
 import { flushSync } from 'react-dom'
 import { createRoot } from 'react-dom/client'
+import styled from 'styled-components'
 import { sortGares } from './gares'
 
 const ModalSheet = dynamic(() => import('./ModalSheet'), {
