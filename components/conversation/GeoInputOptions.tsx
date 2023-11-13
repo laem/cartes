@@ -52,7 +52,7 @@ const Option = ({
 		inputValue = data.inputValue
 
 	const nameIncludes = (what) =>
-		nom.toLowerCase().includes((what || '').toLowerCase())
+		nom && nom.toLowerCase().includes((what || '').toLowerCase())
 	const displayCity = !nameIncludes(ville),
 		displayCountry = !nameIncludes(pays)
 	const locationText =
