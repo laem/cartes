@@ -68,7 +68,7 @@ export default function Map({ searchParams }) {
 			validated: false,
 		})
 		if (v.length > 2) {
-			fetch(`https://photon.komoot.io/api/?q=${v}&limit=6&layer=city&lang=fr`)
+			fetch(`https://photon.komoot.io/api/?q=${v}&limit=6&lang=fr`)
 				.then((res) => res.json())
 				.then((json) => {
 					setState((state) => ({
