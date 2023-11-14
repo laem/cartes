@@ -17,6 +17,7 @@ import { useEffect, useMemo, useRef, useState } from 'react'
 import { flushSync } from 'react-dom'
 import { createRoot } from 'react-dom/client'
 import styled from 'styled-components'
+import createSearchBBox from './createSearchPolygon'
 import { sortGares } from './gares'
 
 const ModalSheet = dynamic(() => import('./ModalSheet'), {
@@ -39,6 +40,12 @@ export default function Map() {
 	const [wikidata, setWikidata] = useState(null)
 	const [osmFeature, setOsmFeature] = useState(null)
 	const [latLngClicked, setLatLngClicked] = useState(null)
+	const [mapState, setMapState] = useState({})
+	const router = useRouter()
+	const params = useParams()
+
+	const updateHash = () => router.push(`/voyage#${zoom}/${lat}/${lng}`)
+
 	const versImageURL = wikidata?.pic && toThumb(wikidata?.pic.value)
 	useEffect(() => {
 		if (!state.vers.choice) return undefined
@@ -169,6 +176,43 @@ export default function Map() {
 		map.on('click', async (e) => {
 			console.log('click event', e)
 			setLatLngClicked(e.lngLat)
+			setSheetOpen(true)
+
+			const { lat1, lng1, lat2, lng2 } = createSearchBBox(e.lngLat)
+
+			const source = map.getSource('searchPolygon')
+			console.log('SOURCE', source)
+			const polygon = {
+				type: 'geojson',
+				data: {
+					type: 'Feature',
+					geometry: {
+						type: 'Polygon',
+						coordinates: [
+							[
+								[lng1, lat1],
+								[lng2, lat2],
+							],
+						],
+					},
+				},
+			}
+			if (source) source.setData(polygon)
+			else {
+				map.addSource('searchPolygon', polygon)
+
+				map.addLayer({
+					id: 'searchPolygon',
+					type: 'fill',
+					source: 'searchPolygon',
+					layout: {},
+					paint: {
+						'fill-color': '#088',
+						'fill-opacity': 0.8,
+					},
+				})
+			}
+
 			// Thanks OSMAPP https://github.com/openmaptiles/openmaptiles/issues/792
 			const features = map.queryRenderedFeatures(e.point)
 
@@ -196,8 +240,6 @@ export default function Map() {
 			if (!json.elements.length) return
 
 			setOsmFeature(json.elements[0])
-
-			setSheetOpen(true)
 		})
 	}, [map])
 
@@ -364,6 +406,7 @@ https://swipable-modal.vercel.app
 						clickedGare,
 						bikeRoute,
 						osmFeature,
+						latLngClicked,
 					}}
 				/>
 			</div>
