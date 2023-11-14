@@ -38,6 +38,7 @@ export default function Map() {
 	const [isSheetOpen, setSheetOpen] = useState(false)
 	const [wikidata, setWikidata] = useState(null)
 	const [osmFeature, setOsmFeature] = useState(null)
+	const [latLngClicked, setLatLngClicked] = useState(null)
 	const versImageURL = wikidata?.pic && toThumb(wikidata?.pic.value)
 	useEffect(() => {
 		if (!state.vers.choice) return undefined
@@ -166,6 +167,8 @@ export default function Map() {
 	useEffect(() => {
 		if (!map) return
 		map.on('click', async (e) => {
+			console.log('click event', e)
+			setLatLngClicked(e.lngLat)
 			// Thanks OSMAPP https://github.com/openmaptiles/openmaptiles/issues/792
 			const features = map.queryRenderedFeatures(e.point)
 

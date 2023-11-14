@@ -1,4 +1,5 @@
 import FriendlyObjectViewer from '@/components/FriendlyObjectViewer'
+import { useEffect } from 'react'
 import Sheet from 'react-modal-sheet'
 import styled from 'styled-components'
 import BikeRouteRésumé from './BikeRouteRésumé'
@@ -9,7 +10,32 @@ export default function ModalSheet({
 	clickedGare,
 	bikeRoute,
 	osmFeature,
+	latLngClicked,
 }) {
+	const [wikimedia, setWikimedia] = useState([])
+	useEffect(() => {
+		if (!latLngClicked) return
+		const makeRequest = async () => {
+			const diff = 0.000002
+			const { lat1, lng1 } = latLngClicked,
+				lat2 = lat1 + diff,
+				lng2 = lng1 + diff
+
+			const url = `https://commons.wikimedia.org/w/api.php?action=query&list=geosearch&gsbbox=${lat1}|${lng1}|${lat2}|${lng2}&gsnamespace=6&gslimit=500&format=json&_=1699996741238`
+			const request = await fetch(url)
+			const json = await request.json()
+			const images = json.query.geosearch
+			setWikimedia(images)
+		}
+		makeRequest()
+	}, [latLngClicked])
+
+	const imageUrls = wikimedia.map((json) => {
+		const title = json.title.split('File:')[1],
+			encodedTitle = title.replace(/\s/g, '_'),
+			url = `azd`
+	})
+
 	return (
 		<CustomSheet
 			isOpen={isSheetOpen}
