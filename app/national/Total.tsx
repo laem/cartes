@@ -19,7 +19,7 @@ export default function Total({ state }) {
 			return memo + addition
 		}, 0),
 		humanTotal = new Intl.NumberFormat('fr-FR', {
-			maximumSignificantDigits: 1,
+			maximumSignificantDigits: 2,
 		}).format(total)
 
 	const explanation = `Votre planification écologique réduit l'empreinte climat de la France de ${total} %.`
