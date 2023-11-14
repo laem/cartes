@@ -1,3 +1,4 @@
+import FriendlyObjectViewer from '@/components/FriendlyObjectViewer'
 import Sheet from 'react-modal-sheet'
 import styled from 'styled-components'
 import BikeRouteRésumé from './BikeRouteRésumé'
@@ -7,6 +8,7 @@ export default function ModalSheet({
 	setSheetOpen,
 	clickedGare,
 	bikeRoute,
+	osmFeature,
 }) {
 	return (
 		<CustomSheet
@@ -30,7 +32,11 @@ export default function ModalSheet({
 				/>
 				<Sheet.Content>
 					<SheetContentWrapper>
-						{clickedGare ? (
+						{osmFeature ? (
+							<div css={``}>
+								<FriendlyObjectViewer data={osmFeature.tags} />
+							</div>
+						) : clickedGare ? (
 							<div
 								css={`
 									@media (min-width: 1200px) {

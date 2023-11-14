@@ -37,6 +37,7 @@ export default function Map() {
 	const [state, setState] = useState(defaultState)
 	const [isSheetOpen, setSheetOpen] = useState(false)
 	const [wikidata, setWikidata] = useState(null)
+	const [osmFeature, setOsmFeature] = useState(null)
 	const versImageURL = wikidata?.pic && toThumb(wikidata?.pic.value)
 	useEffect(() => {
 		if (!state.vers.choice) return undefined
@@ -161,6 +162,41 @@ export default function Map() {
 			map.removeSource('bikeRoute')
 		}
 	}, [bikeRoute, map])
+
+	useEffect(() => {
+		if (!map) return
+		map.on('click', async (e) => {
+			// Thanks OSMAPP https://github.com/openmaptiles/openmaptiles/issues/792
+			const features = map.queryRenderedFeatures(e.point)
+
+			if (!features.length || !features[0].id) return
+
+			const openMapTilesId = '' + features[0].id
+
+			console.log(features)
+			const id = openMapTilesId.slice(null, -1),
+				featureType = { '1': 'way', '0': 'node', '4': 'relation' }[
+					openMapTilesId.slice(-1)
+				]
+			if (!featureType) {
+				console.log('Unknown OSM feature type from OpenMapTiles ID')
+				return
+			}
+			console.log(features, id, openMapTilesId)
+
+			const osmRequest = await fetch(
+				`https://api.openstreetmap.org/api/0.6/${featureType}/${id}.json`
+			)
+			const json = await osmRequest.json()
+
+			console.log('Résultat OSM', json)
+			if (!json.elements.length) return
+
+			setOsmFeature(json.elements[0])
+
+			setSheetOpen(true)
+		})
+	}, [map])
 
 	useEffect(() => {
 		if (!map || !center) return
@@ -324,6 +360,7 @@ https://swipable-modal.vercel.app
 						setSheetOpen,
 						clickedGare,
 						bikeRoute,
+						osmFeature,
 					}}
 				/>
 			</div>
