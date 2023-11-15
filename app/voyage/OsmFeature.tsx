@@ -1,8 +1,9 @@
+import Emoji from '@/components/Emoji'
 import FriendlyObjectViewer from '@/components/FriendlyObjectViewer'
 import parseOpeningHours from 'opening_hours'
 
 export default function OsmFeature({ data }) {
-	const { name, opening_hours, ...rest } = data.tags
+	const { name, opening_hours, phone, ...rest } = data.tags
 
 	return (
 		<div>
@@ -17,6 +18,11 @@ export default function OsmFeature({ data }) {
 				{name}
 			</h2>
 			{opening_hours && <OpeningHours opening_hours={opening_hours} />}
+			{phone && (
+				<a href={`tel:${phone}`}>
+					<Emoji e="☎️" /> {phone}
+				</a>
+			)}
 			<div
 				css={`
 					> div {
