@@ -327,11 +327,18 @@ export default function Map() {
 					z-index: 10;
 					h1 {
 						color: var(--darkerColor);
-						border-bottom: 6px solid var(--color);
+						border-bottom: 5px solid var(--color);
 						display: inline-block;
 						padding: 0;
-						line-height: 1.6rem;
+						line-height: 1.8rem;
 						margin-top: 1rem;
+						@media (max-width: 800px) {
+							margin: 0;
+							margin-bottom: 0.4rem;
+							font-size: 120%;
+							border-bottom-width: 2px;
+							line-height: 1.2rem;
+						}
 					}
 				`}
 			>
