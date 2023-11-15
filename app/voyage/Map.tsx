@@ -132,6 +132,14 @@ export default function Map() {
 		setMap(newMap)
 
 		newMap.addControl(new maplibregl.NavigationControl(), 'top-right')
+		newMap.addControl(
+			new maplibregl.GeolocateControl({
+				positionOptions: {
+					enableHighAccuracy: true,
+				},
+				trackUserLocation: true,
+			})
+		)
 
 		//new maplibregl.Marker({ color: '#FF0000' }).setLngLat(defaultCenter).addTo(newMap)
 
