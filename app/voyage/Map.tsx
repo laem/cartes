@@ -27,6 +27,7 @@ const ModalSheet = dynamic(() => import('./ModalSheet'), {
 import PlaceSearch from './PlaceSearch'
 import QuickFeatureSearch from './QuickFeatureSearch'
 import { osmRequest } from './osmRequest'
+import { centerOfMass } from '@turf/turf'
 
 const defaultCenter =
 	// Saint Malo [-1.9890417068124002, 48.66284934737089]
@@ -121,6 +122,7 @@ export default function Map({ searchParams }) {
 [out:json];
 (
   node${category.query}(${bbox});
+  way${category.query}(${bbox});
 );
 
 out body;
@@ -134,7 +136,35 @@ out skel qt;
 			console.log(url)
 			const request = await fetch(url)
 			const json = await request.json()
-			setFeatures(json.elements)
+			const namedElements = json.elements.filter((element) => {
+				if (!element.tags || !element.tags.name) return false
+				if (!['way', 'node'].includes(element.type)) return false
+				return true
+			})
+			console.log({ namedElements })
+			const nodeElements = namedElements.map((element) => {
+				if (element.type === 'node') return element
+				const nodes = element.nodes.map((id) =>
+						json.elements.find((el) => el.id === id)
+					),
+					polygon = {
+						type: 'Feature',
+						geometry: {
+							type: 'Polygon',
+							coordinates: [nodes.map(({ lat, lon }) => [lat, lon])],
+						},
+					}
+				console.log({ polygon })
+				const center = centerOfMass(polygon)
+
+				console.log('center', center)
+				const [lat, lon] = center.geometry.coordinates
+				console.log({ lon, lat })
+
+				return { ...element, lat, lon }
+			})
+
+			setFeatures(nodeElements)
 		}
 		fetchCategories()
 	}, [category, map])
