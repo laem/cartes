@@ -3,7 +3,6 @@ import { InputStyle } from '@/components/conversation/UI'
 
 export default function PlaceSearch({ onInputChange, state, setState }) {
 	const { vers } = state
-	console.log(state)
 	return (
 		<div>
 			<InputStyle

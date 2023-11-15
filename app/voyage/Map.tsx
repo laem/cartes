@@ -5,7 +5,7 @@ import {
 	ImageWithNameWrapper,
 } from '@/components/conversation/VoyageUI'
 import css from '@/components/css/convertToJs'
-import Emoji from '@/components/Emoji'
+import Emoji, { findOpenmoji } from '@/components/Emoji'
 import destinationPoint from '@/public/destination-point.svg'
 import getCityData, { toThumb } from 'Components/wikidata'
 import { motion } from 'framer-motion'
@@ -19,11 +19,13 @@ import { createRoot } from 'react-dom/client'
 import styled from 'styled-components'
 import createSearchBBox from './createSearchPolygon'
 import { sortGares } from './gares'
+import categories from './categories.yaml'
 
 const ModalSheet = dynamic(() => import('./ModalSheet'), {
 	ssr: false,
 })
 import PlaceSearch from './PlaceSearch'
+import QuickFeatureSearch from './QuickFeatureSearch'
 
 const defaultCenter =
 	// Saint Malo [-1.9890417068124002, 48.66284934737089]
@@ -34,12 +36,15 @@ const defaultState = {
 	vers: { inputValue: '', choice: false },
 	validated: false,
 }
-export default function Map() {
+export default function Map({ searchParams }) {
 	const [state, setState] = useState(defaultState)
 	const [isSheetOpen, setSheetOpen] = useState(false)
 	const [wikidata, setWikidata] = useState(null)
 	const [osmFeature, setOsmFeature] = useState(null)
 	const [latLngClicked, setLatLngClicked] = useState(null)
+
+	const categoryName = searchParams.cat,
+		category = categoryName && categories.find((c) => c.name === categoryName)
 
 	const versImageURL = wikidata?.pic && toThumb(wikidata?.pic.value)
 	useEffect(() => {
@@ -96,6 +101,86 @@ export default function Map() {
 	const [map, setMap] = useState(null)
 	const [clickedGare, clickGare] = useState(null)
 	const [bikeRoute, setBikeRoute] = useState(null)
+	const [features, setFeatures] = useState([])
+
+	useEffect(() => {
+		if (!map || !category) return
+
+		const fetchCategories = async () => {
+			const mapLibreBbox = map.getBounds().toArray(),
+				bbox = [
+					mapLibreBbox[0][1],
+					mapLibreBbox[0][0],
+					mapLibreBbox[1][1],
+					mapLibreBbox[1][0],
+				].join(',')
+
+			const overpassRequest = `
+[out:json];
+(
+  node${category.query}(${bbox});
+);
+
+out body;
+>;
+out skel qt;
+
+`
+			const url = `https://overpass-api.de/api/interpreter?data=${encodeURIComponent(
+				overpassRequest
+			)}`
+			console.log(url)
+			const request = await fetch(url)
+			const json = await request.json()
+			setFeatures(json.elements)
+		}
+		fetchCategories()
+	}, [category, map])
+
+	useEffect(() => {
+		if (!map || features.length < 1) return
+
+		const imageUrl = findOpenmoji(category.emoji, false, 'png')
+		console.log({ imageUrl })
+		map.loadImage(imageUrl, (error, image) => {
+			if (error) throw error
+			map.addImage(category.name, image)
+
+			map.addSource('features', {
+				type: 'geojson',
+				data: {
+					type: 'FeatureCollection',
+					features: features.map((f) => ({
+						type: 'Feature',
+						geometry: {
+							type: 'Point',
+							coordinates: [f.lon, f.lat],
+						},
+						properties: { id: f.id, tags: f.tags, name: f.tags.name },
+					})),
+				},
+			})
+
+			// Add a symbol layer
+			map.addLayer({
+				id: 'features',
+				type: 'symbol',
+				source: 'features',
+				layout: {
+					'icon-image': category.name,
+					'icon-size': 0.25,
+					'text-field': ['get', 'name'],
+					'text-offset': [0, 1.25],
+					'text-anchor': 'top',
+				},
+			})
+		})
+
+		return () => {
+			map.removeLayer('features')
+			map.removeSource('features')
+		}
+	}, [features, map])
 
 	useEffect(() => {
 		if (!center || !clickedGare) return
@@ -228,7 +313,7 @@ export default function Map() {
 
 			const openMapTilesId = '' + features[0].id
 
-			console.log(features)
+			console.log('renderedFeatures', features)
 			const id = openMapTilesId.slice(null, -1),
 				featureType = { '1': 'way', '0': 'node', '4': 'relation' }[
 					openMapTilesId.slice(-1)
@@ -266,7 +351,6 @@ export default function Map() {
 
 	const lesGaresProches =
 		center && gares && sortGares(gares, center).slice(0, 30)
-	console.log({ lesGaresProches, clickedGare, bikeRoute })
 
 	useEffect(() => {
 		if (!lesGaresProches) return
@@ -398,6 +482,7 @@ export default function Map() {
 						</ImageWithNameWrapper>
 					</motion.div>
 				)}
+				<QuickFeatureSearch />
 
 				{/* 
 

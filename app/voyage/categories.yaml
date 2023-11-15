@@ -1,0 +1,6 @@
+- name: café
+  query: '["amenity"="cafe"]'
+  emoji: ☕️
+- name: boulangerie
+  query: '["shop"="bakery"]'
+  emoji: 🥖
