@@ -6,6 +6,7 @@ import styled from 'styled-components'
 import BikeRouteRésumé from './BikeRouteRésumé'
 import createSearchBBox from './createSearchPolygon'
 import GareInfo from './GareInfo'
+import OsmFeature from './OsmFeature'
 
 export default function ModalSheet({
 	isSheetOpen,
@@ -22,7 +23,7 @@ export default function ModalSheet({
 		const makeRequest = async () => {
 			const { lat1, lng1, lat2, lng2 } = createSearchBBox(latLngClicked)
 
-			const url = `https://commons.wikimedia.org/w/api.php?action=query&list=geosearch&gsbbox=${lat1}|${lng1}|${lat2}|${lng2}&gsnamespace=6&gslimit=500&format=json&origin=*`
+			const url = `https://commons.wikimedia.org/w/api.php?action=query&list=geosearch&gsbbox=${lat2}|${lng2}|${lat1}|${lng1}&gsnamespace=6&gslimit=500&format=json&origin=*`
 			const request = await fetch(url)
 			const json = await request.json()
 			const images = json.query.geosearch
@@ -93,9 +94,7 @@ export default function ModalSheet({
 							</ul>
 						)}
 						{osmFeature ? (
-							<div css={``}>
-								<FriendlyObjectViewer data={osmFeature.tags} />
-							</div>
+							<OsmFeature data={osmFeature} />
 						) : clickedGare ? (
 							<div
 								css={`
@@ -140,4 +139,5 @@ const CustomSheet = styled(Sheet)`
 	.react-modal-sheet-content {
 		/* custom styles */
 	}
+	color: var(--darkestColor);
 `

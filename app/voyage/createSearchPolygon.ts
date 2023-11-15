@@ -1,13 +1,16 @@
 const createSearchBBox = (latLngClicked) => {
-	const diff = 0.0006 / 2
+	const diffLng = 0.0005,
+		diffLat = 0.0003
 	const { lat, lng } = latLngClicked
 
-	const lat1 = lat + diff,
-		lng1 = lng - diff,
-		lat2 = +lat1 - diff,
-		lng2 = +lng1 + diff
+	const lat1 = +lat - diffLat,
+		lng1 = +lng + diffLng,
+		lat2 = +lat1 + diffLat,
+		lng2 = +lng1 - diffLng
 
-	return { lat1, lng1, lat2, lng2 }
+	const result = { lat1, lng1, lat2, lng2 }
+	console.log(result)
+	return result
 }
 
 export default createSearchBBox

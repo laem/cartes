@@ -6,7 +6,11 @@ export default function PlaceSearch({ onInputChange, state, setState }) {
 	console.log(state)
 	return (
 		<div>
-			<InputStyle>
+			<InputStyle
+				css={`
+					color: white;
+				`}
+			>
 				<input
 					type="text"
 					autoFocus={true}

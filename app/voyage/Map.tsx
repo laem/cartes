@@ -40,11 +40,6 @@ export default function Map() {
 	const [wikidata, setWikidata] = useState(null)
 	const [osmFeature, setOsmFeature] = useState(null)
 	const [latLngClicked, setLatLngClicked] = useState(null)
-	const [mapState, setMapState] = useState({})
-	const router = useRouter()
-	const params = useParams()
-
-	const updateHash = () => router.push(`/voyage#${zoom}/${lat}/${lng}`)
 
 	const versImageURL = wikidata?.pic && toThumb(wikidata?.pic.value)
 	useEffect(() => {
@@ -132,6 +127,7 @@ export default function Map() {
 			style: `https://api.maptiler.com/maps/2f80a9c4-e0dd-437d-ae35-2b6c212f830b/style.json?key=${process.env.NEXT_PUBLIC_MAPTILER}`,
 			center: defaultCenter,
 			zoom: 8,
+			hash: true,
 		})
 		setMap(newMap)
 
@@ -190,15 +186,19 @@ export default function Map() {
 						type: 'Polygon',
 						coordinates: [
 							[
+								[lng2, lat2],
+								[lng2, lat1],
 								[lng1, lat1],
+								[lng1, lat2],
 								[lng2, lat2],
 							],
 						],
 					},
 				},
 			}
-			if (source) source.setData(polygon)
-			else {
+			if (source) {
+				source.setData(polygon.data)
+			} else {
 				map.addSource('searchPolygon', polygon)
 
 				map.addLayer({
@@ -316,6 +316,7 @@ export default function Map() {
 					bottom: 10px;
 					z-index: 999;
 				}
+				color: var(--darkestColor);
 			`}
 		>
 			<div
