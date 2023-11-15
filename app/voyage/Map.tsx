@@ -17,7 +17,7 @@ import { useEffect, useMemo, useRef, useState } from 'react'
 import { flushSync } from 'react-dom'
 import { createRoot } from 'react-dom/client'
 import styled from 'styled-components'
-import createSearchBBox from './createSearchPolygon'
+import { createPolygon, createSearchBBox } from './createSearchPolygon'
 import { sortGares } from './gares'
 import categories from './categories.yaml'
 
@@ -26,6 +26,7 @@ const ModalSheet = dynamic(() => import('./ModalSheet'), {
 })
 import PlaceSearch from './PlaceSearch'
 import QuickFeatureSearch from './QuickFeatureSearch'
+import { osmRequest } from './osmRequest'
 
 const defaultCenter =
 	// Saint Malo [-1.9890417068124002, 48.66284934737089]
@@ -41,6 +42,7 @@ export default function Map({ searchParams }) {
 	const [isSheetOpen, setSheetOpen] = useState(false)
 	const [wikidata, setWikidata] = useState(null)
 	const [osmFeature, setOsmFeature] = useState(null)
+
 	const [latLngClicked, setLatLngClicked] = useState(null)
 
 	const categoryName = searchParams.cat,
@@ -267,30 +269,12 @@ out skel qt;
 			setLatLngClicked(e.lngLat)
 			setSheetOpen(true)
 
-			const { lat1, lng1, lat2, lng2 } = createSearchBBox(e.lngLat)
-
 			const source = map.getSource('searchPolygon')
-			console.log('SOURCE', source)
-			const polygon = {
-				type: 'geojson',
-				data: {
-					type: 'Feature',
-					geometry: {
-						type: 'Polygon',
-						coordinates: [
-							[
-								[lng2, lat2],
-								[lng2, lat1],
-								[lng1, lat1],
-								[lng1, lat2],
-								[lng2, lat2],
-							],
-						],
-					},
-				},
-			}
+			const polygon = createPolygon(createSearchBBox(e.lngLat))
+
 			if (source) {
 				source.setData(polygon.data)
+				map.setPaintProperty('searchPolygon', 'fill-opacity', 0.6)
 			} else {
 				map.addSource('searchPolygon', polygon)
 
@@ -300,11 +284,15 @@ out skel qt;
 					source: 'searchPolygon',
 					layout: {},
 					paint: {
-						'fill-color': '#088',
-						'fill-opacity': 0.8,
+						'fill-color': '#57bff5',
+						'fill-opacity': 0.6,
 					},
 				})
 			}
+			setTimeout(
+				() => map.setPaintProperty('searchPolygon', 'fill-opacity', 0),
+				1000
+			)
 
 			// Thanks OSMAPP https://github.com/openmaptiles/openmaptiles/issues/792
 			const features = map.queryRenderedFeatures(e.point)
@@ -324,15 +312,31 @@ out skel qt;
 			}
 			console.log(features, id, openMapTilesId)
 
-			const osmRequest = await fetch(
-				`https://api.openstreetmap.org/api/0.6/${featureType}/${id}.json`
-			)
-			const json = await osmRequest.json()
+			const elements = await osmRequest(featureType, id)
 
-			console.log('Résultat OSM', json)
-			if (!json.elements.length) return
+			console.log('Résultat OSM', elements)
+			if (!elements.length) return
 
-			setOsmFeature(json.elements[0])
+			setOsmFeature(elements[0])
+		})
+	}, [map])
+
+	useEffect(() => {
+		if (!map) return
+
+		map.on('click', 'features', async (e) => {
+			const properties = e.features[0].properties,
+				tagsRaw = properties.tags
+			const tags = typeof tagsRaw === 'string' ? JSON.parse(tagsRaw) : tagsRaw
+
+			setOsmFeature({ ...properties, tags })
+		})
+		map.on('mouseenter', 'features', () => {
+			map.getCanvas().style.cursor = 'pointer'
+		})
+		// Change it back to a pointer when it leaves.
+		map.on('mouseleave', 'features', () => {
+			map.getCanvas().style.cursor = ''
 		})
 	}, [map])
 
