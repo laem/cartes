@@ -486,7 +486,7 @@ out skel qt;
 						</ImageWithNameWrapper>
 					</motion.div>
 				)}
-				<QuickFeatureSearch />
+				<QuickFeatureSearch category={category} />
 
 				{/* 
 

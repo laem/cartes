@@ -6,7 +6,7 @@ import { useParams } from 'react-router'
 import categories from './categories.yaml'
 
 const width = '2rem'
-export default function QuickFeatureSearch() {
+export default function QuickFeatureSearch({ category: categorySet }) {
 	const pathname = usePathname(),
 		params = useParams()
 
@@ -27,30 +27,50 @@ export default function QuickFeatureSearch() {
 					width: ${width};
 					height: ${width};
 					border-radius: ${width};
-					background: var(--darkColor);
+
 					margin-right: 0.2rem;
 					img {
 						padding: 0.2rem;
 					}
+					border: 1px solid var(--lightestColor);
 				}
 			`}
 		>
-			{categories.map((category) => (
-				<li key={category.emoji}>
-					<Link
-						href={
-							pathname +
-							'?' +
-							new URLSearchParams({ cat: category.name }) +
-							hash
-						}
-						replace={true}
-						prefetch={false}
+			{categories.map((category) => {
+				const newSearchParams = { cat: category.name }
+
+				return (
+					<li
+						key={category.emoji}
+						css={`
+							background: ${!categorySet
+								? 'var(--lighterColor)'
+								: categorySet.name === category.name
+								? 'var(--darkColor)'
+								: 'var(--lighterColor)'};
+						`}
 					>
-						<Emoji e={category.emoji} />
-					</Link>
-				</li>
-			))}
+						<Link
+							href={
+								pathname +
+								'?' +
+								new URLSearchParams(
+									!categorySet
+										? newSearchParams
+										: categorySet.name === category.name
+										? {}
+										: newSearchParams
+								) +
+								hash
+							}
+							replace={true}
+							prefetch={false}
+						>
+							<Emoji e={category.emoji} />
+						</Link>
+					</li>
+				)
+			})}
 		</ul>
 	)
 }

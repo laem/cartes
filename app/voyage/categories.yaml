@@ -4,3 +4,6 @@
 - name: boulangerie
   query: '["shop"="bakery"]'
   emoji: 🥖
+- name: surf
+  query: '["sport"="surfing"]'
+  emoji: 🏄️
