@@ -11,7 +11,7 @@ const SideSheet = dynamic(() => import('./SideSheet'), {
 export default function ModalSwitch(props) {
 	const matches = useMediaQuery('(min-width: 800px)')
 
-	if (!props.latLngClicked || !props.osmFeature) return null
+	if (!props.isSheetOpen) return null
 
 	if (matches) return <SideSheet {...props} />
 

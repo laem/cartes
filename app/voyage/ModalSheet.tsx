@@ -9,6 +9,8 @@ export default function ModalSheet({
 	bikeRoute,
 	osmFeature,
 	latLngClicked,
+	bikeRouteProfile,
+	setBikeRouteProfile,
 }) {
 	return (
 		<CustomSheet
@@ -38,6 +40,8 @@ export default function ModalSheet({
 								bikeRoute,
 								osmFeature,
 								latLngClicked,
+								bikeRouteProfile,
+								setBikeRouteProfile,
 							}}
 						/>
 					</SheetContentWrapper>

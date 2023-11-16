@@ -44,6 +44,7 @@ export default function Map({ searchParams }) {
 	const [osmFeature, setOsmFeature] = useState(null)
 	const [latLngClicked, setLatLngClicked] = useState(null)
 	const [mapState, setMapState] = useState({ zoom: defaultZoom })
+	const [bikeRouteProfile, setBikeRouteProfile] = useState('safety')
 
 	const categoryName = searchParams.cat,
 		category = categoryName && categories.find((c) => c.name === categoryName)
@@ -266,14 +267,14 @@ out skel qt;
 			[lon2, lat2] = center
 
 		async function fetchBikeRoute() {
-			const url = `https://brouter.osc-fr1.scalingo.io/brouter?lonlats=${lon1},${lat1}|${lon2},${lat2}&profile=safety&alternativeidx=0&format=geojson`
+			const url = `https://brouter.osc-fr1.scalingo.io/brouter?lonlats=${lon1},${lat1}|${lon2},${lat2}&profile=${bikeRouteProfile}&alternativeidx=0&format=geojson`
 			const res = await fetch(url)
 			const json = await res.json()
 			setBikeRoute(json)
 		}
 
 		fetchBikeRoute()
-	}, [center, clickedGare])
+	}, [center, clickedGare, bikeRouteProfile])
 	useEffect(() => {
 		async function fetchGares() {
 			const res = await fetch('/gares.json')
@@ -594,6 +595,8 @@ https://swipable-modal.vercel.app
 						bikeRoute,
 						osmFeature,
 						latLngClicked,
+						setBikeRouteProfile,
+						bikeRouteProfile,
 					}}
 				/>
 			</div>

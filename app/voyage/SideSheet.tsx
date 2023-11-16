@@ -1,13 +1,6 @@
 import Content from './Content'
 
-export default function SideSheet({
-	isSheetOpen,
-	setSheetOpen,
-	clickedGare,
-	bikeRoute,
-	osmFeature,
-	latLngClicked,
-}) {
+export default function SideSheet(props) {
 	return (
 		<div
 			css={`
@@ -20,17 +13,7 @@ export default function SideSheet({
 				overflow: scroll;
 			`}
 		>
-			<Content
-				{...{
-					isSheetOpen,
-					setSheetOpen,
-					clickedGare,
-					bikeRoute,
-					osmFeature,
-
-					latLngClicked,
-				}}
-			/>
+			<Content {...props} />
 		</div>
 	)
 }

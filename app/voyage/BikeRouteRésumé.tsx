@@ -1,7 +1,12 @@
 import css from '@/components/css/convertToJs'
 import Emoji from '@/components/Emoji'
+import ProfileChooser from './ProfileChooser'
 
-export default function BikeRouteRésumé({ data }) {
+export default function BikeRouteRésumé({
+	data,
+	bikeRouteProfile,
+	setBikeRouteProfile,
+}) {
 	if (!data.features) return
 	const feature = data.features[0]
 	if (!feature) return
@@ -32,29 +37,37 @@ export default function BikeRouteRésumé({ data }) {
 					height: auto;
 				}
 				@media (min-width: 1200px) {
-					margin-top: 6rem;
 					max-width: 35rem;
 					height: 6rem;
 				}
 			`}
 		>
 			<Emoji e="🚲️" />
-			<p>
-				Le trajet de <strong>{km} km</strong> depuis la gare vous prendra{' '}
-				<strong>
-					{heures ? heures + ` heure${heures > 1 ? 's' : ''} et ` : ''}
-					{minutes} minutes
-				</strong>{' '}
-				pour{' '}
-				<strong
-					style={css(
-						`background: ${deniveléColor(déniveléCumulé)}; padding: 0 .2rem;`
-					)}
-				>
-					{déniveléCumulé} m de dénivelé cumulé
-				</strong>{' '}
-				et {dénivelé} m en absolu.
-			</p>
+
+			<div>
+				<p>
+					Le trajet de <strong>{km} km</strong> depuis la gare vous prendra{' '}
+					<strong>
+						{heures ? heures + ` heure${heures > 1 ? 's' : ''} et ` : ''}
+						{minutes} minutes
+					</strong>{' '}
+					pour{' '}
+					<strong
+						style={css(
+							`background: ${deniveléColor(déniveléCumulé)}; padding: 0 .2rem;`
+						)}
+					>
+						{déniveléCumulé} m de dénivelé cumulé
+					</strong>{' '}
+					et {dénivelé} m en absolu.
+				</p>
+				<ProfileChooser
+					{...{
+						bikeRouteProfile,
+						setBikeRouteProfile,
+					}}
+				/>
+			</div>
 		</div>
 	)
 }

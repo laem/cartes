@@ -10,6 +10,8 @@ export default function Content({
 	clickedGare,
 	bikeRoute,
 	osmFeature,
+	setBikeRouteProfile,
+	bikeRouteProfile,
 }) {
 	const [wikimedia, setWikimedia] = useState([])
 
@@ -77,7 +79,11 @@ export default function Content({
 			</div>
 			{clickedGare ? (
 				<div css={``}>
-					{bikeRoute && <BikeRouteRésumé data={bikeRoute} />}
+					{bikeRoute && (
+						<BikeRouteRésumé
+							{...{ data: bikeRoute, bikeRouteProfile, setBikeRouteProfile }}
+						/>
+					)}
 					<GareInfo clickedGare={clickedGare} />
 				</div>
 			) : osmFeature ? (
