@@ -43,8 +43,8 @@ export default function Map({ searchParams }) {
 	const [isSheetOpen, setSheetOpen] = useState(false)
 	const [wikidata, setWikidata] = useState(null)
 	const [osmFeature, setOsmFeature] = useState(null)
-
 	const [latLngClicked, setLatLngClicked] = useState(null)
+	const [mapState, setMapState] = useState(null)
 
 	const categoryName = searchParams.cat,
 		category = categoryName && categories.find((c) => c.name === categoryName)
@@ -289,6 +289,10 @@ out skel qt;
 				trackUserLocation: true,
 			})
 		)
+
+		newMap.on('zoom', () => {
+			setMapState({ zoom: newMap.getZoom() })
+		})
 
 		//new maplibregl.Marker({ color: '#FF0000' }).setLngLat(defaultCenter).addTo(newMap)
 
@@ -548,7 +552,9 @@ out skel qt;
 						</ImageWithNameWrapper>
 					</motion.div>
 				)}
-				<QuickFeatureSearch category={category} />
+				{mapState && mapState.zoom > 12 && (
+					<QuickFeatureSearch category={category} />
+				)}
 
 				{/* 
 
