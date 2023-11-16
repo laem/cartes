@@ -42,7 +42,12 @@ export default function QuickFeatureSearch({
 			`}
 		>
 			{categories.map((category) => {
-				const newSearchParams = { ...searchParams, cat: category.name }
+				const newSearchParams = {
+					...omit(['cat'], searchParams),
+					...(!categorySet || categorySet.name !== category.name
+						? { cat: category.name }
+						: {}),
+				}
 
 				return (
 					<li
@@ -57,16 +62,7 @@ export default function QuickFeatureSearch({
 					>
 						<Link
 							href={
-								pathname +
-								'?' +
-								new URLSearchParams(
-									!categorySet
-										? newSearchParams
-										: categorySet.name === category.name
-										? searchParams
-										: newSearchParams
-								) +
-								hash
+								pathname + '?' + new URLSearchParams(newSearchParams) + hash
 							}
 							replace={true}
 							prefetch={false}

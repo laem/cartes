@@ -28,6 +28,7 @@ import PlaceSearch from './PlaceSearch'
 import QuickFeatureSearch from './QuickFeatureSearch'
 import { osmRequest } from './osmRequest'
 import { centerOfMass } from '@turf/turf'
+import parseOpeningHours from 'opening_hours'
 
 const defaultCenter =
 	// Saint Malo [-1.9890417068124002, 48.66284934737089]
@@ -38,16 +39,19 @@ const defaultState = {
 	vers: { inputValue: '', choice: false },
 	validated: false,
 }
+const defaultZoom = 8
 export default function Map({ searchParams }) {
 	const [state, setState] = useState(defaultState)
 	const [isSheetOpen, setSheetOpen] = useState(false)
 	const [wikidata, setWikidata] = useState(null)
 	const [osmFeature, setOsmFeature] = useState(null)
 	const [latLngClicked, setLatLngClicked] = useState(null)
-	const [mapState, setMapState] = useState(null)
+	const [mapState, setMapState] = useState({ zoom: defaultZoom })
 
 	const categoryName = searchParams.cat,
 		category = categoryName && categories.find((c) => c.name === categoryName)
+
+	const showOpenOnly = searchParams.o
 
 	const versImageURL = wikidata?.pic && toThumb(wikidata?.pic.value)
 	useEffect(() => {
@@ -172,18 +176,30 @@ out skel qt;
 	useEffect(() => {
 		if (!map || features.length < 1) return
 
+		const shownFeatures = !showOpenOnly
+			? features
+			: features.filter((f) => {
+					if (!f.tags.opening_hours) return false
+					try {
+						const oh = new parseOpeningHours(f.tags.opening_hours)
+						return oh.getState()
+					} catch (e) {
+						return false
+					}
+			  })
+
 		const imageUrl = findOpenmoji(category.emoji, false, 'png')
 		console.log({ imageUrl })
 		map.loadImage(imageUrl, (error, image) => {
 			if (error) throw error
 			map.addImage(category.name, image)
 
-			console.log('features', features)
+			console.log('features', shownFeatures, features)
 			map.addSource('features-points', {
 				type: 'geojson',
 				data: {
 					type: 'FeatureCollection',
-					features: features.map((f) => {
+					features: shownFeatures.map((f) => {
 						const geometry = {
 							type: 'Point',
 							coordinates: [f.lon, f.lat],
@@ -201,7 +217,7 @@ out skel qt;
 				type: 'geojson',
 				data: {
 					type: 'FeatureCollection',
-					features: features
+					features: shownFeatures
 						.filter((f) => console.log('polyg', f.polygon) || f.polygon)
 						.map((f) => {
 							return {
@@ -244,7 +260,7 @@ out skel qt;
 			map.removeLayer('features-ways')
 			map.removeSource('features-ways')
 		}
-	}, [features, map])
+	}, [features, map, showOpenOnly])
 
 	useEffect(() => {
 		if (!center || !clickedGare) return
@@ -275,7 +291,7 @@ out skel qt;
 			container: mapContainerRef.current,
 			style: `https://api.maptiler.com/maps/2f80a9c4-e0dd-437d-ae35-2b6c212f830b/style.json?key=${process.env.NEXT_PUBLIC_MAPTILER}`,
 			center: defaultCenter,
-			zoom: 8,
+			zoom: defaultZoom,
 			hash: true,
 		})
 		setMap(newMap)
@@ -290,6 +306,7 @@ out skel qt;
 			})
 		)
 
+		setMapState({ zoom: newMap.getZoom() })
 		newMap.on('zoom', () => {
 			setMapState({ zoom: newMap.getZoom() })
 		})
