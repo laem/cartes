@@ -200,7 +200,7 @@ out skel qt;
 				source: 'features',
 				layout: {
 					'icon-image': category.name,
-					'icon-size': 0.25,
+					'icon-size': 0.4,
 					'text-field': ['get', 'name'],
 					'text-offset': [0, 1.25],
 					'text-anchor': 'top',
