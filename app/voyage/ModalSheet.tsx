@@ -4,7 +4,7 @@ import { useEffect, useState } from 'react'
 import Sheet from 'react-modal-sheet'
 import styled from 'styled-components'
 import BikeRouteRésumé from './BikeRouteRésumé'
-import createSearchBBox from './createSearchPolygon'
+import { createSearchBBox } from './createSearchPolygon'
 import GareInfo from './GareInfo'
 import OsmFeature from './OsmFeature'
 

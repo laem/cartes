@@ -386,18 +386,18 @@ out skel qt;
 	useEffect(() => {
 		if (!map) return
 
-		map.on('click', 'features', async (e) => {
+		map.on('click', 'features-points', async (e) => {
 			const properties = e.features[0].properties,
 				tagsRaw = properties.tags
 			const tags = typeof tagsRaw === 'string' ? JSON.parse(tagsRaw) : tagsRaw
 
 			setOsmFeature({ ...properties, tags })
 		})
-		map.on('mouseenter', 'features', () => {
+		map.on('mouseenter', 'features-points', () => {
 			map.getCanvas().style.cursor = 'pointer'
 		})
 		// Change it back to a pointer when it leaves.
-		map.on('mouseleave', 'features', () => {
+		map.on('mouseleave', 'features-points', () => {
 			map.getCanvas().style.cursor = ''
 		})
 	}, [map])
