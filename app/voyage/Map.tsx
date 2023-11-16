@@ -11,7 +11,6 @@ import getCityData, { toThumb } from 'Components/wikidata'
 import { motion } from 'framer-motion'
 import maplibregl from 'maplibre-gl'
 import 'maplibre-gl/dist/maplibre-gl.css'
-import dynamic from 'next/dynamic'
 import Image from 'next/image'
 import { useEffect, useMemo, useRef, useState } from 'react'
 import { flushSync } from 'react-dom'
@@ -21,14 +20,12 @@ import { createPolygon, createSearchBBox } from './createSearchPolygon'
 import { sortGares } from './gares'
 import categories from './categories.yaml'
 
-const ModalSheet = dynamic(() => import('./ModalSheet'), {
-	ssr: false,
-})
 import PlaceSearch from './PlaceSearch'
 import QuickFeatureSearch from './QuickFeatureSearch'
 import { osmRequest } from './osmRequest'
 import { centerOfMass } from '@turf/turf'
 import parseOpeningHours from 'opening_hours'
+import ModalSwitch from './ModalSwitch'
 
 const defaultCenter =
 	// Saint Malo [-1.9890417068124002, 48.66284934737089]
@@ -589,7 +586,7 @@ https://swipable-modal.vercel.app
 
 
 			*/}
-				<ModalSheet
+				<ModalSwitch
 					{...{
 						isSheetOpen,
 						setSheetOpen,

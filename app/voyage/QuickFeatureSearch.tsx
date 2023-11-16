@@ -24,6 +24,7 @@ export default function QuickFeatureSearch({
 	return (
 		<ul
 			css={`
+				margin-top: 0.8rem;
 				padding: 0;
 				list-style-type: none;
 				display: flex;
