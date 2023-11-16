@@ -12,11 +12,11 @@ export default function SideSheet({
 		<div
 			css={`
 				background: var(--lighterColor);
-				width: 40rem;
+				max-width: 40rem;
 				margin-top: 1rem;
 				padding: 1rem 0.6rem;
 				border-radius: 0.6rem;
-				height: calc(90vh - 15rem);
+				max-height: calc(90vh - 15rem);
 				overflow: scroll;
 			`}
 		>
