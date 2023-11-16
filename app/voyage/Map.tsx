@@ -151,17 +151,17 @@ out skel qt;
 						type: 'Feature',
 						geometry: {
 							type: 'Polygon',
-							coordinates: [nodes.map(({ lat, lon }) => [lat, lon])],
+							coordinates: [nodes.map(({ lat, lon }) => [lon, lat])],
 						},
 					}
 				console.log({ polygon })
 				const center = centerOfMass(polygon)
 
 				console.log('center', center)
-				const [lat, lon] = center.geometry.coordinates
+				const [lon, lat] = center.geometry.coordinates
 				console.log({ lon, lat })
 
-				return { ...element, lat, lon }
+				return { ...element, lat, lon, polygon }
 			})
 
 			setFeatures(nodeElements)
@@ -178,26 +178,46 @@ out skel qt;
 			if (error) throw error
 			map.addImage(category.name, image)
 
-			map.addSource('features', {
+			console.log('features', features)
+			map.addSource('features-points', {
 				type: 'geojson',
 				data: {
 					type: 'FeatureCollection',
-					features: features.map((f) => ({
-						type: 'Feature',
-						geometry: {
+					features: features.map((f) => {
+						const geometry = {
 							type: 'Point',
 							coordinates: [f.lon, f.lat],
-						},
-						properties: { id: f.id, tags: f.tags, name: f.tags.name },
-					})),
+						}
+
+						return {
+							type: 'Feature',
+							geometry,
+							properties: { id: f.id, tags: f.tags, name: f.tags.name },
+						}
+					}),
+				},
+			})
+			map.addSource('features-ways', {
+				type: 'geojson',
+				data: {
+					type: 'FeatureCollection',
+					features: features
+						.filter((f) => console.log('polyg', f.polygon) || f.polygon)
+						.map((f) => {
+							return {
+								type: 'Feature',
+								geometry: f.polygon.geometry,
+								properties: { id: f.id, tags: f.tags, name: f.tags.name },
+							}
+						}),
 				},
 			})
 
 			// Add a symbol layer
 			map.addLayer({
-				id: 'features',
+				id: 'features-points',
 				type: 'symbol',
-				source: 'features',
+				source: 'features-points',
 				layout: {
 					'icon-image': category.name,
 					'icon-size': 0.4,
@@ -206,11 +226,23 @@ out skel qt;
 					'text-anchor': 'top',
 				},
 			})
+			map.addLayer({
+				id: 'features-ways',
+				type: 'fill',
+				source: 'features-ways',
+				layout: {},
+				paint: {
+					'fill-color': '#088',
+					'fill-opacity': 0.6,
+				},
+			})
 		})
 
 		return () => {
-			map.removeLayer('features')
-			map.removeSource('features')
+			map.removeLayer('features-points')
+			map.removeSource('features-points')
+			map.removeLayer('features-ways')
+			map.removeSource('features-ways')
 		}
 	}, [features, map])
 
