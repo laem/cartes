@@ -553,7 +553,7 @@ out skel qt;
 					</motion.div>
 				)}
 				{mapState && mapState.zoom > 12 && (
-					<QuickFeatureSearch category={category} />
+					<QuickFeatureSearch category={category} searchParams={searchParams} />
 				)}
 
 				{/* 
