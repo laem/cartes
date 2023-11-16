@@ -38,6 +38,7 @@ const Article = styled.article`
 	hr {
 		opacity: 0.3;
 		color: var(--lightColor);
+		margin: 1.6rem 0;
 	}
 `
 
