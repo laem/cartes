@@ -75,13 +75,13 @@ export default function Content({
 					</ul>
 				)}
 			</div>
-			{osmFeature ? (
-				<OsmFeature data={osmFeature} />
-			) : clickedGare ? (
+			{clickedGare ? (
 				<div css={``}>
 					{bikeRoute && <BikeRouteRésumé data={bikeRoute} />}
 					<GareInfo clickedGare={clickedGare} />
 				</div>
+			) : osmFeature ? (
+				<OsmFeature data={osmFeature} />
 			) : (
 				<p>Cliquez sur une gare pour obtenir ses horaires.</p>
 			)}
