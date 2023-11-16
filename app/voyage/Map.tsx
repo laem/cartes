@@ -5,24 +5,27 @@ import {
 	ImageWithNameWrapper,
 } from '@/components/conversation/VoyageUI'
 import css from '@/components/css/convertToJs'
-import Emoji from '@/components/Emoji'
+import Emoji, { findOpenmoji } from '@/components/Emoji'
 import destinationPoint from '@/public/destination-point.svg'
 import getCityData, { toThumb } from 'Components/wikidata'
 import { motion } from 'framer-motion'
 import maplibregl from 'maplibre-gl'
 import 'maplibre-gl/dist/maplibre-gl.css'
-import dynamic from 'next/dynamic'
 import Image from 'next/image'
 import { useEffect, useMemo, useRef, useState } from 'react'
 import { flushSync } from 'react-dom'
 import { createRoot } from 'react-dom/client'
 import styled from 'styled-components'
+import { createPolygon, createSearchBBox } from './createSearchPolygon'
 import { sortGares } from './gares'
+import categories from './categories.yaml'
 
-const ModalSheet = dynamic(() => import('./ModalSheet'), {
-	ssr: false,
-})
 import PlaceSearch from './PlaceSearch'
+import QuickFeatureSearch from './QuickFeatureSearch'
+import { osmRequest } from './osmRequest'
+import { centerOfMass } from '@turf/turf'
+import parseOpeningHours from 'opening_hours'
+import ModalSwitch from './ModalSwitch'
 
 const defaultCenter =
 	// Saint Malo [-1.9890417068124002, 48.66284934737089]
@@ -33,12 +36,21 @@ const defaultState = {
 	vers: { inputValue: '', choice: false },
 	validated: false,
 }
-export default function Map() {
+const defaultZoom = 8
+export default function Map({ searchParams }) {
 	const [state, setState] = useState(defaultState)
 	const [isSheetOpen, setSheetOpen] = useState(false)
 	const [wikidata, setWikidata] = useState(null)
 	const [osmFeature, setOsmFeature] = useState(null)
 	const [latLngClicked, setLatLngClicked] = useState(null)
+	const [mapState, setMapState] = useState({ zoom: defaultZoom })
+	const [bikeRouteProfile, setBikeRouteProfile] = useState('safety')
+
+	const categoryName = searchParams.cat,
+		category = categoryName && categories.find((c) => c.name === categoryName)
+
+	const showOpenOnly = searchParams.o
+
 	const versImageURL = wikidata?.pic && toThumb(wikidata?.pic.value)
 	useEffect(() => {
 		if (!state.vers.choice) return undefined
@@ -94,6 +106,159 @@ export default function Map() {
 	const [map, setMap] = useState(null)
 	const [clickedGare, clickGare] = useState(null)
 	const [bikeRoute, setBikeRoute] = useState(null)
+	const [features, setFeatures] = useState([])
+
+	useEffect(() => {
+		if (!map || !category) return
+
+		const fetchCategories = async () => {
+			const mapLibreBbox = map.getBounds().toArray(),
+				bbox = [
+					mapLibreBbox[0][1],
+					mapLibreBbox[0][0],
+					mapLibreBbox[1][1],
+					mapLibreBbox[1][0],
+				].join(',')
+
+			const overpassRequest = `
+[out:json];
+(
+  node${category.query}(${bbox});
+  way${category.query}(${bbox});
+);
+
+out body;
+>;
+out skel qt;
+
+`
+			const url = `https://overpass-api.de/api/interpreter?data=${encodeURIComponent(
+				overpassRequest
+			)}`
+			console.log(url)
+			const request = await fetch(url)
+			const json = await request.json()
+			const namedElements = json.elements.filter((element) => {
+				if (!element.tags || !element.tags.name) return false
+				if (!['way', 'node'].includes(element.type)) return false
+				return true
+			})
+			console.log({ namedElements })
+			const nodeElements = namedElements.map((element) => {
+				if (element.type === 'node') return element
+				const nodes = element.nodes.map((id) =>
+						json.elements.find((el) => el.id === id)
+					),
+					polygon = {
+						type: 'Feature',
+						geometry: {
+							type: 'Polygon',
+							coordinates: [nodes.map(({ lat, lon }) => [lon, lat])],
+						},
+					}
+				console.log({ polygon })
+				const center = centerOfMass(polygon)
+
+				console.log('center', center)
+				const [lon, lat] = center.geometry.coordinates
+				console.log({ lon, lat })
+
+				return { ...element, lat, lon, polygon }
+			})
+
+			setFeatures(nodeElements)
+		}
+		fetchCategories()
+	}, [category, map])
+
+	useEffect(() => {
+		if (!map || features.length < 1) return
+
+		const shownFeatures = !showOpenOnly
+			? features
+			: features.filter((f) => {
+					if (!f.tags.opening_hours) return false
+					try {
+						const oh = new parseOpeningHours(f.tags.opening_hours)
+						return oh.getState()
+					} catch (e) {
+						return false
+					}
+			  })
+
+		const imageUrl = findOpenmoji(category.emoji, false, 'png')
+		console.log({ imageUrl })
+		map.loadImage(imageUrl, (error, image) => {
+			if (error) throw error
+			map.addImage(category.name, image)
+
+			console.log('features', shownFeatures, features)
+			map.addSource('features-points', {
+				type: 'geojson',
+				data: {
+					type: 'FeatureCollection',
+					features: shownFeatures.map((f) => {
+						const geometry = {
+							type: 'Point',
+							coordinates: [f.lon, f.lat],
+						}
+
+						return {
+							type: 'Feature',
+							geometry,
+							properties: { id: f.id, tags: f.tags, name: f.tags.name },
+						}
+					}),
+				},
+			})
+			map.addSource('features-ways', {
+				type: 'geojson',
+				data: {
+					type: 'FeatureCollection',
+					features: shownFeatures
+						.filter((f) => console.log('polyg', f.polygon) || f.polygon)
+						.map((f) => {
+							return {
+								type: 'Feature',
+								geometry: f.polygon.geometry,
+								properties: { id: f.id, tags: f.tags, name: f.tags.name },
+							}
+						}),
+				},
+			})
+
+			// Add a symbol layer
+			map.addLayer({
+				id: 'features-points',
+				type: 'symbol',
+				source: 'features-points',
+				layout: {
+					'icon-image': category.name,
+					'icon-size': 0.4,
+					'text-field': ['get', 'name'],
+					'text-offset': [0, 1.25],
+					'text-anchor': 'top',
+				},
+			})
+			map.addLayer({
+				id: 'features-ways',
+				type: 'fill',
+				source: 'features-ways',
+				layout: {},
+				paint: {
+					'fill-color': '#088',
+					'fill-opacity': 0.6,
+				},
+			})
+		})
+
+		return () => {
+			map.removeLayer('features-points')
+			map.removeSource('features-points')
+			map.removeLayer('features-ways')
+			map.removeSource('features-ways')
+		}
+	}, [features, map, showOpenOnly])
 
 	useEffect(() => {
 		if (!center || !clickedGare) return
@@ -102,14 +267,14 @@ export default function Map() {
 			[lon2, lat2] = center
 
 		async function fetchBikeRoute() {
-			const url = `https://brouter.osc-fr1.scalingo.io/brouter?lonlats=${lon1},${lat1}|${lon2},${lat2}&profile=safety&alternativeidx=0&format=geojson`
+			const url = `https://brouter.osc-fr1.scalingo.io/brouter?lonlats=${lon1},${lat1}|${lon2},${lat2}&profile=${bikeRouteProfile}&alternativeidx=0&format=geojson`
 			const res = await fetch(url)
 			const json = await res.json()
 			setBikeRoute(json)
 		}
 
 		fetchBikeRoute()
-	}, [center, clickedGare])
+	}, [center, clickedGare, bikeRouteProfile])
 	useEffect(() => {
 		async function fetchGares() {
 			const res = await fetch('/gares.json')
@@ -124,11 +289,25 @@ export default function Map() {
 			container: mapContainerRef.current,
 			style: `https://api.maptiler.com/maps/2f80a9c4-e0dd-437d-ae35-2b6c212f830b/style.json?key=${process.env.NEXT_PUBLIC_MAPTILER}`,
 			center: defaultCenter,
-			zoom: 8,
+			zoom: defaultZoom,
+			hash: true,
 		})
 		setMap(newMap)
 
 		newMap.addControl(new maplibregl.NavigationControl(), 'top-right')
+		newMap.addControl(
+			new maplibregl.GeolocateControl({
+				positionOptions: {
+					enableHighAccuracy: true,
+				},
+				trackUserLocation: true,
+			})
+		)
+
+		setMapState({ zoom: newMap.getZoom() })
+		newMap.on('zoom', () => {
+			setMapState({ zoom: newMap.getZoom() })
+		})
 
 		//new maplibregl.Marker({ color: '#FF0000' }).setLngLat(defaultCenter).addTo(newMap)
 
@@ -169,6 +348,33 @@ export default function Map() {
 		map.on('click', async (e) => {
 			console.log('click event', e)
 			setLatLngClicked(e.lngLat)
+			setSheetOpen(true)
+
+			const source = map.getSource('searchPolygon')
+			const polygon = createPolygon(createSearchBBox(e.lngLat))
+
+			if (source) {
+				source.setData(polygon.data)
+				map.setPaintProperty('searchPolygon', 'fill-opacity', 0.6)
+			} else {
+				map.addSource('searchPolygon', polygon)
+
+				map.addLayer({
+					id: 'searchPolygon',
+					type: 'fill',
+					source: 'searchPolygon',
+					layout: {},
+					paint: {
+						'fill-color': '#57bff5',
+						'fill-opacity': 0.6,
+					},
+				})
+			}
+			setTimeout(
+				() => map.setPaintProperty('searchPolygon', 'fill-opacity', 0),
+				1000
+			)
+
 			// Thanks OSMAPP https://github.com/openmaptiles/openmaptiles/issues/792
 			const features = map.queryRenderedFeatures(e.point)
 
@@ -176,7 +382,7 @@ export default function Map() {
 
 			const openMapTilesId = '' + features[0].id
 
-			console.log(features)
+			console.log('renderedFeatures', features)
 			const id = openMapTilesId.slice(null, -1),
 				featureType = { '1': 'way', '0': 'node', '4': 'relation' }[
 					openMapTilesId.slice(-1)
@@ -187,17 +393,31 @@ export default function Map() {
 			}
 			console.log(features, id, openMapTilesId)
 
-			const osmRequest = await fetch(
-				`https://api.openstreetmap.org/api/0.6/${featureType}/${id}.json`
-			)
-			const json = await osmRequest.json()
+			const elements = await osmRequest(featureType, id)
 
-			console.log('Résultat OSM', json)
-			if (!json.elements.length) return
+			console.log('Résultat OSM', elements)
+			if (!elements.length) return
 
-			setOsmFeature(json.elements[0])
+			setOsmFeature(elements[0])
+		})
+	}, [map])
 
-			setSheetOpen(true)
+	useEffect(() => {
+		if (!map) return
+
+		map.on('click', 'features-points', async (e) => {
+			const properties = e.features[0].properties,
+				tagsRaw = properties.tags
+			const tags = typeof tagsRaw === 'string' ? JSON.parse(tagsRaw) : tagsRaw
+
+			setOsmFeature({ ...properties, tags })
+		})
+		map.on('mouseenter', 'features-points', () => {
+			map.getCanvas().style.cursor = 'pointer'
+		})
+		// Change it back to a pointer when it leaves.
+		map.on('mouseleave', 'features-points', () => {
+			map.getCanvas().style.cursor = ''
 		})
 	}, [map])
 
@@ -216,7 +436,6 @@ export default function Map() {
 
 	const lesGaresProches =
 		center && gares && sortGares(gares, center).slice(0, 30)
-	console.log({ lesGaresProches, clickedGare, bikeRoute })
 
 	useEffect(() => {
 		if (!lesGaresProches) return
@@ -274,6 +493,7 @@ export default function Map() {
 					bottom: 10px;
 					z-index: 999;
 				}
+				color: var(--darkestColor);
 			`}
 		>
 			<div
@@ -284,11 +504,18 @@ export default function Map() {
 					z-index: 10;
 					h1 {
 						color: var(--darkerColor);
-						border-bottom: 6px solid var(--color);
+						border-bottom: 5px solid var(--color);
 						display: inline-block;
 						padding: 0;
-						line-height: 1.6rem;
+						line-height: 1.8rem;
 						margin-top: 1rem;
+						@media (max-width: 800px) {
+							margin: 0;
+							margin-bottom: 0.4rem;
+							font-size: 120%;
+							border-bottom-width: 2px;
+							line-height: 1.2rem;
+						}
 					}
 				`}
 			>
@@ -340,6 +567,9 @@ export default function Map() {
 						</ImageWithNameWrapper>
 					</motion.div>
 				)}
+				{mapState && mapState.zoom > 12 && (
+					<QuickFeatureSearch category={category} searchParams={searchParams} />
+				)}
 
 				{/* 
 
@@ -357,13 +587,16 @@ https://swipable-modal.vercel.app
 
 
 			*/}
-				<ModalSheet
+				<ModalSwitch
 					{...{
 						isSheetOpen,
 						setSheetOpen,
 						clickedGare,
 						bikeRoute,
 						osmFeature,
+						latLngClicked,
+						setBikeRouteProfile,
+						bikeRouteProfile,
 					}}
 				/>
 			</div>

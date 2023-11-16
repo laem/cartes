@@ -33,6 +33,7 @@ export const ImageWithNameWrapper = styled.div`
 	height: 8rem;
 	border-radius: 0.6rem;
 	width: 20rem;
+	max-width: 90%;
 	> img {
 		position: absolute;
 		transform: translateY(-50%);
@@ -44,7 +45,7 @@ export const ImageWithNameWrapper = styled.div`
 		border-radius: 0;
 	}
 	@media (max-width: 800px) {
-		height: 6rem;
+		height: 5rem;
 	}
 `
 

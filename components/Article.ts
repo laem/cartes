@@ -11,6 +11,7 @@ const Article = styled.article`
 	h1 {
 		font-size: 160%;
 		margin-bottom: 0;
+		line-height: 1.3rem;
 	}
 	h2 {
 		font-size: 140%;
@@ -37,6 +38,7 @@ const Article = styled.article`
 	hr {
 		opacity: 0.3;
 		color: var(--lightColor);
+		margin: 1.6rem 0;
 	}
 `
 

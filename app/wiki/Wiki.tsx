@@ -1,23 +1,22 @@
-import byCategory from 'Components/categories'
-import Emoji from 'Components/Emoji'
-import Link from 'next/link'
-import Image from 'next/image'
-import { utils } from 'publicodes'
 import energy from '@/public/energy.svg'
 import ferryIcon from '@/public/ferry-small.png'
+import byCategory from 'Components/categories'
+import Emoji from 'Components/Emoji'
+import Image from 'next/image'
+import Link from 'next/link'
+import { utils } from 'publicodes'
 
 const { encodeRuleName } = utils
 
 import topElements from '@/app/wiki/topElements.yaml'
+import css from '@/components/css/convertToJs'
 import {
 	CardUnits,
 	CategoryList,
 	RuleListStyle,
 	WikiCard,
 } from '@/components/WikiUI'
-import { Card } from '@/components/UI'
 import { title as ruleTitle } from 'Components/utils/publicodesUtils'
-import css from '@/components/css/convertToJs'
 
 export default function Wiki({ rules }) {
 	const exposedRules = Object.entries(rules)
@@ -76,9 +75,10 @@ const RuleList = ({ rules }) => (
 				icônes = rule.icônes || rule.rawNode?.icônes,
 				units =
 					rule.unités ||
-					(rule.exposé.type === 'question éco'
-						? ['€', 'kWh', 'CO2e']
-						: ['CO2e'])
+					(rule.exposé &&
+						(rule.exposé.type === 'question éco'
+							? ['€', 'kWh', 'CO2e']
+							: ['CO2e']))
 
 			return (
 				<li key={dottedName || rule.titre}>
@@ -93,20 +93,36 @@ const RuleList = ({ rules }) => (
 										height: auto;
 									`}
 								/>
+							) : rule.image ? (
+								<Image
+									src={'/' + rule.image}
+									width={'100'}
+									height={'100'}
+									style={css`
+										position: absolute;
+										top: 0;
+										left: 0;
+										height: 100%;
+										width: auto;
+										object-fit: cover;
+									`}
+								/>
 							) : (
 								<Emoji e={icônes} />
 							)}
 							<h3>{title}</h3>
-							<CardUnits>
-								{units.map((unit) => {
-									const { text, title } = unitRepresentations[unit]
-									return (
-										<span key={unit} title={title}>
-											{text}
-										</span>
-									)
-								})}
-							</CardUnits>
+							{units && (
+								<CardUnits>
+									{units.map((unit) => {
+										const { text, title } = unitRepresentations[unit]
+										return (
+											<span key={unit} title={title}>
+												{text}
+											</span>
+										)
+									})}
+								</CardUnits>
+							)}
 						</WikiCard>
 					</Link>
 				</li>

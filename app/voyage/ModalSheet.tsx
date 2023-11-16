@@ -1,9 +1,7 @@
-import FriendlyObjectViewer from '@/components/FriendlyObjectViewer'
-import { useEffect } from 'react'
 import Sheet from 'react-modal-sheet'
 import styled from 'styled-components'
-import BikeRouteRésumé from './BikeRouteRésumé'
-import GareInfo from './GareInfo'
+import Content from './Content'
+
 export default function ModalSheet({
 	isSheetOpen,
 	setSheetOpen,
@@ -11,31 +9,9 @@ export default function ModalSheet({
 	bikeRoute,
 	osmFeature,
 	latLngClicked,
+	bikeRouteProfile,
+	setBikeRouteProfile,
 }) {
-	const [wikimedia, setWikimedia] = useState([])
-	useEffect(() => {
-		if (!latLngClicked) return
-		const makeRequest = async () => {
-			const diff = 0.000002
-			const { lat1, lng1 } = latLngClicked,
-				lat2 = lat1 + diff,
-				lng2 = lng1 + diff
-
-			const url = `https://commons.wikimedia.org/w/api.php?action=query&list=geosearch&gsbbox=${lat1}|${lng1}|${lat2}|${lng2}&gsnamespace=6&gslimit=500&format=json&_=1699996741238`
-			const request = await fetch(url)
-			const json = await request.json()
-			const images = json.query.geosearch
-			setWikimedia(images)
-		}
-		makeRequest()
-	}, [latLngClicked])
-
-	const imageUrls = wikimedia.map((json) => {
-		const title = json.title.split('File:')[1],
-			encodedTitle = title.replace(/\s/g, '_'),
-			url = `azd`
-	})
-
 	return (
 		<CustomSheet
 			isOpen={isSheetOpen}
@@ -58,25 +34,16 @@ export default function ModalSheet({
 				/>
 				<Sheet.Content>
 					<SheetContentWrapper>
-						{osmFeature ? (
-							<div css={``}>
-								<FriendlyObjectViewer data={osmFeature.tags} />
-							</div>
-						) : clickedGare ? (
-							<div
-								css={`
-									@media (min-width: 1200px) {
-										display: flex;
-										justify-content: space-evenly;
-									}
-								`}
-							>
-								{bikeRoute && <BikeRouteRésumé data={bikeRoute} />}
-								<GareInfo clickedGare={clickedGare} />
-							</div>
-						) : (
-							<p>Cliquez sur une gare pour obtenir ses horaires.</p>
-						)}
+						<Content
+							{...{
+								clickedGare,
+								bikeRoute,
+								osmFeature,
+								latLngClicked,
+								bikeRouteProfile,
+								setBikeRouteProfile,
+							}}
+						/>
 					</SheetContentWrapper>
 				</Sheet.Content>
 			</Sheet.Container>
@@ -106,4 +73,5 @@ const CustomSheet = styled(Sheet)`
 	.react-modal-sheet-content {
 		/* custom styles */
 	}
+	color: var(--darkestColor);
 `

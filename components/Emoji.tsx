@@ -5,15 +5,19 @@ import { Text, Image as ImageStyle } from './EmojiUI'
 
 const regex = emojiRegex()
 
-const url = `https://unpkg.com/openmoji@14.0.0`
-const findOpenmoji = (e, black) => {
+const url = `https://cdn.jsdelivr.net/gh/hfg-gmuend/openmoji`
+export const findOpenmoji = (e, black, fileFormat = 'svg') => {
 	const unicode = e.codePointAt(0).toString(16).toUpperCase()
 
 	const found = openmojis[e] || openmojis[e + '️']
 	// for a reason I don't understand, openmoji JSON file contains the variation 16 emoji somtimes... U+FE0F
 
+	const name = found || unicode
 	return (
-		found && `${url}/${black ? 'black' : 'color'}/svg/${found || unicode}.svg`
+		found &&
+		`${url}/${black ? 'black' : 'color'}/${
+			fileFormat === 'svg' ? 'svg' : '72x72'
+		}/${name}.${fileFormat}`
 	)
 }
 

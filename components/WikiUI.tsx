@@ -40,6 +40,7 @@ export const RuleListStyle = styled.ul`
 	li {
 		list-style-type: none;
 		margin: 0.6rem 1.6rem;
+		position: relative;
 	}
 	li > a {
 		text-decoration: none !important;
@@ -66,10 +67,12 @@ export const WikiCard = styled(Card)`
 	display: flex;
 	flex-direction: column;
 	justify-content: center;
+	overflow: hidden;
 	img {
 		font-size: 150%;
 	}
 	h3 {
+		z-index: 1;
 		margin: 0;
 		font-size: 110%;
 		line-height: 1.3rem;
@@ -102,17 +105,19 @@ export const WikiCard = styled(Card)`
 	`}
 `
 
-const unitSize = 1.6
+const unitSize = 1.8
 export const CardUnits = styled.span`
 	position: absolute;
-	right: -1rem;
-	bottom: -1.1rem;
+	right: -0.7rem;
+	bottom: -0.5rem;
+
 	> span {
-		background: var(--color);
+		font-size: 120%;
+		background: var(--darkerColor);
 		border-radius: 1rem;
-		padding: 0.1rem;
+		padding: 0 0.4rem 0.4rem 0;
 		line-height: ${unitSize + 0.2}rem;
-		color: var(--darkestColor);
+		color: var(--lightColor);
 		height: ${unitSize}rem;
 		width: ${unitSize}rem;
 		display: inline-block;
