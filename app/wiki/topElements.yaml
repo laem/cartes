@@ -19,3 +19,7 @@
   unités:
     - €
 - plaque de cuisson . impact
+- url: /voyage
+  titre: Voyagez, autrement
+  image: voyage-vignette.png
+  inversedColor: true
