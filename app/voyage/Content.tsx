@@ -20,8 +20,6 @@ export default function Content({
 	const ogImages = useOgImageFetcher(url),
 		ogImage = ogImages[url]
 
-	console.log('OGI', ogImages)
-
 	return (
 		<section>
 			{ogImage && (

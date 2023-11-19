@@ -376,9 +376,14 @@ out skel qt;
 			)
 
 			// Thanks OSMAPP https://github.com/openmaptiles/openmaptiles/issues/792
-			const features = map.queryRenderedFeatures(e.point)
+			const features = map
+				.queryRenderedFeatures(e.point)
+				.filter((f) => f.source === 'maptiler_planet')
 
-			if (!features.length || !features[0].id) return
+			if (!features.length || !features[0].id) {
+				console.log('no features', features)
+				return
+			}
 
 			const openMapTilesId = '' + features[0].id
 
