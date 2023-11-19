@@ -17,7 +17,10 @@ export default function Content({
 	bikeRouteProfile,
 }) {
 	const url = osmFeature?.tags?.website
-	const ogImage = useOgImageFetcher(url)
+	const ogImages = useOgImageFetcher(url),
+		ogImage = ogImages[url]
+
+	console.log('OGI', ogImages)
 
 	return (
 		<section>
