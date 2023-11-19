@@ -79,7 +79,8 @@ export default function QuickFeatureSearch({
 					background: ${!searchParams.o
 						? 'var(--lighterColor)'
 						: 'var(--darkColor)'} !important;
-					width: 8rem !important;
+					width: auto !important;
+					padding: 0 0.4rem !important;
 					text-align: center;
 					color: var(--darkerColor);
 					height: 1.4rem !important;
@@ -102,7 +103,7 @@ export default function QuickFeatureSearch({
 						hash
 					}
 				>
-					Seulement ouvert
+					Ouvert
 				</Link>
 			</li>
 		</ul>
