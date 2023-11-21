@@ -18,6 +18,7 @@ export default function SideSheet(props) {
 					2.1px 4.1px 5.2px -1.7px hsl(var(--shadow-color) / 0.36),
 					5px 10px 12.6px -2.5px hsl(var(--shadow-color) / 0.36);
 				box-shadow: var(--shadow-elevation-medium);
+				overflow: hidden;
 			`}
 		>
 			<Content {...props} />
