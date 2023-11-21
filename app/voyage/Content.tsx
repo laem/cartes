@@ -7,6 +7,7 @@ import GareInfo from './GareInfo'
 import OsmFeature from './OsmFeature'
 import useOgImageFetcher from './useOgImageFetcher'
 import ZoneImages from './ZoneImages'
+import Explanations from './explanations.mdx'
 
 export default function Content({
 	latLngClicked,
@@ -20,6 +21,15 @@ export default function Content({
 	const ogImages = useOgImageFetcher(url),
 		ogImage = ogImages[url]
 
+	const [introductionRead, setIntroductionRead] = useState(false)
+
+	useEffect(() => {
+		const tutorials = JSON.parse(localStorage?.getItem('tutorials') || '{}'),
+			introductionRead = tutorials.introduction
+		setIntroductionRead(introductionRead)
+	}, [setIntroductionRead])
+
+	if (!introductionRead) return <Explanations />
 	return (
 		<section>
 			{ogImage && (
@@ -48,7 +58,7 @@ export default function Content({
 			) : osmFeature ? (
 				<OsmFeature data={osmFeature} />
 			) : (
-				<p>Cliquez sur une gare pour obtenir ses horaires.</p>
+				<Explanations />
 			)}
 		</section>
 	)
