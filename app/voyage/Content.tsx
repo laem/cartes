@@ -16,7 +16,7 @@ export default function Content({
 	setBikeRouteProfile,
 	bikeRouteProfile,
 }) {
-	const url = osmFeature?.tags?.website
+	const url = osmFeature?.tags?.website || osmFeature?.tags?.['contact:website']
 	const ogImages = useOgImageFetcher(url),
 		ogImage = ogImages[url]
 

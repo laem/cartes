@@ -28,6 +28,9 @@ export default function ZoneImages({ latLngClicked }) {
 			css={`
 				overflow: scroll;
 				whitespace: nowrap;
+				&::-webkit-scrollbar {
+					display: none;
+				}
 			`}
 		>
 			{imageUrls.length > 0 && (
