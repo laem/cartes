@@ -38,7 +38,9 @@ export default function OsmFeature({ data }) {
 
 const OpeningHours = ({ opening_hours }) => {
 	const now = new Date()
-	const oh = new parseOpeningHours(opening_hours),
+	const oh = new parseOpeningHours(opening_hours, {
+			address: { country_code: 'fr' },
+		}),
 		isOpen = oh.getState(),
 		nextChange = oh.getNextChange()
 

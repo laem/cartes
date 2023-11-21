@@ -179,7 +179,9 @@ out skel qt;
 			: features.filter((f) => {
 					if (!f.tags.opening_hours) return false
 					try {
-						const oh = new parseOpeningHours(f.tags.opening_hours)
+						const oh = new parseOpeningHours(f.tags.opening_hours, {
+							address: { country_code: 'fr' },
+						})
 						return oh.getState()
 					} catch (e) {
 						return false
@@ -355,7 +357,7 @@ out skel qt;
 
 			if (source) {
 				source.setData(polygon.data)
-				map.setPaintProperty('searchPolygon', 'fill-opacity', 0.6)
+				map && map.setPaintProperty('searchPolygon', 'fill-opacity', 0.6)
 			} else {
 				map.addSource('searchPolygon', polygon)
 
@@ -370,10 +372,9 @@ out skel qt;
 					},
 				})
 			}
-			setTimeout(
-				() => map.setPaintProperty('searchPolygon', 'fill-opacity', 0),
-				1000
-			)
+			setTimeout(() => {
+				map && map.setPaintProperty('searchPolygon', 'fill-opacity', 0)
+			}, 1000)
 
 			// Thanks OSMAPP https://github.com/openmaptiles/openmaptiles/issues/792
 			const features = map
