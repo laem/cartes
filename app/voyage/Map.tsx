@@ -504,8 +504,8 @@ out skel qt;
 			<div
 				css={`
 					position: absolute;
-					top: 2vh;
-					left: 4vw;
+					top: min(2vh, 0.5rem);
+					left: min(4vw, 2rem);
 					z-index: 10;
 					h1 {
 						color: var(--darkerColor);
