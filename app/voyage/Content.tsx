@@ -62,7 +62,10 @@ export default function Content({
 			) : osmFeature ? (
 				<OsmFeature data={osmFeature} />
 			) : (
-				<Explanations />
+				<p>
+					Cliquez sur un point d'intérêt ou saisissez une destination puis
+					explorez les gares autour.
+				</p>
 			)}
 		</section>
 	)
