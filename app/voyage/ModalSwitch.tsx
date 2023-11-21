@@ -1,4 +1,4 @@
-import { useMediaQuery } from 'usehooks-ts'
+import { useLocalStorage, useMediaQuery } from 'usehooks-ts'
 import dynamic from 'next/dynamic'
 
 const ModalSheet = dynamic(() => import('./ModalSheet'), {
@@ -11,7 +11,10 @@ const SideSheet = dynamic(() => import('./SideSheet'), {
 export default function ModalSwitch(props) {
 	const matches = useMediaQuery('(min-width: 800px)')
 
-	if (false && !props.isSheetOpen) return null
+	const [tutorials] = useLocalStorage('tutorials', {})
+	console.log('tutorials', tutorials)
+
+	if (tutorials.introduction && !props.isSheetOpen) return null
 
 	if (matches) return <SideSheet {...props} />
 

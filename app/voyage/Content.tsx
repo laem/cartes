@@ -1,13 +1,12 @@
-import { toThumb } from '@/components/wikidata'
-import { useEffect, useState } from 'react'
+import { useLocalStorage } from 'usehooks-ts'
 import BikeRouteRésumé from './BikeRouteRésumé'
-import { createSearchBBox } from './createSearchPolygon'
+import { ExplanationWrapper } from './ContentUI'
+import Explanations from './explanations.mdx'
 import { FeatureImage } from './FeatureImage'
 import GareInfo from './GareInfo'
 import OsmFeature from './OsmFeature'
 import useOgImageFetcher from './useOgImageFetcher'
 import ZoneImages from './ZoneImages'
-import Explanations from './explanations.mdx'
 
 export default function Content({
 	latLngClicked,
@@ -21,15 +20,20 @@ export default function Content({
 	const ogImages = useOgImageFetcher(url),
 		ogImage = ogImages[url]
 
-	const [introductionRead, setIntroductionRead] = useState(false)
+	const [tutorials, setTutorials] = useLocalStorage('tutorials', {})
+	const introductionRead = tutorials.introduction
 
-	useEffect(() => {
-		const tutorials = JSON.parse(localStorage?.getItem('tutorials') || '{}'),
-			introductionRead = tutorials.introduction
-		setIntroductionRead(introductionRead)
-	}, [setIntroductionRead])
-
-	if (!introductionRead) return <Explanations />
+	if (!introductionRead)
+		return (
+			<ExplanationWrapper>
+				<Explanations />
+				<button
+					onClick={() => setTutorials({ ...tutorials, introduction: true })}
+				>
+					OK
+				</button>
+			</ExplanationWrapper>
+		)
 	return (
 		<section>
 			{ogImage && (
