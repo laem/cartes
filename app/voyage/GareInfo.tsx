@@ -35,6 +35,9 @@ export default function GareInfo({ clickedGare }) {
 				@media (min-width: 1200px) {
 					width: 35rem;
 				}
+				> input {
+					margin-top: 1rem;
+				}
 			`}
 		>
 			<input
@@ -45,7 +48,6 @@ export default function GareInfo({ clickedGare }) {
 				min={initialDate}
 				onChange={(e) => setDate(e.target.value)}
 			/>
-			<div>{date}</div>
 			<h2>Gare de {clickedGare.nom}</h2>
 
 			<iframe
