@@ -26,9 +26,14 @@ export default function PlaceSearch({ onInputChange, state, setState }) {
 					<div
 						css={`
 							ul {
-								background: var(--darkestColor);
+								background: var(--darkerColor);
 								border-radius: 0.4rem;
 								padding: 0.6rem 0;
+								list-style-type: none;
+								@media (max-width: 800px) {
+									margin-left: -0.6rem;
+									width: 98vw;
+								}
 							}
 						`}
 					>

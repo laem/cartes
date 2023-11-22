@@ -2,11 +2,11 @@
 import Highlighter from 'react-highlight-words'
 import { useDispatch } from 'react-redux'
 
-const hash = ({ item: { nom, ville, pays, région, département } }) =>
-	'' + nom + ville + pays + région + département
+const hash = ({ nom, ville, pays, département }) =>
+	'' + nom + ville + pays + département
 const removeDuplicates = (elements) =>
 	elements.reduce((memo, next) => {
-		const duplicate = memo.find((el) => hash(el) === hash(next))
+		const duplicate = memo.find((el) => hash(el.item) === hash(next.item))
 		return [...memo, ...(duplicate ? [] : [next])]
 	}, [])
 
@@ -21,7 +21,7 @@ export default function GeoInputOptions({
 		<ul>
 			{removeDuplicates(data.results.slice(0, 5)).map((option) => (
 				<Option
-					key={JSON.stringify(option.item)}
+					key={hash(option.item)}
 					{...{
 						whichInput,
 						option,
@@ -47,23 +47,22 @@ const Option = ({
 	data,
 }) => {
 	const dispatch = useDispatch()
-	const { nom, ville, pays, région, département } = option.item,
+	const { nom = '', ville = '', pays = '', département = '' } = option.item,
 		choice = option.choice,
 		inputValue = data.inputValue
 
 	const nameIncludes = (what) =>
 		nom && nom.toLowerCase().includes((what || '').toLowerCase())
 	const displayCity = !nameIncludes(ville),
-		displayCountry = !nameIncludes(pays)
-	const locationText =
-		(displayCity ? ville + (displayCountry ? ' - ' : '') : '') +
-		département +
-		région +
-		(displayCountry ? pays : '')
+		displayCountry = !nameIncludes(pays) && pays !== 'France' // these web apps are mostly designed for metropolitan France
+	const displayDépartement = pays === 'France' // French people will probably not search for cities with the same name, hence small, abroad
+	const locationText = `${
+		displayCity ? ville + (displayCountry ? ' - ' : '') : ''
+	} ${displayDépartement ? département : ''} ${displayCountry ? pays : ''}`
 
 	return (
 		<li
-			key={nom + ville + pays + région + département}
+			key={hash(option.item)}
 			css={`
 				padding: 0.2rem 0.6rem;
 				border-radius: 0.3rem;

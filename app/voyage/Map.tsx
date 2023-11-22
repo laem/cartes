@@ -82,6 +82,8 @@ export default function Map({ searchParams }) {
 									nom: f.properties.name,
 									ville: f.properties.cities || f.properties.name,
 									pays: f.properties.country,
+									département: f.properties.county,
+									région: f.properties.state,
 								},
 							})),
 						},
