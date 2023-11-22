@@ -37,6 +37,10 @@ const defaultState = {
 	validated: false,
 }
 const defaultZoom = 8
+const styleKeys = {
+	streets: '2f80a9c4-e0dd-437d-ae35-2b6c212f830b',
+	satellite: 'satellite',
+}
 export default function Map({ searchParams }) {
 	const [state, setState] = useState(defaultState)
 	const [isSheetOpen, setSheetOpen] = useState(false)
@@ -45,6 +49,8 @@ export default function Map({ searchParams }) {
 	const [latLngClicked, setLatLngClicked] = useState(null)
 	const [mapState, setMapState] = useState({ zoom: defaultZoom })
 	const [bikeRouteProfile, setBikeRouteProfile] = useState('safety')
+	const [style, setStyle] = useState('streets')
+	const styleKey = styleKeys[style]
 
 	const categoryName = searchParams.cat,
 		category = categoryName && categories.find((c) => c.name === categoryName)
@@ -291,7 +297,7 @@ out skel qt;
 	useEffect(() => {
 		const newMap = new maplibregl.Map({
 			container: mapContainerRef.current,
-			style: `https://api.maptiler.com/maps/2f80a9c4-e0dd-437d-ae35-2b6c212f830b/style.json?key=${process.env.NEXT_PUBLIC_MAPTILER}`,
+			style: `https://api.maptiler.com/maps/${styleKey}/style.json?key=${process.env.NEXT_PUBLIC_MAPTILER}`,
 			center: defaultCenter,
 			zoom: defaultZoom,
 			hash: true,
@@ -319,6 +325,14 @@ out skel qt;
 			newMap.remove()
 		}
 	}, [setMap])
+
+	useEffect(() => {
+		if (!map) return
+
+		map.setStyle(
+			`https://api.maptiler.com/maps/${styleKey}/style.json?key=${process.env.NEXT_PUBLIC_MAPTILER}`
+		)
+	}, [styleKey, map])
 
 	useEffect(() => {
 		if (!map || !bikeRoute || !bikeRoute.features) return
@@ -608,6 +622,40 @@ https://swipable-modal.vercel.app
 					}}
 				/>
 			</div>
+			<button
+				css={`
+					position: fixed;
+					bottom: 0.4rem;
+					left: 0.4rem;
+					width: 4.5rem;
+					height: 4rem;
+					text-align: center;
+					border-radius: 0.4rem;
+					z-index: 1;
+					border: 4px solid white;
+					padding: 0;
+					background: white;
+					opacity: 0.8;
+					img {
+						width: 1.5rem;
+						height: auto;
+					}
+					border: 2px solid var(--lighterColor);
+				`}
+				onClick={() => setStyle(style === 'streets' ? 'satellite' : 'streets')}
+			>
+				{style === 'streets' ? (
+					<div>
+						<Emoji e="🛰️" />
+						<div>Satellite</div>
+					</div>
+				) : (
+					<div>
+						<Emoji e="🗺️" />
+						<div>Carte</div>
+					</div>
+				)}
+			</button>
 			<div ref={mapContainerRef} />
 		</div>
 	)
