@@ -33,18 +33,20 @@ export default function ModalSheet({
 					`}
 				/>
 				<Sheet.Content>
-					<SheetContentWrapper>
-						<Content
-							{...{
-								clickedGare,
-								bikeRoute,
-								osmFeature,
-								latLngClicked,
-								bikeRouteProfile,
-								setBikeRouteProfile,
-							}}
-						/>
-					</SheetContentWrapper>
+					<Sheet.Scroller draggableAt="both">
+						<SheetContentWrapper>
+							<Content
+								{...{
+									clickedGare,
+									bikeRoute,
+									osmFeature,
+									latLngClicked,
+									bikeRouteProfile,
+									setBikeRouteProfile,
+								}}
+							/>
+						</SheetContentWrapper>
+					</Sheet.Scroller>
 				</Sheet.Content>
 			</Sheet.Container>
 			<Sheet.Backdrop />

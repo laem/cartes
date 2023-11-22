@@ -32,7 +32,11 @@ export default function OsmFeature({ data }) {
 		soloTags = translatedTags.filter((t) => t.length === 1)
 
 	return (
-		<div>
+		<div
+			css={`
+				margin-bottom: 1.6rem;
+			`}
+		>
 			<SoloTags tags={soloTags} />
 			<h2
 				css={`
