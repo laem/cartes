@@ -11,6 +11,7 @@ export default function OsmFeature({ data }) {
 		phone,
 		'contact:instagram': instagram,
 		'contact:facebook': facebook,
+		'ref:FR:SIRET': siret,
 		...rest
 	} = data.tags
 	const filteredRest = Object.fromEntries(
@@ -37,15 +38,25 @@ export default function OsmFeature({ data }) {
 			)}
 			{opening_hours && <OpeningHours opening_hours={opening_hours} />}
 			{facebook && (
-				<a href={facebook} target="_blank">
+				<a href={facebook} target="_blank" title="Compte Facebook">
 					<Emoji extra="E042" />
 				</a>
 			)}
 			{instagram && (
-				<a href={instagram} target="_blank">
+				<a href={instagram} target="_blank" title="Compte Instagram">
 					<Emoji extra="E043" />
 				</a>
 			)}
+			{siret && (
+				<a
+					href={`https://annuaire-entreprises.data.gouv.fr/etablissement/${siret}`}
+					target="_blank"
+					title="Fiche entreprise sur l'annuaire officiel des entreprises"
+				>
+					<Emoji e="🇫🇷" />
+				</a>
+			)}
+			<br />
 			<div
 				css={`
 					> div {
