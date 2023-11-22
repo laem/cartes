@@ -1,4 +1,13 @@
+import { useState } from 'react'
+
+const initialDate = new Date()
+	.toISOString()
+	.split(':')
+	.slice(null, -1)
+	.join(':')
 export default function GareInfo({ clickedGare }) {
+	const [date, setDate] = useState(initialDate)
+	console.log(date)
 	return (
 		<div
 			css={`
@@ -28,11 +37,21 @@ export default function GareInfo({ clickedGare }) {
 				}
 			`}
 		>
+			<input
+				type="datetime-local"
+				id="trainDate"
+				name="trainDate"
+				value={date}
+				min={initialDate}
+				onChange={(e) => setDate(e.target.value)}
+			/>
+			<div>{date}</div>
 			<h2>Gare de {clickedGare.nom}</h2>
+
 			<iframe
 				src={`https://tableau-sncf.vercel.app/station/stop_area:SNCF:${clickedGare.uic.slice(
 					2
-				)}`}
+				)}?date=${date}`}
 			/>
 		</div>
 	)
