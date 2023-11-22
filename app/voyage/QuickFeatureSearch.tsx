@@ -7,7 +7,7 @@ import { useEffect, useState } from 'react'
 import { useParams } from 'react-router'
 import categories from './categories.yaml'
 
-const width = '2rem'
+const width = '2.2rem'
 export default function QuickFeatureSearch({
 	category: categorySet,
 	searchParams, // dunno why params is not getting updated here, but updates hash though, we need searchParams
@@ -38,7 +38,7 @@ export default function QuickFeatureSearch({
 					img {
 						padding: 0.2rem;
 					}
-					border: 1px solid var(--lightestColor);
+					border: 2px solid var(--darkColor);
 				}
 			`}
 		>
@@ -55,10 +55,10 @@ export default function QuickFeatureSearch({
 						key={category.emoji}
 						css={`
 							background: ${!categorySet
-								? 'var(--lighterColor)'
+								? 'var(--lightestColor)'
 								: categorySet.name === category.name
 								? 'var(--darkColor)'
-								: 'var(--lighterColor)'};
+								: 'var(--lightestColor)'};
 						`}
 					>
 						<Link
