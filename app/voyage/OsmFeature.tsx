@@ -1,28 +1,34 @@
 import Emoji from '@/components/Emoji'
 import FriendlyObjectViewer from '@/components/FriendlyObjectViewer'
+import Address from '@/components/voyage/Address'
 import parseOpeningHours from 'opening_hours'
 
 export default function OsmFeature({ data }) {
+	if (!data.tags) return null
 	const { name, opening_hours, phone, ...rest } = data.tags
+	const filteredRest = Object.fromEntries(
+		Object.entries(rest).filter(([tag]) => !tag.includes('addr'))
+	)
 
 	return (
 		<div>
 			<h2
 				css={`
 					margin: 0;
-					margin-bottom: 0.6rem;
-					font-size: 110%;
+					margin-bottom: 0.3rem;
+					font-size: 130%;
 					line-height: 1.3rem;
 				`}
 			>
 				{name}
 			</h2>
-			{opening_hours && <OpeningHours opening_hours={opening_hours} />}
+			<Address tags={data.tags} />
 			{phone && (
 				<a href={`tel:${phone}`}>
 					<Emoji e="☎️" /> {phone}
 				</a>
 			)}
+			{opening_hours && <OpeningHours opening_hours={opening_hours} />}
 			<div
 				css={`
 					> div {
@@ -30,7 +36,7 @@ export default function OsmFeature({ data }) {
 					}
 				`}
 			>
-				<FriendlyObjectViewer data={rest} />
+				<FriendlyObjectViewer data={filteredRest} />
 			</div>
 		</div>
 	)
@@ -58,14 +64,22 @@ const OpeningHours = ({ opening_hours }) => {
 	return (
 		<div
 			css={`
+				margin: 0.2rem 0;
 				display: flex;
 				align-items: center;
+				summary {
+					list-style-type: none;
+					display: flex;
+					align-items: center;
+				}
 			`}
 		>
 			<details open={false}>
 				<summary>
-					<OpenIndicator isOpen={isOpen} /> {isOpen ? 'Ouvert' : 'Fermé'}{' '}
-					jusqu'à {formatDate(nextChange)}
+					<OpenIndicator isOpen={isOpen} />{' '}
+					<span>
+						{isOpen ? 'Ouvert' : 'Fermé'} jusqu'à {formatDate(nextChange)}
+					</span>
 				</summary>
 
 				{opening_hours}

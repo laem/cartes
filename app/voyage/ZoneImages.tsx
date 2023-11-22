@@ -36,7 +36,7 @@ export default function ZoneImages({ latLngClicked }) {
 			{imageUrls.length > 0 && (
 				<ul
 					css={`
-						margin: 0 0 1.4rem 0;
+						margin: 0 0 0.4rem 0;
 						display: flex;
 						list-style-type: none;
 
