@@ -5,7 +5,14 @@ import parseOpeningHours from 'opening_hours'
 
 export default function OsmFeature({ data }) {
 	if (!data.tags) return null
-	const { name, opening_hours, phone, ...rest } = data.tags
+	const {
+		name,
+		opening_hours,
+		phone,
+		'contact:instagram': instagram,
+		'contact:facebook': facebook,
+		...rest
+	} = data.tags
 	const filteredRest = Object.fromEntries(
 		Object.entries(rest).filter(([tag]) => !tag.includes('addr'))
 	)
@@ -29,6 +36,16 @@ export default function OsmFeature({ data }) {
 				</a>
 			)}
 			{opening_hours && <OpeningHours opening_hours={opening_hours} />}
+			{facebook && (
+				<a href={facebook} target="_blank">
+					<Emoji extra="E042" />
+				</a>
+			)}
+			{instagram && (
+				<a href={instagram} target="_blank">
+					<Emoji extra="E043" />
+				</a>
+			)}
 			<div
 				css={`
 					> div {
