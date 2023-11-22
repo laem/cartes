@@ -74,6 +74,7 @@
 		"@mdx-js/loader": "^2.3.0",
 		"@mdx-js/react": "^2.3.0",
 		"@next/mdx": "^14.0.2",
+		"@openstreetmap/id-tagging-schema": "^6.4.1",
 		"@opentelemetry/api": "^1.4.1",
 		"@pmmmwh/react-refresh-webpack-plugin": "^0.5.1",
 		"@rehooks/local-storage": "^2.4.4",

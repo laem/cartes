@@ -2,7 +2,9 @@ import Emoji from '@/components/Emoji'
 import FriendlyObjectViewer from '@/components/FriendlyObjectViewer'
 import Address from '@/components/voyage/Address'
 import ContactAndSocial from '@/components/voyage/ContactAndSocial'
+import Tags, { SoloTags } from '@/components/voyage/Tags'
 import parseOpeningHours from 'opening_hours'
+import { getTagLabels } from './osmTagLabels'
 
 export default function OsmFeature({ data }) {
 	if (!data.tags) return null
@@ -17,17 +19,26 @@ export default function OsmFeature({ data }) {
 		'ref:FR:SIRET': siret,
 		...rest
 	} = data.tags
+
 	const filteredRest = Object.fromEntries(
 		Object.entries(rest).filter(([tag]) => !tag.includes('addr'))
 	)
 
+	const translatedTags = Object.entries(filteredRest).map(([key, value]) => {
+			const tagLabels = getTagLabels(key, value)
+			return tagLabels
+		}),
+		keyValueTags = translatedTags.filter((t) => t.length === 2),
+		soloTags = translatedTags.filter((t) => t.length === 1)
+
 	return (
 		<div>
+			<SoloTags tags={soloTags} />
 			<h2
 				css={`
 					margin: 0;
 					margin-bottom: 0.3rem;
-					font-size: 130%;
+					font-size: 140%;
 					line-height: 1.3rem;
 				`}
 			>
@@ -41,15 +52,7 @@ export default function OsmFeature({ data }) {
 			)}
 			{opening_hours && <OpeningHours opening_hours={opening_hours} />}
 			<ContactAndSocial {...{ email, instagram, facebook, siret }} />
-			<div
-				css={`
-					> div {
-						background: var(--lighterColor);
-					}
-				`}
-			>
-				<FriendlyObjectViewer data={filteredRest} />
-			</div>
+			<Tags tags={keyValueTags} />
 		</div>
 	)
 }
