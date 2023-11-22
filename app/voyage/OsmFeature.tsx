@@ -1,6 +1,7 @@
 import Emoji from '@/components/Emoji'
 import FriendlyObjectViewer from '@/components/FriendlyObjectViewer'
 import Address from '@/components/voyage/Address'
+import ContactAndSocial from '@/components/voyage/ContactAndSocial'
 import parseOpeningHours from 'opening_hours'
 
 export default function OsmFeature({ data }) {
@@ -9,8 +10,10 @@ export default function OsmFeature({ data }) {
 		name,
 		opening_hours,
 		phone,
+		email,
 		'contact:instagram': instagram,
 		'contact:facebook': facebook,
+
 		'ref:FR:SIRET': siret,
 		...rest
 	} = data.tags
@@ -37,26 +40,7 @@ export default function OsmFeature({ data }) {
 				</a>
 			)}
 			{opening_hours && <OpeningHours opening_hours={opening_hours} />}
-			{facebook && (
-				<a href={facebook} target="_blank" title="Compte Facebook">
-					<Emoji extra="E042" />
-				</a>
-			)}
-			{instagram && (
-				<a href={instagram} target="_blank" title="Compte Instagram">
-					<Emoji extra="E043" />
-				</a>
-			)}
-			{siret && (
-				<a
-					href={`https://annuaire-entreprises.data.gouv.fr/etablissement/${siret}`}
-					target="_blank"
-					title="Fiche entreprise sur l'annuaire officiel des entreprises"
-				>
-					<Emoji e="🇫🇷" />
-				</a>
-			)}
-			<br />
+			<ContactAndSocial {...{ email, instagram, facebook, siret }} />
 			<div
 				css={`
 					> div {
