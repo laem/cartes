@@ -27,6 +27,9 @@ export function SoloTags({ tags }) {
 				li {
 					margin-right: 0.6rem;
 				}
+				overflow: scroll;
+				white-space: nowrap;
+				margin-bottom: 0.2rem;
 			`}
 		>
 			{tags.map((tag) => (
