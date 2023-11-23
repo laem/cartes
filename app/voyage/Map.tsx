@@ -525,7 +525,7 @@ out skel qt;
 					left: min(4vw, 2rem);
 					z-index: 10;
 					h1 {
-						color: var(--darkerColor);
+						color: ${style === 'satellite' ? 'white' : 'var(--darkerColor)'};
 						border-bottom: 5px solid var(--color);
 						display: inline-block;
 						padding: 0;
