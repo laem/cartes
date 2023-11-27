@@ -7,7 +7,7 @@ export default function SideSheet(props) {
 				background: var(--lighterColor);
 				max-width: 35rem;
 				margin-top: 1rem;
-				padding: 1rem 0.6rem;
+				padding: 0.4rem 0.6rem;
 				border-radius: 0.6rem;
 				max-height: calc(90vh - 15rem);
 				overflow: scroll;
