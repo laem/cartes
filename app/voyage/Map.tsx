@@ -440,11 +440,45 @@ out skel qt;
 	useEffect(() => {
 		if (!map || !featureType || !featureId) return
 		const request = async () => {
-			const elements = await osmRequest(featureType, featureId)
+			const full = ['way', 'relation'].includes(featureType)
+			const elements = await osmRequest(featureType, featureId, full)
 			if (!elements.length) return
+
+			const element = elements[0]
+
+			const featureCollectionFromOsmNodes = (nodes) => {
+				console.log('yanodes', nodes)
+				const fc = {
+					type: 'FeatureCollection',
+					features: nodes.map((el) => ({
+						type: 'Feature',
+						properties: {},
+						geometry: {
+							type: 'Point',
+							coordinates: [el.lon, el.lat],
+						},
+					})),
+				}
+				console.log('centerofmass', fc, centerOfMass(fc))
+				return fc
+			}
+			const center = !full
+				? [element.lon, element.lat]
+				: centerOfMass(
+						featureCollectionFromOsmNodes(
+							elements.filter((el) => el.lat && el.lon)
+						)
+				  ).geometry.coordinates
 
 			setOsmFeature(elements[0])
 			setSheetOpen(true)
+			console.log('should fly to', center)
+			map.flyTo({
+				center,
+				zoom: 18,
+				pitch: 50, // pitch in degrees
+				bearing: 20, // bearing in degrees
+			})
 		}
 		request()
 	}, [map, featureType, featureId])
