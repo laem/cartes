@@ -2,6 +2,7 @@ import Emoji from '../Emoji'
 
 export default function ContactAndSocial({
 	email,
+
 	facebook,
 	instagram,
 	siret,

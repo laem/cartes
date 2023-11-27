@@ -15,7 +15,6 @@ export default function OsmFeature({ data }) {
 		email,
 		'contact:instagram': instagram,
 		'contact:facebook': facebook,
-
 		'ref:FR:SIRET': siret,
 		...rest
 	} = data.tags
