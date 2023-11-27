@@ -1,10 +1,7 @@
 import Emoji from '@/components/Emoji'
+import useSetSeachParams from '@/components/useSetSearchParams'
 import { omit } from '@/components/utils/utils'
-import { NoopObservableUpDownCounterMetric } from '@opentelemetry/api/build/src/metrics/NoopMeter'
 import Link from 'next/link'
-import { usePathname } from 'next/navigation'
-import { useEffect, useState } from 'react'
-import { useParams } from 'react-router'
 import categories from './categories.yaml'
 
 const width = '2.2rem'
@@ -12,14 +9,7 @@ export default function QuickFeatureSearch({
 	category: categorySet,
 	searchParams, // dunno why params is not getting updated here, but updates hash though, we need searchParams
 }) {
-	const pathname = usePathname(),
-		params = useParams()
-
-	const [hash, setHash] = useState(null)
-
-	useEffect(() => {
-		setHash(window.location.hash)
-	}, [params])
+	const setSearchParams = useSetSeachParams()
 
 	return (
 		<ul
@@ -62,9 +52,7 @@ export default function QuickFeatureSearch({
 						`}
 					>
 						<Link
-							href={
-								pathname + '?' + new URLSearchParams(newSearchParams) + hash
-							}
+							href={setSearchParams(newSearchParams, true, true)}
 							replace={true}
 							prefetch={false}
 						>
@@ -93,15 +81,14 @@ export default function QuickFeatureSearch({
 				`}
 			>
 				<Link
-					href={
-						pathname +
-						'?' +
-						new URLSearchParams({
+					href={setSearchParams(
+						{
 							...omit(['o'], searchParams),
 							...(searchParams.o ? {} : { o: 'oui' }),
-						}) +
-						hash
-					}
+						},
+						true,
+						true
+					)}
 				>
 					Ouvert
 				</Link>

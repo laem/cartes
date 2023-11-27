@@ -15,17 +15,18 @@ import Image from 'next/image'
 import { useEffect, useMemo, useRef, useState } from 'react'
 import { flushSync } from 'react-dom'
 import { createRoot } from 'react-dom/client'
-import styled from 'styled-components'
+import categories from './categories.yaml'
 import { createPolygon, createSearchBBox } from './createSearchPolygon'
 import { sortGares } from './gares'
-import categories from './categories.yaml'
 
-import PlaceSearch from './PlaceSearch'
-import QuickFeatureSearch from './QuickFeatureSearch'
-import { osmRequest } from './osmRequest'
+import useSetSeachParams from '@/components/useSetSearchParams'
 import { centerOfMass } from '@turf/turf'
 import parseOpeningHours from 'opening_hours'
 import ModalSwitch from './ModalSwitch'
+import { osmRequest } from './osmRequest'
+import PlaceSearch from './PlaceSearch'
+import QuickFeatureSearch from './QuickFeatureSearch'
+import { decodePlace, encodePlace } from './utils'
 
 const defaultCenter =
 	// Saint Malo [-1.9890417068124002, 48.66284934737089]
@@ -51,6 +52,11 @@ export default function Map({ searchParams }) {
 	const [bikeRouteProfile, setBikeRouteProfile] = useState('safety')
 	const [style, setStyle] = useState('streets')
 	const styleKey = styleKeys[style]
+
+	const setSearchParams = useSetSeachParams()
+
+	const place = searchParams.lieu,
+		[featureType, featureId] = decodePlace(place)
 
 	const categoryName = searchParams.cat,
 		category = categoryName && categories.find((c) => c.name === categoryName)
@@ -88,8 +94,8 @@ export default function Map({ searchParams }) {
 									nom: f.properties.name,
 									ville: f.properties.cities || f.properties.name,
 									pays: f.properties.country,
-									département: f.properties.county,
 									région: f.properties.state,
+									département: f.properties.county,
 								},
 							})),
 						},
@@ -216,7 +222,12 @@ out skel qt;
 						return {
 							type: 'Feature',
 							geometry,
-							properties: { id: f.id, tags: f.tags, name: f.tags.name },
+							properties: {
+								id: f.id,
+								tags: f.tags,
+								name: f.tags.name,
+								featureType: f.type,
+							},
 						}
 					}),
 				},
@@ -415,6 +426,8 @@ out skel qt;
 			}
 			console.log(features, id, openMapTilesId)
 
+			setSearchParams({ lieu: encodePlace(featureType, id) })
+
 			const elements = await osmRequest(featureType, id)
 
 			console.log('Résultat OSM', elements)
@@ -425,12 +438,30 @@ out skel qt;
 	}, [map])
 
 	useEffect(() => {
+		if (!map || !featureType || !featureId) return
+		const request = async () => {
+			const elements = await osmRequest(featureType, featureId)
+			if (!elements.length) return
+
+			setOsmFeature(elements[0])
+			setSheetOpen(true)
+		}
+		request()
+	}, [map, featureType, featureId])
+
+	useEffect(() => {
 		if (!map) return
 
 		map.on('click', 'features-points', async (e) => {
-			const properties = e.features[0].properties,
+			const feature = e.features[0]
+			const properties = feature.properties,
 				tagsRaw = properties.tags
+			console.log('quickSearchOSMfeatureClick', feature)
 			const tags = typeof tagsRaw === 'string' ? JSON.parse(tagsRaw) : tagsRaw
+
+			setSearchParams({
+				lieu: encodePlace(properties.featureType, properties.id),
+			})
 
 			setOsmFeature({ ...properties, tags })
 		})
