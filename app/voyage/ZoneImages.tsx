@@ -21,7 +21,10 @@ export default function ZoneImages({ latLngClicked }) {
 	const imageUrls = wikimedia.map((json) => {
 		const title = json.title,
 			url = toThumb(title)
-		return url
+		return {
+			url,
+			fullUrl: `https://commons.wikimedia.org/wiki/${title.replace(' ', '_')}`,
+		}
 	})
 	return (
 		<div
@@ -48,9 +51,11 @@ export default function ZoneImages({ latLngClicked }) {
 						}
 					`}
 				>
-					{imageUrls.map((url) => (
-						<li key={url}>
-							<FeatureImage src={url} css={``} />
+					{imageUrls.map(({ url, fullUrl }) => (
+						<li key={fullUrl}>
+							<a href={fullUrl} target="_blank">
+								<FeatureImage src={url} css={``} />
+							</a>
 						</li>
 					))}
 				</ul>

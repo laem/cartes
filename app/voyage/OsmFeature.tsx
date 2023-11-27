@@ -11,13 +11,18 @@ export default function OsmFeature({ data }) {
 	const {
 		name,
 		opening_hours,
-		phone,
+		phone: phone1,
+		'contact:phone': phone2,
 		email,
+		website: website1,
+		'contact:website': website2,
 		'contact:instagram': instagram,
 		'contact:facebook': facebook,
 		'ref:FR:SIRET': siret,
 		...rest
 	} = data.tags
+	const phone = phone1 || phone2,
+		website = website1 || website2
 
 	const filteredRest = Object.fromEntries(
 		Object.entries(rest).filter(([tag]) => !tag.includes('addr'))
@@ -34,6 +39,9 @@ export default function OsmFeature({ data }) {
 		<div
 			css={`
 				margin-bottom: 1.6rem;
+				a {
+					color: var(--darkColor);
+				}
 			`}
 		>
 			<SoloTags tags={soloTags} />
@@ -49,9 +57,19 @@ export default function OsmFeature({ data }) {
 			</h2>
 			<Address tags={data.tags} />
 			{phone && (
-				<a href={`tel:${phone}`}>
-					<Emoji e="☎️" /> {phone}
-				</a>
+				<div>
+					<a href={`tel:${phone}`}>
+						<Emoji e="☎️" /> {phone}
+					</a>
+				</div>
+			)}
+
+			{website && (
+				<div>
+					<a href={website} target="_blank" title="Site Web">
+						<Emoji e="🌍️" /> <span>{cleanHttp(website)}</span>
+					</a>
+				</div>
 			)}
 			{opening_hours && <OpeningHours opening_hours={opening_hours} />}
 			<ContactAndSocial {...{ email, instagram, facebook, siret }} />
@@ -59,6 +77,8 @@ export default function OsmFeature({ data }) {
 		</div>
 	)
 }
+
+const cleanHttp = (v) => v.replace(/https?:\/\//g, '').replace(/www\./g, '')
 
 const OpeningHours = ({ opening_hours }) => {
 	const now = new Date()

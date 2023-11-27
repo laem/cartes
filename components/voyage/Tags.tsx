@@ -1,6 +1,5 @@
 import Emoji from '../Emoji'
 
-const cleanHttp = (v) => v.replace(/https?:\/\//g, '').replace(/www\./g, '')
 export default function Tags({ tags }) {
 	return (
 		<ul
@@ -13,22 +12,9 @@ export default function Tags({ tags }) {
 		>
 			{tags.map(([k, v]) => (
 				<li key={k + v}>
-					{k === 'Site Web' ? (
-						<a
-							href={v}
-							target="_blank"
-							title="Site Web"
-							css={`
-								color: inherit;
-							`}
-						>
-							<Emoji e="🌍️" /> <span>{cleanHttp(v)}</span>
-						</a>
-					) : (
-						<span>
-							{k} : {v}
-						</span>
-					)}
+					<span>
+						{k} : {v}
+					</span>
 				</li>
 			))}
 		</ul>
