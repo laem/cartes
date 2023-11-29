@@ -5,7 +5,7 @@ import {
 	ImageWithNameWrapper,
 } from '@/components/conversation/VoyageUI'
 import css from '@/components/css/convertToJs'
-import Emoji, { findOpenmoji } from '@/components/Emoji'
+import Emoji from '@/components/Emoji'
 import destinationPoint from '@/public/destination-point.svg'
 import getCityData, { toThumb } from 'Components/wikidata'
 import { motion } from 'framer-motion'
@@ -20,17 +20,16 @@ import { createPolygon, createSearchBBox } from './createSearchPolygon'
 import { sortGares } from './gares'
 
 import useSetSeachParams from '@/components/useSetSearchParams'
+import useTraceComponentUpdate from '@/components/utils/useTraceComponentUpdate'
+import fetchPhoton from '@/components/voyage/fetchPhoton'
 import { centerOfMass } from '@turf/turf'
 import parseOpeningHours from 'opening_hours'
 import ModalSwitch from './ModalSwitch'
 import { osmRequest } from './osmRequest'
 import PlaceSearch from './PlaceSearch'
 import QuickFeatureSearch, { categoryIconUrl } from './QuickFeatureSearch'
+import { MapContainer, MapHeader } from './UI'
 import { decodePlace, encodePlace } from './utils'
-import { MapHeader, MapContainer } from './UI'
-import useTraceComponentUpdate from '@/components/utils/useTraceComponentUpdate'
-import { debounce } from '@/components/utils/utils'
-import fetchPhoton from '@/components/voyage/fetchPhoton'
 
 const defaultCenter =
 	// Saint Malo [-1.9890417068124002, 48.66284934737089]
@@ -56,6 +55,7 @@ export default function Map({ searchParams }) {
 	const [zoom, setZoom] = useState(defaultZoom)
 	const [bikeRouteProfile, setBikeRouteProfile] = useState('safety')
 	const [style, setStyle] = useState('streets')
+	const [localSearch, setLocalSearch] = useState()
 	const styleKey = styleKeys[style]
 
 	const setSearchParams = useSetSeachParams()
@@ -85,7 +85,9 @@ export default function Map({ searchParams }) {
 			validated: false,
 		})
 		if (v.length > 2) {
-			fetchPhoton(v, setState, whichInput)
+			const hash = window.location.hash,
+				local = hash.split('/').slice(1, 3)
+			fetchPhoton(v, setState, whichInput, local)
 		}
 	}
 

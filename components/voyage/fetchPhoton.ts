@@ -1,7 +1,11 @@
 import { debounce } from '../utils/utils'
 
-function fetchPhoton(v, setState, whichInput) {
-	return fetch(`https://photon.komoot.io/api/?q=${v}&limit=6&lang=fr`)
+function fetchPhoton(v, setState, whichInput, local) {
+	return fetch(
+		`https://photon.komoot.io/api/?q=${v}&limit=6&lang=fr${
+			local ? `&lat=${local[0]}&lon=${local[1]}` : ''
+		}`
+	)
 		.then((res) => res.json())
 		.then((json) => {
 			setState((state) => {
