@@ -29,6 +29,8 @@ import QuickFeatureSearch, { categoryIconUrl } from './QuickFeatureSearch'
 import { decodePlace, encodePlace } from './utils'
 import { MapHeader, MapContainer } from './UI'
 import useTraceComponentUpdate from '@/components/utils/useTraceComponentUpdate'
+import { debounce } from '@/components/utils/utils'
+import fetchPhoton from '@/components/voyage/fetchPhoton'
 
 const defaultCenter =
 	// Saint Malo [-1.9890417068124002, 48.66284934737089]
@@ -83,27 +85,7 @@ export default function Map({ searchParams }) {
 			validated: false,
 		})
 		if (v.length > 2) {
-			fetch(`https://photon.komoot.io/api/?q=${v}&limit=6&lang=fr`)
-				.then((res) => res.json())
-				.then((json) => {
-					setState((state) => ({
-						...state,
-						[whichInput]: {
-							...state[whichInput],
-							results: json.features.map((f) => ({
-								item: {
-									longitude: f.geometry.coordinates[0],
-									latitude: f.geometry.coordinates[1],
-									nom: f.properties.name,
-									ville: f.properties.cities || f.properties.name,
-									pays: f.properties.country,
-									région: f.properties.state,
-									département: f.properties.county,
-								},
-							})),
-						},
-					}))
-				})
+			fetchPhoton(v, setState, whichInput)
 		}
 	}
 
