@@ -1,3 +1,4 @@
+import css from '@/components/css/convertToJs'
 import Emoji from '@/components/Emoji'
 import useSetSeachParams from '@/components/useSetSearchParams'
 import useTraceComponentUpdate from '@/components/utils/useTraceComponentUpdate'
@@ -42,6 +43,12 @@ export default function QuickFeatureSearch({
 						: {}),
 				}
 
+				const queryKey = Object.keys(category.query)[0],
+					queryValue = category.query[queryKey],
+					queryFirstValue = Array.isArray(queryValue)
+						? queryValue[0]
+						: queryValue
+
 				return (
 					<li
 						key={category.emoji}
@@ -51,6 +58,12 @@ export default function QuickFeatureSearch({
 								: categorySet.name === category.name
 								? 'var(--darkColor)'
 								: 'var(--lightestColor)'};
+							text-align: center;
+							img {
+								width: 1.6rem;
+								height: auto;
+								vertical-align: middle;
+							}
 						`}
 					>
 						<Link
@@ -58,7 +71,14 @@ export default function QuickFeatureSearch({
 							replace={true}
 							prefetch={false}
 						>
-							<Emoji e={category.emoji} />
+							{' '}
+							{category.icon ? (
+								<img src={'/icons/' + category.icon + '.svg'} />
+							) : (
+								<img
+									src={`https://cdn.jsdelivr.net/gh/gravitystorm/openstreetmap-carto@5.8.0/symbols/${queryKey}/${queryFirstValue}.svg`}
+								/>
+							)}
 						</Link>
 					</li>
 				)

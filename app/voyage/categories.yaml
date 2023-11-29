@@ -1,26 +1,28 @@
 - name: boulangerie
-  emoji: 🥖
+  #emoji: 🥖
   query:
     shop: bakery
 - name: restaurant
   query:
-    amenity: restaurant
-  emoji: 🍽️
+    amenity:
+      restaurant
+      #emoji: 🍽️
 - name: café
   query:
-    amenity: cafe
-  emoji: ☕️
+    amenity:
+      cafe
+      #emoji: ☕️
 - name: épicerie
   query:
     shop:
       - convenience
       - supermarket
-  emoji: 🛒
+        #emoji: 🛒
 - name: parc
   query:
     leisure: park
-  emoji: 🌳
+  icon: tree
 - name: surf
   query:
     sport: surfing
-  emoji: 🏄️
+  icon: surf
