@@ -1,6 +1,5 @@
 'use client'
 import Highlighter from 'react-highlight-words'
-import { useDispatch } from 'react-redux'
 
 const hash = ({ nom, ville, pays, département }) =>
 	'' + nom + ville + pays + département
@@ -46,10 +45,11 @@ const Option = ({
 	rulesPath,
 	data,
 }) => {
-	const dispatch = useDispatch()
 	const { nom = '', ville = '', pays = '', département = '' } = option.item,
 		choice = option.choice,
 		inputValue = data.inputValue
+
+	console.log('ITEM', option.item)
 
 	const nameIncludes = (what) =>
 		nom && nom.toLowerCase().includes((what || '').toLowerCase())

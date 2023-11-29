@@ -186,7 +186,7 @@ out skel qt;
 	}, [category, map])
 
 	useEffect(() => {
-		if (!map || features.length < 1) return
+		if (!map || features.length < 1 || !category) return
 
 		const shownFeatures = !showOpenOnly
 			? features
@@ -279,7 +279,7 @@ out skel qt;
 			map.removeLayer('features-ways')
 			map.removeSource('features-ways')
 		}
-	}, [features, map, showOpenOnly])
+	}, [features, map, showOpenOnly, category])
 
 	useEffect(() => {
 		if (!center || !clickedGare) return
