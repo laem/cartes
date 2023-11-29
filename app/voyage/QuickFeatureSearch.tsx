@@ -6,6 +6,17 @@ import { omit } from '@/components/utils/utils'
 import Link from 'next/link'
 import categories from './categories.yaml'
 
+export const categoryIconUrl = (category) => {
+	const queryKey = Object.keys(category.query)[0],
+		queryValue = category.query[queryKey],
+		queryFirstValue = Array.isArray(queryValue) ? queryValue[0] : queryValue
+
+	const url = category.icon
+		? '/icons/' + category.icon + '.svg'
+		: `https://cdn.jsdelivr.net/gh/gravitystorm/openstreetmap-carto@5.8.0/symbols/${queryKey}/${queryFirstValue}.svg`
+	return url
+}
+
 const width = '2.2rem'
 export default function QuickFeatureSearch({
 	category: categorySet,
@@ -43,12 +54,6 @@ export default function QuickFeatureSearch({
 						: {}),
 				}
 
-				const queryKey = Object.keys(category.query)[0],
-					queryValue = category.query[queryKey],
-					queryFirstValue = Array.isArray(queryValue)
-						? queryValue[0]
-						: queryValue
-
 				return (
 					<li
 						key={category.emoji}
@@ -71,14 +76,7 @@ export default function QuickFeatureSearch({
 							replace={true}
 							prefetch={false}
 						>
-							{' '}
-							{category.icon ? (
-								<img src={'/icons/' + category.icon + '.svg'} />
-							) : (
-								<img
-									src={`https://cdn.jsdelivr.net/gh/gravitystorm/openstreetmap-carto@5.8.0/symbols/${queryKey}/${queryFirstValue}.svg`}
-								/>
-							)}
+							<img src={categoryIconUrl(category)} />
 						</Link>
 					</li>
 				)

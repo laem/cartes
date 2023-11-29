@@ -25,7 +25,7 @@ import parseOpeningHours from 'opening_hours'
 import ModalSwitch from './ModalSwitch'
 import { osmRequest } from './osmRequest'
 import PlaceSearch from './PlaceSearch'
-import QuickFeatureSearch from './QuickFeatureSearch'
+import QuickFeatureSearch, { categoryIconUrl } from './QuickFeatureSearch'
 import { decodePlace, encodePlace } from './utils'
 import { MapHeader, MapContainer } from './UI'
 import useTraceComponentUpdate from '@/components/utils/useTraceComponentUpdate'
@@ -214,8 +214,7 @@ out skel qt;
 					}
 			  })
 
-		const imageUrl = findOpenmoji(category.emoji, false, 'png')
-		console.log({ imageUrl })
+		const imageUrl = categoryIconUrl(category)
 		map.loadImage(imageUrl, (error, image) => {
 			if (error) throw error
 			map.addImage(category.name, image)
