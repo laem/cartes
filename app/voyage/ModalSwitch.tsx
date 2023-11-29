@@ -1,5 +1,6 @@
 import { useLocalStorage, useMediaQuery } from 'usehooks-ts'
 import dynamic from 'next/dynamic'
+import useTraceComponentUpdate from '@/components/utils/useTraceComponentUpdate'
 
 const ModalSheet = dynamic(() => import('./ModalSheet'), {
 	ssr: false,
@@ -11,8 +12,9 @@ const SideSheet = dynamic(() => import('./SideSheet'), {
 export default function ModalSwitch(props) {
 	const matches = useMediaQuery('(min-width: 800px)')
 
+	useTraceComponentUpdate(props)
+
 	const [tutorials] = useLocalStorage('tutorials', {})
-	console.log('tutorials', tutorials)
 
 	if (tutorials.introduction && !props.isSheetOpen) return null
 

@@ -27,6 +27,7 @@ import { osmRequest } from './osmRequest'
 import PlaceSearch from './PlaceSearch'
 import QuickFeatureSearch from './QuickFeatureSearch'
 import { decodePlace, encodePlace } from './utils'
+import { MapHeader, MapContainer } from './UI'
 
 const defaultCenter =
 	// Saint Malo [-1.9890417068124002, 48.66284934737089]
@@ -561,51 +562,8 @@ out skel qt;
 	}, [lesGaresProches, map])
 
 	return (
-		<div
-			css={`
-				position: absolute;
-				top: 0;
-				left: 0;
-				width: 100%;
-				height: 100%;
-				background: #faf5e4;
-				> div:last-child {
-					position: absolute;
-					width: 100%;
-					height: 100%;
-				}
-				> a {
-					position: absolute;
-					left: 10px;
-					bottom: 10px;
-					z-index: 999;
-				}
-				color: var(--darkestColor);
-			`}
-		>
-			<div
-				css={`
-					position: absolute;
-					top: min(2vh, 0.5rem);
-					left: min(4vw, 2rem);
-					z-index: 10;
-					h1 {
-						color: ${style === 'satellite' ? 'white' : 'var(--darkerColor)'};
-						border-bottom: 5px solid var(--color);
-						display: inline-block;
-						padding: 0;
-						line-height: 1.8rem;
-						margin-top: 1rem;
-						@media (max-width: 800px) {
-							margin: 0;
-							margin-bottom: 0.4rem;
-							font-size: 120%;
-							border-bottom-width: 2px;
-							line-height: 1.2rem;
-						}
-					}
-				`}
-			>
+		<MapContainer>
+			<MapHeader $style={style}>
 				<div
 					css={`
 						display: flex;
@@ -670,7 +628,7 @@ out skel qt;
 						bikeRouteProfile,
 					}}
 				/>
-			</div>
+			</MapHeader>
 			<button
 				css={`
 					position: fixed;
@@ -706,6 +664,6 @@ out skel qt;
 				)}
 			</button>
 			<div ref={mapContainerRef} />
-		</div>
+		</MapContainer>
 	)
 }
