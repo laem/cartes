@@ -1,5 +1,6 @@
 import { Metadata } from 'next'
 import Map from './Map'
+import Test from './Test'
 
 const title = `Voyagez, autrement.`
 const description1 =

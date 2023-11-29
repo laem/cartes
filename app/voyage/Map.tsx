@@ -51,7 +51,7 @@ export default function Map({ searchParams }) {
 	const [wikidata, setWikidata] = useState(null)
 	const [osmFeature, setOsmFeature] = useState(null)
 	const [latLngClicked, setLatLngClicked] = useState(null)
-	const [mapState, setMapState] = useState({ zoom: defaultZoom })
+	const [zoom, setZoom] = useState(defaultZoom)
 	const [bikeRouteProfile, setBikeRouteProfile] = useState('safety')
 	const [style, setStyle] = useState('streets')
 	const styleKey = styleKeys[style]
@@ -328,17 +328,22 @@ out skel qt;
 			})
 		)
 
-		setMapState({ zoom: newMap.getZoom() })
-		newMap.on('zoom', () => {
-			setMapState({ zoom: newMap.getZoom() })
-		})
+		setZoom(Math.round(newMap.getZoom()))
 
 		//new maplibregl.Marker({ color: '#FF0000' }).setLngLat(defaultCenter).addTo(newMap)
 
 		return () => {
 			newMap.remove()
 		}
-	}, [setMap])
+	}, [setMap, styleKey, setZoom])
+
+	useEffect(() => {
+		if (!map) return
+		map.on('zoom', () => {
+			const approximativeZoom = Math.round(map.getZoom())
+			if (approximativeZoom !== zoom) setZoom(approximativeZoom)
+		})
+	}, [zoom, setZoom, map])
 
 	useEffect(() => {
 		if (!map) return
@@ -614,7 +619,7 @@ out skel qt;
 						</ImageWithNameWrapper>
 					</motion.div>
 				)}
-				{mapState && mapState.zoom > 12 && (
+				{zoom > 12 && (
 					<QuickFeatureSearch category={category} searchParams={searchParams} />
 				)}
 
