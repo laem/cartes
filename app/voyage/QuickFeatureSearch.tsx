@@ -1,5 +1,6 @@
 import Emoji from '@/components/Emoji'
 import useSetSeachParams from '@/components/useSetSearchParams'
+import useTraceComponentUpdate from '@/components/utils/useTraceComponentUpdate'
 import { omit } from '@/components/utils/utils'
 import Link from 'next/link'
 import categories from './categories.yaml'
@@ -10,6 +11,7 @@ export default function QuickFeatureSearch({
 	searchParams, // dunno why params is not getting updated here, but updates hash though, we need searchParams
 }) {
 	const setSearchParams = useSetSeachParams()
+	useTraceComponentUpdate({ categorySet, searchParams })
 
 	return (
 		<ul

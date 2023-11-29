@@ -12,7 +12,7 @@ const SideSheet = dynamic(() => import('./SideSheet'), {
 export default function ModalSwitch(props) {
 	const matches = useMediaQuery('(min-width: 800px)')
 
-	useTraceComponentUpdate(props)
+	//	useTraceComponentUpdate(props)
 
 	const [tutorials] = useLocalStorage('tutorials', {})
 

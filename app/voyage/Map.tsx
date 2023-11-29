@@ -28,6 +28,7 @@ import PlaceSearch from './PlaceSearch'
 import QuickFeatureSearch from './QuickFeatureSearch'
 import { decodePlace, encodePlace } from './utils'
 import { MapHeader, MapContainer } from './UI'
+import useTraceComponentUpdate from '@/components/utils/useTraceComponentUpdate'
 
 const defaultCenter =
 	// Saint Malo [-1.9890417068124002, 48.66284934737089]
@@ -44,6 +45,7 @@ const styleKeys = {
 	satellite: 'satellite',
 }
 export default function Map({ searchParams }) {
+	useTraceComponentUpdate(searchParams, 'map')
 	const [state, setState] = useState(defaultState)
 	const [isSheetOpen, setSheetOpen] = useState(false)
 	const [wikidata, setWikidata] = useState(null)

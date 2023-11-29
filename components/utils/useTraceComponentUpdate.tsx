@@ -1,7 +1,7 @@
 import { useEffect, useRef } from 'react'
 
-function useTraceComponentUpdate(props) {
-	console.log('trace component initialised')
+function useTraceComponentUpdate(props, component) {
+	console.log('trace component initialised', component)
 	const prev = useRef(props)
 	useEffect(() => {
 		const changedProps = Object.entries(props).reduce((ps, [k, v]) => {
