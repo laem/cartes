@@ -34,6 +34,11 @@ export function SoloTags({ tags }) {
 				overflow: scroll;
 				white-space: nowrap;
 				margin-bottom: 0.2rem;
+				scrollbar-width: none;
+				&::-webkit-scrollbar {
+					width: 0px;
+					background: transparent; /* Disable scrollbar Chrome/Safari/Webkit */
+				}
 			`}
 		>
 			{tags.map((tag) => (
