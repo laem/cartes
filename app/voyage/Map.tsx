@@ -137,11 +137,20 @@ export default function Map({ searchParams }) {
 					mapLibreBbox[1][0],
 				].join(',')
 
+			const queries = Object.entries(category.query)
+
+			if (queries.length !== 1) throw Error('Syntax not supported yet')
+			const queryCore = queries
+				.map(([k, v]) => {
+					if (typeof v === 'string') return `['${k}'='${v}']`
+					if (Array.isArray(v)) return `['${k}'~'${v.join('|')}']`
+					//query: '["shop"~"convenience|supermarket"]'
+				})
+				.join('')
 			const overpassRequest = `
 [out:json];
 (
-  node${category.query}(${bbox});
-  way${category.query}(${bbox});
+  nw${queryCore}(${bbox});
 );
 
 out body;
