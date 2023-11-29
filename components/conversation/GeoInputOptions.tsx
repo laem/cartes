@@ -49,8 +49,6 @@ const Option = ({
 		choice = option.choice,
 		inputValue = data.inputValue
 
-	console.log('ITEM', option.item)
-
 	const nameIncludes = (what) =>
 		nom && nom.toLowerCase().includes((what || '').toLowerCase())
 	const displayCity = !nameIncludes(ville),

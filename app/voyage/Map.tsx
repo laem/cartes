@@ -48,6 +48,9 @@ const styleKeys = {
 export default function Map({ searchParams }) {
 	useTraceComponentUpdate(searchParams, 'map')
 	const [state, setState] = useState(defaultState)
+	try {
+		console.log('state', state, state.vers.choice.item.type)
+	} catch (e) {}
 	const [isSheetOpen, setSheetOpen] = useState(false)
 	const [wikidata, setWikidata] = useState(null)
 	const [osmFeature, setOsmFeature] = useState(null)
@@ -533,16 +536,21 @@ out skel qt;
 
 	useEffect(() => {
 		if (!map || !center) return
+
+		const destinationType = state.vers.choice.item.type,
+			tailoredZoom = ['city'].includes(destinationType)
+				? 11
+				: Math.max(15, zoom)
 		map.flyTo({
 			center,
-			zoom: 10,
+			zoom: tailoredZoom,
 			pitch: 50, // pitch in degrees
 			bearing: 20, // bearing in degrees
 		})
 		new maplibregl.Marker({ color: 'var(--darkerColor)' })
 			.setLngLat(center)
 			.addTo(map)
-	}, [center, map])
+	}, [center, map, state.vers])
 
 	const lesGaresProches =
 		center && gares && sortGares(gares, center).slice(0, 30)

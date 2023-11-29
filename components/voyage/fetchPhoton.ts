@@ -24,6 +24,7 @@ function fetchPhoton(v, setState, whichInput, local) {
 									pays: f.properties.country,
 									région: f.properties.state,
 									département: f.properties.county,
+									type: f.properties.type,
 								},
 							})),
 						},
