@@ -58,7 +58,7 @@ export default function Map({ searchParams }) {
 	const [zoom, setZoom] = useState(defaultZoom)
 	const [bikeRouteProfile, setBikeRouteProfile] = useState('safety')
 	const [style, setStyle] = useState('streets')
-	const [localSearch, setLocalSearch] = useState()
+	const [localSearch, setLocalSearch] = useState(true)
 	const styleKey = styleKeys[style]
 
 	const setSearchParams = useSetSeachParams()
@@ -79,20 +79,6 @@ export default function Map({ searchParams }) {
 			setWikidata(json?.results?.bindings[0])
 		)
 	}, [state.vers])
-
-	const onInputChange = (whichInput) => (e) => {
-		let v = e.target.value
-		setState({
-			...state,
-			[whichInput]: { ...state[whichInput], inputValue: v },
-			validated: false,
-		})
-		if (v.length > 2) {
-			const hash = window.location.hash,
-				local = hash.split('/').slice(1, 3)
-			fetchPhoton(v, setState, whichInput, local)
-		}
-	}
 
 	if (process.env.NEXT_PUBLIC_MAPTILER == null) {
 		throw new Error('You have to configure env REACT_APP_API_KEY, see README')
@@ -621,7 +607,9 @@ out skel qt;
 						</button>
 					)}
 				</div>
-				{!choice && <PlaceSearch {...{ onInputChange, state, setState }} />}
+				{!choice && (
+					<PlaceSearch {...{ state, setState, localSearch, setLocalSearch }} />
+				)}
 				{choice && versImageURL && (
 					<motion.div
 						initial={{ opacity: 0, scale: 0.8 }}
