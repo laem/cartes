@@ -639,6 +639,8 @@ out skel qt;
 						isSheetOpen,
 						setSheetOpen,
 						clickedGare,
+						clickGare,
+						setOsmFeature,
 						bikeRoute,
 						osmFeature,
 						latLngClicked,

@@ -45,3 +45,22 @@ export const MapHeader = styled.div`
 		}
 	}
 `
+
+const size = 1.2
+export const ModalCloseButton = styled.button`
+	position: absolute;
+	top: -0.2rem;
+	right: -0.4rem;
+	margin: 0;
+	background: var(--darkerColor);
+	color: white;
+	border-radius: 2rem;
+	width: ${size}rem;
+	height: ${size}rem;
+	line-height: ${size}rem;
+
+	text-align: center;
+	cursor: pointer;
+	padding: 0;
+	vertical-align: middle;
+`

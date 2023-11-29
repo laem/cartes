@@ -5,6 +5,7 @@ import Explanations from './explanations.mdx'
 import { FeatureImage } from './FeatureImage'
 import GareInfo from './GareInfo'
 import OsmFeature from './OsmFeature'
+import { ModalCloseButton } from './UI'
 import useOgImageFetcher from './useOgImageFetcher'
 import ZoneImages from './ZoneImages'
 
@@ -15,6 +16,8 @@ export default function Content({
 	osmFeature,
 	setBikeRouteProfile,
 	bikeRouteProfile,
+	clickGare,
+	setOsmFeature,
 }) {
 	const url = osmFeature?.tags?.website || osmFeature?.tags?.['contact:website']
 	const ogImages = useOgImageFetcher(url),
@@ -35,7 +38,12 @@ export default function Content({
 			</ExplanationWrapper>
 		)
 	return (
-		<section>
+		<section
+			css={`
+				position: relative;
+				padding-top: 1.4rem;
+			`}
+		>
 			{ogImage && (
 				<FeatureImage
 					src={ogImage}
@@ -51,7 +59,13 @@ export default function Content({
 			)}
 			<ZoneImages latLngClicked={latLngClicked} />
 			{clickedGare ? (
-				<div css={``}>
+				<div>
+					<ModalCloseButton
+						title="Fermer l'encart gare"
+						onClick={() => clickGare(null)}
+					>
+						x
+					</ModalCloseButton>
 					{bikeRoute && (
 						<BikeRouteRésumé
 							{...{ data: bikeRoute, bikeRouteProfile, setBikeRouteProfile }}
@@ -60,9 +74,21 @@ export default function Content({
 					<GareInfo clickedGare={clickedGare} />
 				</div>
 			) : osmFeature ? (
-				<OsmFeature data={osmFeature} />
+				<div>
+					<ModalCloseButton
+						title="Fermer l'encart point d'intéret"
+						onClick={() => setOsmFeature(null)}
+					>
+						x
+					</ModalCloseButton>
+					<OsmFeature data={osmFeature} />
+				</div>
 			) : (
-				<p>
+				<p
+					css={`
+						max-width: 20rem;
+					`}
+				>
 					Cliquez sur un point d'intérêt ou saisissez une destination puis
 					explorez les gares autour.
 				</p>
