@@ -32,7 +32,7 @@
     amenity:
       cinema
       #icon: .svg
-- name: cotravail
+- name: Espace de cotravail (coworking)
   query:
     amenity: coworking_space
   icon: coworking

@@ -69,6 +69,7 @@ export default function QuickFeatureSearch({
 								vertical-align: middle;
 							}
 						`}
+						title={category.name}
 					>
 						<Link
 							href={setSearchParams(newSearchParams, true, true)}
