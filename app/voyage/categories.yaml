@@ -7,11 +7,13 @@
     amenity:
       restaurant
       #emoji: 🍽️
-- name: café
+- name: cafe
+  title: Café, bar et pub
   query:
     amenity:
-      cafe
-      #emoji: ☕️
+      - pub
+      - bar
+      - cafe
 - name: épicerie
   query:
     shop:
@@ -22,7 +24,23 @@
   query:
     leisure: park
   icon: tree
-- name: points de vue
+- name: bus
+  title: Arrêt de bus ou tram
+  query:
+    public_transport: platform
+  icon: bus
+- name: Pharmacie
+  query:
+    amenity: pharmacy
+- name: billets
+  title: Distributeur de billets
+  query:
+    amenity: atm
+- name: Hôtel
+  query:
+    tourism: hotel
+- name: vue
+  title: Point de vue
   query:
     tourism:
       viewpoint
@@ -32,11 +50,12 @@
     amenity:
       cinema
       #icon: .svg
-- name: Espace de cotravail (coworking)
+- title: Espace de cotravail (coworking)
+  name: cotravail
   query:
     amenity: coworking_space
   icon: coworking
-- name: surf
+- name: Surf
   query:
     sport: surfing
   icon: surf
