@@ -71,7 +71,7 @@ export default function PlaceSearch({
 								text-align: right;
 								margin: 0 0 auto auto;
 								display: block;
-								width: 12.8rem;
+								width: 9rem;
 								margin-top: 0.2rem;
 								background: var(--darkerColor);
 								color: white;
@@ -93,7 +93,7 @@ export default function PlaceSearch({
 									)({ target: { value: vers.inputValue } })
 								}}
 							/>
-							<span style={css``}>Rechercher sur la carte</span>
+							<span style={css``}>Rechercher ici</span>
 						</label>
 					</div>
 				)}
