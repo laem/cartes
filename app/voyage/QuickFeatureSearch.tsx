@@ -23,7 +23,6 @@ export default function QuickFeatureSearch({
 	searchParams, // dunno why params is not getting updated here, but updates hash though, we need searchParams
 }) {
 	const setSearchParams = useSetSeachParams()
-	useTraceComponentUpdate({ categorySet, searchParams })
 
 	return (
 		<ul

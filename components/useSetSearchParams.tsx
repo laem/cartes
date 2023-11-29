@@ -16,7 +16,7 @@ export default function useSetSeachParams() {
 	// searchParams with a provided key/value pair
 	const createQueryString = useCallback(
 		(newSearchParams: object, clear: boolean) => {
-			const params = new URLSearchParams(!clear && searchParams)
+			const params = new URLSearchParams(clear ? {} : searchParams)
 
 			Object.entries(newSearchParams).map(([k, v]) => params.set(k, v))
 
