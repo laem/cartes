@@ -11,7 +11,7 @@ import getCityData, { toThumb } from 'Components/wikidata'
 import { motion } from 'framer-motion'
 import maplibregl from 'maplibre-gl'
 import 'maplibre-gl/dist/maplibre-gl.css'
-import Image from 'next/image'
+import NextImage from 'next/image'
 import { useEffect, useMemo, useRef, useState } from 'react'
 import { flushSync } from 'react-dom'
 import { createRoot } from 'react-dom/client'
@@ -214,81 +214,104 @@ out skel qt;
 					}
 			  })
 
-		const imageUrl = categoryIconUrl(category)
-		map.loadImage(imageUrl, (error, image) => {
-			if (error) throw error
-			map.addImage(category.name, image)
+		const asyncLoadImage = async () => {
+			const imageUrl = categoryIconUrl(category)
 
-			console.log('features', shownFeatures, features)
-			map.addSource('features-points', {
-				type: 'geojson',
-				data: {
-					type: 'FeatureCollection',
-					features: shownFeatures.map((f) => {
-						const geometry = {
-							type: 'Point',
-							coordinates: [f.lon, f.lat],
-						}
+			fetch(imageUrl)
+				.then((response) => response.text())
+				.then((text) => {
+					// If both the image and svg are found, replace the image with the svg.
+					const img = new Image(20, 20)
+					img.src = 'data:image/svg+xml;charset=utf-8,' + text
 
-						return {
-							type: 'Feature',
-							geometry,
-							properties: {
-								id: f.id,
-								tags: f.tags,
-								name: f.tags.name,
-								featureType: f.type,
+					console.log('SRC', img.src)
+
+					img.onload = () => {
+						map.addImage(category.name + '-futureco', img)
+						console.log('OYOYO', category.name, img)
+
+						console.log('features', shownFeatures, features)
+						map.addSource('features-points', {
+							type: 'geojson',
+							data: {
+								type: 'FeatureCollection',
+								features: shownFeatures.map((f) => {
+									const geometry = {
+										type: 'Point',
+										coordinates: [f.lon, f.lat],
+									}
+
+									return {
+										type: 'Feature',
+										geometry,
+										properties: {
+											id: f.id,
+											tags: f.tags,
+											name: f.tags.name,
+											featureType: f.type,
+										},
+									}
+								}),
 							},
-						}
-					}),
-				},
-			})
-			map.addSource('features-ways', {
-				type: 'geojson',
-				data: {
-					type: 'FeatureCollection',
-					features: shownFeatures
-						.filter((f) => console.log('polyg', f.polygon) || f.polygon)
-						.map((f) => {
-							return {
-								type: 'Feature',
-								geometry: f.polygon.geometry,
-								properties: { id: f.id, tags: f.tags, name: f.tags.name },
-							}
-						}),
-				},
-			})
+						})
+						map.addSource('features-ways', {
+							type: 'geojson',
+							data: {
+								type: 'FeatureCollection',
+								features: shownFeatures
+									.filter((f) => console.log('polyg', f.polygon) || f.polygon)
+									.map((f) => {
+										return {
+											type: 'Feature',
+											geometry: f.polygon.geometry,
+											properties: {
+												id: f.id,
+												tags: f.tags,
+												name: f.tags.name,
+											},
+										}
+									}),
+							},
+						})
 
-			// Add a symbol layer
-			map.addLayer({
-				id: 'features-points',
-				type: 'symbol',
-				source: 'features-points',
-				layout: {
-					'icon-image': category.name,
-					'icon-size': 0.4,
-					'text-field': ['get', 'name'],
-					'text-offset': [0, 1.25],
-					'text-anchor': 'top',
-				},
-			})
-			map.addLayer({
-				id: 'features-ways',
-				type: 'fill',
-				source: 'features-ways',
-				layout: {},
-				paint: {
-					'fill-color': '#088',
-					'fill-opacity': 0.6,
-				},
-			})
-		})
+						// Add a symbol layer
+						map.addLayer({
+							id: 'features-points',
+							type: 'symbol',
+							source: 'features-points',
+							layout: {
+								'icon-image': category.name + '-futureco',
+								'icon-size': 1.3,
+								'text-field': ['get', 'name'],
+								'text-offset': [0, 1.25],
+								'text-anchor': 'top',
+							},
+						})
+						map.addLayer({
+							id: 'features-ways',
+							type: 'fill',
+							source: 'features-ways',
+							layout: {},
+							paint: {
+								'fill-color': '#088',
+								'fill-opacity': 0.6,
+							},
+						})
+					}
+				})
+		}
+
+		asyncLoadImage()
 
 		return () => {
-			map.removeLayer('features-points')
-			map.removeSource('features-points')
-			map.removeLayer('features-ways')
-			map.removeSource('features-ways')
+			try {
+				map.removeLayer('features-points')
+				map.removeSource('features-points')
+				map.removeLayer('features-ways')
+				map.removeSource('features-ways')
+			} catch (e) {
+				console.warn(e)
+			}
 		}
 	}, [features, map, showOpenOnly, category])
 
@@ -621,7 +644,7 @@ out skel qt;
 								alt={`Une photo emblématique de la destination, ${state.vers.choice?.item?.nom}`}
 							/>
 							<Destination>
-								<Image src={destinationPoint} alt="Vers" />
+								<NextImage src={destinationPoint} alt="Vers" />
 								<h2>{state.vers.choice.item.nom}</h2>
 							</Destination>
 						</ImageWithNameWrapper>
