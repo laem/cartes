@@ -22,6 +22,20 @@
   query:
     leisure: park
   icon: tree
+- name: points de vue
+  query:
+    tourism:
+      viewpoint
+      #icon: .svg
+- name: Cinéma
+  query:
+    amenity:
+      cinema
+      #icon: .svg
+- name: cotravail
+  query:
+    amenity: coworking_space
+  icon: coworking
 - name: surf
   query:
     sport: surfing
