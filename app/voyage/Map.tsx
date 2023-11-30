@@ -341,8 +341,6 @@ out skel qt;
 
 		setZoom(Math.round(newMap.getZoom()))
 
-		//new maplibregl.Marker({ color: '#FF0000' }).setLngLat(defaultCenter).addTo(newMap)
-
 		return () => {
 			newMap.remove()
 		}
@@ -396,6 +394,7 @@ out skel qt;
 		map.on('click', async (e) => {
 			console.log('click event', e)
 			setLatLngClicked(e.lngLat)
+
 			setSheetOpen(true)
 
 			const source = map.getSource('searchPolygon')
@@ -454,7 +453,7 @@ out skel qt;
 
 			setOsmFeature(elements[0])
 		})
-	}, [map])
+	}, [map, setState])
 
 	useEffect(() => {
 		if (!map || !featureType || !featureId) return
@@ -530,9 +529,9 @@ out skel qt;
 	useEffect(() => {
 		if (!map || !center) return
 
-		const userDragged = state.vers.choice.item.userDragged
+		const marker = state.vers.marker
 
-		if (!userDragged) {
+		if (!marker) {
 			const destinationType = state.vers.choice.item.type,
 				tailoredZoom = ['city'].includes(destinationType)
 					? 11
@@ -550,13 +549,16 @@ out skel qt;
 				.setLngLat(center)
 				.addTo(map)
 
+			setState((state) => ({ ...state, vers: { ...state.vers, marker } }))
+
 			function onDragEnd() {
 				const { lng, lat } = marker.getLngLat()
 				setState((state) => ({
 					...state,
 					vers: {
+						...state.vers,
 						choice: {
-							item: { latitude: lat, longitude: lng, userDragged: true },
+							item: { latitude: lat, longitude: lng },
 						},
 					},
 				}))
