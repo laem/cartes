@@ -1,6 +1,7 @@
 import { useLocalStorage, useMediaQuery } from 'usehooks-ts'
 import dynamic from 'next/dynamic'
 import useTraceComponentUpdate from '@/components/utils/useTraceComponentUpdate'
+import { latest } from 'maplibre-gl'
 
 const ModalSheet = dynamic(() => import('./ModalSheet'), {
 	ssr: false,
@@ -17,6 +18,12 @@ export default function ModalSwitch(props) {
 	const [tutorials] = useLocalStorage('tutorials', {})
 
 	if (tutorials.introduction && !props.isSheetOpen) return null
+	console.log(props)
+	if (
+		tutorials.introduction &&
+		!(props.osmFeature || props.clickedGare || props.latLngClicked)
+	)
+		return null
 
 	if (matches) return <SideSheet {...props} />
 

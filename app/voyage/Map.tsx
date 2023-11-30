@@ -644,6 +644,7 @@ out skel qt;
 						bikeRoute,
 						osmFeature,
 						latLngClicked,
+						setLatLngClicked,
 						setBikeRouteProfile,
 						bikeRouteProfile,
 					}}

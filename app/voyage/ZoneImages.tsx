@@ -2,8 +2,8 @@ import { toThumb } from '@/components/wikidata'
 import { useEffect, useState } from 'react'
 import { createSearchBBox } from './createSearchPolygon'
 import { FeatureImage } from './FeatureImage'
-export default function ZoneImages({ latLngClicked }) {
-	const [wikimedia, setWikimedia] = useState([])
+export default function ZoneImages({ latLngClicked, setLatLngClicked }) {
+	const [wikimedia, setWikimedia] = useState(null)
 
 	useEffect(() => {
 		if (!latLngClicked) return
@@ -11,21 +11,33 @@ export default function ZoneImages({ latLngClicked }) {
 			const { lat1, lng1, lat2, lng2 } = createSearchBBox(latLngClicked)
 
 			const url = `https://commons.wikimedia.org/w/api.php?action=query&list=geosearch&gsbbox=${lat2}|${lng2}|${lat1}|${lng1}&gsnamespace=6&gslimit=500&format=json&origin=*`
+			setWikimedia([])
 			const request = await fetch(url)
+
 			const json = await request.json()
 			const images = json.query.geosearch
-			setWikimedia(images)
+			if (images.length) setWikimedia(images)
+			if (!images.length) {
+				setWikimedia(null)
+				setLatLngClicked(null)
+			}
 		}
 		makeRequest()
 	}, [latLngClicked])
-	const imageUrls = wikimedia.map((json) => {
-		const title = json.title,
-			url = toThumb(title)
-		return {
-			url,
-			fullUrl: `https://commons.wikimedia.org/wiki/${title.replace(' ', '_')}`,
-		}
-	})
+	const imageUrls =
+		wikimedia &&
+		wikimedia.map((json) => {
+			const title = json.title,
+				url = toThumb(title)
+			return {
+				url,
+				fullUrl: `https://commons.wikimedia.org/wiki/${title.replace(
+					' ',
+					'_'
+				)}`,
+			}
+		})
+	if (!imageUrls) return null
 	return (
 		<div
 			css={`
@@ -36,7 +48,10 @@ export default function ZoneImages({ latLngClicked }) {
 				}
 			`}
 		>
-			{imageUrls.length > 0 && (
+			{' '}
+			{!imageUrls.length ? (
+				<p>Recherche d'images...</p>
+			) : (
 				<ul
 					css={`
 						margin: 0 0 0.4rem 0;

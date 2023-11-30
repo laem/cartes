@@ -5,12 +5,13 @@ import Explanations from './explanations.mdx'
 import { FeatureImage } from './FeatureImage'
 import GareInfo from './GareInfo'
 import OsmFeature from './OsmFeature'
-import { ModalCloseButton } from './UI'
+import { DialogButton, ModalCloseButton } from './UI'
 import useOgImageFetcher from './useOgImageFetcher'
 import ZoneImages from './ZoneImages'
 
 export default function Content({
 	latLngClicked,
+	setLatLngClicked,
 	clickedGare,
 	bikeRoute,
 	osmFeature,
@@ -24,17 +25,18 @@ export default function Content({
 		ogImage = ogImages[url]
 
 	const [tutorials, setTutorials] = useLocalStorage('tutorials', {})
-	const introductionRead = tutorials.introduction
+	const introductionRead = tutorials.introduction,
+		clickTipRead = tutorials.clickTip
 
 	if (!introductionRead)
 		return (
 			<ExplanationWrapper>
 				<Explanations />
-				<button
+				<DialogButton
 					onClick={() => setTutorials({ ...tutorials, introduction: true })}
 				>
 					OK
-				</button>
+				</DialogButton>
 			</ExplanationWrapper>
 		)
 	return (
@@ -44,6 +46,15 @@ export default function Content({
 				padding-top: 1.4rem;
 			`}
 		>
+			<ModalCloseButton
+				title="Fermer l'encart point d'intéret"
+				onClick={() => {
+					setOsmFeature(null)
+					setLatLngClicked(null)
+				}}
+			>
+				x
+			</ModalCloseButton>
 			{ogImage && (
 				<FeatureImage
 					src={ogImage}
@@ -57,7 +68,10 @@ export default function Content({
 					`}
 				/>
 			)}
-			<ZoneImages latLngClicked={latLngClicked} />
+			<ZoneImages
+				latLngClicked={latLngClicked}
+				setLatLngClicked={setLatLngClicked}
+			/>
 			{clickedGare ? (
 				<div>
 					<ModalCloseButton
@@ -74,24 +88,25 @@ export default function Content({
 					<GareInfo clickedGare={clickedGare} />
 				</div>
 			) : osmFeature ? (
-				<div>
-					<ModalCloseButton
-						title="Fermer l'encart point d'intéret"
-						onClick={() => setOsmFeature(null)}
-					>
-						x
-					</ModalCloseButton>
-					<OsmFeature data={osmFeature} />
-				</div>
+				<OsmFeature data={osmFeature} />
 			) : (
-				<p
-					css={`
-						max-width: 20rem;
-					`}
-				>
-					Cliquez sur un point d'intérêt ou saisissez une destination puis
-					explorez les gares autour.
-				</p>
+				!clickTipRead && (
+					<div>
+						<p
+							css={`
+								max-width: 20rem;
+							`}
+						>
+							Cliquez sur un point d'intérêt ou saisissez une destination puis
+							explorez les gares autour.
+						</p>
+						<DialogButton
+							onClick={() => setTutorials({ ...tutorials, clickTip: true })}
+						>
+							OK
+						</DialogButton>
+					</div>
+				)
 			)}
 		</section>
 	)

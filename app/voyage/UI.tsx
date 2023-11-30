@@ -64,3 +64,8 @@ export const ModalCloseButton = styled.button`
 	padding: 0;
 	vertical-align: middle;
 `
+
+export const DialogButton = styled.button`
+	background: var(--darkColor);
+	color: white;
+`
