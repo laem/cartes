@@ -322,7 +322,14 @@ out skel qt;
 		})
 		setMap(newMap)
 
-		newMap.addControl(new maplibregl.NavigationControl(), 'top-right')
+		newMap.addControl(
+			new maplibregl.NavigationControl({
+				visualizePitch: true,
+				showZoom: true,
+				showCompass: true,
+			}),
+			'top-right'
+		)
 		newMap.addControl(
 			new maplibregl.GeolocateControl({
 				positionOptions: {
