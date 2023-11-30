@@ -530,20 +530,41 @@ out skel qt;
 	useEffect(() => {
 		if (!map || !center) return
 
-		const destinationType = state.vers.choice.item.type,
-			tailoredZoom = ['city'].includes(destinationType)
-				? 11
-				: Math.max(15, zoom)
-		map.flyTo({
-			center,
-			zoom: tailoredZoom,
-			pitch: 50, // pitch in degrees
-			bearing: 20, // bearing in degrees
-		})
-		new maplibregl.Marker({ color: 'var(--darkerColor)' })
-			.setLngLat(center)
-			.addTo(map)
-	}, [center, map, state.vers])
+		const userDragged = state.vers.choice.item.userDragged
+
+		if (!userDragged) {
+			const destinationType = state.vers.choice.item.type,
+				tailoredZoom = ['city'].includes(destinationType)
+					? 11
+					: Math.max(15, zoom)
+			map.flyTo({
+				center,
+				zoom: tailoredZoom,
+				pitch: 50, // pitch in degrees
+				bearing: 20, // bearing in degrees
+			})
+			const marker = new maplibregl.Marker({
+				color: 'var(--darkerColor)',
+				draggable: true,
+			})
+				.setLngLat(center)
+				.addTo(map)
+
+			function onDragEnd() {
+				const { lng, lat } = marker.getLngLat()
+				setState((state) => ({
+					...state,
+					vers: {
+						choice: {
+							item: { latitude: lat, longitude: lng, userDragged: true },
+						},
+					},
+				}))
+			}
+
+			marker.on('dragend', onDragEnd)
+		}
+	}, [center, map, state.vers, setState])
 
 	const lesGaresProches =
 		center && gares && sortGares(gares, center).slice(0, 30)
