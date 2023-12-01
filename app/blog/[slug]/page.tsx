@@ -8,7 +8,16 @@ export const generateMetadata = ({ params }) => {
 	const post = allArticles.find(
 		(post) => post._raw.flattenedPath === params.slug
 	)
-	return { title: post.titre, description: post.description }
+	return {
+		title: post.titre,
+		description: post.description,
+
+		openGraph: {
+			images: [post.image],
+			type: 'article',
+			publishedTime: post.date + 'T00:00:00.000Z',
+		},
+	}
 }
 
 export default async function Post({ params }: Props) {
