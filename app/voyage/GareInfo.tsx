@@ -18,13 +18,14 @@ export default function GareInfo({ clickedGare }) {
 
 				iframe {
 					width: 100%;
-					border: 6px solid var(--color);
+					border: 6px solid var(--darkerColor);
 					height: 100%;
 				}
 				h2 {
+					color: white;
 					margin-bottom: 0rem;
 					font-size: 120%;
-					background: var(--color);
+					background: var(--darkerColor);
 					width: 100%;
 					text-align: center;
 					padding: 0.2rem 0;
@@ -34,6 +35,7 @@ export default function GareInfo({ clickedGare }) {
 				}
 				@media (min-width: 1200px) {
 					width: 35rem;
+					max-width: 100%;
 				}
 				> input {
 					margin-top: 1rem;

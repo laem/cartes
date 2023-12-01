@@ -456,6 +456,10 @@ out skel qt;
 			if (!elements.length) return
 
 			setOsmFeature(elements[0])
+
+			const uic = elements[0].tags?.uic_ref,
+				gare = gares && gares.find((g) => g.uic.includes(uic))
+			if (uic && gare) clickGare(gare)
 		}
 
 		if (!map || distanceMode) return
@@ -464,7 +468,7 @@ out skel qt;
 			if (!map) return
 			map.off('click', onClick)
 		}
-	}, [map, setState, distanceMode])
+	}, [map, setState, distanceMode, gares])
 
 	useEffect(() => {
 		if (!map || !featureType || !featureId) return
