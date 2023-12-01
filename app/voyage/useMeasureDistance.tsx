@@ -5,9 +5,8 @@ export default function useMeasureDistance(map, distanceMode) {
 	const [points, setPoints] = useState([])
 
 	useEffect(() => {
-		if (!map || !distanceMode) return
-
-		map.on('click', (e) => {
+		if (!map) return
+		const onClick = (e) => {
 			const features = map.queryRenderedFeatures(e.point, {
 				layers: ['measure-points'],
 			})
@@ -30,15 +29,27 @@ export default function useMeasureDistance(map, distanceMode) {
 
 				setPoints((points) => [...points, point])
 			}
-		})
-
-		map.on('mousemove', (e) => {
+		}
+		const onMouseMove = (e) => {
 			const features = map.queryRenderedFeatures(e.point, {
 				layers: ['measure-points'],
 			})
 			// UI indicator for clicking/hovering a point on the map
 			map.getCanvas().style.cursor = features.length ? 'pointer' : 'crosshair'
-		})
+		}
+
+		if (!distanceMode) {
+			map.off('click', onClick)
+			map.off('mousemove', onMouseMove)
+			return
+		}
+
+		map.on('click', onClick)
+		map.on('mousemove', onMouseMove)
+		return () => {
+			map.off('click', onClick)
+			map.off('mousemove', onMouseMove)
+		}
 	}, [map, setPoints, distanceMode])
 
 	// Used to draw a line between points
@@ -96,14 +107,15 @@ export default function useMeasureDistance(map, distanceMode) {
 				filter: ['in', '$type', 'Point'],
 			})
 		}
-	}, [geojson, map, distanceMode])
+	}, [points, geojson, map, distanceMode])
+
 	useEffect(() => {
 		if (!map || distanceMode || points.length < 1) return
 
 		map.removeSource('measure-points')
 		map.removeLayer('measure-lines')
 		map.removeLayer('measure-points')
-	}, [distanceMode, map])
+	}, [distanceMode, map, points])
 
 	const distance = length(linestring).toLocaleString('fr-FR', {
 		maximumFractionDigits: 1,
