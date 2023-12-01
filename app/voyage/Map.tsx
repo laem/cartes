@@ -30,6 +30,8 @@ import PlaceSearch from './PlaceSearch'
 import QuickFeatureSearch, { categoryIconUrl } from './QuickFeatureSearch'
 import { MapContainer, MapHeader } from './UI'
 import { decodePlace, encodePlace } from './utils'
+import useMeasureDistance from './useMeasureDistance'
+import { MapButton, MapButtons } from '@/components/voyage/MapButtons'
 
 const defaultCenter =
 	// Saint Malo [-1.9890417068124002, 48.66284934737089]
@@ -59,6 +61,7 @@ export default function Map({ searchParams }) {
 	const [bikeRouteProfile, setBikeRouteProfile] = useState('safety')
 	const [style, setStyle] = useState('streets')
 	const [localSearch, setLocalSearch] = useState(true)
+	const [distanceMode, setDistanceMode] = useState(false)
 	const styleKey = styleKeys[style]
 
 	const setSearchParams = useSetSeachParams()
@@ -97,6 +100,8 @@ export default function Map({ searchParams }) {
 	const [clickedGare, clickGare] = useState(null)
 	const [bikeRoute, setBikeRoute] = useState(null)
 	const [features, setFeatures] = useState([])
+
+	const distance = useMeasureDistance(map, distanceMode)
 
 	useEffect(() => {
 		if (!map || !category) return
@@ -390,7 +395,7 @@ out skel qt;
 	}, [bikeRoute, map])
 
 	useEffect(() => {
-		if (!map) return
+		if (!map || distanceMode) return
 		map.on('click', async (e) => {
 			console.log('click event', e)
 			setLatLngClicked(e.lngLat)
@@ -453,7 +458,7 @@ out skel qt;
 
 			setOsmFeature(elements[0])
 		})
-	}, [map, setState])
+	}, [map, setState, distanceMode])
 
 	useEffect(() => {
 		if (!map || !featureType || !featureId) return
@@ -502,7 +507,7 @@ out skel qt;
 	}, [map, featureType, featureId])
 
 	useEffect(() => {
-		if (!map) return
+		if (!map || distanceMode) return
 
 		map.on('click', 'features-points', async (e) => {
 			const feature = e.features[0]
@@ -524,7 +529,7 @@ out skel qt;
 		map.on('mouseleave', 'features-points', () => {
 			map.getCanvas().style.cursor = ''
 		})
-	}, [map])
+	}, [map, distanceMode])
 
 	useEffect(() => {
 		if (!map || !center) return
@@ -666,7 +671,7 @@ out skel qt;
 
 				<ModalSwitch
 					{...{
-						isSheetOpen,
+						isSheetOpen: !distanceMode && isSheetOpen,
 						setSheetOpen,
 						clickedGare,
 						clickGare,
@@ -680,40 +685,31 @@ out skel qt;
 					}}
 				/>
 			</MapHeader>
-			<button
-				css={`
-					position: fixed;
-					bottom: 0.4rem;
-					left: 0.4rem;
-					width: 4.5rem;
-					height: 4rem;
-					text-align: center;
-					border-radius: 0.4rem;
-					z-index: 1;
-					border: 4px solid white;
-					padding: 0;
-					background: white;
-					opacity: 0.8;
-					img {
-						width: 1.5rem;
-						height: auto;
+			<MapButtons>
+				<MapButton
+					onClick={() =>
+						setStyle(style === 'streets' ? 'satellite' : 'streets')
 					}
-					border: 2px solid var(--lighterColor);
-				`}
-				onClick={() => setStyle(style === 'streets' ? 'satellite' : 'streets')}
-			>
-				{style === 'streets' ? (
+				>
+					{style === 'streets' ? (
+						<div>
+							<Emoji e="🛰️" />
+							<div>Satellite</div>
+						</div>
+					) : (
+						<div>
+							<Emoji e="🗺️" />
+							<div>Carte</div>
+						</div>
+					)}
+				</MapButton>
+				<MapButton onClick={() => setDistanceMode(!distanceMode)}>
 					<div>
-						<Emoji e="🛰️" />
-						<div>Satellite</div>
+						<Emoji e="📐" />
 					</div>
-				) : (
-					<div>
-						<Emoji e="🗺️" />
-						<div>Carte</div>
-					</div>
-				)}
-			</button>
+					{distanceMode ? <span>{distance} km</span> : <span>Distance</span>}
+				</MapButton>
+			</MapButtons>
 			<div ref={mapContainerRef} />
 		</MapContainer>
 	)

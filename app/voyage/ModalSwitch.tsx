@@ -18,7 +18,6 @@ export default function ModalSwitch(props) {
 	const [tutorials] = useLocalStorage('tutorials', {})
 
 	if (tutorials.introduction && !props.isSheetOpen) return null
-	console.log(props)
 	if (
 		tutorials.introduction &&
 		!(props.osmFeature || props.clickedGare || props.latLngClicked)

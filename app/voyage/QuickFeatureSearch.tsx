@@ -74,7 +74,7 @@ export default function QuickFeatureSearch({
 
 					return (
 						<li
-							key={category.emoji}
+							key={category.name}
 							css={`
 								background: ${!categorySet
 									? 'var(--lightestColor)'
