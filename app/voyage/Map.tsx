@@ -703,11 +703,14 @@ out skel qt;
 						</div>
 					)}
 				</MapButton>
-				<MapButton onClick={() => setDistanceMode(!distanceMode)}>
+				<MapButton
+					onClick={() => setDistanceMode(!distanceMode)}
+					$active={distanceMode}
+				>
 					<div>
 						<Emoji e="📐" />
 					</div>
-					{distanceMode ? <span>{distance} km</span> : <span>Distance</span>}
+					{distanceMode ? <small>{distance} km</small> : <span>Distance</span>}
 				</MapButton>
 			</MapButtons>
 			<div ref={mapContainerRef} />

@@ -5,7 +5,7 @@ export default function useMeasureDistance(map, distanceMode) {
 	const [points, setPoints] = useState([])
 
 	useEffect(() => {
-		if (!map) return
+		if (!map || !distanceMode) return
 		const onClick = (e) => {
 			const features = map.queryRenderedFeatures(e.point, {
 				layers: ['measure-points'],
@@ -38,17 +38,21 @@ export default function useMeasureDistance(map, distanceMode) {
 			map.getCanvas().style.cursor = features.length ? 'pointer' : 'crosshair'
 		}
 
+		/*
 		if (!distanceMode) {
 			map.off('click', onClick)
 			map.off('mousemove', onMouseMove)
 			return
 		}
+		*/
 
 		map.on('click', onClick)
 		map.on('mousemove', onMouseMove)
 		return () => {
+			if (!map || !distanceMode) return
 			map.off('click', onClick)
 			map.off('mousemove', onMouseMove)
+			map.getCanvas().style.cursor = 'pointer'
 		}
 	}, [map, setPoints, distanceMode])
 
@@ -70,6 +74,7 @@ export default function useMeasureDistance(map, distanceMode) {
 		features: [...points, linestring],
 	}
 	useEffect(() => {
+		console.log('useeffect', { distanceMode, points })
 		if (!map || !distanceMode || points.length < 1) return
 		const source = map.getSource('measure-points')
 		if (source) {
@@ -112,9 +117,9 @@ export default function useMeasureDistance(map, distanceMode) {
 	useEffect(() => {
 		if (!map || distanceMode || points.length < 1) return
 
-		map.removeSource('measure-points')
 		map.removeLayer('measure-lines')
 		map.removeLayer('measure-points')
+		map.removeSource('measure-points')
 	}, [distanceMode, map, points])
 
 	const distance = length(linestring).toLocaleString('fr-FR', {

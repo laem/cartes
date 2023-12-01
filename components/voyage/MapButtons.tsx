@@ -25,4 +25,5 @@ export const MapButton = styled.button`
 		height: auto;
 	}
 	border: 2px solid var(--lighterColor);
+	${(p) => p.$active && `border: 2px solid var(--color)`}
 `
