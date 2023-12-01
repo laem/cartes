@@ -395,8 +395,7 @@ out skel qt;
 	}, [bikeRoute, map])
 
 	useEffect(() => {
-		if (!map || distanceMode) return
-		map.on('click', async (e) => {
+		const onClick = async (e) => {
 			console.log('click event', e)
 			setLatLngClicked(e.lngLat)
 
@@ -457,7 +456,14 @@ out skel qt;
 			if (!elements.length) return
 
 			setOsmFeature(elements[0])
-		})
+		}
+
+		if (!map || distanceMode) return
+		map.on('click', onClick)
+		return () => {
+			if (!map) return
+			map.off('click', onClick)
+		}
 	}, [map, setState, distanceMode])
 
 	useEffect(() => {
@@ -710,7 +716,7 @@ out skel qt;
 					<div>
 						<Emoji e="📐" />
 					</div>
-					{distanceMode ? <small>{distance} km</small> : <span>Distance</span>}
+					{distanceMode ? <small>{distance}</small> : <span>Distance</span>}
 				</MapButton>
 			</MapButtons>
 			<div ref={mapContainerRef} />

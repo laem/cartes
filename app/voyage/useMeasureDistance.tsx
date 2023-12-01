@@ -74,14 +74,11 @@ export default function useMeasureDistance(map, distanceMode) {
 		features: [...points, linestring],
 	}
 	useEffect(() => {
-		console.log('useeffect', { distanceMode, points })
 		if (!map || !distanceMode || points.length < 1) return
 		const source = map.getSource('measure-points')
 		if (source) {
-			console.log('set new data', geojson)
 			source.setData(geojson)
 		} else {
-			console.log('create source and layers')
 			map.addSource('measure-points', {
 				type: 'geojson',
 				data: geojson,
@@ -97,7 +94,7 @@ export default function useMeasureDistance(map, distanceMode) {
 				},
 				paint: {
 					'line-color': '#57bff5',
-					'line-width': 2.5,
+					'line-width': 4,
 				},
 				filter: ['in', '$type', 'LineString'],
 			})
@@ -106,7 +103,7 @@ export default function useMeasureDistance(map, distanceMode) {
 				type: 'circle',
 				source: 'measure-points',
 				paint: {
-					'circle-radius': 5,
+					'circle-radius': 6,
 					'circle-color': '#2988e6',
 				},
 				filter: ['in', '$type', 'Point'],
@@ -122,10 +119,13 @@ export default function useMeasureDistance(map, distanceMode) {
 		map.removeSource('measure-points')
 	}, [distanceMode, map, points])
 
-	const distance = length(linestring).toLocaleString('fr-FR', {
-		maximumFractionDigits: 1,
-	})
+	const rawDistance = length(linestring),
+		distance =
+			rawDistance < 1
+				? Math.round(rawDistance * 1000) + ' m'
+				: rawDistance < 10
+				? Math.round(rawDistance * 10) / 10 + ' km'
+				: Math.round(rawDistance) + ' km'
 
-	console.log(distance)
 	return distance
 }
