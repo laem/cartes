@@ -30,6 +30,7 @@ import PlaceSearch from './PlaceSearch'
 import QuickFeatureSearch, { categoryIconUrl } from './QuickFeatureSearch'
 import { MapContainer, MapHeader } from './UI'
 import { decodePlace, encodePlace } from './utils'
+import { extractOsmFeature } from '@/components/voyage/fetchPhoton'
 
 const defaultCenter =
 	// Saint Malo [-1.9890417068124002, 48.66284934737089]
@@ -65,7 +66,11 @@ export default function Map({ searchParams }) {
 	const setSearchParams = useSetSeachParams()
 
 	const place = searchParams.lieu,
-		[featureType, featureId] = decodePlace(place)
+		[featureType, featureId] = place
+			? decodePlace(place)
+			: extractOsmFeature(state.vers.choice)
+
+	console.log('OSM', featureType, featureId)
 
 	const categoryName = searchParams.cat,
 		category = categoryName && categories.find((c) => c.name === categoryName)
@@ -469,11 +474,18 @@ out skel qt;
 	useEffect(() => {
 		if (!map || !featureType || !featureId) return
 		const request = async () => {
+			console.log('Preparing OSM request ', featureType, featureId)
 			const full = ['way', 'relation'].includes(featureType)
+			const isNode = featureType === 'node'
+			if (!isNode && !full)
+				return console.log(
+					"This OSM feature is neither a node, a relation or a way, we don't know how to handle it"
+				)
+
 			const elements = await osmRequest(featureType, featureId, full)
 			if (!elements.length) return
 
-			const element = elements[0]
+			const element = elements.find((el) => el.id === featureId)
 
 			const featureCollectionFromOsmNodes = (nodes) => {
 				console.log('yanodes', nodes)
@@ -499,18 +511,20 @@ out skel qt;
 						)
 				  ).geometry.coordinates
 
-			setOsmFeature(elements[0])
+			setOsmFeature(element)
 			setSheetOpen(true)
 			console.log('should fly to', center)
-			map.flyTo({
-				center,
-				zoom: 18,
-				pitch: 50, // pitch in degrees
-				bearing: 20, // bearing in degrees
-			})
+			if (state.vers.choice?.item.osmId !== featureId) {
+				map.flyTo({
+					center,
+					zoom: 18,
+					pitch: 50, // pitch in degrees
+					bearing: 20, // bearing in degrees
+				})
+			}
 		}
 		request()
-	}, [map, featureType, featureId])
+	}, [map, featureType, featureId, state.vers.choice])
 
 	useEffect(() => {
 		if (!map || distanceMode) return

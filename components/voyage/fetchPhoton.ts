@@ -17,6 +17,12 @@ function fetchPhoton(v, setState, whichInput, local) {
 							...state[whichInput],
 							results: json.features.map((f) => ({
 								item: {
+									osmId: f.properties.osm_id,
+									featureType:
+										f.properties.osm_type &&
+										{ R: 'relation', N: 'node', W: 'way' }[
+											f.properties.osm_type
+										],
 									longitude: f.geometry.coordinates[0],
 									latitude: f.geometry.coordinates[1],
 									nom: f.properties.name,
@@ -34,5 +40,11 @@ function fetchPhoton(v, setState, whichInput, local) {
 }
 
 const debounced = debounce(100, fetchPhoton)
+
+export const extractOsmFeature = (choice) => {
+	if (!choice) return [null, null]
+
+	return [choice.item.featureType, choice.item.osmId]
+}
 
 export default debounced
