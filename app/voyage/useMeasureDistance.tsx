@@ -74,7 +74,7 @@ export default function useMeasureDistance(map, distanceMode) {
 		features: [...points, linestring],
 	}
 	useEffect(() => {
-		if (!map || !distanceMode || points.length < 1) return
+		if (!map || !distanceMode) return
 		const source = map.getSource('measure-points')
 		if (source) {
 			source.setData(geojson)
@@ -112,7 +112,7 @@ export default function useMeasureDistance(map, distanceMode) {
 	}, [points, geojson, map, distanceMode])
 
 	useEffect(() => {
-		if (!map || distanceMode || points.length < 1) return
+		if (!map || distanceMode || !map.getSource('measure-points')) return
 
 		map.removeLayer('measure-lines')
 		map.removeLayer('measure-points')
@@ -127,5 +127,6 @@ export default function useMeasureDistance(map, distanceMode) {
 				? Math.round(rawDistance * 10) / 10 + ' km'
 				: Math.round(rawDistance) + ' km'
 
-	return distance
+	const resetDistance = () => setPoints([])
+	return [distance, resetDistance]
 }

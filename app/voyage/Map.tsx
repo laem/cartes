@@ -21,7 +21,7 @@ import { sortGares } from './gares'
 
 import useSetSeachParams from '@/components/useSetSearchParams'
 import useTraceComponentUpdate from '@/components/utils/useTraceComponentUpdate'
-import fetchPhoton from '@/components/voyage/fetchPhoton'
+import MapButtons from '@/components/voyage/MapButtons'
 import { centerOfMass } from '@turf/turf'
 import parseOpeningHours from 'opening_hours'
 import ModalSwitch from './ModalSwitch'
@@ -30,8 +30,6 @@ import PlaceSearch from './PlaceSearch'
 import QuickFeatureSearch, { categoryIconUrl } from './QuickFeatureSearch'
 import { MapContainer, MapHeader } from './UI'
 import { decodePlace, encodePlace } from './utils'
-import useMeasureDistance from './useMeasureDistance'
-import { MapButton, MapButtons } from '@/components/voyage/MapButtons'
 
 const defaultCenter =
 	// Saint Malo [-1.9890417068124002, 48.66284934737089]
@@ -59,11 +57,11 @@ export default function Map({ searchParams }) {
 	const [latLngClicked, setLatLngClicked] = useState(null)
 	const [zoom, setZoom] = useState(defaultZoom)
 	const [bikeRouteProfile, setBikeRouteProfile] = useState('safety')
-	const [style, setStyle] = useState('streets')
 	const [localSearch, setLocalSearch] = useState(true)
 	const [distanceMode, setDistanceMode] = useState(false)
-	const styleKey = styleKeys[style]
 
+	const style = searchParams.style || 'streets'
+	const styleKey = styleKeys[style]
 	const setSearchParams = useSetSeachParams()
 
 	const place = searchParams.lieu,
@@ -100,8 +98,6 @@ export default function Map({ searchParams }) {
 	const [clickedGare, clickGare] = useState(null)
 	const [bikeRoute, setBikeRoute] = useState(null)
 	const [features, setFeatures] = useState([])
-
-	const distance = useMeasureDistance(map, distanceMode)
 
 	useEffect(() => {
 		if (!map || !category) return
@@ -695,34 +691,7 @@ out skel qt;
 					}}
 				/>
 			</MapHeader>
-			<MapButtons>
-				<MapButton
-					onClick={() =>
-						setStyle(style === 'streets' ? 'satellite' : 'streets')
-					}
-				>
-					{style === 'streets' ? (
-						<div>
-							<Emoji e="🛰️" />
-							<div>Satellite</div>
-						</div>
-					) : (
-						<div>
-							<Emoji e="🗺️" />
-							<div>Carte</div>
-						</div>
-					)}
-				</MapButton>
-				<MapButton
-					onClick={() => setDistanceMode(!distanceMode)}
-					$active={distanceMode}
-				>
-					<div>
-						<Emoji e="📐" />
-					</div>
-					{distanceMode ? <small>{distance}</small> : <span>Distance</span>}
-				</MapButton>
-			</MapButtons>
+			<MapButtons {...{ style, distanceMode, setDistanceMode, map }} />
 			<div ref={mapContainerRef} />
 		</MapContainer>
 	)
