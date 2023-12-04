@@ -10,6 +10,7 @@ export default function OsmFeature({ data }) {
 	if (!data.tags) return null
 	const {
 		name,
+		description,
 		'name:br': nameBrezhoneg,
 		opening_hours,
 		phone: phone1,
@@ -57,6 +58,7 @@ export default function OsmFeature({ data }) {
 			>
 				{name}
 			</h2>
+			{description && <small>{description}</small>}
 			{nameBrezhoneg && (
 				<small>
 					<Emoji extra="1F3F4-E0066-E0072-E0062-E0072-E0065-E007F" />{' '}
@@ -138,7 +140,7 @@ const OpenIndicator = ({ isOpen }) => (
 	<span
 		css={`
 			display: inline-block;
-			margin-right: 0.4rem;
+			margin: 0 0.4rem;
 			width: 1rem;
 			height: 1rem;
 			border-radius: 2rem;
