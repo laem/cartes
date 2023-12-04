@@ -63,7 +63,7 @@ export default function Wikipedia({ name }) {
 				/>
 				{shortenText}
 
-				<a href={url}>
+				<a href={url} target="_blank">
 					<small>Wikipedia</small>
 				</a>
 			</p>
