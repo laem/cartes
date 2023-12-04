@@ -53,7 +53,7 @@ export const ModalCloseButton = styled.button`
 	right: -0.4rem;
 	margin: 0;
 	background: var(--darkerColor);
-	color: var(--lighterColor);
+	color: var(--lightestColor);
 	border-radius: 2rem;
 	font-size: 150%;
 	width: ${size}rem;

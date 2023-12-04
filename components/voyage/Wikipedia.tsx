@@ -35,8 +35,8 @@ export default function Wikipedia({ name }) {
 					content: '';
 					background: linear-gradient(
 						to bottom,
-						color-mix(in srgb, var(--lighterColor) 0%, transparent) 20%,
-						color-mix(in srgb, var(--lighterColor) 100%, transparent) 80%
+						color-mix(in srgb, var(--lightestColor) 0%, transparent) 20%,
+						color-mix(in srgb, var(--lightestColor) 100%, transparent) 80%
 					);
 					pointer-events: none; /* so the text is still selectable */
 				}
