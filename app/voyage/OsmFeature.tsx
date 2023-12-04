@@ -2,6 +2,7 @@ import Emoji from '@/components/Emoji'
 import FriendlyObjectViewer from '@/components/FriendlyObjectViewer'
 import Address from '@/components/voyage/Address'
 import ContactAndSocial from '@/components/voyage/ContactAndSocial'
+import OsmLinks from '@/components/voyage/OsmLinks'
 import Tags, { SoloTags } from '@/components/voyage/Tags'
 import parseOpeningHours from 'opening_hours'
 import { getTagLabels } from './osmTagLabels'
@@ -41,7 +42,6 @@ export default function OsmFeature({ data }) {
 	return (
 		<div
 			css={`
-				margin-bottom: 1.6rem;
 				a {
 					color: var(--darkColor);
 				}
@@ -84,6 +84,7 @@ export default function OsmFeature({ data }) {
 			{opening_hours && <OpeningHours opening_hours={opening_hours} />}
 			<ContactAndSocial {...{ email, instagram, facebook, siret }} />
 			<Tags tags={keyValueTags} />
+			<OsmLinks data={data} />
 		</div>
 	)
 }
