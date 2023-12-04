@@ -19,7 +19,7 @@ export default function ProfileChooser({
 						value={key}
 						checked={bikeRouteProfile === key}
 						onChange={(e) => setBikeRouteProfile(e.target.value)}
-					/>
+					/>{' '}
 					{name}
 				</label>
 			))}
