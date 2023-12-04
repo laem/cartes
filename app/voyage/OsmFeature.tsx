@@ -10,6 +10,7 @@ export default function OsmFeature({ data }) {
 	if (!data.tags) return null
 	const {
 		name,
+		'name:br': nameBrezhoneg,
 		opening_hours,
 		phone: phone1,
 		'contact:phone': phone2,
@@ -21,6 +22,7 @@ export default function OsmFeature({ data }) {
 		'ref:FR:SIRET': siret,
 		...rest
 	} = data.tags
+
 	const phone = phone1 || phone2,
 		website = website1 || website2
 
@@ -55,6 +57,12 @@ export default function OsmFeature({ data }) {
 			>
 				{name}
 			</h2>
+			{nameBrezhoneg && (
+				<small>
+					<Emoji extra="1F3F4-E0066-E0072-E0062-E0072-E0065-E007F" />
+					{nameBrezhoneg}
+				</small>
+			)}
 			<Address tags={data.tags} />
 			{phone && (
 				<div>
