@@ -4,6 +4,7 @@ import Address from '@/components/voyage/Address'
 import ContactAndSocial from '@/components/voyage/ContactAndSocial'
 import OsmLinks from '@/components/voyage/OsmLinks'
 import Tags, { SoloTags } from '@/components/voyage/Tags'
+import Wikipedia from '@/components/voyage/Wikipedia'
 import parseOpeningHours from 'opening_hours'
 import { getTagLabels } from './osmTagLabels'
 
@@ -22,6 +23,7 @@ export default function OsmFeature({ data }) {
 		'contact:instagram': instagram,
 		'contact:facebook': facebook,
 		'ref:FR:SIRET': siret,
+		wikipedia,
 		...rest
 	} = data.tags
 
@@ -66,6 +68,7 @@ export default function OsmFeature({ data }) {
 				</small>
 			)}
 			<Address tags={data.tags} />
+			{wikipedia && wikipedia.includes(':') && <Wikipedia name={wikipedia} />}
 			{phone && (
 				<div>
 					<a href={`tel:${phone}`}>
@@ -81,6 +84,7 @@ export default function OsmFeature({ data }) {
 					</a>
 				</div>
 			)}
+
 			{opening_hours && <OpeningHours opening_hours={opening_hours} />}
 			<ContactAndSocial {...{ email, instagram, facebook, siret }} />
 			<Tags tags={keyValueTags} />

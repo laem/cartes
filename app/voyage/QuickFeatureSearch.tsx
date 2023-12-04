@@ -117,6 +117,7 @@ export default function QuickFeatureSearch({
 							text-decoration: none;
 							font-size: 90%;
 						}
+						width: 3rem;
 					`}
 				>
 					<Link
