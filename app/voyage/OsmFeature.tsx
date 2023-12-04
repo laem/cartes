@@ -59,7 +59,7 @@ export default function OsmFeature({ data }) {
 			</h2>
 			{nameBrezhoneg && (
 				<small>
-					<Emoji extra="1F3F4-E0066-E0072-E0062-E0072-E0065-E007F" />
+					<Emoji extra="1F3F4-E0066-E0072-E0062-E0072-E0065-E007F" />{' '}
 					{nameBrezhoneg}
 				</small>
 			)}

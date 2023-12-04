@@ -31,6 +31,7 @@ import QuickFeatureSearch, { categoryIconUrl } from './QuickFeatureSearch'
 import { MapContainer, MapHeader } from './UI'
 import { decodePlace, encodePlace } from './utils'
 import { extractOsmFeature } from '@/components/voyage/fetchPhoton'
+import { goodIconSize } from '@/components/voyage/mapUtils'
 
 const defaultCenter =
 	// Saint Malo [-1.9890417068124002, 48.66284934737089]
@@ -598,39 +599,38 @@ out skel qt;
 
 	useEffect(() => {
 		if (!lesGaresProches) return
-		lesGaresProches.map((gare) => {
-			const el = document.createElement('div')
-			const root = createRoot(el)
-			const size = { 1: '25px', 2: '35px', 3: '45px' }[gare.niveau] || '15px'
-			flushSync(() => {
-				root.render(
-					<div
-						style={css`
-							display: flex;
-							flex-direction: column;
-							align-items: center;
-							cursor: help;
-						`}
-					>
-						<img
-							src="/gare.svg"
-							style={{ width: size, height: size }}
-							alt="Icône d'une gare"
-						/>
-					</div>
-				)
-			})
+		const markers = lesGaresProches.map((gare) => {
+			const element = document.createElement('div')
+			const factor = { 1: 0.9, 2: 1.1, 3: 1.3 }[gare.niveau] || 0.7
+			element.style.cssText = `
+				display: flex;
+				flex-direction: column;
+				align-items: center;
+				cursor: help;
+			`
+			const size = goodIconSize(zoom, factor) + 'px'
 
-			el.addEventListener('click', () => {
+			const image = document.createElement('img')
+			image.src = '/gare.svg'
+			image.style.width = size
+			image.style.height = size
+			image.alt = "Icône d'une gare"
+			element.append(image)
+
+			element.addEventListener('click', () => {
 				clickGare(gare.uic === clickedGare?.uic ? null : gare)
 				setSheetOpen(true)
 			})
 
-			new maplibregl.Marker({ element: el })
+			const marker = new maplibregl.Marker({ element })
 				.setLngLat(gare.coordonnées)
 				.addTo(map)
+			return marker
 		})
-	}, [lesGaresProches, map])
+		return () => {
+			markers.map((marker) => marker.remove())
+		}
+	}, [lesGaresProches, map, zoom])
 
 	return (
 		<MapContainer>
