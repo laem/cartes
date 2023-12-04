@@ -50,14 +50,15 @@ export default function BikeRouteRésumé({
 					<strong>
 						{heures ? heures + ` heure${heures > 1 ? 's' : ''} et ` : ''}
 						{minutes} minutes
-					</strong>{' '}
+					</strong>
+					<br />
 					pour{' '}
 					<strong
 						style={css(`background: ${deniveléColor(700)}; padding: 0 .2rem;`)}
 					>
 						{déniveléCumulé} m
 					</strong>{' '}
-					de dénivelé cumulé et {dénivelé} m en absolu.
+					de dénivelé cumulé ({dénivelé} m en absolu).
 				</p>
 				<ProfileChooser
 					{...{
