@@ -54,7 +54,11 @@ export default function BikeRouteRésumé({
 					<br />
 					pour{' '}
 					<strong
-						style={css(`background: ${deniveléColor(700)}; padding: 0 .2rem;`)}
+						style={css(
+							`background: ${deniveléColor(
+								déniveléCumulé
+							)}; padding: 0 .2rem; border-radius: 0.3rem;`
+						)}
 					>
 						{déniveléCumulé} m
 					</strong>{' '}

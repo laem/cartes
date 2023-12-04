@@ -377,7 +377,7 @@ out skel qt;
 			data: bikeRoute.features[0],
 		})
 		map.addLayer({
-			id: 'bikeRoute',
+			id: 'bikeRouteContour',
 			type: 'line',
 			source: 'bikeRoute',
 			layout: {
@@ -389,9 +389,23 @@ out skel qt;
 				'line-width': 8,
 			},
 		})
+		map.addLayer({
+			id: 'bikeRoute',
+			type: 'line',
+			source: 'bikeRoute',
+			layout: {
+				'line-join': 'round',
+				'line-cap': 'round',
+			},
+			paint: {
+				'line-color': '#B482DD',
+				'line-width': 5,
+			},
+		})
 
 		return () => {
 			map.removeLayer('bikeRoute')
+			map.removeLayer('bikeRouteContour')
 			map.removeSource('bikeRoute')
 		}
 	}, [bikeRoute, map])
