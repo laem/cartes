@@ -53,13 +53,11 @@ export default function BikeRouteRésumé({
 					</strong>{' '}
 					pour{' '}
 					<strong
-						style={css(
-							`background: ${deniveléColor(déniveléCumulé)}; padding: 0 .2rem;`
-						)}
+						style={css(`background: ${deniveléColor(700)}; padding: 0 .2rem;`)}
 					>
-						{déniveléCumulé} m de dénivelé cumulé
+						{déniveléCumulé} m
 					</strong>{' '}
-					et {dénivelé} m en absolu.
+					de dénivelé cumulé et {dénivelé} m en absolu.
 				</p>
 				<ProfileChooser
 					{...{
@@ -74,9 +72,9 @@ export default function BikeRouteRésumé({
 
 const deniveléColor = (height) =>
 	height > 600
-		? 'red'
+		? '#f98080'
 		: height > 300
-		? 'orange'
+		? '#f7b63f'
 		: height > 150
-		? 'yellow'
-		: 'green'
+		? '#f7f769'
+		: '#a0dba0'
