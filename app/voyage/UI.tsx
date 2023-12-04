@@ -53,8 +53,9 @@ export const ModalCloseButton = styled.button`
 	right: -0.4rem;
 	margin: 0;
 	background: var(--darkerColor);
-	color: white;
+	color: var(--lighterColor);
 	border-radius: 2rem;
+	font-size: 150%;
 	width: ${size}rem;
 	height: ${size}rem;
 	line-height: ${size}rem;
@@ -62,7 +63,6 @@ export const ModalCloseButton = styled.button`
 	text-align: center;
 	cursor: pointer;
 	padding: 0;
-	vertical-align: middle;
 `
 
 export const DialogButton = styled.button`

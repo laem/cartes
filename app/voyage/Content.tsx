@@ -53,7 +53,7 @@ export default function Content({
 					setLatLngClicked(null)
 				}}
 			>
-				x
+				×
 			</ModalCloseButton>
 			{ogImage && (
 				<FeatureImage
@@ -78,7 +78,7 @@ export default function Content({
 						title="Fermer l'encart gare"
 						onClick={() => clickGare(null)}
 					>
-						x
+						×
 					</ModalCloseButton>
 					{bikeRoute && (
 						<BikeRouteRésumé
