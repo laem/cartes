@@ -1,5 +1,3 @@
-import { objectMap } from './utils'
-
 export const encodeDottedName = (decoded) => decoded.replace(/\s\.\s/g, '.')
 const decodeDottedName = (encoded) => encoded.replace(/\./g, ' . ')
 
