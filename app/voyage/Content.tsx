@@ -7,7 +7,7 @@ import GareInfo from './GareInfo'
 import OsmFeature from './OsmFeature'
 import { DialogButton, ModalCloseButton } from './UI'
 import useOgImageFetcher from './useOgImageFetcher'
-import ZoneImages from './ZoneImages'
+import { ZoneImages } from './ZoneImages'
 
 export default function Content({
 	latLngClicked,
@@ -19,6 +19,7 @@ export default function Content({
 	bikeRouteProfile,
 	clickGare,
 	setOsmFeature,
+	zoneImages,
 }) {
 	const url = osmFeature?.tags?.website || osmFeature?.tags?.['contact:website']
 	const ogImages = useOgImageFetcher(url),
@@ -68,10 +69,7 @@ export default function Content({
 					`}
 				/>
 			)}
-			<ZoneImages
-				latLngClicked={latLngClicked}
-				setLatLngClicked={setLatLngClicked}
-			/>
+			<ZoneImages images={zoneImages} />
 			{clickedGare ? (
 				<div>
 					<ModalCloseButton

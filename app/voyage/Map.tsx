@@ -32,6 +32,7 @@ import { MapContainer, MapHeader } from './UI'
 import { decodePlace, encodePlace } from './utils'
 import { extractOsmFeature } from '@/components/voyage/fetchPhoton'
 import { goodIconSize } from '@/components/voyage/mapUtils'
+import { useZoneImages } from './ZoneImages'
 
 const defaultCenter =
 	// Saint Malo [-1.9890417068124002, 48.66284934737089]
@@ -77,6 +78,8 @@ export default function Map({ searchParams }) {
 		category = categoryName && categories.find((c) => c.name === categoryName)
 
 	const showOpenOnly = searchParams.o
+
+	const zoneImages = useZoneImages({ latLngClicked, setLatLngClicked })
 
 	const versImageURL = wikidata?.pic && toThumb(wikidata?.pic.value)
 	useEffect(() => {
@@ -655,8 +658,6 @@ out skel qt;
 						align-items: center;
 					`}
 				>
-					<h1>Où allez-vous ?</h1>
-
 					{choice && (
 						<button
 							onClick={() => setState(defaultState)}
@@ -716,6 +717,7 @@ out skel qt;
 						setLatLngClicked,
 						setBikeRouteProfile,
 						bikeRouteProfile,
+						zoneImages,
 					}}
 				/>
 			</MapHeader>

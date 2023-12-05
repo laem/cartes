@@ -2,7 +2,8 @@ import { toThumb } from '@/components/wikidata'
 import { useEffect, useState } from 'react'
 import { createSearchBBox } from './createSearchPolygon'
 import { FeatureImage } from './FeatureImage'
-export default function ZoneImages({ latLngClicked, setLatLngClicked }) {
+
+export function useZoneImages({ latLngClicked, setLatLngClicked }) {
 	const [wikimedia, setWikimedia] = useState(null)
 
 	useEffect(() => {
@@ -24,9 +25,13 @@ export default function ZoneImages({ latLngClicked, setLatLngClicked }) {
 		}
 		makeRequest()
 	}, [latLngClicked])
+	return wikimedia
+}
+
+export function ZoneImages({ images }) {
 	const imageUrls =
-		wikimedia &&
-		wikimedia.map((json) => {
+		images &&
+		images.map((json) => {
 			const title = json.title,
 				url = toThumb(title)
 			return {

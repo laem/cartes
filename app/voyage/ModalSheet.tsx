@@ -2,23 +2,11 @@ import Sheet from 'react-modal-sheet'
 import styled from 'styled-components'
 import Content from './Content'
 
-export default function ModalSheet({
-	isSheetOpen,
-	setSheetOpen,
-	clickedGare,
-	bikeRoute,
-	osmFeature,
-	latLngClicked,
-	bikeRouteProfile,
-	setBikeRouteProfile,
-	clickGare,
-	setOsmFeature,
-	setLatLngClicked,
-}) {
+export default function ModalSheet(props) {
 	return (
 		<CustomSheet
-			isOpen={isSheetOpen}
-			onClose={() => setSheetOpen(false)}
+			isOpen={props.isSheetOpen}
+			onClose={() => props.setSheetOpen(false)}
 			snapPoints={[-50, 0.5, 100, 0]}
 			initialSnap={1}
 			mountPoint={document.querySelector('main')}
@@ -38,19 +26,7 @@ export default function ModalSheet({
 				<Sheet.Content>
 					<Sheet.Scroller draggableAt="both">
 						<SheetContentWrapper>
-							<Content
-								{...{
-									clickedGare,
-									bikeRoute,
-									osmFeature,
-									latLngClicked,
-									bikeRouteProfile,
-									setBikeRouteProfile,
-									clickGare,
-									setOsmFeature,
-									setLatLngClicked,
-								}}
-							/>
+							<Content {...props} />
 						</SheetContentWrapper>
 					</Sheet.Scroller>
 				</Sheet.Content>
