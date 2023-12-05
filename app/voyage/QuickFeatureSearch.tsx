@@ -116,8 +116,8 @@ export default function QuickFeatureSearch({
 							color: inherit;
 							text-decoration: none;
 							font-size: 90%;
+							width: 3rem !important;
 						}
-						width: 3rem;
 					`}
 				>
 					<Link
