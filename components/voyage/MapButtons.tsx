@@ -8,29 +8,38 @@ import useSetSeachParams from '../useSetSearchParams'
 
 export const MapButtonsWrapper = styled.div`
 	position: fixed;
-	bottom: 0.4rem;
-	left: 0.4rem;
+	top: 9rem;
+	right: 0.6rem;
 	z-index: 1;
 	display: flex;
-	align-items: center;
+	flex-direction: column;
+	align-items: end;
 `
 export const MapButton = styled.div`
-	margin-right: 0.4rem;
-	width: 4.5rem;
-	height: 4rem;
+	margin-bottom: 0.4rem;
+	width: 1.9rem;
+	height: auto;
 	text-align: center;
-	border-radius: 0.4rem;
-	border: 4px solid white;
-	padding: 0;
+	border-radius: 4px;
+	box-shadow: 0 0 0 2px rgba(0, 0, 0, 0.1);
+	padding: 0.1rem;
 	background: white;
 	opacity: 0.8;
 	img {
 		width: 1.5rem;
 		height: auto;
 	}
-	border: 2px solid var(--lighterColor);
+	border: 0px solid lightgrey;
 	cursor: pointer;
-	${(p) => p.$active && `border: 2px solid var(--color)`}
+	${(p) =>
+		p.$active &&
+		`
+
+	border: 2px solid var(--color);
+	width: 4rem;
+
+
+	`}
 	position: relative;
 	> button:first-child {
 		width: 100%;
@@ -61,18 +70,14 @@ export default function MapButtons({
 						true,
 						false
 					)}
+					title={
+						{
+							satellite: 'Passer à la vue carto',
+							streets: 'Passer à la vue satellite',
+						}[style]
+					}
 				>
-					{style === 'streets' ? (
-						<div>
-							<Emoji e="🛰️" />
-							<div>Satellite</div>
-						</div>
-					) : (
-						<div>
-							<Emoji e="🗺️" />
-							<div>Carte</div>
-						</div>
-					)}
+					<Emoji e={{ satellite: '🗺️', streets: '🛰️' }[style]} />
 				</Link>
 			</MapButton>
 			<MapButton $active={distanceMode}>
@@ -80,15 +85,15 @@ export default function MapButtons({
 					<div>
 						<Emoji e="📐" />
 					</div>
-					{distanceMode ? <small>{distance}</small> : <span>Distance</span>}
+					{distanceMode ? <small>{distance}</small> : null}
 				</button>
 				{distanceMode && (
 					<button
 						onClick={() => resetDistance()}
 						css={`
 							position: absolute;
-							top: -1rem;
-							right: -1.1rem;
+							bottom: -1rem;
+							right: -1.9rem;
 							img {
 								width: 1.8rem;
 								height: 1.8rem;
