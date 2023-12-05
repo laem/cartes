@@ -1,0 +1,12 @@
+// Les bars à moins de 200m d'une zone piétonne
+// Define the area of interest
+(
+nwr["highway"="pedestrian"]({{bbox}});
+
+)->.pedestrian;
+
+// Find pubs within ~100m of the pedestrian zone
+(
+nwr["amenity"="bar"](around.pedestrian:200);
+
+);
