@@ -2,13 +2,10 @@ import GeoInputOptions from '@/components/conversation/GeoInputOptions'
 import { InputStyle } from '@/components/conversation/UI'
 import css from '@/components/css/convertToJs'
 import fetchPhoton from '@/components/voyage/fetchPhoton'
+import { useState } from 'react'
 
-export default function PlaceSearch({
-	state,
-	setState,
-	localSearch,
-	setLocalSearch,
-}) {
+export default function PlaceSearch({ state, setState }) {
+	const [localSearch, setLocalSearch] = useState(true)
 	const { vers } = state
 	const onInputChange =
 		(whichInput, localSearch = false) =>

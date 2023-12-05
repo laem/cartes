@@ -15,15 +15,6 @@ export default function ModalSwitch(props) {
 
 	//	useTraceComponentUpdate(props)
 
-	const [tutorials] = useLocalStorage('tutorials', {})
-
-	if (tutorials.introduction && !props.isSheetOpen) return null
-	if (
-		tutorials.introduction &&
-		!(props.osmFeature || props.clickedGare || props.latLngClicked)
-	)
-		return null
-
 	if (matches) return <SideSheet {...props} />
 
 	return <ModalSheet {...props} />

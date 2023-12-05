@@ -54,13 +54,11 @@ export default function Map({ searchParams }) {
 	try {
 		console.log('state', state, state.vers.choice.item.type)
 	} catch (e) {}
-	const [isSheetOpen, setSheetOpen] = useState(false)
 	const [wikidata, setWikidata] = useState(null)
 	const [osmFeature, setOsmFeature] = useState(null)
 	const [latLngClicked, setLatLngClicked] = useState(null)
 	const [zoom, setZoom] = useState(defaultZoom)
 	const [bikeRouteProfile, setBikeRouteProfile] = useState('safety')
-	const [localSearch, setLocalSearch] = useState(true)
 	const [distanceMode, setDistanceMode] = useState(false)
 
 	const style = searchParams.style || 'streets'
@@ -418,8 +416,6 @@ out skel qt;
 			console.log('click event', e)
 			setLatLngClicked(e.lngLat)
 
-			setSheetOpen(true)
-
 			const source = map.getSource('searchPolygon')
 			const polygon = createPolygon(createSearchBBox(e.lngLat))
 
@@ -530,7 +526,6 @@ out skel qt;
 				  ).geometry.coordinates
 
 			setOsmFeature(element)
-			setSheetOpen(true)
 			console.log('should fly to', center)
 			if (state.vers.choice?.item.osmId !== featureId) {
 				map.flyTo({
@@ -636,7 +631,6 @@ out skel qt;
 
 			element.addEventListener('click', () => {
 				clickGare(gare.uic === clickedGare?.uic ? null : gare)
-				setSheetOpen(true)
 			})
 
 			const marker = new maplibregl.Marker({ element })
@@ -677,9 +671,7 @@ out skel qt;
 						</button>
 					)}
 				</div>
-				{!choice && (
-					<PlaceSearch {...{ state, setState, localSearch, setLocalSearch }} />
-				)}
+				{!choice && <PlaceSearch {...{ state, setState }} />}
 				{choice && versImageURL && (
 					<motion.div
 						initial={{ opacity: 0, scale: 0.8 }}
@@ -706,8 +698,8 @@ out skel qt;
 
 				<ModalSwitch
 					{...{
-						isSheetOpen: !distanceMode && isSheetOpen,
-						setSheetOpen,
+						setState,
+						state,
 						clickedGare,
 						clickGare,
 						setOsmFeature,
