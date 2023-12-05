@@ -1,37 +1,25 @@
 'use client'
-import {
-	CityImage,
-	Destination,
-	ImageWithNameWrapper,
-} from '@/components/conversation/VoyageUI'
-import css from '@/components/css/convertToJs'
 import Emoji from '@/components/Emoji'
-import destinationPoint from '@/public/destination-point.svg'
-import getCityData, { toThumb } from 'Components/wikidata'
-import { motion } from 'framer-motion'
+import getCityData from 'Components/wikidata'
 import maplibregl from 'maplibre-gl'
 import 'maplibre-gl/dist/maplibre-gl.css'
-import NextImage from 'next/image'
 import { useEffect, useMemo, useRef, useState } from 'react'
-import { flushSync } from 'react-dom'
-import { createRoot } from 'react-dom/client'
 import categories from './categories.yaml'
 import { createPolygon, createSearchBBox } from './createSearchPolygon'
 import { sortGares } from './gares'
 
 import useSetSeachParams from '@/components/useSetSearchParams'
 import useTraceComponentUpdate from '@/components/utils/useTraceComponentUpdate'
+import { extractOsmFeature } from '@/components/voyage/fetchPhoton'
 import MapButtons from '@/components/voyage/MapButtons'
+import { goodIconSize } from '@/components/voyage/mapUtils'
 import { centerOfMass } from '@turf/turf'
 import parseOpeningHours from 'opening_hours'
 import ModalSwitch from './ModalSwitch'
 import { osmRequest } from './osmRequest'
-import PlaceSearch from './PlaceSearch'
-import QuickFeatureSearch, { categoryIconUrl } from './QuickFeatureSearch'
+import { categoryIconUrl } from './QuickFeatureSearch'
 import { MapContainer, MapHeader } from './UI'
 import { decodePlace, encodePlace } from './utils'
-import { extractOsmFeature } from '@/components/voyage/fetchPhoton'
-import { goodIconSize } from '@/components/voyage/mapUtils'
 import { useZoneImages } from './ZoneImages'
 
 const defaultCenter =
@@ -79,7 +67,6 @@ export default function Map({ searchParams }) {
 
 	const zoneImages = useZoneImages({ latLngClicked, setLatLngClicked })
 
-	const versImageURL = wikidata?.pic && toThumb(wikidata?.pic.value)
 	useEffect(() => {
 		if (!state.vers.choice) return undefined
 
@@ -671,31 +658,6 @@ out skel qt;
 						</button>
 					)}
 				</div>
-				{!choice && <PlaceSearch {...{ state, setState }} />}
-				{choice && versImageURL && (
-					<motion.div
-						initial={{ opacity: 0, scale: 0.8 }}
-						animate={{ opacity: 1, scale: 1 }}
-						transition={{}}
-						key={versImageURL}
-						exit={{ opacity: 0, scale: 0.5, transition: { duration: 0.2 } }}
-					>
-						<ImageWithNameWrapper>
-							<CityImage
-								src={versImageURL}
-								alt={`Une photo emblématique de la destination, ${state.vers.choice?.item?.nom}`}
-							/>
-							<Destination>
-								<NextImage src={destinationPoint} alt="Vers" />
-								<h2>{state.vers.choice.item.nom}</h2>
-							</Destination>
-						</ImageWithNameWrapper>
-					</motion.div>
-				)}
-				{zoom > 12 && (
-					<QuickFeatureSearch category={category} searchParams={searchParams} />
-				)}
-
 				<ModalSwitch
 					{...{
 						setState,
@@ -710,6 +672,7 @@ out skel qt;
 						setBikeRouteProfile,
 						bikeRouteProfile,
 						zoneImages,
+						zoom,
 					}}
 				/>
 			</MapHeader>
