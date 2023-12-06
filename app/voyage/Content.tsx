@@ -3,6 +3,7 @@ import {
 	Destination,
 	ImageWithNameWrapper,
 } from '@/components/conversation/VoyageUI'
+import { toThumb } from '@/components/wikidata'
 import destinationPoint from '@/public/destination-point.svg'
 import { motion } from 'framer-motion'
 import NextImage from 'next/image'
@@ -17,6 +18,7 @@ import PlaceSearch from './PlaceSearch'
 import QuickFeatureSearch from './QuickFeatureSearch'
 import { DialogButton, ModalCloseButton } from './UI'
 import useOgImageFetcher from './useOgImageFetcher'
+import useWikidata from './useWikidata'
 import { ZoneImages } from './ZoneImages'
 
 export default function Content({
@@ -33,6 +35,8 @@ export default function Content({
 	state,
 	setState,
 	zoom,
+	sideSheet,
+	setSnap = () => null,
 }) {
 	const url = osmFeature?.tags?.website || osmFeature?.tags?.['contact:website']
 	const ogImages = useOgImageFetcher(url),
@@ -41,6 +45,7 @@ export default function Content({
 	const [tutorials, setTutorials] = useLocalStorage('tutorials', {})
 	const introductionRead = tutorials.introduction,
 		clickTipRead = tutorials.clickTip
+	const wikidata = useWikidata(state)
 
 	if (!introductionRead)
 		return (
@@ -59,10 +64,9 @@ export default function Content({
 		<section
 			css={`
 				position: relative;
-				padding-top: 1.4rem;
 			`}
 		>
-			{!choice && <PlaceSearch {...{ state, setState }} />}
+			{!choice && <PlaceSearch {...{ state, setState, sideSheet, setSnap }} />}
 			{choice && versImageURL && (
 				<motion.div
 					initial={{ opacity: 0, scale: 0.8 }}
@@ -87,15 +91,17 @@ export default function Content({
 				<QuickFeatureSearch category={category} searchParams={searchParams} />
 			)}
 
-			<ModalCloseButton
-				title="Fermer l'encart point d'intéret"
-				onClick={() => {
-					setOsmFeature(null)
-					setLatLngClicked(null)
-				}}
-			>
-				×
-			</ModalCloseButton>
+			{(choice || osmFeature) && (
+				<ModalCloseButton
+					title="Fermer l'encart point d'intéret"
+					onClick={() => {
+						setOsmFeature(null)
+						setLatLngClicked(null)
+					}}
+				>
+					×
+				</ModalCloseButton>
+			)}
 			{ogImage && (
 				<FeatureImage
 					src={ogImage}

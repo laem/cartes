@@ -1,5 +1,5 @@
 import css from '@/components/css/convertToJs'
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import Sheet from 'react-modal-sheet'
 import styled from 'styled-components'
 import Content from './Content'
@@ -7,6 +7,7 @@ import Content from './Content'
 const popSize = 6
 export default function ModalSheet(props) {
 	const [isOpen, setOpen] = useState(true)
+	const [initialSnap, setInitialSnap] = useState(2)
 	if (!isOpen)
 		return (
 			<div
@@ -36,7 +37,7 @@ export default function ModalSheet(props) {
 				setOpen(false)
 			}}
 			snapPoints={[-50, 0.5, 100]}
-			initialSnap={2}
+			initialSnap={initialSnap}
 			mountPoint={document.querySelector('main')}
 		>
 			<Sheet.Container
@@ -54,7 +55,7 @@ export default function ModalSheet(props) {
 				<Sheet.Content>
 					<Sheet.Scroller draggableAt="both">
 						<SheetContentWrapper>
-							<Content {...props} />
+							<Content {...props} sideSheet={false} setSnap={setInitialSnap} />
 						</SheetContentWrapper>
 					</Sheet.Scroller>
 				</Sheet.Content>
@@ -67,7 +68,7 @@ const SheetContentWrapper = styled.div`
 	height: 100%;
 	display: flex;
 	flex-direction: column;
-	padding: 16px;
+	padding: 0rem 0.6rem;
 `
 const CustomSheet = styled(Sheet)`
 	.react-modal-sheet-backdrop {
@@ -78,6 +79,7 @@ const CustomSheet = styled(Sheet)`
 	}
 	.react-modal-sheet-header {
 		/* custom styles */
+		height: 1rem !important;
 	}
 	.react-modal-sheet-drag-indicator {
 		/* custom styles */

@@ -4,7 +4,7 @@ import css from '@/components/css/convertToJs'
 import fetchPhoton from '@/components/voyage/fetchPhoton'
 import { useState } from 'react'
 
-export default function PlaceSearch({ state, setState }) {
+export default function PlaceSearch({ state, setState, sideSheet, setSnap }) {
 	const [localSearch, setLocalSearch] = useState(true)
 	const { vers } = state
 	const onInputChange =
@@ -26,12 +26,17 @@ export default function PlaceSearch({ state, setState }) {
 			<InputStyle
 				css={`
 					color: white;
+					input {
+						width: 100%;
+						max-width: 100%;
+					}
 				`}
 			>
 				<input
 					type="text"
 					autoFocus={true}
 					value={vers.inputValue}
+					onFocus={() => setSnap(0)}
 					placeholder={'Saint-Malo, Sarzeau, Le Conquet, ...'}
 					onChange={onInputChange('vers', localSearch)}
 				/>
@@ -59,8 +64,10 @@ export default function PlaceSearch({ state, setState }) {
 							{...{
 								whichInput: 'vers',
 								data: state['vers'],
-								updateState: (newData) =>
-									setState((state) => ({ ...state, vers: newData })),
+								updateState: (newData) => {
+									setSnap(1)
+									setState((state) => ({ ...state, vers: newData }))
+								},
 							}}
 						/>
 						<label

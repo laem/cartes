@@ -24,7 +24,7 @@ export default function SideSheet(props) {
 				}
 			`}
 		>
-			<Content {...props} />
+			<Content {...props} sideSheet={true} />
 		</div>
 	)
 }

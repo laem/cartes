@@ -1,6 +1,5 @@
 'use client'
 import Emoji from '@/components/Emoji'
-import getCityData from 'Components/wikidata'
 import maplibregl from 'maplibre-gl'
 import 'maplibre-gl/dist/maplibre-gl.css'
 import { useEffect, useMemo, useRef, useState } from 'react'
@@ -42,7 +41,6 @@ export default function Map({ searchParams }) {
 	try {
 		console.log('state', state, state.vers.choice.item.type)
 	} catch (e) {}
-	const [wikidata, setWikidata] = useState(null)
 	const [osmFeature, setOsmFeature] = useState(null)
 	const [latLngClicked, setLatLngClicked] = useState(null)
 	const [zoom, setZoom] = useState(defaultZoom)
@@ -66,14 +64,6 @@ export default function Map({ searchParams }) {
 	const showOpenOnly = searchParams.o
 
 	const zoneImages = useZoneImages({ latLngClicked, setLatLngClicked })
-
-	useEffect(() => {
-		if (!state.vers.choice) return undefined
-
-		getCityData(state.vers.choice.item.ville).then((json) =>
-			setWikidata(json?.results?.bindings[0])
-		)
-	}, [state.vers])
 
 	if (process.env.NEXT_PUBLIC_MAPTILER == null) {
 		throw new Error('You have to configure env REACT_APP_API_KEY, see README')
