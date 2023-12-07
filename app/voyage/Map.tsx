@@ -20,6 +20,7 @@ import { categoryIconUrl } from './QuickFeatureSearch'
 import { MapContainer, MapHeader } from './UI'
 import { decodePlace, encodePlace } from './utils'
 import { useZoneImages } from './ZoneImages'
+import { getCategory } from '@/components/categories'
 
 const defaultCenter =
 	// Saint Malo [-1.9890417068124002, 48.66284934737089]
@@ -58,8 +59,7 @@ export default function Map({ searchParams }) {
 
 	console.log('OSM', featureType, featureId)
 
-	const categoryName = searchParams.cat,
-		category = categoryName && categories.find((c) => c.name === categoryName)
+	const category = getCategory(searchParams)
 
 	const showOpenOnly = searchParams.o
 
@@ -504,7 +504,10 @@ out skel qt;
 
 			setOsmFeature(element)
 			console.log('should fly to', center)
-			if (state.vers.choice?.item.osmId !== featureId) {
+			if (
+				state.vers.choice?.item &&
+				state.vers.choice.item.osmId !== featureId
+			) {
 				map.flyTo({
 					center,
 					zoom: 18,
@@ -663,6 +666,7 @@ out skel qt;
 						bikeRouteProfile,
 						zoneImages,
 						zoom,
+						searchParams,
 					}}
 				/>
 			</MapHeader>

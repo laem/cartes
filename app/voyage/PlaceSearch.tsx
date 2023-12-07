@@ -27,7 +27,6 @@ export default function PlaceSearch({ state, setState, sideSheet, setSnap }) {
 				css={`
 					color: white;
 					input {
-						width: 100%;
 						max-width: 100%;
 					}
 				`}

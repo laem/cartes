@@ -1,3 +1,4 @@
+import { getCategory } from '@/components/categories'
 import {
 	CityImage,
 	Destination,
@@ -36,6 +37,7 @@ export default function Content({
 	setState,
 	zoom,
 	sideSheet,
+	searchParams,
 	setSnap = () => null,
 }) {
 	const url = osmFeature?.tags?.website || osmFeature?.tags?.['contact:website']
@@ -60,6 +62,8 @@ export default function Content({
 		)
 	const versImageURL = wikidata?.pic && toThumb(wikidata?.pic.value)
 	const choice = state.vers?.choice
+	const category = getCategory(searchParams)
+
 	return (
 		<section
 			css={`
