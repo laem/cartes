@@ -106,9 +106,7 @@ export default function Content({
 							setLatLngClicked(null)
 							resetZoneImages()
 						}}
-					>
-						<span>×</span>
-					</ModalCloseButton>
+					/>
 				)}
 				{ogImage && (
 					<FeatureImage
@@ -129,9 +127,7 @@ export default function Content({
 						<ModalCloseButton
 							title="Fermer l'encart gare"
 							onClick={() => clickGare(null)}
-						>
-							×
-						</ModalCloseButton>
+						/>
 						{bikeRoute && (
 							<BikeRouteRésumé
 								{...{ data: bikeRoute, bikeRouteProfile, setBikeRouteProfile }}

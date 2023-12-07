@@ -47,7 +47,12 @@ export const MapHeader = styled.div`
 `
 
 const size = 1.3
-export const ModalCloseButton = styled.button`
+export const ModalCloseButton = () => (
+	<ModalCloseButtonButton>
+		<span>×</span>
+	</ModalCloseButtonButton>
+)
+export const ModalCloseButtonButton = styled.button`
 	position: absolute;
 	top: -0.2rem;
 	right: -0.4rem;
