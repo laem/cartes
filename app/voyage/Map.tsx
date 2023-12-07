@@ -234,6 +234,16 @@ out skel qt;
 
 						// Add a symbol layer
 						map.addLayer({
+							id: 'features-ways',
+							type: 'fill',
+							source: 'features-ways',
+							layout: {},
+							paint: {
+								'fill-color': '#088',
+								'fill-opacity': 0.6,
+							},
+						})
+						map.addLayer({
 							id: 'features-points',
 							type: 'symbol',
 							source: 'features-points',
@@ -243,16 +253,6 @@ out skel qt;
 								'text-field': ['get', 'name'],
 								'text-offset': [0, 1.25],
 								'text-anchor': 'top',
-							},
-						})
-						map.addLayer({
-							id: 'features-ways',
-							type: 'fill',
-							source: 'features-ways',
-							layout: {},
-							paint: {
-								'fill-color': '#088',
-								'fill-opacity': 0.6,
 							},
 						})
 					}
