@@ -46,7 +46,7 @@ export const MapHeader = styled.div`
 	}
 `
 
-const size = 1.2
+const size = 1.3
 export const ModalCloseButton = styled.button`
 	position: absolute;
 	top: -0.2rem;
@@ -63,6 +63,12 @@ export const ModalCloseButton = styled.button`
 	text-align: center;
 	cursor: pointer;
 	padding: 0;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	span {
+		margin-top: -0.42rem;
+	}
 `
 
 export const DialogButton = styled.button`

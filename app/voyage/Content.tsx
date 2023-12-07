@@ -107,7 +107,7 @@ export default function Content({
 							resetZoneImages()
 						}}
 					>
-						×
+						<span>×</span>
 					</ModalCloseButton>
 				)}
 				{ogImage && (
