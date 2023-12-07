@@ -25,7 +25,7 @@ export function useZoneImages({ latLngClicked, setLatLngClicked }) {
 		}
 		makeRequest()
 	}, [latLngClicked])
-	return wikimedia
+	return [wikimedia, () => setWikimedia(null)]
 }
 
 export function ZoneImages({ images }) {

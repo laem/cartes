@@ -33,6 +33,7 @@ export default function Content({
 	clickGare,
 	setOsmFeature,
 	zoneImages,
+	resetZoneImages,
 	state,
 	setState,
 	zoom,
@@ -65,11 +66,7 @@ export default function Content({
 	const category = getCategory(searchParams)
 
 	return (
-		<section
-			css={`
-				position: relative;
-			`}
-		>
+		<section>
 			{!choice && <PlaceSearch {...{ state, setState, sideSheet, setSnap }} />}
 			{choice && versImageURL && (
 				<motion.div
@@ -95,67 +92,75 @@ export default function Content({
 				<QuickFeatureSearch category={category} searchParams={searchParams} />
 			)}
 
-			{(choice || osmFeature) && (
-				<ModalCloseButton
-					title="Fermer l'encart point d'intéret"
-					onClick={() => {
-						setOsmFeature(null)
-						setLatLngClicked(null)
-					}}
-				>
-					×
-				</ModalCloseButton>
-			)}
-			{ogImage && (
-				<FeatureImage
-					src={ogImage}
-					css={`
-						width: 100%;
-						height: 6rem;
-						@media (min-height: 800px) {
-							height: 9rem;
-						}
-						object-fit: cover;
-					`}
-				/>
-			)}
-			<ZoneImages images={zoneImages} />
-			{clickedGare ? (
-				<div>
+			<section
+				css={`
+					padding-top: 1.6rem;
+					position: relative;
+				`}
+			>
+				{(choice || osmFeature) && (
 					<ModalCloseButton
-						title="Fermer l'encart gare"
-						onClick={() => clickGare(null)}
+						title="Fermer l'encart point d'intéret"
+						onClick={() => {
+							setOsmFeature(null)
+							setLatLngClicked(null)
+							resetZoneImages()
+						}}
 					>
 						×
 					</ModalCloseButton>
-					{bikeRoute && (
-						<BikeRouteRésumé
-							{...{ data: bikeRoute, bikeRouteProfile, setBikeRouteProfile }}
-						/>
-					)}
-					<GareInfo clickedGare={clickedGare} />
-				</div>
-			) : osmFeature ? (
-				<OsmFeature data={osmFeature} />
-			) : (
-				!clickTipRead && (
+				)}
+				{ogImage && (
+					<FeatureImage
+						src={ogImage}
+						css={`
+							width: 100%;
+							height: 6rem;
+							@media (min-height: 800px) {
+								height: 9rem;
+							}
+							object-fit: cover;
+						`}
+					/>
+				)}
+				<ZoneImages images={zoneImages} />
+				{clickedGare ? (
 					<div>
-						<p
-							css={`
-								max-width: 20rem;
-							`}
+						<ModalCloseButton
+							title="Fermer l'encart gare"
+							onClick={() => clickGare(null)}
 						>
-							Cliquez sur un point d'intérêt ou saisissez une destination puis
-							explorez les gares autour.
-						</p>
-						<DialogButton
-							onClick={() => setTutorials({ ...tutorials, clickTip: true })}
-						>
-							OK
-						</DialogButton>
+							×
+						</ModalCloseButton>
+						{bikeRoute && (
+							<BikeRouteRésumé
+								{...{ data: bikeRoute, bikeRouteProfile, setBikeRouteProfile }}
+							/>
+						)}
+						<GareInfo clickedGare={clickedGare} />
 					</div>
-				)
-			)}
+				) : osmFeature ? (
+					<OsmFeature data={osmFeature} />
+				) : (
+					!clickTipRead && (
+						<div>
+							<p
+								css={`
+									max-width: 20rem;
+								`}
+							>
+								Cliquez sur un point d'intérêt ou saisissez une destination puis
+								explorez les gares autour.
+							</p>
+							<DialogButton
+								onClick={() => setTutorials({ ...tutorials, clickTip: true })}
+							>
+								OK
+							</DialogButton>
+						</div>
+					)
+				)}
+			</section>
 		</section>
 	)
 }

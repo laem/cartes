@@ -63,7 +63,10 @@ export default function Map({ searchParams }) {
 
 	const showOpenOnly = searchParams.o
 
-	const zoneImages = useZoneImages({ latLngClicked, setLatLngClicked })
+	const [zoneImages, resetZoneImages] = useZoneImages({
+		latLngClicked,
+		setLatLngClicked,
+	})
 
 	if (process.env.NEXT_PUBLIC_MAPTILER == null) {
 		throw new Error('You have to configure env REACT_APP_API_KEY, see README')
@@ -665,6 +668,7 @@ out skel qt;
 						setBikeRouteProfile,
 						bikeRouteProfile,
 						zoneImages,
+						resetZoneImages,
 						zoom,
 						searchParams,
 					}}
