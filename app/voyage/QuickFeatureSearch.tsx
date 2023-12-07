@@ -54,7 +54,7 @@ export default function QuickFeatureSearch({
 						img {
 							padding: 0.2rem 0.2rem 0.1rem 0.2rem;
 						}
-						border: 2px solid var(--darkColor);
+						border: 2px solid var(--lighterColor);
 					}
 					li a {
 						width: ${width};
@@ -76,17 +76,26 @@ export default function QuickFeatureSearch({
 						<li
 							key={category.name}
 							css={`
-								background: ${!categorySet
-									? 'var(--lightestColor)'
-									: categorySet.name === category.name
-									? 'var(--darkColor)'
-									: 'var(--lightestColor)'};
 								text-align: center;
 								img {
 									width: 1.6rem;
 									height: auto;
 									vertical-align: middle;
+									filter: invert(16%) sepia(24%) saturate(3004%)
+										hue-rotate(180deg) brightness(89%) contrast(98%);
 								}
+								background: ${!categorySet
+									? 'white'
+									: categorySet.name === category.name
+									? 'var(--lighterColor)'
+									: 'white'};
+
+								${categorySet?.name === category.name &&
+								`border-color: var(--darkColor) !important;
+
+img {filter: invert(23%) sepia(100%) saturate(1940%) hue-rotate(206deg) brightness(89%) contrast(84%);}
+
+								`}
 							`}
 							title={category.title}
 						>
