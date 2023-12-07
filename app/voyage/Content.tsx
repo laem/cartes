@@ -65,6 +65,11 @@ export default function Content({
 	const choice = state.vers?.choice
 	const category = getCategory(searchParams)
 
+	const osmWikimediaImage =
+		osmFeature &&
+		osmFeature.tags.wikimedia_commons &&
+		toThumb(osmFeature.tags.wikimedia_commons)
+
 	return (
 		<section>
 			{!choice && <PlaceSearch {...{ state, setState, sideSheet, setSnap }} />}
@@ -111,6 +116,19 @@ export default function Content({
 				{ogImage && (
 					<FeatureImage
 						src={ogImage}
+						css={`
+							width: 100%;
+							height: 6rem;
+							@media (min-height: 800px) {
+								height: 9rem;
+							}
+							object-fit: cover;
+						`}
+					/>
+				)}
+				{osmWikimediaImage && (
+					<FeatureImage
+						src={osmWikimediaImage}
 						css={`
 							width: 100%;
 							height: 6rem;
