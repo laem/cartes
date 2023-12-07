@@ -132,9 +132,13 @@ const OpeningHours = ({ opening_hours }) => {
 			<details open={false}>
 				<summary>
 					<OpenIndicator isOpen={isOpen} />{' '}
-					<span>
-						{isOpen ? 'Ouvert' : 'Fermé'} jusqu'à {formatDate(nextChange)}
-					</span>
+					{!nextChange ? (
+						<span>Ouvert 24/24 7j/7</span>
+					) : (
+						<span>
+							{isOpen ? 'Ouvert' : 'Fermé'} jusqu'à {formatDate(nextChange)}
+						</span>
+					)}
 				</summary>
 
 				{opening_hours}

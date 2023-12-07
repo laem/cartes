@@ -571,6 +571,7 @@ out skel qt;
 				.addTo(map)
 
 			setState((state) => ({ ...state, vers: { ...state.vers, marker } }))
+			setLatLngClicked({ lng: center[0], lat: center[1] })
 
 			function onDragEnd() {
 				const { lng, lat } = marker.getLngLat()
