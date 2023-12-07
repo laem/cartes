@@ -105,8 +105,13 @@ type ProviderProps = {
 export function ThemeColorsProvider({ color, children }: ProviderProps) {
 	const colors = generateTheme(color)
 	return (
-		<ColorProviderComponent $variables={colors}>
+		<ColorProviderComponent $variables={colors} id="colorProvider">
 			{children}
 		</ColorProviderComponent>
 	)
 }
+
+export const computeCssVariable = (name) =>
+	getComputedStyle(document.querySelector('#colorProvider')).getPropertyValue(
+		name
+	)
