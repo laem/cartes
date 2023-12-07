@@ -1,4 +1,4 @@
-import { getCategory } from '@/components/categories'
+import { getCategory } from '@/components/voyage/categories'
 import {
 	CityImage,
 	Destination,
@@ -14,6 +14,7 @@ import { ExplanationWrapper } from './ContentUI'
 import Explanations from './explanations.mdx'
 import { FeatureImage } from './FeatureImage'
 import GareInfo from './GareInfo'
+import { defaultState } from './Map'
 import OsmFeature from './OsmFeature'
 import PlaceSearch from './PlaceSearch'
 import QuickFeatureSearch from './QuickFeatureSearch'
@@ -107,9 +108,12 @@ export default function Content({
 					<ModalCloseButton
 						title="Fermer l'encart point d'intéret"
 						onClick={() => {
+							console.log('will yo')
 							setOsmFeature(null)
 							setLatLngClicked(null)
 							resetZoneImages()
+							console.log('will set default stat')
+							setState(defaultState)
 						}}
 					/>
 				)}
@@ -144,7 +148,10 @@ export default function Content({
 					<div>
 						<ModalCloseButton
 							title="Fermer l'encart gare"
-							onClick={() => clickGare(null)}
+							onClick={() => {
+								console.log('will yo2')
+								clickGare(null)
+							}}
 						/>
 						{bikeRoute && (
 							<BikeRouteRésumé

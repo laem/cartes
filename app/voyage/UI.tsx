@@ -47,8 +47,8 @@ export const MapHeader = styled.div`
 `
 
 const size = 1.3
-export const ModalCloseButton = () => (
-	<ModalCloseButtonButton>
+export const ModalCloseButton = (props) => (
+	<ModalCloseButtonButton {...props}>
 		<span>×</span>
 	</ModalCloseButtonButton>
 )

@@ -20,13 +20,13 @@ import { categoryIconUrl } from './QuickFeatureSearch'
 import { MapContainer, MapHeader } from './UI'
 import { decodePlace, encodePlace } from './utils'
 import { useZoneImages } from './ZoneImages'
-import { getCategory } from '@/components/categories'
+import { getCategory } from '@/components/voyage/categories'
 
 const defaultCenter =
 	// Saint Malo [-1.9890417068124002, 48.66284934737089]
 	[-1.6776317608896583, 48.10983044383964]
 
-const defaultState = {
+export const defaultState = {
 	depuis: { inputValue: '', choice: false },
 	vers: { inputValue: '', choice: false },
 	validated: false,
@@ -630,31 +630,6 @@ out skel qt;
 	return (
 		<MapContainer>
 			<MapHeader $style={style}>
-				<div
-					css={`
-						display: flex;
-						align-items: center;
-					`}
-				>
-					{choice && (
-						<button
-							onClick={() => setState(defaultState)}
-							css={`
-								background: white;
-								border: 3px solid var(--color);
-								width: 2.5rem;
-								height: 2.5rem;
-								border-radius: 3rem;
-								display: inline-flex;
-								margin: 0 0.6rem;
-								align-items: center;
-								justify-content: center;
-							`}
-						>
-							<Emoji e="✏️" />
-						</button>
-					)}
-				</div>
 				<ModalSwitch
 					{...{
 						setState,
