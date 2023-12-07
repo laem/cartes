@@ -27,18 +27,16 @@ export default function BikeRouteRésumé({
 				align-items: center;
 				background: var(--lightestColor);
 				padding: 0.6rem;
-				max-width: 20rem;
 				color: var(--darkestColor);
 				line-height: 1.4rem;
-				border: 5px solid var(--color);
+				border: 4px solid var(--color);
+				border-radius: 0.5rem;
 				img {
 					margin-right: 0.4rem;
 					width: 2.5rem;
 					height: auto;
 				}
 				@media (min-width: 1200px) {
-					max-width: 35rem;
-					height: 6rem;
 				}
 			`}
 		>
@@ -49,9 +47,8 @@ export default function BikeRouteRésumé({
 					Le trajet de <strong>{km} km</strong> depuis la gare vous prendra{' '}
 					<strong>
 						{heures ? heures + ` heure${heures > 1 ? 's' : ''} et ` : ''}
-						{minutes} minutes
-					</strong>
-					<br />
+						{minutes} min
+					</strong>{' '}
 					pour{' '}
 					<strong
 						style={css(
@@ -62,7 +59,7 @@ export default function BikeRouteRésumé({
 					>
 						{déniveléCumulé} m
 					</strong>{' '}
-					de dénivelé cumulé ({dénivelé} m en absolu).
+					de dénivelé (<small>{dénivelé} m en absolu</small>).
 				</p>
 				<ProfileChooser
 					{...{
