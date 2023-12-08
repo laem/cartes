@@ -6,7 +6,9 @@ import wikipediaLogo from '@/public/wikipedia.svg'
 export default function Wikipedia({ name }) {
 	const [text, setText] = useState(null)
 	const [lang, title] = name.split(':')
-	const ApiUrl = `https://${lang}.wikipedia.org/w/api.php?format=json&origin=*&action=query&prop=extracts&explaintext=false&exintro&titles=${title}`,
+	const ApiUrl = `https://${lang}.wikipedia.org/w/api.php?format=json&origin=*&action=query&prop=extracts&explaintext=false&exintro&titles=${encodeURIComponent(
+			title
+		)}&redirects=1`,
 		url = `https://${lang}.wikipedia.org/wiki/${title}`
 
 	useEffect(() => {
