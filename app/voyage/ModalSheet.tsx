@@ -1,4 +1,3 @@
-import css from '@/components/css/convertToJs'
 import Emoji from '@/components/Emoji'
 import { useEffect, useState } from 'react'
 import Sheet from 'react-modal-sheet'
@@ -7,8 +6,15 @@ import Content from './Content'
 
 const popSize = 6
 export default function ModalSheet(props) {
+	console.log('render modal sheet', props)
 	const [isOpen, setOpen] = useState(true)
 	const [initialSnap, setInitialSnap] = useState(2)
+	useEffect(() => {
+		if (props.osmFeature) {
+			setOpen(true)
+			setInitialSnap(1)
+		}
+	}, [setInitialSnap, props.osmFeature])
 	if (!isOpen)
 		return (
 			<div
@@ -42,7 +48,7 @@ export default function ModalSheet(props) {
 			onClose={() => {
 				setOpen(false)
 			}}
-			snapPoints={[-50, 0.5, 100]}
+			snapPoints={[-50, 0.5, 200]}
 			initialSnap={initialSnap}
 			mountPoint={document.querySelector('main')}
 		>
@@ -61,7 +67,12 @@ export default function ModalSheet(props) {
 				<Sheet.Content>
 					<Sheet.Scroller draggableAt="both">
 						<SheetContentWrapper>
-							<Content {...props} sideSheet={false} setSnap={setInitialSnap} />
+							<Content
+								{...props}
+								sideSheet={false}
+								setSnap={setInitialSnap}
+								openSheet={setOpen}
+							/>
 						</SheetContentWrapper>
 					</Sheet.Scroller>
 				</Sheet.Content>

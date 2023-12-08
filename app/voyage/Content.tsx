@@ -42,6 +42,7 @@ export default function Content({
 	sideSheet,
 	searchParams,
 	setSnap = () => null,
+	openSheet = () => null,
 }) {
 	const url = osmFeature?.tags?.website || osmFeature?.tags?.['contact:website']
 	const ogImages = useOgImageFetcher(url),
@@ -121,6 +122,7 @@ export default function Content({
 								resetZoneImages()
 								console.log('will set default stat')
 								setState(defaultState)
+								openSheet(false)
 							}}
 						/>
 					)}
