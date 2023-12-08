@@ -53,10 +53,11 @@ export default function PlaceSearch({ state, setState, sideSheet, setSnap }) {
 								border-radius: 0.4rem;
 								padding: 0.6rem 0;
 								list-style-type: none;
-								@media (max-width: 800px) {
-									margin-left: -0.6rem;
-									width: 98vw;
-								}
+								margin-top: 0.2rem;
+								${!sideSheet &&
+								`
+									width: auto
+								`}
 							}
 						`}
 					>

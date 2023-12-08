@@ -28,7 +28,6 @@ export default function QuickFeatureSearch({
 				overflow: hidden;
 				overflow-x: scroll;
 				white-space: nowrap;
-				max-width: 90vw;
 				height: 3.5rem;
 				scrollbar-width: none;
 				&::-webkit-scrollbar {
