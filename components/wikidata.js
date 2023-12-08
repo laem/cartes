@@ -1,23 +1,30 @@
 import md5 from 'Components/md5'
 
 const endpointUrl = 'https://query.wikidata.org/sparql'
-const getQuery = (cityName) => `#defaultView:ImageGrid
-SELECT distinct ?item ?itemLabel ?itemDescription ?pic ?population ?area WHERE{  
-  ?item ?label "${cityName}";
+const getQuery = (name, onlyCities) => `#defaultView:ImageGrid
+SELECT distinct ?item ?itemLabel ?itemDescription ?pic ${
+	onlyCities ? `?population ?area ` : ''
+}WHERE{  
+  ?item ?label "${name}"@fr;
    wdt:P18 ?pic;
+   ${
+			onlyCities
+				? `
    wdt:P1082 ?population;
-   wdt:P2046 ?area.
+   wdt:P2046 ?area`
+				: ``
+		}.
   ?article schema:about ?item .
-  ?article schema:inLanguage "en" .
-  ?article schema:isPartOf <https://en.wikipedia.org/>. 
+  ?article schema:inLanguage "fr" .
+  ?article schema:isPartOf <https://fr.wikipedia.org/>. 
   SERVICE wikibase:label { bd:serviceParam wikibase:language "fr". }    
 }
  `
 
-export default (cityName) => {
-	const queryCity = cityName
+export default (name, onlyCities = true) => {
+	const queryCity = name
 
-	const query = getQuery(queryCity)
+	const query = getQuery(queryCity, onlyCities)
 
 	const fullUrl = endpointUrl + '?query=' + encodeURIComponent(query)
 	const headers = { Accept: 'application/sparql-results+json' }

@@ -6,7 +6,7 @@ export default function useWikidata(state) {
 	useEffect(() => {
 		if (!state.vers.choice) return undefined
 
-		getCityData(state.vers.choice.item.ville).then((json) =>
+		getCityData(state.vers.choice.item.nom, false).then((json) =>
 			setWikidata(json?.results?.bindings[0])
 		)
 	}, [state.vers])
