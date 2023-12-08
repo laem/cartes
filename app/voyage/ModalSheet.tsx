@@ -1,4 +1,5 @@
 import css from '@/components/css/convertToJs'
+import Emoji from '@/components/Emoji'
 import { useEffect, useState } from 'react'
 import Sheet from 'react-modal-sheet'
 import styled from 'styled-components'
@@ -11,7 +12,7 @@ export default function ModalSheet(props) {
 	if (!isOpen)
 		return (
 			<div
-				style={css(`
+				css={`
 					background: red;
 					position: fixed;
 					bottom: -${popSize / 2}rem;
@@ -21,12 +22,17 @@ export default function ModalSheet(props) {
 					height: ${popSize}rem;
 					border-radius: ${popSize}rem;
 					border: 2px solid var(--color);
-					box-shadow:rgba(0, 0, 0, 0.3) 0px -2px 16px;
+					box-shadow: rgba(0, 0, 0, 0.3) 0px -2px 16px;
 					cursor: pointer;
-				`)}
+					> span {
+						position: absolute;
+						top: 0.9rem;
+						right: 0.9rem;
+					}
+				`}
 				onClick={() => setOpen(true)}
 			>
-				UP
+				<Emoji e="🔎" />
 			</div>
 		)
 
