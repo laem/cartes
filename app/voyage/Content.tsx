@@ -69,39 +69,51 @@ export default function Content({
 	const choice = state.vers?.choice
 	const category = getCategory(searchParams)
 
+	console.log(osmFeature)
 	const osmWikimediaImage =
 		osmFeature &&
-		osmFeature.tags.wikimedia_commons &&
+		osmFeature.tags?.wikimedia_commons &&
 		toThumb(osmFeature.tags.wikimedia_commons)
 
 	const hasContent = choice || osmFeature || zoneImages || !clickTipRead
 	//console.log('OSM', osmFeature)
+	const hasFeature = choice || osmFeature
+	const showSearch = sideSheet || !hasFeature
 
 	return (
 		<section>
-			{!choice && <PlaceSearch {...{ state, setState, sideSheet, setSnap }} />}
-			{choice && versImageURL && (
-				<motion.div
-					initial={{ opacity: 0, scale: 0.8 }}
-					animate={{ opacity: 1, scale: 1 }}
-					transition={{}}
-					key={versImageURL}
-					exit={{ opacity: 0, scale: 0.5, transition: { duration: 0.2 } }}
-				>
-					<ImageWithNameWrapper>
-						<CityImage
-							src={versImageURL}
-							alt={`Une photo emblématique de la destination, ${state.vers.choice?.item?.nom}`}
+			{showSearch && (
+				<section>
+					{!choice && (
+						<PlaceSearch {...{ state, setState, sideSheet, setSnap }} />
+					)}
+					{choice && versImageURL && (
+						<motion.div
+							initial={{ opacity: 0, scale: 0.8 }}
+							animate={{ opacity: 1, scale: 1 }}
+							transition={{}}
+							key={versImageURL}
+							exit={{ opacity: 0, scale: 0.5, transition: { duration: 0.2 } }}
+						>
+							<ImageWithNameWrapper>
+								<CityImage
+									src={versImageURL}
+									alt={`Une photo emblématique de la destination, ${state.vers.choice?.item?.nom}`}
+								/>
+								<Destination>
+									<NextImage src={destinationPoint} alt="Vers" />
+									<h2>{state.vers.choice.item.nom}</h2>
+								</Destination>
+							</ImageWithNameWrapper>
+						</motion.div>
+					)}
+					{zoom > 12 && (
+						<QuickFeatureSearch
+							category={category}
+							searchParams={searchParams}
 						/>
-						<Destination>
-							<NextImage src={destinationPoint} alt="Vers" />
-							<h2>{state.vers.choice.item.nom}</h2>
-						</Destination>
-					</ImageWithNameWrapper>
-				</motion.div>
-			)}
-			{zoom > 12 && (
-				<QuickFeatureSearch category={category} searchParams={searchParams} />
+					)}
+				</section>
 			)}
 
 			{hasContent && (
