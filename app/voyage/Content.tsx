@@ -53,6 +53,7 @@ export default function Content({
 		clickTipRead = tutorials.clickTip
 	const wikidata = useWikidata(state)
 
+	const setSearchParams = useSetSeachParams()
 	if (!introductionRead)
 		return (
 			<ExplanationWrapper>
@@ -76,7 +77,6 @@ export default function Content({
 	const hasContent = choice || osmFeature || zoneImages || !clickTipRead
 	//console.log('OSM', osmFeature)
 
-	const setSearchParams = useSetSeachParams()
 	return (
 		<section>
 			{!choice && <PlaceSearch {...{ state, setState, sideSheet, setSnap }} />}

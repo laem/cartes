@@ -1,6 +1,5 @@
-import { usePathname, useSearchParams, useRouter } from 'next/navigation'
+import { usePathname, useRouter, useSearchParams } from 'next/navigation'
 import { useCallback, useEffect, useState } from 'react'
-import { objectMap, objectMapEntries } from './utils/utils'
 
 export default function useSetSeachParams() {
 	const router = useRouter()
