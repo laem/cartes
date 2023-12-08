@@ -72,6 +72,7 @@ export default function Content({
 		toThumb(osmFeature.tags.wikimedia_commons)
 
 	const hasContent = choice || osmFeature || zoneImages || !clickTipRead
+	//console.log('OSM', osmFeature)
 	return (
 		<section>
 			{!choice && <PlaceSearch {...{ state, setState, sideSheet, setSnap }} />}

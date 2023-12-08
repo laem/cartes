@@ -14,7 +14,7 @@ import { goodIconSize } from '@/components/voyage/mapUtils'
 import { centerOfMass } from '@turf/turf'
 import parseOpeningHours from 'opening_hours'
 import ModalSwitch from './ModalSwitch'
-import { osmRequest } from './osmRequest'
+import { disambiguateWayRelation, osmRequest } from './osmRequest'
 import { categoryIconUrl } from './QuickFeatureSearch'
 import { MapContainer, MapHeader } from './UI'
 import { decodePlace, encodePlace } from './utils'
@@ -428,9 +428,8 @@ out skel qt;
 
 			const openMapTilesId = '' + features[0].id
 
-			console.log('renderedFeatures', features)
 			const id = openMapTilesId.slice(null, -1),
-				featureType = { '1': 'way', '0': 'node', '4': 'relation' }[
+				featureType = { '1': 'way', '0': 'node', '4': 'relation' }[ //this is broken. We're getting the "4" suffix for relations AND ways. See https://github.com/openmaptiles/openmaptiles/issues/1587. See below for hack
 					openMapTilesId.slice(-1)
 				]
 			if (!featureType) {
@@ -439,16 +438,20 @@ out skel qt;
 			}
 			console.log(features, id, openMapTilesId)
 
-			setSearchParams({ lieu: encodePlace(featureType, id) })
+			const [element, realFeatureType] = await disambiguateWayRelation(
+				featureType,
+				id,
+				e.lngLat
+			)
 
-			const elements = await osmRequest(featureType, id)
+			if (element) setSearchParams({ lieu: encodePlace(realFeatureType, id) })
 
-			console.log('Résultat OSM', elements)
-			if (!elements.length) return
+			console.log('Résultat OSM', element)
+			if (!element) return
 
-			setOsmFeature(elements[0])
+			setOsmFeature(element)
 
-			const uic = elements[0].tags?.uic_ref,
+			const uic = element.tags?.uic_ref,
 				gare = gares && gares.find((g) => g.uic.includes(uic))
 			if (uic && gare) clickGare(gare)
 		}
