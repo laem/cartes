@@ -22,6 +22,7 @@ import { DialogButton, ModalCloseButton } from './UI'
 import useOgImageFetcher from './useOgImageFetcher'
 import useWikidata from './useWikidata'
 import { ZoneImages } from './ZoneImages'
+import useSetSeachParams from '@/components/useSetSearchParams'
 
 export default function Content({
 	latLngClicked,
@@ -73,6 +74,8 @@ export default function Content({
 
 	const hasContent = choice || osmFeature || zoneImages || !clickTipRead
 	//console.log('OSM', osmFeature)
+
+	const setSearchParams = useSetSeachParams()
 	return (
 		<section>
 			{!choice && <PlaceSearch {...{ state, setState, sideSheet, setSnap }} />}
@@ -112,7 +115,8 @@ export default function Content({
 							title="Fermer l'encart point d'intéret"
 							onClick={() => {
 								console.log('will yo')
-								setOsmFeature(null)
+								setSearchParams({ lieu: undefined })
+								setTimeout(() => setOsmFeature(null), 100)
 								setLatLngClicked(null)
 								resetZoneImages()
 								console.log('will set default stat')

@@ -444,6 +444,7 @@ out skel qt;
 				e.lngLat
 			)
 
+			console.log('will set OSMfeature after click on POI')
 			setOsmFeature(element)
 			if (element) setSearchParams({ lieu: encodePlace(realFeatureType, id) })
 
@@ -464,6 +465,7 @@ out skel qt;
 	}, [map, setState, distanceMode, gares])
 
 	useEffect(() => {
+		console.log('Debug', featureType, featureId, choice, osmFeature)
 		if (!map || !featureType || !featureId) return
 		if (
 			osmFeature &&
@@ -509,6 +511,7 @@ out skel qt;
 						)
 				  ).geometry.coordinates
 
+			console.log('will set OSMfeature after loading it from the URL')
 			setOsmFeature(element)
 			console.log('should fly to', center)
 			if (!choice || choice.item.osmId !== featureId) {
@@ -538,6 +541,7 @@ out skel qt;
 				lieu: encodePlace(properties.featureType, properties.id),
 			})
 
+			console.log('will set OSMfeature after quickSearch marker click')
 			setOsmFeature({ ...properties, tags })
 		})
 		map.on('mouseenter', 'features-points', () => {

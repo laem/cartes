@@ -1,5 +1,6 @@
 import { usePathname, useSearchParams, useRouter } from 'next/navigation'
 import { useCallback, useEffect, useState } from 'react'
+import { objectMap, objectMapEntries } from './utils/utils'
 
 export default function useSetSeachParams() {
 	const router = useRouter()
@@ -11,14 +12,13 @@ export default function useSetSeachParams() {
 		setHash(window.location.hash)
 	}, [searchParams])
 
-	//TODO move to components
-	// Get a new searchParams string by merging the current
-	// searchParams with a provided key/value pair
 	const createQueryString = useCallback(
 		(newSearchParams: object, clear: boolean) => {
 			const params = new URLSearchParams(clear ? {} : searchParams)
 
-			Object.entries(newSearchParams).map(([k, v]) => params.set(k, v))
+			Object.entries(newSearchParams).map(([k, v]) => {
+				v === undefined ? params.delete(k) : params.set(k, v)
+			})
 
 			return params.toString()
 		},

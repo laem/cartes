@@ -117,3 +117,9 @@ export const objectMap = (obj, fn) =>
 	Object.fromEntries(Object.entries(obj).map(([k, v], i) => [k, fn(v, k, i)]))
 export const objectMapKeys = (obj, fn) =>
 	Object.fromEntries(Object.entries(obj).map(([k, v], i) => [fn(k, v, i), v]))
+
+export const objectMapEntries = (obj, fn, filterBoolean) => {
+	const entries = Object.entries(obj).map(([k, v], i) => fn(k, v, i))
+	const filteredEntries = filterBoolean ? entries.filter(Boolean) : entries
+	return Object.fromEntries(filteredEntries)
+}
