@@ -26,7 +26,7 @@ function fetchPhoton(v, setState, whichInput, local) {
 									longitude: f.geometry.coordinates[0],
 									latitude: f.geometry.coordinates[1],
 									nom: f.properties.name,
-									ville: f.properties.cities || f.properties.name,
+									ville: f.properties.city || f.properties.name,
 									pays: f.properties.country,
 									région: f.properties.state,
 									département: f.properties.county,
