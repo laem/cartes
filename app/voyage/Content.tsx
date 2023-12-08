@@ -71,6 +71,7 @@ export default function Content({
 		osmFeature.tags.wikimedia_commons &&
 		toThumb(osmFeature.tags.wikimedia_commons)
 
+	const hasContent = choice || osmFeature || zoneImages || !clickTipRead
 	return (
 		<section>
 			{!choice && <PlaceSearch {...{ state, setState, sideSheet, setSnap }} />}
@@ -98,90 +99,96 @@ export default function Content({
 				<QuickFeatureSearch category={category} searchParams={searchParams} />
 			)}
 
-			<section
-				css={`
-					padding-top: 1.6rem;
-					position: relative;
-				`}
-			>
-				{(choice || osmFeature) && (
-					<ModalCloseButton
-						title="Fermer l'encart point d'intéret"
-						onClick={() => {
-							console.log('will yo')
-							setOsmFeature(null)
-							setLatLngClicked(null)
-							resetZoneImages()
-							console.log('will set default stat')
-							setState(defaultState)
-						}}
-					/>
-				)}
-				{ogImage && (
-					<FeatureImage
-						src={ogImage}
-						css={`
-							width: 100%;
-							height: 6rem;
-							@media (min-height: 800px) {
-								height: 9rem;
-							}
-							object-fit: cover;
-						`}
-					/>
-				)}
-				{osmWikimediaImage && (
-					<FeatureImage
-						src={osmWikimediaImage}
-						css={`
-							width: 100%;
-							height: 6rem;
-							@media (min-height: 800px) {
-								height: 9rem;
-							}
-							object-fit: cover;
-						`}
-					/>
-				)}
-				<ZoneImages images={zoneImages} />
-				{clickedGare ? (
-					<div>
+			{hasContent && (
+				<section
+					css={`
+						padding-top: 1.6rem;
+						position: relative;
+					`}
+				>
+					{(choice || osmFeature) && (
 						<ModalCloseButton
-							title="Fermer l'encart gare"
+							title="Fermer l'encart point d'intéret"
 							onClick={() => {
-								console.log('will yo2')
-								clickGare(null)
+								console.log('will yo')
+								setOsmFeature(null)
+								setLatLngClicked(null)
+								resetZoneImages()
+								console.log('will set default stat')
+								setState(defaultState)
 							}}
 						/>
-						{bikeRoute && (
-							<BikeRouteRésumé
-								{...{ data: bikeRoute, bikeRouteProfile, setBikeRouteProfile }}
-							/>
-						)}
-						<GareInfo clickedGare={clickedGare} />
-					</div>
-				) : osmFeature ? (
-					<OsmFeature data={osmFeature} />
-				) : (
-					!clickTipRead && (
+					)}
+					{ogImage && (
+						<FeatureImage
+							src={ogImage}
+							css={`
+								width: 100%;
+								height: 6rem;
+								@media (min-height: 800px) {
+									height: 9rem;
+								}
+								object-fit: cover;
+							`}
+						/>
+					)}
+					{osmWikimediaImage && (
+						<FeatureImage
+							src={osmWikimediaImage}
+							css={`
+								width: 100%;
+								height: 6rem;
+								@media (min-height: 800px) {
+									height: 9rem;
+								}
+								object-fit: cover;
+							`}
+						/>
+					)}
+					<ZoneImages images={zoneImages} />
+					{clickedGare ? (
 						<div>
-							<p
-								css={`
-									max-width: 20rem;
-								`}
-							>
-								Cliquez sur un point d'intérêt ou saisissez une destination puis
-								explorez les gares autour.
-							</p>
-							<DialogButton
-								onClick={() => setTutorials({ ...tutorials, clickTip: true })}
-							>
-								OK
-							</DialogButton>
+							<ModalCloseButton
+								title="Fermer l'encart gare"
+								onClick={() => {
+									console.log('will yo2')
+									clickGare(null)
+								}}
+							/>
+							{bikeRoute && (
+								<BikeRouteRésumé
+									{...{
+										data: bikeRoute,
+										bikeRouteProfile,
+										setBikeRouteProfile,
+									}}
+								/>
+							)}
+							<GareInfo clickedGare={clickedGare} />
 						</div>
-					)
-				)}
-			</section>
+					) : osmFeature ? (
+						<OsmFeature data={osmFeature} />
+					) : (
+						!clickTipRead && (
+							<div>
+								<p
+									css={`
+										max-width: 20rem;
+									`}
+								>
+									Cliquez sur un point d'intérêt ou saisissez une destination
+									puis explorez les gares autour.
+								</p>
+								<DialogButton
+									onClick={() => setTutorials({ ...tutorials, clickTip: true })}
+								>
+									OK
+								</DialogButton>
+							</div>
+						)
+					)}
+				</section>
+			)}
 		</section>
 	)
 }
