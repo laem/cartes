@@ -93,7 +93,7 @@ img {filter: invert(23%) sepia(100%) saturate(1940%) hue-rotate(206deg) brightne
 
 								`}
 							`}
-							title={category.title}
+							title={category.title || category.name}
 						>
 							<Link
 								href={setSearchParams(newSearchParams, true, true)}
