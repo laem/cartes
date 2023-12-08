@@ -444,12 +444,11 @@ out skel qt;
 				e.lngLat
 			)
 
+			setOsmFeature(element)
 			if (element) setSearchParams({ lieu: encodePlace(realFeatureType, id) })
 
 			console.log('Résultat OSM', element)
 			if (!element) return
-
-			setOsmFeature(element)
 
 			const uic = element.tags?.uic_ref,
 				gare = gares && gares.find((g) => g.uic.includes(uic))
@@ -466,6 +465,12 @@ out skel qt;
 
 	useEffect(() => {
 		if (!map || !featureType || !featureId) return
+		if (
+			osmFeature &&
+			featureType === osmFeature.type &&
+			featureId === osmFeature.id + ''
+		)
+			return
 		const request = async () => {
 			console.log('Preparing OSM request ', featureType, featureId)
 			const full = ['way', 'relation'].includes(featureType)
@@ -519,7 +524,7 @@ out skel qt;
 			}
 		}
 		request()
-	}, [map, featureType, featureId, state.vers.choice])
+	}, [map, featureType, featureId, state.vers.choice, osmFeature])
 
 	useEffect(() => {
 		if (!map || distanceMode) return
