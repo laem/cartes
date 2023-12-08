@@ -1,7 +1,5 @@
-import { useLocalStorage, useMediaQuery } from 'usehooks-ts'
 import dynamic from 'next/dynamic'
-import useTraceComponentUpdate from '@/components/utils/useTraceComponentUpdate'
-import { latest } from 'maplibre-gl'
+import { useMediaQuery } from 'usehooks-ts'
 
 const ModalSheet = dynamic(() => import('./ModalSheet'), {
 	ssr: false,
@@ -12,8 +10,6 @@ const SideSheet = dynamic(() => import('./SideSheet'), {
 
 export default function ModalSwitch(props) {
 	const matches = useMediaQuery('(min-width: 800px)')
-
-	//	useTraceComponentUpdate(props)
 
 	if (matches) return <SideSheet {...props} />
 

@@ -8,7 +8,6 @@ import { createPolygon, createSearchBBox } from './createSearchPolygon'
 import { sortGares } from './gares'
 
 import useSetSeachParams from '@/components/useSetSearchParams'
-import useTraceComponentUpdate from '@/components/utils/useTraceComponentUpdate'
 import { extractOsmFeature } from '@/components/voyage/fetchPhoton'
 import MapButtons from '@/components/voyage/MapButtons'
 import { goodIconSize } from '@/components/voyage/mapUtils'
@@ -37,7 +36,6 @@ const styleKeys = {
 	satellite: 'satellite',
 }
 export default function Map({ searchParams }) {
-	useTraceComponentUpdate(searchParams, 'map')
 	const [state, setState] = useState(defaultState)
 	try {
 		console.log('state', state, state.vers.choice.item.type)
@@ -56,8 +54,6 @@ export default function Map({ searchParams }) {
 		[featureType, featureId] = place
 			? decodePlace(place)
 			: extractOsmFeature(state.vers.choice)
-
-	console.log('OSM', featureType, featureId)
 
 	const category = getCategory(searchParams)
 

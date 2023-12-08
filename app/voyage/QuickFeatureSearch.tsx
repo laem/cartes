@@ -1,7 +1,4 @@
-import css from '@/components/css/convertToJs'
-import Emoji from '@/components/Emoji'
 import useSetSeachParams from '@/components/useSetSearchParams'
-import useTraceComponentUpdate from '@/components/utils/useTraceComponentUpdate'
 import { omit } from '@/components/utils/utils'
 import Link from 'next/link'
 import categories from './categories.yaml'

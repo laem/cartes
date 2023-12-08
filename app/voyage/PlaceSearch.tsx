@@ -37,7 +37,7 @@ export default function PlaceSearch({ state, setState, sideSheet, setSnap }) {
 					autoFocus={true}
 					value={vers.inputValue}
 					onFocus={() => setSnap(0)}
-					placeholder={'Saint-Malo, Sarzeau, Le Conquet, ...'}
+					placeholder={'Saint-Malo, Le Conquet, Café du Port...'}
 					onChange={onInputChange('vers', localSearch)}
 				/>
 			</InputStyle>
