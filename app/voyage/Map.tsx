@@ -483,7 +483,7 @@ out skel qt;
 			const elements = await osmRequest(featureType, featureId, full)
 			if (!elements.length) return
 
-			const element = elements.find((el) => el.id === featureId)
+			const element = elements.find((el) => '' + el.id === featureId)
 
 			const featureCollectionFromOsmNodes = (nodes) => {
 				console.log('yanodes', nodes)
@@ -511,10 +511,8 @@ out skel qt;
 
 			setOsmFeature(element)
 			console.log('should fly to', center)
-			if (
-				state.vers.choice?.item &&
-				state.vers.choice.item.osmId !== featureId
-			) {
+			if (!choice || choice.item.osmId !== featureId) {
+				console.log('will fly to', center)
 				map.flyTo({
 					center,
 					zoom: 18,
@@ -524,7 +522,7 @@ out skel qt;
 			}
 		}
 		request()
-	}, [map, featureType, featureId, state.vers.choice, osmFeature])
+	}, [map, featureType, featureId, choice, osmFeature])
 
 	useEffect(() => {
 		if (!map || distanceMode) return
