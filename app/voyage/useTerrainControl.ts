@@ -5,13 +5,12 @@ export default function useTerrainControl(map, style) {
 	useEffect(() => {
 		if (!map) return
 		if (!style.hasTerrain) return
-		const control = map.addControl(
-			new maplibregl.TerrainControl({
-				source: 'terrain-rgb',
-				exaggeration: 1,
-			}),
-			'top-right'
-		)
+		const control = new maplibregl.TerrainControl({
+			source: 'terrain-rgb',
+			exaggeration: 1,
+		})
+
+		map.addControl(control, 'top-right')
 		return () => {
 			control && map.removeControl(control)
 		}
