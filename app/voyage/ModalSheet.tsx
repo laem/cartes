@@ -1,30 +1,44 @@
-import { useEffect, useState } from 'react'
-import Sheet from 'react-modal-sheet'
+import { useCallback, useEffect, useRef, useState } from 'react'
+import Sheet, { SheetRef } from 'react-modal-sheet'
 import styled from 'styled-components'
 import Content from './Content'
 import ModalSheetReminder from './ModalSheetReminder'
 
+const snapPoints = [-50, 0.5, 200, 0],
+	initialSnap = 2
+
 export default function ModalSheet(props) {
-	console.log('render modal sheet', props)
 	const [isOpen, setOpen] = useState(true)
-	const [initialSnap, setInitialSnap] = useState(2)
+	const ref = useRef<SheetRef>()
+	const setSnap = useCallback(
+		(i: number) => {
+			console.log('snapp to ' + i)
+
+			ref.current?.snapTo(i)
+		},
+		[ref]
+	)
+
 	useEffect(() => {
 		if (props.osmFeature) {
-			setOpen(true)
-			setInitialSnap(1)
+			setSnap(1)
 		}
-	}, [setInitialSnap, props.osmFeature])
+	}, [setSnap, props.osmFeature])
 	if (!isOpen) return <ModalSheetReminder setOpen={setOpen} />
 
 	return (
 		<CustomSheet
+			ref={ref}
 			isOpen={isOpen}
 			onClose={() => {
 				setOpen(false)
 			}}
-			snapPoints={[-50, 0.5, 200]}
+			snapPoints={snapPoints}
 			initialSnap={initialSnap}
 			mountPoint={document.querySelector('main')}
+			onSnap={(snapIndex) =>
+				console.log('> Current snap point index:', snapIndex)
+			}
 		>
 			<Sheet.Container
 				css={`
@@ -44,7 +58,7 @@ export default function ModalSheet(props) {
 							<Content
 								{...props}
 								sideSheet={false}
-								setSnap={setInitialSnap}
+								setSnap={setSnap}
 								openSheet={setOpen}
 							/>
 						</SheetContentWrapper>
