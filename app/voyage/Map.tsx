@@ -297,6 +297,8 @@ out skel qt;
 	}, [setGares])
 
 	useEffect(() => {
+		if (map) return
+		console.log('salut', map)
 		const newMap = new maplibregl.Map({
 			container: mapContainerRef.current,
 			style: styleUrl,
@@ -304,32 +306,30 @@ out skel qt;
 			zoom: defaultZoom,
 			hash: true,
 		})
-		setMap(newMap)
+		newMap.on('load', () => {
+			setMap(newMap)
 
-		newMap.addControl(
-			new maplibregl.NavigationControl({
-				visualizePitch: true,
-				showZoom: true,
-				showCompass: true,
-			}),
-			'top-right'
-		)
+			newMap.addControl(
+				new maplibregl.NavigationControl({
+					visualizePitch: true,
+					showZoom: true,
+					showCompass: true,
+				}),
+				'top-right'
+			)
 
-		newMap.addControl(
-			new maplibregl.GeolocateControl({
-				positionOptions: {
-					enableHighAccuracy: true,
-				},
-				trackUserLocation: true,
-			})
-		)
+			newMap.addControl(
+				new maplibregl.GeolocateControl({
+					positionOptions: {
+						enableHighAccuracy: true,
+					},
+					trackUserLocation: true,
+				})
+			)
 
-		setZoom(Math.round(newMap.getZoom()))
-
-		return () => {
-			newMap.remove()
-		}
-	}, [setMap, styleUrl, setZoom])
+			setZoom(Math.round(newMap.getZoom()))
+		})
+	}, [map, setMap, styleUrl, setZoom, mapContainerRef.current])
 
 	useTerrainControl(map, style)
 
@@ -466,7 +466,6 @@ out skel qt;
 	}, [map, setState, distanceMode, gares])
 
 	useEffect(() => {
-		console.log('Debug', featureType, featureId, choice, osmFeature)
 		if (!map || !featureType || !featureId) return
 		if (
 			osmFeature &&

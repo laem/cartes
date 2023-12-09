@@ -112,7 +112,9 @@ export default function useMeasureDistance(map, distanceMode) {
 	}, [points, geojson, map, distanceMode])
 
 	useEffect(() => {
-		if (!map || distanceMode || !map.getSource('measure-points')) return
+		if (!map || distanceMode || map.getSource) return
+		const source = map.getSource('measure-points')
+		if (!source) return
 
 		map.removeLayer('measure-lines')
 		map.removeLayer('measure-points')
