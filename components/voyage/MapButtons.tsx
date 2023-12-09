@@ -1,10 +1,8 @@
 'use client'
 
 import useMeasureDistance from '@/app/voyage/useMeasureDistance'
-import Link from 'next/link'
 import styled from 'styled-components'
 import Emoji from '../Emoji'
-import useSetSeachParams from '../useSetSearchParams'
 
 export const MapButtonsWrapper = styled.div`
 	position: fixed;
@@ -54,31 +52,22 @@ export const MapButton = styled.div`
 `
 
 export default function MapButtons({
+	setStyleChooser,
 	style,
 	setDistanceMode,
 	map,
 	distanceMode,
 }) {
-	const setSearchParams = useSetSeachParams()
 	const [distance, resetDistance] = useMeasureDistance(map, distanceMode)
 	return (
 		<MapButtonsWrapper>
 			<MapButton>
-				<Link
-					href={setSearchParams(
-						{ style: style === 'satellite' ? 'streets' : 'satellite' },
-						true,
-						false
-					)}
-					title={
-						{
-							satellite: 'Passer à la vue carto',
-							streets: 'Passer à la vue satellite',
-						}[style]
-					}
+				<button
+					onClick={() => setStyleChooser(true)}
+					title={'Choisir un autre style de fond de carte'}
 				>
-					<Emoji e={{ satellite: '🗺️', streets: '🛰️' }[style]} />
-				</Link>
+					<Emoji e={style.emoji} />
+				</button>
 			</MapButton>
 			<MapButton $active={distanceMode}>
 				<button onClick={() => setDistanceMode(!distanceMode)}>

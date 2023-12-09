@@ -23,6 +23,7 @@ import useOgImageFetcher from './useOgImageFetcher'
 import useWikidata from './useWikidata'
 import { ZoneImages } from './ZoneImages'
 import useSetSeachParams from '@/components/useSetSearchParams'
+import StyleChooser from './StyleChooser'
 
 export default function Content({
 	latLngClicked,
@@ -43,6 +44,9 @@ export default function Content({
 	searchParams,
 	setSnap = () => null,
 	openSheet = () => null,
+	setStyleChooser,
+	style,
+	styleChooser,
 }) {
 	const url = osmFeature?.tags?.website || osmFeature?.tags?.['contact:website']
 	const ogImages = useOgImageFetcher(url),
@@ -116,97 +120,103 @@ export default function Content({
 				</section>
 			)}
 
-			{hasContent && (
-				<section
-					css={`
-						padding-top: 1.6rem;
-						position: relative;
-					`}
-				>
-					{(choice || osmFeature) && (
-						<ModalCloseButton
-							title="Fermer l'encart point d'intéret"
-							onClick={() => {
-								console.log('will yo')
-								setSearchParams({ lieu: undefined })
-								setTimeout(() => setOsmFeature(null), 100)
-								setLatLngClicked(null)
-								resetZoneImages()
-								console.log('will set default stat')
-								setState(defaultState)
-								openSheet(false)
-							}}
-						/>
-					)}
-					{ogImage && (
-						<FeatureImage
-							src={ogImage}
-							css={`
-								width: 100%;
-								height: 6rem;
-								@media (min-height: 800px) {
-									height: 9rem;
-								}
-								object-fit: cover;
-							`}
-						/>
-					)}
-					{osmWikimediaImage && (
-						<FeatureImage
-							src={osmWikimediaImage}
-							css={`
-								width: 100%;
-								height: 6rem;
-								@media (min-height: 800px) {
-									height: 9rem;
-								}
-								object-fit: cover;
-							`}
-						/>
-					)}
-					<ZoneImages images={zoneImages} />
-					{clickedGare ? (
-						<div>
+			{styleChooser ? (
+				<StyleChooser {...{ setStyleChooser, style }} />
+			) : (
+				hasContent && (
+					<section
+						css={`
+							padding-top: 1.6rem;
+							position: relative;
+						`}
+					>
+						{(choice || osmFeature) && (
 							<ModalCloseButton
-								title="Fermer l'encart gare"
+								title="Fermer l'encart point d'intéret"
 								onClick={() => {
-									console.log('will yo2')
-									clickGare(null)
+									console.log('will yo')
+									setSearchParams({ lieu: undefined })
+									setTimeout(() => setOsmFeature(null), 100)
+									setLatLngClicked(null)
+									resetZoneImages()
+									console.log('will set default stat')
+									setState(defaultState)
+									openSheet(false)
 								}}
 							/>
-							{bikeRoute && (
-								<BikeRouteRésumé
-									{...{
-										data: bikeRoute,
-										bikeRouteProfile,
-										setBikeRouteProfile,
+						)}
+						{ogImage && (
+							<FeatureImage
+								src={ogImage}
+								css={`
+									width: 100%;
+									height: 6rem;
+									@media (min-height: 800px) {
+										height: 9rem;
+									}
+									object-fit: cover;
+								`}
+							/>
+						)}
+						{osmWikimediaImage && (
+							<FeatureImage
+								src={osmWikimediaImage}
+								css={`
+									width: 100%;
+									height: 6rem;
+									@media (min-height: 800px) {
+										height: 9rem;
+									}
+									object-fit: cover;
+								`}
+							/>
+						)}
+						<ZoneImages images={zoneImages} />
+						{clickedGare ? (
+							<div>
+								<ModalCloseButton
+									title="Fermer l'encart gare"
+									onClick={() => {
+										console.log('will yo2')
+										clickGare(null)
 									}}
 								/>
-							)}
-							<GareInfo clickedGare={clickedGare} />
-						</div>
-					) : osmFeature ? (
-						<OsmFeature data={osmFeature} />
-					) : (
-						!clickTipRead && (
-							<div>
-								<p
-									css={`
-										max-width: 20rem;
-									`}
-								>
-									Cliquez sur un point d'intérêt ou saisissez une destination
-									puis explorez les gares autour.
-								</p>
-								<DialogButton
-									onClick={() => setTutorials({ ...tutorials, clickTip: true })}
-								>
-									OK
-								</DialogButton>
+								{bikeRoute && (
+									<BikeRouteRésumé
+										{...{
+											data: bikeRoute,
+											bikeRouteProfile,
+											setBikeRouteProfile,
+										}}
+									/>
+								)}
+								<GareInfo clickedGare={clickedGare} />
 							</div>
-						)
-					)}
-				</section>
+						) : osmFeature ? (
+							<OsmFeature data={osmFeature} />
+						) : (
+							!clickTipRead && (
+								<div>
+									<p
+										css={`
+											max-width: 20rem;
+										`}
+									>
+										Cliquez sur un point d'intérêt ou saisissez une destination
+										puis explorez les gares autour.
+									</p>
+									<DialogButton
+										onClick={() =>
+											setTutorials({ ...tutorials, clickTip: true })
+										}
+									>
+										OK
+									</DialogButton>
+								</div>
+							)
+						)}
+					</section>
+				)
 			)}
 		</section>
 	)

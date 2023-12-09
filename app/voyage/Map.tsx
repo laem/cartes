@@ -20,6 +20,7 @@ import { MapContainer, MapHeader } from './UI'
 import { decodePlace, encodePlace } from './utils'
 import { useZoneImages } from './ZoneImages'
 import { getCategory } from '@/components/voyage/categories'
+import { styles } from './styles'
 
 const defaultCenter =
 	// Saint Malo [-1.9890417068124002, 48.66284934737089]
@@ -31,10 +32,6 @@ export const defaultState = {
 	validated: false,
 }
 const defaultZoom = 8
-const styleKeys = {
-	streets: '2f80a9c4-e0dd-437d-ae35-2b6c212f830b',
-	satellite: 'satellite',
-}
 export default function Map({ searchParams }) {
 	const [state, setState] = useState(defaultState)
 	try {
@@ -45,9 +42,11 @@ export default function Map({ searchParams }) {
 	const [zoom, setZoom] = useState(defaultZoom)
 	const [bikeRouteProfile, setBikeRouteProfile] = useState('safety')
 	const [distanceMode, setDistanceMode] = useState(false)
+	const [styleChooser, setStyleChooser] = useState(false)
 
-	const style = searchParams.style || 'streets'
-	const styleKey = styleKeys[style]
+	const styleKey = searchParams.style || 'base',
+		style = styles[styleKey],
+		styleId = styles[styleKey].id
 	const setSearchParams = useSetSeachParams()
 
 	const place = searchParams.lieu,
@@ -299,7 +298,7 @@ out skel qt;
 	useEffect(() => {
 		const newMap = new maplibregl.Map({
 			container: mapContainerRef.current,
-			style: `https://api.maptiler.com/maps/${styleKey}/style.json?key=${process.env.NEXT_PUBLIC_MAPTILER}`,
+			style: `https://api.maptiler.com/maps/${styleId}/style.json?key=${process.env.NEXT_PUBLIC_MAPTILER}`,
 			center: defaultCenter,
 			zoom: defaultZoom,
 			hash: true,
@@ -328,7 +327,7 @@ out skel qt;
 		return () => {
 			newMap.remove()
 		}
-	}, [setMap, styleKey, setZoom])
+	}, [setMap, styleId, setZoom])
 
 	useEffect(() => {
 		if (!map) return
@@ -342,9 +341,9 @@ out skel qt;
 		if (!map) return
 
 		map.setStyle(
-			`https://api.maptiler.com/maps/${styleKey}/style.json?key=${process.env.NEXT_PUBLIC_MAPTILER}`
+			`https://api.maptiler.com/maps/${styleId}/style.json?key=${process.env.NEXT_PUBLIC_MAPTILER}`
 		)
-	}, [styleKey, map])
+	}, [styleId, map])
 
 	useEffect(() => {
 		if (!map || !bikeRoute || !bikeRoute.features) return
@@ -653,10 +652,15 @@ out skel qt;
 						resetZoneImages,
 						zoom,
 						searchParams,
+						style,
+						styleChooser,
+						setStyleChooser,
 					}}
 				/>
 			</MapHeader>
-			<MapButtons {...{ style, distanceMode, setDistanceMode, map }} />
+			<MapButtons
+				{...{ style, setStyleChooser, distanceMode, setDistanceMode, map }}
+			/>
 			<div ref={mapContainerRef} />
 		</MapContainer>
 	)
