@@ -46,7 +46,7 @@ export default function Map({ searchParams }) {
 
 	const styleKey = searchParams.style || 'base',
 		style = styles[styleKey],
-		styleId = styles[styleKey].id
+		styleUrl = styles[styleKey].url
 	const setSearchParams = useSetSeachParams()
 
 	const place = searchParams.lieu,
@@ -298,7 +298,7 @@ out skel qt;
 	useEffect(() => {
 		const newMap = new maplibregl.Map({
 			container: mapContainerRef.current,
-			style: `https://api.maptiler.com/maps/${styleId}/style.json?key=${process.env.NEXT_PUBLIC_MAPTILER}`,
+			style: styleUrl,
 			center: defaultCenter,
 			zoom: defaultZoom,
 			hash: true,
@@ -327,7 +327,7 @@ out skel qt;
 		return () => {
 			newMap.remove()
 		}
-	}, [setMap, styleId, setZoom])
+	}, [setMap, styleUrl, setZoom])
 
 	useEffect(() => {
 		if (!map) return
@@ -340,10 +340,8 @@ out skel qt;
 	useEffect(() => {
 		if (!map) return
 
-		map.setStyle(
-			`https://api.maptiler.com/maps/${styleId}/style.json?key=${process.env.NEXT_PUBLIC_MAPTILER}`
-		)
-	}, [styleId, map])
+		map.setStyle(styleUrl)
+	}, [styleUrl, map])
 
 	useEffect(() => {
 		if (!map || !bikeRoute || !bikeRoute.features) return
