@@ -21,6 +21,7 @@ import { decodePlace, encodePlace } from './utils'
 import { useZoneImages } from './ZoneImages'
 import { getCategory } from '@/components/voyage/categories'
 import { styles } from './styles'
+import useTerrainControl from './useTerrainControl'
 
 const defaultCenter =
 	// Saint Malo [-1.9890417068124002, 48.66284934737089]
@@ -313,6 +314,7 @@ out skel qt;
 			}),
 			'top-right'
 		)
+
 		newMap.addControl(
 			new maplibregl.GeolocateControl({
 				positionOptions: {
@@ -328,6 +330,8 @@ out skel qt;
 			newMap.remove()
 		}
 	}, [setMap, styleUrl, setZoom])
+
+	useTerrainControl(map, style)
 
 	useEffect(() => {
 		if (!map) return

@@ -6,7 +6,7 @@ import Emoji from '../Emoji'
 
 export const MapButtonsWrapper = styled.div`
 	position: fixed;
-	top: 9rem;
+	top: 12rem;
 	right: 0.6rem;
 	z-index: 1;
 	display: flex;

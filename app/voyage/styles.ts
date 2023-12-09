@@ -6,9 +6,23 @@ export const styles = {
 		name: 'Base',
 		emoji: '🗺️',
 	},
-	satellite: { url: maptilerUrl('satellite'), name: 'Satellite', emoji: '🛰️' },
-	winter: { url: maptilerUrl('winter-v2'), name: 'Hiver', emoji: '⛄️' },
-	outdoor: { url: maptilerUrl('outdoor-v2'), name: 'Extérieur', emoji: '🏕️' },
+	satellite: {
+		url: maptilerUrl('satellite'),
+		name: 'Satellite',
+		emoji: '🛰️',
+		hasTerrain: true,
+	},
+	winter: {
+		url: maptilerUrl('winter-v2'),
+		name: 'Hiver',
+		emoji: '⛄️',
+	},
+	outdoor: {
+		url: maptilerUrl('outdoor-v2'),
+		name: 'Extérieur',
+		emoji: '🏕️',
+		hasTerrain: true,
+	},
 	ign: {
 		url: 'https://wxs.ign.fr/static/vectorTiles/styles/PLAN.IGN/essentiels/standard.json',
 		name: 'Plan IGN',
