@@ -10,12 +10,12 @@ export const styles = {
 		url: maptilerUrl('satellite'),
 		name: 'Satellite',
 		emoji: '🛰️',
-		hasTerrain: true,
 	},
 	winter: {
 		url: maptilerUrl('winter-v2'),
 		name: 'Hiver',
 		emoji: '⛄️',
+		hasTerrain: true,
 	},
 	outdoor: {
 		url: maptilerUrl('outdoor-v2'),
