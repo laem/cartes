@@ -66,7 +66,7 @@ export default function MapButtons({
 					onClick={() => setStyleChooser(true)}
 					title={'Choisir un autre style de fond de carte'}
 				>
-					<Emoji e={style.emoji} />
+					<Emoji e={style.emoji || '🗺️'} />
 				</button>
 			</MapButton>
 			<MapButton $active={distanceMode}>
