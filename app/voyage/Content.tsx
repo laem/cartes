@@ -73,7 +73,6 @@ export default function Content({
 	const choice = state.vers?.choice
 	const category = getCategory(searchParams)
 
-	console.log(osmFeature)
 	const osmWikimediaImage =
 		osmFeature &&
 		osmFeature.tags?.wikimedia_commons &&

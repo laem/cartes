@@ -380,27 +380,50 @@ out skel qt;
 				map && map.setPaintProperty('searchPolygon', 'fill-opacity', 0)
 			}, 1000)
 
-			// Thanks OSMAPP https://github.com/openmaptiles/openmaptiles/issues/792
-			const features = map
-				.queryRenderedFeatures(e.point)
-				.filter((f) => f.source === 'maptiler_planet')
+			const allowedLayerProps = ({
+				properties: { class: c },
+				sourceLayer: layer,
+			}) =>
+				layer === 'poi' ||
+				(layer === 'place' &&
+					['city', 'suburb', 'neighbourhood', 'quarter'].includes(c)) // Why ? because "state" does not map to an existing OSM id in France at least, see https://github.com/openmaptiles/openmaptiles/issues/792#issuecomment-1850139297
+			// TODO when "state" place, make an overpass request with name, since OMT's doc explicitely says that name comes from OSM
 
+			// Thanks OSMAPP https://github.com/openmaptiles/openmaptiles/issues/792
+			const rawFeatures = map.queryRenderedFeatures(e.point),
+				features = rawFeatures.filter(
+					(f) => f.source === 'maptiler_planet' && allowedLayerProps(f)
+				)
+
+			console.log('rawFeatures', rawFeatures)
 			if (!features.length || !features[0].id) {
 				console.log('no features', features)
 				return
 			}
 
-			const openMapTilesId = '' + features[0].id
+			const feature = features[0]
+			const openMapTilesId = '' + feature.id
 
-			const id = openMapTilesId.slice(null, -1),
-				featureType = { '1': 'way', '0': 'node', '4': 'relation' }[ //this is broken. We're getting the "4" suffix for relations AND ways. See https://github.com/openmaptiles/openmaptiles/issues/1587. See below for hack
-					openMapTilesId.slice(-1)
-				]
+			const id =
+					feature.sourceLayer === 'place'
+						? openMapTilesId
+						: openMapTilesId.slice(null, -1),
+				featureType =
+					feature.sourceLayer === 'place'
+						? 'node'
+						: { '1': 'way', '0': 'node', '4': 'relation' }[ //this is broken. We're getting the "4" suffix for relations AND ways. See https://github.com/openmaptiles/openmaptiles/issues/1587. See below for hack
+								openMapTilesId.slice(-1)
+						  ]
 			if (!featureType) {
 				console.log('Unknown OSM feature type from OpenMapTiles ID')
 				return
 			}
-			console.log(features, id, openMapTilesId)
+			console.log('Clicked features from openmaptiles', {
+				features,
+				id,
+				featureType,
+				openMapTilesId,
+			})
 
 			const [element, realFeatureType] = await disambiguateWayRelation(
 				featureType,
