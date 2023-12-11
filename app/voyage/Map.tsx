@@ -22,6 +22,7 @@ import { useZoneImages } from './ZoneImages'
 import { getCategory } from '@/components/voyage/categories'
 import { styles } from './styles'
 import useTerrainControl from './useTerrainControl'
+import useDrawRoute from './itinerary/useDrawRoute'
 
 const defaultCenter =
 	// Saint Malo [-1.9890417068124002, 48.66284934737089]
@@ -348,46 +349,7 @@ out skel qt;
 		map.setStyle(styleUrl)
 	}, [styleUrl, map])
 
-	useEffect(() => {
-		if (!map || !bikeRoute || !bikeRoute.features) return
-
-		map.addSource('bikeRoute', {
-			type: 'geojson',
-			data: bikeRoute.features[0],
-		})
-		map.addLayer({
-			id: 'bikeRouteContour',
-			type: 'line',
-			source: 'bikeRoute',
-			layout: {
-				'line-join': 'round',
-				'line-cap': 'round',
-			},
-			paint: {
-				'line-color': '#5B099F',
-				'line-width': 8,
-			},
-		})
-		map.addLayer({
-			id: 'bikeRoute',
-			type: 'line',
-			source: 'bikeRoute',
-			layout: {
-				'line-join': 'round',
-				'line-cap': 'round',
-			},
-			paint: {
-				'line-color': '#B482DD',
-				'line-width': 5,
-			},
-		})
-
-		return () => {
-			map.removeLayer('bikeRoute')
-			map.removeLayer('bikeRouteContour')
-			map.removeSource('bikeRoute')
-		}
-	}, [bikeRoute, map])
+	useDrawRoute(map, bikeRoute, 'bikeRoute')
 
 	useEffect(() => {
 		const onClick = async (e) => {
