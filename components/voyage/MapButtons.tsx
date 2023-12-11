@@ -56,10 +56,9 @@ export default function MapButtons({
 	setStyleChooser,
 	style,
 	setDistanceMode,
-	map,
 	distanceMode,
-	setItineraryMode,
-	itineraryMode,
+	map,
+	itinerary,
 }) {
 	const [distance, resetDistance] = useMeasureDistance(map, distanceMode)
 	return (
@@ -96,7 +95,7 @@ export default function MapButtons({
 					</button>
 				)}
 			</MapButton>
-			<ItineraryButton {...{ map, itineraryMode, setItineraryMode }} />
+			<ItineraryButton {...itinerary} />
 		</MapButtonsWrapper>
 	)
 }

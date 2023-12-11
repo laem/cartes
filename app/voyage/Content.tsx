@@ -47,7 +47,9 @@ export default function Content({
 	setStyleChooser,
 	style,
 	styleChooser,
+	itinerary,
 }) {
+	console.log('ITINER', itinerary)
 	const url = osmFeature?.tags?.website || osmFeature?.tags?.['contact:website']
 	const ogImages = useOgImageFetcher(url),
 		ogImage = ogImages[url]
@@ -117,6 +119,16 @@ export default function Content({
 						/>
 					)}
 				</section>
+			)}
+
+			{itinerary.route && (
+				<BikeRouteRésumé
+					{...{
+						data: itinerary.route,
+						bikeRouteProfile,
+						setBikeRouteProfile,
+					}}
+				/>
 			)}
 
 			{styleChooser ? (

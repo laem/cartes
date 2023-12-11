@@ -2,10 +2,9 @@ import { useEffect, useMemo, useState } from 'react'
 import length from '@turf/length'
 import useDrawRoute from './useDrawRoute'
 
-export default function useMeasureDistance(map, itineraryMode) {
+export default function useItinerary(map, itineraryMode, bikeRouteProfile) {
 	const [points, setPoints] = useState([])
 	const [route, setRoute] = useState(null)
-	const bikeRouteProfile = 'safety'
 
 	const linestring = useMemo(
 		() =>
@@ -115,7 +114,7 @@ export default function useMeasureDistance(map, itineraryMode) {
 		}
 		fetchBikeRoute(points)
 		return undefined
-	}, [points, setRoute])
+	}, [points, setRoute, bikeRouteProfile])
 	// GeoJSON object to hold our measurement features
 
 	useEffect(() => {
@@ -137,5 +136,5 @@ export default function useMeasureDistance(map, itineraryMode) {
 		: Math.round(rawDistance) + ' km'
 
 	const resetDistance = () => setPoints([])
-	return [distance, resetDistance]
+	return [distance, resetDistance, route]
 }

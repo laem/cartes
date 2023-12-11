@@ -7,6 +7,7 @@ export default function BikeRouteRésumé({
 	bikeRouteProfile,
 	setBikeRouteProfile,
 }) {
+	console.log('data', data)
 	if (!data.features) return
 	const feature = data.features[0]
 	if (!feature) return

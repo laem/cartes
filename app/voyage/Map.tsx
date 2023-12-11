@@ -23,6 +23,7 @@ import { getCategory } from '@/components/voyage/categories'
 import { styles } from './styles'
 import useTerrainControl from './useTerrainControl'
 import useDrawRoute from './itinerary/useDrawRoute'
+import useItinerary from './itinerary/useItinerary'
 
 const defaultCenter =
 	// Saint Malo [-1.9890417068124002, 48.66284934737089]
@@ -82,6 +83,20 @@ export default function Map({ searchParams }) {
 	const [map, setMap] = useState(null)
 	const [clickedGare, clickGare] = useState(null)
 	const [bikeRoute, setBikeRoute] = useState(null)
+	const [distance, reset, route] = useItinerary(
+		map,
+		itineraryMode,
+		bikeRouteProfile
+	)
+
+	const itinerary = {
+		bikeRouteProfile,
+		itineraryMode,
+		setItineraryMode,
+		distance,
+		reset,
+		route,
+	}
 	const [features, setFeatures] = useState([])
 
 	useEffect(() => {
@@ -642,6 +657,8 @@ out skel qt;
 						style,
 						styleChooser,
 						setStyleChooser,
+						distance,
+						itinerary,
 					}}
 				/>
 			</MapHeader>
@@ -652,8 +669,7 @@ out skel qt;
 					distanceMode,
 					setDistanceMode,
 					map,
-					itineraryMode,
-					setItineraryMode,
+					itinerary,
 				}}
 			/>
 			<div ref={mapContainerRef} />

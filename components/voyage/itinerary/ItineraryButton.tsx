@@ -5,11 +5,11 @@ import Image from 'next/image'
 import { MapButton } from '../MapButtons'
 
 export default function ItineraryButton({
-	map,
 	setItineraryMode,
 	itineraryMode,
+	distance,
+	reset,
 }) {
-	const [distance, reset] = useItinerary(map, itineraryMode)
 	return (
 		<MapButton $active={itineraryMode}>
 			<button onClick={() => setItineraryMode(!itineraryMode)}>
