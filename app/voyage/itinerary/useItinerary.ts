@@ -95,6 +95,7 @@ export default function useMeasureDistance(map, itineraryMode) {
 	useEffect(() => {
 		if (points.length < 2) {
 			setRoute(null)
+			return
 		}
 		async function fetchBikeRoute(points) {
 			const lonLats = points

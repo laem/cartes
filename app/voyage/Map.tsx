@@ -431,16 +431,17 @@ out skel qt;
 				e.lngLat
 			)
 
-			console.log('will set OSMfeature after click on POI')
-			setOsmFeature(element)
-			if (element) setSearchParams({ lieu: encodePlace(realFeatureType, id) })
-
-			console.log('Résultat OSM', element)
-			if (!element) return
-
-			const uic = element.tags?.uic_ref,
-				gare = gares && gares.find((g) => g.uic.includes(uic))
-			if (uic && gare) clickGare(gare)
+			if (element) {
+				console.log('reset OSMfeature after click on POI')
+				console.log('will set lieu searchparam after click on POI')
+				setOsmFeature(element)
+				setSearchParams({ lieu: encodePlace(realFeatureType, id) })
+				console.log('sill set OSMFeature', element)
+				// wait for the searchParam update to proceed
+				const uic = element.tags?.uic_ref,
+					gare = gares && gares.find((g) => g.uic.includes(uic))
+				if (uic && gare) clickGare(gare)
+			}
 		}
 
 		if (!map || distanceMode) return
@@ -453,12 +454,7 @@ out skel qt;
 
 	useEffect(() => {
 		if (!map || !featureType || !featureId) return
-		if (
-			osmFeature &&
-			featureType === osmFeature.type &&
-			featureId === osmFeature.id + ''
-		)
-			return
+		if (osmFeature) return
 		const request = async () => {
 			console.log('Preparing OSM request ', featureType, featureId)
 			const full = ['way', 'relation'].includes(featureType)
@@ -501,7 +497,10 @@ out skel qt;
 			setOsmFeature(element)
 			console.log('should fly to', center)
 			if (!choice || choice.item.osmId !== featureId) {
-				console.log('will fly to', center)
+				console.log(
+					'will fly to in after OSM download from url query param',
+					center
+				)
 				map.flyTo({
 					center,
 					zoom: 18,
@@ -549,6 +548,7 @@ out skel qt;
 				tailoredZoom = ['city'].includes(destinationType)
 					? 11
 					: Math.max(15, zoom)
+			console.log('will fly to in after OSM download from vers marker')
 			map.flyTo({
 				center,
 				zoom: tailoredZoom,
