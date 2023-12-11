@@ -4,11 +4,11 @@ import styled from 'styled-components'
 import Content from './Content'
 import ModalSheetReminder from './ModalSheetReminder'
 
-const snapPoints = [-50, 0.5, 200, 0],
+const snapPoints = [-50, 0.5, 100, 0],
 	initialSnap = 2
 
 export default function ModalSheet(props) {
-	const [isOpen, setOpen] = useState(true)
+	const [isOpen, setOpen] = useState(false)
 	const ref = useRef<SheetRef>()
 	const setSnap = useCallback(
 		(i: number) => {
@@ -18,55 +18,61 @@ export default function ModalSheet(props) {
 		},
 		[ref]
 	)
+	useEffect(() => {
+		// https://github.com/Temzasse/react-modal-sheet/issues/146
+		setTimeout(() => setOpen(true), 1)
+	}, [setOpen])
 
 	useEffect(() => {
 		if (props.osmFeature) {
 			setSnap(1)
 		}
 	}, [setSnap, props.osmFeature])
-	if (!isOpen) return <ModalSheetReminder setOpen={setOpen} />
 
 	return (
-		<CustomSheet
-			ref={ref}
-			isOpen={isOpen}
-			onClose={() => {
-				setOpen(false)
-			}}
-			snapPoints={snapPoints}
-			initialSnap={initialSnap}
-			mountPoint={document.querySelector('main')}
-			onSnap={(snapIndex) =>
-				console.log('> Current snap point index:', snapIndex)
-			}
-		>
-			<Sheet.Container
-				css={`
-					background-color: var(--lightestColor) !important;
-				`}
+		<>
+			{!isOpen && <ModalSheetReminder setOpen={setOpen} />}
+			<CustomSheet
+				ref={ref}
+				isOpen={isOpen}
+				onClose={() => {
+					setOpen(false)
+				}}
+				snapPoints={snapPoints}
+				initialSnap={initialSnap}
+				mountPoint={document.querySelector('main')}
+				onSnap={(snapIndex) =>
+					console.log('> Current snap point index:', snapIndex)
+				}
 			>
-				<Sheet.Header
+				<Sheet.Container
 					css={`
-						span {
-							background-color: var(--lighterColor) !important;
-						}
+						background-color: var(--lightestColor) !important;
 					`}
-				/>
-				<Sheet.Content>
-					<Sheet.Scroller draggableAt="both">
-						<SheetContentWrapper>
-							<Content
-								{...props}
-								sideSheet={false}
-								setSnap={setSnap}
-								openSheet={setOpen}
-							/>
-						</SheetContentWrapper>
-					</Sheet.Scroller>
-				</Sheet.Content>
-			</Sheet.Container>
-			<Sheet.Backdrop />
-		</CustomSheet>
+				>
+					<Sheet.Header
+						css={`
+							span {
+								background-color: var(--lighterColor) !important;
+							}
+						`}
+					/>
+					<Sheet.Content>
+						<Sheet.Scroller draggableAt="both">
+							<SheetContentWrapper>
+								<Content
+									{...props}
+									sideSheet={false}
+									setSnap={setSnap}
+									openSheet={setOpen}
+								/>
+							</SheetContentWrapper>
+						</Sheet.Scroller>
+					</Sheet.Content>
+				</Sheet.Container>
+				<Sheet.Backdrop />
+			</CustomSheet>
+		</>
 	)
 }
 const SheetContentWrapper = styled.div`
