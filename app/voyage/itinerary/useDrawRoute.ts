@@ -1,20 +1,19 @@
 import { useEffect } from 'react'
 
-export default function useDrawRoute(map, bikeRoute, id) {
+export default function useDrawRoute(map, features, id) {
 	useEffect(() => {
-		if (!map || !bikeRoute || !bikeRoute.features || !bikeRoute.features.length)
+		console.log('bikeRoute', features)
+		if (!map || !features || !features.features || !features.features.length)
 			return
-
-		const feature = bikeRoute.features[0]
 
 		map.addSource(id, {
 			type: 'geojson',
-			data: feature,
+			data: features,
 		})
 		map.addLayer({
 			id: id + 'Contour',
 			type: 'line',
-			source: 'bikeRoute',
+			source: id,
 			layout: {
 				'line-join': 'round',
 				'line-cap': 'round',
@@ -23,9 +22,10 @@ export default function useDrawRoute(map, bikeRoute, id) {
 				'line-color': '#5B099F',
 				'line-width': 8,
 			},
+			filter: ['in', '$type', 'LineString'],
 		})
 		map.addLayer({
-			id: id,
+			id: id + 'Line',
 			type: 'line',
 			source: id,
 			layout: {
@@ -36,12 +36,24 @@ export default function useDrawRoute(map, bikeRoute, id) {
 				'line-color': '#B482DD',
 				'line-width': 5,
 			},
+			filter: ['in', '$type', 'LineString'],
+		})
+		map.addLayer({
+			id: id + 'Points',
+			type: 'circle',
+			source: id,
+			paint: {
+				'circle-radius': 6,
+				'circle-color': '#2988e6',
+			},
+			filter: ['in', '$type', 'Point'],
 		})
 
 		return () => {
-			map.removeLayer(id)
+			map.removeLayer(id + 'Line')
 			map.removeLayer(id + 'Contour')
+			map.removeLayer(id + 'Points')
 			map.removeSource(id)
 		}
-	}, [bikeRoute, map, id])
+	}, [features, map, id])
 }

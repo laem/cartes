@@ -1,5 +1,6 @@
 import { useEffect, useMemo, useState } from 'react'
 import length from '@turf/length'
+import useDrawRoute from './useDrawRoute'
 
 export default function useMeasureDistance(map, itineraryMode) {
 	const [points, setPoints] = useState([])
@@ -23,17 +24,29 @@ export default function useMeasureDistance(map, itineraryMode) {
 				  },
 		[points, route]
 	)
-	const rawDistance = linestring.properties['track-length']
+	const rawDistance = linestring.properties['track-length'] / 1000
+
+	const geojson = useMemo(
+		() => ({
+			type: 'FeatureCollection',
+			features: [...points, linestring],
+		}),
+		[points, linestring]
+	)
+	useDrawRoute(itineraryMode && map, geojson, 'route')
+
 	useEffect(() => {
 		if (!map || !itineraryMode) return
 
 		const onClick = (e) => {
-			const features = map.queryRenderedFeatures(e.point, {
-				layers: ['measure-points'],
-			})
+			const features =
+				points &&
+				map.queryRenderedFeatures(e.point, {
+					layers: ['routePoints'],
+				})
 
 			// If a feature was clicked, remove it from the map
-			if (features.length) {
+			if (features?.length) {
 				const id = features[0].properties.id
 				setPoints((points) => points.filter((p) => p.properties.id !== id))
 			} else {
@@ -48,13 +61,15 @@ export default function useMeasureDistance(map, itineraryMode) {
 					},
 				}
 
-				setPoints((points) => [...points, point])
+				setPoints([...points, point])
 			}
 		}
 		const onMouseMove = (e) => {
-			const features = map.queryRenderedFeatures(e.point, {
-				layers: ['measure-points'],
-			})
+			const features =
+				points &&
+				map.queryRenderedFeatures(e.point, {
+					layers: ['routePoints'],
+				})
 			// UI indicator for clicking/hovering a point on the map
 			map.getCanvas().style.cursor = features.length ? 'pointer' : 'crosshair'
 		}
@@ -75,10 +90,12 @@ export default function useMeasureDistance(map, itineraryMode) {
 			map.off('mousemove', onMouseMove)
 			map.getCanvas().style.cursor = 'pointer'
 		}
-	}, [map, setPoints, itineraryMode])
+	}, [map, points, setPoints, itineraryMode])
 
 	useEffect(() => {
-		if (points.length < 2) return undefined
+		if (points.length < 2) {
+			setRoute(null)
+		}
 		async function fetchBikeRoute(points) {
 			const lonLats = points
 				.map(
@@ -99,50 +116,6 @@ export default function useMeasureDistance(map, itineraryMode) {
 		return undefined
 	}, [points, setRoute])
 	// GeoJSON object to hold our measurement features
-	const geojson = useMemo(
-		() => ({
-			type: 'FeatureCollection',
-			features: [...points, linestring],
-		}),
-		[points, linestring]
-	)
-	useEffect(() => {
-		if (!map || !itineraryMode) return
-		const source = map.getSource('measure-points')
-		if (source) {
-			source.setData(geojson)
-		} else {
-			map.addSource('measure-points', {
-				type: 'geojson',
-				data: geojson,
-			})
-			// Add styles to the map
-			map.addLayer({
-				id: 'measure-lines',
-				type: 'line',
-				source: 'measure-points',
-				layout: {
-					'line-cap': 'round',
-					'line-join': 'round',
-				},
-				paint: {
-					'line-color': '#57bff5',
-					'line-width': 4,
-				},
-				filter: ['in', '$type', 'LineString'],
-			})
-			map.addLayer({
-				id: 'measure-points',
-				type: 'circle',
-				source: 'measure-points',
-				paint: {
-					'circle-radius': 6,
-					'circle-color': '#2988e6',
-				},
-				filter: ['in', '$type', 'Point'],
-			})
-		}
-	}, [points, geojson, map, itineraryMode])
 
 	useEffect(() => {
 		if (!map || itineraryMode || map.getSource) return
