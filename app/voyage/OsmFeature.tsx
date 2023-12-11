@@ -41,7 +41,7 @@ export default function OsmFeature({ data }) {
 		keyValueTags = translatedTags.filter((t) => t.length === 2),
 		soloTags = translatedTags
 			.filter((t) => t.length === 1)
-			.filter(([t]) => !name.toLowerCase().includes(t.toLowerCase()))
+			.filter(([t]) => name && !name.toLowerCase().includes(t.toLowerCase()))
 
 	return (
 		<div

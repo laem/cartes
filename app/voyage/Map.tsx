@@ -43,6 +43,7 @@ export default function Map({ searchParams }) {
 	const [zoom, setZoom] = useState(defaultZoom)
 	const [bikeRouteProfile, setBikeRouteProfile] = useState('safety')
 	const [distanceMode, setDistanceMode] = useState(false)
+	const [itineraryMode, setItineraryMode] = useState(false)
 	const [styleChooser, setStyleChooser] = useState(false)
 
 	const styleKey = searchParams.style || 'base',
@@ -660,7 +661,15 @@ out skel qt;
 				/>
 			</MapHeader>
 			<MapButtons
-				{...{ style, setStyleChooser, distanceMode, setDistanceMode, map }}
+				{...{
+					style,
+					setStyleChooser,
+					distanceMode,
+					setDistanceMode,
+					map,
+					itineraryMode,
+					setItineraryMode,
+				}}
 			/>
 			<div ref={mapContainerRef} />
 		</MapContainer>

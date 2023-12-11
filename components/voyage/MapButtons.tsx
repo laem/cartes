@@ -3,6 +3,7 @@
 import useMeasureDistance from '@/app/voyage/useMeasureDistance'
 import styled from 'styled-components'
 import Emoji from '../Emoji'
+import ItineraryButton from './itinerary/ItineraryButton'
 
 export const MapButtonsWrapper = styled.div`
 	position: fixed;
@@ -57,6 +58,8 @@ export default function MapButtons({
 	setDistanceMode,
 	map,
 	distanceMode,
+	setItineraryMode,
+	itineraryMode,
 }) {
 	const [distance, resetDistance] = useMeasureDistance(map, distanceMode)
 	return (
@@ -93,6 +96,7 @@ export default function MapButtons({
 					</button>
 				)}
 			</MapButton>
+			<ItineraryButton {...{ map, itineraryMode, setItineraryMode }} />
 		</MapButtonsWrapper>
 	)
 }
