@@ -1,6 +1,8 @@
 import css from '@/components/css/convertToJs'
 import Emoji from '@/components/Emoji'
 import ProfileChooser from './ProfileChooser'
+import hexToFilter from '@/components/utils/colorize'
+import CircularIcon from '@/components/CircularIcon'
 
 export default function BikeRouteRésumé({
 	data,
@@ -31,39 +33,53 @@ export default function BikeRouteRésumé({
 				padding: 0.6rem;
 				color: var(--darkestColor);
 				line-height: 1.4rem;
-				border: 4px solid var(--color);
+				border: 4px solid var(--darkColor);
 				margin-top: 1.4rem;
 				border-radius: 0.5rem;
-				img {
-					position: absolute;
-					top: 0;
-					left: calc(50% - 1rem);
-					transform: translateX(-50%) translateY(-70%);
-					margin-right: 0.4rem;
-					width: 2rem;
-					height: auto;
-				}
-				img:nth-child(2) {
-					left: calc(50% + 1rem);
-				}
 				@media (min-width: 1200px) {
 				}
 			`}
 		>
-			<img src="/bike.svg" alt="Icône d'un vélo" width="100" height="100" />
-			<img
-				src="/walking.svg"
-				alt="Icône d'une personne qui marche"
-				width="100"
-				height="100"
-			/>
-
+			{' '}
+			<div
+				css={`
+					> div {
+						position: absolute !important;
+						top: 0;
+						left: calc(50% - 1rem);
+						transform: translateX(-50%) translateY(-70%);
+						margin-right: 0.4rem;
+						width: 2rem;
+						height: auto;
+					}
+					> div:nth-child(2) {
+						left: calc(50% + 1rem);
+					}
+				`}
+			>
+				<CircularIcon
+					src={'/bike.svg'}
+					alt="Icône d'un vélo"
+					color={
+						bikeRouteProfile === 'hiking-mountain' ? 'lightColor' : 'darkColor'
+					}
+					onClick={() => setBikeRouteProfile('safety')}
+				/>
+				<CircularIcon
+					src={'/walking.svg'}
+					alt="Icône d'une personne qui marche"
+					color={
+						bikeRouteProfile !== 'hiking-mountain' ? 'lightColor' : 'darkColor'
+					}
+					onClick={() => setBikeRouteProfile('hiking-mountain')}
+				/>
+			</div>
 			<div>
 				<p>
-					Le trajet de <strong>{km} km</strong> depuis la gare vous prendra{' '}
+					Le trajet de <strong>{km}&nbsp;km</strong> depuis la gare vous prendra{' '}
 					<strong>
 						{heures ? heures + ` heure${heures > 1 ? 's' : ''} et ` : ''}
-						{minutes} min
+						{minutes}&nbsp;min
 					</strong>{' '}
 					pour{' '}
 					<strong
@@ -73,16 +89,18 @@ export default function BikeRouteRésumé({
 							)}; padding: 0 .2rem; border-radius: 0.3rem;`
 						)}
 					>
-						{déniveléCumulé} m
+						{déniveléCumulé}&nbsp;m
 					</strong>{' '}
-					de dénivelé (<small>{dénivelé} m en absolu</small>).
+					de dénivelé (<small>{dénivelé}&nbsp;m en absolu</small>).
 				</p>
-				<ProfileChooser
-					{...{
-						bikeRouteProfile,
-						setBikeRouteProfile,
-					}}
-				/>
+				{bikeRouteProfile !== 'hiking-mountain' && (
+					<ProfileChooser
+						{...{
+							bikeRouteProfile,
+							setBikeRouteProfile,
+						}}
+					/>
+				)}
 			</div>
 		</div>
 	)

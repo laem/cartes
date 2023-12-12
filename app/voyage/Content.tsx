@@ -24,6 +24,7 @@ import useWikidata from './useWikidata'
 import { ZoneImages } from './ZoneImages'
 import useSetSeachParams from '@/components/useSetSearchParams'
 import StyleChooser from './StyleChooser'
+import CircularIcon from '@/components/CircularIcon'
 
 export default function Content({
 	latLngClicked,
