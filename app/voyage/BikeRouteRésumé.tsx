@@ -32,22 +32,31 @@ export default function BikeRouteRésumé({
 				color: var(--darkestColor);
 				line-height: 1.4rem;
 				border: 4px solid var(--color);
-				margin-top: 1rem;
+				margin-top: 1.4rem;
 				border-radius: 0.5rem;
 				img {
 					position: absolute;
 					top: 0;
-					left: 50%;
+					left: calc(50% - 1rem);
 					transform: translateX(-50%) translateY(-70%);
 					margin-right: 0.4rem;
 					width: 2rem;
 					height: auto;
+				}
+				img:nth-child(2) {
+					left: calc(50% + 1rem);
 				}
 				@media (min-width: 1200px) {
 				}
 			`}
 		>
 			<img src="/bike.svg" alt="Icône d'un vélo" width="100" height="100" />
+			<img
+				src="/walking.svg"
+				alt="Icône d'une personne qui marche"
+				width="100"
+				height="100"
+			/>
 
 			<div>
 				<p>
