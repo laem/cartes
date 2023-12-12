@@ -24,6 +24,7 @@ export default function BikeRouteRésumé({
 	return (
 		<div
 			css={`
+				position: relative;
 				display: flex;
 				align-items: center;
 				background: var(--lightestColor);
@@ -31,10 +32,15 @@ export default function BikeRouteRésumé({
 				color: var(--darkestColor);
 				line-height: 1.4rem;
 				border: 4px solid var(--color);
+				margin-top: 1rem;
 				border-radius: 0.5rem;
 				img {
+					position: absolute;
+					top: 0;
+					left: 50%;
+					transform: translateX(-50%) translateY(-70%);
 					margin-right: 0.4rem;
-					width: 2.5rem;
+					width: 2rem;
 					height: auto;
 				}
 				@media (min-width: 1200px) {
