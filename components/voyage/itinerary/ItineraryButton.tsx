@@ -1,7 +1,6 @@
 import useItinerary from '@/app/voyage/itinerary/useItinerary'
+import css from '@/components/css/convertToJs'
 import Emoji from '@/components/Emoji'
-import trashIcon from '@/public/trash.svg'
-import Image from 'next/image'
 import { MapButton } from '../MapButtons'
 
 export default function ItineraryButton({
@@ -25,15 +24,24 @@ export default function ItineraryButton({
 						position: absolute;
 						bottom: -1.2rem;
 						right: -1.7rem;
-						img {
-							width: 1.4rem;
-							height: 1.4rem;
-						}
 					`}
 				>
-					<Image src={trashIcon} />
+					<ResetIcon />
 				</button>
 			)}
 		</MapButton>
 	)
 }
+
+export const ResetIcon = () => (
+	<img
+		style={css`
+			width: 1.4rem;
+			height: 1.4rem;
+		`}
+		src={'/trash.svg'}
+		width="100"
+		height="100"
+		alt="Icône poubelle"
+	/>
+)

@@ -1,7 +1,67 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 20 20"><link xmlns="" type="text/css" rel="stylesheet" id="dark-mode-custom-link"/><link xmlns="" type="text/css" rel="stylesheet" id="dark-mode-general-link"/><style xmlns="" lang="en" type="text/css" id="dark-mode-custom-style"/><style xmlns="" lang="en" type="text/css" id="dark-mode-native-style"/><style xmlns="" lang="en" type="text/css" id="dark-mode-native-sheet"/>
-  <title>
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<svg:svg
+   width="20"
+   height="20"
+   viewBox="0 0 20 20"
+   version="1.1"
+   id="svg1"
+   sodipodi:docname="trash.svg"
+   inkscape:version="1.3.1 (9b9bdc1480, 2023-11-25, custom)"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns:svg="http://www.w3.org/2000/svg">
+  <svg:defs
+     id="defs1" />
+  <sodipodi:namedview
+     id="namedview1"
+     pagecolor="#ffffff"
+     bordercolor="#666666"
+     borderopacity="1.0"
+     inkscape:showpageshadow="2"
+     inkscape:pageopacity="0.0"
+     inkscape:pagecheckerboard="0"
+     inkscape:deskcolor="#d1d1d1"
+     inkscape:zoom="11.628516"
+     inkscape:cx="9.7174914"
+     inkscape:cy="11.179415"
+     inkscape:window-width="950"
+     inkscape:window-height="1043"
+     inkscape:window-x="962"
+     inkscape:window-y="4"
+     inkscape:window-maximized="1"
+     inkscape:current-layer="svg1" />
+  <link
+     type="text/css"
+     rel="stylesheet"
+     id="dark-mode-custom-link" />
+  <link
+     type="text/css"
+     rel="stylesheet"
+     id="dark-mode-general-link" />
+  <style
+     lang="en"
+     type="text/css"
+     id="dark-mode-custom-style" />
+  <style
+     lang="en"
+     type="text/css"
+     id="dark-mode-native-style" />
+  <style
+     lang="en"
+     type="text/css"
+     id="dark-mode-native-sheet" />
+  <svg:title
+     id="title1">
     trash
-  </title>
-  <path d="M17 2h-3.5l-1-1h-5l-1 1H3v2h14zM4 17a2 2 0 0 0 2 2h8a2 2 0 0 0 2-2V5H4z"/>
-</svg>
+  </svg:title>
+  <svg:circle
+     style="fill:#2988e6;fill-rule:evenodd;stroke-width:0.949271;fill-opacity:1"
+     id="path2"
+     cx="10.005616"
+     cy="10.1019"
+     r="9.5119963" />
+  <svg:path
+     d="M 14.621319,5.2146083 H 12.414857 L 11.784439,4.5841913 H 8.6323476 L 8.00193,5.2146083 H 5.7954688 v 1.260835 H 14.621319 Z M 6.4258864,14.670869 a 1.260835,1.260835 0 0 0 1.260835,1.260836 h 5.0433446 a 1.260835,1.260835 0 0 0 1.260835,-1.260836 V 7.1058612 H 6.4258864 Z"
+     id="path1"
+     style="fill:#ffffff;fill-opacity:1;stroke-width:0.630418" />
+</svg:svg>
