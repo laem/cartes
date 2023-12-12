@@ -41,7 +41,7 @@ export default function BikeRouteRésumé({
 				}
 			`}
 		>
-			<Emoji e="🚲️" />
+			<img src="/bike.svg" alt="Icône d'un vélo" width="100" height="100" />
 
 			<div>
 				<p>
