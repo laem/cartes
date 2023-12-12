@@ -13,7 +13,7 @@ export default function ItineraryButton({
 		<MapButton $active={itineraryMode}>
 			<button onClick={() => setItineraryMode(!itineraryMode)}>
 				<div>
-					<Emoji e="🚲️" />
+					<ItineraryIcon />
 				</div>
 				{itineraryMode ? <small>{distance}</small> : null}
 			</button>
@@ -33,6 +33,18 @@ export default function ItineraryButton({
 	)
 }
 
+export const ItineraryIcon = () => (
+	<img
+		style={css`
+			width: 1.4rem;
+			height: 1.4rem;
+		`}
+		src={'/itinerary.svg'}
+		width="100"
+		height="100"
+		alt="Icône poubelle"
+	/>
+)
 export const ResetIcon = () => (
 	<img
 		style={css`

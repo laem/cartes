@@ -2,6 +2,7 @@
 
 import useMeasureDistance from '@/app/voyage/useMeasureDistance'
 import styled from 'styled-components'
+import css from '../css/convertToJs'
 import Emoji from '../Emoji'
 import ItineraryButton, { ResetIcon } from './itinerary/ItineraryButton'
 
@@ -17,7 +18,7 @@ export const MapButtonsWrapper = styled.div`
 export const MapButton = styled.div`
 	margin-bottom: 0.4rem;
 	width: 1.9rem;
-	height: auto;
+	height: 1.9rem;
 	text-align: center;
 	border-radius: 4px;
 	box-shadow: 0 0 0 2px rgba(0, 0, 0, 0.1);
@@ -27,6 +28,7 @@ export const MapButton = styled.div`
 	img {
 		width: 1.5rem;
 		height: auto;
+		vertical-align: bottom;
 	}
 	border: 0px solid lightgrey;
 	cursor: pointer;
@@ -68,13 +70,13 @@ export default function MapButtons({
 					onClick={() => setStyleChooser(true)}
 					title={'Choisir un autre style de fond de carte'}
 				>
-					<Emoji e={style.emoji || '🗺️'} />
+					<MapIcon />
 				</button>
 			</MapButton>
 			<MapButton $active={distanceMode}>
 				<button onClick={() => setDistanceMode(!distanceMode)}>
 					<div>
-						<Emoji e="📐" />
+						<DistanceIcon />
 					</div>
 					{distanceMode ? <small>{distance}</small> : null}
 				</button>
@@ -95,3 +97,27 @@ export default function MapButtons({
 		</MapButtonsWrapper>
 	)
 }
+export const MapIcon = () => (
+	<img
+		style={css`
+			width: 1.4rem;
+			height: 1.4rem;
+		`}
+		src={'/map.svg'}
+		width="100"
+		height="100"
+		alt="Icône poubelle"
+	/>
+)
+export const DistanceIcon = () => (
+	<img
+		style={css`
+			width: 1.4rem;
+			height: 1.4rem;
+		`}
+		src={'/distance.svg'}
+		width="100"
+		height="100"
+		alt="Icône poubelle"
+	/>
+)
