@@ -38,7 +38,7 @@ export const MapButton = styled.div`
 
 	border: 2px solid var(--color);
 	width: 4rem;
-
+height: 4rem;
 
 	`}
 	position: relative;
