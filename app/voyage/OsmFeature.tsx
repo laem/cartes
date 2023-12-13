@@ -21,6 +21,7 @@ export default function OsmFeature({ data }) {
 		'contact:phone': phone2,
 		'contact:mobile': phone3,
 		email,
+		'contact:email': email2,
 		website: website1,
 		'contact:website': website2,
 		'contact:instagram': instagram,
@@ -92,7 +93,9 @@ export default function OsmFeature({ data }) {
 			)}
 
 			{opening_hours && <OpeningHours opening_hours={opening_hours} />}
-			<ContactAndSocial {...{ email, instagram, facebook, siret }} />
+			<ContactAndSocial
+				{...{ email: email || email2, instagram, facebook, siret }}
+			/>
 			<Brand {...{ brand, brandWikidata, brandWikipedia }} />
 			<Tags tags={keyValueTags} />
 			<OsmLinks data={data} />

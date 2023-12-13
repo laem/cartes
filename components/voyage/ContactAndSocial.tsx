@@ -2,7 +2,6 @@ import Emoji from '../Emoji'
 
 export default function ContactAndSocial({
 	email,
-
 	facebook,
 	instagram,
 	siret,
@@ -23,12 +22,20 @@ export default function ContactAndSocial({
 				</a>
 			)}
 			{facebook && (
-				<a href={facebook} target="_blank" title="Compte Facebook">
+				<a
+					href={atOrUrl(facebook, 'https://facebook.com')}
+					target="_blank"
+					title="Compte Facebook"
+				>
 					<Emoji extra="E042" />
 				</a>
 			)}
 			{instagram && (
-				<a href={instagram} target="_blank" title="Compte Instagram">
+				<a
+					href={atOrUrl(instagram, 'https://instagram.com')}
+					target="_blank"
+					title="Compte Instagram"
+				>
 					<Emoji extra="E043" />
 				</a>
 			)}
@@ -44,3 +51,13 @@ export default function ContactAndSocial({
 		</div>
 	)
 }
+
+const atOrUrl = (key, domain) =>
+	key
+		.replace('http://', 'https://')
+		.replace('://www.', '://')
+		.startsWith(domain)
+		? key
+		: key.startsWith(domain.split('://')[1])
+		? `https://${key}`
+		: `${domain}/${key}`
