@@ -29,6 +29,12 @@ export const tagNameCorrespondance = (key) => {
 		tobacco: 'Vente de tabac',
 		'check_date:opening_hours': 'Horaires vérifiés le',
 		pastry: 'Patisserie',
+		female: 'Pour les femmes',
+		male: 'Pour les hommes',
+		official_name: 'Nom officiel',
+		'payment:cash': 'Paiement en liquide',
+		'payment:card': 'Paiement par carte',
+		'opening_hours:signed': 'Horaires visibles',
 	}[key]
 	return found || key
 }

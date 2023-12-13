@@ -1,6 +1,7 @@
 import css from '@/components/css/convertToJs'
 
 export default function Brand({ brand, brandWikidata, brandWikipedia }) {
+	if (!(brand || brandWikidata || brandWikipedia)) return null
 	if (!brandWikipedia) return <div>Marque: {brand}</div>
 	const [presumedLang, presumedName] = brandWikipedia.split(':'),
 		lang = presumedName ? presumedLang : 'fr',
