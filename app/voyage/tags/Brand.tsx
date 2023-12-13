@@ -1,3 +1,4 @@
+import Wiki from '@/app/wiki/Wiki'
 import css from '@/components/css/convertToJs'
 
 export default function Brand({ brand, brandWikidata, brandWikipedia }) {
@@ -23,26 +24,28 @@ export default function Brand({ brand, brandWikidata, brandWikipedia }) {
 			<a href={url} target="_blank">
 				{brand}
 			</a>
-			{brandWikidata && (
-				<span
-					style={css`
-						margin-left: 0.8rem;
-					`}
-				>
-					<img
-						src={'/wikidata.svg'}
-						alt="Logo de Wikidata"
-						width="20"
-						height="20"
-						style={css`
-							vertical-align: middle;
-						`}
-					/>{' '}
-					<a href={url} target="_blank">
-						<small>wikidata</small>
-					</a>
-				</span>
-			)}
+			{brandWikidata && <Wikidata key={brandWikidata} />}
 		</div>
 	)
 }
+
+export const Wikidata = ({ id }) => (
+	<span
+		style={css`
+			margin-left: 0.8rem;
+		`}
+	>
+		<img
+			src={'/wikidata.svg'}
+			alt="Logo de Wikidata"
+			width="20"
+			height="20"
+			style={css`
+				vertical-align: middle;
+			`}
+		/>{' '}
+		<a href={`https://wikidata.org/wiki/${id}`} target="_blank">
+			<small>wikidata</small>
+		</a>
+	</span>
+)

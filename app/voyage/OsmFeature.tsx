@@ -8,7 +8,7 @@ import Tags, { SoloTags } from '@/components/voyage/Tags'
 import Wikipedia from '@/components/voyage/Wikipedia'
 import parseOpeningHours from 'opening_hours'
 import { getTagLabels } from './osmTagLabels'
-import Brand from './tags/Brand'
+import Brand, { Wikidata } from './tags/Brand'
 
 export default function OsmFeature({ data }) {
 	if (!data.tags) return null
@@ -31,6 +31,7 @@ export default function OsmFeature({ data }) {
 		'brand:wikidata': brandWikidata,
 		'brand:wikipedia': brandWikipedia,
 		wikipedia,
+		wikidata,
 		...rest
 	} = data.tags
 
@@ -76,6 +77,7 @@ export default function OsmFeature({ data }) {
 			)}
 			<Address tags={data.tags} />
 			{wikipedia && wikipedia.includes(':') && <Wikipedia name={wikipedia} />}
+			{wikidata && <Wikidata id={wikidata} />}
 			{phone && (
 				<div>
 					<a href={`tel:${phone}`}>
