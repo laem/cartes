@@ -1,14 +1,20 @@
 // Inspired by https://github.com/zbycz/osmapp/blob/master/src/services/helpers.ts#L107
 
-export default function Address({ tags }) {
-	const {
-		'addr:place': place,
-		'addr:street': street,
-		'addr:housenumber': houseNumber,
-		'addr:city': city,
-		'addr:state': state,
-		'addr:postcode': postcode,
-	} = tags
+export const addressKeys = [
+	'addr:place',
+	'addr:street',
+	'addr:housenumber',
+	'addr:city',
+	'addr:state',
+	'addr:postcode',
+	'contact:city',
+	'contact:housenumber',
+	'contact:postcode',
+	'contact:street',
+]
+
+export default function Address({ tags: t }) {
+	const g = (key) => t[`addr:` + key] || t['contact:' + key]
 
 	return (
 		<address
@@ -18,8 +24,9 @@ export default function Address({ tags }) {
 				font-style: normal;
 			`}
 		>
-			{houseNumber} {street}
-			{postcode || city || state ? ', ' : ''} {postcode} {city} {state}
+			{g('housenumber')} {g('street')}
+			{g('postcode') || g('city') || g('state') ? ', ' : ''} {g('postcode')}{' '}
+			{g('city')} {g('state')}
 		</address>
 	)
 }

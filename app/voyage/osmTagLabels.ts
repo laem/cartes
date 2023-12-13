@@ -27,6 +27,7 @@ export const tagNameCorrespondance = (key) => {
 		'diet:vegan': 'Végan',
 		'diet:vegetarian': 'Végétarien',
 		tobacco: 'Vente de tabac',
+		'check_date:opening_hours': 'Horaires vérifiés le',
 	}[key]
 	return found || key
 }

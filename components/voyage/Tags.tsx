@@ -5,6 +5,7 @@ export default function Tags({ tags }) {
 	return (
 		<ul
 			css={`
+				margin-top: 0.6rem;
 				padding-left: 0.6rem;
 				list-style-type: none;
 				border-left: 4px solid var(--lightColor);

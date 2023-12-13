@@ -1,6 +1,7 @@
 import Emoji from '@/components/Emoji'
 import FriendlyObjectViewer from '@/components/FriendlyObjectViewer'
-import Address from '@/components/voyage/Address'
+import { omit } from '@/components/utils/utils'
+import Address, { addressKeys } from '@/components/voyage/Address'
 import ContactAndSocial from '@/components/voyage/ContactAndSocial'
 import OsmLinks from '@/components/voyage/OsmLinks'
 import Tags, { SoloTags } from '@/components/voyage/Tags'
@@ -18,6 +19,7 @@ export default function OsmFeature({ data }) {
 		opening_hours,
 		phone: phone1,
 		'contact:phone': phone2,
+		'contact:mobile': phone3,
 		email,
 		website: website1,
 		'contact:website': website2,
@@ -31,12 +33,10 @@ export default function OsmFeature({ data }) {
 		...rest
 	} = data.tags
 
-	const phone = phone1 || phone2,
+	const phone = phone1 || phone2 || phone3,
 		website = website1 || website2
 
-	const filteredRest = Object.fromEntries(
-		Object.entries(rest).filter(([tag]) => !tag.includes('addr'))
-	)
+	const filteredRest = omit([...addressKeys], rest)
 
 	const translatedTags = Object.entries(filteredRest).map(([key, value]) => {
 			const tagLabels = getTagLabels(key, value)
