@@ -1,4 +1,7 @@
-import { tagNameCorrespondance } from '@/app/voyage/osmTagLabels'
+import {
+	tagNameCorrespondance,
+	tagValueCorrespondance,
+} from '@/app/voyage/osmTagLabels'
 import Emoji from '../Emoji'
 
 export default function Tags({ tags }) {
@@ -15,7 +18,7 @@ export default function Tags({ tags }) {
 			{tags.map(([k, v]) => (
 				<li key={k + v}>
 					<span>
-						{tagNameCorrespondance(k)} : {v}
+						{tagNameCorrespondance(k)} : {tagValueCorrespondance(v)}
 					</span>
 				</li>
 			))}

@@ -35,6 +35,13 @@ export const tagNameCorrespondance = (key) => {
 		'payment:cash': 'Paiement en liquide',
 		'payment:card': 'Paiement par carte',
 		'opening_hours:signed': 'Horaires visibles',
+		books: 'Livres',
+	}[key]
+	return found || key
+}
+export const tagValueCorrespondance = (key) => {
+	const found = {
+		children: 'Enfant',
 	}[key]
 	return found || key
 }
