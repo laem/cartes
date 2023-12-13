@@ -21,3 +21,11 @@ const translateBasics = (value) => {
 	const found = { yes: 'oui', no: 'non' }[value]
 	return found || value
 }
+
+export const tagNameCorrespondance = (key) => {
+	const found = {
+		'diet:vegan': 'Végan',
+		'diet:vegetarian': 'Végétarien',
+	}[key]
+	return found || key
+}

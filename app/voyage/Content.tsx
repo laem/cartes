@@ -50,7 +50,6 @@ export default function Content({
 	styleChooser,
 	itinerary,
 }) {
-	console.log('ITINER', itinerary)
 	const url = osmFeature?.tags?.website || osmFeature?.tags?.['contact:website']
 	const ogImages = useOgImageFetcher(url),
 		ogImage = ogImages[url]

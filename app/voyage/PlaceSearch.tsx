@@ -18,6 +18,7 @@ export default function PlaceSearch({ state, setState, sideSheet, setSnap }) {
 			if (v.length > 2) {
 				const hash = window.location.hash,
 					local = hash.split('/').slice(1, 3)
+
 				fetchPhoton(v, setState, whichInput, localSearch && local)
 			}
 		}
@@ -89,7 +90,7 @@ export default function PlaceSearch({ state, setState, sideSheet, setSnap }) {
 						>
 							<input
 								type="checkbox"
-								checked={localSearch}
+								defaultChecked={localSearch}
 								onClick={() => {
 									setLocalSearch(!localSearch)
 									onInputChange(

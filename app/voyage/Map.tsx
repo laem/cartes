@@ -481,8 +481,15 @@ out skel qt;
 
 			const elements = await osmRequest(featureType, featureId, full)
 			if (!elements.length) return
+			console.log(
+				'OSM elements received',
+				elements,
+				' for ',
+				featureType,
+				featureId
+			)
 
-			const element = elements.find((el) => '' + el.id === featureId)
+			const element = elements.find((el) => el.id == featureId)
 
 			const featureCollectionFromOsmNodes = (nodes) => {
 				console.log('yanodes', nodes)
