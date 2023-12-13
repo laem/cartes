@@ -30,6 +30,7 @@ export default function OsmFeature({ data }) {
 		brand: brand,
 		'brand:wikidata': brandWikidata,
 		'brand:wikipedia': brandWikipedia,
+		'ref:FR:Allocine': allocine,
 		wikipedia,
 		wikidata,
 		...rest
@@ -98,6 +99,15 @@ export default function OsmFeature({ data }) {
 			<ContactAndSocial
 				{...{ email: email || email2, instagram, facebook, siret }}
 			/>
+			{allocine && (
+				<a
+					href={`https://www.allocine.fr/seance/salle_gen_csalle=${allocine}.html`}
+					target="_blank"
+					title="Lien vers la fiche cinéma sur Allocine"
+				>
+					Fiche Allociné
+				</a>
+			)}
 			<Brand {...{ brand, brandWikidata, brandWikipedia }} />
 			<Tags tags={keyValueTags} />
 			<OsmLinks data={data} />

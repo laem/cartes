@@ -36,6 +36,7 @@ export const tagNameCorrespondance = (key) => {
 		'payment:card': 'Paiement par carte',
 		'opening_hours:signed': 'Horaires visibles',
 		books: 'Livres',
+		short_name: 'Diminutif',
 	}[key]
 	return found || key
 }
