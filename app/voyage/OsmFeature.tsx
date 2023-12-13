@@ -7,6 +7,7 @@ import Tags, { SoloTags } from '@/components/voyage/Tags'
 import Wikipedia from '@/components/voyage/Wikipedia'
 import parseOpeningHours from 'opening_hours'
 import { getTagLabels } from './osmTagLabels'
+import Brand from './tags/Brand'
 
 export default function OsmFeature({ data }) {
 	if (!data.tags) return null
@@ -23,6 +24,9 @@ export default function OsmFeature({ data }) {
 		'contact:instagram': instagram,
 		'contact:facebook': facebook,
 		'ref:FR:SIRET': siret,
+		brand: brand,
+		'brand:wikidata': brandWikidata,
+		'brand:wikipedia': brandWikipedia,
 		wikipedia,
 		...rest
 	} = data.tags
@@ -89,6 +93,7 @@ export default function OsmFeature({ data }) {
 
 			{opening_hours && <OpeningHours opening_hours={opening_hours} />}
 			<ContactAndSocial {...{ email, instagram, facebook, siret }} />
+			<Brand {...{ brand, brandWikidata, brandWikipedia }} />
 			<Tags tags={keyValueTags} />
 			<OsmLinks data={data} />
 		</div>

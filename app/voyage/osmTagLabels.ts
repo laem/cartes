@@ -26,6 +26,7 @@ export const tagNameCorrespondance = (key) => {
 	const found = {
 		'diet:vegan': 'Végan',
 		'diet:vegetarian': 'Végétarien',
+		tobacco: 'Vente de tabac',
 	}[key]
 	return found || key
 }
