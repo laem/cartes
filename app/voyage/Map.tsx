@@ -37,9 +37,6 @@ export const defaultState = {
 const defaultZoom = 8
 export default function Map({ searchParams }) {
 	const [state, setState] = useState(defaultState)
-	try {
-		console.log('state', state, state.vers.choice.item.type)
-	} catch (e) {}
 	const [osmFeature, setOsmFeature] = useState(null)
 	const [latLngClicked, setLatLngClicked] = useState(null)
 	const [zoom, setZoom] = useState(defaultZoom)

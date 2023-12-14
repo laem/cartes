@@ -29,6 +29,9 @@ export default function Wikipedia({ name }) {
 		<div
 			css={`
 				position: relative;
+				${
+					shortenText?.length > 100 &&
+					`
 				&:after {
 					position: absolute;
 					bottom: 0;
@@ -41,6 +44,8 @@ export default function Wikipedia({ name }) {
 						color-mix(in srgb, var(--lightestColor) 100%, transparent) 80%
 					);
 					pointer-events: none; /* so the text is still selectable */
+				`
+				}
 				}
 				p {
 					line-height: 1.2rem;
