@@ -78,7 +78,6 @@ export default function OsmFeature({ data }) {
 			)}
 			<Address tags={data.tags} />
 			{wikipedia && wikipedia.includes(':') && <Wikipedia name={wikipedia} />}
-			{wikidata && <Wikidata id={wikidata} />}
 			{phone && (
 				<div>
 					<a href={`tel:${phone}`}>
@@ -110,6 +109,7 @@ export default function OsmFeature({ data }) {
 			)}
 			<Brand {...{ brand, brandWikidata, brandWikipedia }} />
 			<Tags tags={keyValueTags} />
+			{wikidata && <Wikidata id={wikidata} />}
 			<OsmLinks data={data} />
 		</div>
 	)

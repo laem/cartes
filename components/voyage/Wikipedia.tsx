@@ -49,16 +49,27 @@ export default function Wikipedia({ name }) {
 				}
 				p {
 					line-height: 1.2rem;
+					${
+						shortenText?.length > 100
+							? ''
+							: `
+				    margin-bottom: 1.4rem`
+					}
 				}
 				img {
 					vertical-align: text-bottom;
 					margin-right: 0.3rem;
 				}
 				p > a {
+				${
+					shortenText?.length > 100
+						? `
 					z-index: 2;
 					position: absolute;
 					right: 0;
-				}
+					`
+						: `float: right; `
+				};}
 			`}
 		>
 			<p>
