@@ -1,6 +1,9 @@
 import osmLogo from '@/public/openstreetmap.svg'
 import Image from 'next/image'
-export default function OsmLinks({ data: { type: featureType, id } }) {
+export default function OsmLinks({
+	data: { type: featureType2, featureType: featureType1, id },
+}) {
+	const featureType = featureType1 || featureType2
 	return (
 		<div
 			css={`

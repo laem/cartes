@@ -545,8 +545,12 @@ out skel qt;
 				lieu: encodePlace(properties.featureType, properties.id),
 			})
 
-			console.log('will set OSMfeature after quickSearch marker click')
-			setOsmFeature({ ...properties, tags })
+			const osmFeature = { ...properties, tags }
+			console.log(
+				'will set OSMfeature after quickSearch marker click, ',
+				osmFeature
+			)
+			setOsmFeature(osmFeature)
 		})
 		map.on('mouseenter', 'features-points', () => {
 			map.getCanvas().style.cursor = 'pointer'
