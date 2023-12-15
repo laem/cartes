@@ -21,14 +21,27 @@ const TransportRoute = ({ data }) => {
 	)
 }
 
+export const isNotTransportStop = (tags) =>
+	!tags || tags.public_transport !== 'platform'
 export default function TransportStop({ tags }) {
-	const stopId = 'STAR:' + tags[transportKeys[0]]
+	console.log('tags', tags)
 	const [data, setData] = useState(null)
+
+	const ref = Object.entries(tags).find(([k, v]) => k.match(/ref(\:FR)?\:.+/g))
+	console.log(ref)
+	if (!ref) return null
+	const splits = ref[0].split(':')
+	const network = splits.length === 3 ? splits[2] : splits[1]
+	const stopId = ref[1].includes(network.toUpperCase())
+		? ref[1]
+		: network.toUpperCase() + ':' + ref[1]
 
 	console.log('bus data', data)
 	useEffect(() => {
 		const doFetch = async () => {
-			const response = await fetch('http://localhost:3000/stopTimes/' + stopId)
+			const response = await fetch(
+				'https://gtfs-server.osc-fr1.scalingo.io/stopTimes/' + stopId
+			)
 			const json = await response.json()
 
 			setData(json)

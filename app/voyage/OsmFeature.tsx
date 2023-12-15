@@ -9,7 +9,10 @@ import Wikipedia from '@/components/voyage/Wikipedia'
 import parseOpeningHours from 'opening_hours'
 import { getTagLabels } from './osmTagLabels'
 import Brand, { Wikidata } from './tags/Brand'
-import TransportStop, { transportKeys } from './transport/TransportStop'
+import TransportStop, {
+	isNotTransportStop,
+	transportKeys,
+} from './transport/TransportStop'
 
 export default function OsmFeature({ data }) {
 	if (!data.tags) return null
@@ -99,7 +102,8 @@ export default function OsmFeature({ data }) {
 			<ContactAndSocial
 				{...{ email: email || email2, instagram, facebook, siret }}
 			/>
-			<TransportStop tags={data.tags} />
+			{!isNotTransportStop(data.tags) && <TransportStop tags={data.tags} />}
+
 			{allocine && (
 				<a
 					href={`https://www.allocine.fr/seance/salle_gen_csalle=${allocine}.html`}
