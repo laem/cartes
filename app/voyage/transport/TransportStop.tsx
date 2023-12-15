@@ -40,7 +40,8 @@ export default function TransportStop({ tags }) {
 	useEffect(() => {
 		const doFetch = async () => {
 			const response = await fetch(
-				'https://gtfs-server.osc-fr1.scalingo.io/stopTimes/' + stopId
+				'https://gtfs-server.osc-fr1.scalingo.io/stopTimes/' + stopId,
+				{ mode: 'cors' }
 			)
 			const json = await response.json()
 
