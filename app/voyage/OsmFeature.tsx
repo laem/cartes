@@ -9,6 +9,7 @@ import Wikipedia from '@/components/voyage/Wikipedia'
 import parseOpeningHours from 'opening_hours'
 import { getTagLabels } from './osmTagLabels'
 import Brand, { Wikidata } from './tags/Brand'
+import TransportStop, { transportKeys } from './transport/TransportStop'
 
 export default function OsmFeature({ data }) {
 	if (!data.tags) return null
@@ -39,7 +40,7 @@ export default function OsmFeature({ data }) {
 	const phone = phone1 || phone2 || phone3,
 		website = website1 || website2
 
-	const filteredRest = omit([...addressKeys], rest)
+	const filteredRest = omit([...addressKeys, ...transportKeys], rest)
 
 	const translatedTags = Object.entries(filteredRest).map(([key, value]) => {
 			const tagLabels = getTagLabels(key, value)
@@ -98,6 +99,7 @@ export default function OsmFeature({ data }) {
 			<ContactAndSocial
 				{...{ email: email || email2, instagram, facebook, siret }}
 			/>
+			<TransportStop tags={data.tags} />
 			{allocine && (
 				<a
 					href={`https://www.allocine.fr/seance/salle_gen_csalle=${allocine}.html`}
