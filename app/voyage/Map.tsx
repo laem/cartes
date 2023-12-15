@@ -571,7 +571,11 @@ out skel qt;
 				tailoredZoom = ['city'].includes(destinationType)
 					? 11
 					: Math.max(15, zoom)
-			console.log('will fly to in after OSM download from vers marker')
+			console.log(
+				'will fly to in after OSM download from vers marker',
+				center,
+				tailoredZoom
+			)
 			map.flyTo({
 				center,
 				zoom: tailoredZoom,

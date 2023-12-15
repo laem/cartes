@@ -4,7 +4,13 @@ import css from '@/components/css/convertToJs'
 import fetchPhoton from '@/components/voyage/fetchPhoton'
 import { useState } from 'react'
 
-export default function PlaceSearch({ state, setState, sideSheet, setSnap }) {
+export default function PlaceSearch({
+	state,
+	setState,
+	sideSheet,
+	setSnap,
+	zoom,
+}) {
 	const [localSearch, setLocalSearch] = useState(true)
 	const { vers } = state
 	const onInputChange =
@@ -19,7 +25,7 @@ export default function PlaceSearch({ state, setState, sideSheet, setSnap }) {
 				const hash = window.location.hash,
 					local = hash.split('/').slice(1, 3)
 
-				fetchPhoton(v, setState, whichInput, localSearch && local)
+				fetchPhoton(v, setState, whichInput, localSearch && local, zoom)
 			}
 		}
 	return (
