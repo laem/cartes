@@ -192,10 +192,10 @@ out skel qt;
 				.then((response) => response.text())
 				.then((text) => {
 					// If both the image and svg are found, replace the image with the svg.
-					const img = new Image(20, 20)
+					const img = new Image(40, 40)
 					img.src = 'data:image/svg+xml;charset=utf-8,' + text
 
-					console.log('SRC', img.src)
+					console.log('SRC', text, img.src)
 
 					img.onload = () => {
 						const imageName = category.name + '-futureco'
@@ -266,7 +266,7 @@ out skel qt;
 							source: 'features-points',
 							layout: {
 								'icon-image': category.name + '-futureco',
-								'icon-size': 1.3,
+								'icon-size': 0.6,
 								'text-field': ['get', 'name'],
 								'text-offset': [0, 1.25],
 								'text-anchor': 'top',
