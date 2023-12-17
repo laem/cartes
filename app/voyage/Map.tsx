@@ -562,7 +562,7 @@ out skel qt;
 		map.on('mouseleave', 'features-points', () => {
 			map.getCanvas().style.cursor = 'auto'
 		})
-	}, [map, distanceMode])
+	}, [map, distanceMode, setSearchParams])
 
 	useEffect(() => {
 		if (!map || !center) return
@@ -572,7 +572,7 @@ out skel qt;
 		if (!marker) {
 			const destinationType = state.vers.choice.item.type,
 				tailoredZoom = ['city'].includes(destinationType)
-					? 11
+					? 12
 					: Math.max(15, zoom)
 			console.log(
 				'will fly to in after OSM download from vers marker',

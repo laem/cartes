@@ -13,7 +13,6 @@ export default function useSetSearchParams() {
 
 	const createQueryString = useCallback(
 		(newSearchParams: object, clear: boolean) => {
-			console.log('new', newSearchParams, 'old', searchParams)
 			const params = new URLSearchParams(clear ? {} : searchParams)
 
 			Object.entries(newSearchParams).map(([k, v]) => {
