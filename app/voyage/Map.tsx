@@ -25,6 +25,7 @@ import useTerrainControl from './useTerrainControl'
 import useDrawRoute from './itinerary/useDrawRoute'
 import useItinerary from './itinerary/useItinerary'
 import useHoverOnMapFeatures from './useHoverOnMapFeatures'
+import { computeCssVariable } from '@/components/utils/colors'
 
 const defaultCenter =
 	// Saint Malo [-1.9890417068124002, 48.66284934737089]
@@ -193,7 +194,14 @@ out skel qt;
 				.then((text) => {
 					// If both the image and svg are found, replace the image with the svg.
 					const img = new Image(40, 40)
-					img.src = 'data:image/svg+xml;charset=utf-8,' + text
+					const backgroundDisk = `<circle
+     style="fill:${computeCssVariable('--color')};fill-rule:evenodd"
+     cx="4.9782648"
+     cy="4.9129262"
+     r="4.8509607" />`
+					img.src =
+						'data:image/svg+xml;charset=utf-8,' +
+						text.replace('<path', backgroundDisk + '<path')
 
 					console.log('SRC', text, img.src)
 
