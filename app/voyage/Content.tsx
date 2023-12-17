@@ -22,7 +22,7 @@ import { DialogButton, ModalCloseButton } from './UI'
 import useOgImageFetcher from './useOgImageFetcher'
 import useWikidata from './useWikidata'
 import { ZoneImages } from './ZoneImages'
-import useSetSeachParams from '@/components/useSetSearchParams'
+import useSetSearchParams from '@/components/useSetSearchParams'
 import StyleChooser from './StyleChooser'
 import CircularIcon from '@/components/CircularIcon'
 
@@ -59,7 +59,7 @@ export default function Content({
 		clickTipRead = tutorials.clickTip
 	const wikidata = useWikidata(state)
 
-	const setSearchParams = useSetSeachParams()
+	const setSearchParams = useSetSearchParams()
 	if (!introductionRead)
 		return (
 			<ExplanationWrapper>

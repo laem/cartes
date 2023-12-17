@@ -7,7 +7,7 @@ import categories from './categories.yaml'
 import { createPolygon, createSearchBBox } from './createSearchPolygon'
 import { sortGares } from './gares'
 
-import useSetSeachParams from '@/components/useSetSearchParams'
+import useSetSearchParams from '@/components/useSetSearchParams'
 import { extractOsmFeature } from '@/components/voyage/fetchPhoton'
 import MapButtons from '@/components/voyage/MapButtons'
 import { goodIconSize } from '@/components/voyage/mapUtils'
@@ -48,7 +48,7 @@ export default function Map({ searchParams }) {
 	const styleKey = searchParams.style || 'base',
 		style = styles[styleKey],
 		styleUrl = styles[styleKey].url
-	const setSearchParams = useSetSeachParams()
+	const setSearchParams = useSetSearchParams()
 
 	const place = searchParams.lieu,
 		[featureType, featureId] = place

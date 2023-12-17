@@ -1,4 +1,4 @@
-import useSetSeachParams from '@/components/useSetSearchParams'
+import useSetSearchParams from '@/components/useSetSearchParams'
 import { omit } from '@/components/utils/utils'
 import Link from 'next/link'
 import categories from './categories.yaml'
@@ -19,7 +19,7 @@ export default function QuickFeatureSearch({
 	category: categorySet,
 	searchParams, // dunno why params is not getting updated here, but updates hash though, we need searchParams
 }) {
-	const setSearchParams = useSetSeachParams()
+	const setSearchParams = useSetSearchParams()
 
 	return (
 		<div

@@ -1,7 +1,7 @@
 import { usePathname, useRouter, useSearchParams } from 'next/navigation'
 import { useCallback, useEffect, useState } from 'react'
 
-export default function useSetSeachParams() {
+export default function useSetSearchParams() {
 	const router = useRouter()
 	const pathname = usePathname()
 	const searchParams = useSearchParams()
@@ -13,6 +13,7 @@ export default function useSetSeachParams() {
 
 	const createQueryString = useCallback(
 		(newSearchParams: object, clear: boolean) => {
+			console.log('new', newSearchParams, 'old', searchParams)
 			const params = new URLSearchParams(clear ? {} : searchParams)
 
 			Object.entries(newSearchParams).map(([k, v]) => {
