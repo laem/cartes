@@ -26,6 +26,7 @@ import useDrawRoute from './itinerary/useDrawRoute'
 import useItinerary from './itinerary/useItinerary'
 import useHoverOnMapFeatures from './useHoverOnMapFeatures'
 import { computeCssVariable } from '@/components/utils/colors'
+import { fromHTML } from '@/components/utils/htmlUtils'
 
 const defaultCenter =
 	// Saint Malo [-1.9890417068124002, 48.66284934737089]
@@ -194,18 +195,23 @@ out skel qt;
 				.then((text) => {
 					// If both the image and svg are found, replace the image with the svg.
 					const img = new Image(40, 40)
+
+					const svg = fromHTML(text)
+					const svgSize = svg.getAttribute('width'), // Icons must be square !
+						xyr = svgSize / 2
 					const backgroundDisk = `<circle
      style="fill:${encodeURIComponent(
 				computeCssVariable('--color')
 			)};fill-rule:evenodd"
-     cx="5"
-     cy="5"
-     r="6" />`
-					img.src =
-						'data:image/svg+xml;charset=utf-8,' +
-						text.replace('<path', backgroundDisk + '<path')
+     cx="${xyr}"
+     cy="${xyr}"
+     r="${xyr}" />`
+					const newInner = `${backgroundDisk}<g style="fill:white;" transform="scale(.7)" transform-origin="center" transform-box="fill-box">${svg.innerHTML}</g>`
+					svg.innerHTML = newInner
+					console.log('svg', newInner)
+					console.log(svg.outerHTML)
 
-					console.log('SRC', text, img.src)
+					img.src = 'data:image/svg+xml;charset=utf-8,' + svg.outerHTML
 
 					img.onload = () => {
 						const imageName = category.name + '-futureco'
