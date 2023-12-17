@@ -195,10 +195,12 @@ out skel qt;
 					// If both the image and svg are found, replace the image with the svg.
 					const img = new Image(40, 40)
 					const backgroundDisk = `<circle
-     style="fill:${computeCssVariable('--color')};fill-rule:evenodd"
-     cx="4.9782648"
-     cy="4.9129262"
-     r="4.8509607" />`
+     style="fill:${encodeURIComponent(
+				computeCssVariable('--color')
+			)};fill-rule:evenodd"
+     cx="5"
+     cy="5"
+     r="6" />`
 					img.src =
 						'data:image/svg+xml;charset=utf-8,' +
 						text.replace('<path', backgroundDisk + '<path')
