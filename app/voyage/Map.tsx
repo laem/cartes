@@ -287,6 +287,12 @@ out skel qt;
 								'text-offset': [0, 1.25],
 								'text-anchor': 'top',
 							},
+							paint: {
+								'text-color': '#503f38',
+								'text-halo-blur': 0.5,
+								'text-halo-color': 'white',
+								'text-halo-width': 1,
+							},
 						})
 					}
 				})
