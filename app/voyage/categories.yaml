@@ -42,9 +42,7 @@
 - name: vue
   title: Point de vue
   query:
-    tourism:
-      viewpoint
-      #icon: .svg
+    tourism: viewpoint
 - name: Cinéma
   query:
     amenity:

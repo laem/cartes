@@ -136,7 +136,6 @@ out skel qt;
 			const request = await fetch(url)
 			const json = await request.json()
 			const namedElements = json.elements.filter((element) => {
-				if (!element.tags || !element.tags.name) return false
 				if (!['way', 'node'].includes(element.type)) return false
 				return true
 			})
@@ -174,7 +173,7 @@ out skel qt;
 		const shownFeatures = !showOpenOnly
 			? features
 			: features.filter((f) => {
-					if (!f.tags.opening_hours) return false
+					if (!f.tags || f.tags.opening_hours) return false
 					try {
 						const oh = new parseOpeningHours(f.tags.opening_hours, {
 							address: { country_code: 'fr' },
@@ -214,13 +213,14 @@ out skel qt;
 										coordinates: [f.lon, f.lat],
 									}
 
+									const tags = f.tags || {}
 									return {
 										type: 'Feature',
 										geometry,
 										properties: {
 											id: f.id,
-											tags: f.tags,
-											name: f.tags.name,
+											tags,
+											name: tags.name,
 											featureType: f.type,
 										},
 									}
@@ -234,13 +234,14 @@ out skel qt;
 								features: shownFeatures
 									.filter((f) => f.polygon)
 									.map((f) => {
+										const tags = f.tags || {}
 										return {
 											type: 'Feature',
 											geometry: f.polygon.geometry,
 											properties: {
 												id: f.id,
-												tags: f.tags,
-												name: f.tags.name,
+												tags,
+												name: tags.name,
 											},
 										}
 									}),
