@@ -24,6 +24,7 @@ import { styles } from './styles'
 import useTerrainControl from './useTerrainControl'
 import useDrawRoute from './itinerary/useDrawRoute'
 import useItinerary from './itinerary/useItinerary'
+import useHoverOnMapFeatures from './useHoverOnMapFeatures'
 
 const defaultCenter =
 	// Saint Malo [-1.9890417068124002, 48.66284934737089]
@@ -563,6 +564,8 @@ out skel qt;
 			map.getCanvas().style.cursor = 'auto'
 		})
 	}, [map, distanceMode, setSearchParams])
+
+	useHoverOnMapFeatures(map)
 
 	useEffect(() => {
 		if (!map || !center) return
