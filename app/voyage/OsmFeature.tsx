@@ -60,6 +60,10 @@ export default function OsmFeature({ data }) {
 				a {
 					color: var(--darkColor);
 				}
+				small {
+					line-height: 0.9rem;
+					display: inline-block;
+				}
 			`}
 		>
 			<SoloTags tags={soloTags} />

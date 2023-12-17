@@ -1,25 +1,5 @@
-import { findContrastedTextColor } from '@/components/utils/colors'
 import { useEffect, useState } from 'react'
-
-const TransportRoute = ({ data }) => {
-	console.log('plop', data)
-	return (
-		<li>
-			<small
-				css={`
-					background: ${data.route_color ? `#${data.route_color}` : 'grey'};
-					padding: 0 0.2rem;
-					border-radius: 0.3rem;
-					color: ${data.route_color
-						? findContrastedTextColor(data.route_color, true)
-						: '#ffffff'};
-				`}
-			>
-				🚍️ <strong>{data.route_short_name}</strong> {data.route_long_name}
-			</small>
-		</li>
-	)
-}
+import TransportRoute from './TransportRoute'
 
 export const isNotTransportStop = (tags) =>
 	!tags || tags.public_transport !== 'platform'
@@ -64,7 +44,16 @@ export default function TransportStop({ tags }) {
 		<div>
 			<ul>
 				{data.routes.map((route) => (
-					<TransportRoute key={route.route_id} data={route} />
+					<TransportRoute
+						key={route.route_id}
+						route={route}
+						stops={data.stops
+							.map((stop) => {
+								const trip = data.trips.find((t) => t.trip_id === stop.trip_id)
+								return { ...stop, trip }
+							})
+							.filter((stop) => stop.trip.route_id === route.route_id)}
+					/>
 				))}
 			</ul>
 		</div>
