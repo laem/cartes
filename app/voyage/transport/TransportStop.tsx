@@ -23,18 +23,27 @@ const TransportRoute = ({ data }) => {
 
 export const isNotTransportStop = (tags) =>
 	!tags || tags.public_transport !== 'platform'
-export default function TransportStop({ tags }) {
-	console.log('tags', tags)
-	const [data, setData] = useState(null)
 
+const findStopId = (tags) => {
+	// ref:MobiBreizh = ILLENOO2:13602
+	// ref:STAR = 1320
+	// ref:bzh:IOAD = MARCHE
 	const ref = Object.entries(tags).find(([k, v]) => k.match(/ref(\:FR)?\:.+/g))
-	console.log(ref)
+	console.log('transport ref', ref)
 	if (!ref) return null
+	if (ref[1].split(':').length === 2) return ref[1]
 	const splits = ref[0].split(':')
 	const network = splits.length === 3 ? splits[2] : splits[1]
 	const stopId = ref[1].includes(network.toUpperCase())
 		? ref[1]
 		: network.toUpperCase() + ':' + ref[1]
+	return stopId
+}
+export default function TransportStop({ tags }) {
+	console.log('tags', tags)
+	const [data, setData] = useState(null)
+
+	const stopId = findStopId(tags)
 
 	console.log('bus data', data)
 	useEffect(() => {
