@@ -198,7 +198,9 @@ out skel qt;
 					console.log('SRC', img.src)
 
 					img.onload = () => {
-						map.addImage(category.name + '-futureco', img)
+						const imageName = category.name + '-futureco'
+						const mapImage = map.getImage(imageName)
+						if (!mapImage) map.addImage(imageName, img)
 						console.log('OYOYO', category.name, img)
 
 						console.log('features', shownFeatures, features)
@@ -230,7 +232,7 @@ out skel qt;
 							data: {
 								type: 'FeatureCollection',
 								features: shownFeatures
-									.filter((f) => console.log('polyg', f.polygon) || f.polygon)
+									.filter((f) => f.polygon)
 									.map((f) => {
 										return {
 											type: 'Feature',
@@ -557,7 +559,7 @@ out skel qt;
 		})
 		// Change it back to a pointer when it leaves.
 		map.on('mouseleave', 'features-points', () => {
-			map.getCanvas().style.cursor = ''
+			map.getCanvas().style.cursor = 'auto'
 		})
 	}, [map, distanceMode])
 
@@ -574,7 +576,8 @@ out skel qt;
 			console.log(
 				'will fly to in after OSM download from vers marker',
 				center,
-				tailoredZoom
+				tailoredZoom,
+				destinationType
 			)
 			map.flyTo({
 				center,
