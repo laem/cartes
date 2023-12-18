@@ -25,6 +25,7 @@ import { ZoneImages } from './ZoneImages'
 import useSetSearchParams from '@/components/useSetSearchParams'
 import StyleChooser from './StyleChooser'
 import CircularIcon from '@/components/CircularIcon'
+import { useEffect } from 'react'
 
 export default function Content({
 	latLngClicked,
@@ -60,6 +61,10 @@ export default function Content({
 	const wikidata = useWikidata(state)
 
 	const setSearchParams = useSetSearchParams()
+	useEffect(() => {
+		if (!introductionRead) setSnap(1)
+	}, [introductionRead, setSnap])
+
 	if (!introductionRead)
 		return (
 			<ExplanationWrapper>
