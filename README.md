@@ -1,4 +1,4 @@
-Copyright 2023,2024 Maël THOMAS-QUILLÉVÉRÉ. L'ensemble de ce dépot est soumis à la licence AGPL3.
+> Copyright 2023,2024 Maël THOMAS-QUILLÉVÉRÉ. L'ensemble de ce dépot est soumis à la licence AGPL3.
 
 ## Futureco
 
