@@ -1,6 +1,6 @@
 {
 	"name": "futur.eco",
-	"license": "MIT",
+	"license": "AGPL-3.0-or-later",
 	"version": "2.0.0",
 	"repository": {
 		"type": "git",
