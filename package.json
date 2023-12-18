@@ -2,6 +2,7 @@
 	"name": "futur.eco",
 	"license": "AGPL-3.0-or-later",
 	"version": "2.0.0",
+	"author": "Maël THOMAS-QUILLÉVÉRÉ <laem@kont.me>",
 	"repository": {
 		"type": "git",
 		"url": "https://github.com/laem/futureco.git"
