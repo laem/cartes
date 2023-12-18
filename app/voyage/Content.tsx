@@ -90,7 +90,16 @@ export default function Content({
 			{showSearch && (
 				<section>
 					{!choice && (
-						<PlaceSearch {...{ state, setState, sideSheet, setSnap, zoom }} />
+						<PlaceSearch
+							{...{
+								state,
+								setState,
+								sideSheet,
+								setSnap,
+								zoom,
+								setSearchParams,
+							}}
+						/>
 					)}
 					{choice && versImageURL && (
 						<motion.div

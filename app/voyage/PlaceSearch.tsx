@@ -3,6 +3,7 @@ import { InputStyle } from '@/components/conversation/UI'
 import css from '@/components/css/convertToJs'
 import fetchPhoton from '@/components/voyage/fetchPhoton'
 import { useState } from 'react'
+import { encodePlace } from './utils'
 
 export default function PlaceSearch({
 	state,
@@ -10,6 +11,7 @@ export default function PlaceSearch({
 	sideSheet,
 	setSnap,
 	zoom,
+	setSearchParams,
 }) {
 	const [localSearch, setLocalSearch] = useState(true)
 	const { vers } = state
@@ -75,6 +77,11 @@ export default function PlaceSearch({
 								updateState: (newData) => {
 									setSnap(1)
 									setState((state) => ({ ...state, vers: newData }))
+
+									console.log('ici', newData)
+									const { osmId, featureType } = newData.choice.item
+									if (osmId && featureType)
+										setSearchParams({ lieu: encodePlace(featureType, osmId) })
 								},
 							}}
 						/>

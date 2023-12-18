@@ -530,7 +530,17 @@ out skel qt;
 				console.log('centerofmass', fc, centerOfMass(fc))
 				return fc
 			}
-			const center = !full
+			const relation = elements.find((el) => el.id == featureId),
+				adminCenter =
+					relation &&
+					relation.members?.find((el) => el.role === 'admin_centre'),
+				adminCenterNode =
+					adminCenter && elements.find((el) => el.id == adminCenter.ref)
+
+			console.log('admincenter', relation, adminCenter, adminCenterNode)
+			const center = adminCenterNode
+				? [adminCenterNode.lon, adminCenterNode.lat]
+				: !full
 				? [element.lon, element.lat]
 				: centerOfMass(
 						featureCollectionFromOsmNodes(

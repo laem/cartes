@@ -1,6 +1,8 @@
 'use client'
 import Highlighter from 'react-highlight-words'
 
+// Beware, this file is shared by the Map app, and the carbon footprint / € calculators
+
 const hash = ({ nom, ville, pays, département }) =>
 	'' + nom + ville + pays + département
 const removeDuplicates = (elements) =>
