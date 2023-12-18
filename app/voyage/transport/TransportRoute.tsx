@@ -23,8 +23,11 @@ export default function TransportRoute({ route, stops }) {
 
 	// don't know why in Rennes, you get multiple trips on one stop with the same arrival date
 	const byArrivalDate = new Map(
-		augmentedStops.map((el) => [el.arrival_time, el])
+		augmentedStops.map((el) => {
+			return [el.arrival_time, el]
+		})
 	)
+	console.log('byar', byArrivalDate)
 
 	const stopSelection = [...byArrivalDate.values()]
 		.sort((a, b) => a.arrivalTime - b.arrivalTime)
@@ -57,7 +60,7 @@ export default function TransportRoute({ route, stops }) {
 				{stopSelection.map((stop, i) => (
 					<li key={stop.trip_id}>
 						{i > 0 && '- '}
-						<Stop stop={stop} />
+						<Stop stop={stop} doPrefix={i === 0} />
 					</li>
 				))}
 			</ul>
@@ -65,15 +68,29 @@ export default function TransportRoute({ route, stops }) {
 	)
 }
 
-const Stop = ({ stop }) => {
+const Stop = ({ stop, doPrefix }) => {
 	const d = stop.arrivalTime
 	const now = new Date()
 
 	const seconds = (d.getTime() - now.getTime()) / 1000
 	const minutes = seconds / 60
 
-	if (seconds < 60) return <small>Dans {Math.round(seconds)} seconds</small>
-	if (minutes < 60) return <small>Dans {Math.round(minutes)} minutes</small>
+	const prefix = doPrefix ? 'Dans ' : ''
+
+	if (seconds < 60)
+		return (
+			<small>
+				{prefix}
+				{Math.round(seconds)} seconds
+			</small>
+		)
+	if (minutes < 60)
+		return (
+			<small>
+				{prefix}
+				{Math.round(minutes)} minutes
+			</small>
+		)
 
 	console.log(d.getHours())
 	const human = `À ${d.getHours()} h ${d.getMinutes()} min`
