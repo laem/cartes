@@ -1,39 +1,63 @@
 import { findContrastedTextColor } from '@/components/utils/colors'
 
-const time = (hhmmss) => {
-	let d = new Date() // Creates a Date Object using the clients current time
+const nowAsYYMMDD = () => {
+	var d = new Date(),
+		month = '' + (d.getMonth() + 1),
+		day = '' + d.getDate(),
+		year = d.getFullYear()
 
+	if (month.length < 2) month = '0' + month
+	if (day.length < 2) day = '0' + day
+
+	return [year, month, day].join('')
+}
+
+const timeFromHHMMSS = (hhmmss) => {
 	let [hours, minutes, seconds] = hhmmss.split(':')
 
-	d.setHours(+hours) // Set the hours, using implicit type coercion
-	d.setMinutes(minutes) // can pass Number or String - doesn't really matter
-	d.setSeconds(seconds)
-	return d
+	return [hours, minutes, seconds]
+}
+const toDate = ({ year, month, day }, time) => {
+	return new Date(+year, +month - 1, +day, ...time)
 }
 export default function TransportRoute({ route, stops }) {
 	const now = new Date()
 	const augmentedStops = stops
 		.map((stop) => {
-			const arrivalTime = time(stop.arrival_time)
-			const isFuture = arrivalTime > now
+			const time = timeFromHHMMSS(stop.arrival_time)
 
-			return { ...stop, isFuture, arrivalTime }
+			// in Bretagne unified GTFS, all the GTFS are normalized to use this technique to specify trip days
+			const calendarDate = stop.trip.calendarDates[0].date
+			const serializedDay = '' + calendarDate,
+				year = serializedDay.slice(0, 4),
+				month = serializedDay.slice(4, 6),
+				day = serializedDay.slice(6)
+			const arrivalDate = toDate({ year, month, day }, time)
+			console.log(calendarDate, time, arrivalDate)
+
+			const isFuture = arrivalDate > now
+
+			return {
+				...stop,
+				isFuture,
+				arrivalDate,
+			}
 		})
 		.filter((el) => el.isFuture)
 
-	// don't know why in Rennes, you get multiple trips on one stop with the same arrival date
+	/*
 	const byArrivalDate = new Map(
 		augmentedStops.map((el) => {
 			return [el.arrival_time, el]
 		})
 	)
-	console.log('byar', byArrivalDate)
+	*/
 
-	const stopSelection = [...byArrivalDate.values()]
-		.sort((a, b) => a.arrivalTime - b.arrivalTime)
+	const stopSelection = augmentedStops
+		.sort((a, b) => a.arrivalDate - b.arrivalDate)
 		.slice(0, 4)
 
-	console.log(stopSelection)
+	console.log('stopSelection', stopSelection)
 	return (
 		<li>
 			<small
@@ -69,7 +93,7 @@ export default function TransportRoute({ route, stops }) {
 }
 
 const Stop = ({ stop, doPrefix }) => {
-	const d = stop.arrivalTime
+	const d = stop.arrivalDate
 	const now = new Date()
 
 	const seconds = (d.getTime() - now.getTime()) / 1000

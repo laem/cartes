@@ -9,7 +9,6 @@ const findStopId = (tags) => {
 	// ref:STAR = 1320
 	// ref:bzh:IOAD = MARCHE
 	const ref = Object.entries(tags).find(([k, v]) => k.match(/ref(\:FR)?\:.+/g))
-	console.log('transport ref', ref)
 	if (!ref) return null
 	if (ref[1].split(':').length === 2) return ref[1]
 	const splits = ref[0].split(':')
@@ -30,6 +29,7 @@ export default function TransportStop({ tags }) {
 		const doFetch = async () => {
 			const response = await fetch(
 				'https://gtfs-server.osc-fr1.scalingo.io/stopTimes/' + stopId,
+				//	'http://localhost:3000/stopTimes/' + stopId,
 				{ mode: 'cors' }
 			)
 			const json = await response.json()
