@@ -55,8 +55,16 @@ export default function QuickFeatureSearch({
 					li a {
 						width: ${width};
 						height: ${width};
-						display: block;
 						padding: 0;
+						display: flex;
+						align-items: center;
+						justify-content: center;
+					}
+					li a img {
+						padding: 0;
+						margin: 0;
+						width: 1.2rem;
+						height: 1.2rem;
 					}
 				`}
 			>
