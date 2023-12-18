@@ -48,6 +48,8 @@ export default function Map({ searchParams }) {
 	const [itineraryMode, setItineraryMode] = useState(false)
 	const [styleChooser, setStyleChooser] = useState(false)
 
+	console.log('osmFeature', osmFeature)
+
 	const styleKey = searchParams.style || 'base',
 		style = styles[styleKey],
 		styleUrl = styles[styleKey].url
@@ -492,7 +494,7 @@ out skel qt;
 
 	useEffect(() => {
 		if (!map || !featureType || !featureId) return
-		if (osmFeature) return
+		if (osmFeature && osmFeature.id == featureId) return
 		const request = async () => {
 			console.log('Preparing OSM request ', featureType, featureId)
 			const full = ['way', 'relation'].includes(featureType)
