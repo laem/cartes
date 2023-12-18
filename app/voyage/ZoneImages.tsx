@@ -1,3 +1,4 @@
+import css from '@/components/css/convertToJs'
 import { toThumb } from '@/components/wikidata'
 import { useEffect, useState } from 'react'
 import { createSearchBBox } from './createSearchPolygon'
@@ -42,21 +43,17 @@ export function ZoneImages({ images }) {
 				)}`,
 			}
 		})
-	if (!imageUrls) return null
 	return (
 		<div
 			css={`
 				overflow: scroll;
-				whitespace: nowrap;
+				white-space: nowrap;
 				&::-webkit-scrollbar {
 					display: none;
 				}
 			`}
 		>
-			{' '}
-			{!imageUrls.length ? (
-				<p>Recherche d'images...</p>
-			) : (
+			{imageUrls?.length > 0 && (
 				<ul
 					css={`
 						margin: 0 0 0.4rem 0;
