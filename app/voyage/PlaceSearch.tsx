@@ -44,6 +44,15 @@ export default function PlaceSearch({
 				<input
 					type="text"
 					value={vers.inputValue}
+					onClick={(e) => {
+						setSnap(0)
+						e.preventDefault()
+						e.stopPropagation()
+
+						setTimeout(() => {
+							e.target.focus()
+						}, 300)
+					}}
 					placeholder={'Saint-Malo, Le Conquet, Café du Port...'}
 					onChange={onInputChange('vers', localSearch)}
 				/>
