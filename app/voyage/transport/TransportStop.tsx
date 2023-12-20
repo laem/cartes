@@ -42,7 +42,11 @@ export default function TransportStop({ tags }) {
 
 	return (
 		<div>
-			<ul>
+			<ul
+				css={`
+					list-style-type: none;
+				`}
+			>
 				{data.routes.map((route) => (
 					<TransportRoute
 						key={route.route_id}

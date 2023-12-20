@@ -65,7 +65,7 @@ export default function TransportRoute({ route, stops }) {
 	return (
 		<li
 			css={`
-				margin-top: 0.6rem;
+				margin-top: 0.8rem;
 			`}
 		>
 			<small
@@ -97,15 +97,23 @@ export default function TransportRoute({ route, stops }) {
 			<ul
 				css={`
 					display: flex;
+					justify-content: end;
 					list-style-type: none;
 					li {
 						margin-right: 0.6rem;
+						border-right: 2px solid var(--lighterColor);
+						padding-right: 0.6rem;
+						line-height: 1rem;
+						display: flex;
+						align-items: center;
+					}
+					li:last-child {
+						border-right: none;
 					}
 				`}
 			>
 				{stopSelection.map((stop, i) => (
 					<li key={stop.trip_id}>
-						{i > 0 && '- '}
 						<Stop stop={stop} doPrefix={i === 0} />
 					</li>
 				))}
@@ -127,19 +135,22 @@ const Stop = ({ stop, doPrefix }) => {
 		return (
 			<small>
 				{prefix}
-				{Math.round(seconds)} seconds
+				{Math.round(seconds)} sec
 			</small>
 		)
 	if (minutes < 60)
 		return (
 			<small>
 				{prefix}
-				{Math.round(minutes)} minutes
+				{Math.round(minutes)} min
 			</small>
 		)
 
 	console.log(d.getHours())
-	const human = `À ${d.getHours()} h ${d.getMinutes()} min`
+	const prefix2 = doPrefix ? 'À ' : ''
+	const hours = d.getHours(),
+		humanHours = +hours >= 10 ? hours : '0' + hours
+	const human = `${prefix2}${humanHours}h${d.getMinutes()}`
 
 	return <small>{human}</small>
 }
