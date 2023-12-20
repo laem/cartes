@@ -50,9 +50,11 @@ export default function PlaceSearch({
 					onClick={() => {
 						console.log('click')
 						// Don't lose focus if immediate event
+						/*
 						setTimeout(() => {
 							setSnap(0)
 						}, 150)
+						*/
 					}}
 					placeholder={'Saint-Malo, Le Conquet, Café du Port...'}
 					onChange={onInputChange('vers', localSearch)}
