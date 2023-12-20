@@ -337,8 +337,8 @@ out skel qt;
 	}, [setGares])
 
 	useEffect(() => {
-		if (map) return
-		if (!mapContainerRef.current) return
+		console.log('remove', [map, setMap, styleUrl, setZoom, mapContainerRef])
+		if (!mapContainerRef.current) return undefined
 		console.log('styleUrl', styleUrl)
 
 		const newMap = new maplibregl.Map({
@@ -373,7 +373,12 @@ out skel qt;
 
 			setZoom(Math.round(newMap.getZoom()))
 		})
-	}, [map, setMap, styleUrl, setZoom, mapContainerRef])
+
+		return () => {
+			console.log('remove newmap', newMap['_mapId'])
+			newMap?.remove()
+		}
+	}, [setMap, styleUrl, setZoom, mapContainerRef])
 
 	useTerrainControl(map, style)
 
