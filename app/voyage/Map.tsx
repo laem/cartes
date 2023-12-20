@@ -48,8 +48,6 @@ export default function Map({ searchParams }) {
 	const [itineraryMode, setItineraryMode] = useState(false)
 	const [styleChooser, setStyleChooser] = useState(false)
 
-	console.log('osmFeature', osmFeature)
-
 	const styleKey = searchParams.style || 'base',
 		style = styles[styleKey],
 		styleUrl = styles[styleKey].url
@@ -73,7 +71,7 @@ export default function Map({ searchParams }) {
 		throw new Error('You have to configure env REACT_APP_API_KEY, see README')
 	}
 
-	const mapContainerRef = useRef()
+	const mapContainerRef = useRef(null)
 
 	const choice = state.vers?.choice
 	const center = useMemo(
@@ -340,7 +338,9 @@ out skel qt;
 
 	useEffect(() => {
 		if (map) return
-		console.log('salut', map)
+		if (!mapContainerRef.current) return
+		console.log('styleUrl', styleUrl)
+
 		const newMap = new maplibregl.Map({
 			container: mapContainerRef.current,
 			style: styleUrl,
@@ -348,7 +348,9 @@ out skel qt;
 			zoom: defaultZoom,
 			hash: true,
 		})
+		console.log('Has created newMap', newMap)
 		newMap.on('load', () => {
+			console.log('Will set newMap to state.map')
 			setMap(newMap)
 
 			newMap.addControl(
@@ -371,7 +373,7 @@ out skel qt;
 
 			setZoom(Math.round(newMap.getZoom()))
 		})
-	}, [map, setMap, styleUrl, setZoom, mapContainerRef.current])
+	}, [map, setMap, styleUrl, setZoom, mapContainerRef])
 
 	useTerrainControl(map, style)
 

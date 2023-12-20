@@ -86,7 +86,6 @@ export default function Content({
 		toThumb(osmFeature.tags.wikimedia_commons)
 
 	const hasContent = choice || osmFeature || zoneImages || !clickTipRead
-	//console.log('OSM', osmFeature)
 	const hasFeature = choice || osmFeature
 	const showSearch = sideSheet || !hasFeature
 
