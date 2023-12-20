@@ -4,7 +4,7 @@ import styled from 'styled-components'
 import Content from './Content'
 import ModalSheetReminder from './ModalSheetReminder'
 
-const snapPoints = [-50, 0.5, 100, 0],
+const snapPoints = [-50, 0.5, 150, 0],
 	initialSnap = 2
 
 export default function ModalSheet(props) {
