@@ -4,8 +4,8 @@ import styled from 'styled-components'
 import Content from './Content'
 import ModalSheetReminder from './ModalSheetReminder'
 
-const snapPoints = [-50, 0.5, 150, 0],
-	initialSnap = 2
+const snapPoints = [-50, 0.5, 150, 100, 0],
+	initialSnap = 3
 
 export default function ModalSheet(props) {
 	const [isOpen, setOpen] = useState(false)

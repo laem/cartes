@@ -27,6 +27,8 @@ import StyleChooser from './StyleChooser'
 import CircularIcon from '@/components/CircularIcon'
 import { useEffect } from 'react'
 
+const minimumQuickSearchZoom = 12
+
 export default function Content({
 	latLngClicked,
 	setLatLngClicked,
@@ -44,7 +46,7 @@ export default function Content({
 	zoom,
 	sideSheet,
 	searchParams,
-	setSnap = () => null,
+	setSnap = (snap) => null,
 	openSheet = () => null,
 	setStyleChooser,
 	style,
@@ -65,17 +67,6 @@ export default function Content({
 		if (!introductionRead) setSnap(1)
 	}, [introductionRead, setSnap])
 
-	if (!introductionRead)
-		return (
-			<ExplanationWrapper>
-				<Explanations />
-				<DialogButton
-					onClick={() => setTutorials({ ...tutorials, introduction: true })}
-				>
-					OK
-				</DialogButton>
-			</ExplanationWrapper>
-		)
 	const versImageURL = wikidata?.pic && toThumb(wikidata?.pic.value)
 	const choice = state.vers?.choice
 	const category = getCategory(searchParams)
@@ -88,6 +79,25 @@ export default function Content({
 	const hasContent = choice || osmFeature || zoneImages || !clickTipRead
 	const hasFeature = choice || osmFeature
 	const showSearch = sideSheet || !hasFeature
+
+	useEffect(() => {
+		if (!showSearch) return
+		if (zoom > minimumQuickSearchZoom) {
+			setSnap(2)
+		}
+	}, [showSearch, zoom])
+
+	if (!introductionRead)
+		return (
+			<ExplanationWrapper>
+				<Explanations />
+				<DialogButton
+					onClick={() => setTutorials({ ...tutorials, introduction: true })}
+				>
+					OK
+				</DialogButton>
+			</ExplanationWrapper>
+		)
 
 	return (
 		<section>
@@ -125,7 +135,7 @@ export default function Content({
 							</ImageWithNameWrapper>
 						</motion.div>
 					)}
-					{zoom > 12 && (
+					{zoom > minimumQuickSearchZoom && (
 						<QuickFeatureSearch
 							category={category}
 							searchParams={searchParams}
