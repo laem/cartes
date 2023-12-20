@@ -63,7 +63,7 @@ export default function Input({
 								onValueChange={({ floatValue }) => {
 									debouncedOnChange(
 										floatValue != undefined
-											? { valeur: floatValue, unité }
+											? { valeur: floatValue, ...(unité ? { unité } : {}) }
 											: undefined
 									)
 								}}
