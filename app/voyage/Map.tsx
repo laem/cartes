@@ -27,30 +27,29 @@ import useItinerary from './itinerary/useItinerary'
 import useHoverOnMapFeatures from './useHoverOnMapFeatures'
 import { computeCssVariable } from '@/components/utils/colors'
 import { fromHTML } from '@/components/utils/htmlUtils'
-
-const defaultCenter =
-	// Saint Malo [-1.9890417068124002, 48.66284934737089]
-	[-1.6776317608896583, 48.10983044383964]
+import useAddMap, { defaultZoom } from './effects/useAddMap'
 
 export const defaultState = {
 	depuis: { inputValue: '', choice: false },
 	vers: { inputValue: '', choice: false },
 	validated: false,
 }
-const defaultZoom = 8
 export default function Map({ searchParams }) {
+	const mapContainerRef = useRef(null)
+	const [zoom, setZoom] = useState(defaultZoom)
+	const styleKey = searchParams.style || 'base',
+		style = styles[styleKey],
+		styleUrl = styles[styleKey].url
+	const map = useAddMap(styleUrl, setZoom, mapContainerRef)
+
 	const [state, setState] = useState(defaultState)
 	const [osmFeature, setOsmFeature] = useState(null)
 	const [latLngClicked, setLatLngClicked] = useState(null)
-	const [zoom, setZoom] = useState(defaultZoom)
 	const [bikeRouteProfile, setBikeRouteProfile] = useState('safety')
 	const [distanceMode, setDistanceMode] = useState(false)
 	const [itineraryMode, setItineraryMode] = useState(false)
 	const [styleChooser, setStyleChooser] = useState(false)
 
-	const styleKey = searchParams.style || 'base',
-		style = styles[styleKey],
-		styleUrl = styles[styleKey].url
 	const setSearchParams = useSetSearchParams()
 
 	const place = searchParams.lieu,
@@ -71,8 +70,6 @@ export default function Map({ searchParams }) {
 		throw new Error('You have to configure env REACT_APP_API_KEY, see README')
 	}
 
-	const mapContainerRef = useRef(null)
-
 	const choice = state.vers?.choice
 	const center = useMemo(
 		() => choice && [choice.item.longitude, choice.item.latitude],
@@ -80,7 +77,6 @@ export default function Map({ searchParams }) {
 	)
 
 	const [gares, setGares] = useState(null)
-	const [map, setMap] = useState(null)
 	const [clickedGare, clickGare] = useState(null)
 	const [bikeRoute, setBikeRoute] = useState(null)
 	const [distance, reset, route] = useItinerary(
@@ -335,50 +331,6 @@ out skel qt;
 		}
 		fetchGares()
 	}, [setGares])
-
-	useEffect(() => {
-		console.log('remove', [map, setMap, styleUrl, setZoom, mapContainerRef])
-		if (!mapContainerRef.current) return undefined
-		console.log('styleUrl', styleUrl)
-
-		const newMap = new maplibregl.Map({
-			container: mapContainerRef.current,
-			style: styleUrl,
-			center: defaultCenter,
-			zoom: defaultZoom,
-			hash: true,
-		})
-		console.log('Has created newMap', newMap)
-		newMap.on('load', () => {
-			console.log('Will set newMap to state.map')
-			setMap(newMap)
-
-			newMap.addControl(
-				new maplibregl.NavigationControl({
-					visualizePitch: true,
-					showZoom: true,
-					showCompass: true,
-				}),
-				'top-right'
-			)
-
-			newMap.addControl(
-				new maplibregl.GeolocateControl({
-					positionOptions: {
-						enableHighAccuracy: true,
-					},
-					trackUserLocation: true,
-				})
-			)
-
-			setZoom(Math.round(newMap.getZoom()))
-		})
-
-		return () => {
-			console.log('remove newmap', newMap['_mapId'])
-			newMap?.remove()
-		}
-	}, [setMap, styleUrl, setZoom, mapContainerRef])
 
 	useTerrainControl(map, style)
 
