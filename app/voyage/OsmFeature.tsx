@@ -127,13 +127,24 @@ export default function OsmFeature({ data }) {
 
 const cleanHttp = (v) => v.replace(/https?:\/\//g, '').replace(/www\./g, '')
 
+const getOh = (opening_hours) => {
+	try {
+		const oh = new parseOpeningHours(opening_hours, {
+				address: { country_code: 'fr' },
+			}),
+			isOpen = oh.getState(),
+			nextChange = oh.getNextChange()
+
+		return { isOpen, nextChange }
+	} catch (e) {
+		console.log('Error parsing opening hours', e)
+		return { isOpen: 'error', nextChange: 'error' }
+	}
+}
 const OpeningHours = ({ opening_hours }) => {
 	const now = new Date()
-	const oh = new parseOpeningHours(opening_hours, {
-			address: { country_code: 'fr' },
-		}),
-		isOpen = oh.getState(),
-		nextChange = oh.getNextChange()
+
+	const { isOpen, nextChange } = getOh(opening_hours)
 
 	const formatDate = (date) => {
 		const sameDay = date.getDay() === now.getDay()
@@ -143,7 +154,7 @@ const OpeningHours = ({ opening_hours }) => {
 			hour: 'numeric',
 			minute: 'numeric',
 			weekday,
-		}).format(nextChange)
+		}).format(date)
 		return result
 	}
 	return (
@@ -161,8 +172,9 @@ const OpeningHours = ({ opening_hours }) => {
 		>
 			<details open={false}>
 				<summary>
-					<OpenIndicator isOpen={isOpen} />{' '}
-					{!nextChange ? (
+					<OpenIndicator isOpen={isOpen === 'error' ? false : isOpen} />{' '}
+					{isOpen === 'error' && <span>Problème dans les horaires</span>}
+					{nextChange === 'error' ? null : !nextChange ? (
 						<span>Ouvert 24/24 7j/7</span>
 					) : (
 						<span>
