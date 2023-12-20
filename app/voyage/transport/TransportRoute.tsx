@@ -58,19 +58,41 @@ export default function TransportRoute({ route, stops }) {
 		.slice(0, 4)
 
 	console.log('stopSelection', stopSelection)
+	const color = route.route_color
+		? findContrastedTextColor(route.route_color, true)
+		: '#ffffff'
+	const backgroundColor = route.route_color ? `#${route.route_color}` : 'grey'
 	return (
-		<li>
+		<li
+			css={`
+				margin-top: 0.6rem;
+			`}
+		>
 			<small
 				css={`
-					background: ${route.route_color ? `#${route.route_color}` : 'grey'};
-					padding: 0 0.2rem;
-					border-radius: 0.3rem;
-					color: ${route.route_color
-						? findContrastedTextColor(route.route_color, true)
-						: '#ffffff'};
+					strong {
+						background: ${backgroundColor};
+						padding: 0 0.2rem;
+						border-radius: 0.3rem;
+						color: ${color};
+					}
+					span {
+						text-decoration: underline;
+						text-decoration-color: ${backgroundColor};
+						text-decoration-thickness: 2px;
+					}
+					white-space: nowrap;
+					width: 100%;
+					overflow: scroll;
+					height: 1.2rem;
+					&::-webkit-scrollbar {
+						display: none;
+					}
+					scrollbar-width: none;
 				`}
 			>
-				🚍️ <strong>{route.route_short_name}</strong> {route.route_long_name}
+				🚍️ <strong>{route.route_short_name}</strong>{' '}
+				<span>{route.route_long_name}</span>
 			</small>
 			<ul
 				css={`
