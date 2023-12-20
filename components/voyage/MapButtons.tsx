@@ -55,6 +55,7 @@ height: 4rem;
 `
 
 export default function MapButtons({
+	styleChooser,
 	setStyleChooser,
 	style,
 	setDistanceMode,
@@ -67,7 +68,7 @@ export default function MapButtons({
 		<MapButtonsWrapper>
 			<MapButton>
 				<button
-					onClick={() => setStyleChooser(true)}
+					onClick={() => setStyleChooser(!styleChooser)}
 					title={'Choisir un autre style de fond de carte'}
 				>
 					<MapIcon />

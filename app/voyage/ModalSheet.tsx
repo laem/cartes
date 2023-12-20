@@ -24,7 +24,7 @@ export default function ModalSheet(props) {
 	}, [setOpen])
 
 	useEffect(() => {
-		if (!props.osmFeature) return
+		if (!props.osmFeature && !props.styleChooser) return
 
 		setOpen(true)
 		const timeout = () => {
@@ -34,7 +34,7 @@ export default function ModalSheet(props) {
 		return () => {
 			clearTimeout(timeout)
 		}
-	}, [setSnap, props.osmFeature])
+	}, [setSnap, props.osmFeature, props.styleChooser])
 
 	return (
 		<>

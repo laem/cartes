@@ -50,6 +50,8 @@ export default function Map({ searchParams }) {
 	const [itineraryMode, setItineraryMode] = useState(false)
 	const [styleChooser, setStyleChooser] = useState(false)
 
+	console.log('sylec', styleChooser)
+
 	const setSearchParams = useSetSearchParams()
 
 	const place = searchParams.lieu,
@@ -678,6 +680,7 @@ out skel qt;
 				{...{
 					style,
 					setStyleChooser,
+					styleChooser,
 					distanceMode,
 					setDistanceMode,
 					map,
