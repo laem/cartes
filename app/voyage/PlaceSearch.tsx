@@ -44,7 +44,11 @@ export default function PlaceSearch({
 				<input
 					type="text"
 					value={vers.inputValue}
-					onTouchStart={() => {
+					onTouchStart={() => console.log('start')}
+					onTouchCancel={() => console.log('cancel')}
+					onTouchEnd={() => console.log('end')}
+					onClick={() => {
+						console.log('click')
 						// Don't lose focus if immediate event
 						setTimeout(() => {
 							setSnap(0)
