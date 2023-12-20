@@ -33,7 +33,6 @@ export default function TransportRoute({ route, stops }) {
 				month = serializedDay.slice(4, 6),
 				day = serializedDay.slice(6)
 			const arrivalDate = toDate({ year, month, day }, time)
-			console.log(calendarDate, time, arrivalDate)
 
 			const isFuture = arrivalDate > now
 
@@ -57,7 +56,6 @@ export default function TransportRoute({ route, stops }) {
 		.sort((a, b) => a.arrivalDate - b.arrivalDate)
 		.slice(0, 4)
 
-	console.log('stopSelection', stopSelection)
 	const color = route.route_color
 		? findContrastedTextColor(route.route_color, true)
 		: '#ffffff'
@@ -146,7 +144,6 @@ const Stop = ({ stop, doPrefix }) => {
 			</small>
 		)
 
-	console.log(d.getHours())
 	const prefix2 = doPrefix ? 'À ' : ''
 	const hours = d.getHours(),
 		humanHours = +hours >= 10 ? hours : '0' + hours

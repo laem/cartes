@@ -136,12 +136,19 @@ out skel qt;
 			console.log(url)
 			const request = await fetch(url)
 			const json = await request.json()
-			const namedElements = json.elements.filter((element) => {
-				if (!['way', 'node'].includes(element.type)) return false
+			const nodesOrWays = json.elements.filter((element) => {
+				if (!['way', 'node'].includes(element.type)) return false // TODO relations should be handled
 				return true
 			})
-			console.log({ namedElements })
-			const nodeElements = namedElements.map((element) => {
+
+			const waysNodes = nodesOrWays
+				.filter((el) => el.type === 'way')
+				.map((el) => el.nodes)
+				.flat()
+			const interestingElements = nodesOrWays.filter(
+				(el) => !waysNodes.find((id) => id === el.id)
+			)
+			const nodeElements = interestingElements.map((element) => {
 				if (element.type === 'node') return element
 				const nodes = element.nodes.map((id) =>
 						json.elements.find((el) => el.id === id)
@@ -153,12 +160,9 @@ out skel qt;
 							coordinates: [nodes.map(({ lat, lon }) => [lon, lat])],
 						},
 					}
-				console.log({ polygon })
 				const center = centerOfMass(polygon)
 
-				console.log('center', center)
 				const [lon, lat] = center.geometry.coordinates
-				console.log({ lon, lat })
 
 				return { ...element, lat, lon, polygon }
 			})
