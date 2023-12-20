@@ -43,9 +43,13 @@ export default function PlaceSearch({
 			>
 				<input
 					type="text"
-					autoFocus={true}
 					value={vers.inputValue}
-					onTouchStart={() => setSnap(0)}
+					onTouchStart={() => {
+						// Don't lose focus if immediate event
+						setTimeout(() => {
+							setSnap(0)
+						}, 150)
+					}}
 					placeholder={'Saint-Malo, Le Conquet, Café du Port...'}
 					onChange={onInputChange('vers', localSearch)}
 				/>
