@@ -33,6 +33,14 @@ export default function RootLayout({
 }) {
 	return (
 		<html lang="fr">
+			<head>
+				<link
+					rel="search"
+					type="application/opensearchdescription+xml"
+					title="Voyage"
+					href="https://futur.eco/voyage-search.xml"
+				/>
+			</head>
 			<body>
 				<StyledComponentsRegistry>
 					<Providers>
