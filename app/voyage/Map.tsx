@@ -30,8 +30,8 @@ import { fromHTML } from '@/components/utils/htmlUtils'
 import useAddMap, { defaultZoom } from './effects/useAddMap'
 
 export const defaultState = {
-	depuis: { inputValue: '', choice: false },
-	vers: { inputValue: '', choice: false },
+	depuis: { inputValue: null, choice: false },
+	vers: { inputValue: null, choice: false },
 	validated: false,
 }
 export default function Map({ searchParams }) {

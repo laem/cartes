@@ -37,7 +37,7 @@ export default function PlaceSearch({
 	const onDestinationChange = onInputChange('vers', localSearch)
 
 	useEffect(() => {
-		if (!urlSearchQuery || value === urlSearchQuery) return
+		if (!urlSearchQuery || value != null) return
 
 		onDestinationChange(urlSearchQuery)
 	}, [urlSearchQuery, onDestinationChange, value])
