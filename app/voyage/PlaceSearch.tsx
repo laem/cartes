@@ -2,7 +2,7 @@ import GeoInputOptions from '@/components/conversation/GeoInputOptions'
 import { InputStyle } from '@/components/conversation/UI'
 import css from '@/components/css/convertToJs'
 import fetchPhoton from '@/components/voyage/fetchPhoton'
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import { encodePlace } from './utils'
 
 export default function PlaceSearch({
@@ -12,12 +12,16 @@ export default function PlaceSearch({
 	setSnap,
 	zoom,
 	setSearchParams,
+	searchParams,
 }) {
 	const [localSearch, setLocalSearch] = useState(true)
+	const urlSearchQuery = searchParams.q
 	const { vers } = state
+	const value = vers.inputValue
+
 	const onInputChange =
 		(whichInput, localSearch = false) =>
-		({ target: { value: v } }) => {
+		(v) => {
 			setState({
 				...state,
 				[whichInput]: { ...state[whichInput], inputValue: v },
@@ -30,6 +34,14 @@ export default function PlaceSearch({
 				fetchPhoton(v, setState, whichInput, localSearch && local, zoom)
 			}
 		}
+	const onDestinationChange = onInputChange('vers', localSearch)
+
+	useEffect(() => {
+		if (!urlSearchQuery || value === urlSearchQuery) return
+
+		onDestinationChange(urlSearchQuery)
+	}, [urlSearchQuery, onDestinationChange, value])
+
 	return (
 		<div>
 			<InputStyle
@@ -43,7 +55,7 @@ export default function PlaceSearch({
 			>
 				<input
 					type="text"
-					value={vers.inputValue}
+					value={value}
 					onClick={(e) => {
 						setSnap(0)
 						e.preventDefault()
@@ -54,7 +66,7 @@ export default function PlaceSearch({
 						}, 300)
 					}}
 					placeholder={'Saint-Malo, Le Conquet, Café du Port...'}
-					onChange={onInputChange('vers', localSearch)}
+					onChange={({ target: { value } }) => onDestinationChange(value)}
 				/>
 			</InputStyle>
 
@@ -113,10 +125,7 @@ export default function PlaceSearch({
 								defaultChecked={localSearch}
 								onClick={() => {
 									setLocalSearch(!localSearch)
-									onInputChange(
-										'vers',
-										!localSearch
-									)({ target: { value: vers.inputValue } })
+									onInputChange('vers', !localSearch)(vers.inputValue)
 								}}
 							/>
 							<span style={css``}>Rechercher ici</span>
