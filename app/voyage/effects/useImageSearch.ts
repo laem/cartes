@@ -2,6 +2,16 @@ import { goodIconSize } from '@/components/voyage/mapUtils'
 import maplibregl from 'maplibre-gl'
 import { useEffect, useMemo, useState } from 'react'
 
+/*
+ * TODO
+ * This component is not optimized, and may feel clumsy
+ * - we limit the nb of images since there could be 10 000 images in a single bbox
+ * - wikimedia can return images on a localised small part of the bbox because of that limit
+ * - when you do a search somewhere, then drag the map, the new search should be done only in the added surface
+ * - etc
+ *
+ *
+ */
 const serializeBbox = (bbox) => {
 	if (!bbox) return null
 
