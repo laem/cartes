@@ -2,28 +2,28 @@ import { goodIconSize } from '@/components/voyage/mapUtils'
 import maplibregl from 'maplibre-gl'
 import { useEffect, useMemo, useState } from 'react'
 
-const serializeBbox = (map) => {
-	if (!map) return null
+const serializeBbox = (bbox) => {
+	if (!bbox) return null
 
-	const bbox = map.getBounds().toArray()
 	const [[lng2, lat1], [lng1, lat2]] = bbox,
 		bboxString = `${lat2}|${lng2}|${lat1}|${lng1}`
 	return bboxString
 }
-export default function useImageSearch(map, zoom) {
+export default function useImageSearch(map, zoom, bbox, active) {
 	const [bboxImages, setBboxImages] = useState({})
 
-	const bboxString = serializeBbox(map)
+	const bboxString = serializeBbox(bbox)
+
 	const images = useMemo(
 		() => bboxImages[bboxString] || [],
 		[bboxString, bboxImages]
 	)
 	useEffect(() => {
-		console.log('bbox', bboxString)
-		if (!bboxString || zoom < 17) return
+		if (!active) return
+		if (!bboxString) return
 		if (images.length) return
 		const makeRequest = async () => {
-			const url = `https://commons.wikimedia.org/w/api.php?action=query&list=geosearch&gsbbox=${bboxString}&gsnamespace=6&gslimit=10&format=json&origin=*`
+			const url = `https://commons.wikimedia.org/w/api.php?action=query&list=geosearch&gsbbox=${bboxString}&gsnamespace=6&gslimit=30&format=json&origin=*`
 			const request = await fetch(url)
 
 			const json = await request.json()
@@ -32,7 +32,7 @@ export default function useImageSearch(map, zoom) {
 				setBboxImages((old) => ({ ...old, [bboxString]: newImages }))
 		}
 		makeRequest()
-	}, [zoom, setBboxImages, bboxString, images])
+	}, [setBboxImages, bboxString, images, active])
 
 	useEffect(() => {
 		if (!map) return

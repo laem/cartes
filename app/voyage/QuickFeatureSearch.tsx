@@ -68,6 +68,42 @@ export default function QuickFeatureSearch({
 					}
 				`}
 			>
+				<li
+					key="photos"
+					css={`
+						img {
+							width: 1.6rem;
+							height: auto;
+							vertical-align: middle;
+							filter: invert(16%) sepia(24%) saturate(3004%) hue-rotate(180deg)
+								brightness(89%) contrast(98%);
+						}
+						background: ${searchParams.photos !== 'oui'
+							? 'white'
+							: 'var(--lighterColor)'};
+
+						${searchParams.photos === 'oui' &&
+						`border-color: var(--darkColor) !important;
+
+						img {
+							filter: invert(23%) sepia(100%) saturate(1940%) hue-rotate(206deg)
+								brightness(89%) contrast(84%);
+						}`}
+					`}
+				>
+					<Link
+						href={setSearchParams(
+							{
+								...omit(['photos'], searchParams),
+								...(searchParams.photos ? {} : { photos: 'oui' }),
+							},
+							true,
+							true
+						)}
+					>
+						<img src={'/icons/photo.svg'} />
+					</Link>
+				</li>
 				{categories.map((category) => {
 					const newSearchParams = {
 						...omit(['cat'], searchParams),

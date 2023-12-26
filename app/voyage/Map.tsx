@@ -33,10 +33,11 @@ export const defaultState = {
 export default function Map({ searchParams }) {
 	const mapContainerRef = useRef(null)
 	const [zoom, setZoom] = useState(defaultZoom)
+	const [bbox, setBbox] = useState(null)
 	const styleKey = searchParams.style || 'base',
 		style = styles[styleKey],
 		styleUrl = styles[styleKey].url
-	const map = useAddMap(styleUrl, setZoom, mapContainerRef)
+	const map = useAddMap(styleUrl, setZoom, setBbox, mapContainerRef)
 
 	const [state, setState] = useState(defaultState)
 	const [osmFeature, setOsmFeature] = useState(null)
@@ -62,7 +63,8 @@ export default function Map({ searchParams }) {
 		setLatLngClicked,
 	})
 
-	useImageSearch(map, zoom)
+	console.log('bbox', bbox)
+	useImageSearch(map, zoom, bbox, searchParams.photos === 'oui')
 
 	if (process.env.NEXT_PUBLIC_MAPTILER == null) {
 		throw new Error('You have to configure env REACT_APP_API_KEY, see README')
@@ -202,7 +204,10 @@ out skel qt;
 			const approximativeZoom = Math.round(map.getZoom())
 			if (approximativeZoom !== zoom) setZoom(approximativeZoom)
 		})
-	}, [zoom, setZoom, map])
+		map.on('moveend', () => {
+			setBbox(map.getBounds().toArray())
+		})
+	}, [zoom, setZoom, map, setBbox])
 
 	useEffect(() => {
 		if (!map) return
