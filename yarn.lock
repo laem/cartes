@@ -9004,10 +9004,10 @@ magic-string@^0.25.0, magic-string@^0.25.7:
   dependencies:
     sourcemap-codec "^1.4.8"
 
-maplibre-gl@^3.6.2:
-  version "3.6.2"
-  resolved "https://registry.yarnpkg.com/maplibre-gl/-/maplibre-gl-3.6.2.tgz#abc2f34bddecabef8c20028eff06d62e36d75ccc"
-  integrity sha512-krg2KFIdOpLPngONDhP6ixCoWl5kbdMINP0moMSJFVX7wX1Clm2M9hlNKXS8vBGlVWwR5R3ZfI6IPrYz7c+aCQ==
+maplibre-gl@^4.0.0-pre.2:
+  version "4.0.0-pre.2"
+  resolved "https://registry.yarnpkg.com/maplibre-gl/-/maplibre-gl-4.0.0-pre.2.tgz#635dbe995364e44a47bf525242ebdc2fe6f48902"
+  integrity sha512-1bOzZWiXdGFQdX/Et6y28cqHNW4sWZpVrw5BMho5zPhR89WWniSiV/3xx97VvRyfccRvOL2WLd7o+Y9+tsr2yg==
   dependencies:
     "@mapbox/geojson-rewind" "^0.5.2"
     "@mapbox/jsonlint-lines-primitives" "^2.0.2"

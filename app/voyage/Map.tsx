@@ -1,33 +1,31 @@
 'use client'
-import Emoji from '@/components/Emoji'
 import maplibregl from 'maplibre-gl'
 import 'maplibre-gl/dist/maplibre-gl.css'
 import { useEffect, useMemo, useRef, useState } from 'react'
-import categories from './categories.yaml'
 import { createPolygon, createSearchBBox } from './createSearchPolygon'
 import { sortGares } from './gares'
 
 import useSetSearchParams from '@/components/useSetSearchParams'
+import { computeCssVariable } from '@/components/utils/colors'
+import { fromHTML } from '@/components/utils/htmlUtils'
+import { getCategory } from '@/components/voyage/categories'
 import { extractOsmFeature } from '@/components/voyage/fetchPhoton'
 import MapButtons from '@/components/voyage/MapButtons'
 import { goodIconSize } from '@/components/voyage/mapUtils'
 import { centerOfMass } from '@turf/turf'
 import parseOpeningHours from 'opening_hours'
+import useAddMap, { defaultZoom } from './effects/useAddMap'
+import useDrawRoute from './itinerary/useDrawRoute'
+import useItinerary from './itinerary/useItinerary'
 import ModalSwitch from './ModalSwitch'
 import { disambiguateWayRelation, osmRequest } from './osmRequest'
 import { categoryIconUrl } from './QuickFeatureSearch'
+import { styles } from './styles'
 import { MapContainer, MapHeader } from './UI'
+import useHoverOnMapFeatures from './useHoverOnMapFeatures'
+import useTerrainControl from './useTerrainControl'
 import { decodePlace, encodePlace } from './utils'
 import { useZoneImages } from './ZoneImages'
-import { getCategory } from '@/components/voyage/categories'
-import { styles } from './styles'
-import useTerrainControl from './useTerrainControl'
-import useDrawRoute from './itinerary/useDrawRoute'
-import useItinerary from './itinerary/useItinerary'
-import useHoverOnMapFeatures from './useHoverOnMapFeatures'
-import { computeCssVariable } from '@/components/utils/colors'
-import { fromHTML } from '@/components/utils/htmlUtils'
-import useAddMap, { defaultZoom } from './effects/useAddMap'
 
 export const defaultState = {
 	depuis: { inputValue: null, choice: false },
@@ -272,8 +270,18 @@ out skel qt;
 							source: 'features-ways',
 							layout: {},
 							paint: {
-								'fill-color': '#088',
+								'fill-color': computeCssVariable('--lightestColor'),
 								'fill-opacity': 0.6,
+							},
+						})
+						map.addLayer({
+							id: 'features-ways-outlines',
+							type: 'line',
+							source: 'features-ways',
+							layout: {},
+							paint: {
+								'line-color': computeCssVariable('--color'),
+								'line-width': 2,
 							},
 						})
 						map.addLayer({
@@ -305,6 +313,7 @@ out skel qt;
 				map.removeLayer('features-points')
 				map.removeSource('features-points')
 				map.removeLayer('features-ways')
+				map.removeLayer('features-ways-outlines')
 				map.removeSource('features-ways')
 			} catch (e) {
 				console.warn(e)
