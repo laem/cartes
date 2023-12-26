@@ -118,7 +118,7 @@
 		"next-contentlayer": "^0.3.4",
 		"next-mdx-remote": "^4.4.1",
 		"opening_hours": "^3.8.0",
-		"openmoji": "^14.0.0",
+		"openmoji": "^15.0.0",
 		"path-browserify": "^1.0.1",
 		"process": "^0.11.10",
 		"publicodes": "^1.0.0-beta.77",

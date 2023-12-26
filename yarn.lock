@@ -10313,10 +10313,10 @@ opening_hours@^3.8.0:
     i18next-browser-languagedetector "^6.1.4"
     suncalc "^1.9.0"
 
-openmoji@^14.0.0:
-  version "14.0.0"
-  resolved "https://registry.yarnpkg.com/openmoji/-/openmoji-14.0.0.tgz#83d52501c3bb96a00d4bbd096825d9b533b4dc51"
-  integrity sha512-MGF9GbXfpULuRtUM1srEv2OP3sg/e8hAw0UCTiP+N3+CX38RCo8/kjyFYm0eO+OENnbbri9Vx4m5pU0Vbc7LGw==
+openmoji@^15.0.0:
+  version "15.0.0"
+  resolved "https://registry.yarnpkg.com/openmoji/-/openmoji-15.0.0.tgz#1e7f45c78dabd1cea238b2b7d211244b476d2380"
+  integrity sha512-Jk8h7k/aG3PikTB0IDxZ1Vqf63G0kvgXKMXDrnw4j4dBcezoKWBuhXlkpZbEZEXnJZDzN0PBNdE1nZwYroaA3g==
 
 optionator@^0.9.3:
   version "0.9.3"
