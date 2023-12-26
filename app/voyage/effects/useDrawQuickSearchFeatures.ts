@@ -50,9 +50,11 @@ export default function useDrawQuickSearchFeatures(
 						}
 
 						const tags = f.tags || {}
-						const isOpenColor = { true: '#37c267', false: 'red', null: 'grey' }[
-							f.isOpen
-						]
+						const isOpenColor = {
+							true: '#4ce0a5ff',
+							false: '#e95748ff',
+							null: 'beige',
+						}[f.isOpen]
 
 						console.log('YOYO', tags.name, isOpenColor, f)
 
@@ -113,15 +115,6 @@ export default function useDrawQuickSearchFeatures(
 				},
 			})
 			map.addLayer({
-				id: 'features-points-is-open',
-				type: 'circle',
-				source: 'features-points',
-				paint: {
-					'circle-radius': 16,
-					'circle-color': ['get', 'isOpenColor'],
-				},
-			})
-			map.addLayer({
 				id: 'features-points',
 				type: 'symbol',
 				source: 'features-points',
@@ -137,6 +130,18 @@ export default function useDrawQuickSearchFeatures(
 					'text-halo-blur': 0.5,
 					'text-halo-color': 'white',
 					'text-halo-width': 1,
+				},
+			})
+			map.addLayer({
+				id: 'features-points-is-open',
+				type: 'circle',
+				source: 'features-points',
+				paint: {
+					'circle-radius': 4,
+					'circle-color': ['get', 'isOpenColor'],
+					'circle-stroke-color': computeCssVariable('--color'),
+					'circle-stroke-width': 1.5,
+					'circle-translate': [12, -12],
 				},
 			})
 		})
