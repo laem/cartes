@@ -31,6 +31,7 @@ export default function useDrawQuickSearchFeatures(
 			? featuresWithOpen.filter((f) => f.isOpen)
 			: featuresWithOpen
 
+		const isOpenByDefault = category['open by default']
 		const imageUrl = categoryIconUrl(category)
 		buildSvgImage(imageUrl, (img) => {
 			const imageName = category.name + '-futureco'
@@ -53,7 +54,7 @@ export default function useDrawQuickSearchFeatures(
 						const isOpenColor = {
 							true: '#4ce0a5ff',
 							false: '#e95748ff',
-							null: 'beige',
+							null: isOpenByDefault ? false : 'beige',
 						}[f.isOpen]
 
 						console.log('YOYO', tags.name, isOpenColor, f)
@@ -143,6 +144,7 @@ export default function useDrawQuickSearchFeatures(
 					'circle-stroke-width': 1.5,
 					'circle-translate': [12, -12],
 				},
+				filter: ['!=', 'isOpenColor', false],
 			})
 		})
 

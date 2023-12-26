@@ -24,11 +24,13 @@
   query:
     leisure: park
   icon: tree
+  open by default: true
 - name: bus
   title: Arrêt de bus ou tram
   query:
     public_transport: platform
   icon: bus
+  open by default: true
 - name: Pharmacie
   query:
     amenity: pharmacy
@@ -36,13 +38,16 @@
   title: Distributeur de billets
   query:
     amenity: atm
+  open by default: true
 - name: Hôtel
   query:
     tourism: hotel
+  open by default: true
 - name: vue
   title: Point de vue
   query:
     tourism: viewpoint
+  open by default: true
 - name: Cinéma
   query:
     amenity:
