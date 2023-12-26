@@ -130,6 +130,7 @@ img {filter: invert(23%) sepia(100%) saturate(1940%) hue-rotate(206deg) brightne
 							text-decoration: none;
 							font-size: 90%;
 							width: 3rem !important;
+							height: auto !important;
 						}
 					`}
 				>
