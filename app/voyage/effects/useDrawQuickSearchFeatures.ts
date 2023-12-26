@@ -13,19 +13,23 @@ export default function useDrawQuickSearchFeatures(
 	useEffect(() => {
 		if (!map || features.length < 1 || !category) return
 
-		const shownFeatures = !showOpenOnly
-			? features
-			: features.filter((f) => {
-					if (!f.tags || f.tags.opening_hours) return false
-					try {
-						const oh = new parseOpeningHours(f.tags.opening_hours, {
-							address: { country_code: 'fr' },
-						})
-						return oh.getState()
-					} catch (e) {
-						return false
-					}
-			  })
+		const featuresWithOpen = features.map((f) => {
+			if (!f.tags || !f.tags.opening_hours) {
+				return { ...f, isOpen: null }
+			}
+			try {
+				const oh = new parseOpeningHours(f.tags.opening_hours, {
+					address: { country_code: 'fr' },
+				})
+				return { ...f, isOpen: oh.getState() }
+			} catch (e) {
+				return { ...f, isOpen: null }
+			}
+		})
+
+		const shownFeatures = showOpenOnly
+			? featuresWithOpen.filter((f) => f.isOpen)
+			: featuresWithOpen
 
 		const imageUrl = categoryIconUrl(category)
 		buildSvgImage(imageUrl, (img) => {
@@ -46,6 +50,12 @@ export default function useDrawQuickSearchFeatures(
 						}
 
 						const tags = f.tags || {}
+						const isOpenColor = { true: '#37c267', false: 'red', null: 'grey' }[
+							f.isOpen
+						]
+
+						console.log('YOYO', tags.name, isOpenColor, f)
+
 						return {
 							type: 'Feature',
 							geometry,
@@ -54,6 +64,7 @@ export default function useDrawQuickSearchFeatures(
 								tags,
 								name: tags.name,
 								featureType: f.type,
+								isOpenColor: isOpenColor,
 							},
 						}
 					}),
@@ -102,6 +113,15 @@ export default function useDrawQuickSearchFeatures(
 				},
 			})
 			map.addLayer({
+				id: 'features-points-is-open',
+				type: 'circle',
+				source: 'features-points',
+				paint: {
+					'circle-radius': 16,
+					'circle-color': ['get', 'isOpenColor'],
+				},
+			})
+			map.addLayer({
 				id: 'features-points',
 				type: 'symbol',
 				source: 'features-points',
@@ -124,6 +144,7 @@ export default function useDrawQuickSearchFeatures(
 		return () => {
 			try {
 				map.removeLayer('features-points')
+				map.removeLayer('features-points-is-open')
 				map.removeSource('features-points')
 				map.removeLayer('features-ways')
 				map.removeLayer('features-ways-outlines')
