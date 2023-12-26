@@ -5,9 +5,12 @@ import { useEffect, useMemo, useState } from 'react'
 /*
  * TODO
  * This component is not optimized, and may feel clumsy
+ *
  * - we limit the nb of images since there could be 10 000 images in a single bbox
  * - wikimedia can return images on a localised small part of the bbox because of that limit
+ * - solution ? Use the coord instead of bbox, and expect the user to drag to view more images
  * - when you do a search somewhere, then drag the map, the new search should be done only in the added surface
+ * - it would be cool to use the "featured" or "quality" image tags from commons, but it does not look possible in one request https://stackoverflow.com/questions/24529853/how-to-get-more-info-within-only-one-geosearch-call-via-wikipedia-api
  * - etc
  *
  *
