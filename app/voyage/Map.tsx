@@ -23,6 +23,7 @@ import useTerrainControl from './useTerrainControl'
 import { decodePlace, encodePlace } from './utils'
 import { useZoneImages } from './ZoneImages'
 import useDrawQuickSearchFeatures from './effects/useDrawQuickSearchFeatures'
+import useImageSearch from './effects/useImageSearch'
 
 export const defaultState = {
 	depuis: { inputValue: null, choice: false },
@@ -60,6 +61,8 @@ export default function Map({ searchParams }) {
 		latLngClicked,
 		setLatLngClicked,
 	})
+
+	useImageSearch(map, zoom)
 
 	if (process.env.NEXT_PUBLIC_MAPTILER == null) {
 		throw new Error('You have to configure env REACT_APP_API_KEY, see README')
