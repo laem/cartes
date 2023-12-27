@@ -775,6 +775,13 @@ const style = (key) => ({
 			],
 		},
 		{
+			id: 'simple-tiles',
+			type: 'raster',
+			source: 'raster-tiles',
+			minzoom: 0,
+			maxzoom: 22,
+		},
+		{
 			id: 'Place labels',
 			type: 'symbol',
 			source: 'maptiler_planet',
@@ -951,13 +958,6 @@ const style = (key) => ({
 			},
 			metadata: {},
 			filter: ['==', 'class', 'continent'],
-		},
-		{
-			id: 'simple-tiles',
-			type: 'raster',
-			source: 'raster-tiles',
-			minzoom: 0,
-			maxzoom: 22,
 		},
 	],
 	glyphs: 'https://api.maptiler.com/fonts/{fontstack}/{range}.pbf?key=' + key,
