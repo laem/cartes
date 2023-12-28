@@ -100,7 +100,10 @@ export default function PlaceSearch({
 									console.log('ici', newData)
 									const { osmId, featureType } = newData.choice.item
 									if (osmId && featureType)
-										setSearchParams({ lieu: encodePlace(featureType, osmId) })
+										setSearchParams({
+											lieu: encodePlace(featureType, osmId),
+											q: undefined,
+										})
 								},
 							}}
 						/>
