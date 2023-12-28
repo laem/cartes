@@ -1,4 +1,7 @@
+import css from '@/components/css/convertToJs'
+import Emoji from '@/components/Emoji'
 import { findContrastedTextColor } from '@/components/utils/colors'
+import { useState } from 'react'
 
 const nowAsYYMMDD = () => {
 	var d = new Date(),
@@ -21,6 +24,7 @@ const toDate = ({ year, month, day }, time) => {
 	return new Date(+year, +month - 1, +day, ...time)
 }
 export default function TransportRoute({ route, stops }) {
+	const [calendarOpen, setCalendarOpen] = useState(false)
 	const now = new Date()
 	const augmentedStops = stops
 		.map((stop) => {
@@ -112,15 +116,18 @@ export default function TransportRoute({ route, stops }) {
 			>
 				{stopSelection.map((stop, i) => (
 					<li key={stop.trip_id}>
-						<Stop stop={stop} doPrefix={i === 0} />
+						<StopTime stop={stop} doPrefix={i === 0} />
 					</li>
 				))}
+				<button onClick={() => setCalendarOpen(!calendarOpen)}>
+					<Emoji e="🗓️" />
+				</button>
 			</ul>
 		</li>
 	)
 }
 
-const Stop = ({ stop, doPrefix }) => {
+const StopTime = ({ stop, doPrefix }) => {
 	const d = stop.arrivalDate
 	const now = new Date()
 
