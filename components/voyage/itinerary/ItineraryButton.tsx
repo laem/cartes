@@ -38,11 +38,12 @@ export const ItineraryIcon = () => (
 		style={css`
 			width: 1.4rem;
 			height: 1.4rem;
+			margin: 0 !important;
 		`}
 		src={'/itinerary.svg'}
 		width="100"
 		height="100"
-		alt="Icône poubelle"
+		alt="Icône itinéraire"
 	/>
 )
 export const ResetIcon = () => (

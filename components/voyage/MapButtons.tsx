@@ -103,11 +103,12 @@ export const MapIcon = () => (
 		style={css`
 			width: 1.4rem;
 			height: 1.4rem;
+			margin: 0 !important;
 		`}
 		src={'/map.svg'}
 		width="100"
 		height="100"
-		alt="Icône poubelle"
+		alt="Icône fond de carte"
 	/>
 )
 export const DistanceIcon = () => (
@@ -115,10 +116,11 @@ export const DistanceIcon = () => (
 		style={css`
 			width: 1.4rem;
 			height: 1.4rem;
+			margin: 0 !important;
 		`}
 		src={'/distance.svg'}
 		width="100"
 		height="100"
-		alt="Icône poubelle"
+		alt="Icône distance"
 	/>
 )
