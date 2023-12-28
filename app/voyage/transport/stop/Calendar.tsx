@@ -27,6 +27,8 @@ export default function Calendar({ data }) {
 		return { ...memo, [thisHour]: [...memo[thisHour], next] }
 	}, hoursObject)
 
+	console.log('DD', stopByHour)
+
 	return (
 		<div>
 			<input

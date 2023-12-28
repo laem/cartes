@@ -64,6 +64,7 @@ export default function Route({ route, stops }) {
 		? findContrastedTextColor(route.route_color, true)
 		: '#ffffff'
 	const backgroundColor = route.route_color ? `#${route.route_color}` : 'grey'
+	console.log('ROUTE', route, stopSelection)
 	return (
 		<li
 			css={`
