@@ -23,7 +23,7 @@ const timeFromHHMMSS = (hhmmss) => {
 const toDate = ({ year, month, day }, time) => {
 	return new Date(+year, +month - 1, +day, ...time)
 }
-export default function TransportRoute({ route, stops }) {
+export default function Route({ route, stops }) {
 	const [calendarOpen, setCalendarOpen] = useState(false)
 	const now = new Date()
 	const augmentedStops = stops

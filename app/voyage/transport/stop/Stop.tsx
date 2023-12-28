@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react'
-import TransportRoute from './TransportRoute'
+import Route from './Route'
 
 export const isNotTransportStop = (tags) =>
 	!tags || tags.public_transport !== 'platform'
@@ -18,7 +18,7 @@ const findStopId = (tags) => {
 		: network.toUpperCase() + ':' + ref[1]
 	return stopId
 }
-export default function TransportStop({ tags }) {
+export default function Stop({ tags }) {
 	console.log('tags', tags)
 	const [data, setData] = useState(null)
 
@@ -48,7 +48,7 @@ export default function TransportStop({ tags }) {
 				`}
 			>
 				{data.routes.map((route) => (
-					<TransportRoute
+					<Route
 						key={route.route_id}
 						route={route}
 						stops={data.stops
