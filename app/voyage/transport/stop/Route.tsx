@@ -69,8 +69,21 @@ export default function Route({ route, stops }) {
 	const directions = stops.map(({ trip }) => trip.direction_id)
 	const hasMultipleTripDirections = directions.find((d) => d !== directions[0])
 	const direction = directions[0],
-		nameParts = route.route_long_name.split(' - '),
-		name = (direction === 0 ? nameParts.reverse() : nameParts).join(' → ')
+		rawName = route.route_long_name,
+		// Here we're deriving the directed name from the raw name. They don't help
+		// us here :D haven't found a better way to display the correct trip name...
+		//
+		//"Rennes (La Poterie)  Vezin-le-Coquet (ZI Ouest)"
+		// "Cesson-Sévigné (Cesson - Viasilva)  Rennes   Chantepie (Rosa Parks)"
+		nameParts = rawName.match(/\s\s/)
+			? rawName.split(/\s\s/)
+			: // "PLOUZANÉ Bourg - BREST Amiral Ronarc’h"
+			rawName.match(/\s-\s/)
+			? rawName.split(/\s-\s/)
+			: null,
+		name = nameParts
+			? (direction === 1 ? nameParts.reverse() : nameParts).join(' → ')
+			: rawName
 
 	console.log('ROUTE dire', directions, stops)
 	console.log('ROUTE', route, stopSelection)
