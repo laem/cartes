@@ -82,21 +82,23 @@ export default function Calendar({ data }) {
 						}
 					`}
 				>
-					{Object.entries(stopByHour).map(
-						([hour, entries]) =>
-							entries.length > 0 && (
-								<li key={hour}>
-									<strong>{hour % 24} h</strong>
-									<ul>
-										{entries.map((entry) => (
-											<li key={entry.arrival_time}>
-												{entry.arrival_time.split(':')[1]}
-											</li>
-										))}
-									</ul>
-								</li>
-							)
-					)}
+					{Object.entries(stopByHour)
+						.sort(([h1], [h2]) => +h1 - +h2)
+						.map(
+							([hour, entries]) =>
+								entries.length > 0 && (
+									<li key={hour}>
+										<strong>{hour % 24} h</strong>
+										<ul>
+											{entries.map((entry) => (
+												<li key={entry.arrival_time}>
+													{entry.arrival_time.split(':')[1]}
+												</li>
+											))}
+										</ul>
+									</li>
+								)
+						)}
 				</ul>
 			</div>
 		</div>

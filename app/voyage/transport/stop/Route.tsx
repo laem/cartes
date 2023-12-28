@@ -48,7 +48,6 @@ export default function Route({ route, stops }) {
 				arrivalDate,
 			}
 		})
-		.filter((el) => el.isFuture)
 		.sort((a, b) => a.arrivalDate - b.arrivalDate)
 
 	/*
@@ -59,7 +58,7 @@ export default function Route({ route, stops }) {
 	)
 	*/
 
-	const stopSelection = augmentedStops.slice(0, 4)
+	const stopSelection = augmentedStops.filter((el) => el.isFuture).slice(0, 4)
 
 	const color = route.route_color
 		? findContrastedTextColor(route.route_color, true)
@@ -85,7 +84,6 @@ export default function Route({ route, stops }) {
 			? (direction === 1 ? nameParts.reverse() : nameParts).join(' → ')
 			: rawName
 
-	console.log('ROUTE dire', directions, stops)
 	console.log('ROUTE', route, stopSelection)
 	return (
 		<li
