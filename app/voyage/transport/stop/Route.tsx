@@ -27,6 +27,7 @@ const toDate = ({ year, month, day }, time) => {
 export default function Route({ route, stops }) {
 	const [calendarOpen, setCalendarOpen] = useState(false)
 	const now = new Date()
+
 	const augmentedStops = stops
 		.map((stop) => {
 			const time = timeFromHHMMSS(stop.arrival_time)
@@ -64,6 +65,14 @@ export default function Route({ route, stops }) {
 		? findContrastedTextColor(route.route_color, true)
 		: '#ffffff'
 	const backgroundColor = route.route_color ? `#${route.route_color}` : 'grey'
+
+	const directions = stops.map(({ trip }) => trip.direction_id)
+	const hasMultipleTripDirections = directions.find((d) => d !== directions[0])
+	const direction = directions[0],
+		nameParts = route.route_long_name.split(' - '),
+		name = (direction === 0 ? nameParts.reverse() : nameParts).join(' → ')
+
+	console.log('ROUTE dire', directions, stops)
 	console.log('ROUTE', route, stopSelection)
 	return (
 		<li
@@ -94,9 +103,22 @@ export default function Route({ route, stops }) {
 					scrollbar-width: none;
 				`}
 			>
-				🚍️ <strong>{route.route_short_name}</strong>{' '}
-				<span>{route.route_long_name}</span>
+				🚍️ <strong>{route.route_short_name}</strong> <span>{name}</span>
 			</small>
+			{hasMultipleTripDirections && (
+				<div
+					style={css`
+						display: flex;
+						align-items: center;
+					`}
+				>
+					<Emoji e="⚠️" />{' '}
+					<small>
+						Attention, plusieurs directions d'une même ligne de bus s'arrêtent à
+						cet arrêt.
+					</small>
+				</div>
+			)}
 			<ul
 				css={`
 					display: flex;
