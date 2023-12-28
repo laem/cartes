@@ -2,8 +2,9 @@ import css from '@/components/css/convertToJs'
 import Emoji from '@/components/Emoji'
 import { findContrastedTextColor } from '@/components/utils/colors'
 import { useState } from 'react'
+import Calendar from './Calendar'
 
-const nowAsYYMMDD = () => {
+export const nowAsYYMMDD = (delimiter = '') => {
 	var d = new Date(),
 		month = '' + (d.getMonth() + 1),
 		day = '' + d.getDate(),
@@ -12,7 +13,7 @@ const nowAsYYMMDD = () => {
 	if (month.length < 2) month = '0' + month
 	if (day.length < 2) day = '0' + day
 
-	return [year, month, day].join('')
+	return [year, month, day].join(delimiter)
 }
 
 const timeFromHHMMSS = (hhmmss) => {
@@ -47,6 +48,7 @@ export default function Route({ route, stops }) {
 			}
 		})
 		.filter((el) => el.isFuture)
+		.sort((a, b) => a.arrivalDate - b.arrivalDate)
 
 	/*
 	const byArrivalDate = new Map(
@@ -56,9 +58,7 @@ export default function Route({ route, stops }) {
 	)
 	*/
 
-	const stopSelection = augmentedStops
-		.sort((a, b) => a.arrivalDate - b.arrivalDate)
-		.slice(0, 4)
+	const stopSelection = augmentedStops.slice(0, 4)
 
 	const color = route.route_color
 		? findContrastedTextColor(route.route_color, true)
@@ -123,6 +123,7 @@ export default function Route({ route, stops }) {
 					<Emoji e="🗓️" />
 				</button>
 			</ul>
+			{calendarOpen && <Calendar data={augmentedStops} />}
 		</li>
 	)
 }
