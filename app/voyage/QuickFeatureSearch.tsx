@@ -1,6 +1,8 @@
 import useSetSearchParams from '@/components/useSetSearchParams'
 import { omit } from '@/components/utils/utils'
+import Fuse from 'fuse.js'
 import Link from 'next/link'
+import { useMemo } from 'react'
 import categories from './categories.yaml'
 
 export const categoryIconUrl = (category) => {
@@ -18,17 +20,28 @@ export const categoryIconUrl = (category) => {
 
 const width = '2.2rem'
 
+const fuse = new Fuse(categories, {
+	keys: ['name', 'title', 'query', 'dictionary'],
+	includeScore: true,
+})
+
 export default function QuickFeatureSearch({
 	category: categorySet,
 	searchParams, // dunno why params is not getting updated here, but updates hash though, we need searchParams
 	searchInput,
 }) {
 	const setSearchParams = useSetSearchParams()
-	const filteredCategories =
-		searchInput?.length > 2
-			? categories.filter((el) => JSON.stringify(el).includes(searchInput))
-			: categories
+	const filteredCategories = useMemo(
+		() =>
+			searchInput?.length > 2
+				? fuse
+						.search(searchInput)
+						.filter((el) => el.score < 0.5)
+						.map((el) => console.log('SSS', el) || categories[el.refIndex])
+				: categories,
 
+		[searchInput]
+	)
 	return (
 		<div
 			css={`

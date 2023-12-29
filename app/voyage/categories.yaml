@@ -1,26 +1,51 @@
 - name: boulangerie
+  dictionary:
+    - pain
+    - viennoiserie
+    - croissant
+    - patisserie
   #emoji: 🥖
   query:
     shop: bakery
 - name: restaurant
+  dictionary:
+    - resto
+    - emporter
+    - manger
+    - diner
+    - déjeuner
   query:
     amenity:
       restaurant
       #emoji: 🍽️
 - name: cafe
   title: Café, bar et pub
+  dictionary:
+    - bière
+    - vin
+    - boisson
+    - terrasse
   query:
     amenity:
       - pub
       - bar
       - cafe
 - name: épicerie
+  dictionary:
+    - supermarché
+    - magasin
+    - hypermarché
+    - superette
   query:
     shop:
       - convenience
       - supermarket
         #emoji: 🛒
 - name: parc
+  dictionary:
+    - verdure
+    - jardin
+    - square
   query:
     leisure: park
   icon: tree
@@ -35,6 +60,11 @@
   query:
     amenity: pharmacy
 - name: billets
+  dictionary:
+    - banque
+    - DAB
+    - cash
+    - argent
   title: Distributeur de billets
   query:
     amenity: atm
@@ -45,10 +75,15 @@
   open by default: true
 - name: vue
   title: Point de vue
+  dictionary:
+    - panorama
   query:
     tourism: viewpoint
   open by default: true
 - name: Cinéma
+  dictionary:
+    - ciné
+    - film
   query:
     amenity:
       cinema
