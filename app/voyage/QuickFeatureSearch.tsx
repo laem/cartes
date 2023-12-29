@@ -9,7 +9,9 @@ export const categoryIconUrl = (category) => {
 		queryFirstValue = Array.isArray(queryValue) ? queryValue[0] : queryValue
 
 	const url = category.icon
-		? '/icons/' + category.icon + '.svg'
+		? category.icon.startsWith('http')
+			? category.icon
+			: '/icons/' + category.icon + '.svg'
 		: `https://cdn.jsdelivr.net/gh/gravitystorm/openstreetmap-carto@5.8.0/symbols/${queryKey}/${queryFirstValue}.svg`
 	return url
 }

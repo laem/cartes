@@ -58,6 +58,10 @@
   query:
     amenity: coworking_space
   icon: coworking
+- name: plage
+  query:
+    natural: beach
+  icon: https://cdn.jsdelivr.net/gh/mapbox/maki/icons/beach.svg
 - name: Surf
   query:
     sport: surfing
