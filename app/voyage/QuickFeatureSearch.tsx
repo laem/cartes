@@ -17,11 +17,17 @@ export const categoryIconUrl = (category) => {
 }
 
 const width = '2.2rem'
+
 export default function QuickFeatureSearch({
 	category: categorySet,
 	searchParams, // dunno why params is not getting updated here, but updates hash though, we need searchParams
+	searchInput,
 }) {
 	const setSearchParams = useSetSearchParams()
+	const filteredCategories =
+		searchInput?.length > 2
+			? categories.filter((el) => JSON.stringify(el).includes(searchInput))
+			: categories
 
 	return (
 		<div
@@ -77,8 +83,6 @@ export default function QuickFeatureSearch({
 							width: 1.6rem;
 							height: auto;
 							vertical-align: middle;
-							filter: invert(16%) sepia(24%) saturate(3004%) hue-rotate(180deg)
-								brightness(89%) contrast(98%);
 						}
 						background: ${searchParams.photos !== 'oui'
 							? 'white'
@@ -106,7 +110,7 @@ export default function QuickFeatureSearch({
 						<img src={'/icons/photo.svg'} />
 					</Link>
 				</li>
-				{categories.map((category) => {
+				{filteredCategories.map((category) => {
 					const newSearchParams = {
 						...omit(['cat'], searchParams),
 						...(!categorySet || categorySet.name !== category.name

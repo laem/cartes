@@ -140,6 +140,7 @@ export default function Content({
 						<QuickFeatureSearch
 							category={category}
 							searchParams={searchParams}
+							searchInput={state.vers.inputValue}
 						/>
 					)}
 				</section>

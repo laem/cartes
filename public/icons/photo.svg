@@ -1,25 +1,116 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <!-- Created with Inkscape (http://www.inkscape.org/) -->
-<svg xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:cc="http://creativecommons.org/ns#" xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#" xmlns:svg="http://www.w3.org/2000/svg" xmlns="http://www.w3.org/2000/svg" xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd" xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape" width="2048" height="2048" id="svg2" version="1.1" inkscape:version="0.92.4 (5da689c313, 2019-01-14)" sodipodi:docname="icone photo.svg" inkscape:export-filename="./Fotografia Originuum - Símbolo Logotipo - 1.0.0 - 2048x2048.png" inkscape:export-xdpi="90" inkscape:export-ydpi="90"><link xmlns="" type="text/css" rel="stylesheet" id="dark-mode-custom-link"/><link xmlns="" type="text/css" rel="stylesheet" id="dark-mode-general-link"/><style xmlns="" lang="en" type="text/css" id="dark-mode-custom-style"/><style xmlns="" lang="en" type="text/css" id="dark-mode-native-style"/><style xmlns="" lang="en" type="text/css" id="dark-mode-native-sheet"/>
-  <sodipodi:namedview id="base" pagecolor="#ffffff" bordercolor="#666666" borderopacity="1.0" inkscape:pageopacity="0.0" inkscape:pageshadow="2" inkscape:zoom="0.22627417" inkscape:cx="1379.4606" inkscape:cy="892.48368" inkscape:document-units="px" inkscape:current-layer="layer1" showgrid="false" inkscape:snap-bbox="true" inkscape:bbox-paths="true" inkscape:bbox-nodes="true" inkscape:snap-bbox-edge-midpoints="true" inkscape:snap-bbox-midpoints="true" inkscape:object-paths="true" inkscape:snap-intersection-paths="true" inkscape:object-nodes="true" inkscape:snap-smooth-nodes="true" inkscape:snap-midpoints="true" inkscape:snap-object-midpoints="true" inkscape:snap-center="true" inkscape:snap-global="true" showguides="true" inkscape:guide-bbox="true" inkscape:window-width="1366" inkscape:window-height="716" inkscape:window-x="-8" inkscape:window-y="-8" inkscape:window-maximized="1" fit-margin-top="0" fit-margin-left="0" fit-margin-right="0" fit-margin-bottom="0"/>
-  <defs id="defs4"/>
-  <metadata id="metadata7">
+
+<svg:svg
+   width="2048"
+   height="2048"
+   id="svg2"
+   version="1.1"
+   inkscape:version="1.3.1 (9b9bdc1480, 2023-11-25, custom)"
+   sodipodi:docname="photo.svg"
+   inkscape:export-filename="./Fotografia Originuum - Símbolo Logotipo - 1.0.0 - 2048x2048.png"
+   inkscape:export-xdpi="90"
+   inkscape:export-ydpi="90"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns:svg="http://www.w3.org/2000/svg"
+   xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+   xmlns:cc="http://creativecommons.org/ns#"
+   xmlns:dc="http://purl.org/dc/elements/1.1/">
+  <link
+     type="text/css"
+     rel="stylesheet"
+     id="dark-mode-custom-link" />
+  <link
+     type="text/css"
+     rel="stylesheet"
+     id="dark-mode-general-link" />
+  <style
+     lang="en"
+     type="text/css"
+     id="dark-mode-custom-style" />
+  <style
+     lang="en"
+     type="text/css"
+     id="dark-mode-native-style" />
+  <style
+     lang="en"
+     type="text/css"
+     id="dark-mode-native-sheet" />
+  <sodipodi:namedview
+     id="base"
+     pagecolor="#ffffff"
+     bordercolor="#666666"
+     borderopacity="1.0"
+     inkscape:pageopacity="0.0"
+     inkscape:pageshadow="2"
+     inkscape:zoom="0.22627417"
+     inkscape:cx="1378.8582"
+     inkscape:cy="892.72231"
+     inkscape:document-units="px"
+     inkscape:current-layer="layer1"
+     showgrid="false"
+     inkscape:snap-bbox="true"
+     inkscape:bbox-paths="true"
+     inkscape:bbox-nodes="true"
+     inkscape:snap-bbox-edge-midpoints="true"
+     inkscape:snap-bbox-midpoints="true"
+     inkscape:object-paths="true"
+     inkscape:snap-intersection-paths="true"
+     inkscape:object-nodes="true"
+     inkscape:snap-smooth-nodes="true"
+     inkscape:snap-midpoints="true"
+     inkscape:snap-object-midpoints="true"
+     inkscape:snap-center="true"
+     inkscape:snap-global="true"
+     showguides="true"
+     inkscape:guide-bbox="true"
+     inkscape:window-width="1920"
+     inkscape:window-height="1055"
+     inkscape:window-x="0"
+     inkscape:window-y="0"
+     inkscape:window-maximized="1"
+     fit-margin-top="0"
+     fit-margin-left="0"
+     fit-margin-right="0"
+     fit-margin-bottom="0"
+     inkscape:showpageshadow="2"
+     inkscape:pagecheckerboard="0"
+     inkscape:deskcolor="#d1d1d1" />
+  <svg:defs
+     id="defs4" />
+  <svg:metadata
+     id="metadata7">
     <rdf:RDF>
-      <cc:Work rdf:about="">
+      <cc:Work
+         rdf:about="">
         <dc:format>image/svg+xml</dc:format>
-        <dc:type rdf:resource="http://purl.org/dc/dcmitype/StillImage"/>
-        <dc:title/>
+        <dc:type
+           rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
+        <dc:title />
       </cc:Work>
     </rdf:RDF>
-  </metadata>
-  <g transform="translate(-256.4375,1567.0625)" id="layer1" inkscape:groupmode="layer" inkscape:label="Camada 1">
-    <g id="g3897" transform="translate(0,69.535705)">
-      <path style="color:#000000;fill:#1a1a1a;fill-opacity:1;fill-rule:nonzero;stroke:none;stroke-width:22.60000038;marker:none;visibility:visible;display:inline;overflow:visible;enable-background:accumulate" d="m 1423.7287,-1367.0669 c -223.8882,0 -218.1856,238.1299 -415.169,243.0944 l -147.9841,0 -26.9062,0 -72.89704,0 -299.40971,0 -51.30951,0 -3.44149,0 c -83.19648,0 -150.17415,66.9777 -150.17415,150.17418 l 0,965.49466 c 0,83.19648 66.97767,150.17415 150.17415,150.17415 l 1747.65165,0 c 83.1965,0 150.1742,-66.97767 150.1742,-150.17415 l 0,-965.49466 c 0,-83.19648 -66.9777,-150.17418 -150.1742,-150.17418 l -170.5102,0 c -196.9835,-4.9645 -191.2807,-243.0944 -415.1689,-243.0944 l -144.8555,0 z m -891.3462,154.5543 c -39.29917,0 -71.01985,30.2859 -71.01985,68.204 l 299.40971,0 c 0,-37.9181 -31.40792,-68.204 -70.707,-68.204 l -157.68286,0 z" id="path3829" inkscape:connector-curvature="0"/>
-      <circle style="color:#000000;display:inline;overflow:visible;visibility:visible;fill:none;stroke:#ffffff;stroke-width:100;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1;marker:none;enable-background:accumulate" id="path3772" cx="1496.1155" cy="-483.31458" r="424.79773"/>
-      <circle style="color:#000000;display:inline;overflow:visible;visibility:visible;fill:#ffffff;fill-opacity:1;stroke:none;stroke-width:114.78717804;marker:none;enable-background:accumulate" id="path3775" cx="1256.6993" cy="-691.8797" r="86.705666"/>
-      <path style="color:#000000;display:inline;overflow:visible;visibility:visible;fill:#ffffff;fill-opacity:1;fill-rule:nonzero;stroke:none;stroke-width:3.90109921;marker:none;enable-background:accumulate" d="m 1847.8796,-534.50093 c -19.6726,213.96915 -189.8665,383.94328 -403.8613,403.59021 9.3174,0.68696 18.6951,1.0842 28.1889,1.0842 208.451,0 377.0276,-168.3057 377.0276,-376.75648 0,-9.36118 -0.687,-18.72963 -1.3552,-27.91793 z" id="path3784" inkscape:connector-curvature="0"/>
-      <circle id="path3792" style="color:#000000;display:inline;overflow:visible;visibility:visible;fill:#ffffff;fill-opacity:1;stroke:none;stroke-width:44.02372742;marker:none;enable-background:accumulate" cx="1410.7645" cy="-553.9679" r="33.253773"/>
-      <rect style="color:#000000;fill:#ffffff;fill-opacity:1;fill-rule:nonzero;stroke:none;stroke-width:5;marker:none;visibility:visible;display:inline;overflow:visible;enable-background:accumulate" id="rect3797" width="258.54865" height="144.11386" x="1366.8821" y="-1317.5764" ry="72.056931"/>
-    </g>
-  </g>
-</svg>
+  </svg:metadata>
+  <svg:g
+     transform="translate(-256.4375,1567.0625)"
+     id="layer1"
+     inkscape:groupmode="layer"
+     inkscape:label="Camada 1">
+    <svg:path
+       id="rect1"
+       style="fill:#000000;fill-opacity:1;fill-rule:evenodd;stroke-width:1.10948"
+       d="m 432.55469,-1168.4062 c -83.2375,0 -150.24805,67.0105 -150.24805,150.248 v 990.341794 c 0,83.237495 67.01055,150.248046 150.24805,150.248046 H 2135.5273 c 83.2375,0 150.2481,-67.010551 150.2481,-150.248046 V -1018.1582 c 0,-83.2375 -67.0106,-150.248 -150.2481,-150.248 z m -23.00391,142.7109 H 2163.6934 V -14.595703 H 409.55078 Z"
+       sodipodi:nodetypes="sssssssssccccc" />
+    <svg:path
+       style="fill:#000000;fill-opacity:1;stroke:#000000;stroke-width:1.10948px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
+       d="m 465.08518,-100.94608 c 0,0 231.03626,-321.35891 364.74844,-323.81953 133.71216,-2.46062 335.96718,112.50864 438.51278,112.50864 102.5457,0 249.9615,-344.80873 409.4541,-344.80873 159.4925,0 414.0476,554.42721 414.0476,554.42721 z"
+       id="path2"
+       sodipodi:nodetypes="cssscc" />
+    <svg:circle
+       style="fill:#000000;fill-opacity:1;fill-rule:evenodd;stroke-width:1.61514"
+       id="path3"
+       cx="932.58667"
+       cy="-804.92108"
+       r="169.58" />
+  </svg:g>
+</svg:svg>
