@@ -33,6 +33,7 @@ export default function useDrawQuickSearchFeatures(
 
 		const isOpenByDefault = category['open by default']
 		const imageUrl = categoryIconUrl(category)
+		console.log('demat')
 		buildSvgImage(imageUrl, (img) => {
 			const imageName = category.name + '-futureco'
 			const mapImage = map.getImage(imageName)

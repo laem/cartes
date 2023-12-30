@@ -6,15 +6,13 @@ import { useMemo } from 'react'
 import categories from './categories.yaml'
 
 export const categoryIconUrl = (category) => {
-	const queryKey = Object.keys(category.query)[0],
-		queryValue = category.query[queryKey],
-		queryFirstValue = Array.isArray(queryValue) ? queryValue[0] : queryValue
-
-	const url = category.icon
-		? category.icon.startsWith('http')
-			? category.icon
-			: '/icons/' + category.icon + '.svg'
-		: `https://cdn.jsdelivr.net/gh/gravitystorm/openstreetmap-carto@5.8.0/symbols/${queryKey}/${queryFirstValue}.svg`
+	if (!category.icon)
+		throw new Error(
+			'Chaque catégorie doit fournir une icône au format suivant (voir le code)'
+		)
+	const url = category.icon.startsWith('http')
+		? category.icon
+		: '/icons/' + category.icon + '.svg'
 	return url
 }
 

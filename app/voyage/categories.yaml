@@ -5,8 +5,8 @@
     - croissant
     - patisserie
   #emoji: 🥖
-  query:
-    shop: bakery
+  query: '[shop=bakery]'
+  icon: https://cdn.jsdelivr.net/gh/mapbox/maki/icons/bakery.svg
 - name: restaurant
   dictionary:
     - resto
@@ -14,10 +14,24 @@
     - manger
     - diner
     - déjeuner
+  query: '[amenity=restaurant]'
+  icon: https://cdn.jsdelivr.net/gh/mapbox/maki/icons/restaurant.svg
+- name: végé
+  title: Repas et cafés végétarien ou végan
+  dictionary:
+    - resto
+    - emporter
+    - manger
+    - diner
+    - déjeuner
+    - végétarien
+    - végé
+    - vegan
+    - végétalien
   query:
-    amenity:
-      restaurant
-      #emoji: 🍽️
+    - '["diet:vegetarian"~"yes|only"]'
+    - '["diet:vegan"~"yes|only"]'
+  icon: veg
 - name: cafe
   title: Café, bar et pub
   dictionary:
@@ -25,40 +39,32 @@
     - vin
     - boisson
     - terrasse
-  query:
-    amenity:
-      - pub
-      - bar
-      - cafe
+  query: '[amenity~"pub|bar|cage"]'
+  icon: https://cdn.jsdelivr.net/gh/mapbox/maki/icons/cafe.svg
 - name: épicerie
   dictionary:
     - supermarché
     - magasin
     - hypermarché
     - superette
-  query:
-    shop:
-      - convenience
-      - supermarket
-        #emoji: 🛒
+  query: '["shop"~"convenience|supermarket"]'
+  icon: https://cdn.jsdelivr.net/gh/mapbox/maki/icons/convenience.svg
 - name: parc
   dictionary:
     - verdure
     - jardin
     - square
-  query:
-    leisure: park
+  query: '[leisure=park]'
   icon: tree
   open by default: true
 - name: bus
   title: Arrêt de bus ou tram
-  query:
-    public_transport: platform
+  query: '[public_transport=platform]'
   icon: bus
   open by default: true
 - name: Pharmacie
-  query:
-    amenity: pharmacy
+  query: '[amenity=pharmacy]'
+  icon: https://cdn.jsdelivr.net/gh/mapbox/maki/icons/pharmacy.svg
 - name: billets
   dictionary:
     - banque
@@ -66,38 +72,33 @@
     - cash
     - argent
   title: Distributeur de billets
-  query:
-    amenity: atm
+  query: '[amenity=atm]'
   open by default: true
+  icon: https://cdn.jsdelivr.net/gh/mapbox/maki/icons/bank.svg
 - name: Hôtel
-  query:
-    tourism: hotel
+  query: '[tourism=hotel]'
   open by default: true
+  icon: https://cdn.jsdelivr.net/gh/mapbox/maki/icons/lodging.svg
 - name: vue
   title: Point de vue
   dictionary:
     - panorama
-  query:
-    tourism: viewpoint
+  query: '[tourism=viewpoint]'
   open by default: true
+  icon: https://cdn.jsdelivr.net/gh/mapbox/maki/icons/viewpoint.svg
 - name: Cinéma
   dictionary:
     - ciné
     - film
-  query:
-    amenity:
-      cinema
-      #icon: .svg
+  query: '[amenity=cinema]'
+  icon: https://cdn.jsdelivr.net/gh/mapbox/maki/icons/cinema.svg
 - title: Espace de cotravail (coworking)
   name: cotravail
-  query:
-    amenity: coworking_space
+  query: '[amenity=coworking_space]'
   icon: coworking
 - name: plage
-  query:
-    natural: beach
+  query: '[natural=beach]'
   icon: https://cdn.jsdelivr.net/gh/mapbox/maki/icons/beach.svg
 - name: Surf
-  query:
-    sport: surfing
+  query: '[sport=surfing]'
   icon: surf

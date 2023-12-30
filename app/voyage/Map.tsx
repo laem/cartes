@@ -107,20 +107,19 @@ export default function Map({ searchParams }) {
 					mapLibreBbox[1][0],
 				].join(',')
 
-			const queries = Object.entries(category.query)
+			const queries =
+				typeof category.query === 'string' ? [category.query] : category.query
 
-			if (queries.length !== 1) throw Error('Syntax not supported yet')
 			const queryCore = queries
-				.map(([k, v]) => {
-					if (typeof v === 'string') return `['${k}'='${v}']`
-					if (Array.isArray(v)) return `['${k}'~'${v.join('|')}']`
-					//query: '["shop"~"convenience|supermarket"]'
+				.map((query) => {
+					return `nw${query}(${bbox});`
 				})
 				.join('')
+			// TODO we're missing the "r" in "nwr" for "relations"
 			const overpassRequest = `
 [out:json];
 (
-  nw${queryCore}(${bbox});
+${queryCore}
 );
 
 out body;
@@ -128,12 +127,15 @@ out body;
 out skel qt;
 
 `
+
+			console.log('overpass', overpassRequest)
 			const url = `https://overpass-api.de/api/interpreter?data=${encodeURIComponent(
 				overpassRequest
 			)}`
 			console.log(url)
 			const request = await fetch(url)
 			const json = await request.json()
+
 			const nodesOrWays = json.elements.filter((element) => {
 				if (!['way', 'node'].includes(element.type)) return false // TODO relations should be handled
 				return true
