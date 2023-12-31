@@ -7,12 +7,12 @@ export default function manifest(): MetadataRoute.Manifest {
 		description:
 			'Une application de cartes pour découvrir les lieux autour de toi et voyager.',
 		start_url: '/voyage',
-		display: 'standalone',
+		display: 'fullscreen',
 		background_color: '#fff',
 		theme_color: '#2988e6',
 		icons: [
 			{
-				src: '/icon.svg',
+				src: 'https://futur.eco/icon.svg',
 				sizes: 'any',
 				type: 'image/svg+xml',
 			},
