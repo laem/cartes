@@ -1,4 +1,5 @@
 import railStyle from './railStyle'
+import voyageStyle from './voyage'
 
 const key = process.env.NEXT_PUBLIC_MAPTILER
 
@@ -6,7 +7,7 @@ const maptilerUrl = (styleId) =>
 	`https://api.maptiler.com/maps/${styleId}/style.json?key=${key}`
 export const styles = {
 	base: {
-		url: maptilerUrl('2f80a9c4-e0dd-437d-ae35-2b6c212f830b'),
+		url: voyageStyle(key),
 		name: 'Base',
 		emoji: '🗺️',
 	},
