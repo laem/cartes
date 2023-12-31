@@ -3,11 +3,11 @@
 ## Futureco
 
 
-## Futureco voyage
+## 🆕 🗺️ Futureco voyage
 
 Les développements de 2024 vont se concentrer sur le développement d'une application de cartes généralistes et libres, avec une attention particulière sur les itinéraires pour aider les gens à voyager tout en respectant la planète. 
 
-Le développement se fait dans le dossier app/voyage. 
+Le développement se fait dans le dossier app/voyage. Lisez [la documentation de Voyage](https://github.com/laem/futureco/blob/master/app/voyage/README.md).
 
 Découvrez [nos motivations](https://futur.eco/blog/un-beau-voyage) et les dernières nouveautés dans [le blog](https://futur.eco/blog).
 
