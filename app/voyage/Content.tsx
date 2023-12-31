@@ -1,13 +1,15 @@
-import { getCategory } from '@/components/voyage/categories'
 import {
 	CityImage,
 	Destination,
 	ImageWithNameWrapper,
 } from '@/components/conversation/VoyageUI'
+import useSetSearchParams from '@/components/useSetSearchParams'
+import { getCategory } from '@/components/voyage/categories'
 import { toThumb } from '@/components/wikidata'
 import destinationPoint from '@/public/destination-point.svg'
 import { motion } from 'framer-motion'
 import NextImage from 'next/image'
+import { useEffect } from 'react'
 import { useLocalStorage } from 'usehooks-ts'
 import BikeRouteRésumé from './BikeRouteRésumé'
 import { ExplanationWrapper } from './ContentUI'
@@ -18,16 +20,13 @@ import { defaultState } from './Map'
 import OsmFeature from './OsmFeature'
 import PlaceSearch from './PlaceSearch'
 import QuickFeatureSearch from './QuickFeatureSearch'
+import StyleChooser from './StyleChooser'
 import { DialogButton, ModalCloseButton } from './UI'
 import useOgImageFetcher from './useOgImageFetcher'
 import useWikidata from './useWikidata'
 import { ZoneImages } from './ZoneImages'
-import useSetSearchParams from '@/components/useSetSearchParams'
-import StyleChooser from './StyleChooser'
-import CircularIcon from '@/components/CircularIcon'
-import { useEffect } from 'react'
 
-const minimumQuickSearchZoom = 12
+const getMinimumQuickSearchZoom = (mobile) => (mobile ? 10.5 : 12) // On a small screen, 70 %  of the tiles are not visible, hence this rule
 
 export default function Content({
 	latLngClicked,
@@ -44,7 +43,7 @@ export default function Content({
 	state,
 	setState,
 	zoom,
-	sideSheet,
+	sideSheet, // This gives us the indication that we're on the desktop version, where the Content is on the left, always visible, as opposed to the mobile version where a pull-up modal is used
 	searchParams,
 	setSnap = (snap) => null,
 	openSheet = () => null,
@@ -79,6 +78,8 @@ export default function Content({
 	const hasContent = choice || osmFeature || zoneImages || !clickTipRead
 	const hasFeature = choice || osmFeature
 	const showSearch = sideSheet || !hasFeature
+
+	const minimumQuickSearchZoom = getMinimumQuickSearchZoom(!sideSheet)
 
 	useEffect(() => {
 		if (!showSearch) return
