@@ -30,3 +30,6 @@ You'll have to create your free MapTiler key and put it in a `env.local` file :
 ```
 NEXT_PUBLIC_MAPTILER=YOUR_KEY
 ```
+## Similar projects 
+
+Checkout [OSMApp](https://github.com/zbycz/osmapp/issues/217). Qwant Maps would be the other similar projet, but it's not developped anymore. 
