@@ -3171,8 +3171,7 @@ export default function voyageStyle(key) {
 				],
 			},
 		],
-		glyphs:
-			'https://api.maptiler.com/fonts/{fontstack}/{range}.pbf?key=agNj1wjcwTfcd7NCdWSp',
+		glyphs: `https://api.maptiler.com/fonts/{fontstack}/{range}.pbf?key=${key}`,
 		sprite:
 			'https://api.maptiler.com/maps/2f80a9c4-e0dd-437d-ae35-2b6c212f830b/sprite',
 		bearing: 0,
