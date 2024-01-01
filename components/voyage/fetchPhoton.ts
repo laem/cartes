@@ -17,6 +17,7 @@ function fetchPhoton(v, setState, whichInput, local, zoom) {
 							...state[whichInput],
 							results: json.features.map((f) => ({
 								item: {
+									...f.properties,
 									osmId: f.properties.osm_id,
 									featureType:
 										f.properties.osm_type &&
@@ -30,7 +31,6 @@ function fetchPhoton(v, setState, whichInput, local, zoom) {
 									pays: f.properties.country,
 									région: f.properties.state,
 									département: f.properties.county,
-									type: f.properties.type,
 								},
 							})),
 						},

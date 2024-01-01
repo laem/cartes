@@ -1,5 +1,6 @@
 'use client'
 import Highlighter from 'react-highlight-words'
+import icons from '@/app/voyage/icons/icons.json'
 
 // Beware, this file is shared by the Map app, and the carbon footprint / € calculators
 
@@ -51,6 +52,8 @@ const Option = ({
 		choice = option.choice,
 		inputValue = data.inputValue
 
+	console.log('icons', option.item)
+
 	const nameIncludes = (what) =>
 		nom && nom.toLowerCase().includes((what || '').toLowerCase())
 	const displayCity = !nameIncludes(ville),
@@ -59,6 +62,14 @@ const Option = ({
 	const locationText = `${
 		displayCity ? ville + (displayCountry ? ' - ' : '') : ''
 	} ${displayDépartement ? département : ''} ${displayCountry ? pays : ''}`
+
+	const { osm_key: osmKey, osm_value: osmValue } = option.item
+
+	const foundIcon = icons.find(
+		([key]) => key === osmKey + '_' + osmValue || key === osmValue
+	)
+	const urlBase = `https://cdn.jsdelivr.net/gh/osmandapp/OsmAnd-resources/icons/svg/`
+	const iconPath = foundIcon ? urlBase + foundIcon[1] : `/dot.svg`
 
 	return (
 		<li
@@ -73,16 +84,25 @@ const Option = ({
 					color: white;
 					font-size: 100%;
 					display: flex;
-					justify-content: space-between;
 					align-items: center;
 					text-align: left;
 					width: 100%;
 					padding: 0;
 				}
+				> span {
+					display: flex;
+					justify-content: space-between;
+					align-items: center;
+				}
 
 				button:hover {
 					background: var(--darkerColor2);
 					border-radius: 0.3rem;
+				}
+				button > img {
+					width: 1.2rem;
+					height: 1.2rem;
+					margin-right: 0.6rem;
 				}
 			`}
 		>
@@ -101,12 +121,20 @@ const Option = ({
 					updateState(newState)
 				}}
 			>
-				<Highlighter searchWords={[inputValue]} textToHighlight={nom} />
-				<span style={{ opacity: 0.6, fontSize: '75%', marginLeft: '.6em' }}>
-					<Highlighter
-						searchWords={[inputValue]}
-						textToHighlight={locationText}
-					/>
+				<img
+					width="10"
+					height="10"
+					src={iconPath}
+					alt="Icône représentant au mieux le type de lieu"
+				/>
+				<span>
+					<Highlighter searchWords={[inputValue]} textToHighlight={nom} />
+					<span style={{ opacity: 0.6, fontSize: '75%', marginLeft: '.6em' }}>
+						<Highlighter
+							searchWords={[inputValue]}
+							textToHighlight={locationText}
+						/>
+					</span>
 				</span>
 			</button>
 		</li>
