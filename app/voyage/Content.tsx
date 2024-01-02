@@ -1,14 +1,6 @@
-import {
-	CityImage,
-	Destination,
-	ImageWithNameWrapper,
-} from '@/components/conversation/VoyageUI'
 import useSetSearchParams from '@/components/useSetSearchParams'
 import { getCategory } from '@/components/voyage/categories'
-import { toThumb } from '@/components/wikidata'
-import destinationPoint from '@/public/destination-point.svg'
-import { motion } from 'framer-motion'
-import NextImage from 'next/image'
+import { getThumb } from '@/components/wikidata'
 import { useEffect } from 'react'
 import { useLocalStorage } from 'usehooks-ts'
 import BikeRouteRésumé from './BikeRouteRésumé'
@@ -33,10 +25,10 @@ export default function Content({
 	setLatLngClicked,
 	clickedGare,
 	bikeRoute,
-	osmFeature,
 	setBikeRouteProfile,
 	bikeRouteProfile,
 	clickGare,
+	osmFeature,
 	setOsmFeature,
 	zoneImages,
 	resetZoneImages,
@@ -59,21 +51,23 @@ export default function Content({
 	const [tutorials, setTutorials] = useLocalStorage('tutorials', {})
 	const introductionRead = tutorials.introduction,
 		clickTipRead = tutorials.clickTip
-	const wikidata = useWikidata(state)
+	const wikidata = useWikidata(osmFeature, state)
 
+	console.log('wikidata received', wikidata)
 	const setSearchParams = useSetSearchParams()
 	useEffect(() => {
 		if (!introductionRead) setSnap(1)
 	}, [introductionRead, setSnap])
 
-	const versImageURL = wikidata?.pic && toThumb(wikidata?.pic.value)
 	const choice = state.vers?.choice
 	const category = getCategory(searchParams)
 
-	const osmWikimediaImage =
+	const wikidataPictureUrl = wikidata?.pictureUrl
+	const wikiFeatureImage =
 		osmFeature &&
-		osmFeature.tags?.wikimedia_commons &&
-		toThumb(osmFeature.tags.wikimedia_commons)
+		(osmFeature.tags?.wikimedia_commons
+			? getThumb(osmFeature.tags.wikimedia_commons, 500)
+			: wikidataPictureUrl)
 
 	const hasContent = choice || osmFeature || zoneImages || !clickTipRead
 	const hasFeature = choice || osmFeature
@@ -117,26 +111,28 @@ export default function Content({
 							}}
 						/>
 					)}
-					{choice && versImageURL && (
+					{/* TODO reuse the name overlay and only that ?
+					wikidataPictureUrl && (
 						<motion.div
 							initial={{ opacity: 0, scale: 0.8 }}
 							animate={{ opacity: 1, scale: 1 }}
 							transition={{}}
-							key={versImageURL}
+							key={wikidataPictureUrl}
 							exit={{ opacity: 0, scale: 0.5, transition: { duration: 0.2 } }}
 						>
 							<ImageWithNameWrapper>
 								<CityImage
-									src={versImageURL}
+									src={wikidataPictureUrl}
 									alt={`Une photo emblématique de la destination, ${state.vers.choice?.item?.nom}`}
 								/>
 								<Destination>
 									<NextImage src={destinationPoint} alt="Vers" />
-									<h2>{state.vers.choice.item.nom}</h2>
+									<h2>{osmFeature.tags.name}</h2>
 								</Destination>
 							</ImageWithNameWrapper>
 						</motion.div>
-					)}
+					)
+					*/}
 					{zoom > minimumQuickSearchZoom && (
 						<QuickFeatureSearch
 							category={category}
@@ -195,9 +191,9 @@ export default function Content({
 								`}
 							/>
 						)}
-						{osmWikimediaImage && (
+						{wikiFeatureImage && (
 							<FeatureImage
-								src={osmWikimediaImage}
+								src={wikiFeatureImage}
 								css={`
 									width: 100%;
 									height: 6rem;

@@ -1,19 +1,18 @@
 import RuleInput from 'Components/conversation/RuleInput'
-import Engine from 'publicodes'
-import { createContext, useContext, useEffect, useState } from 'react'
-import { useSelector } from 'react-redux'
-import { Link, Navigate, Route, Routes, useParams } from 'react-router-dom'
+import { CityImage } from 'Components/conversation/select/SelectTwoAirports'
 import Emoji from 'Components/Emoji'
 import TopBar from 'Components/TopBar'
+import useMediaQuery from 'Components/useMediaQuery'
 import Meta from 'Components/utils/Meta'
-import { situationSelector } from '../../../selectors/simulationSelectors'
+import getCityData from 'Components/wikidata'
+import { motion } from 'framer-motion'
+import Engine from 'publicodes'
+import { createContext, useContext, useEffect, useState } from 'react'
+import { Link, Navigate, Route, Routes, useParams } from 'react-router-dom'
 import Documentation from '../pages/Documentation'
+import { extractFileName, getThumb } from '../wikidata'
 import Lab from './Lab'
 import TicketSystem from './TicketSystem'
-import getCityData, { toThumb } from 'Components/wikidata'
-import { motion } from 'framer-motion'
-import { CityImage } from 'Components/conversation/select/SelectTwoAirports'
-import useMediaQuery from 'Components/useMediaQuery'
 
 /*
  * envoi Bonpote
@@ -114,9 +113,9 @@ const Ferry = ({}) => {
 			</Routes>
 		</div>
 	)
-};
+}
 
-export default Ferry;
+export default Ferry
 const Main = ({ situation }) => (
 	<div>
 		<p
@@ -286,7 +285,9 @@ const TravelFootprint = ({ situation }) => {
 		)
 	}, [ville])
 
-	const versImageURL = wikidata?.pic && toThumb(wikidata?.pic.value)
+	const versImageURL =
+		wikidata?.pic &&
+		getThumb(extractFileName(decodeURI(wikidata?.pic.value)), 400)
 
 	const evaluationWhole = engine.evaluate('empreinte du voyage')
 	const evaluationPerKm = engine.evaluate('empreinte par km')

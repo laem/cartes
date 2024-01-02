@@ -5,7 +5,7 @@ import startPoint from '@/public/start-point.svg'
 import Emoji from 'Components/Emoji'
 const Map = dynamic(() => import('Components/Map'), { ssr: false })
 
-import getCityData, { toThumb } from 'Components/wikidata'
+import getCityData from 'Components/wikidata'
 import { motion } from 'framer-motion'
 import GreatCircle from 'great-circle'
 import dynamic from 'next/dynamic'
@@ -13,6 +13,7 @@ import Image from 'next/image'
 import { useEffect, useState } from 'react'
 import { LightButton } from '../UI'
 import useGeo from '../useGeo'
+import { extractFileName, getThumb } from '../wikidata'
 import GeoInputOptions from './GeoInputOptions'
 import { InputStyle } from './UI'
 import {
@@ -58,7 +59,16 @@ export default function VoyageInput({
 		)
 	}, [state.vers])
 
-	const versImageURL = wikidata?.pic && toThumb(wikidata?.pic.value)
+	console.log('wikidata', wikidata?.pic.value)
+	const versImageURL =
+		wikidata?.pic &&
+		getThumb(extractFileName(decodeURI(wikidata?.pic.value)), 400)
+	console.log(
+		'wikidata',
+		wikidata?.pic.value,
+		extractFileName(decodeURI(wikidata?.pic.value)),
+		getThumb(extractFileName(decodeURI(wikidata?.pic.value)), 400)
+	)
 	const { depuis, vers } = state
 
 	const distance = realDistance || computeDistance(state)
@@ -86,7 +96,7 @@ export default function VoyageInput({
 	])
 
 	const onInputChange = (whichInput) => (e) => {
-		let v = e.target.value
+		const v = e.target.value
 		setState({
 			...state,
 			[whichInput]: { ...state[whichInput], inputValue: v },

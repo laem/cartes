@@ -1,5 +1,5 @@
 import css from '@/components/css/convertToJs'
-import { toThumb } from '@/components/wikidata'
+import { getThumb, extractFileName } from '@/components/wikidata'
 import { useEffect, useState } from 'react'
 import { createSearchBBox } from './createSearchPolygon'
 import { FeatureImage } from './FeatureImage'
@@ -34,7 +34,7 @@ export function ZoneImages({ images }) {
 		images &&
 		images.map((json) => {
 			const title = json.title,
-				url = toThumb(title)
+				url = getThumb(title, 400)
 			return {
 				url,
 				fullUrl: `https://commons.wikimedia.org/wiki/${title.replace(

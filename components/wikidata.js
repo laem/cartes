@@ -1,10 +1,8 @@
-import md5 from 'Components/md5'
-
 const endpointUrl = 'https://query.wikidata.org/sparql'
 const getQuery = (name, onlyCities) => `#defaultView:ImageGrid
 SELECT distinct ?item ?itemLabel ?itemDescription ?pic ${
 	onlyCities ? `?population ?area ` : ''
-}WHERE{  
+}WHERE{
   ?item ?label "${name}"@fr;
    wdt:P18 ?pic;
    ${
@@ -16,8 +14,8 @@ SELECT distinct ?item ?itemLabel ?itemDescription ?pic ${
 		}.
   ?article schema:about ?item .
   ?article schema:inLanguage "fr" .
-  ?article schema:isPartOf <https://fr.wikipedia.org/>. 
-  SERVICE wikibase:label { bd:serviceParam wikibase:language "fr". }    
+  ?article schema:isPartOf <https://fr.wikipedia.org/>.
+  SERVICE wikibase:label { bd:serviceParam wikibase:language "fr". }
 }
  `
 
@@ -32,15 +30,22 @@ export default (name, onlyCities = true) => {
 	return fetch(fullUrl, { headers }).then((body) => body.json())
 }
 
-export const toThumb = (url) => {
+export const extractFileName = (url) => {
+	// http://commons.wikimedia.org/wiki/Special:FilePath/Saint-Martin%20090.JPG
 	const paths = url.includes('FilePath/')
 		? url.split('FilePath/')
 		: url.includes('File:')
 		? url.split('File:')
 		: url.split('Fichier:')
+	//TODO probably won't work for other languages
+	// try a regexp with /Special:xxx/THIS ?
 	const fileName = paths[1]
-	const decoded = decodeURIComponent(fileName).replaceAll(' ', '_')
-	const hash = md5(unescape(encodeURIComponent(decoded)))
+	return decodeURIComponent(fileName)
+}
+export const getThumb = (fileName, width = 200) => {
+	const pictureUrl = `https://commons.wikimedia.org/w/index.php?title=Special:Redirect/file/${encodeURIComponent(
+		fileName
+	)}&width=${width}`
 
-	return `https://upload.wikimedia.org/wikipedia/commons/thumb/${hash[0]}/${hash[0]}${hash[1]}/${decoded}/400px-${decoded}`
+	return pictureUrl
 }
