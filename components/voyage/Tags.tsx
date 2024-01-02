@@ -1,9 +1,10 @@
+import Icons from '@/app/voyage/icons/Icons'
 import {
 	tagNameCorrespondance,
 	tagValueCorrespondance,
 } from '@/app/voyage/osmTagLabels'
-import Emoji from '../Emoji'
 
+const isSecondary = ([k, v]) => k.startsWith('source:')
 export default function Tags({ tags }) {
 	return (
 		<ul
@@ -15,8 +16,13 @@ export default function Tags({ tags }) {
 				line-height: 1.4rem;
 			`}
 		>
-			{tags.map(([k, v]) => (
-				<li key={k + v}>
+			{tags.map(([raw, [k, v]]) => (
+				<li
+					key={k + v}
+					css={`
+						${isSecondary(Object.entries(raw)[0]) && `font-size: 80%`}
+					`}
+				>
 					<span>
 						{tagNameCorrespondance(k)} : {tagValueCorrespondance(v)}
 					</span>
@@ -33,8 +39,10 @@ export function SoloTags({ tags }) {
 				list-style-type: none;
 				display: flex;
 				align-items: center;
-				li {
+				> li {
 					margin-right: 0.6rem;
+					display: flex;
+					align-items: center;
 				}
 				overflow: scroll;
 				white-space: nowrap;
@@ -44,10 +52,17 @@ export function SoloTags({ tags }) {
 					width: 0px;
 					background: transparent; /* Disable scrollbar Chrome/Safari/Webkit */
 				}
+				opacity: 0.7;
+				> li > span {
+					line-height: 1.4rem;
+				}
 			`}
 		>
-			{tags.map((tag) => (
-				<li key={tag}>{tag}</li>
+			{tags.map(([raw, tag]) => (
+				<li key={tag}>
+					<Icons tags={raw} />
+					<span>{tag}</span>
+				</li>
 			))}
 		</ul>
 	)

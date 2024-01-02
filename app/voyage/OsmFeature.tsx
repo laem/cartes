@@ -7,6 +7,7 @@ import OsmLinks from '@/components/voyage/OsmLinks'
 import Tags, { SoloTags } from '@/components/voyage/Tags'
 import Wikipedia from '@/components/voyage/Wikipedia'
 import parseOpeningHours from 'opening_hours'
+import Icons from './icons/Icons'
 import { getTagLabels } from './osmTagLabels'
 import Brand, { Wikidata } from './tags/Brand'
 import Stop, { isNotTransportStop, transportKeys } from './transport/stop/Stop'
@@ -44,12 +45,12 @@ export default function OsmFeature({ data }) {
 
 	const translatedTags = Object.entries(filteredRest).map(([key, value]) => {
 			const tagLabels = getTagLabels(key, value)
-			return tagLabels
+			return [{ [key]: value }, tagLabels]
 		}),
-		keyValueTags = translatedTags.filter((t) => t.length === 2),
-		soloTags = translatedTags
-			.filter((t) => t.length === 1)
-			.filter(([t]) => name && !name.toLowerCase().includes(t.toLowerCase()))
+		keyValueTags = translatedTags.filter(([, t]) => t.length === 2),
+		soloTags = translatedTags.filter(([, t]) => t.length === 1)
+
+	console.log('kvt', keyValueTags)
 
 	return (
 		<div
@@ -63,6 +64,7 @@ export default function OsmFeature({ data }) {
 				}
 			`}
 		>
+			{' '}
 			<SoloTags tags={soloTags} />
 			<h2
 				css={`
@@ -90,7 +92,6 @@ export default function OsmFeature({ data }) {
 					</a>
 				</div>
 			)}
-
 			{website && (
 				<div>
 					<a href={website} target="_blank" title="Site Web">
@@ -98,13 +99,11 @@ export default function OsmFeature({ data }) {
 					</a>
 				</div>
 			)}
-
 			{opening_hours && <OpeningHours opening_hours={opening_hours} />}
 			<ContactAndSocial
 				{...{ email: email || email2, instagram, facebook, siret }}
 			/>
 			{!isNotTransportStop(data.tags) && <Stop tags={data.tags} />}
-
 			{allocine && (
 				<a
 					href={`https://www.allocine.fr/seance/salle_gen_csalle=${allocine}.html`}

@@ -37,6 +37,7 @@ export const tagNameCorrespondance = (key) => {
 		'opening_hours:signed': 'Horaires visibles',
 		books: 'Livres',
 		short_name: 'Diminutif',
+		old_name: 'Ancien nom',
 	}[key]
 	return found || key
 }
