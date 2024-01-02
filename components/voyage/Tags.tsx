@@ -14,6 +14,9 @@ export default function Tags({ tags }) {
 				list-style-type: none;
 				border-left: 4px solid var(--lightColor);
 				line-height: 1.4rem;
+				img {
+					opacity: 0.7;
+				}
 			`}
 		>
 			{tags.map(([raw, [k, v]]) => (
@@ -23,6 +26,7 @@ export default function Tags({ tags }) {
 						${isSecondary(Object.entries(raw)[0]) && `font-size: 80%`}
 					`}
 				>
+					<Icons tags={raw} />
 					<span>
 						{tagNameCorrespondance(k)} : {tagValueCorrespondance(v)}
 					</span>
