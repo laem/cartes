@@ -89,10 +89,11 @@ const Option = ({
 					width: 100%;
 					padding: 0;
 				}
-				> span {
+				button > span {
 					display: flex;
 					justify-content: space-between;
 					align-items: center;
+					width: 100%;
 				}
 
 				button:hover {
