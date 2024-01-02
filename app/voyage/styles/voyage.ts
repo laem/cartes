@@ -154,7 +154,7 @@ export default function voyageStyle(key) {
 				source: 'maptiler_planet',
 				'source-layer': 'landcover',
 				layout: { visibility: 'visible' },
-				paint: { 'fill-color': 'hsl(99,48%,77%)', 'fill-opacity': 0.5 },
+				paint: { 'fill-color': '#a8c884', 'fill-opacity': 0.6 },
 				metadata: {},
 				filter: ['==', 'class', 'wood'],
 			},
@@ -234,8 +234,8 @@ export default function voyageStyle(key) {
 				'source-layer': 'landcover',
 				layout: { visibility: 'visible' },
 				paint: {
-					'fill-color': 'hsl(103, 41%, 75%)',
-					'fill-opacity': 0.5,
+					'fill-color': '#c6ddaa',
+					'fill-opacity': 0.6,
 					'fill-antialias': false,
 				},
 				metadata: {},
@@ -436,7 +436,7 @@ export default function voyageStyle(key) {
 				'source-layer': 'water',
 				layout: { visibility: 'visible' },
 				paint: {
-					'fill-color': 'hsl(204,92%,75%)',
+					'fill-color': '#6688dd',
 					'fill-opacity': ['match', ['get', 'intermittent'], 1, 0.85, 1],
 					'fill-antialias': true,
 				},
@@ -1026,7 +1026,7 @@ export default function voyageStyle(key) {
 					visibility: 'visible',
 				},
 				paint: {
-					'line-color': 'hsl(9, 0%, 90%)',
+					'line-color': '#C6C2B3',
 					'line-width': [
 						'interpolate',
 						['linear', 2],
@@ -1384,7 +1384,7 @@ export default function voyageStyle(key) {
 					visibility: 'visible',
 				},
 				paint: {
-					'line-color': 'hsl(8, 0%, 92%)',
+					'line-color': '#E6E1D1',
 					'line-width': [
 						'interpolate',
 						['linear', 2],
@@ -1487,7 +1487,7 @@ export default function voyageStyle(key) {
 					visibility: 'visible',
 				},
 				paint: {
-					'line-color': 'hsl(0,0%,100%)',
+					'line-color': '#E8DFFB',
 					'line-width': {
 						base: 1.2,
 						stops: [
@@ -1518,7 +1518,7 @@ export default function voyageStyle(key) {
 					visibility: 'visible',
 				},
 				paint: {
-					'line-color': 'hsl(0, 0%, 79%)',
+					'line-color': '#6F5D98',
 					'line-width': {
 						base: 1.2,
 						stops: [
@@ -1558,7 +1558,7 @@ export default function voyageStyle(key) {
 						['exponential', 1],
 						['zoom'],
 						8,
-						'hsl(221, 79%, 53%)',
+						'#590F99',
 						16,
 						'hsl(0, 0%, 70%)',
 					],
@@ -1890,9 +1890,9 @@ export default function voyageStyle(key) {
 					'text-rotation-alignment': 'map',
 				},
 				paint: {
-					'text-color': 'hsl(205,84%,39%)',
+					'text-color': '#DFEDF6',
 					'text-halo-blur': 1,
-					'text-halo-color': 'hsl(202, 76%, 82%)',
+					'text-halo-color': '#182772',
 					'text-halo-width': {
 						stops: [
 							[10, 1],
