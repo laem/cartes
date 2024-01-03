@@ -17,10 +17,19 @@ const Article = styled.article`
 		font-size: 140%;
 	}
 	img {
-		max-width: 90vw;
+		max-width: 90%;
 		max-height: 30rem;
 		display: block;
 		margin: 1rem auto;
+	}
+	img + em {
+		font-size: 90%;
+		line-height: 1rem;
+		text-align: center;
+		max-width: 70%;
+		margin: 0 auto;
+		display: block;
+		margin-bottom: 0.8rem;
 	}
 	blockquote {
 		margin-left: 0;
@@ -39,6 +48,13 @@ const Article = styled.article`
 		opacity: 0.3;
 		color: var(--lightColor);
 		margin: 1.6rem 0;
+	}
+	iframe {
+		width: 90%;
+		margin: 1.4rem auto;
+		display: block;
+		border: none;
+		border-radius: 0.4rem;
 	}
 `
 

@@ -1,0 +1,109 @@
+---
+titre: 'Voyage v0.4'
+date: '2024-01-03'
+image: /blog-images/poi-images.png
+description: |
+  Dans cette troisième version de Voyage, découvrez la vue satellite, un fond de carte qui relègue les routes majeures au second plan. Mais aussi, la mesure des distances, de meilleurs fiches pour les commerces et points d'intérêt, plus de filtres de recherche rapide de commerces et lieux, ainsi que le choix de la date du tableau d'horaires du train.
+---
+
+import Pouete from '@/components/Pouete'
+
+<script src="https://boitam.eu/embed.js" async="async"></script>
+
+> En bref : dans cette quatrième version de Voyage, nous proposons une application de carto généraliste qui commence à rattraper les équivalents, avec des fonctionnalités inédites
+
+> 📜 Au menu : découvrez la refonte de l'interface mobile, de nouveaux fonds de carte (base, IGN, 3D, extérieur, neige, train), un jeu d'icônes pour illustrer les lieux, l'exploration via de belles photos des lieux, un meilleur outil de recherche, les premiers itinéraires à pieds et à vélo, et les horaires de bus.
+
+## Plus facile d'usage sur mobile
+
+Cette application restera une application Web, mais ciblée avant tout pour l'usage mobile : c'est souvent via notre téléphone qu'on va chercher les horaires des commerces, ou lancer un calcul d'itinéraire spontané. Le mode bureau sera disponible, par exemple pour les préparations de voyage facilitées par le grand écran d'un ordinateur.
+
+Ainsi, sur ordinateur les informations s'affichent à gauche, sur mobile via une fenêtre glissante qui se range en-dessous de l'écran quand on n'a pas besoin d'elle.
+
+Vous remarquerez que la barre de recherche n'est plus en haut : en effet, elle est plus accessible pour nos doigts en bas de l'écran. Nous suivons pour cela le design d'Apple Maps plutôt que Google Maps.
+
+![](/blog-images/mobile-0.4.png)
+_On maximise l'espace disponible pour la carte sur mobile, les boutons étant proches de vos doigts_
+
+## De nouveaux fonds de carte
+
+### Le style de base continue d'évoluer
+
+Nous continuons d'itérer sur le fond de carte principale. Il met en avant le vélo, la marche, les espaces naturels et met en retrait les routes et surtout les routes majeures, qui ne sont presque d'aucune utilité quand on n'utilise plus que rarement la voiture.
+
+![](/blog-images/fond-0.4.png)
+_Une mer plus contrastée (même si l'on sait très bien que l'océan est turquoise en Bretagne)_
+
+![](/blog-images/fond-0.4-2.png)
+_Des zones naturelles un peu plus vertes_
+
+![](/blog-images/fond-piéton-0.4.png)
+_Les zones piétonnes sont en mauve, les chemins piéton aussi_
+
+N'hésitez pas à nous suggérer des changements qui tranchent avec les fonds classiques hérités des cartes papier dédiées au déplacement en voiture individuelle.
+
+### De nouveaux fonds utiles
+
+De nouveaux fonds adaptés à une diversité d'usages sont maintenant disponibles, par exemple le voyage en train.
+
+<Pouete src="https://boitam.eu/@maeool/111653739714175528/embed" />
+
+Les passionnés pourront accéder au fameux fond de carte IGN dans sa version vectorielle.
+
+Bonus : certains fonds de carte sont accessibles en 3D, comme le fond "extérieur" et le fond "hiver". Pratique pour bien visualiser les dénivelés à vélo, ou préparer une randonnée.
+
+![](/blog-images/hiver-3D-0.4.png)
+_Si vous n'avez jamais foulé le sommet lunaire du Parmelan, quelle chance d'avoir encore cette découverte à faire !_
+
+## Les lieux et commerces ouverts en un clin d'oeil
+
+Une boule de couleur vous indique l'ouverture des lieux.
+
+<Pouete src="https://boitam.eu/@maeool/111675148380801112" />
+
+De nouveaux types de lieux ont été ajouté à la recherche rapide.
+
+<Pouete src="https://boitam.eu/@maeool/111668943863935655" />
+
+## Des icônes
+
+Aussi bien dans la recherche que dans les fiches des lieux, des icônes viennent vous donner des clefs de lecture instantanées.
+
+<Pouete src="https://boitam.eu/@maeool/111686513549196226" />
+
+## Plus d'images
+
+Grâce à l'immense banque d'images libres Wikimedia Commons, de nombreuses fiches de lieux sont agrémentées de belles images.
+
+Vous pouvez aussi rechercher des images dans la zone en cours, via le bouton de recherche rapide. Cela permet d'explorer les lieux touristiques.
+
+![](https://media.boitam.eu/media_attachments/files/111/647/537/541/666/353/original/709d5493d1572f9a.png)
+_La Pointe du Raz, le lieux naturel le plus visité de Bretagne_
+
+Pour les commerces qui ont indiqué une image sur leur site Web (via la balise standard de métadonnées "og:image"), elle sera automatiquement affichée sur sa fiche Voyage.
+
+![](https://media.boitam.eu/media_attachments/files/111/572/692/854/783/185/original/ab1e65d642d79afa.png)
+
+## Une recherche améliorée
+
+De nombreuses améliorations concernent la barre de recherche. Outre les icônes pour illustrer les résultats, vous pouvez maintenant ajouter Voyage comme moteur de recherche sur vos navigateurs.
+
+![](/blog-images/recherche-0.4.png)
+
+C'est simple : https://futur.eco/voyage?q=XXX, à configurer dans les options du navigateur.
+
+Sur Firefox bureau, c'est automatiquement proposé au clic sur la barre d'adresse tout en bas.
+
+## Voyager à pieds et à vélo
+
+Après le calcul des distance, et l'affichage des gares proches de votre destination, on continue avec les premiers calculateurs d'itinéraires : la marche et le vélo.
+
+<Pouete src="https://boitam.eu/@maeool/111568613091004869" />
+
+## Un début de voyage en transport en commun
+
+Faute d'avoir encore un calculateur d'itinéraire en transport en commun en bonne et due forme, vous pouvez visualiser les horaires des arrêts de bus en Bretagne.
+
+<Pouete src="https://boitam.eu/@maeool/111658912046665462" />
+
+C'est à la fois une fonctionnalité, et un teaser de ce qui arrive bientôt ;)
