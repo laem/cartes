@@ -1,10 +1,9 @@
 export default function Pouete({ src }) {
 	return (
 		<iframe
-			src={src}
+			src={src + '/embed'}
 			className="mastodon-embed"
-			width="400"
-			allowfullscreen="allowfullscreen"
+			allowFullScreen={true}
 		></iframe>
 	)
 }
