@@ -1,36 +1,41 @@
 import { useEffect, useMemo, useState } from 'react'
-import length from '@turf/length'
 import useDrawRoute from './useDrawRoute'
 
 export default function useItinerary(map, itineraryMode, bikeRouteProfile) {
 	const [points, setPoints] = useState([])
 	const [route, setRoute] = useState(null)
 
-	const linestring = useMemo(
+	const linestrings = useMemo(
 		() =>
 			route
-				? route.features[0]
-				: {
-						type: 'Feature',
-						properties: {},
+				? route
+				: [
+						{
+							type: 'Feature',
+							properties: {},
 
-						geometry: {
-							type: 'LineString',
-							coordinates: points.map((point) => {
-								return point.geometry.coordinates
-							}),
+							geometry: {
+								type: 'LineString',
+								coordinates: points.map((point) => {
+									return point.geometry.coordinates
+								}),
+							},
 						},
-				  },
+				  ],
 		[points, route]
 	)
-	const rawDistance = linestring.properties['track-length'] / 1000
+
+	console.log('linestrings', linestrings)
+	const rawDistance = linestrings
+		.map((el) => el.properties['track-length'] / 1000)
+		.reduce((memo, next) => memo + next, 0)
 
 	const geojson = useMemo(
 		() => ({
 			type: 'FeatureCollection',
-			features: [...points, linestring],
+			features: [...points, ...linestrings],
 		}),
-		[points, linestring]
+		[points, linestrings]
 	)
 	useDrawRoute(itineraryMode && map, geojson, 'route')
 
@@ -96,6 +101,35 @@ export default function useItinerary(map, itineraryMode, bikeRouteProfile) {
 			setRoute(null)
 			return
 		}
+
+		async function fetchTrainRoute(points) {
+			if (points.length > 2) return
+			const lonLats = points.map(
+				({
+					geometry: {
+						coordinates: [lon, lat],
+					},
+				}) => `${lon};${lat}`
+			)
+
+			const url = `https://api.sncf.com/v1/coverage/sncf/journeys?from=${lonLats[0]}&to=${lonLats[1]}&datetime=20240107T182852`
+			console.log('train', url)
+
+			const res = await fetch(url, {
+				headers: { Authorization: process.env.NEXT_PUBLIC_SNCF_API_KEY },
+			})
+			const json = await res.json()
+			console.log('Train route json', json)
+			if (!json.journeys) setRoute(null)
+			const sections = json.journeys[0].sections
+			setRoute(
+				sections.map((el) => ({
+					type: 'Feature',
+					properties: el.geojson.properties[0],
+					geometry: { coordinates: el.geojson.coordinates, type: 'LineString' },
+				}))
+			)
+		}
 		async function fetchBikeRoute(points) {
 			const lonLats = points
 				.map(
@@ -110,9 +144,11 @@ export default function useItinerary(map, itineraryMode, bikeRouteProfile) {
 			const res = await fetch(url)
 			const json = await res.json()
 			console.log('Brouter route json', json)
-			setRoute(json)
+			if (!json.features) return
+			setRoute(json.features)
 		}
-		fetchBikeRoute(points)
+		//fetchBikeRoute(points)
+		fetchTrainRoute(points)
 		return undefined
 	}, [points, setRoute, bikeRouteProfile])
 	// GeoJSON object to hold our measurement features
