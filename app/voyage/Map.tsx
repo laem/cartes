@@ -67,7 +67,7 @@ export default function Map({ searchParams }) {
 	useImageSearch(map, zoom, bbox, searchParams.photos === 'oui')
 
 	if (process.env.NEXT_PUBLIC_MAPTILER == null) {
-		throw new Error('You have to configure env REACT_APP_API_KEY, see README')
+		throw new Error('You have to configure env NEXT_PUBLIC_MAPTILER, see README')
 	}
 
 	const choice = state.vers?.choice
