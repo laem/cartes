@@ -39,7 +39,7 @@
     - vin
     - boisson
     - terrasse
-  query: '[amenity~"pub|bar|cage"]'
+  query: '[amenity~"pub|bar|cafe"]'
   icon: https://cdn.jsdelivr.net/gh/mapbox/maki/icons/cafe.svg
 - name: épicerie
   dictionary:
