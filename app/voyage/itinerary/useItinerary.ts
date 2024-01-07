@@ -1,4 +1,5 @@
 import { useEffect, useMemo, useState } from 'react'
+import { buildRequest, getLineStrings } from './motisRequest'
 import useDrawRoute from './useDrawRoute'
 
 export default function useItinerary(map, itineraryMode, bikeRouteProfile) {
@@ -107,20 +108,16 @@ export default function useItinerary(map, itineraryMode, bikeRouteProfile) {
 			const lonLats = points.map(
 				({
 					geometry: {
-						coordinates: [lon, lat],
+						coordinates: [lng, lat],
 					},
-				}) => `${lon};${lat}`
+				}) => ({ lat, lng })
 			)
 
-			const url = `https://api.sncf.com/v1/coverage/sncf/journeys?from=${lonLats[0]}&to=${lonLats[1]}&datetime=20240107T182852`
-			console.log('train', url)
+			const json = getLineStrings(lonLats[0], lonLats[1])
+			return
 
-			const res = await fetch(url, {
-				headers: { Authorization: process.env.NEXT_PUBLIC_SNCF_API_KEY },
-			})
-			const json = await res.json()
 			console.log('Train route json', json)
-			if (!json.journeys) setRoute(null)
+			if (!json.journeys) return setRoute(null)
 			const sections = json.journeys[0].sections
 			setRoute(
 				sections.map((el) => ({
