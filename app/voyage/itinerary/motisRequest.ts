@@ -35,7 +35,7 @@ export const buildRequestBody = (start, destination) => {
 	return body
 }
 
-export const getLineStrings = async (start, destionation) => {
+export const computeMotisTrip = async (start, destionation) => {
 	const body = buildRequestBody(start, destionation)
 
 	const request = await fetch(`http://localhost:3000/`, {
@@ -48,5 +48,5 @@ export const getLineStrings = async (start, destionation) => {
 	})
 	const json = await request.json()
 	console.log('motis', json)
-	return null
+	return json
 }

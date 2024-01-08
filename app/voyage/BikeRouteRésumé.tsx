@@ -1,15 +1,12 @@
-import css from '@/components/css/convertToJs'
-import Emoji from '@/components/Emoji'
-import ProfileChooser from './ProfileChooser'
-import hexToFilter from '@/components/utils/colorize'
 import CircularIcon from '@/components/CircularIcon'
+import css from '@/components/css/convertToJs'
+import ProfileChooser from './ProfileChooser'
 
 export default function BikeRouteRésumé({
 	data,
 	bikeRouteProfile,
 	setBikeRouteProfile,
 }) {
-	console.log('data', data)
 	if (!data.features) return
 	const feature = data.features[0]
 	if (!feature) return

@@ -1,6 +1,7 @@
 import useSetSearchParams from '@/components/useSetSearchParams'
+import distance from '@turf/distance'
 import { useCallback, useEffect, useMemo, useState } from 'react'
-import { getLineStrings } from './motisRequest'
+import { computeMotisTrip } from './motisRequest'
 import useDrawRoute from './useDrawRoute'
 
 const serializePoints = (points) => {
@@ -19,7 +20,7 @@ export default function useItinerary(
 	bikeRouteProfile,
 	searchParams
 ) {
-	const [route, setRoute] = useState(null)
+	const [routes, setRoutes] = useState(null)
 	const setSearchParams = useSetSearchParams(),
 		setPoints = useCallback(
 			(newPoints) =>
@@ -58,23 +59,20 @@ export default function useItinerary(
 	}, [searchParams])
 
 	const linestrings = useMemo(
-		() =>
-			route
-				? route
-				: [
-						{
-							type: 'Feature',
-							properties: {},
+		() => [
+			{
+				type: 'Feature',
+				properties: {},
 
-							geometry: {
-								type: 'LineString',
-								coordinates: points.map((point) => {
-									return point.geometry.coordinates
-								}),
-							},
-						},
-				  ],
-		[points, route]
+				geometry: {
+					type: 'LineString',
+					coordinates: points.map((point) => {
+						return point.geometry.coordinates
+					}),
+				},
+			},
+		],
+		[points]
 	)
 
 	console.log('linestrings', linestrings)
@@ -150,11 +148,13 @@ export default function useItinerary(
 
 	useEffect(() => {
 		if (points.length < 2) {
-			setRoute(null)
+			setRoutes(null)
 			return
 		}
 
-		async function fetchTrainRoute(points) {
+		async function fetchTrainRoute(points, itineraryDistance) {
+			const minTransitDistance = 1 // please walk or bike
+			if (itineraryDistance < minTransitDistance) return null
 			if (points.length > 2) return
 			const lonLats = points.map(
 				({
@@ -164,21 +164,22 @@ export default function useItinerary(
 				}) => ({ lat, lng })
 			)
 
-			const json = getLineStrings(lonLats[0], lonLats[1])
-			return
+			const json = await computeMotisTrip(lonLats[0], lonLats[1])
 
-			console.log('Train route json', json)
-			if (!json.journeys) return setRoute(null)
-			const sections = json.journeys[0].sections
-			setRoute(
-				sections.map((el) => ({
-					type: 'Feature',
-					properties: el.geojson.properties[0],
-					geometry: { coordinates: el.geojson.coordinates, type: 'LineString' },
-				}))
-			)
+			if (!json.content) return null
+			/*
+			return sections.map((el) => ({
+				type: 'Feature',
+				properties: el.geojson.properties[0],
+				geometry: { coordinates: el.geojson.coordinates, type: 'LineString' },
+			}))
+			*/
+			return json.content
 		}
-		async function fetchBikeRoute(points) {
+		async function fetchBrouterRoute(points, itineraryDistance, profile) {
+			const maxBikeDistance = 35 // ~ 25 km/h (ebike) x 1:30 hours
+			if (itineraryDistance > maxBikeDistance) return null
+
 			const lonLats = points
 				.map(
 					({
@@ -188,17 +189,34 @@ export default function useItinerary(
 					}) => `${lon},${lat}`
 				)
 				.join('|')
-			const url = `https://brouter.osc-fr1.scalingo.io/brouter?lonlats=${lonLats}&profile=${bikeRouteProfile}&alternativeidx=0&format=geojson`
+			const url = `https://brouter.osc-fr1.scalingo.io/brouter?lonlats=${lonLats}&profile=${profile}&alternativeidx=0&format=geojson`
 			const res = await fetch(url)
 			const json = await res.json()
 			console.log('Brouter route json', json)
 			if (!json.features) return
-			setRoute(json.features)
+			return json.features
 		}
-		//fetchBikeRoute(points)
-		fetchTrainRoute(points)
-		return undefined
-	}, [points, setRoute, bikeRouteProfile])
+
+		//TODO fails is 3rd point is closer to 1st than 2nd, use reduce that sums
+		const itineraryDistance = distance(points[0], points.slice(-1)[0])
+
+		const fetchRoutes = async () => {
+			const cycling = await fetchBrouterRoute(
+				points,
+				itineraryDistance,
+				bikeRouteProfile
+			)
+			const walking = await fetchBrouterRoute(
+				points,
+				itineraryDistance,
+				'hiking-mountain'
+			)
+			const transit = await fetchTrainRoute(points, itineraryDistance)
+
+			setRoutes({ cycling, walking, transit })
+		}
+		fetchRoutes()
+	}, [points, setRoutes, bikeRouteProfile])
 	// GeoJSON object to hold our measurement features
 
 	useEffect(() => {
@@ -211,7 +229,8 @@ export default function useItinerary(
 		map.removeSource('measure-points')
 	}, [itineraryMode, map, points])
 
-	const distance = isNaN(rawDistance)
+	/* Not sure it's useful to display the distance in this multimodal new mode
+	const computedDistance = isNaN(rawDistance)
 		? '...'
 		: rawDistance < 1
 		? Math.round(rawDistance * 1000) + ' m'
@@ -219,6 +238,7 @@ export default function useItinerary(
 		? Math.round(rawDistance * 10) / 10 + ' km'
 		: Math.round(rawDistance) + ' km'
 
-	const resetDistance = () => setPoints([])
-	return [distance, resetDistance, route]
+*/
+	const resetItinerary = () => setPoints([])
+	return [resetItinerary, routes]
 }

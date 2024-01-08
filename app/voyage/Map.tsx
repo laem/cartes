@@ -81,7 +81,7 @@ export default function Map({ searchParams }) {
 	const [gares, setGares] = useState(null)
 	const [clickedGare, clickGare] = useState(null)
 	const [bikeRoute, setBikeRoute] = useState(null)
-	const [distance, reset, route] = useItinerary(
+	const [resetItinerary, routes] = useItinerary(
 		map,
 		itineraryMode,
 		bikeRouteProfile,
@@ -92,9 +92,8 @@ export default function Map({ searchParams }) {
 		bikeRouteProfile,
 		itineraryMode,
 		setItineraryMode,
-		distance,
-		reset,
-		route,
+		reset: resetItinerary,
+		routes,
 	}
 	const [features, setFeatures] = useState([])
 
@@ -541,7 +540,6 @@ out skel qt;
 						style,
 						styleChooser,
 						setStyleChooser,
-						distance,
 						itinerary,
 					}}
 				/>

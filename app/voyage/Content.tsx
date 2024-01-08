@@ -143,10 +143,10 @@ export default function Content({
 				</section>
 			)}
 
-			{itinerary.route && (
+			{Object.values(itinerary.routes || {}).find(Boolean) && (
 				<BikeRouteRésumé
 					{...{
-						data: itinerary.route,
+						data: itinerary.routes,
 						bikeRouteProfile,
 						setBikeRouteProfile,
 					}}
