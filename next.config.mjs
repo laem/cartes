@@ -29,6 +29,21 @@ const nextConfig = {
 		// !! WARN !!
 		ignoreBuildErrors: true,
 	},
+	async rewrites() {
+		return process.env.VOYAGE
+			? {
+					beforeFiles: [
+						// These rewrites are checked after headers/redirects
+						// and before all files including _next/public files which
+						// allows overriding page files
+						{
+							source: '/',
+							destination: '/voyage',
+						},
+					],
+			  }
+			: {}
+	},
 	async redirects() {
 		return [
 			{
