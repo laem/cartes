@@ -67,7 +67,9 @@ export default function Map({ searchParams }) {
 	useImageSearch(map, zoom, bbox, searchParams.photos === 'oui')
 
 	if (process.env.NEXT_PUBLIC_MAPTILER == null) {
-		throw new Error('You have to configure env NEXT_PUBLIC_MAPTILER, see README')
+		throw new Error(
+			'You have to configure env NEXT_PUBLIC_MAPTILER, see README'
+		)
 	}
 
 	const choice = state.vers?.choice
@@ -82,7 +84,8 @@ export default function Map({ searchParams }) {
 	const [distance, reset, route] = useItinerary(
 		map,
 		itineraryMode,
-		bikeRouteProfile
+		bikeRouteProfile,
+		searchParams
 	)
 
 	const itinerary = {

@@ -1,10 +1,61 @@
-import { useEffect, useMemo, useState } from 'react'
-import { buildRequest, getLineStrings } from './motisRequest'
+import useSetSearchParams from '@/components/useSetSearchParams'
+import { useCallback, useEffect, useMemo, useState } from 'react'
+import { getLineStrings } from './motisRequest'
 import useDrawRoute from './useDrawRoute'
 
-export default function useItinerary(map, itineraryMode, bikeRouteProfile) {
-	const [points, setPoints] = useState([])
+const serializePoints = (points) => {
+	const result = points
+		// We don't need full precision, just 5 decimals ~ 1m
+		// https://wiki.openstreetmap.org/wiki/Precision_of_coordinates
+		.map(({ geometry: { coordinates } }) =>
+			coordinates.map((coordinate) => (+coordinate).toFixed(5)).join('|')
+		)
+		.join(';')
+	return result
+}
+export default function useItinerary(
+	map,
+	itineraryMode,
+	bikeRouteProfile,
+	searchParams
+) {
 	const [route, setRoute] = useState(null)
+	const setSearchParams = useSetSearchParams(),
+		setPoints = useCallback(
+			(newPoints) =>
+				console.log('motis newPoints', serializePoints(newPoints)) ||
+				setSearchParams({ allez: serializePoints(newPoints) }),
+			[setSearchParams]
+		)
+
+	/*
+	 * {
+  "type": "Feature",
+  "geometry": {
+    "type": "Point",
+    "coordinates": [
+      -1.6369411434976087,
+      48.17932437715612
+    ]
+  },
+  "properties": {
+    "id": "1704742857502"
+  }
+}
+	 */
+	const points = useMemo(() => {
+		const coordinates = searchParams['allez'],
+			rawPoints = coordinates?.split(';').map((el) => el.split('|')) || [],
+			points = rawPoints.map(([lon, lat]) => ({
+				type: 'Feature',
+				geometry: {
+					type: 'Point',
+					coordinates: [lon, lat],
+				},
+				properties: {},
+			}))
+		return points
+	}, [searchParams])
 
 	const linestrings = useMemo(
 		() =>
@@ -53,7 +104,7 @@ export default function useItinerary(map, itineraryMode, bikeRouteProfile) {
 			// If a feature was clicked, remove it from the map
 			if (features?.length) {
 				const id = features[0].properties.id
-				setPoints((points) => points.filter((p) => p.properties.id !== id))
+				setPoints(points.filter((p) => p.properties.id !== id))
 			} else {
 				const point = {
 					type: 'Feature',
