@@ -131,7 +131,11 @@ const getOh = (opening_hours) => {
 			isOpen = oh.getState(),
 			nextChange = oh.getNextChange()
 
-		return { isOpen, nextChange }
+		const intervals = oh.getOpenIntervals(
+			new Date(),
+			new Date(new Date().setDate(new Date().getDate() + 7))
+		)
+		return { isOpen, nextChange, intervals }
 	} catch (e) {
 		console.log('Error parsing opening hours', e)
 		return { isOpen: 'error', nextChange: 'error' }
@@ -140,7 +144,7 @@ const getOh = (opening_hours) => {
 const OpeningHours = ({ opening_hours }) => {
 	const now = new Date()
 
-	const { isOpen, nextChange } = getOh(opening_hours)
+	const { isOpen, nextChange, intervals } = getOh(opening_hours)
 
 	const formatDate = (date) => {
 		const sameDay = date.getDay() === now.getDay()
@@ -153,6 +157,40 @@ const OpeningHours = ({ opening_hours }) => {
 		}).format(date)
 		return result
 	}
+
+	const hourFormatter = new Intl.DateTimeFormat('fr-FR', {
+		hour: 'numeric',
+		minute: 'numeric',
+	})
+
+	const dayFormatter = new Intl.DateTimeFormat('fr-FR', {
+		weekday: 'long',
+	})
+
+	const ohPerDay = intervals
+		? intervals.reduce(
+				(memo, next) => {
+					const [from, to] = next
+					const fromDay = dayFormatter.format(from)
+					const toDay = dayFormatter.format(to)
+
+					const simple = (h) => hourFormatter.format(h).replace(':00', 'h')
+					const error = toDay !== fromDay
+					const fromHour = simple(from),
+						toHour = simple(to)
+					const range = fromHour + ' - ' + toHour
+
+					return {
+						...memo,
+						[fromDay]: [...(memo[fromDay] || []), range],
+						error: memo.error || error,
+					}
+				},
+				{ error: false }
+		  )
+		: {}
+
+	console.log(ohPerDay)
 	return (
 		<div
 			css={`
@@ -179,7 +217,44 @@ const OpeningHours = ({ opening_hours }) => {
 					)}
 				</summary>
 
-				{opening_hours}
+				{intervals != null && !ohPerDay.error ? (
+					<ul
+						css={`
+							padding-left: 2rem;
+							width: 100%;
+							> li {
+								display: flex;
+								justify-content: space-between;
+								> span {
+									margin-right: 2rem;
+								}
+							}
+							> li > ul {
+								display: flex;
+								list-style-type: none;
+								li {
+									margin: 0 0.4rem;
+								}
+							}
+						`}
+					>
+						{Object.entries(ohPerDay).map(
+							([day, ranges]) =>
+								day !== 'error' && (
+									<li key={day}>
+										<span>{day}</span>
+										<ul>
+											{ranges.map((hour) => (
+												<li key={hour}>{hour}</li>
+											))}
+										</ul>
+									</li>
+								)
+						)}
+					</ul>
+				) : (
+					opening_hours
+				)}
 			</details>
 		</div>
 	)
