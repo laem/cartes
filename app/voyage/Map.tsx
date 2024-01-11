@@ -44,8 +44,24 @@ export default function Map({ searchParams }) {
 	const [latLngClicked, setLatLngClicked] = useState(null)
 	const [bikeRouteProfile, setBikeRouteProfile] = useState('safety')
 	const [distanceMode, setDistanceMode] = useState(false)
-	const [itineraryMode, setItineraryMode] = useState(searchParams.allez != null)
+	const [itineraryMode, setItineraryMode] = useState(false)
 	const [styleChooser, setStyleChooser] = useState(false)
+
+	useEffect(() => {
+		const yo = () => {
+			setItineraryMode(true)
+		}
+
+		setTimeout(
+			yo,
+
+			2000
+		)
+
+		return () => {
+			clearTimeout(yo)
+		}
+	}, [setItineraryMode])
 
 	const setSearchParams = useSetSearchParams()
 
