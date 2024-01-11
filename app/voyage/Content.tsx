@@ -53,7 +53,6 @@ export default function Content({
 		clickTipRead = tutorials.clickTip
 	const wikidata = useWikidata(osmFeature, state)
 
-	console.log('wikidata received', wikidata)
 	const setSearchParams = useSetSearchParams()
 	useEffect(() => {
 		if (!introductionRead) setSnap(1)

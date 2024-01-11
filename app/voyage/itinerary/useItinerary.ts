@@ -5,6 +5,7 @@ import { computeMotisTrip } from './motisRequest'
 import useDrawRoute from './useDrawRoute'
 
 const serializePoints = (points) => {
+	if (points.length === 0) return undefined
 	const result = points
 		// We don't need full precision, just 5 decimals ~ 1m
 		// https://wiki.openstreetmap.org/wiki/Precision_of_coordinates

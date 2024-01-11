@@ -44,7 +44,7 @@ export default function Map({ searchParams }) {
 	const [latLngClicked, setLatLngClicked] = useState(null)
 	const [bikeRouteProfile, setBikeRouteProfile] = useState('safety')
 	const [distanceMode, setDistanceMode] = useState(false)
-	const [itineraryMode, setItineraryMode] = useState(false)
+	const [itineraryMode, setItineraryMode] = useState(searchParams.allez != null)
 	const [styleChooser, setStyleChooser] = useState(false)
 
 	const setSearchParams = useSetSearchParams()
@@ -63,7 +63,6 @@ export default function Map({ searchParams }) {
 		setLatLngClicked,
 	})
 
-	console.log('bbox', bbox)
 	useImageSearch(map, zoom, bbox, searchParams.photos === 'oui')
 
 	if (process.env.NEXT_PUBLIC_MAPTILER == null) {
