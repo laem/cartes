@@ -52,7 +52,7 @@ export default function useItinerary(
 				type: 'Feature',
 				geometry: {
 					type: 'Point',
-					coordinates: [lon, lat],
+					coordinates: [+lon, +lat],
 				},
 				properties: {},
 			}))
@@ -88,6 +88,7 @@ export default function useItinerary(
 		}),
 		[points, linestrings]
 	)
+	console.log('useDrawRoute from outside', map, geojson)
 	useDrawRoute(itineraryMode && map, geojson, 'route')
 
 	useEffect(() => {

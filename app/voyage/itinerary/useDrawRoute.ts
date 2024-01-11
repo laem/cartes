@@ -1,15 +1,20 @@
 import { useEffect } from 'react'
 
-export default function useDrawRoute(map, features, id) {
+export default function useDrawRoute(map, geojson, id) {
+	console.log('geojson udR', geojson)
 	useEffect(() => {
-		console.log('bikeRoute', features)
-		if (!map || !features || !features.features || !features.features.length)
-			return
+		if (map) console.log('getsource', id, map.getSource(id))
+		if (!map || !geojson || !geojson.features || !geojson.features.length)
+			return undefined
+		console.log('will draw useDrawRoute inside ' + id, id, geojson)
 
 		map.addSource(id, {
 			type: 'geojson',
-			data: features,
+			data: geojson,
 		})
+
+		if (map) console.log('getsource2', id, map.getSource(id))
+		console.log('useDrawRoute did add source')
 		map.addLayer({
 			id: id + 'Contour',
 			type: 'line',
@@ -48,12 +53,14 @@ export default function useDrawRoute(map, features, id) {
 			},
 			filter: ['in', '$type', 'Point'],
 		})
+		console.log('useDrawRoute did add layers')
 
 		return () => {
+			console.log('will remove useDrawRoute' + id)
 			map.removeLayer(id + 'Line')
 			map.removeLayer(id + 'Contour')
 			map.removeLayer(id + 'Points')
 			map.removeSource(id)
 		}
-	}, [features, map, id])
+	}, [geojson, map, id])
 }

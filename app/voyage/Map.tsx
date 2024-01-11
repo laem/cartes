@@ -94,6 +94,7 @@ export default function Map({ searchParams }) {
 		reset: resetItinerary,
 		routes,
 	}
+	console.log('itinerary', itinerary)
 	const [features, setFeatures] = useState([])
 
 	useEffect(() => {
@@ -218,7 +219,7 @@ out skel qt;
 		map.setStyle(styleUrl)
 	}, [styleUrl, map])
 
-	useDrawRoute(map, bikeRoute, 'bikeRoute')
+	//useDrawRoute(map, bikeRoute, 'bikeRoute')
 
 	useEffect(() => {
 		const onClick = async (e) => {
