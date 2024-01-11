@@ -53,10 +53,19 @@ export default function useDrawRoute(map, geojson, id) {
 			},
 			filter: ['in', '$type', 'Point'],
 		})
-		console.log('useDrawRoute did add layers')
+		console.log(
+			'useDrawRoute did add layers',
+			map._mapId,
+			map.getLayer(id + 'Points')
+		)
 
 		return () => {
-			console.log('will remove useDrawRoute' + id)
+			console.log(
+				'will remove useDrawRoute' + id,
+				map._mapId,
+				map.getLayer(id + 'Points')
+			)
+
 			map.removeLayer(id + 'Line')
 			map.removeLayer(id + 'Contour')
 			map.removeLayer(id + 'Points')
