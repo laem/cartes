@@ -12,8 +12,10 @@ import MapButtons from '@/components/voyage/MapButtons'
 import { goodIconSize } from '@/components/voyage/mapUtils'
 import { centerOfMass } from '@turf/turf'
 import useAddMap, { defaultZoom } from './effects/useAddMap'
-import useDrawRoute from './itinerary/useDrawRoute'
+import useDrawQuickSearchFeatures from './effects/useDrawQuickSearchFeatures'
+import useImageSearch from './effects/useImageSearch'
 import useItinerary from './itinerary/useItinerary'
+import useItineraryFromUrl from './itinerary/useItineraryFromUrl'
 import ModalSwitch from './ModalSwitch'
 import { disambiguateWayRelation, osmRequest } from './osmRequest'
 import { styles } from './styles/styles'
@@ -22,8 +24,6 @@ import useHoverOnMapFeatures from './useHoverOnMapFeatures'
 import useTerrainControl from './useTerrainControl'
 import { decodePlace, encodePlace } from './utils'
 import { useZoneImages } from './ZoneImages'
-import useDrawQuickSearchFeatures from './effects/useDrawQuickSearchFeatures'
-import useImageSearch from './effects/useImageSearch'
 
 export const defaultState = {
 	depuis: { inputValue: null, choice: false },
@@ -47,21 +47,7 @@ export default function Map({ searchParams }) {
 	const [itineraryMode, setItineraryMode] = useState(false)
 	const [styleChooser, setStyleChooser] = useState(false)
 
-	useEffect(() => {
-		const yo = () => {
-			setItineraryMode(true)
-		}
-
-		setTimeout(
-			yo,
-
-			2000
-		)
-
-		return () => {
-			clearTimeout(yo)
-		}
-	}, [setItineraryMode])
+	useItineraryFromUrl(searchParams, setItineraryMode, map)
 
 	const setSearchParams = useSetSearchParams()
 

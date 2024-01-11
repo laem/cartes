@@ -89,7 +89,7 @@ export default function useItinerary(
 		[points, linestrings]
 	)
 	console.log('useDrawRoute from outside', map, geojson)
-	useDrawRoute(itineraryMode && map, geojson, 'route')
+	useDrawRoute(itineraryMode, map, geojson, 'route')
 
 	useEffect(() => {
 		if (!map || !itineraryMode) return

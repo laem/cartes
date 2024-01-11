@@ -1,10 +1,16 @@
 import { useEffect } from 'react'
 
-export default function useDrawRoute(map, geojson, id) {
+export default function useDrawRoute(itineraryMode, map, geojson, id) {
 	console.log('geojson udR', geojson)
 	useEffect(() => {
-		if (map) console.log('getsource', id, map.getSource(id))
-		if (!map || !geojson || !geojson.features || !geojson.features.length)
+		if (map) console.log('getsource', id, map._mapId, map.getSource(id))
+		if (
+			!itineraryMode ||
+			!map ||
+			!geojson ||
+			!geojson.features ||
+			!geojson.features.length
+		)
 			return undefined
 		console.log('will draw useDrawRoute inside ' + id, id, geojson)
 
@@ -71,5 +77,5 @@ export default function useDrawRoute(map, geojson, id) {
 			map.removeLayer(id + 'Points')
 			map.removeSource(id)
 		}
-	}, [geojson, map, id])
+	}, [itineraryMode, geojson, map, id])
 }
