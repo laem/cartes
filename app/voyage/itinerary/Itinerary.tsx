@@ -1,4 +1,5 @@
 import BikeRouteRésumé from '../BikeRouteRésumé'
+import Transit from './Transit'
 
 export default function Itinerary({
 	itinerary,
@@ -6,10 +7,6 @@ export default function Itinerary({
 	setBikeRouteProfile,
 }) {
 	if (!itinerary.routes) return
-
-	const transit = itinerary.routes.transit
-
-	console.log('transit', transit)
 
 	return (
 		<section>
@@ -24,7 +21,7 @@ export default function Itinerary({
 					}}
 				/>
 			)}
-			<div>TeC</div>
+			<Transit data={itinerary.routes.transit} />
 		</section>
 	)
 }
