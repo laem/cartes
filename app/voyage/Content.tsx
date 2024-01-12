@@ -142,15 +142,18 @@ export default function Content({
 				</section>
 			)}
 
-			{Object.values(itinerary.routes || {}).find(Boolean) && (
-				<BikeRouteRésumé
-					{...{
-						data: itinerary.routes,
-						bikeRouteProfile,
-						setBikeRouteProfile,
-					}}
-				/>
-			)}
+			{itinerary?.routes &&
+				(itinerary.routes.cycling || itinerary.routes.walking) && (
+					<BikeRouteRésumé
+						{...{
+							cycling: itinerary.routes.cycling,
+							walking: itinerary.routes.walking,
+							data: itinerary.routes,
+							bikeRouteProfile,
+							setBikeRouteProfile,
+						}}
+					/>
+				)}
 
 			{styleChooser ? (
 				<StyleChooser {...{ setStyleChooser, style }} />

@@ -1,25 +1,16 @@
 import CircularIcon from '@/components/CircularIcon'
 import css from '@/components/css/convertToJs'
+import { useState } from 'react'
 import ProfileChooser from './ProfileChooser'
 
 export default function BikeRouteRésumé({
-	data,
+	walking,
+	cycling,
 	bikeRouteProfile,
 	setBikeRouteProfile,
 }) {
-	if (!data.features) return
-	const feature = data.features[0]
-	if (!feature) return
+	const [mode, setMode] = useState('cycling') // TODO set automatically a guessed mode from distance and possibly then user preferences
 
-	const seconds = feature.properties['total-time'],
-		distance = feature.properties['track-length'],
-		km = Math.round(distance / 1000),
-		date = new Date(1000 * seconds).toISOString().substr(11, 8).split(':'),
-		heures = +date[0],
-		minutes = date[1]
-
-	const déniveléCumulé = feature.properties['filtered ascend']
-	const dénivelé = feature.properties['plain-ascend']
 	return (
 		<div
 			css={`
@@ -57,48 +48,70 @@ export default function BikeRouteRésumé({
 				<CircularIcon
 					src={'/bike.svg'}
 					alt="Icône d'un vélo"
-					color={
-						bikeRouteProfile === 'hiking-mountain' ? 'lightColor' : 'darkColor'
-					}
-					onClick={() => setBikeRouteProfile('safety')}
+					color={mode !== 'cycling' ? 'lightColor' : 'darkColor'}
+					onClick={() => setMode('cycling')}
 				/>
 				<CircularIcon
 					src={'/walking.svg'}
 					alt="Icône d'une personne qui marche"
-					color={
-						bikeRouteProfile !== 'hiking-mountain' ? 'lightColor' : 'darkColor'
-					}
-					onClick={() => setBikeRouteProfile('hiking-mountain')}
+					color={mode !== 'walking' ? 'lightColor' : 'darkColor'}
+					onClick={() => setMode('walking')}
 				/>
 			</div>
-			<div>
-				<p>
-					Le trajet de <strong>{km}&nbsp;km</strong> depuis la gare vous prendra{' '}
-					<strong>
-						{heures ? heures + ` heure${heures > 1 ? 's' : ''} et ` : ''}
-						{minutes}&nbsp;min
-					</strong>{' '}
-					pour{' '}
-					<strong
-						style={css(
-							`background: ${deniveléColor(
-								déniveléCumulé
-							)}; padding: 0 .2rem; border-radius: 0.3rem;`
-						)}
-					>
-						{déniveléCumulé}&nbsp;m
-					</strong>{' '}
-					de dénivelé (<small>{dénivelé}&nbsp;m en absolu</small>).
-				</p>
-				{bikeRouteProfile !== 'hiking-mountain' && (
-					<ProfileChooser
-						{...{
-							bikeRouteProfile,
-							setBikeRouteProfile,
-						}}
-					/>
-				)}
-			</div>
+			<ModeContent
+				{...{
+					bikeRouteProfile,
+					setBikeRouteProfile,
+					data: mode === 'cycling' ? cycling : walking,
+				}}
+			/>
+		</div>
+	)
+}
+
+const ModeContent = ({ data, setBikeRouteProfile, bikeRouteProfile }) => {
+	if (!data?.length) return null
+
+	const feature = data[0]
+	if (!feature) return
+
+	const seconds = feature.properties['total-time'],
+		distance = feature.properties['track-length'],
+		km = Math.round(distance / 1000),
+		date = new Date(1000 * seconds).toISOString().substr(11, 8).split(':'),
+		heures = +date[0],
+		minutes = date[1]
+
+	const déniveléCumulé = feature.properties['filtered ascend']
+	const dénivelé = feature.properties['plain-ascend']
+	return (
+		<div>
+			<p>
+				Le trajet de <strong>{km}&nbsp;km</strong> depuis la gare vous prendra{' '}
+				<strong>
+					{heures ? heures + ` heure${heures > 1 ? 's' : ''} et ` : ''}
+					{minutes}&nbsp;min
+				</strong>{' '}
+				pour{' '}
+				<strong
+					style={css(
+						`background: ${deniveléColor(
+							déniveléCumulé
+						)}; padding: 0 .2rem; border-radius: 0.3rem;`
+					)}
+				>
+					{déniveléCumulé}&nbsp;m
+				</strong>{' '}
+				de dénivelé (<small>{dénivelé}&nbsp;m en absolu</small>).
+			</p>
+			{bikeRouteProfile !== 'hiking-mountain' && (
+				<ProfileChooser
+					{...{
+						bikeRouteProfile,
+						setBikeRouteProfile,
+					}}
+				/>
+			)}
 		</div>
 	)
 }

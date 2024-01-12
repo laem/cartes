@@ -1,3 +1,7 @@
+const todayPlusHours = (hours) => {
+	const today = new Date()
+	return today.setHours(today.getHours() + hours)
+}
 export const buildRequestBody = (start, destination) => {
 	const body = {
 		destination: { type: 'Module', target: '/intermodal' },
@@ -6,7 +10,7 @@ export const buildRequestBody = (start, destination) => {
 			start_type: 'IntermodalPretripStart',
 			start: {
 				position: start,
-				interval: { begin: 1704693621, end: 1704700821 },
+				interval: { begin: Date.now(), end: todayPlusHours(6) },
 				min_connection_count: 5,
 				extend_interval_earlier: true,
 				extend_interval_later: true,
