@@ -8,6 +8,7 @@ import { ExplanationWrapper } from './ContentUI'
 import Explanations from './explanations.mdx'
 import { FeatureImage } from './FeatureImage'
 import GareInfo from './GareInfo'
+import Itinerary from './itinerary/Itinerary'
 import { defaultState } from './Map'
 import OsmFeature from './OsmFeature'
 import PlaceSearch from './PlaceSearch'
@@ -142,18 +143,7 @@ export default function Content({
 				</section>
 			)}
 
-			{itinerary?.routes &&
-				(itinerary.routes.cycling || itinerary.routes.walking) && (
-					<BikeRouteRésumé
-						{...{
-							cycling: itinerary.routes.cycling,
-							walking: itinerary.routes.walking,
-							data: itinerary.routes,
-							bikeRouteProfile,
-							setBikeRouteProfile,
-						}}
-					/>
-				)}
+			<Itinerary {...{ itinerary, bikeRouteProfile, setBikeRouteProfile }} />
 
 			{styleChooser ? (
 				<StyleChooser {...{ setStyleChooser, style }} />
