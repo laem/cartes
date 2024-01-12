@@ -62,6 +62,7 @@ export default function BikeRouteRésumé({
 				{...{
 					bikeRouteProfile,
 					setBikeRouteProfile,
+					mode,
 					data: mode === 'cycling' ? cycling : walking,
 				}}
 			/>
@@ -69,7 +70,7 @@ export default function BikeRouteRésumé({
 	)
 }
 
-const ModeContent = ({ data, setBikeRouteProfile, bikeRouteProfile }) => {
+const ModeContent = ({ mode, data, setBikeRouteProfile, bikeRouteProfile }) => {
 	if (!data?.length) return null
 
 	const feature = data[0]
@@ -104,7 +105,7 @@ const ModeContent = ({ data, setBikeRouteProfile, bikeRouteProfile }) => {
 				</strong>{' '}
 				de dénivelé (<small>{dénivelé}&nbsp;m en absolu</small>).
 			</p>
-			{bikeRouteProfile !== 'hiking-mountain' && (
+			{mode === 'cycling' && (
 				<ProfileChooser
 					{...{
 						bikeRouteProfile,
