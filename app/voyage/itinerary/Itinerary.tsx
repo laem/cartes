@@ -5,23 +5,26 @@ export default function Itinerary({
 	bikeRouteProfile,
 	setBikeRouteProfile,
 }) {
-	if (
-		!(
-			itinerary?.routes &&
-			(itinerary.routes.cycling || itinerary.routes.walking)
-		)
-	)
-		return null
+	if (!itinerary.routes) return
+
+	const transit = itinerary.routes.transit
+
+	console.log('transit', transit)
 
 	return (
-		<BikeRouteRésumé
-			{...{
-				cycling: itinerary.routes.cycling,
-				walking: itinerary.routes.walking,
-				data: itinerary.routes,
-				bikeRouteProfile,
-				setBikeRouteProfile,
-			}}
-		/>
+		<section>
+			{(itinerary.routes.cycling || itinerary.routes.walking) && (
+				<BikeRouteRésumé
+					{...{
+						cycling: itinerary.routes.cycling,
+						walking: itinerary.routes.walking,
+						data: itinerary.routes,
+						bikeRouteProfile,
+						setBikeRouteProfile,
+					}}
+				/>
+			)}
+			<div>TeC</div>
+		</section>
 	)
 }
