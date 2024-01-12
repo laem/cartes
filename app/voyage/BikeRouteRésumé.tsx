@@ -89,7 +89,7 @@ const ModeContent = ({ data, setBikeRouteProfile, bikeRouteProfile }) => {
 			<p>
 				Le trajet de <strong>{km}&nbsp;km</strong> depuis la gare vous prendra{' '}
 				<strong>
-					{heures ? heures + ` heure${heures > 1 ? 's' : ''} et ` : ''}
+					{heures ? heures + ` h et ` : ''}
 					{minutes}&nbsp;min
 				</strong>{' '}
 				pour{' '}
