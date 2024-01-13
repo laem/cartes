@@ -49,7 +49,7 @@ export const computeMotisTrip = async (start, destionation) => {
 	const body = buildRequestBody(start, destionation)
 
 	try {
-		const request = await fetch(`http://localhost:3000/`, {
+		const request = await fetch(`https://motis.cartes.app`, {
 			method: 'POST',
 			body: JSON.stringify(body),
 			headers: {
