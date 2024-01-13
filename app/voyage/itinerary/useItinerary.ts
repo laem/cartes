@@ -168,7 +168,7 @@ export default function useItinerary(
 
 			const json = await computeMotisTrip(lonLats[0], lonLats[1])
 
-			if (!json.content) return null
+			if (!json?.content) return null
 			/*
 			return sections.map((el) => ({
 				type: 'Feature',

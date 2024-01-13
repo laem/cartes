@@ -48,15 +48,24 @@ export const buildRequestBody = (start, destination) => {
 export const computeMotisTrip = async (start, destionation) => {
 	const body = buildRequestBody(start, destionation)
 
-	const request = await fetch(`http://localhost:3000/`, {
-		method: 'POST',
-		body: JSON.stringify(body),
-		headers: {
-			'Content-Type': 'application/json',
-			Accept: 'application/json',
-		},
-	})
-	const json = await request.json()
-	console.log('motis', json)
-	return json
+	try {
+		const request = await fetch(`http://localhost:3000/`, {
+			method: 'POST',
+			body: JSON.stringify(body),
+			headers: {
+				'Content-Type': 'application/json',
+				Accept: 'application/json',
+			},
+		})
+		if (!request.ok) {
+			console.error('Error fetching motis server')
+			return null
+		}
+		const json = await request.json()
+		console.log('motis', json)
+		return json
+	} catch (e) {
+		console.error('Error fetching motis server')
+		return null
+	}
 }
