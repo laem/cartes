@@ -23,8 +23,16 @@ const Connections = ({ connections }) => (
 )
 
 const correspondance = { Walk: 'Marche', Transport: 'Transport' }
+
+const startDateFormatter = Intl.DateTimeFormat('fr-FR', {
+	hour: 'numeric',
+	minute: 'numeric',
+})
 const Connection = ({ connection }) => (
 	<li>
+		{startDateFormatter.format(
+			new Date(connection.stops[0].departure.time * 1000)
+		)}
 		<ul
 			css={`
 				display: flex;
