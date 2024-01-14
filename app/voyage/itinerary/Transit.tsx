@@ -8,21 +8,29 @@ export default function Transit({ data }) {
 	if (!connections?.length) return null
 	return (
 		<div>
-			<div>{connections.length} itinéraires trouvés :)</div>
 			<Connections connections={connections} />
 		</div>
 	)
 }
 
-const Connections = ({ connections }) => (
-	<div>
-		<ul>
-			{connections.map((el) => (
-				<Connection connection={el} />
-			))}
-		</ul>
-	</div>
-)
+const Connections = ({ connections }) => {
+	const endTime = Math.max(
+		...connections.map(({ stops }) => stops.slice(-1)[0].arrival.time)
+	)
+	return (
+		<div
+			css={`
+				margin-top: 1rem;
+			`}
+		>
+			<ul>
+				{connections.map((el) => (
+					<Connection connection={el} endTime={endTime} />
+				))}
+			</ul>
+		</div>
+	)
+}
 
 const correspondance = { Walk: 'Marche', Transport: 'Transport' }
 
@@ -30,16 +38,74 @@ const startDateFormatter = Intl.DateTimeFormat('fr-FR', {
 	hour: 'numeric',
 	minute: 'numeric',
 })
-const Connection = ({ connection }) => (
-	<li>
-		{startDateFormatter.format(
-			new Date(connection.stops[0].departure.time * 1000)
-		)}
+const dateFromMotis = (timestamp) => new Date(timestamp * 1000)
+const formatMotis = (timestamp) =>
+	startDateFormatter.format(dateFromMotis(timestamp))
+const Frise = ({ range: [rangeFrom, rangeTo], connection: [from, to] }) => {
+	const length = rangeTo - rangeFrom
+
+	const barWidth = ((to - from) / length) * 100,
+		left = ((from - rangeFrom) / length) * 100
+	return (
+		<div
+			css={`
+				height: 1.1rem;
+				width: calc(100% - 4rem);
+				margin: 0 2rem;
+				margin-top: 0.4rem;
+				position: relative;
+				display: flex;
+				align-items: center;
+				background: white;
+			`}
+		>
+			<div
+				css={`
+					position: absolute;
+					left: ${left}%;
+					width: ${barWidth}%;
+					height: 0.6rem;
+					background: var(--darkColor);
+					top: 50%;
+					transform: translateY(-50%);
+				`}
+			>
+				<small
+					css={`
+						position: absolute;
+						right: calc(100% + 0.4rem);
+						top: 50%;
+						transform: translateY(-50%);
+					`}
+				>
+					{formatMotis(from)}
+				</small>
+				<small
+					css={`
+						position: absolute;
+						left: calc(100% + 0.4rem);
+						top: 50%;
+						transform: translateY(-50%);
+					`}
+				>
+					{formatMotis(to)}
+				</small>
+			</div>
+		</div>
+	)
+}
+const Connection = ({ connection, endTime }) => (
+	<li
+		css={`
+			margin-bottom: 1.4rem;
+		`}
+	>
 		<ul
 			css={`
 				display: flex;
 				justify-content: space-evenly;
 				list-style-type: none;
+				align-items: center;
 			`}
 		>
 			{connection.transports.map((transport) => (
@@ -53,11 +119,18 @@ const Connection = ({ connection }) => (
 				</li>
 			))}
 		</ul>
+		<Frise
+			range={[Math.round(Date.now() / 1000), endTime]}
+			connection={[
+				connection.stops[0].departure.time,
+				connection.stops.slice(-1)[0].arrival.time,
+			]}
+		/>
 	</li>
 )
 
 const Transport = ({ transport, trip }) => {
-	const [colors, setColors] = useState(null)
+	const [attributes, setAttributes] = useState({})
 
 	const tripId = trip?.id.id.split('_')[1] // `bretagne_` prefix added by Motis it seems, coming from its config.ini file that names schedules with ids
 	useEffect(() => {
@@ -68,31 +141,53 @@ const Transport = ({ transport, trip }) => {
 					`https://gtfs-server.osc-fr1.scalingo.io/routes/trip/${tripId}`
 				)
 				const json = await request.json()
-				const { route_color, route_text_color } = json.routes[0]
-				setColors({ route_color, route_text_color })
+				const safeAttributes = json.routes[0] || {}
+				setAttributes(safeAttributes)
 			} catch (e) {
 				console.error('Unable to fetch route color from GTFS server')
 			}
 		}
 		doFetch()
-	}, [tripId, setColors])
+	}, [tripId, setAttributes])
 
-	const background = colors ? `#${colors.route_color}` : 'var(--darkColor)'
+	const background = attributes.route_color
+		? `#${attributes.route_color}`
+		: 'var(--darkColor)'
 	return (
 		<span>
 			{transport.move.name ? (
-				<CircularIcon
-					givenSize={'2rem'}
-					padding=".4rem"
-					src={'/icons/bus.svg'}
-					alt="Icône d'un bus"
-					background={background}
-				/>
+				<span
+					css={`
+						display: flex;
+						align-items: center;
+					`}
+				>
+					<CircularIcon
+						givenSize={'1.8rem'}
+						padding=".4rem"
+						src={transportIcon(attributes.route_type)}
+						alt="Icône d'un bus"
+						background={background}
+					/>
+					<small
+						css={`
+							background: ${background};
+							color: ${attributes.route_text_color
+								? '#' + attributes.route_text_color
+								: 'white'};
+							padding: 0 0.4rem;
+							line-height: 1.2rem;
+							border-radius: 0.4rem;
+						`}
+					>
+						{transport.move.name}
+					</small>
+				</span>
 			) : transport.move_type === 'Walk' ? (
 				<CircularIcon
-					givenSize={'1.6rem'}
+					givenSize={'1.25rem'}
 					src={'/walking.svg'}
-					padding=".1rem"
+					padding=".05rem"
 					alt="Icône d'une personne qui marche"
 					background={background}
 				/>
@@ -101,4 +196,11 @@ const Transport = ({ transport, trip }) => {
 			)}
 		</span>
 	)
+}
+
+//TODO complete with spec possibilities https://gtfs.org/fr/schedule/reference/#routestxt
+const transportIcon = (routeType) => {
+	if (!routeType) return '/icons/bus.svg'
+	const found = { 0: '/icons/bus.svg', 1: '/icons/subway.svg' }[routeType]
+	return found || '/icons/bus.svg'
 }
