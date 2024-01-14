@@ -161,6 +161,9 @@ const Transport = ({ transport, trip }) => {
 	const background = attributes.route_color
 		? `#${attributes.route_color}`
 		: 'var(--darkColor)'
+
+	const transportType = trip && trip.id.id.split('_')[0],
+		frenchTrainType = transportType && { tgv: 'TGV', ter: 'TER' }[transportType]
 	return (
 		<span>
 			{transport.move.name ? (
@@ -188,7 +191,7 @@ const Transport = ({ transport, trip }) => {
 							border-radius: 0.4rem;
 						`}
 					>
-						{transport.move.name}
+						{frenchTrainType || transport.move.name}
 					</small>
 				</span>
 			) : transport.move_type === 'Walk' ? (
