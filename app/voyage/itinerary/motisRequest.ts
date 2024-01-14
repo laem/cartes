@@ -16,7 +16,10 @@ export const buildRequestBody = (start, destination) => {
 			start_type: 'IntermodalPretripStart',
 			start: {
 				position: start,
-				interval: { begin: nowStamp(), end: todayPlusHours(6) },
+				interval: {
+					begin: nowStamp(),
+					end: todayPlusHours(2), // TODO This parameter should probably be modulated depending on the transit offer in the simulation setup. Or, query for the whole day at once, and filter them in the UI
+				},
 				min_connection_count: 5,
 				extend_interval_earlier: true,
 				extend_interval_later: true,
