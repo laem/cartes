@@ -50,13 +50,17 @@ export default function BikeRouteRésumé({
 				<CircularIcon
 					src={'/bike.svg'}
 					alt="Icône d'un vélo"
-					color={mode !== 'cycling' ? 'lightColor' : 'darkColor'}
+					background={
+						mode !== 'cycling' ? 'var(--lightColor)' : 'var(--darkColor)'
+					}
 					onClick={() => setMode('cycling')}
 				/>
 				<CircularIcon
 					src={'/walking.svg'}
 					alt="Icône d'une personne qui marche"
-					color={mode !== 'walking' ? 'lightColor' : 'darkColor'}
+					background={
+						mode === 'cycling' ? 'var(--lightColor)' : 'var(--darkColor)'
+					}
 					onClick={() => setMode('walking')}
 				/>
 			</div>

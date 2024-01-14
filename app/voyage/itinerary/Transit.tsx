@@ -1,3 +1,4 @@
+import CircularIcon from '@/components/CircularIcon'
 import { useEffect, useState } from 'react'
 
 export default function Transit({ data }) {
@@ -76,13 +77,28 @@ const Transport = ({ transport, trip }) => {
 		doFetch()
 	}, [tripId, setColors])
 
+	const background = colors ? `#${colors.route_color}` : 'var(--darkColor)'
 	return (
-		<span
-			css={`
-				background: ${colors ? `#${colors.route_color}` : 'var(--darkColor)'};
-			`}
-		>
-			{transport.move.name || correspondance[transport.move_type]}
+		<span>
+			{transport.move.name ? (
+				<CircularIcon
+					givenSize={'2rem'}
+					padding=".4rem"
+					src={'/icons/bus.svg'}
+					alt="Icône d'un bus"
+					background={background}
+				/>
+			) : transport.move_type === 'Walk' ? (
+				<CircularIcon
+					givenSize={'1.6rem'}
+					src={'/walking.svg'}
+					padding=".1rem"
+					alt="Icône d'une personne qui marche"
+					background={background}
+				/>
+			) : (
+				correspondance[transport.move_type]
+			)}
 		</span>
 	)
 }
