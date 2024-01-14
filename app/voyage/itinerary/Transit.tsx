@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react'
 
 export default function Transit({ data }) {
+	if (data === 'loading') return <div>Transports en commun en cours</div>
 	const connections = data?.connections
 	console.log('motis', data)
 	if (!connections?.length) return null

@@ -22,6 +22,8 @@ export default function useItinerary(
 	searchParams
 ) {
 	const [routes, setRoutes] = useState(null)
+	const updateRoute = (key, value) =>
+		setRoutes((routes) => ({ ...routes, [key]: value }))
 	const setSearchParams = useSetSearchParams(),
 		setPoints = useCallback(
 			(newPoints) =>
@@ -203,19 +205,18 @@ export default function useItinerary(
 		const itineraryDistance = distance(points[0], points.slice(-1)[0])
 
 		const fetchRoutes = async () => {
-			const cycling = await fetchBrouterRoute(
-				points,
-				itineraryDistance,
-				bikeRouteProfile
+			updateRoute('cycling', 'loading')
+			fetchBrouterRoute(points, itineraryDistance, bikeRouteProfile).then(
+				(cycling) => setRoutes((routes) => ({ ...routes, cycling }))
 			)
-			const walking = await fetchBrouterRoute(
-				points,
-				itineraryDistance,
-				'hiking-mountain'
+			updateRoute('walking', 'loading')
+			fetchBrouterRoute(points, itineraryDistance, 'hiking-mountain').then(
+				(walking) => setRoutes((routes) => ({ ...routes, walking }))
 			)
-			const transit = await fetchTrainRoute(points, itineraryDistance)
-
-			setRoutes({ cycling, walking, transit })
+			updateRoute('transit', 'loading')
+			fetchTrainRoute(points, itineraryDistance).then((transit) =>
+				setRoutes((routes) => ({ ...routes, transit }))
+			)
 		}
 		fetchRoutes()
 	}, [points, setRoutes, bikeRouteProfile])

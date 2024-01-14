@@ -11,6 +11,8 @@ export default function BikeRouteRésumé({
 }) {
 	const [mode, setMode] = useState('cycling') // TODO set automatically a guessed mode from distance and possibly then user preferences
 
+	if (walking === 'loading' || walking === 'loading')
+		return <div>La roue tourne est en train de tourner</div>
 	return (
 		<div
 			css={`
@@ -88,7 +90,8 @@ const ModeContent = ({ mode, data, setBikeRouteProfile, bikeRouteProfile }) => {
 	return (
 		<div>
 			<p>
-				Le trajet de <strong>{km}&nbsp;km</strong> vous prendra{' '}
+				À {mode === 'walking' ? 'pieds' : 'vélo'}, le trajet de{' '}
+				<strong>{km}&nbsp;km</strong> vous prendra{' '}
 				<strong>
 					{heures ? heures + ` h et ` : ''}
 					{minutes}&nbsp;min
