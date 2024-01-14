@@ -7,7 +7,15 @@ export default function Transit({ data }) {
 	console.log('motis', data)
 	if (!connections?.length) return null
 	return (
-		<div>
+		<div
+			css={`
+				margin-top: 1rem;
+				ul {
+					list-style-type: none;
+				}
+			`}
+		>
+			<p>Il existe aussi des transports en commun pour ce trajet. </p>
 			<Connections connections={connections} />
 		</div>
 	)
