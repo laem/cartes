@@ -30,7 +30,7 @@ const nextConfig = {
 		ignoreBuildErrors: true,
 	},
 	async rewrites() {
-		return process.env.VOYAGE
+		return process.env.VOYAGE === 'oui'
 			? {
 					beforeFiles: [
 						// These rewrites are checked after headers/redirects
