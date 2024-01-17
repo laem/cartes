@@ -113,7 +113,7 @@ trajet voiture . prix carburant:
 trajet voiture . prix électricité:
   question: Quel est le prix de l'électricité ?
   par défaut: 0.2276
-  unité: € / kWh
+  unité: €/kWh
   suggestions:
     bornes publiques: 0.5
     tarif bleu EDF: 0.2276
