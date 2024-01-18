@@ -20,10 +20,14 @@ export const categoryIconUrl = (category) => {
 	return url
 }
 
-const fuse = new Fuse(categories, {
-	keys: ['name', 'title', 'query', 'dictionary'],
-	includeScore: true,
-})
+export function initializeFuse(categories) {
+	return new Fuse(categories, {
+		keys: ['name', 'title', 'query', 'dictionary'],
+		includeScore: true,
+	})
+}
+
+const fuse = initializeFuse(categories)
 
 export default function QuickFeatureSearch({
 	searchParams, // dunno why params is not getting updated here, but updates hash though, we need searchParams
@@ -34,9 +38,10 @@ export default function QuickFeatureSearch({
 	const [showMore, setShowMore] = useState(false)
 	const hasLieu = searchParams.lieu
 	const setSearchParams = useSetSearchParams()
+	const doFilter = !hasLieu && searchInput?.length > 2
 	const filteredCategories = useMemo(
 		() =>
-			!hasLieu && searchInput?.length > 2
+			doFilter
 				? fuse
 						.search(searchInput)
 						.filter((el) => el.score < 0.5)
@@ -155,6 +160,8 @@ export default function QuickFeatureSearch({
 				<MoreCategories
 					getNewSearchParamsLink={getNewSearchParamsLink}
 					categorySet={categorySet}
+					doFilter={doFilter}
+					searchInput={searchInput}
 				/>
 			)}
 		</div>

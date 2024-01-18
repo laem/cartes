@@ -1,10 +1,22 @@
 import Link from 'next/link'
 import categories from './moreCategories.yaml'
+import { initializeFuse } from './QuickFeatureSearch'
+
+const fuse = initializeFuse(categories)
+
 export default function MoreCategories({
 	getNewSearchParamsLink,
 	categorySet,
+	doFilter,
+	searchInput,
 }) {
-	const groups = categories.reduce((memo, next) => {
+	const filteredCategories = doFilter
+		? fuse
+				.search(searchInput)
+				.filter((el) => el.score < 0.5)
+				.map((el) => console.log('SSS', el) || categories[el.refIndex])
+		: categories
+	const groups = filteredCategories.reduce((memo, next) => {
 		return {
 			...memo,
 			[next.category]: [...(memo[next.category] || []), next],
