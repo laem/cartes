@@ -17,8 +17,15 @@ export default function MoreCategories({
 				ul {
 					list-style-type: none;
 				}
+				ol > li > div {
+					overflow-x: scroll;
+					white-space: nowrap;
+					scrollbar-width: none;
+					width: 100%;
+				}
 				ul {
 					display: flex;
+					align-items: center;
 					li {
 						margin: 0 0.2rem;
 						padding: 0rem 0.4rem;
@@ -46,25 +53,27 @@ export default function MoreCategories({
 				{Object.entries(groups).map(([group, categories]) => (
 					<li key={group}>
 						<h2>{group}</h2>
-						<ul>
-							{categories.map((category) => (
-								<li
-									key={category.name}
-									css={
-										categorySet?.name === category.name &&
-										`
+						<div>
+							<ul>
+								{categories.map((category) => (
+									<li
+										key={category.name}
+										css={
+											categorySet?.name === category.name &&
+											`
 				background: var(--lighterColor) !important;
   border-color: var(--darkColor) !important;
 
 						`
-									}
-								>
-									<Link href={getNewSearchParamsLink(category)}>
-										{category.name}
-									</Link>
-								</li>
-							))}
-						</ul>
+										}
+									>
+										<Link href={getNewSearchParamsLink(category)}>
+											{category.name}
+										</Link>
+									</li>
+								))}
+							</ul>
+						</div>
 					</li>
 				))}
 			</ol>
