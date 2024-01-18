@@ -12,7 +12,7 @@ export const quickSearchButtonStyle = (clicked, background, filter) => `
 		border: 2px solid var(--lighterColor);
 				text-align: center;
 	}
-	& a {
+	& > * {
 		width: ${width};
 		height: ${width};
 		padding: 0;
@@ -20,7 +20,7 @@ export const quickSearchButtonStyle = (clicked, background, filter) => `
 		align-items: center;
 		justify-content: center;
 	}
-	& a img {
+	& > * > img {
 		padding: 0;
 		margin: 0;
 		width: 1.2rem;

@@ -1,16 +1,13 @@
 import useSetSearchParams from '@/components/useSetSearchParams'
 import { omit } from '@/components/utils/utils'
 import { getCategory } from '@/components/voyage/categories'
-import { backIn } from 'framer-motion'
 import Fuse from 'fuse.js'
 import Link from 'next/link'
+import Image from 'next/image'
 import { useMemo, useState } from 'react'
 import categories from './categories.yaml'
 import MoreCategories from './MoreCategories'
-import {
-	quickSearchButtonStyle,
-	QuickSearchButtonStyle,
-} from './QuickFeatureSearchUI'
+import { quickSearchButtonStyle } from './QuickFeatureSearchUI'
 
 export const categoryIconUrl = (category) => {
 	if (!category.icon)
@@ -139,20 +136,19 @@ export default function QuickFeatureSearch({
 						)}
 					`}
 				>
-					<Link
-						href="/"
+					<button
 						onClick={() => {
 							setSnap(1)
 							setShowMore(!showMore)
 						}}
 					>
-						<img
+						<Image
 							src={'/icons/more.svg'}
-							width="100"
-							height="100"
+							width="10"
+							height="10"
 							alt="Voir plus de catégories de recherche"
 						/>
-					</Link>
+					</button>
 				</div>
 			</div>
 			{showMore && (
