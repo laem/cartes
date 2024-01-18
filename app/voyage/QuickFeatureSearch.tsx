@@ -168,40 +168,6 @@ img {filter: invert(23%) sepia(100%) saturate(1940%) hue-rotate(206deg) brightne
 						</li>
 					)
 				})}
-				<li
-					key="onlyOpen"
-					css={`
-						background: ${!searchParams.o
-							? 'var(--lighterColor)'
-							: 'var(--darkColor)'} !important;
-						width: auto !important;
-						padding: 0 0.4rem !important;
-						text-align: center;
-						color: var(--darkerColor);
-						height: 1.4rem !important;
-						line-height: 1.2rem;
-						a {
-							color: inherit;
-							text-decoration: none;
-							font-size: 90%;
-							width: 3rem !important;
-							height: auto !important;
-						}
-					`}
-				>
-					<Link
-						href={setSearchParams(
-							{
-								...omit(['o'], searchParams),
-								...(searchParams.o ? {} : { o: 'oui' }),
-							},
-							true,
-							true
-						)}
-					>
-						Ouvert
-					</Link>
-				</li>
 			</ul>
 		</div>
 	)
