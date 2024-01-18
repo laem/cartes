@@ -1,3 +1,52 @@
+- name: végé
+  category: Manger et boire
+  title: Repas et cafés végétarien ou végan
+  dictionary:
+    - resto
+    - emporter
+    - manger
+    - diner
+    - déjeuner
+    - végétarien
+    - végé
+    - vegan
+    - végétalien
+  query:
+    - '["diet:vegetarian"~"yes|only"]'
+    - '["diet:vegan"~"yes|only"]'
+  icon: veg
+- name: pâtisserie
+  category: Manger et boire
+  dictionary:
+    - viennoiserie
+    - croissant
+    - patisserie
+  query: '[shop=pastry]'
+  icon: https://cdn.jsdelivr.net/gh/mapbox/maki/icons/bakery.svg
+- name: Crêperie
+  category: Manger et boire
+  dictionary:
+    - crêpes
+    - breton
+  query:
+    '[amenity=restaurant][cuisine~crepe]'
+    #icon: hermine ne marche pas :/
+  icon: https://cdn.jsdelivr.net/gh/osmandapp/OsmAnd-resources/icons/svg/food/restaurant.svg
+- name: Libanais
+  category: Manger et boire
+  dictionary:
+    - bain
+    - nage
+  query: '[amenity=restaurant][cuisine~lebanese]'
+  icon: https://cdn.jsdelivr.net/gh/osmandapp/OsmAnd-resources/icons/svg/food/restaurant.svg
+- name: Fast food
+  category: Manger et boire
+  dictionary:
+    - burger
+    - macdo
+  query: '[amenity=fast_food]'
+  icon: https://cdn.jsdelivr.net/gh/osmandapp/OsmAnd-resources/icons/svg/food/fastfood.svg
+
 - name: piscine
   category: Sports
   dictionary:
@@ -54,55 +103,6 @@
     - animaux
   query: '[amenity=veterinary]'
   icon: veterinary
-
-- name: végé
-  category: Manger et boire
-  title: Repas et cafés végétarien ou végan
-  dictionary:
-    - resto
-    - emporter
-    - manger
-    - diner
-    - déjeuner
-    - végétarien
-    - végé
-    - vegan
-    - végétalien
-  query:
-    - '["diet:vegetarian"~"yes|only"]'
-    - '["diet:vegan"~"yes|only"]'
-  icon: veg
-- name: pâtisserie
-  category: Manger et boire
-  dictionary:
-    - viennoiserie
-    - croissant
-    - patisserie
-  query: '[shop=pastry]'
-  icon: https://cdn.jsdelivr.net/gh/mapbox/maki/icons/bakery.svg
-- name: Crêperie
-  category: Manger et boire
-  dictionary:
-    - crêpes
-    - breton
-  query:
-    '[amenity=restaurant][cuisine~crepe]'
-    #icon: hermine ne marche pas :/
-  icon: https://cdn.jsdelivr.net/gh/osmandapp/OsmAnd-resources/icons/svg/food/restaurant.svg
-- name: Libanais
-  category: Manger et boire
-  dictionary:
-    - bain
-    - nage
-  query: '[amenity=restaurant][cuisine~lebanese]'
-  icon: https://cdn.jsdelivr.net/gh/osmandapp/OsmAnd-resources/icons/svg/food/restaurant.svg
-- name: Fast food
-  category: Manger et boire
-  dictionary:
-    - burger
-    - macdo
-  query: '[amenity=fast_food]'
-  icon: https://cdn.jsdelivr.net/gh/osmandapp/OsmAnd-resources/icons/svg/food/fastfood.svg
 
 - name: Vêtements
   category: Divers
