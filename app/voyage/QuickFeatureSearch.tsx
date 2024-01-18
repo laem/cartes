@@ -1,9 +1,11 @@
 import useSetSearchParams from '@/components/useSetSearchParams'
 import { omit } from '@/components/utils/utils'
+import { backIn } from 'framer-motion'
 import Fuse from 'fuse.js'
 import Link from 'next/link'
 import { useMemo, useState } from 'react'
 import categories from './categories.yaml'
+import MoreCategories from './MoreCategories'
 import {
 	quickSearchButtonStyle,
 	QuickSearchButtonStyle,
@@ -29,6 +31,7 @@ export default function QuickFeatureSearch({
 	category: categorySet,
 	searchParams, // dunno why params is not getting updated here, but updates hash though, we need searchParams
 	searchInput,
+	setSnap,
 }) {
 	const [showMore, setShowMore] = useState(false)
 	const hasLieu = searchParams.lieu
@@ -46,85 +49,115 @@ export default function QuickFeatureSearch({
 		[searchInput, hasLieu]
 	)
 	return (
-		<div>
+		<div
+			css={`
+				margin-top: 0.8rem;
+			`}
+		>
 			<div
 				css={`
-					margin-top: 0.8rem;
-					overflow: hidden;
-					overflow-x: scroll;
-					white-space: nowrap;
-					height: 3.5rem;
-					scrollbar-width: none;
-					&::-webkit-scrollbar {
-						width: 0px;
-						background: transparent; /* Disable scrollbar Chrome/Safari/Webkit */
+					display: flex;
+					align-items: center;
+					> div {
 					}
-					width: calc(100% - 3rem);
 				`}
 			>
-				<ul
+				<div
 					css={`
-						padding: 0;
-						list-style-type: none;
-						display: flex;
-						align-items: center;
+						overflow: hidden;
+						overflow-x: scroll;
+						white-space: nowrap;
+						scrollbar-width: none;
+						&::-webkit-scrollbar {
+							width: 0px;
+							background: transparent; /* Disable scrollbar Chrome/Safari/Webkit */
+						}
+						width: calc(100% - 3rem);
 					`}
 				>
-					<li
-						key="photos"
+					<ul
 						css={`
-							${quickSearchButtonStyle(searchParams.photos === 'oui')}
+							padding: 0;
+							list-style-type: none;
+							display: flex;
+							align-items: center;
 						`}
 					>
-						<Link
-							href={setSearchParams(
-								{
-									...omit(['photos'], searchParams),
-									...(searchParams.photos ? {} : { photos: 'oui' }),
-								},
-								true,
-								true
-							)}
+						<li
+							key="photos"
+							css={`
+								${quickSearchButtonStyle(searchParams.photos === 'oui')}
+							`}
 						>
-							<img src={'/icons/photo.svg'} />
-						</Link>
-					</li>
-					{filteredCategories.map((category) => {
-						const newSearchParams = {
-							...omit(['cat'], searchParams),
-							...(!categorySet || categorySet.name !== category.name
-								? { cat: category.name }
-								: {}),
-						}
-
-						return (
-							<li
-								key={category.name}
-								css={`
-									${quickSearchButtonStyle(categorySet?.name === category.name)}
-								`}
-								title={category.title || category.name}
+							<Link
+								href={setSearchParams(
+									{
+										...omit(['photos'], searchParams),
+										...(searchParams.photos ? {} : { photos: 'oui' }),
+									},
+									true,
+									true
+								)}
 							>
-								<Link
-									href={setSearchParams(newSearchParams, true, true)}
-									replace={true}
-									prefetch={false}
+								<img src={'/icons/photo.svg'} />
+							</Link>
+						</li>
+						{filteredCategories.map((category) => {
+							const newSearchParams = {
+								...omit(['cat'], searchParams),
+								...(!categorySet || categorySet.name !== category.name
+									? { cat: category.name }
+									: {}),
+							}
+
+							return (
+								<li
+									key={category.name}
+									css={`
+										${quickSearchButtonStyle(
+											categorySet?.name === category.name
+										)}
+									`}
+									title={category.title || category.name}
 								>
-									<img src={categoryIconUrl(category)} />
-								</Link>
-							</li>
-						)
-					})}
-				</ul>
+									<Link
+										href={setSearchParams(newSearchParams, true, true)}
+										replace={true}
+										prefetch={false}
+									>
+										<img src={categoryIconUrl(category)} />
+									</Link>
+								</li>
+							)
+						})}
+					</ul>
+				</div>
+				<div
+					css={`
+						${quickSearchButtonStyle(
+							showMore,
+							'var(--darkerColor)',
+							'invert(1)'
+						)}
+					`}
+				>
+					<Link
+						href="/"
+						onClick={() => {
+							setSnap(1)
+							setShowMore(!showMore)
+						}}
+					>
+						<img
+							src={'/icons/more.svg'}
+							width="100"
+							height="100"
+							alt="Voir plus de catégories de recherche"
+						/>
+					</Link>
+				</div>
 			</div>
-			<div
-				css={`
-					background: var(--color);
-					color: white;
-				`}
-			>
-				+
-			</div>
+			{showMore && <MoreCategories />}
 		</div>
 	)
 }

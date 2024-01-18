@@ -135,9 +135,12 @@ export default function Content({
 					*/}
 					{zoom > minimumQuickSearchZoom && (
 						<QuickFeatureSearch
-							category={category}
-							searchParams={searchParams}
-							searchInput={state.vers.inputValue}
+							{...{
+								category,
+								searchParams,
+								searchInput: state.vers.inputValue,
+								setSnap,
+							}}
 						/>
 					)}
 				</section>
