@@ -99,3 +99,17 @@
     - chaussures
   query: '[shop=shoes]'
   icon: shoes
+- name: Centre commercial
+  category: Divers
+  dictionary:
+    - courses
+    - shopping
+  query: '[shop=mall]'
+  icon: shop
+
+- name: Jeux pour enfants
+  category: Divers
+  dictionary:
+    - terrain de jeu
+  query: '[leisure=playground]'
+  icon: playground

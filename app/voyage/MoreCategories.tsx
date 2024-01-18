@@ -26,6 +26,7 @@ export default function MoreCategories({
 						border-radius: 0.2rem;
 						background: white;
 						border: 2px solid var(--lighterColor);
+						white-space: nowrap;
 
 						a {
 							text-decoration: none;
