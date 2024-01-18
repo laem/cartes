@@ -51,6 +51,7 @@ export default function MoreCategories({
 						a {
 							text-decoration: none;
 							color: inherit;
+							text-transform: lowercase;
 						}
 					}
 				}

@@ -46,9 +46,6 @@
   query: '[public_transport=platform]'
   icon: bus
   open by default: true
-- name: Pharmacie
-  query: '[amenity=pharmacy]'
-  icon: https://cdn.jsdelivr.net/gh/mapbox/maki/icons/pharmacy.svg
 - name: billets
   dictionary:
     - banque

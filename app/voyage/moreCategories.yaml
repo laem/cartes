@@ -37,6 +37,10 @@
     - généraliste
   query: '[amenity=doctors]'
   icon: https://cdn.jsdelivr.net/gh/osmandapp/OsmAnd-resources/icons/svg/health/doctors3.svg
+- name: Pharmacie
+  category: Santé
+  query: '[amenity=pharmacy]'
+  icon: https://cdn.jsdelivr.net/gh/mapbox/maki/icons/pharmacy.svg
 - name: dentiste
   category: Santé
   dictionary:
