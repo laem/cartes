@@ -83,7 +83,7 @@
   dictionary:
     - bain
     - nage
-  query: '[amenity=restaurant]'
+  query: '[amenity=restaurant][cuisine~lebanese]'
   icon: https://cdn.jsdelivr.net/gh/osmandapp/OsmAnd-resources/icons/svg/food/restaurant.svg
 - name: Fast food
   category: Manger et boire
