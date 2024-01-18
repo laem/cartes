@@ -72,6 +72,16 @@
     - hand
   query: '[leisure=sports_centre]'
   icon: https://cdn.jsdelivr.net/gh/osmandapp/OsmAnd-resources/icons/svg/sport/gymnasium.svg
+
+- name: plage
+  category: Sports
+  query: '[natural=beach]'
+  icon: https://cdn.jsdelivr.net/gh/mapbox/maki/icons/beach.svg
+
+- name: Surf
+  category: Sports
+  query: '[sport=surfing]'
+  icon: surf
 - name: hôpital
   category: Santé
   dictionary:
