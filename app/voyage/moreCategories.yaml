@@ -23,6 +23,13 @@
     - hand
   query: '[leisure=sports_centre]'
   icon: https://cdn.jsdelivr.net/gh/osmandapp/OsmAnd-resources/icons/svg/sport/gymnasium.svg
+- name: hôpital
+  category: Santé
+  dictionary:
+    - urgences
+    - clinique
+  query: '[amenity=hospital]'
+  icon: https://cdn.jsdelivr.net/gh/mapbox/maki/icons/hospital.svg
 - name: médecin
   category: Santé
   dictionary:
