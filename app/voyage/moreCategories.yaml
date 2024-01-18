@@ -23,12 +23,6 @@
     - hand
   query: '[leisure=sports_centre]'
   icon: https://cdn.jsdelivr.net/gh/osmandapp/OsmAnd-resources/icons/svg/sport/gymnasium.svg
-- name: vétérinaire
-  category: Santé
-  dictionary:
-    - animaux
-  query: '[amenity=veterinary]'
-  icon: veterinary
 - name: médecin
   category: Santé
   dictionary:
@@ -36,9 +30,22 @@
     - généraliste
   query: '[amenity=doctors]'
   icon: https://cdn.jsdelivr.net/gh/osmandapp/OsmAnd-resources/icons/svg/health/doctors3.svg
+- name: dentiste
+  category: Santé
+  dictionary:
+    - dents
+    - médecin
+  query: '[amenity=dentist]'
+  icon: tooth
+- name: vétérinaire
+  category: Santé
+  dictionary:
+    - animaux
+  query: '[amenity=veterinary]'
+  icon: veterinary
 
 - name: végé
-  catégorie: Manger et boire
+  category: Manger et boire
   title: Repas et cafés végétarien ou végan
   dictionary:
     - resto
@@ -55,6 +62,7 @@
     - '["diet:vegan"~"yes|only"]'
   icon: veg
 - name: pâtisserie
+  category: Manger et boire
   dictionary:
     - viennoiserie
     - croissant
