@@ -25,6 +25,7 @@ export default function MoreCategories({
 	return (
 		<div
 			css={`
+				margin-bottom: 0.6rem;
 				ol,
 				ul {
 					list-style-type: none;
