@@ -37,8 +37,32 @@
   query: '[amenity=doctors]'
   icon: https://cdn.jsdelivr.net/gh/osmandapp/OsmAnd-resources/icons/svg/health/doctors3.svg
 
+- name: végé
+  catégorie: Manger et boire
+  title: Repas et cafés végétarien ou végan
+  dictionary:
+    - resto
+    - emporter
+    - manger
+    - diner
+    - déjeuner
+    - végétarien
+    - végé
+    - vegan
+    - végétalien
+  query:
+    - '["diet:vegetarian"~"yes|only"]'
+    - '["diet:vegan"~"yes|only"]'
+  icon: veg
+- name: pâtisserie
+  dictionary:
+    - viennoiserie
+    - croissant
+    - patisserie
+  query: '[shop=pastry]'
+  icon: https://cdn.jsdelivr.net/gh/mapbox/maki/icons/bakery.svg
 - name: Crêperie
-  category: Restaurants
+  category: Manger et boire
   dictionary:
     - crêpes
     - breton
@@ -47,16 +71,31 @@
     #icon: hermine ne marche pas :/
   icon: https://cdn.jsdelivr.net/gh/osmandapp/OsmAnd-resources/icons/svg/food/restaurant.svg
 - name: Libanais
-  category: Restaurants
+  category: Manger et boire
   dictionary:
     - bain
     - nage
   query: '[amenity=restaurant]'
   icon: https://cdn.jsdelivr.net/gh/osmandapp/OsmAnd-resources/icons/svg/food/restaurant.svg
 - name: Fast food
-  category: Restaurants
+  category: Manger et boire
   dictionary:
     - burger
     - macdo
   query: '[amenity=fast_food]'
   icon: https://cdn.jsdelivr.net/gh/osmandapp/OsmAnd-resources/icons/svg/food/fastfood.svg
+
+- name: Vêtements
+  category: Divers
+  dictionary:
+    - shopping
+    - fringues
+  query: '[shop=clothes]'
+  icon: clothes
+- name: Chaussures
+  category: Divers
+  dictionary:
+    - shopping
+    - chaussures
+  query: '[shop=shoes]'
+  icon: shoes

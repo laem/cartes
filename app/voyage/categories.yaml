@@ -16,22 +16,6 @@
     - déjeuner
   query: '[amenity=restaurant]'
   icon: https://cdn.jsdelivr.net/gh/mapbox/maki/icons/restaurant.svg
-- name: végé
-  title: Repas et cafés végétarien ou végan
-  dictionary:
-    - resto
-    - emporter
-    - manger
-    - diner
-    - déjeuner
-    - végétarien
-    - végé
-    - vegan
-    - végétalien
-  query:
-    - '["diet:vegetarian"~"yes|only"]'
-    - '["diet:vegan"~"yes|only"]'
-  icon: veg
 - name: cafe
   title: Café, bar et pub
   dictionary:
