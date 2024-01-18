@@ -1,5 +1,9 @@
+import Link from 'next/link'
 import categories from './moreCategories.yaml'
-export default function MoreCategories() {
+export default function MoreCategories({
+	getNewSearchParamsLink,
+	categorySet,
+}) {
 	const groups = categories.reduce((memo, next) => {
 		return {
 			...memo,
@@ -7,14 +11,57 @@ export default function MoreCategories() {
 		}
 	}, {})
 	return (
-		<div>
+		<div
+			css={`
+				ol,
+				ul {
+					list-style-type: none;
+				}
+				ul {
+					display: flex;
+					li {
+						margin: 0 0.2rem;
+						padding: 0rem 0.4rem;
+						line-height: 1.5rem;
+						border-radius: 0.2rem;
+						background: white;
+						border: 2px solid var(--lighterColor);
+
+						a {
+							text-decoration: none;
+							color: inherit;
+						}
+					}
+				}
+				h2 {
+					font-size: 100%;
+					margin: 0.6rem 0 0.1rem 0;
+					line-height: initial;
+					color: var(--lighterTextColor);
+				}
+			`}
+		>
 			<ol>
 				{Object.entries(groups).map(([group, categories]) => (
 					<li key={group}>
 						<h2>{group}</h2>
 						<ul>
 							{categories.map((category) => (
-								<li key={category}>{category.name}</li>
+								<li
+									key={category.name}
+									css={
+										categorySet?.name === category.name &&
+										`
+				background: var(--lighterColor) !important;
+  border-color: var(--darkColor) !important;
+
+						`
+									}
+								>
+									<Link href={getNewSearchParamsLink(category)}>
+										{category.name}
+									</Link>
+								</li>
 							))}
 						</ul>
 					</li>

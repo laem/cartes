@@ -3,14 +3,15 @@
   dictionary:
     - bain
     - nage
-  query: '[leisure=swimming_pool]'
+      # basin only  query: '[leisure=swimming_pool][access=yes]'
+  query: '[leisure=sports_centre][sport=swimming]'
   icon: https://cdn.jsdelivr.net/gh/osmandapp/OsmAnd-resources/icons/svg/sport/swimming_indoor.svg
-- name: stade de sport
+- name: stade
   category: Sports
   dictionary:
     - foot
     - athlétisme
-  query: '[leisure=stadium]'
+  query: '[leisure=pitch]'
   icon: https://cdn.jsdelivr.net/gh/osmandapp/OsmAnd-resources/icons/svg/sport/stadium.svg
 - name: gymnase
   category: Sports
@@ -27,7 +28,7 @@
   dictionary:
     - animaux
   query: '[amenity=veterinary]'
-  icon: https://cdn.jsdelivr.net/gh/osmandapp/OsmAnd-resources/icons/svg/sport/veterinary.svg
+  icon: veterinary
 - name: médecin
   category: Santé
   dictionary:
@@ -36,40 +37,26 @@
   query: '[amenity=doctors]'
   icon: https://cdn.jsdelivr.net/gh/osmandapp/OsmAnd-resources/icons/svg/health/doctors3.svg
 
+- name: Crêperie
+  category: Restaurants
+  dictionary:
+    - crêpes
+    - breton
+  query:
+    '[amenity=restaurant][cuisine~crepe]'
+    #icon: hermine ne marche pas :/
+  icon: https://cdn.jsdelivr.net/gh/osmandapp/OsmAnd-resources/icons/svg/food/restaurant.svg
 - name: Libanais
-  category: Sports
+  category: Restaurants
   dictionary:
     - bain
     - nage
-  query: '[leisure=swimming_pool]'
-  icon: https://cdn.jsdelivr.net/gh/osmandapp/OsmAnd-resources/icons/svg/sport/swimming_indoor.svg
-- name: stade de sport
-  category: Sports
+  query: '[amenity=restaurant]'
+  icon: https://cdn.jsdelivr.net/gh/osmandapp/OsmAnd-resources/icons/svg/food/restaurant.svg
+- name: Fast food
+  category: Restaurants
   dictionary:
-    - foot
-    - athlétisme
-  query: '[leisure=stadium]'
-  icon: https://cdn.jsdelivr.net/gh/osmandapp/OsmAnd-resources/icons/svg/sport/stadium.svg
-- name: gymnase
-  category: Sports
-  dictionary:
-    - badminton
-    - tennis
-    - salle de sport
-    - basket
-    - hand
-  query: '[leisure=sports_centre]'
-  icon: https://cdn.jsdelivr.net/gh/osmandapp/OsmAnd-resources/icons/svg/sport/gymnasium.svg
-- name: vétérinaire
-  category: Santé
-  dictionary:
-    - animaux
-  query: '[amenity=veterinary]'
-  icon: https://cdn.jsdelivr.net/gh/osmandapp/OsmAnd-resources/icons/svg/sport/veterinary.svg
-- name: médecin
-  category: Santé
-  dictionary:
-    - docteur
-    - généraliste
-  query: '[amenity=doctors]'
-  icon: https://cdn.jsdelivr.net/gh/osmandapp/OsmAnd-resources/icons/svg/health/doctors3.svg
+    - burger
+    - macdo
+  query: '[amenity=fast_food]'
+  icon: https://cdn.jsdelivr.net/gh/osmandapp/OsmAnd-resources/icons/svg/food/fastfood.svg

@@ -1,5 +1,6 @@
 import useSetSearchParams from '@/components/useSetSearchParams'
 import { omit } from '@/components/utils/utils'
+import { getCategory } from '@/components/voyage/categories'
 import { backIn } from 'framer-motion'
 import Fuse from 'fuse.js'
 import Link from 'next/link'
@@ -28,15 +29,14 @@ const fuse = new Fuse(categories, {
 })
 
 export default function QuickFeatureSearch({
-	category: categorySet,
 	searchParams, // dunno why params is not getting updated here, but updates hash though, we need searchParams
 	searchInput,
 	setSnap,
 }) {
+	const categorySet = getCategory(searchParams)
 	const [showMore, setShowMore] = useState(false)
 	const hasLieu = searchParams.lieu
 	const setSearchParams = useSetSearchParams()
-	console.log('hasLieu', hasLieu)
 	const filteredCategories = useMemo(
 		() =>
 			!hasLieu && searchInput?.length > 2
@@ -47,6 +47,11 @@ export default function QuickFeatureSearch({
 				: categories,
 
 		[searchInput, hasLieu]
+	)
+	const getNewSearchParamsLink = buildGetNewSearchParams(
+		searchParams,
+		setSearchParams,
+		categorySet
 	)
 	return (
 		<div
@@ -103,13 +108,6 @@ export default function QuickFeatureSearch({
 							</Link>
 						</li>
 						{filteredCategories.map((category) => {
-							const newSearchParams = {
-								...omit(['cat'], searchParams),
-								...(!categorySet || categorySet.name !== category.name
-									? { cat: category.name }
-									: {}),
-							}
-
 							return (
 								<li
 									key={category.name}
@@ -121,7 +119,7 @@ export default function QuickFeatureSearch({
 									title={category.title || category.name}
 								>
 									<Link
-										href={setSearchParams(newSearchParams, true, true)}
+										href={getNewSearchParamsLink(category)}
 										replace={true}
 										prefetch={false}
 									>
@@ -137,7 +135,7 @@ export default function QuickFeatureSearch({
 						${quickSearchButtonStyle(
 							showMore,
 							'var(--darkerColor)',
-							'invert(1)'
+							!showMore ? 'invert(1)' : ''
 						)}
 					`}
 				>
@@ -157,7 +155,23 @@ export default function QuickFeatureSearch({
 					</Link>
 				</div>
 			</div>
-			{showMore && <MoreCategories />}
+			{showMore && (
+				<MoreCategories
+					getNewSearchParamsLink={getNewSearchParamsLink}
+					categorySet={categorySet}
+				/>
+			)}
 		</div>
 	)
 }
+
+const buildGetNewSearchParams =
+	(searchParams, setSearchParams, categorySet) => (category) => {
+		const newSearchParams = {
+			...omit(['cat'], searchParams),
+			...(!categorySet || categorySet.name !== category.name
+				? { cat: category.name }
+				: {}),
+		}
+		return setSearchParams(newSearchParams, true, true)
+	}

@@ -1,5 +1,4 @@
 import useSetSearchParams from '@/components/useSetSearchParams'
-import { getCategory } from '@/components/voyage/categories'
 import { getThumb } from '@/components/wikidata'
 import { useEffect } from 'react'
 import { useLocalStorage } from 'usehooks-ts'
@@ -60,7 +59,6 @@ export default function Content({
 	}, [introductionRead, setSnap])
 
 	const choice = state.vers?.choice
-	const category = getCategory(searchParams)
 
 	const wikidataPictureUrl = wikidata?.pictureUrl
 	const wikiFeatureImage =
@@ -136,7 +134,6 @@ export default function Content({
 					{zoom > minimumQuickSearchZoom && (
 						<QuickFeatureSearch
 							{...{
-								category,
 								searchParams,
 								searchInput: state.vers.inputValue,
 								setSnap,
