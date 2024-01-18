@@ -28,17 +28,19 @@ export default function QuickFeatureSearch({
 	searchParams, // dunno why params is not getting updated here, but updates hash though, we need searchParams
 	searchInput,
 }) {
+	const hasLieu = searchParams.lieu
 	const setSearchParams = useSetSearchParams()
+	console.log('hasLieu', hasLieu)
 	const filteredCategories = useMemo(
 		() =>
-			searchInput?.length > 2
+			!hasLieu && searchInput?.length > 2
 				? fuse
 						.search(searchInput)
 						.filter((el) => el.score < 0.5)
 						.map((el) => console.log('SSS', el) || categories[el.refIndex])
 				: categories,
 
-		[searchInput]
+		[searchInput, hasLieu]
 	)
 	return (
 		<div
