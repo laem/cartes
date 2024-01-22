@@ -47,6 +47,8 @@
   query: '[amenity=fast_food]'
   icon: https://cdn.jsdelivr.net/gh/osmandapp/OsmAnd-resources/icons/svg/food/fastfood.svg
 
+################################
+
 - name: piscine
   category: Sports
   dictionary:
@@ -82,6 +84,9 @@
   category: Sports
   query: '[sport=surfing]'
   icon: surf
+
+################################
+
 - name: hôpital
   category: Santé
   dictionary:
@@ -113,6 +118,33 @@
     - animaux
   query: '[amenity=veterinary]'
   icon: veterinary
+
+################################
+
+- name: Journaux
+  category: Culture
+  dictionary:
+    - kiosque
+    - magazines
+    - presse
+  query: '[shop~"newsagent|kiosk"]'
+  icon: newspaper
+- name: Bibliothèque
+  category: Culture
+  dictionary:
+    - livres
+    - médiathèque
+  query: '[amenity=library]'
+  icon: book
+- name: Librairie
+  category: Culture
+  dictionary:
+    - livres
+    - bouquins
+  query: '[shop="books"]'
+  icon: book
+
+################################
 
 - name: Vêtements
   category: Divers
