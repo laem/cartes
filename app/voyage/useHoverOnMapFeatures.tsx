@@ -1,15 +1,16 @@
 import { useEffect } from 'react'
+import { layersWithOsmId } from './clickableLayers'
 
 export default function useHoverOnMapFeatures(map) {
 	useEffect(() => {
 		if (!map) return
 
-		setUpHover(map, ['Other POI'])
+		setUpHover(map)
 	}, [map])
 }
 
 // Taken from https://github.com/zbycz/osmapp/blob/master/src/components/Map/behaviour/useInitMap.tsx
-const setUpHover = (map, layersWithOsmId) => {
+const setUpHover = (map) => {
 	let lastHover = null
 
 	const setHoverOn = (feature) =>

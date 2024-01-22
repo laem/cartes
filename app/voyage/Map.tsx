@@ -24,6 +24,7 @@ import { decodePlace, encodePlace } from './utils'
 import { useZoneImages } from './ZoneImages'
 import useDrawQuickSearchFeatures from './effects/useDrawQuickSearchFeatures'
 import useImageSearch from './effects/useImageSearch'
+import { clickableClasses } from './clickableLayers'
 
 export const defaultState = {
 	depuis: { inputValue: null, choice: false },
@@ -250,20 +251,10 @@ out skel qt;
 				map && map.setPaintProperty('searchPolygon', 'fill-opacity', 0)
 			}, 1000)
 
-			const allowedLayerProps = ({
-				properties: { class: c },
-				sourceLayer: layer,
-			}) =>
-				layer === 'poi' ||
-				(layer === 'place' &&
-					[
-						'city',
-						'town',
-						'suburb',
-						'neighbourhood',
-						'quarter',
-						'hamlet',
-					].includes(c)) // Why ? because e.g. "state" does not map to an existing OSM id in France at least, see https://github.com/openmaptiles/openmaptiles/issues/792#issuecomment-1850139297
+			const allowedLayerProps = ({ properties: { class: c }, sourceLayer }) =>
+				sourceLayer === 'poi' ||
+				(['place', 'waterway'].includes(sourceLayer) &&
+					clickableClasses.includes(c)) // Why ? because e.g. "state" does not map to an existing OSM id in France at least, see https://github.com/openmaptiles/openmaptiles/issues/792#issuecomment-1850139297
 			// TODO when "state" place, make an overpass request with name, since OMT's doc explicitely says that name comes from OSM
 
 			// Thanks OSMAPP https://github.com/openmaptiles/openmaptiles/issues/792
@@ -282,12 +273,13 @@ out skel qt;
 			const feature = features[0]
 			const openMapTilesId = '' + feature.id
 
-			const id =
-					feature.sourceLayer === 'place'
-						? openMapTilesId
-						: openMapTilesId.slice(null, -1),
+			const id = ['place', 'waterway'].includes(feature.sourceLayer)
+					? openMapTilesId
+					: openMapTilesId.slice(null, -1),
 				featureType =
-					feature.sourceLayer === 'place'
+					feature.sourceLayer === 'waterway'
+						? 'way' // bold assumption here
+						: feature.sourceLayer === 'place'
 						? 'node'
 						: { '1': 'way', '0': 'node', '4': 'relation' }[ //this is broken. We're getting the "4" suffix for relations AND ways. See https://github.com/openmaptiles/openmaptiles/issues/1587. See below for hack
 								openMapTilesId.slice(-1)
