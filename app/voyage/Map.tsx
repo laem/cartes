@@ -67,7 +67,9 @@ export default function Map({ searchParams }) {
 	useImageSearch(map, zoom, bbox, searchParams.photos === 'oui')
 
 	if (process.env.NEXT_PUBLIC_MAPTILER == null) {
-		throw new Error('You have to configure env NEXT_PUBLIC_MAPTILER, see README')
+		throw new Error(
+			'You have to configure env NEXT_PUBLIC_MAPTILER, see README'
+		)
 	}
 
 	const choice = state.vers?.choice
@@ -254,7 +256,7 @@ out skel qt;
 			}) =>
 				layer === 'poi' ||
 				(layer === 'place' &&
-					['city', 'suburb', 'neighbourhood', 'quarter'].includes(c)) // Why ? because "state" does not map to an existing OSM id in France at least, see https://github.com/openmaptiles/openmaptiles/issues/792#issuecomment-1850139297
+					['city', 'suburb', 'neighbourhood', 'quarter', 'hamlet'].includes(c)) // Why ? because e.g. "state" does not map to an existing OSM id in France at least, see https://github.com/openmaptiles/openmaptiles/issues/792#issuecomment-1850139297
 			// TODO when "state" place, make an overpass request with name, since OMT's doc explicitely says that name comes from OSM
 
 			// Thanks OSMAPP https://github.com/openmaptiles/openmaptiles/issues/792
@@ -264,6 +266,7 @@ out skel qt;
 				)
 
 			console.log('rawFeatures', rawFeatures)
+			console.log('filteredFeatures', features)
 			if (!features.length || !features[0].id) {
 				console.log('no features', features)
 				return
