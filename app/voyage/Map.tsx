@@ -256,7 +256,14 @@ out skel qt;
 			}) =>
 				layer === 'poi' ||
 				(layer === 'place' &&
-					['city', 'suburb', 'neighbourhood', 'quarter', 'hamlet'].includes(c)) // Why ? because e.g. "state" does not map to an existing OSM id in France at least, see https://github.com/openmaptiles/openmaptiles/issues/792#issuecomment-1850139297
+					[
+						'city',
+						'town',
+						'suburb',
+						'neighbourhood',
+						'quarter',
+						'hamlet',
+					].includes(c)) // Why ? because e.g. "state" does not map to an existing OSM id in France at least, see https://github.com/openmaptiles/openmaptiles/issues/792#issuecomment-1850139297
 			// TODO when "state" place, make an overpass request with name, since OMT's doc explicitely says that name comes from OSM
 
 			// Thanks OSMAPP https://github.com/openmaptiles/openmaptiles/issues/792
