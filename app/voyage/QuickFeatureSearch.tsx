@@ -46,7 +46,13 @@ export default function QuickFeatureSearch({
 				? fuse
 						.search(searchInput)
 						.filter((el) => el.score < threshold)
-						.map((el) => console.log('FFF', el) || categories[el.refIndex])
+						.map(
+							(el) =>
+								console.log('FFF', el) || {
+									...categories[el.refIndex],
+									score: el.score,
+								}
+						)
 				: categories,
 
 		[searchInput, hasLieu]
@@ -92,7 +98,6 @@ export default function QuickFeatureSearch({
 							align-items: center;
 						`}
 					>
-						{' '}
 						{!doFilter && (
 							<li
 								key="photos"
@@ -121,7 +126,9 @@ export default function QuickFeatureSearch({
 									css={`
 										${quickSearchButtonStyle(
 											categorySet?.name === category.name
-										)}
+										)};
+										${category.score < 0.01 &&
+										`border-color: gold !important; background: #f8f3e0 !important;`}
 									`}
 									title={category.title || category.name}
 								>

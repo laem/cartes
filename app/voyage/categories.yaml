@@ -52,6 +52,7 @@
     - DAB
     - cash
     - argent
+    - distributeur
   title: Distributeur de billets
   query: '[amenity=atm]'
   open by default: true
