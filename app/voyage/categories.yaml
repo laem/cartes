@@ -73,7 +73,3 @@
     - film
   query: '[amenity=cinema]'
   icon: https://cdn.jsdelivr.net/gh/mapbox/maki/icons/cinema.svg
-- title: Espace de cotravail (coworking)
-  name: cotravail
-  query: '[amenity=coworking_space]'
-  icon: coworking

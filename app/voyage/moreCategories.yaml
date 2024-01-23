@@ -174,3 +174,8 @@
     - terrain de jeu
   query: '[leisure=playground]'
   icon: playground
+- title: Espace de cotravail (coworking)
+  category: Divers
+  name: cotravail
+  query: '[amenity=coworking_space]'
+  icon: coworking
