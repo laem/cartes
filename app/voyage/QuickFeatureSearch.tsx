@@ -77,6 +77,7 @@ export default function QuickFeatureSearch({
 						scrollbar-width: none;
 						&::-webkit-scrollbar {
 							width: 0px;
+							height: 0px;
 							background: transparent; /* Disable scrollbar Chrome/Safari/Webkit */
 						}
 						width: calc(100% - 3rem);
