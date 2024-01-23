@@ -147,27 +147,34 @@
 ################################
 
 - name: Vêtements
-  category: Divers
+  category: Commerces
   dictionary:
     - shopping
     - fringues
   query: '[shop=clothes]'
   icon: clothes
 - name: Chaussures
-  category: Divers
+  category: Commerces
   dictionary:
     - shopping
     - chaussures
   query: '[shop=shoes]'
   icon: shoes
 - name: Centre commercial
-  category: Divers
+  category: Commerces
   dictionary:
     - courses
     - shopping
   query: '[shop=mall]'
   icon: shop
 
+- name: Police
+  category: Divers
+  dictionary:
+    - gendarmerie
+    - comissariat
+  query: '[amenity=police]'
+  icon: police
 - name: Jeux pour enfants
   category: Divers
   dictionary:
