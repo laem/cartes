@@ -182,6 +182,14 @@
     - comissariat
   query: '[amenity=police]'
   icon: police
+- name: Agence postale
+  category: Divers
+  dictionary:
+    - poste
+    - colis
+    - la poste
+  query: '[amenity=post_office]'
+  icon: post
 - title: Espace de cotravail (coworking)
   category: Divers
   name: cotravail
