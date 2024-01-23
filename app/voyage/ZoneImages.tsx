@@ -118,6 +118,9 @@ export function ZoneImages({ zoneImages: images, panoramaxImages }) {
 										width: 2.2rem;
 										height: auto;
 									}
+									> img:last-child {
+										border: 2px solid #83328a;
+									}
 								`}
 								title="Cette zone est visualisable depuis la rue grâce au projet Panoramax"
 							>
