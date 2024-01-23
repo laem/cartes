@@ -50,7 +50,7 @@
 ################################
 
 - name: piscine
-  category: Sports
+  category: Loisirs & sports
   dictionary:
     - bain
     - nage
@@ -58,14 +58,14 @@
   query: '[leisure=sports_centre][sport=swimming]'
   icon: https://cdn.jsdelivr.net/gh/osmandapp/OsmAnd-resources/icons/svg/sport/swimming_indoor.svg
 - name: stade
-  category: Sports
+  category: Loisirs & sports
   dictionary:
     - foot
     - athlétisme
   query: '[leisure=pitch]'
   icon: https://cdn.jsdelivr.net/gh/osmandapp/OsmAnd-resources/icons/svg/sport/stadium.svg
 - name: gymnase
-  category: Sports
+  category: Loisirs & sports
   dictionary:
     - badminton
     - tennis
@@ -76,12 +76,19 @@
   icon: https://cdn.jsdelivr.net/gh/osmandapp/OsmAnd-resources/icons/svg/sport/gymnasium.svg
 
 - name: plage
-  category: Sports
+  category: Loisirs & sports
   query: '[natural=beach]'
   icon: https://cdn.jsdelivr.net/gh/mapbox/maki/icons/beach.svg
 
+- name: Jeux pour enfants
+  category: Loisirs & sports
+  dictionary:
+    - terrain de jeu
+  query: '[leisure=playground]'
+  icon: playground
+
 - name: Surf
-  category: Sports
+  category: Loisirs & sports
   query: '[sport=surfing]'
   icon: surf
 
@@ -175,12 +182,6 @@
     - comissariat
   query: '[amenity=police]'
   icon: police
-- name: Jeux pour enfants
-  category: Divers
-  dictionary:
-    - terrain de jeu
-  query: '[leisure=playground]'
-  icon: playground
 - title: Espace de cotravail (coworking)
   category: Divers
   name: cotravail
