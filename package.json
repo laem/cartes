@@ -84,6 +84,7 @@
 		"@turf/turf": "^6.5.0",
 		"@types/mdx": "^2.0.8",
 		"@vercel/analytics": "^1.1.1",
+		"@vercel/edge": "^1.1.1",
 		"@vercel/og": "^0.5.10",
 		"add": "^2.0.6",
 		"babel-plugin-webpack-alias": "^2.1.2",

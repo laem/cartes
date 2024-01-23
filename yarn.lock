@@ -4006,6 +4006,11 @@
   dependencies:
     server-only "^0.0.1"
 
+"@vercel/edge@^1.1.1":
+  version "1.1.1"
+  resolved "https://registry.yarnpkg.com/@vercel/edge/-/edge-1.1.1.tgz#9b2fc0081dfe95db8b4c3598275721b1ad85e43f"
+  integrity sha512-NtKiIbn9Cq6HWGy+qRudz28mz5nxfOJWls5Pnckjw1yCfSX8rhXdvY/il3Sy3Zd5n/sKCM2h7VSCCpJF/oaDrQ==
+
 "@vercel/og@^0.5.10":
   version "0.5.10"
   resolved "https://registry.yarnpkg.com/@vercel/og/-/og-0.5.10.tgz#722fae05a9f12473ba344095da318c4e2e8d3aca"
