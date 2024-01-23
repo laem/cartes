@@ -136,18 +136,20 @@ export function ZoneImages({ zoneImages: images, panoramaxImages }) {
 							</div>
 						</a>
 					)}
-					{imageUrls.map(({ url, fullUrl }) => (
-						<li key={fullUrl}>
-							<a href={fullUrl} target="_blank">
-								<FeatureImage
-									src={url}
-									alt="Image de terrain issue de Wikimedia Commons"
-									width="150"
-									height="150"
-								/>
-							</a>
-						</li>
-					))}
+					{imageUrls &&
+						imageUrls.length > 0 &&
+						imageUrls.map(({ url, fullUrl }) => (
+							<li key={fullUrl}>
+								<a href={fullUrl} target="_blank">
+									<FeatureImage
+										src={url}
+										alt="Image de terrain issue de Wikimedia Commons"
+										width="150"
+										height="150"
+									/>
+								</a>
+							</li>
+						))}
 				</ul>
 			)}
 		</div>
