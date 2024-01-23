@@ -60,7 +60,7 @@ export default function MoreCategories({
 						<h2>{group}</h2>
 						<div>
 							<ul>
-								{filteredMoreCategories.map((category) => (
+								{categories.map((category) => (
 									<li
 										key={category.name}
 										css={`
