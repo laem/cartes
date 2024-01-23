@@ -59,7 +59,7 @@ export default function Map({ searchParams }) {
 
 	const showOpenOnly = searchParams.o
 
-	const [zoneImages, resetZoneImages] = useZoneImages({
+	const [zoneImages, panoramaxImages, resetZoneImages] = useZoneImages({
 		latLngClicked,
 		setLatLngClicked,
 	})
@@ -534,6 +534,7 @@ out skel qt;
 						setBikeRouteProfile,
 						bikeRouteProfile,
 						zoneImages,
+						panoramaxImages,
 						resetZoneImages,
 						zoom,
 						searchParams,

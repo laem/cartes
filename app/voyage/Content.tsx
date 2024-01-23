@@ -30,6 +30,7 @@ export default function Content({
 	osmFeature,
 	setOsmFeature,
 	zoneImages,
+	panoramaxImages,
 	resetZoneImages,
 	state,
 	setState,
@@ -67,7 +68,8 @@ export default function Content({
 			? getThumb(osmFeature.tags.wikimedia_commons, 500)
 			: wikidataPictureUrl)
 
-	const hasContent = choice || osmFeature || zoneImages || !clickTipRead
+	const hasContent =
+		choice || osmFeature || zoneImages || panoramaxImages || !clickTipRead
 	const hasFeature = choice || osmFeature
 	const showSearch = sideSheet || !hasFeature
 
@@ -204,7 +206,10 @@ export default function Content({
 								`}
 							/>
 						)}
-						<ZoneImages images={zoneImages} />
+						<ZoneImages
+							zoneImages={zoneImages}
+							panoramaxImages={panoramaxImages}
+						/>
 						{clickedGare ? (
 							<div>
 								<ModalCloseButton
