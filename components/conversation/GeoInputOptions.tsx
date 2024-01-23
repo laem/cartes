@@ -1,6 +1,7 @@
 'use client'
 import Highlighter from 'react-highlight-words'
 import icons from '@/app/voyage/icons/icons.json'
+import css from '../css/convertToJs'
 
 // Beware, this file is shared by the Map app, and the carbon footprint / € calculators
 
@@ -129,9 +130,14 @@ const Option = ({
 					alt="Icône représentant au mieux le type de lieu"
 				/>
 				<span>
-					<Highlighter searchWords={[inputValue]} textToHighlight={nom} />
+					<Highlighter
+						searchWords={[inputValue]}
+						textToHighlight={nom}
+						highlightStyle={highlightStyle}
+					/>
 					<span style={{ opacity: 0.6, fontSize: '75%', marginLeft: '.6em' }}>
 						<Highlighter
+							highlightStyle={highlightStyle}
 							searchWords={[inputValue]}
 							textToHighlight={locationText}
 						/>
@@ -141,3 +147,7 @@ const Option = ({
 		</li>
 	)
 }
+
+const highlightStyle = css`
+	background: gold;
+`
