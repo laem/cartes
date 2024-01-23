@@ -28,6 +28,7 @@ export function initializeFuse(categories) {
 }
 
 const fuse = initializeFuse(categories)
+export const threshold = 0.1
 
 export default function QuickFeatureSearch({
 	searchParams, // dunno why params is not getting updated here, but updates hash though, we need searchParams
@@ -44,8 +45,8 @@ export default function QuickFeatureSearch({
 			doFilter
 				? fuse
 						.search(searchInput)
-						.filter((el) => el.score < 0.5)
-						.map((el) => console.log('SSS', el) || categories[el.refIndex])
+						.filter((el) => el.score < threshold)
+						.map((el) => console.log('FFF', el) || categories[el.refIndex])
 				: categories,
 
 		[searchInput, hasLieu]
@@ -91,25 +92,28 @@ export default function QuickFeatureSearch({
 							align-items: center;
 						`}
 					>
-						<li
-							key="photos"
-							css={`
-								${quickSearchButtonStyle(searchParams.photos === 'oui')}
-							`}
-						>
-							<Link
-								href={setSearchParams(
-									{
-										...omit(['photos'], searchParams),
-										...(searchParams.photos ? {} : { photos: 'oui' }),
-									},
-									true,
-									true
-								)}
+						{' '}
+						{!doFilter && (
+							<li
+								key="photos"
+								css={`
+									${quickSearchButtonStyle(searchParams.photos === 'oui')}
+								`}
 							>
-								<img src={'/icons/photo.svg'} />
-							</Link>
-						</li>
+								<Link
+									href={setSearchParams(
+										{
+											...omit(['photos'], searchParams),
+											...(searchParams.photos ? {} : { photos: 'oui' }),
+										},
+										true,
+										true
+									)}
+								>
+									<img src={'/icons/photo.svg'} />
+								</Link>
+							</li>
+						)}
 						{filteredCategories.map((category) => {
 							return (
 								<li

@@ -1,6 +1,6 @@
 import Link from 'next/link'
 import categories from './moreCategories.yaml'
-import { initializeFuse } from './QuickFeatureSearch'
+import { initializeFuse, threshold } from './QuickFeatureSearch'
 
 const fuse = initializeFuse(categories)
 
@@ -13,7 +13,7 @@ export default function MoreCategories({
 	const filteredCategories = doFilter
 		? fuse
 				.search(searchInput)
-				.filter((el) => el.score < 0.5)
+				.filter((el) => el.score < threshold)
 				.map((el) => console.log('SSS', el) || categories[el.refIndex])
 		: categories
 	const groups = filteredCategories.reduce((memo, next) => {
