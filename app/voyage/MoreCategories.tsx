@@ -1,22 +1,13 @@
 import Link from 'next/link'
-import categories from './moreCategories.yaml'
-import { initializeFuse, threshold } from './QuickFeatureSearch'
-
-const fuse = initializeFuse(categories)
+import { exactThreshold } from './QuickFeatureSearch'
+import { goldCladding } from './QuickFeatureSearchUI'
 
 export default function MoreCategories({
 	getNewSearchParamsLink,
 	categorySet,
-	doFilter,
-	searchInput,
+	filteredMoreCategories,
 }) {
-	const filteredCategories = doFilter
-		? fuse
-				.search(searchInput)
-				.filter((el) => el.score < threshold)
-				.map((el) => console.log('SSS', el) || categories[el.refIndex])
-		: categories
-	const groups = filteredCategories.reduce((memo, next) => {
+	const groups = filteredMoreCategories.reduce((memo, next) => {
 		return {
 			...memo,
 			[next.category]: [...(memo[next.category] || []), next],
@@ -69,17 +60,19 @@ export default function MoreCategories({
 						<h2>{group}</h2>
 						<div>
 							<ul>
-								{categories.map((category) => (
+								{filteredMoreCategories.map((category) => (
 									<li
 										key={category.name}
-										css={
-											categorySet?.name === category.name &&
+										css={`
+											${categorySet?.name === category.name &&
 											`
-				background: var(--lighterColor) !important;
-  border-color: var(--darkColor) !important;
+background: var(--lighterColor) !important;
+border-color: var(--darkColor) !important;
+`}
 
-						`
-										}
+											${console.log('catscore', category.score) ||
+											(category.score < exactThreshold && goldCladding)}
+										`}
 									>
 										<Link href={getNewSearchParamsLink(category)}>
 											{category.name}

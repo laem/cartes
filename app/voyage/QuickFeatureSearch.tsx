@@ -2,12 +2,13 @@ import useSetSearchParams from '@/components/useSetSearchParams'
 import { omit } from '@/components/utils/utils'
 import { getCategory } from '@/components/voyage/categories'
 import Fuse from 'fuse.js'
-import Link from 'next/link'
 import Image from 'next/image'
+import Link from 'next/link'
 import { useMemo, useState } from 'react'
 import categories from './categories.yaml'
 import MoreCategories from './MoreCategories'
-import { quickSearchButtonStyle } from './QuickFeatureSearchUI'
+import moreCategories from './moreCategories.yaml'
+import { goldCladding, quickSearchButtonStyle } from './QuickFeatureSearchUI'
 
 export const categoryIconUrl = (category) => {
 	if (!category.icon)
@@ -28,7 +29,9 @@ export function initializeFuse(categories) {
 }
 
 const fuse = initializeFuse(categories)
+const fuseMore = initializeFuse(moreCategories)
 export const threshold = 0.1
+export const exactThreshold = 0.01
 
 export default function QuickFeatureSearch({
 	searchParams, // dunno why params is not getting updated here, but updates hash though, we need searchParams
@@ -46,17 +49,29 @@ export default function QuickFeatureSearch({
 				? fuse
 						.search(searchInput)
 						.filter((el) => el.score < threshold)
-						.map(
-							(el) =>
-								console.log('FFF', el) || {
-									...categories[el.refIndex],
-									score: el.score,
-								}
-						)
+						.map((el) => ({
+							...categories[el.refIndex],
+							score: el.score,
+						}))
 				: categories,
 
 		[searchInput, hasLieu]
 	)
+	const filteredMoreCategories = useMemo(
+		() =>
+			doFilter
+				? fuseMore
+						.search(searchInput)
+						.filter((el) => el.score < threshold)
+						.map((el) => ({
+							...moreCategories[el.refIndex],
+							score: el.score,
+						}))
+				: categories,
+
+		[searchInput, hasLieu]
+	)
+
 	const getNewSearchParamsLink = buildGetNewSearchParams(
 		searchParams,
 		setSearchParams,
@@ -127,8 +142,7 @@ export default function QuickFeatureSearch({
 										${quickSearchButtonStyle(
 											categorySet?.name === category.name
 										)};
-										${category.score < 0.01 &&
-										`border-color: gold !important; background: #f8f3e0 !important;`}
+										${category.score < exactThreshold && goldCladding}
 									`}
 									title={category.title || category.name}
 								>
@@ -168,12 +182,11 @@ export default function QuickFeatureSearch({
 					</button>
 				</div>
 			</div>
-			{showMore && (
+			{(showMore || (doFilter && filteredMoreCategories.length > 0)) && (
 				<MoreCategories
 					getNewSearchParamsLink={getNewSearchParamsLink}
 					categorySet={categorySet}
-					doFilter={doFilter}
-					searchInput={searchInput}
+					filteredMoreCategories={filteredMoreCategories}
 				/>
 			)}
 		</div>
