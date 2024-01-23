@@ -67,7 +67,7 @@ export default function QuickFeatureSearch({
 							...moreCategories[el.refIndex],
 							score: el.score,
 						}))
-				: categories,
+				: moreCategories,
 
 		[searchInput, hasLieu]
 	)
