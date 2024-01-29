@@ -171,7 +171,7 @@ export default function Content({
 								onClick={() => {
 									console.log('will yo')
 									setSearchParams({ lieu: undefined })
-									setTimeout(() => setOsmFeature(null), 100)
+									setTimeout(() => setOsmFeature(null), 300)
 									setLatLngClicked(null)
 									resetZoneImages()
 									console.log('will set default stat')
