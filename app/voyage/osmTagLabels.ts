@@ -39,6 +39,7 @@ export const tagNameCorrespondance = (key) => {
 		books: 'Livres',
 		short_name: 'Diminutif',
 		old_name: 'Ancien nom',
+		indoor_seating: "Sièges à l'intérieur",
 	}[key]
 	return found || key
 }
