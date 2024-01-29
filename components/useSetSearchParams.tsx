@@ -1,3 +1,5 @@
+'use client'
+
 import { usePathname, useRouter, useSearchParams } from 'next/navigation'
 import { useCallback, useEffect, useState } from 'react'
 
@@ -5,11 +7,6 @@ export default function useSetSearchParams() {
 	const router = useRouter()
 	const pathname = usePathname()
 	const searchParams = useSearchParams()
-	const [hash, setHash] = useState(null)
-
-	useEffect(() => {
-		setHash(window.location.hash)
-	}, [searchParams])
 
 	const createQueryString = useCallback(
 		(newSearchParams: object, clear: boolean) => {
@@ -25,7 +22,10 @@ export default function useSetSearchParams() {
 	)
 	return (newSearchParams: object, noPush: boolean, clear: boolean) => {
 		const newUrl =
-			pathname + '?' + createQueryString(newSearchParams, clear) + hash
+			pathname +
+			'?' +
+			createQueryString(newSearchParams, clear) +
+			window.location.hash
 		if (!noPush) router.push(newUrl)
 		else return newUrl
 	}
