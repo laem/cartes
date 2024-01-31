@@ -1,8 +1,9 @@
 import CircularIcon from '@/components/CircularIcon'
 import { useEffect, useState } from 'react'
+import TransitLoader from './TransitLoader'
 
 export default function Transit({ data }) {
-	if (data === 'loading') return <div>Transports en commun en cours</div>
+	if (data === 'loading') return <TransitLoader />
 	const connections = data?.connections
 	console.log('motis', data)
 	if (!connections?.length) return null

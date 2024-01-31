@@ -47,8 +47,6 @@ export default function Map({ searchParams }) {
 	const [itineraryMode, setItineraryMode] = useState(false)
 	const [styleChooser, setStyleChooser] = useState(false)
 
-	console.log('itineraryMode', itineraryMode)
-
 	useItineraryFromUrl(searchParams, setItineraryMode, map)
 
 	const setSearchParams = useSetSearchParams()
@@ -318,14 +316,14 @@ out skel qt;
 			}
 		}
 
-		if (!map || distanceMode) return
+		if (!map || distanceMode || itineraryMode) return
 
 		map.on('click', onClick)
 		return () => {
 			if (!map) return
 			map.off('click', onClick)
 		}
-	}, [map, setState, distanceMode, gares])
+	}, [map, setState, distanceMode, itineraryMode, gares])
 
 	useEffect(() => {
 		if (!map || !featureType || !featureId) return
@@ -405,7 +403,7 @@ out skel qt;
 	}, [map, featureType, featureId, choice, osmFeature])
 
 	useEffect(() => {
-		if (!map || distanceMode) return
+		if (!map || distanceMode || itineraryMode) return
 
 		map.on('click', 'features-points', async (e) => {
 			const feature = e.features[0]
@@ -432,7 +430,7 @@ out skel qt;
 		map.on('mouseleave', 'features-points', () => {
 			map.getCanvas().style.cursor = 'auto'
 		})
-	}, [map, distanceMode, setSearchParams])
+	}, [map, distanceMode, itineraryMode, setSearchParams])
 
 	useHoverOnMapFeatures(map)
 

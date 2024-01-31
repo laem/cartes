@@ -157,7 +157,7 @@ export default function useItinerary(
 		}
 
 		async function fetchTrainRoute(points, itineraryDistance) {
-			const minTransitDistance = 1 // please walk or bike
+			const minTransitDistance = 0.5 // please walk or bike
 			if (itineraryDistance < minTransitDistance) return null
 			if (points.length > 2) return
 			const lonLats = points.map(
