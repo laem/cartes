@@ -20,7 +20,7 @@ export default function ItineraryButton({
 					onClick={() => reset()}
 					css={`
 						position: absolute;
-						bottom: -1.2rem;
+						bottom: -0.6rem;
 						right: -1.7rem;
 					`}
 				>
