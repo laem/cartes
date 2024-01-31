@@ -25,8 +25,6 @@ import useTerrainControl from './useTerrainControl'
 import { decodePlace, encodePlace } from './utils'
 import { useZoneImages } from './ZoneImages'
 
-import useDrawQuickSearchFeatures from './effects/useDrawQuickSearchFeatures'
-import useImageSearch from './effects/useImageSearch'
 import { clickableClasses } from './clickableLayers'
 
 export const defaultState = {
