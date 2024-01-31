@@ -1,9 +1,14 @@
 import useSetSearchParams from '@/components/useSetSearchParams'
 import { omit } from '@/components/utils/utils'
+import { getCategory } from '@/components/voyage/categories'
 import Fuse from 'fuse.js'
+import Image from 'next/image'
 import Link from 'next/link'
-import { useMemo } from 'react'
+import { useMemo, useState } from 'react'
 import categories from './categories.yaml'
+import MoreCategories from './MoreCategories'
+import moreCategories from './moreCategories.yaml'
+import { goldCladding, quickSearchButtonStyle } from './QuickFeatureSearchUI'
 
 export const categoryIconUrl = (category) => {
 	if (!category.icon)
@@ -16,191 +21,185 @@ export const categoryIconUrl = (category) => {
 	return url
 }
 
-const width = '2.2rem'
+export function initializeFuse(categories) {
+	return new Fuse(categories, {
+		keys: ['name', 'title', 'query', 'dictionary'],
+		includeScore: true,
+	})
+}
 
-const fuse = new Fuse(categories, {
-	keys: ['name', 'title', 'query', 'dictionary'],
-	includeScore: true,
-})
+const fuse = initializeFuse(categories)
+const fuseMore = initializeFuse(moreCategories)
+export const threshold = 0.1
+export const exactThreshold = 0.01
 
 export default function QuickFeatureSearch({
-	category: categorySet,
 	searchParams, // dunno why params is not getting updated here, but updates hash though, we need searchParams
 	searchInput,
+	setSnap,
 }) {
+	const categorySet = getCategory(searchParams)
+	const [showMore, setShowMore] = useState(false)
+	const hasLieu = searchParams.lieu
 	const setSearchParams = useSetSearchParams()
+	const doFilter = !hasLieu && searchInput?.length > 2
 	const filteredCategories = useMemo(
 		() =>
-			searchInput?.length > 2
+			doFilter
 				? fuse
 						.search(searchInput)
-						.filter((el) => el.score < 0.5)
-						.map((el) => console.log('SSS', el) || categories[el.refIndex])
+						.filter((el) => el.score < threshold)
+						.map((el) => ({
+							...categories[el.refIndex],
+							score: el.score,
+						}))
 				: categories,
 
-		[searchInput]
+		[searchInput, hasLieu]
+	)
+	const filteredMoreCategories = useMemo(
+		() =>
+			doFilter
+				? fuseMore
+						.search(searchInput)
+						.filter((el) => el.score < threshold)
+						.map((el) => ({
+							...moreCategories[el.refIndex],
+							score: el.score,
+						}))
+				: moreCategories,
+
+		[searchInput, hasLieu]
+	)
+
+	const getNewSearchParamsLink = buildGetNewSearchParams(
+		searchParams,
+		setSearchParams,
+		categorySet
 	)
 	return (
 		<div
 			css={`
 				margin-top: 0.8rem;
-				overflow: hidden;
-				overflow-x: scroll;
-				white-space: nowrap;
-				height: 3.5rem;
-				scrollbar-width: none;
-				&::-webkit-scrollbar {
-					width: 0px;
-					background: transparent; /* Disable scrollbar Chrome/Safari/Webkit */
-				}
 			`}
 		>
-			<ul
+			<div
 				css={`
-					padding: 0;
-					list-style-type: none;
 					display: flex;
 					align-items: center;
-
-					li {
-						border-radius: ${width};
-
-						margin-right: 0.2rem;
-						img {
-							padding: 0.2rem 0.2rem 0.1rem 0.2rem;
-						}
-						border: 2px solid var(--lighterColor);
-					}
-					li a {
-						width: ${width};
-						height: ${width};
-						padding: 0;
-						display: flex;
-						align-items: center;
-						justify-content: center;
-					}
-					li a img {
-						padding: 0;
-						margin: 0;
-						width: 1.2rem;
-						height: 1.2rem;
+					> div {
 					}
 				`}
 			>
-				<li
-					key="photos"
+				<div
 					css={`
-						img {
-							width: 1.6rem;
-							height: auto;
-							vertical-align: middle;
+						overflow: hidden;
+						overflow-x: scroll;
+						white-space: nowrap;
+						scrollbar-width: none;
+						&::-webkit-scrollbar {
+							width: 0px;
+							height: 0px;
+							background: transparent; /* Disable scrollbar Chrome/Safari/Webkit */
 						}
-						background: ${searchParams.photos !== 'oui'
-							? 'white'
-							: 'var(--lighterColor)'};
-
-						${searchParams.photos === 'oui' &&
-						`border-color: var(--darkColor) !important;
-
-						img {
-							filter: invert(23%) sepia(100%) saturate(1940%) hue-rotate(206deg)
-								brightness(89%) contrast(84%);
-						}`}
+						width: calc(100% - 3rem);
 					`}
 				>
-					<Link
-						href={setSearchParams(
-							{
-								...omit(['photos'], searchParams),
-								...(searchParams.photos ? {} : { photos: 'oui' }),
-							},
-							true,
-							true
-						)}
+					<ul
+						css={`
+							padding: 0;
+							list-style-type: none;
+							display: flex;
+							align-items: center;
+						`}
 					>
-						<img src={'/icons/photo.svg'} />
-					</Link>
-				</li>
-				{filteredCategories.map((category) => {
-					const newSearchParams = {
-						...omit(['cat'], searchParams),
-						...(!categorySet || categorySet.name !== category.name
-							? { cat: category.name }
-							: {}),
-					}
-
-					return (
-						<li
-							key={category.name}
-							css={`
-								text-align: center;
-								img {
-									width: 1.6rem;
-									height: auto;
-									vertical-align: middle;
-									filter: invert(16%) sepia(24%) saturate(3004%)
-										hue-rotate(180deg) brightness(89%) contrast(98%);
-								}
-								background: ${!categorySet
-									? 'white'
-									: categorySet.name === category.name
-									? 'var(--lighterColor)'
-									: 'white'};
-
-								${categorySet?.name === category.name &&
-								`border-color: var(--darkColor) !important;
-
-img {filter: invert(23%) sepia(100%) saturate(1940%) hue-rotate(206deg) brightness(89%) contrast(84%);}
-
+						{!doFilter && (
+							<li
+								key="photos"
+								css={`
+									${quickSearchButtonStyle(searchParams.photos === 'oui')}
 								`}
-							`}
-							title={category.title || category.name}
-						>
-							<Link
-								href={setSearchParams(newSearchParams, true, true)}
-								replace={true}
-								prefetch={false}
 							>
-								<img src={categoryIconUrl(category)} />
-							</Link>
-						</li>
-					)
-				})}
-				<li
-					key="onlyOpen"
+								<Link
+									href={setSearchParams(
+										{
+											...omit(['photos'], searchParams),
+											...(searchParams.photos ? {} : { photos: 'oui' }),
+										},
+										true,
+										true
+									)}
+								>
+									<img src={'/icons/photo.svg'} />
+								</Link>
+							</li>
+						)}
+						{filteredCategories.map((category) => {
+							return (
+								<li
+									key={category.name}
+									css={`
+										${quickSearchButtonStyle(
+											categorySet?.name === category.name
+										)};
+										${category.score < exactThreshold && goldCladding}
+									`}
+									title={category.title || category.name}
+								>
+									<Link
+										href={getNewSearchParamsLink(category)}
+										replace={true}
+										prefetch={false}
+									>
+										<img src={categoryIconUrl(category)} />
+									</Link>
+								</li>
+							)
+						})}
+					</ul>
+				</div>
+				<div
 					css={`
-						background: ${!searchParams.o
-							? 'var(--lighterColor)'
-							: 'var(--darkColor)'} !important;
-						width: auto !important;
-						padding: 0 0.4rem !important;
-						text-align: center;
-						color: var(--darkerColor);
-						height: 1.4rem !important;
-						line-height: 1.2rem;
-						a {
-							color: inherit;
-							text-decoration: none;
-							font-size: 90%;
-							width: 3rem !important;
-							height: auto !important;
-						}
+						${quickSearchButtonStyle(
+							showMore,
+							'var(--darkerColor)',
+							!showMore ? 'invert(1)' : ''
+						)}
 					`}
 				>
-					<Link
-						href={setSearchParams(
-							{
-								...omit(['o'], searchParams),
-								...(searchParams.o ? {} : { o: 'oui' }),
-							},
-							true,
-							true
-						)}
+					<button
+						onClick={() => {
+							setSnap(1)
+							setShowMore(!showMore)
+						}}
 					>
-						Ouvert
-					</Link>
-				</li>
-			</ul>
+						<Image
+							src={'/icons/more.svg'}
+							width="10"
+							height="10"
+							alt="Voir plus de catégories de recherche"
+						/>
+					</button>
+				</div>
+			</div>
+			{(showMore || (doFilter && filteredMoreCategories.length > 0)) && (
+				<MoreCategories
+					getNewSearchParamsLink={getNewSearchParamsLink}
+					categorySet={categorySet}
+					filteredMoreCategories={filteredMoreCategories}
+				/>
+			)}
 		</div>
 	)
 }
+
+const buildGetNewSearchParams =
+	(searchParams, setSearchParams, categorySet) => (category) => {
+		const newSearchParams = {
+			...omit(['cat'], searchParams),
+			...(!categorySet || categorySet.name !== category.name
+				? { cat: category.name }
+				: {}),
+		}
+		return setSearchParams(newSearchParams, true, true)
+	}

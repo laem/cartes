@@ -46,10 +46,12 @@ export const MapHeader = styled.div`
 	}
 `
 
+import Image from 'next/image'
+import closeIcon from '@/public/close.svg'
 const size = 1.3
 export const ModalCloseButton = (props) => (
 	<ModalCloseButtonButton {...props}>
-		<span>×</span>
+		<Image src={closeIcon} alt="Fermer" />
 	</ModalCloseButtonButton>
 )
 export const ModalCloseButtonButton = styled.button`
@@ -71,8 +73,9 @@ export const ModalCloseButtonButton = styled.button`
 	display: flex;
 	align-items: center;
 	justify-content: center;
-	span {
-		margin-top: -0.42rem;
+	> img {
+		width: 1;
+		margin: 0;
 	}
 `
 

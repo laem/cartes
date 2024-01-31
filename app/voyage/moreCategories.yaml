@@ -1,0 +1,197 @@
+- name: végé
+  category: Manger et boire
+  title: Repas et cafés végétarien ou végan
+  dictionary:
+    - resto
+    - emporter
+    - manger
+    - diner
+    - déjeuner
+    - végétarien
+    - végé
+    - vegan
+    - végétalien
+  query:
+    - '["diet:vegetarian"~"yes|only"]'
+    - '["diet:vegan"~"yes|only"]'
+  icon: veg
+- name: pâtisserie
+  category: Manger et boire
+  dictionary:
+    - viennoiserie
+    - croissant
+    - patisserie
+  query: '[shop=pastry]'
+  icon: https://cdn.jsdelivr.net/gh/mapbox/maki/icons/bakery.svg
+- name: Crêperie
+  category: Manger et boire
+  dictionary:
+    - crêpes
+    - breton
+  query:
+    '[amenity=restaurant][cuisine~crepe]'
+    #icon: hermine ne marche pas :/
+  icon: https://cdn.jsdelivr.net/gh/osmandapp/OsmAnd-resources/icons/svg/food/restaurant.svg
+- name: Libanais
+  category: Manger et boire
+  dictionary:
+    - bain
+    - nage
+  query: '[amenity=restaurant][cuisine~lebanese]'
+  icon: https://cdn.jsdelivr.net/gh/osmandapp/OsmAnd-resources/icons/svg/food/restaurant.svg
+- name: Fast food
+  category: Manger et boire
+  dictionary:
+    - burger
+    - macdo
+  query: '[amenity=fast_food]'
+  icon: https://cdn.jsdelivr.net/gh/osmandapp/OsmAnd-resources/icons/svg/food/fastfood.svg
+
+################################
+
+- name: piscine
+  category: Loisirs & sports
+  dictionary:
+    - bain
+    - nage
+      # basin only  query: '[leisure=swimming_pool][access=yes]'
+  query: '[leisure=sports_centre][sport=swimming]'
+  icon: https://cdn.jsdelivr.net/gh/osmandapp/OsmAnd-resources/icons/svg/sport/swimming_indoor.svg
+- name: stade
+  category: Loisirs & sports
+  dictionary:
+    - foot
+    - athlétisme
+  query: '[leisure=pitch]'
+  icon: https://cdn.jsdelivr.net/gh/osmandapp/OsmAnd-resources/icons/svg/sport/stadium.svg
+- name: gymnase
+  category: Loisirs & sports
+  dictionary:
+    - badminton
+    - tennis
+    - salle de sport
+    - basket
+    - hand
+  query: '[leisure=sports_centre]'
+  icon: https://cdn.jsdelivr.net/gh/osmandapp/OsmAnd-resources/icons/svg/sport/gymnasium.svg
+
+- name: plage
+  category: Loisirs & sports
+  query: '[natural=beach]'
+  icon: https://cdn.jsdelivr.net/gh/mapbox/maki/icons/beach.svg
+
+- name: Jeux pour enfants
+  category: Loisirs & sports
+  dictionary:
+    - terrain de jeu
+  query: '[leisure=playground]'
+  icon: playground
+
+- name: Surf
+  category: Loisirs & sports
+  query: '[sport=surfing]'
+  icon: surf
+
+################################
+
+- name: hôpital
+  category: Santé
+  dictionary:
+    - urgences
+    - clinique
+  query: '[amenity=hospital]'
+  icon: https://cdn.jsdelivr.net/gh/mapbox/maki/icons/hospital.svg
+- name: médecin
+  category: Santé
+  dictionary:
+    - docteur
+    - généraliste
+  query: '[amenity=doctors]'
+  icon: https://cdn.jsdelivr.net/gh/osmandapp/OsmAnd-resources/icons/svg/health/doctors3.svg
+- name: Pharmacie
+  category: Santé
+  query: '[amenity=pharmacy]'
+  icon: https://cdn.jsdelivr.net/gh/mapbox/maki/icons/pharmacy.svg
+- name: dentiste
+  category: Santé
+  dictionary:
+    - dents
+    - médecin
+  query: '[amenity=dentist]'
+  icon: tooth
+- name: vétérinaire
+  category: Santé
+  dictionary:
+    - animaux
+  query: '[amenity=veterinary]'
+  icon: veterinary
+
+################################
+
+- name: Journaux
+  category: Culture
+  dictionary:
+    - kiosque
+    - magazines
+    - presse
+  query: '[shop~"newsagent|kiosk"]'
+  icon: newspaper
+- name: Bibliothèque
+  category: Culture
+  dictionary:
+    - livres
+    - médiathèque
+  query: '[amenity=library]'
+  icon: book
+- name: Librairie
+  category: Culture
+  dictionary:
+    - livres
+    - bouquins
+  query: '[shop="books"]'
+  icon: book
+
+################################
+
+- name: Vêtements
+  category: Commerces
+  dictionary:
+    - shopping
+    - fringues
+  query: '[shop=clothes]'
+  icon: clothes
+- name: Chaussures
+  category: Commerces
+  dictionary:
+    - shopping
+    - chaussures
+  query: '[shop=shoes]'
+  icon: shoes
+- name: Centre commercial
+  category: Commerces
+  dictionary:
+    - courses
+    - shopping
+  query: '[shop=mall]'
+  icon: shop
+
+- name: Police
+  category: Divers
+  dictionary:
+    - gendarmerie
+    - comissariat
+  query: '[amenity=police]'
+  icon: police
+- name: Agence postale
+  category: Divers
+  dictionary:
+    - poste
+    - colis
+    - la poste
+  query: '[amenity=post_office]'
+  icon: post
+- title: Espace de cotravail (coworking)
+  category: Divers
+  name: cotravail
+  query: '[amenity=coworking_space]'
+  icon: coworking

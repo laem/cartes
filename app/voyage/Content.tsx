@@ -1,5 +1,4 @@
 import useSetSearchParams from '@/components/useSetSearchParams'
-import { getCategory } from '@/components/voyage/categories'
 import { getThumb } from '@/components/wikidata'
 import { useEffect } from 'react'
 import { useLocalStorage } from 'usehooks-ts'
@@ -32,6 +31,7 @@ export default function Content({
 	osmFeature,
 	setOsmFeature,
 	zoneImages,
+	panoramaxImages,
 	resetZoneImages,
 	state,
 	setState,
@@ -60,7 +60,6 @@ export default function Content({
 	}, [introductionRead, setSnap])
 
 	const choice = state.vers?.choice
-	const category = getCategory(searchParams)
 
 	const wikidataPictureUrl = wikidata?.pictureUrl
 	const wikiFeatureImage =
@@ -69,7 +68,8 @@ export default function Content({
 			? getThumb(osmFeature.tags.wikimedia_commons, 500)
 			: wikidataPictureUrl)
 
-	const hasContent = choice || osmFeature || zoneImages || !clickTipRead
+	const hasContent =
+		choice || osmFeature || zoneImages || panoramaxImages || !clickTipRead
 	const hasFeature = choice || osmFeature
 	const showSearch = sideSheet || !hasFeature
 
@@ -135,9 +135,11 @@ export default function Content({
 					*/}
 					{zoom > minimumQuickSearchZoom && (
 						<QuickFeatureSearch
-							category={category}
-							searchParams={searchParams}
-							searchInput={state.vers.inputValue}
+							{...{
+								searchParams,
+								searchInput: state.vers.inputValue,
+								setSnap,
+							}}
 						/>
 					)}
 				</section>
@@ -161,7 +163,7 @@ export default function Content({
 								onClick={() => {
 									console.log('will yo')
 									setSearchParams({ lieu: undefined })
-									setTimeout(() => setOsmFeature(null), 100)
+									setTimeout(() => setOsmFeature(null), 300)
 									setLatLngClicked(null)
 									resetZoneImages()
 									console.log('will set default stat')
@@ -196,7 +198,10 @@ export default function Content({
 								`}
 							/>
 						)}
-						<ZoneImages images={zoneImages} />
+						<ZoneImages
+							zoneImages={zoneImages}
+							panoramaxImages={panoramaxImages}
+						/>
 						{clickedGare ? (
 							<div>
 								<ModalCloseButton

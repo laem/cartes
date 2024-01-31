@@ -1,11 +1,12 @@
-import css from '@/components/css/convertToJs'
-import { getThumb, extractFileName } from '@/components/wikidata'
+import { getThumb } from '@/components/wikidata'
 import { useEffect, useState } from 'react'
 import { createSearchBBox } from './createSearchPolygon'
 import { FeatureImage } from './FeatureImage'
+import Image from 'next/image'
 
 export function useZoneImages({ latLngClicked, setLatLngClicked }) {
 	const [wikimedia, setWikimedia] = useState(null)
+	const [panoramax, setPanoramax] = useState(null)
 
 	useEffect(() => {
 		if (!latLngClicked) return
@@ -25,11 +26,43 @@ export function useZoneImages({ latLngClicked, setLatLngClicked }) {
 			}
 		}
 		makeRequest()
-	}, [latLngClicked])
-	return [wikimedia, () => setWikimedia(null)]
+	}, [latLngClicked, setLatLngClicked])
+
+	useEffect(() => {
+		if (!latLngClicked) return
+		const makeRequest = async () => {
+			const { lat1, lng1, lat2, lng2 } = createSearchBBox(latLngClicked)
+
+			const url = `https://api.panoramax.xyz/api/search?limit=1&bbox=${lng2},${lat1},${lng1},${lat2}`
+			setPanoramax([])
+			const request = await fetch(url)
+
+			const json = await request.json()
+			const images = json.features
+			if (images.length) setPanoramax(images)
+			if (!images.length) {
+				setPanoramax(null)
+				setLatLngClicked(null)
+			}
+		}
+		makeRequest()
+	}, [latLngClicked, setLatLngClicked])
+	return [
+		wikimedia,
+		panoramax,
+		() => {
+			setWikimedia(null)
+			setPanoramax(null)
+		},
+	]
 }
 
-export function ZoneImages({ images }) {
+export function ZoneImages({ zoneImages: images, panoramaxImages }) {
+	console.log('panoramax', panoramaxImages)
+
+	const panoramaxImage = panoramaxImages && panoramaxImages[0],
+		panoramaxThumb = panoramaxImage?.assets?.thumb
+
 	const imageUrls =
 		images &&
 		images.map((json) => {
@@ -53,7 +86,7 @@ export function ZoneImages({ images }) {
 				}
 			`}
 		>
-			{imageUrls?.length > 0 && (
+			{(panoramaxThumb || imageUrls?.length > 0) && (
 				<ul
 					css={`
 						margin: 0 0 0.4rem 0;
@@ -68,13 +101,58 @@ export function ZoneImages({ images }) {
 						}
 					`}
 				>
-					{imageUrls.map(({ url, fullUrl }) => (
-						<li key={fullUrl}>
-							<a href={fullUrl} target="_blank">
-								<FeatureImage src={url} css={``} />
-							</a>
-						</li>
-					))}
+					{panoramaxThumb && (
+						<a
+							href={`https://panoramax.fr/photos#focus=pic&map=${window.location.hash.slice(
+								1
+							)}&pic=${panoramaxImage.id}`}
+							target="_blank"
+						>
+							<div
+								css={`
+									position: relative;
+									> img:first-child {
+										position: absolute;
+										bottom: 0.8rem;
+										left: 0.4rem;
+										width: 2.2rem;
+										height: auto;
+									}
+									> img:last-child {
+										border: 2px solid #83328a;
+									}
+								`}
+								title="Cette zone est visualisable depuis la rue grâce au projet Panoramax"
+							>
+								<Image
+									src={`/panoramax.svg`}
+									width="10"
+									height="10"
+									alt="Logo du projet Panoramax"
+								/>
+								<FeatureImage
+									src={panoramaxThumb.href}
+									alt="Image de terrain issue de Panoramax"
+									width="150"
+									height="150"
+								/>
+							</div>
+						</a>
+					)}
+					{imageUrls &&
+						imageUrls.length > 0 &&
+						imageUrls.map(({ url, fullUrl }) => (
+							<li key={fullUrl}>
+								<a href={fullUrl} target="_blank">
+									<FeatureImage
+										src={url}
+										alt="Image de terrain issue de Wikimedia Commons"
+										width="150"
+										height="150"
+									/>
+								</a>
+							</li>
+						))}
 				</ul>
 			)}
 		</div>

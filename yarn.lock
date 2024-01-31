@@ -4013,6 +4013,11 @@
   dependencies:
     server-only "^0.0.1"
 
+"@vercel/edge@^1.1.1":
+  version "1.1.1"
+  resolved "https://registry.yarnpkg.com/@vercel/edge/-/edge-1.1.1.tgz#9b2fc0081dfe95db8b4c3598275721b1ad85e43f"
+  integrity sha512-NtKiIbn9Cq6HWGy+qRudz28mz5nxfOJWls5Pnckjw1yCfSX8rhXdvY/il3Sy3Zd5n/sKCM2h7VSCCpJF/oaDrQ==
+
 "@vercel/og@^0.5.10":
   version "0.5.10"
   resolved "https://registry.yarnpkg.com/@vercel/og/-/og-0.5.10.tgz#722fae05a9f12473ba344095da318c4e2e8d3aca"
@@ -11040,10 +11045,10 @@ psl@^1.1.33:
   resolved "https://registry.yarnpkg.com/psl/-/psl-1.9.0.tgz#d0df2a137f00794565fcaf3b2c00cd09f8d5a5a7"
   integrity sha512-E/ZsdU4HLs/68gYzgGTkMicWTLPdAftJLfJFlLUAAKZGkStNU72sZjT66SnMDVOfOWY/YAoiD7Jxa9iHvngcag==
 
-publicodes@^1.0.0-beta.77:
-  version "1.0.0-beta.77"
-  resolved "https://registry.yarnpkg.com/publicodes/-/publicodes-1.0.0-beta.77.tgz#45e3c4d2a46bfadcc932e1405ea037e659c28134"
-  integrity sha512-F8U3WGUWMo3/rxhWYS1gWIiG20g1Yy/+PpXdHM99d6ZHKWnnyh/4txVEuyVE75glgDs+mTjwZPnmoKWsTMXluA==
+publicodes@1.0.0-rc.7:
+  version "1.0.0-rc.7"
+  resolved "https://registry.yarnpkg.com/publicodes/-/publicodes-1.0.0-rc.7.tgz#2ed0ce1d091674646477d5fd4d6411daaa283a0c"
+  integrity sha512-Y5WZ1t9BCRJxGFDsOflq0sFyryp7gFe05A9txHfvsW+DMjejnAgvC9O4enaU4+/4fI7+N62jxCWNsmStwqy/ZQ==
 
 pump@^2.0.0:
   version "2.0.1"

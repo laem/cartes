@@ -1,4 +1,6 @@
-import categories from '@/app/voyage/categories.yaml'
+import baseCategories from '@/app/voyage/categories.yaml'
+import moreCategories from '@/app/voyage/moreCategories.yaml'
+const categories = [...baseCategories, ...moreCategories]
 
 export const getCategory = (searchParams) => {
 	const categoryName = searchParams.cat,

@@ -51,7 +51,7 @@ voiture . coût instantané au km:
       - si: motorisation = 'électrique'
         alors: trajet voiture . prix électricité * motorisation . électrique . consommation / 100
       - sinon: trajet voiture . prix carburant * consommation thermique / 100
-  unité: € / km
+  unité: €/km
   exemples:
     - titre: Clio diesel
       situation:
@@ -94,7 +94,7 @@ voiture . consommation thermique:
   question: Quelle est la consommation de la voiture ?
   abrégé: conso
   par défaut: par défaut
-  unité: l / 100 km
+  unité: l/100 km
   note: |
     Les suggestions sont tirées de ce graphique ADEME https://carlabelling.ademe.fr/chiffrescles/r/evolutionConsoMoyenne.
 
@@ -129,7 +129,7 @@ voiture . consommation thermique . par défaut:
 voiture . motorisation . électrique . consommation:
   question: Quelle est la consommation de la voiture ?
   par défaut: 15
-  unité: kWh / 100 km
+  unité: kWh/100 km
   description: |
     Pour calculer la consommation, nous nous basons sur les données d'un test de la Renault Zoé, l'une des voitures électriques les plus présentes en France.
   note: |
