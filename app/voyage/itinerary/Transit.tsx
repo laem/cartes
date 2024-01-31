@@ -179,6 +179,7 @@ const Transport = ({ transport, trip }) => {
 						src={transportIcon(attributes.route_type)}
 						alt="Icône d'un bus"
 						background={background}
+						black={attributes.route_text_color?.toLowerCase() !== 'ffffff'}
 					/>
 					<small
 						css={`

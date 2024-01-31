@@ -47,6 +47,8 @@ export default function Map({ searchParams }) {
 	const [itineraryMode, setItineraryMode] = useState(false)
 	const [styleChooser, setStyleChooser] = useState(false)
 
+	console.log('itineraryMode', itineraryMode)
+
 	useItineraryFromUrl(searchParams, setItineraryMode, map)
 
 	const setSearchParams = useSetSearchParams()
@@ -317,6 +319,7 @@ out skel qt;
 		}
 
 		if (!map || distanceMode) return
+
 		map.on('click', onClick)
 		return () => {
 			if (!map) return

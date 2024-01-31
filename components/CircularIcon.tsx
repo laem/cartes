@@ -7,6 +7,7 @@ export default function CircularIcon({
 	background,
 	givenSize,
 	padding,
+	black,
 	...rest
 }) {
 	const size = givenSize || defaultSize
@@ -34,7 +35,7 @@ export default function CircularIcon({
 					position: absolute;
 					width: 100%;
 					height: 100%;
-					filter: invert(1);
+					${black ? '' : 'filter: invert(1);'}
 					${padding ? `padding: ${padding};` : ``}
 				`)}
 				src={src}
