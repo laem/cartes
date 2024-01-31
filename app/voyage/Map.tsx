@@ -12,8 +12,10 @@ import MapButtons from '@/components/voyage/MapButtons'
 import { goodIconSize } from '@/components/voyage/mapUtils'
 import { centerOfMass } from '@turf/turf'
 import useAddMap, { defaultZoom } from './effects/useAddMap'
-import useDrawRoute from './itinerary/useDrawRoute'
+import useDrawQuickSearchFeatures from './effects/useDrawQuickSearchFeatures'
+import useImageSearch from './effects/useImageSearch'
 import useItinerary from './itinerary/useItinerary'
+import useItineraryFromUrl from './itinerary/useItineraryFromUrl'
 import ModalSwitch from './ModalSwitch'
 import { disambiguateWayRelation, osmRequest } from './osmRequest'
 import { styles } from './styles/styles'
@@ -22,6 +24,7 @@ import useHoverOnMapFeatures from './useHoverOnMapFeatures'
 import useTerrainControl from './useTerrainControl'
 import { decodePlace, encodePlace } from './utils'
 import { useZoneImages } from './ZoneImages'
+
 import useDrawQuickSearchFeatures from './effects/useDrawQuickSearchFeatures'
 import useImageSearch from './effects/useImageSearch'
 import { clickableClasses } from './clickableLayers'
@@ -48,6 +51,8 @@ export default function Map({ searchParams }) {
 	const [itineraryMode, setItineraryMode] = useState(false)
 	const [styleChooser, setStyleChooser] = useState(false)
 
+	useItineraryFromUrl(searchParams, setItineraryMode, map)
+
 	const setSearchParams = useSetSearchParams()
 
 	const place = searchParams.lieu,
@@ -64,7 +69,6 @@ export default function Map({ searchParams }) {
 		setLatLngClicked,
 	})
 
-	console.log('bbox', bbox)
 	useImageSearch(map, zoom, bbox, searchParams.photos === 'oui')
 
 	if (process.env.NEXT_PUBLIC_MAPTILER == null) {
@@ -82,20 +86,23 @@ export default function Map({ searchParams }) {
 	const [gares, setGares] = useState(null)
 	const [clickedGare, clickGare] = useState(null)
 	const [bikeRoute, setBikeRoute] = useState(null)
-	const [distance, reset, route] = useItinerary(
+	const [resetItinerary, routes, date, setDate] = useItinerary(
 		map,
 		itineraryMode,
-		bikeRouteProfile
+		bikeRouteProfile,
+		searchParams
 	)
 
 	const itinerary = {
 		bikeRouteProfile,
 		itineraryMode,
 		setItineraryMode,
-		distance,
-		reset,
-		route,
+		reset: resetItinerary,
+		routes,
+		date,
+		setDate,
 	}
+	console.log('itinerary', itinerary)
 	const [features, setFeatures] = useState([])
 
 	useEffect(() => {
@@ -220,7 +227,7 @@ out skel qt;
 		map.setStyle(styleUrl)
 	}, [styleUrl, map])
 
-	useDrawRoute(map, bikeRoute, 'bikeRoute')
+	//useDrawRoute(map, bikeRoute, 'bikeRoute')
 
 	useEffect(() => {
 		const onClick = async (e) => {
@@ -314,13 +321,14 @@ out skel qt;
 			}
 		}
 
-		if (!map || distanceMode) return
+		if (!map || distanceMode || itineraryMode) return
+
 		map.on('click', onClick)
 		return () => {
 			if (!map) return
 			map.off('click', onClick)
 		}
-	}, [map, setState, distanceMode, gares])
+	}, [map, setState, distanceMode, itineraryMode, gares])
 
 	useEffect(() => {
 		if (!map || !featureType || !featureId) return
@@ -400,7 +408,7 @@ out skel qt;
 	}, [map, featureType, featureId, choice, osmFeature])
 
 	useEffect(() => {
-		if (!map || distanceMode) return
+		if (!map || distanceMode || itineraryMode) return
 
 		map.on('click', 'features-points', async (e) => {
 			const feature = e.features[0]
@@ -427,7 +435,7 @@ out skel qt;
 		map.on('mouseleave', 'features-points', () => {
 			map.getCanvas().style.cursor = 'auto'
 		})
-	}, [map, distanceMode, setSearchParams])
+	}, [map, distanceMode, itineraryMode, setSearchParams])
 
 	useHoverOnMapFeatures(map)
 
@@ -541,7 +549,6 @@ out skel qt;
 						style,
 						styleChooser,
 						setStyleChooser,
-						distance,
 						itinerary,
 					}}
 				/>

@@ -1,28 +1,18 @@
-import css from '@/components/css/convertToJs'
-import Emoji from '@/components/Emoji'
-import ProfileChooser from './ProfileChooser'
-import hexToFilter from '@/components/utils/colorize'
 import CircularIcon from '@/components/CircularIcon'
+import css from '@/components/css/convertToJs'
+import { useState } from 'react'
+import ProfileChooser from './ProfileChooser'
 
 export default function BikeRouteRésumé({
-	data,
+	walking,
+	cycling,
 	bikeRouteProfile,
 	setBikeRouteProfile,
 }) {
-	console.log('data', data)
-	if (!data.features) return
-	const feature = data.features[0]
-	if (!feature) return
+	const [mode, setMode] = useState('cycling') // TODO set automatically a guessed mode from distance and possibly then user preferences
 
-	const seconds = feature.properties['total-time'],
-		distance = feature.properties['track-length'],
-		km = Math.round(distance / 1000),
-		date = new Date(1000 * seconds).toISOString().substr(11, 8).split(':'),
-		heures = +date[0],
-		minutes = date[1]
-
-	const déniveléCumulé = feature.properties['filtered ascend']
-	const dénivelé = feature.properties['plain-ascend']
+	if (walking === 'loading' || walking === 'loading')
+		return <div>La roue tourne est en train de tourner</div>
 	return (
 		<div
 			css={`
@@ -60,48 +50,76 @@ export default function BikeRouteRésumé({
 				<CircularIcon
 					src={'/bike.svg'}
 					alt="Icône d'un vélo"
-					color={
-						bikeRouteProfile === 'hiking-mountain' ? 'lightColor' : 'darkColor'
+					background={
+						mode !== 'cycling' ? 'var(--lightColor)' : 'var(--darkColor)'
 					}
-					onClick={() => setBikeRouteProfile('safety')}
+					onClick={() => setMode('cycling')}
 				/>
 				<CircularIcon
 					src={'/walking.svg'}
 					alt="Icône d'une personne qui marche"
-					color={
-						bikeRouteProfile !== 'hiking-mountain' ? 'lightColor' : 'darkColor'
+					background={
+						mode === 'cycling' ? 'var(--lightColor)' : 'var(--darkColor)'
 					}
-					onClick={() => setBikeRouteProfile('hiking-mountain')}
+					onClick={() => setMode('walking')}
 				/>
 			</div>
-			<div>
-				<p>
-					Le trajet de <strong>{km}&nbsp;km</strong> depuis la gare vous prendra{' '}
-					<strong>
-						{heures ? heures + ` heure${heures > 1 ? 's' : ''} et ` : ''}
-						{minutes}&nbsp;min
-					</strong>{' '}
-					pour{' '}
-					<strong
-						style={css(
-							`background: ${deniveléColor(
-								déniveléCumulé
-							)}; padding: 0 .2rem; border-radius: 0.3rem;`
-						)}
-					>
-						{déniveléCumulé}&nbsp;m
-					</strong>{' '}
-					de dénivelé (<small>{dénivelé}&nbsp;m en absolu</small>).
-				</p>
-				{bikeRouteProfile !== 'hiking-mountain' && (
-					<ProfileChooser
-						{...{
-							bikeRouteProfile,
-							setBikeRouteProfile,
-						}}
-					/>
-				)}
-			</div>
+			<ModeContent
+				{...{
+					bikeRouteProfile,
+					setBikeRouteProfile,
+					mode,
+					data: mode === 'cycling' ? cycling : walking,
+				}}
+			/>
+		</div>
+	)
+}
+
+const ModeContent = ({ mode, data, setBikeRouteProfile, bikeRouteProfile }) => {
+	if (!data?.length) return null
+
+	const feature = data[0]
+	if (!feature) return
+
+	const seconds = feature.properties['total-time'],
+		distance = feature.properties['track-length'],
+		km = Math.round(distance / 1000),
+		date = new Date(1000 * seconds).toISOString().substr(11, 8).split(':'),
+		heures = +date[0],
+		minutes = date[1]
+
+	const déniveléCumulé = feature.properties['filtered ascend']
+	const dénivelé = feature.properties['plain-ascend']
+	return (
+		<div>
+			<p>
+				À {mode === 'walking' ? 'pieds' : 'vélo'}, le trajet de{' '}
+				<strong>{km}&nbsp;km</strong> vous prendra{' '}
+				<strong>
+					{heures ? heures + ` h et ` : ''}
+					{minutes}&nbsp;min
+				</strong>{' '}
+				pour{' '}
+				<strong
+					style={css(
+						`background: ${deniveléColor(
+							déniveléCumulé
+						)}; padding: 0 .2rem; border-radius: 0.3rem;`
+					)}
+				>
+					{déniveléCumulé}&nbsp;m
+				</strong>{' '}
+				de dénivelé (<small>{dénivelé}&nbsp;m en absolu</small>).
+			</p>
+			{mode === 'cycling' && (
+				<ProfileChooser
+					{...{
+						bikeRouteProfile,
+						setBikeRouteProfile,
+					}}
+				/>
+			)}
 		</div>
 	)
 }

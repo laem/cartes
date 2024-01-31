@@ -43,6 +43,7 @@ export default function useAddMap(styleUrl, setZoom, setBbox, mapContainerRef) {
 		})
 
 		return () => {
+			setMap(null)
 			newMap?.remove()
 		}
 	}, [setMap, styleUrl, setZoom, setBbox, mapContainerRef])

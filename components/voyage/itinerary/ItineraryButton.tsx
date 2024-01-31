@@ -6,7 +6,6 @@ import { MapButton } from '../MapButtons'
 export default function ItineraryButton({
 	setItineraryMode,
 	itineraryMode,
-	distance,
 	reset,
 }) {
 	return (
@@ -15,14 +14,13 @@ export default function ItineraryButton({
 				<div>
 					<ItineraryIcon />
 				</div>
-				{itineraryMode ? <small>{distance}</small> : null}
 			</button>
 			{itineraryMode && (
 				<button
 					onClick={() => reset()}
 					css={`
 						position: absolute;
-						bottom: -1.2rem;
+						bottom: -0.6rem;
 						right: -1.7rem;
 					`}
 				>

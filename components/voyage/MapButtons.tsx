@@ -86,7 +86,7 @@ export default function MapButtons({
 						onClick={() => resetDistance()}
 						css={`
 							position: absolute;
-							bottom: -1.2rem;
+							bottom: -0.5rem;
 							right: -1.7rem;
 						`}
 					>

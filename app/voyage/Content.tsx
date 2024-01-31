@@ -7,6 +7,7 @@ import { ExplanationWrapper } from './ContentUI'
 import Explanations from './explanations.mdx'
 import { FeatureImage } from './FeatureImage'
 import GareInfo from './GareInfo'
+import Itinerary from './itinerary/Itinerary'
 import { defaultState } from './Map'
 import OsmFeature from './OsmFeature'
 import PlaceSearch from './PlaceSearch'
@@ -53,7 +54,6 @@ export default function Content({
 		clickTipRead = tutorials.clickTip
 	const wikidata = useWikidata(osmFeature, state)
 
-	console.log('wikidata received', wikidata)
 	const setSearchParams = useSetSearchParams()
 	useEffect(() => {
 		if (!introductionRead) setSnap(1)
@@ -145,15 +145,7 @@ export default function Content({
 				</section>
 			)}
 
-			{itinerary.route && (
-				<BikeRouteRésumé
-					{...{
-						data: itinerary.route,
-						bikeRouteProfile,
-						setBikeRouteProfile,
-					}}
-				/>
-			)}
+			<Itinerary {...{ itinerary, bikeRouteProfile, setBikeRouteProfile }} />
 
 			{styleChooser ? (
 				<StyleChooser {...{ setStyleChooser, style }} />
