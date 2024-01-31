@@ -21,7 +21,13 @@ export default function Itinerary({
 					}}
 				/>
 			)}
-			<Transit data={itinerary.routes.transit} />
+			<Transit
+				data={{
+					...itinerary.routes.transit,
+					date: itinerary.date,
+					setDate: itinerary.setDate,
+				}}
+			/>
 		</section>
 	)
 }

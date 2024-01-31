@@ -82,7 +82,7 @@ export default function Map({ searchParams }) {
 	const [gares, setGares] = useState(null)
 	const [clickedGare, clickGare] = useState(null)
 	const [bikeRoute, setBikeRoute] = useState(null)
-	const [resetItinerary, routes] = useItinerary(
+	const [resetItinerary, routes, date, setDate] = useItinerary(
 		map,
 		itineraryMode,
 		bikeRouteProfile,
@@ -95,6 +95,8 @@ export default function Map({ searchParams }) {
 		setItineraryMode,
 		reset: resetItinerary,
 		routes,
+		date,
+		setDate,
 	}
 	console.log('itinerary', itinerary)
 	const [features, setFeatures] = useState([])

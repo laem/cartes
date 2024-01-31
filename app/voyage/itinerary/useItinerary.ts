@@ -1,6 +1,8 @@
 import useSetSearchParams from '@/components/useSetSearchParams'
 import distance from '@turf/distance'
 import { useCallback, useEffect, useMemo, useState } from 'react'
+import { useDebounce } from 'usehooks-ts'
+import { initialDate } from '../GareInfo'
 import { computeMotisTrip } from './motisRequest'
 import useDrawRoute from './useDrawRoute'
 
@@ -22,6 +24,9 @@ export default function useItinerary(
 	searchParams
 ) {
 	const [routes, setRoutes] = useState(null)
+	const [date, setDate] = useState(initialDate)
+	const debouncedDate = useDebounce(date, 1000)
+
 	const updateRoute = (key, value) =>
 		setRoutes((routes) => ({ ...routes, [key]: value }))
 	const setSearchParams = useSetSearchParams(),
@@ -156,7 +161,7 @@ export default function useItinerary(
 			return
 		}
 
-		async function fetchTrainRoute(points, itineraryDistance) {
+		async function fetchTrainRoute(points, itineraryDistance, date) {
 			const minTransitDistance = 0.5 // please walk or bike
 			if (itineraryDistance < minTransitDistance) return null
 			if (points.length > 2) return
@@ -168,7 +173,7 @@ export default function useItinerary(
 				}) => ({ lat, lng })
 			)
 
-			const json = await computeMotisTrip(lonLats[0], lonLats[1])
+			const json = await computeMotisTrip(lonLats[0], lonLats[1], date)
 
 			if (!json?.content) return null
 			/*
@@ -214,12 +219,12 @@ export default function useItinerary(
 				(walking) => setRoutes((routes) => ({ ...routes, walking }))
 			)
 			updateRoute('transit', 'loading')
-			fetchTrainRoute(points, itineraryDistance).then((transit) =>
-				setRoutes((routes) => ({ ...routes, transit }))
+			fetchTrainRoute(points, itineraryDistance, debouncedDate).then(
+				(transit) => setRoutes((routes) => ({ ...routes, transit }))
 			)
 		}
 		fetchRoutes()
-	}, [points, setRoutes, bikeRouteProfile])
+	}, [points, setRoutes, bikeRouteProfile, debouncedDate])
 	// GeoJSON object to hold our measurement features
 
 	useEffect(() => {
@@ -243,5 +248,5 @@ export default function useItinerary(
 
 */
 	const resetItinerary = () => setPoints([])
-	return [resetItinerary, routes]
+	return [resetItinerary, routes, date, setDate]
 }

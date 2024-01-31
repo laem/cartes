@@ -1,6 +1,6 @@
 import { useState } from 'react'
 
-const initialDate = new Date()
+export const initialDate = new Date()
 	.toISOString()
 	.split(':')
 	.slice(null, -1)

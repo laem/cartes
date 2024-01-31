@@ -1,5 +1,6 @@
 import CircularIcon from '@/components/CircularIcon'
 import { useEffect, useState } from 'react'
+import { initialDate } from '../GareInfo'
 import TransitLoader from './TransitLoader'
 
 export default function Transit({ data }) {
@@ -14,15 +15,27 @@ export default function Transit({ data }) {
 				ul {
 					list-style-type: none;
 				}
+				input {
+					margin: 0 0 0 auto;
+					display: block;
+				}
 			`}
 		>
 			<p>Il existe aussi des transports en commun pour ce trajet. </p>
-			<Connections connections={connections} />
+			<input
+				type="datetime-local"
+				id="trainDate"
+				name="trainDate"
+				value={data.date}
+				min={initialDate}
+				onChange={(e) => data.setDate(e.target.value)}
+			/>
+			<Connections connections={connections} date={data.date} />
 		</div>
 	)
 }
 
-const Connections = ({ connections }) => {
+const Connections = ({ connections, date }) => {
 	const endTime = Math.max(
 		...connections.map(({ stops }) => stops.slice(-1)[0].arrival.time)
 	)
@@ -34,7 +47,7 @@ const Connections = ({ connections }) => {
 		>
 			<ul>
 				{connections.map((el) => (
-					<Connection connection={el} endTime={endTime} />
+					<Connection connection={el} endTime={endTime} date={date} />
 				))}
 			</ul>
 		</div>
@@ -50,6 +63,7 @@ const startDateFormatter = Intl.DateTimeFormat('fr-FR', {
 const dateFromMotis = (timestamp) => new Date(timestamp * 1000)
 const formatMotis = (timestamp) =>
 	startDateFormatter.format(dateFromMotis(timestamp))
+
 const Frise = ({ range: [rangeFrom, rangeTo], connection: [from, to] }) => {
 	const length = rangeTo - rangeFrom
 
@@ -103,7 +117,7 @@ const Frise = ({ range: [rangeFrom, rangeTo], connection: [from, to] }) => {
 		</div>
 	)
 }
-const Connection = ({ connection, endTime }) => (
+const Connection = ({ connection, endTime, date }) => (
 	<li
 		css={`
 			margin-bottom: 1.4rem;
@@ -129,7 +143,7 @@ const Connection = ({ connection, endTime }) => (
 			))}
 		</ul>
 		<Frise
-			range={[Math.round(Date.now() / 1000), endTime]}
+			range={[Math.round(new Date(date).getTime() / 1000), endTime]}
 			connection={[
 				connection.stops[0].departure.time,
 				connection.stops.slice(-1)[0].arrival.time,
