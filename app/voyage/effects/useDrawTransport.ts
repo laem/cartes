@@ -1,12 +1,12 @@
 import { useEffect } from 'react'
 
 export default function useDrawTransport(map, data) {
-	const shapes = data?.shapes,
+	const routesGeojson = data?.routesGeojson,
 		stopId = data?.stopId
-	console.log('SHAPES', shapes, data)
 
 	useEffect(() => {
-		if (!map || !shapes) return
+		if (!map || !routesGeojson) return
+
 		const layerIds = map.getLayersOrder()
 		layerIds.map((layerId) => {
 			if (layerId.startsWith('routes-stopId-')) return
@@ -23,22 +23,30 @@ export default function useDrawTransport(map, data) {
 					: null
 			if (property) property.map((p) => map.setPaintProperty(layerId, p, 0.3))
 		})
-		const featureCollection = shapes.reduce(
+		const featureCollection = routesGeojson.reduce(
 			(memo, next) => ({
 				type: 'FeatureCollection',
-				features: [...memo.features, ...next.features],
+				features: [
+					...memo.features,
+					...next.shapes.features,
+					...next.stops.features.map((f) => ({
+						...f,
+						properties: { route_color: f.properties.routes[0].route_color },
+					})),
+				],
 			}),
 			{ features: [] }
 		)
 		const id = 'routes-stopId-' + stopId
 		const source = map.getSource(id)
 		if (source) return
+		console.log({ coco: featureCollection })
 		map.addSource(id, { type: 'geojson', data: featureCollection })
 
 		map.addLayer({
-			id: id,
-			type: 'line',
 			source: id,
+			type: 'line',
+			id: id + '-lines',
 			filter: ['in', '$type', 'LineString'],
 			layout: {
 				'line-join': 'round',
@@ -46,14 +54,49 @@ export default function useDrawTransport(map, data) {
 			},
 			paint: {
 				'line-color': ['get', 'route_color'],
-				'line-width': 3,
+				'line-width': [
+					'interpolate',
+					['linear', 1],
+					['zoom'],
+					3,
+					0.2,
+					4,
+					0.4,
+					12,
+					2,
+					18,
+					4,
+				],
+			},
+		})
+		map.addLayer({
+			source: id,
+			type: 'circle',
+			id: id + '-points',
+			filter: ['in', '$type', 'Point'],
+			paint: {
+				'circle-radius': [
+					'interpolate',
+					['linear', 1],
+					['zoom'],
+					0,
+					4,
+					1,
+					6,
+					12,
+					11,
+					18,
+					14,
+				],
+				'circle-color': ['get', 'route_color'],
 			},
 		})
 
 		return () => {
 			if (!map || !map.isStyleLoaded()) return
-			map.removeLayer(id)
+			map.removeLayer(id + '-lines')
+			map.removeLayer(id + '-points')
 			map.removeSource(id)
 		}
-	}, [map, shapes, stopId])
+	}, [map, routesGeojson, stopId])
 }
