@@ -5,7 +5,7 @@ export default function SideSheet(props) {
 		<div
 			css={`
 				background-color: var(--lightestColor) !important;
-				max-width: 26rem;
+				max-width: 30rem;
 				margin-top: 1rem;
 				padding: 0.4rem 0.6rem;
 				border-radius: 0.6rem;
