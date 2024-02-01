@@ -26,6 +26,7 @@ import { decodePlace, encodePlace } from './utils'
 import { useZoneImages } from './ZoneImages'
 
 import { clickableClasses } from './clickableLayers'
+import useTransportStopData from './transport/useTransportStopData'
 
 export const defaultState = {
 	depuis: { inputValue: null, choice: false },
@@ -81,6 +82,7 @@ export default function Map({ searchParams }) {
 		[choice]
 	)
 
+	const transportStopData = useTransportStopData(osmFeature)
 	const [gares, setGares] = useState(null)
 	const [clickedGare, clickGare] = useState(null)
 	const [bikeRoute, setBikeRoute] = useState(null)
@@ -548,6 +550,7 @@ out skel qt;
 						styleChooser,
 						setStyleChooser,
 						itinerary,
+						transportStopData,
 					}}
 				/>
 			</MapHeader>

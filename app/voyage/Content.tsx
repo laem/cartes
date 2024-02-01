@@ -44,6 +44,7 @@ export default function Content({
 	style,
 	styleChooser,
 	itinerary,
+	transportStopData,
 }) {
 	const url = osmFeature?.tags?.website || osmFeature?.tags?.['contact:website']
 	const ogImages = useOgImageFetcher(url),
@@ -223,7 +224,10 @@ export default function Content({
 								<GareInfo clickedGare={clickedGare} />
 							</div>
 						) : osmFeature ? (
-							<OsmFeature data={osmFeature} />
+							<OsmFeature
+								data={osmFeature}
+								transportStopData={transportStopData}
+							/>
 						) : (
 							!clickTipRead && (
 								<div>

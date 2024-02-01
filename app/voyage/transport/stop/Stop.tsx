@@ -4,7 +4,7 @@ import Route from './Route'
 export const isNotTransportStop = (tags) =>
 	!tags || tags.public_transport !== 'platform'
 
-const findStopId = (tags) => {
+export const findStopId = (tags) => {
 	// ref:MobiBreizh = ILLENOO2:13602
 	// ref:STAR = 1320
 	// ref:bzh:IOAD = MARCHE
@@ -18,26 +18,10 @@ const findStopId = (tags) => {
 		: network.toUpperCase() + ':' + ref[1]
 	return stopId
 }
-export default function Stop({ tags }) {
+export default function Stop({ tags, data }) {
 	console.log('tags', tags)
-	const [data, setData] = useState(null)
-
-	const stopId = findStopId(tags)
 
 	console.log('bus data', data)
-	useEffect(() => {
-		const doFetch = async () => {
-			const response = await fetch(
-				'https://gtfs-server.osc-fr1.scalingo.io/stopTimes/' + stopId,
-				//	'http://localhost:3000/stopTimes/' + stopId,
-				{ mode: 'cors' }
-			)
-			const json = await response.json()
-
-			setData(json)
-		}
-		doFetch()
-	}, [stopId, setData])
 	if (!data || !data.routes) return null
 
 	return (
