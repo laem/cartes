@@ -49,13 +49,13 @@ export default function PlaceSearch({
 			<div
 				css={`
 					display: flex;
+					justify-content: center;
 					> img {
 						width: 2rem;
 						margin-right: 0.4rem;
 						height: auto;
 					}
-					> div {
-					}
+					${sideSheet && `margin: .4rem 0`}
 				`}
 			>
 				<Image src={Logo} alt="Logo de Cartes.app" width="100" height="100" />
