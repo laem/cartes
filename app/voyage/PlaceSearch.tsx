@@ -4,6 +4,8 @@ import css from '@/components/css/convertToJs'
 import fetchPhoton from '@/components/voyage/fetchPhoton'
 import { useEffect, useState } from 'react'
 import { encodePlace } from './utils'
+import Logo from '@/public/voyage.svg'
+import Image from 'next/image'
 
 export default function PlaceSearch({
 	state,
@@ -44,32 +46,47 @@ export default function PlaceSearch({
 
 	return (
 		<div>
-			<InputStyle
+			<div
 				css={`
-					color: white;
-					input {
-						max-width: 100%;
-						margin-bottom: 0;
+					display: flex;
+					> img {
+						width: 2rem;
+						margin-right: 0.4rem;
+						height: auto;
+					}
+					> div {
 					}
 				`}
 			>
-				<input
-					type="text"
-					value={value}
-					onClick={(e) => {
-						setSnap(0)
-						e.preventDefault()
-						e.stopPropagation()
+				<Image src={Logo} alt="Logo de Cartes.app" width="100" height="100" />
+				<InputStyle
+					css={`
+						color: white;
+						input {
+							max-width: 22rem;
+							width: 83vw;
 
-						setTimeout(() => {
-							e.target.focus()
-						}, 300)
-					}}
-					placeholder={'Saint-Malo, Le Conquet, Café du Port...'}
-					onChange={({ target: { value } }) => onDestinationChange(value)}
-				/>
-			</InputStyle>
+							margin-bottom: 0;
+						}
+					`}
+				>
+					<input
+						type="text"
+						value={value}
+						onClick={(e) => {
+							setSnap(0)
+							e.preventDefault()
+							e.stopPropagation()
 
+							setTimeout(() => {
+								e.target.focus()
+							}, 300)
+						}}
+						placeholder={'Saint-Malo, Le Conquet, Café du Port...'}
+						onChange={({ target: { value } }) => onDestinationChange(value)}
+					/>
+				</InputStyle>
+			</div>
 			{vers.results &&
 				vers.inputValue !== '' &&
 				(!state.vers.choice ||
