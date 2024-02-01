@@ -27,6 +27,7 @@ import { useZoneImages } from './ZoneImages'
 
 import { clickableClasses } from './clickableLayers'
 import useTransportStopData from './transport/useTransportStopData'
+import useDrawTransport from './effects/useDrawTransport'
 
 export const defaultState = {
 	depuis: { inputValue: null, choice: false },
@@ -83,6 +84,7 @@ export default function Map({ searchParams }) {
 	)
 
 	const transportStopData = useTransportStopData(osmFeature)
+	useDrawTransport(map, transportStopData)
 	const [gares, setGares] = useState(null)
 	const [clickedGare, clickGare] = useState(null)
 	const [bikeRoute, setBikeRoute] = useState(null)
