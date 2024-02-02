@@ -18,11 +18,37 @@ const findStopId = (tags) => {
 		: network.toUpperCase() + ':' + ref[1]
 	return stopId
 }
-export default function Stop({ tags }) {
+
+export default function Stop({ node }) {
+	const tags = node.tags
 	console.log('tags', tags)
 	const [data, setData] = useState(null)
+	const [stopIdGps, setStopIdGps] = useState(null)
 
-	const stopId = findStopId(tags)
+	let stopId = findStopId(tags)
+	let testId = ""
+	if (stopId === null) {
+		// TODO - Fix this hacky way to trigger the UseEffect()
+		testId += " "
+		console.log("Null StopID, search for stop around click", node.lat, node.long)
+	}
+	useEffect(() => {
+		const doFetch = async () => {
+			console.log("passe 1")
+			const response = await fetch(
+				// 'https://gtfs-server.osc-fr1.scalingo.io/stopTimes/' + stopId,
+				`http://localhost:3000/getStopIds?latitude=${node.lat}&longitude=${node.long}`,
+				{ mode: 'cors' }
+			)
+			const json = await response.json()
+			setStopIdGps(json)
+		}
+		doFetch()
+	}, [testId])
+	if (stopIdGps !== null && stopIdGps.stopIds !== null) {
+		// TODO - Handle several stops around those coordinates
+		stopId = stopIdGps.stopIds[0]
+	}
 
 	console.log('bus data', data)
 	useEffect(() => {

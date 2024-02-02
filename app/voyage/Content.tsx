@@ -52,6 +52,11 @@ export default function Content({
 	styleChooser,
 	itinerary,
 }) {
+	if (osmFeature != null && latLngClicked !== null) {
+		// TODO - Cleaner way to propagate GPS coordinates?
+		osmFeature.lat = latLngClicked.lat
+		osmFeature.long = latLngClicked.lng
+	}
 	const url = osmFeature?.tags?.website || osmFeature?.tags?.['contact:website']
 	const ogImages = useOgImageFetcher(url),
 		ogImage = ogImages[url]

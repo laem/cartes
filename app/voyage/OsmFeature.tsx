@@ -103,7 +103,7 @@ export default function OsmFeature({ data }) {
 			<ContactAndSocial
 				{...{ email: email || email2, instagram, facebook, siret }}
 			/>
-			{!isNotTransportStop(data.tags) && <Stop tags={data.tags} />}
+			{!isNotTransportStop(data.tags) && <Stop node={data} />}
 
 			{allocine && (
 				<a
