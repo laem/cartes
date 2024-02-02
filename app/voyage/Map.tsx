@@ -28,6 +28,7 @@ import { useZoneImages } from './ZoneImages'
 import { clickableClasses } from './clickableLayers'
 import useTransportStopData from './transport/useTransportStopData'
 import useDrawTransport from './effects/useDrawTransport'
+import { findStopId } from './transport/stop/Stop'
 
 export const defaultState = {
 	depuis: { inputValue: null, choice: false },
@@ -39,7 +40,8 @@ export default function Map({ searchParams }) {
 	const [zoom, setZoom] = useState(defaultZoom)
 	const [bbox, setBbox] = useState(null)
 	const [safeStyleUrl, setSafeStyleUrl] = useState(null)
-	const styleKey = searchParams.style || 'base',
+	const [tempStyle, setTempStyle] = useState(null)
+	const styleKey = tempStyle || searchParams.style || 'base',
 		style = styles[styleKey],
 		styleUrl = styles[styleKey].url
 	const map = useAddMap(styleUrl, setZoom, setBbox, mapContainerRef)
@@ -85,6 +87,16 @@ export default function Map({ searchParams }) {
 	)
 
 	const transportStopData = useTransportStopData(osmFeature)
+	useEffect(() => {
+		if (!transportStopData || !transportStopData.routesGeojson) return
+		setTempStyle('dataviz')
+
+		return () => {
+			console.log('will unset')
+			setTempStyle(null)
+		}
+	}, [setTempStyle, transportStopData])
+
 	useDrawTransport(map, transportStopData, safeStyleUrl)
 	const [gares, setGares] = useState(null)
 	const [clickedGare, clickGare] = useState(null)
