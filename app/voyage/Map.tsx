@@ -225,6 +225,7 @@ out skel qt;
 
 	useEffect(() => {
 		if (!map) return
+		console.log('onload useEffect style hook', map._mapId)
 
 		map.setStyle(styleUrl)
 	}, [styleUrl, map])

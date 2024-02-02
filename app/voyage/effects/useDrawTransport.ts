@@ -4,6 +4,8 @@ export default function useDrawTransport(map, data) {
 	const routesGeojson = data?.routesGeojson,
 		stopId = data?.stopId
 
+	const mapStyle = map && map.getStyle()
+
 	useEffect(() => {
 		if (!map || !routesGeojson) return
 
@@ -41,7 +43,7 @@ export default function useDrawTransport(map, data) {
 		const id = 'routes-stopId-' + stopId
 		const source = map.getSource(id)
 		if (source) return
-		console.log({ coco: featureCollection })
+		console.log('will (re)draw transport route geojson')
 		map.addSource(id, { type: 'geojson', data: featureCollection })
 
 		map.addLayer({
@@ -105,7 +107,10 @@ export default function useDrawTransport(map, data) {
 		return () => {
 			map.removeLayer(id + '-lines')
 			map.removeLayer(id + '-points')
-			map.removeSource(id)
+			const source = map.getSource(id)
+			if (source) {
+				map.removeSource(id)
+			}
 		}
-	}, [map, routesGeojson, stopId])
+	}, [map, routesGeojson, stopId, mapStyle])
 }
