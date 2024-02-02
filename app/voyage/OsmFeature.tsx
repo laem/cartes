@@ -12,7 +12,7 @@ import { getTagLabels } from './osmTagLabels'
 import Brand, { Wikidata } from './tags/Brand'
 import Stop, { isNotTransportStop, transportKeys } from './transport/stop/Stop'
 
-export default function OsmFeature({ data }) {
+export default function OsmFeature({ data, transportStopData }) {
 	if (!data.tags) return null
 	const {
 		name,
@@ -103,7 +103,9 @@ export default function OsmFeature({ data }) {
 			<ContactAndSocial
 				{...{ email: email || email2, instagram, facebook, siret }}
 			/>
-			{!isNotTransportStop(data.tags) && <Stop tags={data.tags} />}
+			{!isNotTransportStop(data.tags) && (
+				<Stop tags={data.tags} data={transportStopData} />
+			)}
 			{allocine && (
 				<a
 					href={`https://www.allocine.fr/seance/salle_gen_csalle=${allocine}.html`}

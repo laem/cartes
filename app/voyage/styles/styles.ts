@@ -39,4 +39,9 @@ export const styles = {
 		name: 'Carte des rails',
 		emoji: '🛤️',
 	},
+	dataviz: {
+		url: maptilerUrl('dataviz'),
+		name: 'Fond léger',
+		emoji: '⬜️',
+	},
 }

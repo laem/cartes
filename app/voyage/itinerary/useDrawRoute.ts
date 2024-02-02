@@ -3,7 +3,6 @@ import { useEffect } from 'react'
 export default function useDrawRoute(itineraryMode, map, geojson, id) {
 	console.log('geojson udR', geojson)
 	useEffect(() => {
-		if (map) console.log('getsource', id, map._mapId, map.getSource(id))
 		if (
 			!itineraryMode ||
 			!map ||

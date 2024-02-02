@@ -5,6 +5,7 @@ const defaultCenter =
 	// Saint Malo [-1.9890417068124002, 48.66284934737089]
 	[-1.6776317608896583, 48.10983044383964]
 export const defaultZoom = 8
+
 export default function useAddMap(styleUrl, setZoom, setBbox, mapContainerRef) {
 	const [map, setMap] = useState(null)
 	useEffect(() => {
@@ -17,7 +18,11 @@ export default function useAddMap(styleUrl, setZoom, setBbox, mapContainerRef) {
 			zoom: defaultZoom,
 			hash: true,
 		})
+		newMap.on('style.load', function () {
+			console.log('ONLOAD STYLE', newMap._mapId)
+		})
 		newMap.on('load', () => {
+			console.log('ONLOAD', newMap._mapId)
 			setMap(newMap)
 
 			newMap.addControl(
@@ -46,7 +51,7 @@ export default function useAddMap(styleUrl, setZoom, setBbox, mapContainerRef) {
 			setMap(null)
 			newMap?.remove()
 		}
-	}, [setMap, styleUrl, setZoom, setBbox, mapContainerRef])
+	}, [setMap, setZoom, setBbox, mapContainerRef])
 
 	return map
 }

@@ -26,6 +26,9 @@ import { decodePlace, encodePlace } from './utils'
 import { useZoneImages } from './ZoneImages'
 
 import { clickableClasses } from './clickableLayers'
+import useTransportStopData from './transport/useTransportStopData'
+import useDrawTransport from './effects/useDrawTransport'
+import { findStopId } from './transport/stop/Stop'
 
 export const defaultState = {
 	depuis: { inputValue: null, choice: false },
@@ -36,7 +39,9 @@ export default function Map({ searchParams }) {
 	const mapContainerRef = useRef(null)
 	const [zoom, setZoom] = useState(defaultZoom)
 	const [bbox, setBbox] = useState(null)
-	const styleKey = searchParams.style || 'base',
+	const [safeStyleUrl, setSafeStyleUrl] = useState(null)
+	const [tempStyle, setTempStyle] = useState(null)
+	const styleKey = tempStyle || searchParams.style || 'base',
 		style = styles[styleKey],
 		styleUrl = styles[styleKey].url
 	const map = useAddMap(styleUrl, setZoom, setBbox, mapContainerRef)
@@ -81,6 +86,18 @@ export default function Map({ searchParams }) {
 		[choice]
 	)
 
+	const transportStopData = useTransportStopData(osmFeature)
+	useEffect(() => {
+		if (!transportStopData || !transportStopData.routesGeojson) return
+		setTempStyle('dataviz')
+
+		return () => {
+			console.log('will unset')
+			setTempStyle(null)
+		}
+	}, [setTempStyle, transportStopData])
+
+	useDrawTransport(map, transportStopData, safeStyleUrl)
 	const [gares, setGares] = useState(null)
 	const [clickedGare, clickGare] = useState(null)
 	const [bikeRoute, setBikeRoute] = useState(null)
@@ -221,8 +238,13 @@ out skel qt;
 
 	useEffect(() => {
 		if (!map) return
+		console.log('onload useEffect style hook', map._mapId)
 
 		map.setStyle(styleUrl)
+		setTimeout(() => {
+			// Hack : I haven't found a way to know when this style change is done, hence this setTimeout, absolutely not a UI problem but could be too quick ?
+			setSafeStyleUrl(styleUrl)
+		}, 300)
 	}, [styleUrl, map])
 
 	//useDrawRoute(map, bikeRoute, 'bikeRoute')
@@ -548,6 +570,7 @@ out skel qt;
 						styleChooser,
 						setStyleChooser,
 						itinerary,
+						transportStopData,
 					}}
 				/>
 			</MapHeader>

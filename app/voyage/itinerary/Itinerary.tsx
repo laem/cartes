@@ -6,7 +6,18 @@ export default function Itinerary({
 	bikeRouteProfile,
 	setBikeRouteProfile,
 }) {
-	if (!itinerary.routes) return
+	if (!itinerary.itineraryMode) return null
+	if (itinerary.itineraryMode && !itinerary.routes)
+		return (
+			<p
+				css={`
+					margin: 1rem 0;
+					text-align: center;
+				`}
+			>
+				Cliquez sur la carte pour construire votre itinéraire.
+			</p>
+		)
 
 	return (
 		<section>
