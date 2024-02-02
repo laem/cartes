@@ -1649,10 +1649,10 @@
   resolved "https://registry.yarnpkg.com/@mapbox/whoots-js/-/whoots-js-3.1.0.tgz#497c67a1cef50d1a2459ba60f315e448d2ad87fe"
   integrity sha512-Es6WcD0nO5l+2BOQS4uLfNPYQaNDfbot3X1XUoloz+x0mPDS3eeORZJl06HXjwBG1fOGwCRnzK88LMdxKRrd6Q==
 
-"@maplibre/maplibre-gl-style-spec@^20.0.0":
-  version "20.0.0"
-  resolved "https://registry.yarnpkg.com/@maplibre/maplibre-gl-style-spec/-/maplibre-gl-style-spec-20.0.0.tgz#25fcd48c17fdfbc85128909104a4bc3513371889"
-  integrity sha512-wG8h8jTPpbteorXEa3W/7H+J6PKVdz6Jd8AwTiAggeSBF14Jgof58LrvKBz3UeVZbCy8Wm6fmQZR6KlGR1l0lQ==
+"@maplibre/maplibre-gl-style-spec@^20.1.0":
+  version "20.1.0"
+  resolved "https://registry.yarnpkg.com/@maplibre/maplibre-gl-style-spec/-/maplibre-gl-style-spec-20.1.0.tgz#c8c8dabfaddbd87f28a1efd45c32d78f669f4cda"
+  integrity sha512-iQLe6cAz6Nkw7GmTI3y0J5dq4WoA/FdobWibO0YR3LKk81cDx+6Z3TtoxKLIvn0Ss2c1leBpt6eHh/MalaZ/mg==
   dependencies:
     "@mapbox/jsonlint-lines-primitives" "~2.0.2"
     "@mapbox/unitbezier" "^0.0.1"
@@ -9016,10 +9016,10 @@ magic-string@^0.25.0, magic-string@^0.25.7:
   dependencies:
     sourcemap-codec "^1.4.8"
 
-maplibre-gl@4.0.0-pre.4:
-  version "4.0.0-pre.4"
-  resolved "https://registry.yarnpkg.com/maplibre-gl/-/maplibre-gl-4.0.0-pre.4.tgz#7b201f7b100c5186805534cf3c2fc039795c7204"
-  integrity sha512-rY+8cqyFHEKrKPyxTSqBXb4B3VwEefKfyUPy9j6zUaG2dcvIWmDR/+YU8Y6FHv+Hq3GET1ubMnvyKlVwvRbsJg==
+maplibre-gl@4.0.0:
+  version "4.0.0"
+  resolved "https://registry.yarnpkg.com/maplibre-gl/-/maplibre-gl-4.0.0.tgz#bcb01eee68378402e9f7d499389664d3ca7211bf"
+  integrity sha512-bzVQ2pdOWITwbE+JHKSiAB/viVBBx4Aa1puydc1xizOWGbvRHD9pXpy3dsaW2ZlbmZKbv9r9sHpcvM9fTLGsKA==
   dependencies:
     "@mapbox/geojson-rewind" "^0.5.2"
     "@mapbox/jsonlint-lines-primitives" "^2.0.2"
@@ -9028,7 +9028,7 @@ maplibre-gl@4.0.0-pre.4:
     "@mapbox/unitbezier" "^0.0.1"
     "@mapbox/vector-tile" "^1.3.1"
     "@mapbox/whoots-js" "^3.1.0"
-    "@maplibre/maplibre-gl-style-spec" "^20.0.0"
+    "@maplibre/maplibre-gl-style-spec" "^20.1.0"
     "@types/geojson" "^7946.0.13"
     "@types/geojson-vt" "3.2.5"
     "@types/mapbox__point-geometry" "^0.1.4"
