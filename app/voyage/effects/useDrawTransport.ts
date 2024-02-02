@@ -60,10 +60,8 @@ export default function useDrawTransport(map, data) {
 					['zoom'],
 					3,
 					0.2,
-					4,
-					0.4,
 					12,
-					2,
+					2.5,
 					18,
 					4,
 				],
@@ -80,11 +78,9 @@ export default function useDrawTransport(map, data) {
 					['linear', 1],
 					['zoom'],
 					0,
-					4,
-					1,
-					6,
+					0.1,
 					12,
-					11,
+					1,
 					18,
 					14,
 				],
@@ -93,7 +89,7 @@ export default function useDrawTransport(map, data) {
 		})
 
 		return () => {
-			if (!map || !map.isStyleLoaded()) return
+			if (!map.isStyleLoaded()) return
 			map.removeLayer(id + '-lines')
 			map.removeLayer(id + '-points')
 			map.removeSource(id)
