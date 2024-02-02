@@ -1,14 +1,16 @@
 import { useEffect } from 'react'
 
-export default function useDrawTransport(map, data) {
+export default function useDrawTransport(map, data, styleKey) {
 	const routesGeojson = data?.routesGeojson,
 		stopId = data?.stopId
 
-	const mapStyle = map && map.getStyle()
-
 	useEffect(() => {
 		if (!map || !routesGeojson) return
+		console.log('onload redraw')
 
+		/* Lower the opacity of all style layers.
+		 * Replaced by setting the "dataviz" style
+		 *
 		const layerIds = map.getLayersOrder()
 		layerIds.map((layerId) => {
 			if (layerId.startsWith('routes-stopId-')) return
@@ -25,6 +27,7 @@ export default function useDrawTransport(map, data) {
 					: null
 			if (property) property.map((p) => map.setPaintProperty(layerId, p, 0.3))
 		})
+		*/
 		const featureCollection = routesGeojson.reduce(
 			(memo, next) =>
 				console.log('ROUTE', next.route) || {
@@ -112,5 +115,5 @@ export default function useDrawTransport(map, data) {
 				map.removeSource(id)
 			}
 		}
-	}, [map, routesGeojson, stopId, mapStyle])
+	}, [map, routesGeojson, stopId, styleKey])
 }

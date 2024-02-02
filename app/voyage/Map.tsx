@@ -38,6 +38,7 @@ export default function Map({ searchParams }) {
 	const mapContainerRef = useRef(null)
 	const [zoom, setZoom] = useState(defaultZoom)
 	const [bbox, setBbox] = useState(null)
+	const [safeStyleUrl, setSafeStyleUrl] = useState(null)
 	const styleKey = searchParams.style || 'base',
 		style = styles[styleKey],
 		styleUrl = styles[styleKey].url
@@ -84,7 +85,7 @@ export default function Map({ searchParams }) {
 	)
 
 	const transportStopData = useTransportStopData(osmFeature)
-	useDrawTransport(map, transportStopData)
+	useDrawTransport(map, transportStopData, safeStyleUrl)
 	const [gares, setGares] = useState(null)
 	const [clickedGare, clickGare] = useState(null)
 	const [bikeRoute, setBikeRoute] = useState(null)
@@ -228,6 +229,10 @@ out skel qt;
 		console.log('onload useEffect style hook', map._mapId)
 
 		map.setStyle(styleUrl)
+		setTimeout(() => {
+			// Hack : I haven't found a way to know when this style change is done, hence this setTimeout, absolutely not a UI problem but could be too quick ?
+			setSafeStyleUrl(styleUrl)
+		}, 300)
 	}, [styleUrl, map])
 
 	//useDrawRoute(map, bikeRoute, 'bikeRoute')
