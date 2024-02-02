@@ -24,17 +24,18 @@ export default function useDrawTransport(map, data) {
 			if (property) property.map((p) => map.setPaintProperty(layerId, p, 0.3))
 		})
 		const featureCollection = routesGeojson.reduce(
-			(memo, next) => ({
-				type: 'FeatureCollection',
-				features: [
-					...memo.features,
-					...next.shapes.features,
-					...next.stops.features.map((f) => ({
-						...f,
-						properties: { route_color: f.properties.routes[0].route_color },
-					})),
-				],
-			}),
+			(memo, next) =>
+				console.log('ROUTE', next.route) || {
+					type: 'FeatureCollection',
+					features: [
+						...memo.features,
+						...next.shapes.features,
+						...next.stops.features.map((f) => ({
+							...f,
+							properties: { route_color: '#' + next.route.route_color },
+						})),
+					],
+				},
 			{ features: [] }
 		)
 		const id = 'routes-stopId-' + stopId
@@ -85,6 +86,7 @@ export default function useDrawTransport(map, data) {
 					14,
 				],
 				'circle-color': ['get', 'route_color'],
+				'circle-pitch-alignment': 'map',
 			},
 		})
 
