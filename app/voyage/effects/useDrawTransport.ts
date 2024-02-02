@@ -83,15 +83,26 @@ export default function useDrawTransport(map, data) {
 					12,
 					1,
 					18,
-					14,
+					10,
 				],
-				'circle-color': ['get', 'route_color'],
+				'circle-color': 'white',
 				'circle-pitch-alignment': 'map',
+				'circle-stroke-color': ['get', 'route_color'],
+				'circle-stroke-width': [
+					'interpolate',
+					['linear', 1],
+					['zoom'],
+					0,
+					0.1,
+					12,
+					1,
+					18,
+					4,
+				],
 			},
 		})
 
 		return () => {
-			if (!map.isStyleLoaded()) return
 			map.removeLayer(id + '-lines')
 			map.removeLayer(id + '-points')
 			map.removeSource(id)
