@@ -39,7 +39,7 @@ export default function Map({ searchParams }) {
 	const mapContainerRef = useRef(null)
 	const [zoom, setZoom] = useState(defaultZoom)
 	const [bbox, setBbox] = useState(null)
-	const [safeStyleUrl, setSafeStyleUrl] = useState(null)
+	const [safeStyleKey, setSafeStyleKey] = useState(null)
 	const [tempStyle, setTempStyle] = useState(null)
 	const styleKey = tempStyle || searchParams.style || 'base',
 		style = styles[styleKey],
@@ -97,7 +97,7 @@ export default function Map({ searchParams }) {
 		}
 	}, [setTempStyle, transportStopData])
 
-	useDrawTransport(map, transportStopData, safeStyleUrl)
+	useDrawTransport(map, transportStopData, safeStyleKey)
 	const [gares, setGares] = useState(null)
 	const [clickedGare, clickGare] = useState(null)
 	const [bikeRoute, setBikeRoute] = useState(null)
@@ -236,18 +236,34 @@ out skel qt;
 		})
 	}, [zoom, setZoom, map, setBbox])
 
+	const prevStyleKeyRef = useRef()
+	useEffect(() => {
+		prevStyleKeyRef.current = styleKey
+	}, [styleKey])
+
+	const prevStyleKey = prevStyleKeyRef.current
 	useEffect(() => {
 		if (!map) return
-		console.log('onload useEffect style hook', map._mapId)
+		if (styleKey === prevStyleKey) return
+		console.log(
+			'onload useEffect style hook mapId ',
+			map._mapId,
+			' from ',
+			styleKey,
+			' to ',
+			prevStyleKey
+		)
 
-		map.setStyle(styleUrl)
+		console.log('onload should diff', styleKey !== 'base')
+		// diff seems to fail because of a undefined sprite error showed in the
+		// console
+		// hence this diff: false. We're not loosing much
+		map.setStyle(styleUrl, { diff: false }) //setting styleKey!== 'base' doesn't work, probably because the error comes from switching from base to another ?
 		setTimeout(() => {
 			// Hack : I haven't found a way to know when this style change is done, hence this setTimeout, absolutely not a UI problem but could be too quick ?
-			setSafeStyleUrl(styleUrl)
+			setSafeStyleKey(styleKey)
 		}, 300)
-	}, [styleUrl, map])
-
-	//useDrawRoute(map, bikeRoute, 'bikeRoute')
+	}, [styleUrl, map, styleKey, prevStyleKey])
 
 	useEffect(() => {
 		const onClick = async (e) => {

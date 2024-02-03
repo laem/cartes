@@ -1,8 +1,8 @@
 export default function voyageStyle(key) {
 	return {
 		version: 8,
-		id: '2f80a9c4-e0dd-437d-ae35-2b6c212f830b',
-		name: 'voyage',
+		id: 'voyage',
+		name: 'Voyage',
 		sources: {
 			maptiler_planet: {
 				url: `https://api.maptiler.com/tiles/v3/tiles.json?key=${key}`,
