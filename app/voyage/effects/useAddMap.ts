@@ -18,30 +18,29 @@ export default function useAddMap(styleUrl, setZoom, setBbox, mapContainerRef) {
 			zoom: defaultZoom,
 			hash: true,
 		})
+		newMap.addControl(
+			new maplibregl.NavigationControl({
+				visualizePitch: true,
+				showZoom: true,
+				showCompass: true,
+			}),
+			'top-right'
+		)
+
+		newMap.addControl(
+			new maplibregl.GeolocateControl({
+				positionOptions: {
+					enableHighAccuracy: true,
+				},
+				trackUserLocation: true,
+			})
+		)
 		newMap.on('style.load', function () {
 			console.log('ONLOAD STYLE', newMap._mapId)
 		})
 		newMap.on('load', () => {
 			console.log('ONLOAD', newMap._mapId)
 			setMap(newMap)
-
-			newMap.addControl(
-				new maplibregl.NavigationControl({
-					visualizePitch: true,
-					showZoom: true,
-					showCompass: true,
-				}),
-				'top-right'
-			)
-
-			newMap.addControl(
-				new maplibregl.GeolocateControl({
-					positionOptions: {
-						enableHighAccuracy: true,
-					},
-					trackUserLocation: true,
-				})
-			)
 
 			setZoom(Math.round(newMap.getZoom()))
 			setBbox(newMap.getBounds().toArray())
