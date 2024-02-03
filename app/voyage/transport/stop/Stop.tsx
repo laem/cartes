@@ -4,7 +4,7 @@ import Route from './Route'
 export const isNotTransportStop = (tags) =>
 	!tags || tags.public_transport !== 'platform'
 
-const findStopId = (tags) => {
+const findStopIdByRef = (tags) => {
 	// ref:MobiBreizh = ILLENOO2:13602
 	// ref:STAR = 1320
 	// ref:bzh:IOAD = MARCHE
@@ -19,40 +19,38 @@ const findStopId = (tags) => {
 	return stopId
 }
 
+async function findStopIdByGpsCoordinates(latitude: number, longitude: number) {
+	const response = await fetch(
+		// 'https://gtfs-server.osc-fr1.scalingo.io/stopTimes/' + stopId,
+		`http://localhost:3000/getStopIds?latitude=${latitude}&longitude=${longitude}`,
+		{ mode: 'cors' }
+	)
+	const stopIdsGps = await response.json()
+	console.log("OGZ 1", stopIdsGps)
+	if (stopIdsGps !== null && stopIdsGps.stopIds !== null) {
+		console.log("OGZ 2")
+		// TODO - Handle several stops around those coordinates
+		return stopIdsGps.stopIds[0]
+	} else {
+		return null
+	}
+}
+
 export default function Stop({ node }) {
 	const tags = node.tags
 	console.log('tags', tags)
 	const [data, setData] = useState(null)
-	const [stopIdGps, setStopIdGps] = useState(null)
 
-	let stopId = findStopId(tags)
-	let testId = ""
-	if (stopId === null) {
-		// TODO - Fix this hacky way to trigger the UseEffect()
-		testId += " "
-		console.log("Null StopID, search for stop around click", node.lat, node.long)
-	}
-	useEffect(() => {
-		const doFetch = async () => {
-			console.log("passe 1")
-			const response = await fetch(
-				// 'https://gtfs-server.osc-fr1.scalingo.io/stopTimes/' + stopId,
-				`http://localhost:3000/getStopIds?latitude=${node.lat}&longitude=${node.long}`,
-				{ mode: 'cors' }
-			)
-			const json = await response.json()
-			setStopIdGps(json)
-		}
-		doFetch()
-	}, [testId])
-	if (stopIdGps !== null && stopIdGps.stopIds !== null) {
-		// TODO - Handle several stops around those coordinates
-		stopId = stopIdGps.stopIds[0]
-	}
+	let stopId = findStopIdByRef(tags)
 
 	console.log('bus data', data)
 	useEffect(() => {
 		const doFetch = async () => {
+			if (!stopId) {
+				stopId = await findStopIdByGpsCoordinates(node.lat, node.long)
+			}
+			if (!stopId) return
+
 			const response = await fetch(
 				'https://gtfs-server.osc-fr1.scalingo.io/stopTimes/' + stopId,
 				//	'http://localhost:3000/stopTimes/' + stopId,
