@@ -6,7 +6,7 @@ const defaultCenter =
 	// Saint Malo [-1.9890417068124002, 48.66284934737089]
 	[-1.678, 48.11]
 export const defaultZoom = 8
-const defaultHash = `#${defaultZoom}/${defaultCenter[0]}/${defaultCenter[1]}`
+const defaultHash = `#${defaultZoom}/${defaultCenter[1]}/${defaultCenter[0]}`
 
 export default function useAddMap(styleUrl, setZoom, setBbox, mapContainerRef) {
 	const [map, setMap] = useState(null)
@@ -47,6 +47,7 @@ export default function useAddMap(styleUrl, setZoom, setBbox, mapContainerRef) {
 			setZoom(Math.round(newMap.getZoom()))
 			setBbox(newMap.getBounds().toArray())
 
+			console.log('MOBILE', mobile, window.location.hash, defaultHash)
 			if (window.location.hash === defaultHash && mobile) geolocate.trigger()
 		})
 
@@ -54,7 +55,7 @@ export default function useAddMap(styleUrl, setZoom, setBbox, mapContainerRef) {
 			setMap(null)
 			newMap?.remove()
 		}
-	}, [setMap, setZoom, setBbox, mapContainerRef]) // styleUrl not listed on purpose
+	}, [setMap, setZoom, setBbox, mapContainerRef, mobile]) // styleUrl not listed on purpose
 
 	return map
 }
