@@ -58,23 +58,26 @@ export default function useDrawRoute(itineraryMode, map, geojson, id) {
 			},
 			filter: ['in', '$type', 'Point'],
 		})
-		console.log(
-			'useDrawRoute did add layers',
-			map._mapId,
-			map.getLayer(id + 'Points')
-		)
 
 		return () => {
-			console.log(
-				'will remove useDrawRoute' + id,
-				map._mapId,
-				map.getLayer(id + 'Points')
-			)
+			// There's something I don't understand in MapLibre's lifecycle...
+			// "this.style is undefined" when redimensioning the browser window, need
+			// to catch it
+			// We're operating on a stale style / map
+			try {
+				console.log(
+					'will remove useDrawRoute' + id,
+					map._mapId,
+					map.getLayer(id + 'Points')
+				)
 
-			map.removeLayer(id + 'Line')
-			map.removeLayer(id + 'Contour')
-			map.removeLayer(id + 'Points')
-			map.removeSource(id)
+				map.removeLayer(id + 'Line')
+				map.removeLayer(id + 'Contour')
+				map.removeLayer(id + 'Points')
+				map.removeSource(id)
+			} catch (e) {
+				console.log('Could not remove useDrawRoute layers or source', e)
+			}
 		}
 	}, [itineraryMode, geojson, map, id])
 }
