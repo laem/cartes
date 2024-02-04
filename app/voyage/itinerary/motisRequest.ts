@@ -99,6 +99,7 @@ export const computeMotisTrip = async (start, destination, date) => {
 						const { route_color, route_text_color } = gtfsAttributes
 
 						const isBretagneTGV = trip?.id.id.startsWith('bretagne_SNCF2')
+
 						const isOUIGO =
 							trip?.id.station_id.includes('OUIGO') ||
 							trip?.id.target_station_id.includes('OUIGO') // well, on fait avec ce qu'on a
@@ -121,8 +122,20 @@ export const computeMotisTrip = async (start, destination, date) => {
 								: route_text_color && '#' + route_text_color,
 						}
 						const attributes = { ...gtfsAttributes, ...customAttributes }
+						const transportType = trip?.id.id.split('_')[0],
+							frenchTrainType = isOUIGO
+								? 'OUIGO'
+								: isTGV
+								? 'TGV'
+								: transportType && { tgv: 'TGV', ter: 'TER' }[transportType]
 
-						return { ...transport, ...attributes, trip, tripId }
+						return {
+							...transport,
+							...attributes,
+							trip,
+							tripId,
+							frenchTrainType,
+						}
 					})
 				)
 				return { ...connection, transports: augmentedTransports }

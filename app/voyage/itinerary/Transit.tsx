@@ -191,8 +191,6 @@ const connectionEnd = (connection) => connection.stops.slice(-1)[0].arrival.time
 const Transport = ({ transport }) => {
 	const background = transport.route_color || 'var(--darkColor)'
 
-	const transportType = transport.trip && transport.trip.id.id.split('_')[0],
-		frenchTrainType = transportType && { tgv: 'TGV', ter: 'TER' }[transportType]
 	return (
 		<span>
 			{transport.move.name ? (
@@ -221,7 +219,7 @@ const Transport = ({ transport }) => {
 							border-radius: 0.4rem;
 						`}
 					>
-						{frenchTrainType || transport.move.name}
+						{transport.frenchTrainType || transport.move.name}
 					</small>
 				</span>
 			) : transport.move_type === 'Walk' ? (
