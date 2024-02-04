@@ -1,6 +1,7 @@
 import CircularIcon from '@/components/CircularIcon'
 import { useEffect, useState } from 'react'
 import { initialDate } from '../GareInfo'
+import { nowStamp } from './motisRequest'
 import TransitLoader from './TransitLoader'
 
 export default function Transit({ data }) {
@@ -10,6 +11,9 @@ export default function Transit({ data }) {
 	const connections = data?.connections
 	console.log('motis', data)
 	if (!connections?.length) return null
+
+	const firstDate = connectionStart(connections[0]) // We assume Motis orders them by start date, when you start to walk. Could also be intersting to query the first end date
+
 	return (
 		<div
 			css={`
@@ -23,7 +27,9 @@ export default function Transit({ data }) {
 				}
 			`}
 		>
-			<p>Il existe aussi des transports en commun pour ce trajet. </p>
+			<p>Il existe des transports en commun pour ce trajet. </p>
+			<LateWarning date={firstDate} />
+
 			<input
 				type="datetime-local"
 				id="trainDate"
@@ -35,6 +41,20 @@ export default function Transit({ data }) {
 			<Connections connections={connections} date={data.date} />
 		</div>
 	)
+}
+const LateWarning = ({ date }) => {
+	const diffHours = (date - nowStamp()) / (60 * 60)
+
+	const displayDiff = Math.round(diffHours)
+	if (diffHours > 12)
+		return <p>😓 Le prochain trajet est dans plus de {displayDiff} heures</p>
+	if (diffHours > 4)
+		return <p> 😔 Le prochain trajet est dans plus de {displayDiff} heures</p>
+	if (diffHours > 2)
+		return <p> ⏳ Le prochain trajet est dans plus de {displayDiff} heures</p>
+	if (diffHours > 1)
+		return <p> ⏳ Le prochain trajet est dans plus d'une heure</p>
+	return null
 }
 
 const Connections = ({ connections, date }) => {
@@ -146,13 +166,14 @@ const Connection = ({ connection, endTime, date }) => (
 		</ul>
 		<Frise
 			range={[Math.round(new Date(date).getTime() / 1000), endTime]}
-			connection={[
-				connection.stops[0].departure.time,
-				connection.stops.slice(-1)[0].arrival.time,
-			]}
+			connection={[connectionStart(connection), connectionEnd(connection)]}
 		/>
 	</li>
 )
+
+const connectionStart = (connection) => connection.stops[0].departure.time
+
+const connectionEnd = (connection) => connection.stops.slice(-1)[0].arrival.time
 
 const Transport = ({ transport, trip }) => {
 	const [attributes, setAttributes] = useState({})
