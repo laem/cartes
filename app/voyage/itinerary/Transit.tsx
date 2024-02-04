@@ -38,7 +38,11 @@ export default function Transit({ data }) {
 				min={initialDate}
 				onChange={(e) => data.setDate(e.target.value)}
 			/>
-			<Connections connections={connections} date={data.date} />
+			<Connections
+				connections={connections}
+				date={data.date}
+				setSelectedConnection={data.setSelectedConnection}
+			/>
 		</div>
 	)
 }
@@ -57,7 +61,7 @@ const LateWarning = ({ date }) => {
 	return null
 }
 
-const Connections = ({ connections, date }) => {
+const Connections = ({ connections, date, setSelectedConnection }) => {
 	const endTime = Math.max(
 		...connections.map(({ stops }) => stops.slice(-1)[0].arrival.time)
 	)
@@ -68,8 +72,14 @@ const Connections = ({ connections, date }) => {
 			`}
 		>
 			<ul>
-				{connections.map((el) => (
-					<Connection connection={el} endTime={endTime} date={date} />
+				{connections.map((el, index) => (
+					<Connection
+						connection={el}
+						endTime={endTime}
+						date={date}
+						setSelectedConnection={setSelectedConnection}
+						index={index}
+					/>
 				))}
 			</ul>
 		</div>
@@ -139,11 +149,19 @@ const Frise = ({ range: [rangeFrom, rangeTo], connection: [from, to] }) => {
 		</div>
 	)
 }
-const Connection = ({ connection, endTime, date }) => (
+const Connection = ({
+	connection,
+	endTime,
+	date,
+	setSelectedConnection,
+	index,
+}) => (
 	<li
 		css={`
 			margin-bottom: 1.4rem;
+			cursor: pointer;
 		`}
+		onClick={() => setSelectedConnection(index)}
 	>
 		<ul
 			css={`
@@ -155,12 +173,7 @@ const Connection = ({ connection, endTime, date }) => (
 		>
 			{connection.transports.map((transport) => (
 				<li>
-					<Transport
-						transport={transport}
-						trip={connection.trips.find(
-							(trip) => trip.id.line_id === transport.move.line_id
-						)}
-					/>
+					<Transport transport={transport} />
 				</li>
 			))}
 		</ul>
@@ -175,32 +188,12 @@ const connectionStart = (connection) => connection.stops[0].departure.time
 
 const connectionEnd = (connection) => connection.stops.slice(-1)[0].arrival.time
 
-const Transport = ({ transport, trip }) => {
-	const [attributes, setAttributes] = useState({})
-
-	const tripId = trip?.id.id.split('_')[1] // `bretagne_` prefix added by Motis it seems, coming from its config.ini file that names schedules with ids
-	useEffect(() => {
-		if (!tripId) return
-		const doFetch = async () => {
-			try {
-				const request = await fetch(
-					`https://gtfs-server.osc-fr1.scalingo.io/routes/trip/${tripId}`
-				)
-				const json = await request.json()
-				const safeAttributes = json.routes[0] || {}
-				setAttributes(safeAttributes)
-			} catch (e) {
-				console.error('Unable to fetch route color from GTFS server')
-			}
-		}
-		doFetch()
-	}, [tripId, setAttributes])
-
-	const background = attributes.route_color
-		? `#${attributes.route_color}`
+const Transport = ({ transport }) => {
+	const background = transport.route_color
+		? `#${transport.route_color}`
 		: 'var(--darkColor)'
 
-	const transportType = trip && trip.id.id.split('_')[0],
+	const transportType = transport.trip && transport.trip.id.id.split('_')[0],
 		frenchTrainType = transportType && { tgv: 'TGV', ter: 'TER' }[transportType]
 	return (
 		<span>
@@ -214,16 +207,16 @@ const Transport = ({ transport, trip }) => {
 					<CircularIcon
 						givenSize={'1.8rem'}
 						padding=".4rem"
-						src={transportIcon(attributes.route_type)}
+						src={transportIcon(transport.route_type)}
 						alt="Icône d'un bus"
 						background={background}
-						black={attributes.route_text_color?.toLowerCase() !== 'ffffff'}
+						black={transport.route_text_color?.toLowerCase() !== 'ffffff'}
 					/>
 					<small
 						css={`
 							background: ${background};
-							color: ${attributes.route_text_color
-								? '#' + attributes.route_text_color
+							color: ${transport.route_text_color
+								? '#' + transport.route_text_color
 								: 'white'};
 							padding: 0 0.4rem;
 							line-height: 1.2rem;

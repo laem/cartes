@@ -89,6 +89,8 @@ export default function Map({ searchParams }) {
 	const transportStopData = useTransportStopData(osmFeature)
 	useEffect(() => {
 		if (!transportStopData || !transportStopData.routesGeojson) return
+		console.log('debug', transportStopData.routesGeojson)
+
 		setTempStyle('dataviz')
 
 		return () => {
@@ -101,12 +103,8 @@ export default function Map({ searchParams }) {
 	const [gares, setGares] = useState(null)
 	const [clickedGare, clickGare] = useState(null)
 	const [bikeRoute, setBikeRoute] = useState(null)
-	const [resetItinerary, routes, date, setDate] = useItinerary(
-		map,
-		itineraryMode,
-		bikeRouteProfile,
-		searchParams
-	)
+	const [resetItinerary, routes, date, setDate, setSelectedConnection] =
+		useItinerary(map, itineraryMode, bikeRouteProfile, searchParams)
 
 	const itinerary = {
 		bikeRouteProfile,
@@ -116,6 +114,7 @@ export default function Map({ searchParams }) {
 		routes,
 		date,
 		setDate,
+		setSelectedConnection,
 	}
 	console.log('itinerary', itinerary)
 	const [features, setFeatures] = useState([])

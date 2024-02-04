@@ -2,6 +2,7 @@ import useSetSearchParams from '@/components/useSetSearchParams'
 import distance from '@turf/distance'
 import { useCallback, useEffect, useMemo, useState } from 'react'
 import { useDebounce } from 'usehooks-ts'
+import useDrawTransit from '../effects/useDrawTransit'
 import { initialDate } from '../GareInfo'
 import { computeMotisTrip } from './motisRequest'
 import useDrawRoute from './useDrawRoute'
@@ -30,7 +31,12 @@ export default function useItinerary(
 	const [selectedConnection, setSelectedConnection] = useState(0)
 	const [motisTrips, setMotisTrips] = useState(null)
 
-	useMotisTrips(routes?.transit, selectedConnection, setMotisTrips)
+	//useMotisTrips(routes?.transit, selectedConnection, setMotisTrips)
+	// not sure this is useful. On the routes I've tried, there is no precise
+	// geojson shape for trains, buses (appart from straight lines from stop to
+	// stop) nor walk
+
+	useDrawTransit(map, routes?.transit, selectedConnection)
 
 	const updateRoute = (key, value) =>
 		setRoutes((routes) => ({ ...routes, [key]: value }))
@@ -255,5 +261,5 @@ export default function useItinerary(
 
 */
 	const resetItinerary = () => setPoints([])
-	return [resetItinerary, routes, date, setDate]
+	return [resetItinerary, routes, date, setDate, setSelectedConnection]
 }

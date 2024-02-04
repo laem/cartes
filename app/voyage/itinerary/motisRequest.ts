@@ -70,7 +70,46 @@ export const computeMotisTrip = async (start, destination, date) => {
 		}
 		const json = await request.json()
 		console.log('motis', json)
-		return json
+
+		const augmentedConnections = await Promise.all(
+			json.content.connections.map(async (connection) => {
+				const { trips, stops, transports } = connection
+				const augmentedTransports = await Promise.all(
+					transports.map(async (transport) => {
+						const trip = trips.find(
+							(trip) => trip.id.line_id === transport.move.line_id
+						)
+
+						const tripId = trip?.id.id.split('_')[1] // `bretagne_` prefix added by Motis it seems, coming from its config.ini file that names schedules with ids
+						const doFetch = async () => {
+							try {
+								const request = await fetch(
+									`https://gtfs-server.osc-fr1.scalingo.io/routes/trip/${tripId}`
+								)
+								const json = await request.json()
+								const safeAttributes = json.routes[0] || {}
+								return safeAttributes
+							} catch (e) {
+								console.error('Unable to fetch route color from GTFS server')
+								return {}
+							}
+						}
+						const attributes = await doFetch()
+
+						return { ...transport, ...attributes, trip, tripId }
+					})
+				)
+				return { ...connection, transports: augmentedTransports }
+			})
+		)
+		const augmentedResponse = {
+			...json,
+			content: {
+				...json.content,
+				connections: augmentedConnections,
+			},
+		}
+		return augmentedResponse
 	} catch (e) {
 		// Can happen when no transit found, the server returns a timeout
 		// e.g. for Rennes -> Port Navalo on a sunday...

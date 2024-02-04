@@ -37,6 +37,7 @@ export default function Itinerary({
 					...itinerary.routes.transit,
 					date: itinerary.date,
 					setDate: itinerary.setDate,
+					setSelectedConnection: itinerary.setSelectedConnection,
 				}}
 			/>
 		</section>
