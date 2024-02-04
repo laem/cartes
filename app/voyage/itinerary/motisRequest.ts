@@ -72,7 +72,9 @@ export const computeMotisTrip = async (start, destination, date) => {
 		console.log('motis', json)
 		return json
 	} catch (e) {
-		console.error('Error fetching motis server')
-		return null
+		// Can happen when no transit found, the server returns a timeout
+		// e.g. for Rennes -> Port Navalo on a sunday...
+		console.error('Error fetching motis server', e)
+		return { state: 'error' }
 	}
 }

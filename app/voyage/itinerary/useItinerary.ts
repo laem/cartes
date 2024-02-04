@@ -175,6 +175,8 @@ export default function useItinerary(
 
 			const json = await computeMotisTrip(lonLats[0], lonLats[1], date)
 
+			if (json.state === 'error') return json
+
 			if (!json?.content) return null
 			/*
 			return sections.map((el) => ({
@@ -218,7 +220,7 @@ export default function useItinerary(
 			fetchBrouterRoute(points, itineraryDistance, 'hiking-mountain').then(
 				(walking) => setRoutes((routes) => ({ ...routes, walking }))
 			)
-			updateRoute('transit', 'loading')
+			updateRoute('transit', { state: 'loading' })
 			fetchTrainRoute(points, itineraryDistance, debouncedDate).then(
 				(transit) => setRoutes((routes) => ({ ...routes, transit }))
 			)

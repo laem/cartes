@@ -4,7 +4,9 @@ import { initialDate } from '../GareInfo'
 import TransitLoader from './TransitLoader'
 
 export default function Transit({ data }) {
-	if (data === 'loading') return <TransitLoader />
+	if (data.state === 'loading') return <TransitLoader />
+	if (data.state === 'error')
+		return <p>Pas de transport en commun trouvé :( </p>
 	const connections = data?.connections
 	console.log('motis', data)
 	if (!connections?.length) return null
