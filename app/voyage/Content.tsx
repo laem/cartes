@@ -52,7 +52,7 @@ export default function Content({
 
 	const [tutorials, setTutorials] = useLocalStorage('tutorials', {})
 	const introductionRead = tutorials.introduction,
-		clickTipRead = tutorials.clickTip
+		clickTipRead = true || tutorials.clickTip
 	const wikidata = useWikidata(osmFeature, state)
 
 	const setSearchParams = useSetSearchParams()
@@ -229,7 +229,6 @@ export default function Content({
 								transportStopData={transportStopData}
 							/>
 						) : (
-							false &&
 							!clickTipRead && (
 								<div>
 									<p
