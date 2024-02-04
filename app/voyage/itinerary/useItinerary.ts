@@ -5,6 +5,7 @@ import { useDebounce } from 'usehooks-ts'
 import { initialDate } from '../GareInfo'
 import { computeMotisTrip } from './motisRequest'
 import useDrawRoute from './useDrawRoute'
+import useMotisTrips from './useMotisTrips'
 
 const serializePoints = (points) => {
 	if (points.length === 0) return undefined
@@ -26,6 +27,10 @@ export default function useItinerary(
 	const [routes, setRoutes] = useState(null)
 	const [date, setDate] = useState(initialDate)
 	const debouncedDate = useDebounce(date, 1000)
+	const [selectedConnection, setSelectedConnection] = useState(0)
+	const [motisTrips, setMotisTrips] = useState(null)
+
+	useMotisTrips(routes?.transit, selectedConnection, setMotisTrips)
 
 	const updateRoute = (key, value) =>
 		setRoutes((routes) => ({ ...routes, [key]: value }))
