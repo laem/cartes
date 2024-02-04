@@ -229,6 +229,7 @@ export default function Content({
 								transportStopData={transportStopData}
 							/>
 						) : (
+							false &&
 							!clickTipRead && (
 								<div>
 									<p
