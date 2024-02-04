@@ -189,9 +189,7 @@ const connectionStart = (connection) => connection.stops[0].departure.time
 const connectionEnd = (connection) => connection.stops.slice(-1)[0].arrival.time
 
 const Transport = ({ transport }) => {
-	const background = transport.route_color
-		? `#${transport.route_color}`
-		: 'var(--darkColor)'
+	const background = transport.route_color || 'var(--darkColor)'
 
 	const transportType = transport.trip && transport.trip.id.id.split('_')[0],
 		frenchTrainType = transportType && { tgv: 'TGV', ter: 'TER' }[transportType]
@@ -216,7 +214,7 @@ const Transport = ({ transport }) => {
 						css={`
 							background: ${background};
 							color: ${transport.route_text_color
-								? '#' + transport.route_text_color
+								? transport.route_text_color
 								: 'white'};
 							padding: 0 0.4rem;
 							line-height: 1.2rem;

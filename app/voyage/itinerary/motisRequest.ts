@@ -83,6 +83,7 @@ export const computeMotisTrip = async (start, destination, date) => {
 						const tripId = trip?.id.id.split('_')[1] // `bretagne_` prefix added by Motis it seems, coming from its config.ini file that names schedules with ids
 						const doFetch = async () => {
 							try {
+								if (!tripId) return {}
 								const request = await fetch(
 									`https://gtfs-server.osc-fr1.scalingo.io/routes/trip/${tripId}`
 								)
@@ -94,7 +95,32 @@ export const computeMotisTrip = async (start, destination, date) => {
 								return {}
 							}
 						}
-						const attributes = await doFetch()
+						const gtfsAttributes = await doFetch()
+						const { route_color, route_text_color } = gtfsAttributes
+
+						const isBretagneTGV = trip?.id.id.startsWith('bretagne_SNCF2')
+						const isOUIGO =
+							trip?.id.station_id.includes('OUIGO') ||
+							trip?.id.target_station_id.includes('OUIGO') // well, on fait avec ce qu'on a
+						const isTGVStop =
+							trip?.id.station_id.includes('TGV INOUI') ||
+							trip?.id.target_station_id.includes('TGV INOUI') // well, on fait avec ce qu'on a
+						const isTGV = isTGVStop || isBretagneTGV
+						//TODO this should be a configuration file that sets not only main
+						//colors, but gradients, icons (ouigo, inoui, tgv, ter, etc.)
+						const customAttributes = {
+							route_color: isTGV
+								? '#b8175e'
+								: isOUIGO
+								? '#0193c9'
+								: route_color && '#' + route_color,
+							route_text_color: isTGV
+								? '#fff'
+								: isOUIGO
+								? '#fff'
+								: route_text_color && '#' + route_text_color,
+						}
+						const attributes = { ...gtfsAttributes, ...customAttributes }
 
 						return { ...transport, ...attributes, trip, tripId }
 					})

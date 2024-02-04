@@ -9,6 +9,7 @@ export default function useDrawTransit(map, transit, selectedConnection) {
 
 		const { transports, stops } = connection
 
+		console.log('yotr', transports)
 		const featureCollection = {
 			type: 'FeatureCollection',
 			features: transports.reduce(
@@ -16,7 +17,10 @@ export default function useDrawTransit(map, transit, selectedConnection) {
 					...memo,
 					{
 						type: 'Feature',
-						properties: {},
+						properties: {
+							route_color: next.route_color,
+							route_text_color: next.route_text_color,
+						},
 						geometry: {
 							type: 'LineString',
 							coordinates: stops
