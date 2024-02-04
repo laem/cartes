@@ -1,5 +1,6 @@
 import { useEffect } from 'react'
 import { computeMotisTrips } from './motisTripsRequest'
+import polyline from '@mapbox/polyline'
 
 export default function useMotisTrip(
 	transit,
@@ -18,6 +19,15 @@ export default function useMotisTrip(
 
 			if (!json?.content) return null
 			console.log('trips success', json)
+
+			const featureCollection = {
+				type: 'FeatureCollection',
+				features: json.content.polylines
+					.map((line) => line !== '' && polyline.toGeoJSON(line, 6))
+					.filter(Boolean)
+					.map((geometry) => ({ geometry, type: 'Feature', properties: {} })),
+			}
+			console.log('trips polylines', featureCollection)
 
 			return json.content
 		}

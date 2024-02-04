@@ -72,6 +72,7 @@
 	"dependencies": {
 		"@adobe/css-tools": "^4.3.1",
 		"@babel/runtime": "^7.22.6",
+		"@mapbox/polyline": "^1.2.1",
 		"@mdx-js/loader": "^2.3.0",
 		"@mdx-js/react": "^2.3.0",
 		"@next/mdx": "^14.0.2",
