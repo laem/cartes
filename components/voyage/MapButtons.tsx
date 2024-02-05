@@ -36,7 +36,7 @@ export const MapButton = styled.div`
 		p.$active &&
 		`
 
-	border: 2px solid var(--color);
+	border: 3px solid var(--color);
 	width: 4rem;
 height: 4rem;
 
