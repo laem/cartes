@@ -4,9 +4,9 @@ const datePlusHours = (date, hours) => {
 	return Math.round(newToday / 1000)
 }
 
-export const nowStamp = () => {
-	return Math.round(Date.now() / 1000)
-}
+export const nowStamp = () => Math.round(Date.now() / 1000)
+
+export const stamp = (date) => Math.round(new Date(date).getTime() / 1000)
 
 export const buildRequestBody = (start, destination, date) => {
 	const begin = Math.round(new Date(date).getTime() / 1000),

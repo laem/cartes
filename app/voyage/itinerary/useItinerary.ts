@@ -4,9 +4,9 @@ import { useCallback, useEffect, useMemo, useState } from 'react'
 import { useDebounce } from 'usehooks-ts'
 import useDrawTransit from '../effects/useDrawTransit'
 import { initialDate } from '../GareInfo'
+import { decodeDate } from './DateSelector'
 import { computeMotisTrip } from './motisRequest'
 import useDrawRoute from './useDrawRoute'
-import useMotisTrips from './useMotisTrips'
 
 const serializePoints = (points) => {
 	if (points.length === 0) return undefined
@@ -26,11 +26,10 @@ export default function useItinerary(
 	searchParams
 ) {
 	const [routes, setRoutes] = useState(null)
-	const [date, setDate] = useState(initialDate)
-	const debouncedDate = useDebounce(date, 1000)
-	const [selectedConnection, setSelectedConnection] = useState(0)
-	const [motisTrips, setMotisTrips] = useState(null)
+	const date = decodeDate(searchParams.date) || initialDate
+	const selectedConnection = searchParams.choix
 
+	//const [motisTrips, setMotisTrips] = useState(null)
 	//useMotisTrips(routes?.transit, selectedConnection, setMotisTrips)
 	// not sure this is useful. On the routes I've tried, there is no precise
 	// geojson shape for trains, buses (appart from straight lines from stop to
@@ -245,10 +244,10 @@ export default function useItinerary(
 		const itineraryDistance = distance(points[0], points.slice(-1)[0])
 
 		updateRoute('transit', { state: 'loading' })
-		fetchTrainRoute(points, itineraryDistance, debouncedDate).then((transit) =>
+		fetchTrainRoute(points, itineraryDistance, date).then((transit) =>
 			setRoutes((routes) => ({ ...routes, transit }))
 		)
-	}, [points, setRoutes, debouncedDate])
+	}, [points, setRoutes, date])
 
 	// GeoJSON object to hold our measurement features
 
@@ -273,5 +272,5 @@ export default function useItinerary(
 
 */
 	const resetItinerary = () => setPoints([])
-	return [resetItinerary, routes, date, setDate, setSelectedConnection]
+	return [resetItinerary, routes, date]
 }

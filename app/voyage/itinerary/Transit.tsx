@@ -1,7 +1,7 @@
 import CircularIcon from '@/components/CircularIcon'
-import { useEffect, useState } from 'react'
-import { initialDate } from '../GareInfo'
-import { nowStamp } from './motisRequest'
+import useSetSearchParams from '@/components/useSetSearchParams'
+import DateSelector from './DateSelector'
+import { stamp } from './motisRequest'
 import TransitLoader from './TransitLoader'
 
 export default function Transit({ data }) {
@@ -28,26 +28,16 @@ export default function Transit({ data }) {
 			`}
 		>
 			<p>Il existe des transports en commun pour ce trajet. </p>
-			<LateWarning date={firstDate} />
+			<LateWarning firstDate={firstDate} date={data.date} />
+			<DateSelector date={data.date} />
 
-			<input
-				type="datetime-local"
-				id="trainDate"
-				name="trainDate"
-				value={data.date}
-				min={initialDate}
-				onChange={(e) => data.setDate(e.target.value)}
-			/>
-			<Connections
-				connections={connections}
-				date={data.date}
-				setSelectedConnection={data.setSelectedConnection}
-			/>
+			<Connections connections={connections} date={data.date} />
 		</div>
 	)
 }
-const LateWarning = ({ date }) => {
-	const diffHours = (date - nowStamp()) / (60 * 60)
+
+const LateWarning = ({ date, firstDate }) => {
+	const diffHours = (firstDate - stamp(date)) / (60 * 60)
 
 	const displayDiff = Math.round(diffHours)
 	if (diffHours > 12)
@@ -61,7 +51,8 @@ const LateWarning = ({ date }) => {
 	return null
 }
 
-const Connections = ({ connections, date, setSelectedConnection }) => {
+const Connections = ({ connections, date }) => {
+	const setSearchParams = useSetSearchParams()
 	const endTime = Math.max(
 		...connections.map(({ stops }) => stops.slice(-1)[0].arrival.time)
 	)
@@ -77,7 +68,7 @@ const Connections = ({ connections, date, setSelectedConnection }) => {
 						connection={el}
 						endTime={endTime}
 						date={date}
-						setSelectedConnection={setSelectedConnection}
+						setSelectedConnection={(choix) => setSearchParams({ choix })}
 						index={index}
 					/>
 				))}
