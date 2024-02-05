@@ -62,8 +62,9 @@ export default function useItinerary(
   }
 }
 	 */
+	const allez = searchParams.allez
 	const points = useMemo(() => {
-		const coordinates = searchParams['allez'],
+		const coordinates = allez,
 			rawPoints = coordinates?.split(';').map((el) => el.split('|')) || [],
 			points = rawPoints.map(([lon, lat]) => ({
 				type: 'Feature',
@@ -74,7 +75,7 @@ export default function useItinerary(
 				properties: {},
 			}))
 		return points
-	}, [searchParams])
+	}, [allez])
 
 	const linestrings = useMemo(
 		() => [

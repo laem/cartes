@@ -54,7 +54,8 @@ export default function Map({ searchParams }) {
 	const [itineraryMode, setItineraryMode] = useState(false)
 	const [styleChooser, setStyleChooser] = useState(false)
 
-	useItineraryFromUrl(searchParams, setItineraryMode, map)
+	const allez = searchParams.allez
+	useItineraryFromUrl(allez, setItineraryMode, map)
 
 	const setSearchParams = useSetSearchParams()
 
