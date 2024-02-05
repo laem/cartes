@@ -172,32 +172,6 @@ export default function useItinerary(
 			return
 		}
 
-		async function fetchTrainRoute(points, itineraryDistance, date) {
-			const minTransitDistance = 0.5 // please walk or bike
-			if (itineraryDistance < minTransitDistance) return null
-			if (points.length > 2) return
-			const lonLats = points.map(
-				({
-					geometry: {
-						coordinates: [lng, lat],
-					},
-				}) => ({ lat, lng })
-			)
-
-			const json = await computeMotisTrip(lonLats[0], lonLats[1], date)
-
-			if (json.state === 'error') return json
-
-			if (!json?.content) return null
-			/*
-			return sections.map((el) => ({
-				type: 'Feature',
-				properties: el.geojson.properties[0],
-				geometry: { coordinates: el.geojson.coordinates, type: 'LineString' },
-			}))
-			*/
-			return json.content
-		}
 		async function fetchBrouterRoute(points, itineraryDistance, profile) {
 			const maxBikeDistance = 35 // ~ 25 km/h (ebike) x 1:30 hours
 			if (itineraryDistance > maxBikeDistance) return null
@@ -231,13 +205,51 @@ export default function useItinerary(
 			fetchBrouterRoute(points, itineraryDistance, 'hiking-mountain').then(
 				(walking) => setRoutes((routes) => ({ ...routes, walking }))
 			)
-			updateRoute('transit', { state: 'loading' })
-			fetchTrainRoute(points, itineraryDistance, debouncedDate).then(
-				(transit) => setRoutes((routes) => ({ ...routes, transit }))
-			)
 		}
 		fetchRoutes()
-	}, [points, setRoutes, bikeRouteProfile, debouncedDate])
+	}, [points, setRoutes, bikeRouteProfile])
+
+	useEffect(() => {
+		if (points.length < 2) {
+			setRoutes(null)
+			return
+		}
+
+		async function fetchTrainRoute(points, itineraryDistance, date) {
+			const minTransitDistance = 0.5 // please walk or bike
+			if (itineraryDistance < minTransitDistance) return null
+			if (points.length > 2) return
+			const lonLats = points.map(
+				({
+					geometry: {
+						coordinates: [lng, lat],
+					},
+				}) => ({ lat, lng })
+			)
+
+			const json = await computeMotisTrip(lonLats[0], lonLats[1], date)
+
+			if (json.state === 'error') return json
+
+			if (!json?.content) return null
+			/*
+			return sections.map((el) => ({
+				type: 'Feature',
+				properties: el.geojson.properties[0],
+				geometry: { coordinates: el.geojson.coordinates, type: 'LineString' },
+			}))
+			*/
+			return json.content
+		}
+		//TODO fails is 3rd point is closer to 1st than 2nd, use reduce that sums
+		const itineraryDistance = distance(points[0], points.slice(-1)[0])
+
+		updateRoute('transit', { state: 'loading' })
+		fetchTrainRoute(points, itineraryDistance, debouncedDate).then((transit) =>
+			setRoutes((routes) => ({ ...routes, transit }))
+		)
+	}, [points, setRoutes, debouncedDate])
+
 	// GeoJSON object to hold our measurement features
 
 	useEffect(() => {

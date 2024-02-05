@@ -80,7 +80,7 @@ const ModeContent = ({ mode, data, setBikeRouteProfile, bikeRouteProfile }) => {
 	if (!data?.length) return null
 
 	const feature = data[0]
-	if (!feature) return
+	if (!feature || !feature.properties) return
 
 	const seconds = feature.properties['total-time'],
 		distance = feature.properties['track-length'],
