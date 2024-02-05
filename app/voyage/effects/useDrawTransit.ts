@@ -18,7 +18,9 @@ export default function useDrawTransit(map, transit, selectedConnection) {
 					{
 						type: 'Feature',
 						properties: {
+							move_type: next.move_type,
 							route_color: next.route_color,
+							route_color_darker: next.route_color_darker,
 							route_text_color: next.route_text_color,
 						},
 						geometry: {
@@ -43,6 +45,30 @@ export default function useDrawTransit(map, transit, selectedConnection) {
 		map.addLayer({
 			source: id,
 			type: 'line',
+			id: id + '-lines-contour',
+			filter: ['in', '$type', 'LineString'],
+			layout: {
+				'line-join': 'round',
+				'line-cap': 'round',
+			},
+			paint: {
+				'line-color': ['get', 'route_color_darker'],
+				'line-width': [
+					'interpolate',
+					['linear', 1],
+					['zoom'],
+					3,
+					0.4,
+					12,
+					7,
+					18,
+					18,
+				],
+			},
+		})
+		map.addLayer({
+			source: id,
+			type: 'line',
 			id: id + '-lines',
 			filter: ['in', '$type', 'LineString'],
 			layout: {
@@ -56,11 +82,11 @@ export default function useDrawTransit(map, transit, selectedConnection) {
 					['linear', 1],
 					['zoom'],
 					3,
-					0.2,
+					0.3,
 					12,
-					2.5,
-					18,
 					4,
+					18,
+					12,
 				],
 			},
 		})
@@ -100,6 +126,7 @@ export default function useDrawTransit(map, transit, selectedConnection) {
 
 		return () => {
 			map.removeLayer(id + '-lines')
+			map.removeLayer(id + '-lines-contour')
 			map.removeLayer(id + '-points')
 			const source = map.getSource(id)
 			if (source) {

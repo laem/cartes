@@ -1,3 +1,5 @@
+import { lightenColor } from '@/components/utils/colors'
+
 const datePlusHours = (date, hours) => {
 	const today = new Date(date)
 	const newToday = today.setHours(today.getHours() + hours)
@@ -121,7 +123,10 @@ export const computeMotisTrip = async (start, destination, date) => {
 								? '#fff'
 								: route_text_color && '#' + route_text_color,
 						}
-						const attributes = { ...gtfsAttributes, ...customAttributes }
+						const attributes = {
+							...gtfsAttributes,
+							...customAttributes,
+						}
 						const transportType = trip?.id.id.split('_')[0],
 							frenchTrainType = isOUIGO
 								? 'OUIGO'
@@ -132,6 +137,9 @@ export const computeMotisTrip = async (start, destination, date) => {
 						return {
 							...transport,
 							...attributes,
+							route_color_darker: attributes.route_color
+								? lightenColor(attributes.route_color, -20)
+								: '#5b099f',
 							trip,
 							tripId,
 							frenchTrainType,
