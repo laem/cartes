@@ -184,9 +184,13 @@ export default function useItinerary(
 			return
 		}
 
-		async function fetchBrouterRoute(points, itineraryDistance, profile) {
-			const maxBikeDistance = 35 // ~ 25 km/h (ebike) x 1:30 hours
-			if (itineraryDistance > maxBikeDistance) return null
+		async function fetchBrouterRoute(
+			points,
+			itineraryDistance,
+			profile,
+			maxDistance
+		) {
+			if (itineraryDistance > maxDistance) return null
 
 			const lonLats = points
 				.map(
@@ -213,7 +217,8 @@ export default function useItinerary(
 			const cycling = await fetchBrouterRoute(
 				points,
 				itineraryDistance,
-				bikeRouteProfile
+				bikeRouteProfile,
+				35 // ~ 25 km/h (ebike) x 1:30 hours
 			)
 			updateRoute('cycling', cycling)
 
@@ -221,7 +226,8 @@ export default function useItinerary(
 			const walking = await fetchBrouterRoute(
 				points,
 				itineraryDistance,
-				'hiking-mountain'
+				'hiking-mountain',
+				2 // ~ 3 km/h donc 2 km = 40 minutes, au-dessus ça me semble peu pertinent de proposer la marche par défaut
 			)
 			updateRoute('walking', walking)
 		}

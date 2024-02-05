@@ -50,5 +50,5 @@ export default function DateSelector({ date }) {
 	)
 }
 
-export const encodeDate = (date) => date.replace(/:/, 'h')
-export const decodeDate = (date) => date.replace(/h/, ':')
+export const encodeDate = (date) => date?.replace(/:/, 'h')
+export const decodeDate = (date) => date?.replace(/h/, ':')
