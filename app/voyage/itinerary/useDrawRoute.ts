@@ -33,7 +33,8 @@ export default function useDrawRoute(itineraryMode, map, geojson, id) {
 			},
 			paint: {
 				'line-color': '#5B099F',
-				'line-width': 8,
+				'line-width': id === 'distance' ? 5 : id === 'cycling' ? 8 : 8,
+				...(id === 'distance' ? { 'line-dasharray': [1, 2] } : {}),
 			},
 			filter: ['in', '$type', 'LineString'],
 		})
@@ -47,7 +48,7 @@ export default function useDrawRoute(itineraryMode, map, geojson, id) {
 			},
 			paint: {
 				'line-color': '#B482DD',
-				'line-width': 5,
+				'line-width': id === 'distance' ? 0 : id === 'cycling' ? 5 : 5,
 			},
 			filter: ['in', '$type', 'LineString'],
 		})

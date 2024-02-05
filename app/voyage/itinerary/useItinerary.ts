@@ -107,7 +107,7 @@ export default function useItinerary(
 		[points, linestrings]
 	)
 	console.log('useDrawRoute from outside', map, geojson)
-	useDrawRoute(itineraryMode, map, geojson, 'route')
+	useDrawRoute(itineraryMode, map, geojson, 'distance')
 
 	useEffect(() => {
 		if (!map || !itineraryMode) return
@@ -116,7 +116,7 @@ export default function useItinerary(
 			const features =
 				points &&
 				map.queryRenderedFeatures(e.point, {
-					layers: ['routePoints'],
+					layers: ['distancePoints'],
 				})
 
 			// If a feature was clicked, remove it from the map
