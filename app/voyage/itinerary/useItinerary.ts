@@ -38,7 +38,7 @@ export default function useItinerary(
 	useDrawTransit(map, routes?.transit, selectedConnection)
 
 	const updateRoute = (key, value) =>
-		setRoutes((routes) => ({ ...routes, [key]: value }))
+		setRoutes((routes) => ({ ...(routes || {}), [key]: value }))
 	const setSearchParams = useSetSearchParams(),
 		setPoints = useCallback(
 			(newPoints) =>
@@ -108,6 +108,18 @@ export default function useItinerary(
 	)
 	console.log('useDrawRoute from outside', map, geojson)
 	useDrawRoute(itineraryMode, map, geojson, 'distance')
+	useDrawRoute(
+		itineraryMode,
+		map,
+		routes && routes.cycling !== 'loading' && routes.cycling,
+		'cycling'
+	)
+	useDrawRoute(
+		itineraryMode,
+		map,
+		routes && routes.walking !== 'loading' && routes.walking,
+		'walking'
+	)
 
 	useEffect(() => {
 		if (!map || !itineraryMode) return
@@ -190,7 +202,7 @@ export default function useItinerary(
 			const json = await res.json()
 			console.log('Brouter route json', json)
 			if (!json.features) return
-			return json.features
+			return json
 		}
 
 		//TODO fails is 3rd point is closer to 1st than 2nd, use reduce that sums
@@ -198,13 +210,20 @@ export default function useItinerary(
 
 		const fetchRoutes = async () => {
 			updateRoute('cycling', 'loading')
-			fetchBrouterRoute(points, itineraryDistance, bikeRouteProfile).then(
-				(cycling) => setRoutes((routes) => ({ ...routes, cycling }))
+			const cycling = await fetchBrouterRoute(
+				points,
+				itineraryDistance,
+				bikeRouteProfile
 			)
+			updateRoute('cycling', cycling)
+
 			updateRoute('walking', 'loading')
-			fetchBrouterRoute(points, itineraryDistance, 'hiking-mountain').then(
-				(walking) => setRoutes((routes) => ({ ...routes, walking }))
+			const walking = await fetchBrouterRoute(
+				points,
+				itineraryDistance,
+				'hiking-mountain'
 			)
+			updateRoute('walking', walking)
 		}
 		fetchRoutes()
 	}, [points, setRoutes, bikeRouteProfile])

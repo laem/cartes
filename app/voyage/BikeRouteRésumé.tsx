@@ -11,7 +11,7 @@ export default function BikeRouteRésumé({
 }) {
 	const [mode, setMode] = useState('cycling') // TODO set automatically a guessed mode from distance and possibly then user preferences
 
-	if (walking === 'loading' || walking === 'loading')
+	if (cycling === 'loading' || walking === 'loading')
 		return <div>La roue tourne est en train de tourner</div>
 	return (
 		<div
@@ -77,9 +77,10 @@ export default function BikeRouteRésumé({
 }
 
 const ModeContent = ({ mode, data, setBikeRouteProfile, bikeRouteProfile }) => {
-	if (!data?.length) return null
+	const features = data?.features
+	if (!features?.length) return null
 
-	const feature = data[0]
+	const feature = features[0]
 	if (!feature || !feature.properties) return
 
 	const seconds = feature.properties['total-time'],

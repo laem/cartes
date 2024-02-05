@@ -32,10 +32,20 @@ export default function useDrawRoute(itineraryMode, map, geojson, id) {
 				'line-cap': 'round',
 			},
 			paint: {
-				'line-color': '#5B099F',
-				'line-width': id === 'distance' ? 5 : id === 'cycling' ? 8 : 8,
-				...(id === 'distance' ? { 'line-dasharray': [1, 2] } : {}),
-			},
+				walking: {
+					'line-color': '#5B099F',
+					'line-width': 8,
+				},
+				distance: {
+					'line-width': 3,
+					'line-color': '#5B099F',
+					'line-dasharray': [0, 3],
+				},
+				cycling: {
+					'line-color': '#5B099F',
+					'line-width': 8,
+				},
+			}[id],
 			filter: ['in', '$type', 'LineString'],
 		})
 		map.addLayer({
@@ -47,9 +57,19 @@ export default function useDrawRoute(itineraryMode, map, geojson, id) {
 				'line-cap': 'round',
 			},
 			paint: {
-				'line-color': '#B482DD',
-				'line-width': id === 'distance' ? 0 : id === 'cycling' ? 5 : 5,
-			},
+				walking: {
+					'line-color': '#B482DD',
+					'line-width': 6,
+					'line-dasharray': [0, 2],
+				},
+				distance: {
+					'line-width': 0,
+				},
+				cycling: {
+					'line-color': '#B482DD',
+					'line-width': 5,
+				},
+			}[id],
 			filter: ['in', '$type', 'LineString'],
 		})
 		map.addLayer({
