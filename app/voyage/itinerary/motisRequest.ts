@@ -87,7 +87,7 @@ export const computeMotisTrip = async (start, destination, date) => {
 							try {
 								if (!tripId) return {}
 								const request = await fetch(
-									`https://gtfs-server.osc-fr1.scalingo.io/routes/trip/${tripId}`
+									`https://motis.cartes.app/gtfs/routes/trip/${tripId}`
 								)
 								const json = await request.json()
 								const safeAttributes = json.routes[0] || {}
