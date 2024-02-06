@@ -26,9 +26,8 @@ import { decodePlace, encodePlace } from './utils'
 import { useZoneImages } from './ZoneImages'
 
 import { clickableClasses } from './clickableLayers'
-import useTransportStopData from './transport/useTransportStopData'
 import useDrawTransport from './effects/useDrawTransport'
-import { findStopId } from './transport/stop/Stop'
+import useTransportStopData from './transport/useTransportStopData'
 
 export const defaultState = {
 	depuis: { inputValue: null, choice: false },

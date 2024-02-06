@@ -1,10 +1,11 @@
 import { useEffect, useState } from 'react'
-import { findStopId } from './stop/Stop'
+import { findStopId, isNotTransportStop } from './stop/Stop'
 
 export default function useTransportStopData(osmFeature) {
 	const [data, setData] = useState(null)
 	useEffect(() => {
-		if (!osmFeature) return
+		if (!osmFeature || !osmFeature.tags) return
+		if (isNotTransportStop(osmFeature.tags)) return
 		const stopId = findStopId(osmFeature.tags)
 		const doFetch = async () => {
 			const response = await fetch(

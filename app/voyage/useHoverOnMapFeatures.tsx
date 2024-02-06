@@ -37,8 +37,12 @@ const setUpHover = (map) => {
 		map.getCanvas().style.cursor = '' // eslint-disable-line no-param-reassign
 	}
 
-	layersWithOsmId.forEach((layer) => {
-		map.on('mousemove', layer, onMouseMove)
-		map.on('mouseleave', layer, onMouseLeave)
-	})
+	try {
+		layersWithOsmId.forEach((layer) => {
+			map.on('mousemove', layer, onMouseMove)
+			map.on('mouseleave', layer, onMouseLeave)
+		})
+	} catch (e) {
+		console.log('Caught error useHoverOnMapFeatures', e)
+	}
 }

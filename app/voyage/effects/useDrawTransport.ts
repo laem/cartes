@@ -44,75 +44,83 @@ export default function useDrawTransport(map, data, styleKey) {
 			{ features: [] }
 		)
 		const id = 'routes-stopId-' + stopId
-		const source = map.getSource(id)
-		if (source) return
-		console.log('will (re)draw transport route geojson')
-		map.addSource(id, { type: 'geojson', data: featureCollection })
+		try {
+			const source = map.getSource(id)
+			if (source) return
+			console.log('will (re)draw transport route geojson')
+			map.addSource(id, { type: 'geojson', data: featureCollection })
 
-		map.addLayer({
-			source: id,
-			type: 'line',
-			id: id + '-lines',
-			filter: ['in', '$type', 'LineString'],
-			layout: {
-				'line-join': 'round',
-				'line-cap': 'round',
-			},
-			paint: {
-				'line-color': ['get', 'route_color'],
-				'line-width': [
-					'interpolate',
-					['linear', 1],
-					['zoom'],
-					3,
-					0.2,
-					12,
-					2.5,
-					18,
-					4,
-				],
-			},
-		})
-		map.addLayer({
-			source: id,
-			type: 'circle',
-			id: id + '-points',
-			filter: ['in', '$type', 'Point'],
-			paint: {
-				'circle-radius': [
-					'interpolate',
-					['linear', 1],
-					['zoom'],
-					0,
-					0.1,
-					12,
-					1,
-					18,
-					10,
-				],
-				'circle-color': 'white',
-				'circle-pitch-alignment': 'map',
-				'circle-stroke-color': ['get', 'route_color'],
-				'circle-stroke-width': [
-					'interpolate',
-					['linear', 1],
-					['zoom'],
-					0,
-					0.1,
-					12,
-					1,
-					18,
-					4,
-				],
-			},
-		})
+			map.addLayer({
+				source: id,
+				type: 'line',
+				id: id + '-lines',
+				filter: ['in', '$type', 'LineString'],
+				layout: {
+					'line-join': 'round',
+					'line-cap': 'round',
+				},
+				paint: {
+					'line-color': ['get', 'route_color'],
+					'line-width': [
+						'interpolate',
+						['linear', 1],
+						['zoom'],
+						3,
+						0.2,
+						12,
+						2.5,
+						18,
+						4,
+					],
+				},
+			})
+			map.addLayer({
+				source: id,
+				type: 'circle',
+				id: id + '-points',
+				filter: ['in', '$type', 'Point'],
+				paint: {
+					'circle-radius': [
+						'interpolate',
+						['linear', 1],
+						['zoom'],
+						0,
+						0.1,
+						12,
+						1,
+						18,
+						10,
+					],
+					'circle-color': 'white',
+					'circle-pitch-alignment': 'map',
+					'circle-stroke-color': ['get', 'route_color'],
+					'circle-stroke-width': [
+						'interpolate',
+						['linear', 1],
+						['zoom'],
+						0,
+						0.1,
+						12,
+						1,
+						18,
+						4,
+					],
+				},
+			})
+		} catch (e) {
+			console.log('Caught error drawing useDrawTransport', e)
+		}
 
 		return () => {
-			map.removeLayer(id + '-lines')
-			map.removeLayer(id + '-points')
-			const source = map.getSource(id)
-			if (source) {
-				map.removeSource(id)
+			try {
+				map.removeLayer(id + '-lines')
+				map.removeLayer(id + '-points')
+				const source = map.getSource(id)
+				if (source) {
+					map.removeSource(id)
+				}
+			} catch (e) {
+				console.log('Caught error undrawing useDrawTransport', e)
 			}
 		}
 	}, [map, routesGeojson, stopId, styleKey])
