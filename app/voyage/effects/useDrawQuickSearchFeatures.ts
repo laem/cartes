@@ -13,6 +13,8 @@ export default function useDrawQuickSearchFeatures(
 	useEffect(() => {
 		if (!map || features.length < 1 || !category) return
 
+		console.log('olivier will draw ', features.length, features[0])
+
 		const featuresWithOpen = features.map((f) => {
 			if (!f.tags || !f.tags.opening_hours) {
 				return { ...f, isOpen: null }
@@ -33,15 +35,19 @@ export default function useDrawQuickSearchFeatures(
 
 		const isOpenByDefault = category['open by default']
 		const imageUrl = categoryIconUrl(category)
-		console.log('demat')
 		buildSvgImage(imageUrl, (img) => {
+			console.log('useDrawQuickSearchFeatures build svg image', shownFeatures)
 			const imageName = category.name + '-futureco'
 			const mapImage = map.getImage(imageName)
 			if (!mapImage) map.addImage(imageName, img)
-			console.log('OYOYO', category.name, img)
 
-			console.log('features', shownFeatures, features)
-			map.addSource('features-points', {
+			const baseId = `features-${category.name}-`
+			console.log('useDrawQuickSearchFeatures add source ', baseId + 'points')
+			// Looks like buildSvgImage triggers multiple img.onload calls thus
+			// multiple map.addSource, hence an error
+			const source = map.getSource(baseId + 'points')
+			if (source) return
+			map.addSource(baseId + 'points', {
 				type: 'geojson',
 				data: {
 					type: 'FeatureCollection',
@@ -58,8 +64,6 @@ export default function useDrawQuickSearchFeatures(
 							null: isOpenByDefault ? false : 'beige',
 						}[f.isOpen]
 
-						console.log('YOYO', tags.name, isOpenColor, f)
-
 						return {
 							type: 'Feature',
 							geometry,
@@ -74,7 +78,7 @@ export default function useDrawQuickSearchFeatures(
 					}),
 				},
 			})
-			map.addSource('features-ways', {
+			map.addSource(baseId + 'ways', {
 				type: 'geojson',
 				data: {
 					type: 'FeatureCollection',
@@ -97,9 +101,9 @@ export default function useDrawQuickSearchFeatures(
 
 			// Add a symbol layer
 			map.addLayer({
-				id: 'features-ways',
+				id: baseId + 'ways',
 				type: 'fill',
-				source: 'features-ways',
+				source: baseId + 'ways',
 				layout: {},
 				paint: {
 					'fill-color': computeCssVariable('--lightestColor'),
@@ -107,9 +111,9 @@ export default function useDrawQuickSearchFeatures(
 				},
 			})
 			map.addLayer({
-				id: 'features-ways-outlines',
+				id: baseId + 'ways-outlines',
 				type: 'line',
-				source: 'features-ways',
+				source: baseId + 'ways',
 				layout: {},
 				paint: {
 					'line-color': computeCssVariable('--color'),
@@ -117,9 +121,9 @@ export default function useDrawQuickSearchFeatures(
 				},
 			})
 			map.addLayer({
-				id: 'features-points',
+				id: baseId + 'points',
 				type: 'symbol',
-				source: 'features-points',
+				source: baseId + 'points',
 				layout: {
 					'icon-image': category.name + '-futureco',
 					'icon-size': 0.6,
@@ -135,9 +139,9 @@ export default function useDrawQuickSearchFeatures(
 				},
 			})
 			map.addLayer({
-				id: 'features-points-is-open',
+				id: baseId + 'points-is-open',
 				type: 'circle',
-				source: 'features-points',
+				source: baseId + 'points',
 				paint: {
 					'circle-radius': 4,
 					'circle-color': ['get', 'isOpenColor'],
@@ -150,16 +154,35 @@ export default function useDrawQuickSearchFeatures(
 		})
 
 		return () => {
-			try {
-				map.removeLayer('features-points')
-				map.removeLayer('features-points-is-open')
-				map.removeSource('features-points')
-				map.removeLayer('features-ways')
-				map.removeLayer('features-ways-outlines')
-				map.removeSource('features-ways')
-			} catch (e) {
-				console.warn(e)
-			}
+			const baseId = `features-${category.name}-`
+			safeRemove(map)(
+				[
+					baseId + 'points',
+					baseId + 'points-is-open',
+					baseId + 'ways-outlines',
+					baseId + 'ways',
+				],
+				[baseId + 'points', baseId + 'ways']
+			)
 		}
 	}, [features, map, showOpenOnly, category])
+}
+
+const safeRemove = (map) => (layers, sources) => {
+	if (!map) return
+
+	layers.map((layer) => {
+		const test = map.getLayer(layer)
+		if (test) {
+			console.log('useDrawQuickSearchFeatures will remove layer', layer)
+			map.removeLayer(layer)
+		}
+	})
+	sources.map((source) => {
+		const test = map.getSource(source)
+		if (test) {
+			console.log('useDrawQuickSearchFeatures will remove source', source)
+			map.removeSource(source)
+		}
+	})
 }

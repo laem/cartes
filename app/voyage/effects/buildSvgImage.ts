@@ -1,6 +1,7 @@
 import { computeCssVariable } from '@/components/utils/colors'
 import { fromHTML } from '@/components/utils/htmlUtils'
 export default async function buildSvgImage(imageUrl, then) {
+	console.log('useDrawQuickSearchFeatures inside build svg image', imageUrl)
 	const imageRequest = await fetch(imageUrl)
 	const imageText = await imageRequest.text()
 

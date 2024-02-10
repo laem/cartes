@@ -28,6 +28,7 @@ import { useZoneImages } from './ZoneImages'
 import { clickableClasses } from './clickableLayers'
 import useDrawTransport from './effects/useDrawTransport'
 import useTransportStopData from './transport/useTransportStopData'
+import useDrawSearchResults from './effects/useDrawSearchResults'
 
 export const defaultState = {
 	depuis: { inputValue: null, choice: false },
@@ -45,7 +46,10 @@ export default function Map({ searchParams }) {
 		styleUrl = styles[styleKey].url
 	const map = useAddMap(styleUrl, setZoom, setBbox, mapContainerRef)
 
+	// This is a generic name herited from the /ferry and /avion pages, state means the from and to box's states.
+	// From is not currently used but will be.
 	const [state, setState] = useState(defaultState)
+	useDrawSearchResults(map, state)
 	const [osmFeature, setOsmFeature] = useState(null)
 	const [latLngClicked, setLatLngClicked] = useState(null)
 	const [bikeRouteProfile, setBikeRouteProfile] = useState('safety')
@@ -120,6 +124,7 @@ export default function Map({ searchParams }) {
 	}
 	console.log('itinerary', itinerary)
 	const [features, setFeatures] = useState([])
+	console.log('baobab features', features)
 
 	useEffect(() => {
 		if (!map || !category) return
