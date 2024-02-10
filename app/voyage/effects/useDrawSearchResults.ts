@@ -42,5 +42,5 @@ export default function useDrawSearchResults(map, state) {
 
 const category = {
 	name: 'search',
-	icon: 'tree',
+	icon: 'search-result',
 }
