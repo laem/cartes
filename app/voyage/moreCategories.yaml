@@ -190,6 +190,11 @@
     - la poste
   query: '[amenity=post_office]'
   icon: post
+- title: Coiffeur
+  category: Divers
+  name: coiffeur
+  query: '[shop=hairdresser]'
+  icon: hairdresser
 - title: Espace de cotravail (coworking)
   category: Divers
   name: cotravail
