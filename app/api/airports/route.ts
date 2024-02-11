@@ -4,15 +4,15 @@ import Fuse from 'fuse.js'
 
 const searchWeights = [
 	{
-		name: 'ville',
+		name: 'city',
 		weight: 0.4,
 	},
 	{
-		name: 'nom',
+		name: 'name',
 		weight: 0.4,
 	},
 	{
-		name: 'pays',
+		name: 'country',
 		weight: 0.2,
 	},
 ]
@@ -25,7 +25,10 @@ export function GET(request: Request) {
 	const { searchParams } = new URL(request.url)
 	const input = searchParams.get('input')
 
-	const results = fuse.search(input)
+	const results = fuse
+		.search(input)
+		.slice(0, 10)
+		.map((result) => result.item)
 
 	return NextResponse.json(results)
 }
