@@ -1,11 +1,13 @@
 import { buildLocationText } from '@/components/conversation/GeoInputOptions'
 import Address from '@/components/voyage/Address'
 
-export default function ClickedPoint({ clickedPoint: { lat, lon, data } }) {
+export default function ClickedPoint({
+	clickedPoint: { latitude, longitude, data },
+}) {
 	console.log('jaune data', data)
 	const LatLong = () => (
 		<div>
-			{lat} {lon}
+			{latitude} {longitude}
 		</div>
 	)
 

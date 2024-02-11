@@ -13,9 +13,8 @@ export default function useRightClick(map) {
 		}
 
 		map.on('contextmenu', (e) => {
-			const { lat, lng: lon } = e.lngLat
-			setClickedPoint({ lat, lon })
-			console.log('jaune right', lat, lon)
+			const { lat: latitude, lng: longitude } = e.lngLat
+			setClickedPoint({ latitude, longitude })
 		})
 		map.on('touchstart', (e) => {
 			if (e.originalEvent.touches.length > 1) {
@@ -42,7 +41,7 @@ export default function useRightClick(map) {
 
 		const doFetch = async () => {
 			const request = await fetch(
-				`https://photon.komoot.io/reverse?lon=${clickedPoint.lon}&lat=${clickedPoint.lat}`
+				`https://photon.komoot.io/reverse?lon=${clickedPoint.longitude}&lat=${clickedPoint.latitude}`
 			)
 			const json = await request.json()
 
@@ -51,5 +50,7 @@ export default function useRightClick(map) {
 		doFetch()
 	}, [clickedPoint, setData])
 
-	return [{ ...clickedPoint, data }, () => setClickedPoint(null)]
+	const result = clickedPoint && { ...clickedPoint, data }
+
+	return [result, () => setClickedPoint(null)]
 }

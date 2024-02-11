@@ -8,7 +8,13 @@ const defaultCenter =
 export const defaultZoom = 8
 const defaultHash = `#${defaultZoom}/${defaultCenter[1]}/${defaultCenter[0]}`
 
-export default function useAddMap(styleUrl, setZoom, setBbox, mapContainerRef) {
+export default function useAddMap(
+	styleUrl,
+	setZoom,
+	setBbox,
+	mapContainerRef,
+	setState
+) {
 	const [map, setMap] = useState(null)
 	const mobile = useMediaQuery('(max-width: 800px)')
 	useEffect(() => {
@@ -36,7 +42,17 @@ export default function useAddMap(styleUrl, setZoom, setBbox, mapContainerRef) {
 			},
 			trackUserLocation: true,
 		})
+
 		newMap.addControl(geolocate)
+
+		geolocate.on('geolocate', function (e) {
+			console.log('bleu ', e.coords)
+			setState((state) => ({
+				...state,
+				depuis: { ...state.depuis, geolocated: e.coords },
+			}))
+		})
+
 		newMap.on('style.load', function () {
 			console.log('ONLOAD STYLE', newMap._mapId)
 		})

@@ -45,11 +45,13 @@ export default function Map({ searchParams }) {
 	const styleKey = tempStyle || searchParams.style || 'base',
 		style = styles[styleKey],
 		styleUrl = styles[styleKey].url
-	const map = useAddMap(styleUrl, setZoom, setBbox, mapContainerRef)
 
 	// This is a generic name herited from the /ferry and /avion pages, state means the from and to box's states.
 	// From is not currently used but will be.
 	const [state, setState] = useState(defaultState)
+	console.log('bleu state', state)
+	const map = useAddMap(styleUrl, setZoom, setBbox, mapContainerRef, setState)
+
 	useDrawSearchResults(map, state)
 	const [osmFeature, setOsmFeature] = useState(null)
 	const [latLngClicked, setLatLngClicked] = useState(null)
@@ -357,7 +359,11 @@ out skel qt;
 			if (element) {
 				console.log('reset OSMfeature after click on POI')
 				console.log('will set lieu searchparam after click on POI')
-				setOsmFeature(element)
+				setOsmFeature({
+					...element,
+					longitude: e.lngLat.lng,
+					latitude: e.lngLat.lat,
+				})
 				setSearchParams({ lieu: encodePlace(realFeatureType, id) })
 				console.log('sill set OSMFeature', element)
 				// wait for the searchParam update to proceed

@@ -13,6 +13,7 @@ import { defaultState } from './Map'
 import OsmFeature from './OsmFeature'
 import PlaceSearch from './PlaceSearch'
 import QuickFeatureSearch from './QuickFeatureSearch'
+import SetDestination from './SetDestination'
 import StyleChooser from './styles/StyleChooser'
 import { DialogButton, ModalCloseButton } from './UI'
 import useOgImageFetcher from './useOgImageFetcher'
@@ -79,7 +80,15 @@ export default function Content({
 		panoramaxImages ||
 		!clickTipRead ||
 		clickedPoint
+
 	const hasFeature = choice || osmFeature
+	const hasDestination = choice || osmFeature || clickedPoint,
+		yo = console.log('bleu destination', clickedPoint),
+		destination = hasDestination && {
+			longitude: hasDestination.longitude,
+			latitude: hasDestination.latitude,
+		}
+
 	const showSearch = sideSheet || !hasFeature
 
 	const minimumQuickSearchZoom = getMinimumQuickSearchZoom(!sideSheet)
@@ -211,6 +220,12 @@ export default function Content({
 							zoneImages={zoneImages}
 							panoramaxImages={panoramaxImages}
 						/>
+						{hasDestination && (
+							<SetDestination
+								destination={destination}
+								origin={state.depuis.geolocated}
+							/>
+						)}
 						{clickedGare ? (
 							<div>
 								<ModalCloseButton
