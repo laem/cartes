@@ -13,8 +13,9 @@ export const addressKeys = [
 	'contact:street',
 ]
 
-export default function Address({ tags: t }) {
-	const g = (key) => t[`addr:` + key] || t['contact:' + key]
+export default function Address({ tags: t, noPrefix }) {
+	const g = (key) =>
+		noPrefix ? t[key] : t[`addr:` + key] || t['contact:' + key]
 
 	return (
 		<address

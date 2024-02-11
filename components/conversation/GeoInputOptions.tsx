@@ -41,6 +41,22 @@ export default function GeoInputOptions({
 	)
 }
 
+export const buildLocationText = (item) => {
+	const { nom = '', ville = '', pays = '', département = '' } = item
+
+	const nameIncludes = (what) =>
+		nom && nom.toLowerCase().includes((what || '').toLowerCase())
+
+	const displayCity = !nameIncludes(ville),
+		displayCountry = !nameIncludes(pays) && pays !== 'France' // these web apps are mostly designed for metropolitan France
+	const displayDépartement = pays === 'France' // French people will probably not search for cities with the same name, hence small, abroad
+
+	const locationText = `${
+		displayCity ? ville + (displayCountry ? ' - ' : '') : ''
+	} ${displayDépartement ? département : ''} ${displayCountry ? pays : ''}`
+	return locationText
+}
+
 const Option = ({
 	whichInput,
 	option,
@@ -49,23 +65,13 @@ const Option = ({
 	rulesPath,
 	data,
 }) => {
-	const { nom = '', ville = '', pays = '', département = '' } = option.item,
+	const { nom = '', ville = '' } = option.item,
 		choice = option.choice,
 		inputValue = data.inputValue
 
-	console.log('icons', option.item)
-
-	const nameIncludes = (what) =>
-		nom && nom.toLowerCase().includes((what || '').toLowerCase())
-	const displayCity = !nameIncludes(ville),
-		displayCountry = !nameIncludes(pays) && pays !== 'France' // these web apps are mostly designed for metropolitan France
-	const displayDépartement = pays === 'France' // French people will probably not search for cities with the same name, hence small, abroad
-	const locationText = `${
-		displayCity ? ville + (displayCountry ? ' - ' : '') : ''
-	} ${displayDépartement ? département : ''} ${displayCountry ? pays : ''}`
-
 	const { osm_key: osmKey, osm_value: osmValue } = option.item
 
+	const locationText = buildLocationText(option.item)
 	const foundIcon = icons.find(
 		([key]) => key === osmKey + '_' + osmValue || key === osmValue
 	)
