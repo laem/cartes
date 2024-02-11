@@ -51,5 +51,5 @@ export default function useRightClick(map) {
 		doFetch()
 	}, [clickedPoint, setData])
 
-	return [{ ...clickedPoint, data }]
+	return [{ ...clickedPoint, data }, () => setClickedPoint(null)]
 }

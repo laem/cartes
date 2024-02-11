@@ -3,6 +3,7 @@ import { getThumb } from '@/components/wikidata'
 import { useEffect } from 'react'
 import { useLocalStorage } from 'usehooks-ts'
 import BikeRouteRésumé from './BikeRouteRésumé'
+import ClickedPoint from './ClickedPoint'
 import { ExplanationWrapper } from './ContentUI'
 import Explanations from './explanations.mdx'
 import { FeatureImage } from './FeatureImage'
@@ -45,6 +46,8 @@ export default function Content({
 	styleChooser,
 	itinerary,
 	transportStopData,
+	clickedPoint,
+	resetClickedPoint,
 }) {
 	const url = osmFeature?.tags?.website || osmFeature?.tags?.['contact:website']
 	const ogImages = useOgImageFetcher(url),
@@ -70,7 +73,12 @@ export default function Content({
 			: wikidataPictureUrl)
 
 	const hasContent =
-		choice || osmFeature || zoneImages || panoramaxImages || !clickTipRead
+		choice ||
+		osmFeature ||
+		zoneImages ||
+		panoramaxImages ||
+		!clickTipRead ||
+		clickedPoint
 	const hasFeature = choice || osmFeature
 	const showSearch = sideSheet || !hasFeature
 
@@ -228,6 +236,8 @@ export default function Content({
 								data={osmFeature}
 								transportStopData={transportStopData}
 							/>
+						) : clickedPoint ? (
+							<ClickedPoint clickedPoint={clickedPoint} />
 						) : (
 							!clickTipRead && (
 								<div>

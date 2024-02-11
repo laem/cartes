@@ -272,8 +272,9 @@ out skel qt;
 		}, 300)
 	}, [styleUrl, map, styleKey, prevStyleKey])
 
-	const [clickedPoint] = useRightClick(map)
+	const [clickedPoint, resetClickedPoint] = useRightClick(map)
 	console.log('jaune point', clickedPoint)
+
 	useEffect(() => {
 		const onClick = async (e) => {
 			console.log('click event', e)
@@ -596,6 +597,8 @@ out skel qt;
 						setStyleChooser,
 						itinerary,
 						transportStopData,
+						clickedPoint,
+						resetClickedPoint,
 					}}
 				/>
 			</MapHeader>
