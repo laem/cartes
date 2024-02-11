@@ -17,6 +17,11 @@ export default function manifest(): MetadataRoute.Manifest {
 				type: 'image/svg+xml',
 				purpose: 'any',
 			},
+			{
+				src: 'https://cartes.app/icon-192.png',
+				sizes: '192x192',
+				type: 'image/png',
+			},
 		],
 	}
 }
