@@ -1,4 +1,4 @@
-import { debounce } from '../utils/utils'
+import { debounce, omit } from '../utils/utils'
 
 function fetchPhoton(v, setState, whichInput, local, zoom) {
 	return fetch(
@@ -15,36 +15,33 @@ function fetchPhoton(v, setState, whichInput, local, zoom) {
 						...state,
 						[whichInput]: {
 							...state[whichInput],
-							results: json.features.map((f) => ({
-								item: {
-									...f.properties,
-									osmId: f.properties.osm_id,
-									featureType:
-										f.properties.osm_type &&
-										{ R: 'relation', N: 'node', W: 'way' }[
-											f.properties.osm_type
-										],
-									longitude: f.geometry.coordinates[0],
-									latitude: f.geometry.coordinates[1],
-									nom: f.properties.name,
-									ville: f.properties.city || f.properties.name,
-									pays: f.properties.country,
-									région: f.properties.state,
-									département: f.properties.county,
-								},
-							})),
+							results: json.features.map((f) => (
+								 buildPhotonItem(f),
+							)),
 						},
 					}
 			})
 		})
 }
 
+export const buildPhotonItem = (f) => ({
+	...omit(['osm_id', 'osm_type'],f.properties),
+	osmId: f.properties.osm_id,
+	featureType:
+		f.properties.osm_type &&
+		{ R: 'relation', N: 'node', W: 'way' }[f.properties.osm_type],
+	longitude: f.geometry.coordinates[0],
+	latitude: f.geometry.coordinates[1],
+	//région fr : f.properties.state,
+	//département fr: f.properties.county,
+})
+
 const debounced = debounce(100, fetchPhoton)
 
 export const extractOsmFeature = (choice) => {
 	if (!choice) return [null, null]
 
-	return [choice.item.featureType, choice.item.osmId]
+	return [choice.featureType, choice.osmId]
 }
 
 export default debounced

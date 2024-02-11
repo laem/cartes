@@ -13,6 +13,7 @@ import Image from 'next/image'
 import { useEffect, useState } from 'react'
 import { LightButton } from '../UI'
 import useGeo from '../useGeo'
+import { buildPhotonItem } from '../voyage/fetchPhoton'
 import { extractFileName, getThumb } from '../wikidata'
 import GeoInputOptions from './GeoInputOptions'
 import { InputStyle } from './UI'
@@ -54,7 +55,7 @@ export default function VoyageInput({
 	useEffect(() => {
 		if (!state.vers.choice) return undefined
 
-		getCityData(state.vers.choice.item.ville).then((json) =>
+		getCityData(state.vers.choice.city || state.vers.choice.name).then((json) =>
 			setWikidata(json?.results?.bindings[0])
 		)
 	}, [state.vers])
@@ -111,17 +112,7 @@ export default function VoyageInput({
 							...state,
 							[whichInput]: {
 								...state[whichInput],
-								results: json.features.map((f) => ({
-									item: {
-										longitude: f.geometry.coordinates[0],
-										latitude: f.geometry.coordinates[1],
-										nom: f.properties.name,
-										ville: f.properties.cities || f.properties.name,
-										pays: f.properties.country,
-										région: f.properties.state,
-										département: f.properties.county,
-									},
-								})),
+								results: json.features.map((f) => buildPhotonItem(f)),
 							},
 						}))
 					})
@@ -153,7 +144,7 @@ export default function VoyageInput({
 							<CityImage
 								$thinner={displayImage === 'plane'}
 								src={versImageURL}
-								alt={`Une photo emblématique de la destination, ${vers.choice?.item?.nom}`}
+								alt={`Une photo emblématique de la destination, ${vers.choice?.name}`}
 							/>
 						</motion.div>
 					)}
@@ -223,7 +214,7 @@ export default function VoyageInput({
 						<Choice>
 							<Image src={startPoint} alt="Depuis" />
 							<ChoiceContent>
-								<ChoiceText>{depuis.choice.item.nom}</ChoiceText>
+								<ChoiceText>{depuis.choice.name}</ChoiceText>
 								<button
 									type="button"
 									onClick={() => setState({ ...state, depuis: {} })}
@@ -287,7 +278,7 @@ export default function VoyageInput({
 						<Choice>
 							<Image src={destinationPoint} alt="Vers" />
 							<ChoiceContent>
-								<ChoiceText>{vers.choice.item.nom}</ChoiceText>
+								<ChoiceText>{vers.choice.name}</ChoiceText>
 								<button
 									type="button"
 									onClick={() => setState({ ...state, vers: {} })}
@@ -321,12 +312,12 @@ const MapWrapper = ({
 	orthodromic,
 }) => {
 	const origin = depuis.choice && [
-		depuis.choice.item.latitude,
-		depuis.choice.item.longitude,
+		depuis.choice.latitude,
+		depuis.choice.longitude,
 	]
 	const destination = vers.choice && [
-		vers.choice.item.latitude,
-		vers.choice.item.longitude,
+		vers.choice.latitude,
+		vers.choice.longitude,
 	]
 	return (
 		<Map
@@ -345,10 +336,10 @@ export function computeDistance({ depuis, vers }) {
 		vers.choice &&
 		Math.round(
 			GreatCircle.distance(
-				depuis.choice.item.latitude,
-				depuis.choice.item.longitude,
-				vers.choice.item.latitude,
-				vers.choice.item.longitude,
+				depuis.choice.latitude,
+				depuis.choice.longitude,
+				vers.choice.latitude,
+				vers.choice.longitude,
 				'KM'
 			)
 		)

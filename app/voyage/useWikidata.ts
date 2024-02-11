@@ -8,7 +8,7 @@ export default function useWikidata(osmFeature, state) {
 		if (osmFeature.tags?.wikidata || osmFeature.tags?.wikimedia_commons) return
 		if (!state.vers.choice) return
 
-		getCityData(state.vers.choice.item.nom, false).then((json) => {
+		getCityData(state.vers.choice.name, false).then((json) => {
 			const firstResult = json?.results?.bindings[0],
 				wikimediaUrl = firstResult?.pic?.value
 

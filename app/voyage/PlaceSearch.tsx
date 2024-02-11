@@ -115,7 +115,7 @@ export default function PlaceSearch({
 									setState((state) => ({ ...state, vers: newData }))
 
 									console.log('ici', newData)
-									const { osmId, featureType } = newData.choice.item
+									const { osmId, featureType } = newData.choice
 									if (osmId && featureType)
 										setSearchParams({
 											lieu: encodePlace(featureType, osmId),

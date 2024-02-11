@@ -2,14 +2,23 @@
 import Highlighter from 'react-highlight-words'
 import icons from '@/app/voyage/icons/icons.json'
 import css from '../css/convertToJs'
+import { buildAppStaticPaths } from 'next/dist/build/utils'
+import { buildAddress } from '../voyage/Address'
+import { omit } from 'ramda'
 
 // Beware, this file is shared by the Map app, and the carbon footprint / € calculators
 
-const hash = ({ nom, ville, pays, département }) =>
-	'' + nom + ville + pays + département
+const hash = (item) =>
+	Object.entries(
+		omit(
+			['osmId', 'latitude', 'longitude', 'extent', 'osm_value', 'osm_key'],
+			item
+		)
+	).join('')
+
 const removeDuplicates = (elements) =>
 	elements.reduce((memo, next) => {
-		const duplicate = memo.find((el) => hash(el.item) === hash(next.item))
+		const duplicate = memo.find((el) => hash(el) === hash(next))
 		return [...memo, ...(duplicate ? [] : [next])]
 	}, [])
 
@@ -22,19 +31,21 @@ export default function GeoInputOptions({
 }) {
 	return data?.results.length > 0 ? (
 		<ul>
-			{removeDuplicates(data.results.slice(0, 5)).map((option) => (
-				<Option
-					key={hash(option.item)}
-					{...{
-						whichInput,
-						option,
-						updateState,
-						rulesPath,
-						data,
-						dispatchUpdateSituation,
-					}}
-				/>
-			))}
+			{removeDuplicates(data.results)
+				.slice(0, 5)
+				.map((option) => (
+					<Option
+						key={option.osmId}
+						{...{
+							whichInput,
+							option,
+							updateState,
+							rulesPath,
+							data,
+							dispatchUpdateSituation,
+						}}
+					/>
+				))}
 		</ul>
 	) : (
 		<p>Chargement en cours</p>
@@ -42,18 +53,21 @@ export default function GeoInputOptions({
 }
 
 export const buildLocationText = (item) => {
-	const { nom = '', ville = '', pays = '', département = '' } = item
-
+	console.log('jaune addresse', item)
+	if (item.street) return buildAddress((key) => item[key] || '')
 	const nameIncludes = (what) =>
-		nom && nom.toLowerCase().includes((what || '').toLowerCase())
+		item.name && item.name.toLowerCase().includes((what || '').toLowerCase())
 
-	const displayCity = !nameIncludes(ville),
-		displayCountry = !nameIncludes(pays) && pays !== 'France' // these web apps are mostly designed for metropolitan France
-	const displayDépartement = pays === 'France' // French people will probably not search for cities with the same name, hence small, abroad
+	const displayCity = !nameIncludes(item.city),
+		displayCountry = !nameIncludes(item.country) && item.country !== 'France' // these web apps are mostly designed for metropolitan France
+	const displayDépartement = item.country === 'France' // French people will probably not search for cities with the same name, hence small, abroad
 
-	const locationText = `${
-		displayCity ? ville + (displayCountry ? ' - ' : '') : ''
-	} ${displayDépartement ? département : ''} ${displayCountry ? pays : ''}`
+	const locationText = `${item.name || ''} ${
+		displayCity ? item.city + (displayCountry ? ' - ' : '') : ''
+	} ${displayDépartement ? item.county : ''} ${
+		displayCountry ? item.country : ''
+	}`
+
 	return locationText
 }
 
@@ -65,13 +79,12 @@ const Option = ({
 	rulesPath,
 	data,
 }) => {
-	const { nom = '', ville = '' } = option.item,
-		choice = option.choice,
+	const choice = option.choice,
 		inputValue = data.inputValue
 
-	const { osm_key: osmKey, osm_value: osmValue } = option.item
+	const { osm_key: osmKey, osm_value: osmValue } = option
 
-	const locationText = buildLocationText(option.item)
+	const locationText = buildLocationText(option)
 	const foundIcon = icons.find(
 		([key]) => key === osmKey + '_' + osmValue || key === osmValue
 	)
@@ -80,11 +93,10 @@ const Option = ({
 
 	return (
 		<li
-			key={hash(option.item)}
 			css={`
 				padding: 0.2rem 0.6rem;
 				border-radius: 0.3rem;
-				${choice && choice.nom === nom
+				${choice && choice.name === option.name
 					? 'background: var(--color); color: var(--textColor)'
 					: ''};
 				button {
@@ -122,7 +134,7 @@ const Option = ({
 						rulesPath +
 							' . ' +
 							{ depuis: 'départ', vers: 'arrivée' }[whichInput],
-						`'${ville}'`,
+						`'${option.city}'`,
 					]
 
 					dispatchUpdateSituation(entry[0])(entry[1])
@@ -138,7 +150,7 @@ const Option = ({
 				<span>
 					<Highlighter
 						searchWords={[inputValue]}
-						textToHighlight={nom}
+						textToHighlight={option.name}
 						highlightStyle={highlightStyle}
 					/>
 					<span style={{ opacity: 0.6, fontSize: '75%', marginLeft: '.6em' }}>

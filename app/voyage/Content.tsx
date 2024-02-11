@@ -132,7 +132,7 @@ export default function Content({
 							<ImageWithNameWrapper>
 								<CityImage
 									src={wikidataPictureUrl}
-									alt={`Une photo emblématique de la destination, ${state.vers.choice?.item?.nom}`}
+									alt={`Une photo emblématique de la destination, ${state.vers.choice?.name}`}
 								/>
 								<Destination>
 									<NextImage src={destinationPoint} alt="Vers" />

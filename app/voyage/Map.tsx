@@ -87,7 +87,7 @@ export default function Map({ searchParams }) {
 
 	const choice = state.vers?.choice
 	const center = useMemo(
-		() => choice && [choice.item.longitude, choice.item.latitude],
+		() => choice && [choice.longitude, choice.latitude],
 		[choice]
 	)
 
@@ -437,7 +437,7 @@ out skel qt;
 			console.log('will set OSMfeature after loading it from the URL')
 			setOsmFeature(element)
 			console.log('should fly to', center)
-			if (!choice || choice.item.osmId !== featureId) {
+			if (!choice || choice.osmId !== featureId) {
 				console.log(
 					'will fly to in after OSM download from url query param',
 					center
@@ -491,7 +491,7 @@ out skel qt;
 		const marker = state.vers.marker
 
 		if (!marker) {
-			const destinationType = state.vers.choice.item.type,
+			const destinationType = state.vers.choice.type,
 				tailoredZoom = ['city'].includes(destinationType)
 					? 12
 					: Math.max(15, zoom)
@@ -523,9 +523,7 @@ out skel qt;
 					...state,
 					vers: {
 						...state.vers,
-						choice: {
-							item: { latitude: lat, longitude: lng },
-						},
+						choice: { latitude: lat, longitude: lng },
 					},
 				}))
 			}
