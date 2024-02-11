@@ -29,6 +29,7 @@ import { clickableClasses } from './clickableLayers'
 import useDrawTransport from './effects/useDrawTransport'
 import useTransportStopData from './transport/useTransportStopData'
 import useDrawSearchResults from './effects/useDrawSearchResults'
+import useRightClick from './effects/useRightClick'
 
 export const defaultState = {
 	depuis: { inputValue: null, choice: false },
@@ -271,36 +272,8 @@ out skel qt;
 		}, 300)
 	}, [styleUrl, map, styleKey, prevStyleKey])
 
-	useEffect(() => {
-		if (!map) return
-
-		let timeout = null
-		const clearClickTimeout = () => {
-			clearTimeout(timeout)
-		}
-
-		map.on('contextmenu', (e) => {
-			console.log('jaune right')
-		})
-		map.on('touchstart', (e) => {
-			if (e.originalEvent.touches.length > 1) {
-				return
-			}
-			timeout = setTimeout(() => {
-				console.log('jaune')
-			}, 500)
-		})
-
-		map.on('touchend', clearClickTimeout)
-		map.on('touchcancel', clearClickTimeout)
-		map.on('touchmove', clearClickTimeout)
-		map.on('pointerdrag', clearClickTimeout)
-		map.on('pointermove', clearClickTimeout)
-		map.on('moveend', clearClickTimeout)
-		map.on('gesturestart', clearClickTimeout)
-		map.on('gesturechange', clearClickTimeout)
-		map.on('gestureend', clearClickTimeout)
-	}, [map])
+	const [clickedPoint] = useRightClick(map)
+	console.log('jaune point', clickedPoint)
 	useEffect(() => {
 		const onClick = async (e) => {
 			console.log('click event', e)

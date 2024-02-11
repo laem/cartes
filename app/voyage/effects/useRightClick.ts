@@ -1,0 +1,55 @@
+import { useEffect, useState } from 'react'
+
+export default function useRightClick(map) {
+	const [clickedPoint, setClickedPoint] = useState(null)
+	const [data, setData] = useState(null)
+
+	useEffect(() => {
+		if (!map) return
+
+		let timeout = null
+		const clearClickTimeout = () => {
+			clearTimeout(timeout)
+		}
+
+		map.on('contextmenu', (e) => {
+			const { lat, lng: lon } = e.lngLat
+			setClickedPoint({ lat, lon })
+			console.log('jaune right', lat, lon)
+		})
+		map.on('touchstart', (e) => {
+			if (e.originalEvent.touches.length > 1) {
+				return
+			}
+			timeout = setTimeout(() => {
+				console.log('jaune')
+			}, 500)
+		})
+
+		map.on('touchend', clearClickTimeout)
+		map.on('touchcancel', clearClickTimeout)
+		map.on('touchmove', clearClickTimeout)
+		map.on('pointerdrag', clearClickTimeout)
+		map.on('pointermove', clearClickTimeout)
+		map.on('moveend', clearClickTimeout)
+		map.on('gesturestart', clearClickTimeout)
+		map.on('gesturechange', clearClickTimeout)
+		map.on('gestureend', clearClickTimeout)
+	}, [map, setClickedPoint])
+
+	useEffect(() => {
+		if (!clickedPoint) return
+
+		const doFetch = async () => {
+			const request = await fetch(
+				`https://photon.komoot.io/reverse?lon=${clickedPoint.lon}&lat=${clickedPoint.lat}`
+			)
+			const json = await request.json()
+
+			setData(json)
+		}
+		doFetch()
+	}, [clickedPoint, setData])
+
+	return [{ ...clickedPoint, data }]
+}
