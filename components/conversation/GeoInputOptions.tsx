@@ -1,10 +1,9 @@
 'use client'
-import Highlighter from 'react-highlight-words'
 import icons from '@/app/voyage/icons/icons.json'
-import css from '../css/convertToJs'
-import { buildAppStaticPaths } from 'next/dist/build/utils'
-import { buildAddress } from '../voyage/Address'
 import { omit } from 'ramda'
+import Highlighter from 'react-highlight-words'
+import css from '../css/convertToJs'
+import { buildAddress } from '../voyage/Address'
 
 // Beware, this file is shared by the Map app, and the carbon footprint / € calculators
 
@@ -134,7 +133,7 @@ const Option = ({
 						rulesPath +
 							' . ' +
 							{ depuis: 'départ', vers: 'arrivée' }[whichInput],
-						`'${option.city}'`,
+						`'${option.name || option.city}'`,
 					]
 
 					dispatchUpdateSituation(entry[0])(entry[1])
