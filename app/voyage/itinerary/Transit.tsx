@@ -163,8 +163,11 @@ const humanDuration = (seconds) => {
 	if (minutes < 60) return `${Math.round(minutes)} min`
 	const hours = minutes / 60
 
-	if (hours < 5)
-		return `${Math.floor(hours)} h ${Math.round(minutes - hours * 60)} minutes`
+	if (hours < 5) {
+		const rest = Math.round(minutes - hours * 60)
+
+		return `${Math.floor(hours)} h${rest > 0 ? ` ${rest} min` : ''}`
+	}
 	return `${Math.round(hours)} heures`
 }
 const Frise = ({
@@ -265,14 +268,16 @@ const Transport = ({ transport }) => {
 				padding: 0.2rem 0;
 				img {
 					display: ${displayImage ? 'block' : 'none'};
-					width: 1rem;
-					height: auto;
+					height: 0.8rem;
+					width: auto;
 					margin-right: 0.2rem;
 
-					filter: invert(
-						${transport.route_text_color?.toLowerCase() === 'ffffff' ? 0 : 1}
-					);
-				}
+${
+	transport.frenchTrainType
+		? `filter: brightness(0) invert(1);`
+		: transport.route_text_color?.toLowerCase() === 'ffffff' &&
+		  `filter: invert(1)`
+}
 			`}
 			title={`${humanDuration(transport.seconds)} de ${
 				transport.frenchTrainType || transport.move.name || 'marche'
@@ -286,7 +291,7 @@ const Transport = ({ transport }) => {
 					`}
 				>
 					<Image
-						src={transportIcon(transport.route_type)}
+						src={transportIcon(transport.frenchTrainType, transport.route_type)}
 						alt="Icône d'un bus"
 						width="100"
 						height="100"
@@ -312,7 +317,8 @@ const Transport = ({ transport }) => {
 					width="100"
 					height="100"
 					css={`
-						width: 1.6rem !important;
+						height: 2rem !important;
+
 						margin: 0 !important;
 					`}
 				/>
@@ -324,7 +330,8 @@ const Transport = ({ transport }) => {
 }
 
 //TODO complete with spec possibilities https://gtfs.org/fr/schedule/reference/#routestxt
-const transportIcon = (routeType) => {
+const transportIcon = (frenchTrainType, routeType) => {
+	if (frenchTrainType) return `/transit/${frenchTrainType.toLowerCase()}.svg`
 	if (!routeType) return '/icons/bus.svg'
 	const found = { 0: '/icons/bus.svg', 1: '/icons/subway.svg' }[routeType]
 	return found || '/icons/bus.svg'

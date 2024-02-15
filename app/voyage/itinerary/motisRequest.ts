@@ -111,11 +111,20 @@ export const computeMotisTrip = async (start, destination, date) => {
 						const isTGV = isTGVStop || isBretagneTGV
 						//TODO this should be a configuration file that sets not only main
 						//colors, but gradients, icons (ouigo, inoui, tgv, ter, etc.)
+						const transportType = trip?.id.id.split('_')[0],
+							frenchTrainType = isOUIGO
+								? 'OUIGO'
+								: isTGV
+								? 'TGV'
+								: transportType && { tgv: 'TGV', ter: 'TER' }[transportType]
+
 						const customAttributes = {
 							route_color: isTGV
 								? '#b8175e'
 								: isOUIGO
 								? '#0193c9'
+								: frenchTrainType === 'TER'
+								? '#034EA2'
 								: route_color && '#' + route_color,
 							route_text_color: isTGV
 								? '#fff'
@@ -127,12 +136,6 @@ export const computeMotisTrip = async (start, destination, date) => {
 							...gtfsAttributes,
 							...customAttributes,
 						}
-						const transportType = trip?.id.id.split('_')[0],
-							frenchTrainType = isOUIGO
-								? 'OUIGO'
-								: isTGV
-								? 'TGV'
-								: transportType && { tgv: 'TGV', ter: 'TER' }[transportType]
 
 						/* Temporal aspect */
 						const fromStop = stops[transport.move.range.from]
