@@ -69,13 +69,25 @@ const Connections = ({ connections, date, connectionsTimeRange }) => {
 		...connections.map(({ stops }) => stops.slice(-1)[0].arrival.time)
 	)
 
+	const quickestConnection = connections.reduce(
+			(memo, next) => (next.seconds < memo.seconds ? next : memo),
+			{ seconds: Infinity }
+		),
+		quickest = quickestConnection.seconds
+
+	const range = connectionsTimeRange.to - connectionsTimeRange.from
+
+	/*
+	 * quickest ->  60 % width
+	 * range -> total %
+	 * */
 	return (
 		<div
 			css={`
 				margin-top: 1rem;
 				overflow-x: scroll;
 				> ul {
-					width: 300%;
+					width: ${((range * 0.6) / quickest) * 100}%;
 				}
 			`}
 		>
@@ -168,8 +180,9 @@ const Frise = ({
 			css={`
 				height: 4rem;
 				width: calc(100% - 4rem);
-				margin: 0 2rem;
-				margin-top: 0.4rem;
+				padding: 0.4rem 0;
+				margin: 0;
+				margin-top: 0.3rem;
 				position: relative;
 				display: flex;
 				align-items: center;
@@ -209,9 +222,10 @@ const Frise = ({
 					css={`
 						display: flex;
 						justify-content: space-between;
+						line-height: 1.2rem;
 					`}
 				>
-					<small css={``}>{formatMotis(from)}</small>
+					<small>{formatMotis(from)}</small>
 					<small
 						css={`
 							color: #555;
@@ -219,7 +233,7 @@ const Frise = ({
 					>
 						{humanDuration(connection.seconds)}
 					</small>
-					<small css={``}>{formatMotis(to)}</small>
+					<small>{formatMotis(to)}</small>
 				</div>
 			</div>
 		</div>
