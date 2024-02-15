@@ -155,15 +155,17 @@ const connectionEnd = (connection) => connection.stops.slice(-1)[0].arrival.time
 
 const humanDuration = (seconds) => {
 	if (seconds < 60) return `${seconds} secondes`
-	const minutes = Math.round(seconds / 60)
+	const minutes = seconds / 60
 	if (minutes > 15 - 2 && minutes < 15 + 2) return `Un quart d'heure`
 	if (minutes > 30 - 4 && minutes < 30 + 4) return `Une demi-heure`
 	if (minutes > 45 - 4 && minutes < 45 + 4) return `Trois quart d'heure`
 
-	if (minutes < 60) return `${minutes} min`
-	const hours = Math.round(minutes / 60)
-	if (hours < 5) return `${hours} h ${minutes - hours * 60} minutes`
-	return `${hours} heures`
+	if (minutes < 60) return `${Math.round(minutes)} min`
+	const hours = minutes / 60
+
+	if (hours < 5)
+		return `${Math.floor(hours)} h ${Math.round(minutes - hours * 60)} minutes`
+	return `${Math.round(hours)} heures`
 }
 const Frise = ({
 	range: [rangeFrom, rangeTo],
@@ -243,7 +245,6 @@ const Frise = ({
 const Transport = ({ transport }) => {
 	const background = transport.route_color || 'rgb(211, 178, 238)'
 
-	const minutes = Math.round(transport.seconds / 60)
 	const ref = useRef<HTMLDivElement>(null)
 	const { width = 0, height = 0 } = useResizeObserver({
 		ref,
@@ -273,8 +274,8 @@ const Transport = ({ transport }) => {
 					);
 				}
 			`}
-			title={`${minutes} min de ${
-				transport.frenchTrainType || transport.move.name
+			title={`${humanDuration(transport.seconds)} de ${
+				transport.frenchTrainType || transport.move.name || 'marche'
 			}`}
 		>
 			{transport.move.name ? (
