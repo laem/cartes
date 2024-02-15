@@ -157,8 +157,12 @@ export const computeMotisTrip = async (start, destination, date) => {
 						}
 					})
 				)
+				const seconds = augmentedTransports.reduce(
+					(memo, next) => memo + next.seconds,
+					0
+				)
 
-				return { ...connection, transports: augmentedTransports }
+				return { ...connection, transports: augmentedTransports, seconds }
 			})
 		)
 		const augmentedResponse = {

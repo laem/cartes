@@ -103,12 +103,6 @@ const startDateFormatter = Intl.DateTimeFormat('fr-FR', {
 })
 const dateFromMotis = (timestamp) => new Date(timestamp * 1000)
 
-const transportRelativeRatio = (transport, transports) => {
-	const sum = transports.reduce((memo, next) => memo + next.seconds, 0)
-
-	const ratio = transport.seconds / sum
-	return ratio
-}
 const formatMotis = (timestamp) =>
 	startDateFormatter.format(dateFromMotis(timestamp))
 
@@ -120,6 +114,7 @@ const Connection = ({
 	index,
 	connectionsTimeRange,
 }) => {
+	console.log('prune', connection)
 	return (
 		<li
 			css={`
@@ -131,7 +126,11 @@ const Connection = ({
 			<Frise
 				range={[stamp(date), endTime]}
 				transports={connection.transports}
-				connection={[connectionStart(connection), connectionEnd(connection)]}
+				connection={connection}
+				connectionRange={[
+					connectionStart(connection),
+					connectionEnd(connection),
+				]}
 			/>
 		</li>
 	)
@@ -143,7 +142,8 @@ const connectionEnd = (connection) => connection.stops.slice(-1)[0].arrival.time
 
 const Frise = ({
 	range: [rangeFrom, rangeTo],
-	connection: [from, to],
+	connection,
+	connectionRange: [from, to],
 	transports,
 }) => {
 	const length = rangeTo - rangeFrom
@@ -184,7 +184,7 @@ const Frise = ({
 					{transports.map((transport) => (
 						<li
 							css={`
-								width: ${transportRelativeRatio(transport, transports) * 100}%;
+								width: ${(transport.seconds / connection.seconds) * 100}%;
 								height: 1.8rem;
 							`}
 						>
@@ -199,6 +199,7 @@ const Frise = ({
 					`}
 				>
 					<small css={``}>{formatMotis(from)}</small>
+					<small css={``}>{}</small>
 					<small css={``}>{formatMotis(to)}</small>
 				</div>
 			</div>
