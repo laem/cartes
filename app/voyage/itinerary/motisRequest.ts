@@ -134,6 +134,11 @@ export const computeMotisTrip = async (start, destination, date) => {
 								? 'TGV'
 								: transportType && { tgv: 'TGV', ter: 'TER' }[transportType]
 
+						/* Temporal aspect */
+						const fromStop = stops[transport.move.range.from]
+						const toStop = stops[transport.move.range.to]
+
+						const seconds = toStop.arrival.time - fromStop.departure.time
 						return {
 							...transport,
 							...attributes,
@@ -143,9 +148,11 @@ export const computeMotisTrip = async (start, destination, date) => {
 							trip,
 							tripId,
 							frenchTrainType,
+							seconds,
 						}
 					})
 				)
+
 				return { ...connection, transports: augmentedTransports }
 			})
 		)

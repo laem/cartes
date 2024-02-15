@@ -119,20 +119,6 @@ const Connection = ({
 	index,
 	connectionsTimeRange,
 }) => {
-	const transportsWithTimes = connection.transports.map((transport) => {
-		const fromStop = connection.stops[transport.move.range.from]
-		const toStop = connection.stops[transport.move.range.to]
-
-		const seconds = toStop.arrival.time - fromStop.departure.time
-		return { ...transport, seconds }
-	})
-
-	console.log(
-		'prune transports',
-		transportsWithTimes,
-		connection,
-		connectionsTimeRange
-	)
 	return (
 		<li
 			css={`
@@ -143,7 +129,7 @@ const Connection = ({
 		>
 			<Frise
 				range={[stamp(date), endTime]}
-				transports={transportsWithTimes}
+				transports={connection.transports}
 				connection={[connectionStart(connection), connectionEnd(connection)]}
 			/>
 		</li>
