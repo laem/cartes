@@ -139,6 +139,10 @@ export const computeMotisTrip = async (start, destination, date) => {
 						const toStop = stops[transport.move.range.to]
 
 						const seconds = toStop.arrival.time - fromStop.departure.time
+						const name = transport.move.name
+						const shortName =
+							frenchTrainType ||
+							(name?.startsWith('Bus ') ? name.replace('Bus ', '') : name)
 						return {
 							...transport,
 							...attributes,
@@ -149,6 +153,7 @@ export const computeMotisTrip = async (start, destination, date) => {
 							tripId,
 							frenchTrainType,
 							seconds,
+							shortName,
 						}
 					})
 				)

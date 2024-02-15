@@ -217,6 +217,7 @@ const Frise = ({
 const Transport = ({ transport }) => {
 	const background = transport.route_color || 'rgb(211, 178, 238)'
 
+	const minutes = Math.round(transport.seconds / 60)
 	return (
 		<span
 			css={`
@@ -227,6 +228,9 @@ const Transport = ({ transport }) => {
 				display: flex;
 				justify-content: center;
 			`}
+			title={`${minutes} min de ${
+				transport.frenchTrainType || transport.move.name
+			}`}
 		>
 			{transport.move.name ? (
 				<span
@@ -252,9 +256,10 @@ const Transport = ({ transport }) => {
 							padding: 0 0.4rem;
 							line-height: 1.2rem;
 							border-radius: 0.4rem;
+							text-transform: uppercase;
 						`}
 					>
-						{transport.frenchTrainType || transport.move.name}
+						{transport.frenchTrainType || transport.shortName}
 					</small>
 				</span>
 			) : transport.move_type === 'Walk' ? (
