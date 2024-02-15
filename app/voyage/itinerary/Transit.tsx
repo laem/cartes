@@ -140,6 +140,18 @@ const connectionStart = (connection) => connection.stops[0].departure.time
 
 const connectionEnd = (connection) => connection.stops.slice(-1)[0].arrival.time
 
+const humanDuration = (seconds) => {
+	if (seconds < 60) return `${seconds} secondes`
+	const minutes = Math.round(seconds / 60)
+	if (minutes > 15 - 2 && minutes < 15 + 2) return `Un quart d'heure`
+	if (minutes > 30 - 4 && minutes < 30 + 4) return `Une demi-heure`
+	if (minutes > 45 - 4 && minutes < 45 + 4) return `Trois quart d'heure`
+
+	if (minutes < 60) return `${minutes} min`
+	const hours = Math.round(minutes / 60)
+	if (hours < 5) return `${hours} h ${minutes - hours * 60} minutes`
+	return `${hours} heures`
+}
 const Frise = ({
 	range: [rangeFrom, rangeTo],
 	connection,
@@ -150,6 +162,7 @@ const Frise = ({
 
 	const barWidth = ((to - from) / length) * 100,
 		left = ((from - rangeFrom) / length) * 100
+
 	return (
 		<div
 			css={`
@@ -199,7 +212,13 @@ const Frise = ({
 					`}
 				>
 					<small css={``}>{formatMotis(from)}</small>
-					<small css={``}>{}</small>
+					<small
+						css={`
+							color: #555;
+						`}
+					>
+						{humanDuration(connection.seconds)}
+					</small>
 					<small css={``}>{formatMotis(to)}</small>
 				</div>
 			</div>
