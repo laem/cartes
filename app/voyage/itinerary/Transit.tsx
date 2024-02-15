@@ -1,4 +1,5 @@
 import CircularIcon from '@/components/CircularIcon'
+import Image from 'next/image'
 import useSetSearchParams from '@/components/useSetSearchParams'
 import DateSelector from './DateSelector'
 import { stamp } from './motisRequest'
@@ -122,7 +123,7 @@ const Connection = ({
 	return (
 		<li
 			css={`
-				margin-bottom: 1.4rem;
+				margin-bottom: 0.1rem;
 				cursor: pointer;
 			`}
 			onClick={() => setSelectedConnection(index)}
@@ -171,16 +172,6 @@ const Frise = ({
 					transform: translateY(-50%);
 				`}
 			>
-				<small
-					css={`
-						position: absolute;
-						right: calc(100% + 0.4rem);
-						top: 50%;
-						transform: translateY(-50%);
-					`}
-				>
-					{formatMotis(from)}
-				</small>
 				<ul
 					css={`
 						display: flex;
@@ -194,22 +185,22 @@ const Frise = ({
 						<li
 							css={`
 								width: ${transportRelativeRatio(transport, transports) * 100}%;
+								height: 1.8rem;
 							`}
 						>
 							<Transport transport={transport} />
 						</li>
 					))}
 				</ul>
-				<small
+				<div
 					css={`
-						position: absolute;
-						left: calc(100% + 0.4rem);
-						top: 50%;
-						transform: translateY(-50%);
+						display: flex;
+						justify-content: space-between;
 					`}
 				>
-					{formatMotis(to)}
-				</small>
+					<small css={``}>{formatMotis(from)}</small>
+					<small css={``}>{formatMotis(to)}</small>
+				</div>
 			</div>
 		</div>
 	)
@@ -227,6 +218,16 @@ const Transport = ({ transport }) => {
 				height: 100%;
 				display: flex;
 				justify-content: center;
+				padding: 0.2rem 0;
+				img {
+					width: 1rem;
+					height: auto;
+					margin-right: 0.2rem;
+
+					filter: invert(
+						${transport.route_text_color?.toLowerCase() === 'ffffff' ? 0 : 1}
+					);
+				}
 			`}
 			title={`${minutes} min de ${
 				transport.frenchTrainType || transport.move.name
@@ -239,36 +240,35 @@ const Transport = ({ transport }) => {
 						align-items: center;
 					`}
 				>
-					<CircularIcon
-						givenSize={'1.8rem'}
-						padding=".4rem"
+					<Image
 						src={transportIcon(transport.route_type)}
 						alt="Icône d'un bus"
-						background={background}
-						black={transport.route_text_color?.toLowerCase() !== 'ffffff'}
+						width="100"
+						height="100"
 					/>
-					<small
+					<strong
 						css={`
 							background: ${background};
 							color: ${transport.route_text_color
 								? transport.route_text_color
 								: 'white'};
-							padding: 0 0.4rem;
 							line-height: 1.2rem;
 							border-radius: 0.4rem;
 							text-transform: uppercase;
 						`}
 					>
 						{transport.frenchTrainType || transport.shortName}
-					</small>
+					</strong>
 				</span>
 			) : transport.move_type === 'Walk' ? (
-				<CircularIcon
-					givenSize={'1.25rem'}
+				<Image
 					src={'/walking.svg'}
-					padding=".05rem"
 					alt="Icône d'une personne qui marche"
-					background={background}
+					width="100"
+					height="100"
+					css={`
+						width: 1.6rem !important;
+					`}
 				/>
 			) : (
 				correspondance[transport.move_type]
