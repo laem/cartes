@@ -9,7 +9,7 @@ export default function Transit({ data }) {
 	if (data.state === 'error')
 		return <p>Pas de transport en commun trouvé :( </p>
 	const connections = data?.connections
-	console.log('motis', data)
+	console.log('prune motis', data)
 	if (!connections?.length) return null
 
 	const firstDate = connectionStart(connections[0]) // We assume Motis orders them by start date, when you start to walk. Could also be intersting to query the first end date
@@ -31,7 +31,14 @@ export default function Transit({ data }) {
 			<LateWarning firstDate={firstDate} date={data.date} />
 			<DateSelector date={data.date} />
 
-			<Connections connections={connections} date={data.date} />
+			<Connections
+				connections={connections}
+				date={data.date}
+				connectionsTimeRange={{
+					from: data.interval_begin,
+					to: data.interval_end,
+				}}
+			/>
 		</div>
 	)
 }
@@ -51,15 +58,24 @@ const LateWarning = ({ date, firstDate }) => {
 	return null
 }
 
-const Connections = ({ connections, date }) => {
+const Connections = ({ connections, date, connectionsTimeRange }) => {
 	const setSearchParams = useSetSearchParams()
+
+	/* The request result's latest arrival date, usually too far, makes everything
+	 * small
+	 */
 	const endTime = Math.max(
 		...connections.map(({ stops }) => stops.slice(-1)[0].arrival.time)
 	)
+
 	return (
 		<div
 			css={`
 				margin-top: 1rem;
+				overflow-x: scroll;
+				> ul {
+					width: 300%;
+				}
 			`}
 		>
 			<ul>
@@ -70,6 +86,7 @@ const Connections = ({ connections, date }) => {
 						date={date}
 						setSelectedConnection={(choix) => setSearchParams({ choix })}
 						index={index}
+						connectionsTimeRange={connectionsTimeRange}
 					/>
 				))}
 			</ul>
@@ -84,10 +101,64 @@ const startDateFormatter = Intl.DateTimeFormat('fr-FR', {
 	minute: 'numeric',
 })
 const dateFromMotis = (timestamp) => new Date(timestamp * 1000)
+
+const transportRelativeRatio = (transport, transports) => {
+	const sum = transports.reduce((memo, next) => memo + next.seconds, 0)
+
+	const ratio = transport.seconds / sum
+	return ratio
+}
 const formatMotis = (timestamp) =>
 	startDateFormatter.format(dateFromMotis(timestamp))
 
-const Frise = ({ range: [rangeFrom, rangeTo], connection: [from, to] }) => {
+const Connection = ({
+	connection,
+	endTime,
+	date,
+	setSelectedConnection,
+	index,
+	connectionsTimeRange,
+}) => {
+	const transportsWithTimes = connection.transports.map((transport) => {
+		const fromStop = connection.stops[transport.move.range.from]
+		const toStop = connection.stops[transport.move.range.to]
+
+		const seconds = toStop.arrival.time - fromStop.departure.time
+		return { ...transport, seconds }
+	})
+
+	console.log(
+		'prune transports',
+		transportsWithTimes,
+		connection,
+		connectionsTimeRange
+	)
+	return (
+		<li
+			css={`
+				margin-bottom: 1.4rem;
+				cursor: pointer;
+			`}
+			onClick={() => setSelectedConnection(index)}
+		>
+			<Frise
+				range={[stamp(date), endTime]}
+				transports={transportsWithTimes}
+				connection={[connectionStart(connection), connectionEnd(connection)]}
+			/>
+		</li>
+	)
+}
+
+const connectionStart = (connection) => connection.stops[0].departure.time
+
+const connectionEnd = (connection) => connection.stops.slice(-1)[0].arrival.time
+
+const Frise = ({
+	range: [rangeFrom, rangeTo],
+	connection: [from, to],
+	transports,
+}) => {
 	const length = rangeTo - rangeFrom
 
 	const barWidth = ((to - from) / length) * 100,
@@ -95,7 +166,7 @@ const Frise = ({ range: [rangeFrom, rangeTo], connection: [from, to] }) => {
 	return (
 		<div
 			css={`
-				height: 1.1rem;
+				height: 4rem;
 				width: calc(100% - 4rem);
 				margin: 0 2rem;
 				margin-top: 0.4rem;
@@ -110,8 +181,6 @@ const Frise = ({ range: [rangeFrom, rangeTo], connection: [from, to] }) => {
 					position: absolute;
 					left: ${left}%;
 					width: ${barWidth}%;
-					height: 0.6rem;
-					background: var(--darkColor);
 					top: 50%;
 					transform: translateY(-50%);
 				`}
@@ -126,6 +195,25 @@ const Frise = ({ range: [rangeFrom, rangeTo], connection: [from, to] }) => {
 				>
 					{formatMotis(from)}
 				</small>
+				<ul
+					css={`
+						display: flex;
+						justify-content: space-evenly;
+						list-style-type: none;
+						align-items: center;
+						width: 100%;
+					`}
+				>
+					{transports.map((transport) => (
+						<li
+							css={`
+								width: ${transportRelativeRatio(transport, transports) * 100}%;
+							`}
+						>
+							<Transport transport={transport} />
+						</li>
+					))}
+				</ul>
 				<small
 					css={`
 						position: absolute;
@@ -140,50 +228,20 @@ const Frise = ({ range: [rangeFrom, rangeTo], connection: [from, to] }) => {
 		</div>
 	)
 }
-const Connection = ({
-	connection,
-	endTime,
-	date,
-	setSelectedConnection,
-	index,
-}) => (
-	<li
-		css={`
-			margin-bottom: 1.4rem;
-			cursor: pointer;
-		`}
-		onClick={() => setSelectedConnection(index)}
-	>
-		<ul
-			css={`
-				display: flex;
-				justify-content: space-evenly;
-				list-style-type: none;
-				align-items: center;
-			`}
-		>
-			{connection.transports.map((transport) => (
-				<li>
-					<Transport transport={transport} />
-				</li>
-			))}
-		</ul>
-		<Frise
-			range={[Math.round(new Date(date).getTime() / 1000), endTime]}
-			connection={[connectionStart(connection), connectionEnd(connection)]}
-		/>
-	</li>
-)
-
-const connectionStart = (connection) => connection.stops[0].departure.time
-
-const connectionEnd = (connection) => connection.stops.slice(-1)[0].arrival.time
-
 const Transport = ({ transport }) => {
-	const background = transport.route_color || 'var(--darkColor)'
+	const background = transport.route_color || 'rgb(211, 178, 238)'
 
 	return (
-		<span>
+		<span
+			css={`
+				display: inline-block;
+				width: 100%;
+				background: ${background};
+				height: 100%;
+				display: flex;
+				justify-content: center;
+			`}
+		>
 			{transport.move.name ? (
 				<span
 					css={`
