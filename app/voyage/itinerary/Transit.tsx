@@ -1,6 +1,7 @@
-import CircularIcon from '@/components/CircularIcon'
-import Image from 'next/image'
 import useSetSearchParams from '@/components/useSetSearchParams'
+import Image from 'next/image'
+import { useRef } from 'react'
+import { useResizeObserver } from 'usehooks-ts'
 import DateSelector from './DateSelector'
 import { stamp } from './motisRequest'
 import TransitLoader from './TransitLoader'
@@ -243,8 +244,16 @@ const Transport = ({ transport }) => {
 	const background = transport.route_color || 'rgb(211, 178, 238)'
 
 	const minutes = Math.round(transport.seconds / 60)
+	const ref = useRef<HTMLDivElement>(null)
+	const { width = 0, height = 0 } = useResizeObserver({
+		ref,
+		box: 'border-box',
+	})
+
+	const displayImage = width > 30
 	return (
 		<span
+			ref={ref}
 			css={`
 				display: inline-block;
 				width: 100%;
@@ -254,6 +263,7 @@ const Transport = ({ transport }) => {
 				justify-content: center;
 				padding: 0.2rem 0;
 				img {
+					display: ${displayImage ? 'block' : 'none'};
 					width: 1rem;
 					height: auto;
 					margin-right: 0.2rem;
@@ -302,6 +312,7 @@ const Transport = ({ transport }) => {
 					height="100"
 					css={`
 						width: 1.6rem !important;
+						margin: 0 !important;
 					`}
 				/>
 			) : (
