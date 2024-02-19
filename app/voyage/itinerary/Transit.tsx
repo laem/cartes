@@ -2,7 +2,9 @@ import useSetSearchParams from '@/components/useSetSearchParams'
 import Image from 'next/image'
 import { useRef } from 'react'
 import { useResizeObserver } from 'usehooks-ts'
+import BestConnection from './BestConnection'
 import DateSelector from './DateSelector'
+import findBestConnection, { getBestIntervals } from './findBestConnection'
 import { stamp } from './motisRequest'
 import TransitLoader from './TransitLoader'
 
@@ -11,10 +13,11 @@ export default function Transit({ data, searchParams }) {
 	if (data.state === 'error')
 		return <p>Pas de transport en commun trouvé :( </p>
 	const connections = data?.connections
-	console.log('prune motis', data)
 	if (!connections?.length) return null
 
 	const firstDate = connectionStart(connections[0]) // We assume Motis orders them by start date, when you start to walk. Could also be intersting to query the first end date
+
+	const bestConnection = findBestConnection(connections)
 
 	return (
 		<div
@@ -32,6 +35,7 @@ export default function Transit({ data, searchParams }) {
 			<p>Il existe des transports en commun pour ce trajet. </p>
 			<LateWarning firstDate={firstDate} date={data.date} />
 			<DateSelector date={data.date} />
+			{bestConnection && <BestConnection bestConnection={bestConnection} />}
 
 			<Connections
 				connections={connections}
@@ -121,7 +125,7 @@ const startDateFormatter = Intl.DateTimeFormat('fr-FR', {
 	hour: 'numeric',
 	minute: 'numeric',
 })
-const dateFromMotis = (timestamp) => new Date(timestamp * 1000)
+export const dateFromMotis = (timestamp) => new Date(timestamp * 1000)
 
 const formatMotis = (timestamp) =>
 	startDateFormatter.format(dateFromMotis(timestamp))
@@ -164,22 +168,37 @@ const connectionStart = (connection) => connection.stops[0].departure.time
 
 const connectionEnd = (connection) => connection.stops.slice(-1)[0].arrival.time
 
-const humanDuration = (seconds) => {
-	if (seconds < 60) return `${seconds} secondes`
-	const minutes = seconds / 60
-	if (minutes > 15 - 2 && minutes < 15 + 2) return `Un quart d'heure`
-	if (minutes > 30 - 4 && minutes < 30 + 4) return `Une demi-heure`
-	if (minutes > 45 - 4 && minutes < 45 + 4) return `Trois quart d'heure`
+export const humanDuration = (seconds) => {
+	if (seconds < 60) {
+		const text = `${seconds} secondes`
 
-	if (minutes < 60) return `${Math.round(minutes)} min`
+		return { interval: `toutes les ${seconds} secondes`, single: text }
+	}
+	const minutes = seconds / 60
+	if (minutes > 15 - 2 && minutes < 15 + 2)
+		return { interval: `tous les quarts d'heure`, single: `Un quart d'heure` }
+	if (minutes > 30 - 4 && minutes < 30 + 4)
+		return { interval: `toutes les demi-heures`, single: `Une demi-heure` }
+	if (minutes > 45 - 4 && minutes < 45 + 4)
+		return {
+			interval: `tous les trois quarts d'heure`,
+			single: `trois quarts d'heure`,
+		}
+
+	if (minutes < 60) {
+		const text = `${Math.round(minutes)} min`
+		return { interval: `toutes les ${text}`, single: text }
+	}
 	const hours = minutes / 60
 
 	if (hours < 5) {
 		const rest = Math.round(minutes - hours * 60)
 
-		return `${Math.floor(hours)} h${rest > 0 ? ` ${rest} min` : ''}`
+		const text = `${Math.floor(hours)} h${rest > 0 ? ` ${rest} min` : ''}`
+		return { interval: `Toutes les ${text}`, single: text }
 	}
-	return `${Math.round(hours)} heures`
+	const text = `${Math.round(hours)} heures`
+	return { interval: `toutes les ${text}`, single: text }
 }
 const Frise = ({
 	range: [rangeFrom, rangeTo],
@@ -249,7 +268,7 @@ const Frise = ({
 							color: #555;
 						`}
 					>
-						{humanDuration(connection.seconds)}
+						{humanDuration(connection.seconds).single}
 					</small>
 					<small>{formatMotis(to)}</small>
 				</div>
@@ -257,7 +276,7 @@ const Frise = ({
 		</div>
 	)
 }
-const Transport = ({ transport }) => {
+export const Transport = ({ transport }) => {
 	const background = transport.route_color || 'rgb(211, 178, 238)'
 
 	const ref = useRef<HTMLDivElement>(null)
@@ -287,11 +306,11 @@ const Transport = ({ transport }) => {
 ${
 	transport.frenchTrainType
 		? `filter: brightness(0) invert(1);`
-		: transport.route_text_color?.toLowerCase() === 'ffffff' &&
+		: transport.route_text_color?.toLowerCase().includes('ffffff') &&
 		  `filter: invert(1)`
 }
 			`}
-			title={`${humanDuration(transport.seconds)} de ${
+			title={`${humanDuration(transport.seconds).single} de ${
 				transport.frenchTrainType || transport.move.name || 'marche'
 			}`}
 		>
