@@ -11,14 +11,29 @@ export default function findBestConnection(connections) {
 	 * Very simple algorithm to find a best candidate
 	 * to be highlighted at the top
 	 * */
-	const directs = connections.filter(
-		(connection) => connection.trips.length === 1
-	)
-	if (!directs.length) return null
+	const selected = connections
+		.filter((connection) => connection.trips.length === 1)
+		//TODO this selection should probably made using distance, not time. Or both.
+		//it's ok to walk 20 min, and take the train for 10 min, if the train goes at
+		//200 km/h
+		.filter((connection) => {
+			const walking = connection.transports.filter(
+					(transport) => transport.move_type === 'Walk'
+				),
+				walkingTime = walking.reduce((memo, next) => memo + next.seconds, 0)
 
-	console.log('prune directs', directs)
+			return (
+				walkingTime <
+				// because why not ? See note above
+				(2 / 3) *
+					connection.transports.find(
+						(transport) => transport.move_type === 'Transport'
+					).seconds
+			)
+		})
+	if (!selected.length) return null
 
-	const best = directs.reduce((memo, next) => {
+	const best = selected.reduce((memo, next) => {
 		if (memo === null) return next
 		if (connectionDuration(next) < connectionDuration(memo)) return next
 		return memo
