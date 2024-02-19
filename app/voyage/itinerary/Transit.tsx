@@ -6,7 +6,7 @@ import DateSelector from './DateSelector'
 import { stamp } from './motisRequest'
 import TransitLoader from './TransitLoader'
 
-export default function Transit({ data }) {
+export default function Transit({ data, searchParams }) {
 	if (data.state === 'loading') return <TransitLoader />
 	if (data.state === 'error')
 		return <p>Pas de transport en commun trouvé :( </p>
@@ -36,6 +36,7 @@ export default function Transit({ data }) {
 			<Connections
 				connections={connections}
 				date={data.date}
+				selectedConnection={searchParams.choix}
 				connectionsTimeRange={{
 					from: data.interval_begin,
 					to: data.interval_end,
@@ -60,7 +61,12 @@ const LateWarning = ({ date, firstDate }) => {
 	return null
 }
 
-const Connections = ({ connections, date, connectionsTimeRange }) => {
+const Connections = ({
+	connections,
+	date,
+	connectionsTimeRange,
+	selectedConnection,
+}) => {
 	const setSearchParams = useSetSearchParams()
 
 	/* The request result's latest arrival date, usually too far, makes everything
@@ -98,6 +104,7 @@ const Connections = ({ connections, date, connectionsTimeRange }) => {
 						connection={el}
 						endTime={endTime}
 						date={date}
+						selected={+selectedConnection === index}
 						setSelectedConnection={(choix) => setSearchParams({ choix })}
 						index={index}
 						connectionsTimeRange={connectionsTimeRange}
@@ -126,6 +133,7 @@ const Connection = ({
 	setSelectedConnection,
 	index,
 	connectionsTimeRange,
+	selected,
 }) => {
 	console.log('prune', connection)
 	return (
@@ -133,6 +141,9 @@ const Connection = ({
 			css={`
 				margin-bottom: 0.1rem;
 				cursor: pointer;
+				> div {
+					${selected && `border: 2px solid var(--color);`}
+				}
 			`}
 			onClick={() => setSelectedConnection(index)}
 		>

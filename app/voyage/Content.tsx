@@ -163,7 +163,9 @@ export default function Content({
 				</section>
 			)}
 
-			<Itinerary {...{ itinerary, bikeRouteProfile, setBikeRouteProfile }} />
+			<Itinerary
+				{...{ itinerary, bikeRouteProfile, setBikeRouteProfile, searchParams }}
+			/>
 
 			{styleChooser ? (
 				<StyleChooser {...{ setStyleChooser, style }} />

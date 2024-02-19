@@ -5,6 +5,7 @@ export default function Itinerary({
 	itinerary,
 	bikeRouteProfile,
 	setBikeRouteProfile,
+	searchParams,
 }) {
 	if (!itinerary.itineraryMode) return null
 	if (itinerary.itineraryMode && !itinerary.routes)
@@ -38,6 +39,7 @@ export default function Itinerary({
 					date: itinerary.date,
 					setDate: itinerary.setDate,
 				}}
+				searchParams={searchParams}
 			/>
 		</section>
 	)
