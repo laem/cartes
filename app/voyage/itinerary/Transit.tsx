@@ -229,6 +229,7 @@ const Frise = ({
 							css={`
 								width: ${(transport.seconds / connection.seconds) * 100}%;
 								height: 1.8rem;
+								border-right: 2px solid white;
 							`}
 						>
 							<Transport transport={transport} />
