@@ -329,7 +329,7 @@ ${
 					width="100"
 					height="100"
 					css={`
-						height: 2rem !important;
+						height: 1.4rem !important;
 
 						margin: 0 !important;
 					`}
