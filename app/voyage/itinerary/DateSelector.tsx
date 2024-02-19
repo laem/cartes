@@ -29,7 +29,7 @@ export default function DateSelector({ date }) {
 				id="trainDate"
 				name="trainDate"
 				value={localDate}
-				min={initialDate}
+				min={initialDate()}
 				onChange={(e) => {
 					const value = e.target.value
 					// changing e.g. the weekday starting with the 0 diigt with the keyboard will make value '' on firefox, LOL

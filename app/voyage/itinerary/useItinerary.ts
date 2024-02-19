@@ -1,7 +1,6 @@
 import useSetSearchParams from '@/components/useSetSearchParams'
 import distance from '@turf/distance'
 import { useCallback, useEffect, useMemo, useState } from 'react'
-import { useDebounce } from 'usehooks-ts'
 import useDrawTransit from '../effects/useDrawTransit'
 import { initialDate } from '../GareInfo'
 import { decodeDate } from './DateSelector'
@@ -26,7 +25,7 @@ export default function useItinerary(
 	searchParams
 ) {
 	const [routes, setRoutes] = useState(null)
-	const date = decodeDate(searchParams.date) || initialDate
+	const date = decodeDate(searchParams.date) || initialDate()
 	const selectedConnection = searchParams.choix
 
 	//const [motisTrips, setMotisTrips] = useState(null)

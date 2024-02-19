@@ -1,12 +1,14 @@
 import { useState } from 'react'
 
-export const initialDate = new Date()
-	.toISOString()
-	.split(':')
-	.slice(null, -1)
-	.join(':')
+export const initialDate = () => {
+	const stringDate = new Date().toLocaleString('fr')
+	const [date, hour] = stringDate.split(' ')
+
+	return date.split('/').reverse().join('-') + 'T' + hour.slice(0, -3)
+}
+
 export default function GareInfo({ clickedGare }) {
-	const [date, setDate] = useState(initialDate)
+	const [date, setDate] = useState(initialDate())
 	console.log(date)
 	return (
 		<div
@@ -47,7 +49,7 @@ export default function GareInfo({ clickedGare }) {
 				id="trainDate"
 				name="trainDate"
 				value={date}
-				min={initialDate}
+				min={initialDate()}
 				onChange={(e) => setDate(e.target.value)}
 			/>
 			<h2>Gare de {clickedGare.nom}</h2>
