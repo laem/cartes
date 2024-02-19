@@ -22,8 +22,8 @@ export default function useDrawTransit(map, transit, selectedConnection) {
 						type: 'Feature',
 						properties: {
 							move_type: next.move_type,
-							route_color: next.route_color,
-							route_color_darker: next.route_color_darker,
+							route_color: next.route_color || '#d3b2ee',
+							route_color_darker: next.route_color_darker || '',
 							route_text_color: next.route_text_color,
 						},
 						geometry: {
