@@ -8,12 +8,14 @@ const snapPoints = [-50, 0.5, 150, 100, 0],
 	initialSnap = 3
 
 export default function ModalSheet(props) {
+	const [trackedSnap, setTrackedSnap] = useState(initialSnap)
 	const [isOpen, setOpen] = useState(false)
 	const ref = useRef<SheetRef>()
 	const setSnap = useCallback(
 		(i: number) => {
 			console.log('snapp to ' + i)
 
+			console.log('modal sheet ref current', ref.current)
 			ref.current?.snapTo(i)
 		},
 		[ref]
@@ -48,9 +50,10 @@ export default function ModalSheet(props) {
 				snapPoints={snapPoints}
 				initialSnap={initialSnap}
 				mountPoint={document.querySelector('main')}
-				onSnap={(snapIndex) =>
+				onSnap={(snapIndex) => {
 					console.log('> Current snap point index:', snapIndex)
-				}
+					setTrackedSnap(snapIndex)
+				}}
 			>
 				<Sheet.Container
 					css={`
@@ -70,6 +73,7 @@ export default function ModalSheet(props) {
 								<Content
 									{...props}
 									sideSheet={false}
+									snap={trackedSnap}
 									setSnap={setSnap}
 									openSheet={setOpen}
 								/>

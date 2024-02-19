@@ -80,6 +80,7 @@
 		"@opentelemetry/api": "^1.4.1",
 		"@pmmmwh/react-refresh-webpack-plugin": "^0.5.1",
 		"@rehooks/local-storage": "^2.4.4",
+		"@turf/bbox": "^6.5.0",
 		"@turf/distance": "^6.5.0",
 		"@turf/length": "^6.5.0",
 		"@turf/turf": "^6.5.0",

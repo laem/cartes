@@ -40,6 +40,7 @@ export default function Content({
 	zoom,
 	sideSheet, // This gives us the indication that we're on the desktop version, where the Content is on the left, always visible, as opposed to the mobile version where a pull-up modal is used
 	searchParams,
+	snap,
 	setSnap = (snap) => null,
 	openSheet = () => null,
 	setStyleChooser,
