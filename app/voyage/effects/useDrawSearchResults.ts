@@ -2,7 +2,7 @@ import { useEffect, useState } from 'react'
 import { osmRequest } from '../osmRequest'
 import useDrawQuickSearchFeatures from './useDrawQuickSearchFeatures'
 
-export default function useDrawSearchResults(map, state) {
+export default function useDrawSearchResults(map, state, setOsmFeature) {
 	// Photon search results are not full OSM objectfs, lacking tags, so lacking
 	// opening times for instance
 	const [features, setFeatures] = useState([])
@@ -34,7 +34,7 @@ export default function useDrawSearchResults(map, state) {
 		}
 	}, [map, setFeatures, results])
 
-	useDrawQuickSearchFeatures(map, features, false, category)
+	useDrawQuickSearchFeatures(map, features, false, category, setOsmFeature)
 	console.log('olivier osm features', features)
 }
 

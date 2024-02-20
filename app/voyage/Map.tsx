@@ -52,7 +52,9 @@ export default function Map({ searchParams }) {
 	console.log('bleu state', state)
 	const map = useAddMap(styleUrl, setZoom, setBbox, mapContainerRef, setState)
 
-	useDrawSearchResults(map, state)
+	const resetInput = (which) =>
+		setState({ ...state, [which]: defaultState[which] })
+
 	const [osmFeature, setOsmFeature] = useState(null)
 	const [latLngClicked, setLatLngClicked] = useState(null)
 	const [bikeRouteProfile, setBikeRouteProfile] = useState('safety')
@@ -206,7 +208,18 @@ out skel qt;
 		fetchCategories()
 	}, [category, map])
 
-	useDrawQuickSearchFeatures(map, features, showOpenOnly, category)
+	const onSearchResultClick = (feature) => {
+		resetInput('vers')
+		setOsmFeature(feature)
+	}
+	useDrawQuickSearchFeatures(
+		map,
+		features,
+		showOpenOnly,
+		category,
+		onSearchResultClick
+	)
+	useDrawSearchResults(map, state, onSearchResultClick)
 
 	useEffect(() => {
 		if (!center || !clickedGare) return
@@ -458,36 +471,6 @@ out skel qt;
 		}
 		request()
 	}, [map, featureType, featureId, choice, osmFeature])
-
-	useEffect(() => {
-		if (!map || distanceMode || itineraryMode) return
-
-		map.on('click', 'features-points', async (e) => {
-			const feature = e.features[0]
-			const properties = feature.properties,
-				tagsRaw = properties.tags
-			console.log('quickSearchOSMfeatureClick', feature)
-			const tags = typeof tagsRaw === 'string' ? JSON.parse(tagsRaw) : tagsRaw
-
-			setSearchParams({
-				lieu: encodePlace(properties.featureType, properties.id),
-			})
-
-			const osmFeature = { ...properties, tags }
-			console.log(
-				'will set OSMfeature after quickSearch marker click, ',
-				osmFeature
-			)
-			setOsmFeature(osmFeature)
-		})
-		map.on('mouseenter', 'features-points', () => {
-			map.getCanvas().style.cursor = 'pointer'
-		})
-		// Change it back to a pointer when it leaves.
-		map.on('mouseleave', 'features-points', () => {
-			map.getCanvas().style.cursor = 'auto'
-		})
-	}, [map, distanceMode, itineraryMode, setSearchParams])
 
 	useHoverOnMapFeatures(map)
 

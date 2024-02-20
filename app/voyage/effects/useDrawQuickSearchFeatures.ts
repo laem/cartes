@@ -3,13 +3,17 @@ import parseOpeningHours from 'opening_hours'
 import { categoryIconUrl } from '../QuickFeatureSearch'
 import { useEffect } from 'react'
 import buildSvgImage from './buildSvgImage'
+import useSetSearchParams from '@/components/useSetSearchParams'
+import { encodePlace } from '../utils'
 
 export default function useDrawQuickSearchFeatures(
 	map,
 	features,
 	showOpenOnly,
-	category
+	category,
+	setOsmFeature
 ) {
+	const setSearchParams = useSetSearchParams()
 	useEffect(() => {
 		if (!map || features.length < 1 || !category) return
 
@@ -150,6 +154,32 @@ export default function useDrawQuickSearchFeatures(
 					'circle-translate': [12, -12],
 				},
 				filter: ['!=', 'isOpenColor', false],
+			})
+
+			map.on('click', baseId + 'points', async (e) => {
+				const feature = e.features[0]
+				const properties = feature.properties,
+					tagsRaw = properties.tags
+				console.log('quickSearchOSMfeatureClick', feature)
+				const tags = typeof tagsRaw === 'string' ? JSON.parse(tagsRaw) : tagsRaw
+
+				setSearchParams({
+					lieu: encodePlace(properties.featureType, properties.id),
+				})
+
+				const osmFeature = { ...properties, tags }
+				console.log(
+					'will set OSMfeature after quickSearch marker click, ',
+					osmFeature
+				)
+				setOsmFeature(osmFeature)
+			})
+			map.on('mouseenter', 'features-points', () => {
+				map.getCanvas().style.cursor = 'pointer'
+			})
+			// Change it back to a pointer when it leaves.
+			map.on('mouseleave', 'features-points', () => {
+				map.getCanvas().style.cursor = 'auto'
 			})
 		})
 
