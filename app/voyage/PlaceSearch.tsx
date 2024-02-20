@@ -73,6 +73,7 @@ export default function PlaceSearch({
 
 							margin-bottom: 0;
 						}
+						position: relative;
 					`}
 				>
 					<input
@@ -90,7 +91,29 @@ export default function PlaceSearch({
 						placeholder={'Saint-Malo, Le Conquet, Café du Port...'}
 						onChange={({ target: { value } }) => onDestinationChange(value)}
 					/>
-					<button onClick={() => onDestinationChange(null)}>X</button>
+					{value && (
+						<button
+							onClick={() => onDestinationChange(null)}
+							css={`
+								position: absolute;
+								right: 0.6rem;
+								top: 50%;
+								transform: translateY(-50%);
+								img {
+									width: 0.8rem;
+									height: 0.8rem;
+								}
+								padding: 0;
+							`}
+						>
+							<Image
+								src="/close.svg"
+								alt="Effacer la recherche"
+								width="10"
+								height="10"
+							/>
+						</button>
+					)}
 				</InputStyle>
 			</div>
 			{vers.results &&
