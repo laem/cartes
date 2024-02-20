@@ -20,16 +20,21 @@ export default function PlaceSearch({
 	const urlSearchQuery = searchParams.q
 	const { vers } = state
 	const value = vers.inputValue
+	console.log('violet', value)
 
 	const onInputChange =
 		(whichInput, localSearch = false) =>
 		(v) => {
+			const oldState = state[whichInput]
 			setState({
 				...state,
-				[whichInput]: { ...state[whichInput], inputValue: v },
+				[whichInput]: {
+					...(v == null ? { ...oldState, results: null } : oldState),
+					inputValue: v,
+				},
 				validated: false,
 			})
-			if (v.length > 2) {
+			if (v?.length > 2) {
 				const hash = window.location.hash,
 					local = hash.split('/').slice(1, 3)
 
@@ -72,7 +77,7 @@ export default function PlaceSearch({
 				>
 					<input
 						type="text"
-						value={value}
+						value={value || ''}
 						onClick={(e) => {
 							setSnap(0)
 							e.preventDefault()
@@ -85,6 +90,7 @@ export default function PlaceSearch({
 						placeholder={'Saint-Malo, Le Conquet, Café du Port...'}
 						onChange={({ target: { value } }) => onDestinationChange(value)}
 					/>
+					<button onClick={() => onDestinationChange(null)}>X</button>
 				</InputStyle>
 			</div>
 			{vers.results &&

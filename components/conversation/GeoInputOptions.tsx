@@ -52,7 +52,6 @@ export default function GeoInputOptions({
 }
 
 export const buildLocationText = (item) => {
-	console.log('jaune addresse', item)
 	if (item.street) return buildAddress((key) => item[key] || '')
 	const nameIncludes = (what) =>
 		item.name && item.name.toLowerCase().includes((what || '').toLowerCase())
