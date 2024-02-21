@@ -21,7 +21,8 @@ export default function useRightClick(map) {
 				return
 			}
 			timeout = setTimeout(() => {
-				console.log('jaune')
+				const { lat: latitude, lng: longitude } = e.lngLat
+				setClickedPoint({ latitude, longitude })
 			}, 500)
 		})
 
