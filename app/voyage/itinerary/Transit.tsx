@@ -40,7 +40,7 @@ export default function Transit({ data, searchParams }) {
 			<Connections
 				connections={connections}
 				date={data.date}
-				selectedConnection={searchParams.choix}
+				selectedConnection={searchParams.choix || 0}
 				connectionsTimeRange={{
 					from: data.interval_begin,
 					to: data.interval_end,
