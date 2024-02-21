@@ -4,7 +4,7 @@ import { useMediaQuery } from 'usehooks-ts'
 
 export default function useDrawTransit(map, transit, selectedConnection) {
 	const connection =
-		transit?.connections && transit.connections[selectedConnection]
+		transit?.connections && transit.connections[selectedConnection || 0]
 
 	const isMobile = useMediaQuery('(max-width: 800px)')
 	useEffect(() => {

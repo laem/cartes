@@ -95,6 +95,11 @@ export default function Content({
 	const minimumQuickSearchZoom = getMinimumQuickSearchZoom(!sideSheet)
 
 	useEffect(() => {
+		if (clickedPoint) {
+			setSnap(1)
+		}
+	}, [clickedPoint, setSnap])
+	useEffect(() => {
 		if (!showSearch) return
 		if (zoom > minimumQuickSearchZoom) {
 			setSnap(2)
