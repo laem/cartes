@@ -28,7 +28,6 @@ export default function SetDestination({ destination, origin }) {
 					color: white;
 				`}
 			>
-				{' '}
 				<div
 					css={`
 						background: white;
@@ -39,7 +38,7 @@ export default function SetDestination({ destination, origin }) {
 						img {
 							width: 100%;
 							height: 100%;
-							padding: 0.2rem;
+							padding: 0.25rem;
 						}
 					`}
 				>
