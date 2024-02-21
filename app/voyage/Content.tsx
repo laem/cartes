@@ -255,7 +255,10 @@ export default function Content({
 								transportStopData={transportStopData}
 							/>
 						) : clickedPoint ? (
-							<ClickedPoint clickedPoint={clickedPoint} />
+							<ClickedPoint
+								clickedPoint={clickedPoint}
+								origin={state.depuis.geolocated}
+							/>
 						) : (
 							!clickTipRead && (
 								<div>
