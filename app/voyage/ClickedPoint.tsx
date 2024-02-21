@@ -7,18 +7,13 @@ export default function ClickedPoint({
 	origin,
 }) {
 	console.log('jaune data', data)
-	const LatLong = () => (
-		<div>
-			{latitude} {longitude}
-		</div>
-	)
 
 	console.log('origin', origin)
 	if (!data)
 		return (
 			<div>
 				<Distance origin={origin} destination={{ longitude, latitude }} />
-				<LatLong />
+				<LatLong {...{ latitude, longitude }} />
 			</div>
 		)
 	const feature = data.features[0],
@@ -27,18 +22,34 @@ export default function ClickedPoint({
 
 	if (isAddress)
 		return (
-			<div>
-				<Distance origin={origin} destination={{ longitude, latitude }} />
+			<div
+				css={`
+					margin: 1rem 0;
+				`}
+			>
+				<strong>Adresse</strong>
 				<Address tags={item} noPrefix={true} />
+				<strong>Distance</strong>
+				<Distance origin={origin} destination={{ longitude, latitude }} />
 			</div>
 		)
 
+	/* What was I trying to do here ? As far as I've tested, it returns undefined
+	 * - undefined
 	const locationText = buildLocationText(data)
-	return (
-		<div>
-			<Distance origin={origin} destination={{ longitude, latitude }} />
-			<LatLong />
 			{data && <div>{locationText}</div>}
+
+*/
+	return (
+		<div
+			css={`
+				margin: 1rem 0;
+			`}
+		>
+			<strong>Distance</strong>
+			<Distance origin={origin} destination={{ longitude, latitude }} />
+			<strong>Coordonnées</strong>
+			<LatLong {...{ latitude, longitude }} />
 		</div>
 	)
 }
@@ -70,5 +81,21 @@ const Distance = ({ destination, origin }) => {
 			: distance < 10
 			? `${Math.round(distance * 10) / 10} km`
 			: `${Math.round(distance)} km`
-	return <div>{humanDistance}</div>
+	return (
+		<div>
+			<small>À {humanDistance}</small>
+		</div>
+	)
 }
+const LatLong = ({ latitude, longitude }) => (
+	<div
+		css={`
+			small {
+				color: #666;
+			}
+		`}
+	>
+		<small>longitude</small>&nbsp;{longitude.toFixed(4)} <small>latitude</small>
+		&nbsp;{latitude.toFixed(4)}
+	</div>
+)
