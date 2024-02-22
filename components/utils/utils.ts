@@ -93,7 +93,8 @@ export const last = (array) => {
 	return lastItem
 }
 
-export function omit(keys, obj) {
+export function omit(givenKeys, obj) {
+	const keys = [...givenKeys]
 	if (!keys.length) {
 		return obj
 	}

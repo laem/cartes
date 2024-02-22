@@ -30,6 +30,7 @@ import useDrawTransport from './effects/useDrawTransport'
 import useTransportStopData from './transport/useTransportStopData'
 import useDrawSearchResults from './effects/useDrawSearchResults'
 import useRightClick from './effects/useRightClick'
+import useSearchLocalTransit from './effects/useSearchLocalTransit'
 
 export const defaultState = {
 	depuis: { inputValue: null, choice: false },
@@ -40,6 +41,11 @@ export default function Map({ searchParams }) {
 	const mapContainerRef = useRef(null)
 	const [zoom, setZoom] = useState(defaultZoom)
 	const [bbox, setBbox] = useState(null)
+	const center = useMemo(
+		() =>
+			bbox && [(bbox[0][0] + bbox[1][0]) / 2, (bbox[0][1] + bbox[1][1]) / 2],
+		[bbox]
+	)
 	const [safeStyleKey, setSafeStyleKey] = useState(null)
 	const [tempStyle, setTempStyle] = useState(null)
 	const styleKey = tempStyle || searchParams.style || 'base',
@@ -90,7 +96,7 @@ export default function Map({ searchParams }) {
 	}
 
 	const choice = state.vers?.choice
-	const center = useMemo(
+	const target = useMemo(
 		() => choice && [choice.longitude, choice.latitude],
 		[choice]
 	)
@@ -107,6 +113,8 @@ export default function Map({ searchParams }) {
 			setTempStyle(null)
 		}
 	}, [setTempStyle, transportStopData])
+
+	useSearchLocalTransit(map, searchParams.transports === 'oui', center, zoom)
 
 	useDrawTransport(map, transportStopData, safeStyleKey)
 	const [gares, setGares] = useState(null)
@@ -222,10 +230,10 @@ out skel qt;
 	useDrawSearchResults(map, state, onSearchResultClick)
 
 	useEffect(() => {
-		if (!center || !clickedGare) return
+		if (!target || !clickedGare) return
 
 		const [lon1, lat1] = clickedGare.coordonnées,
-			[lon2, lat2] = center
+			[lon2, lat2] = target
 
 		async function fetchBikeRoute() {
 			const url = `https://brouter.osc-fr1.scalingo.io/brouter?lonlats=${lon1},${lat1}|${lon2},${lat2}&profile=${bikeRouteProfile}&alternativeidx=0&format=geojson`
@@ -235,7 +243,7 @@ out skel qt;
 		}
 
 		fetchBikeRoute()
-	}, [center, clickedGare, bikeRouteProfile])
+	}, [target, clickedGare, bikeRouteProfile])
 	useEffect(() => {
 		async function fetchGares() {
 			const res = await fetch('/gares.json')
@@ -475,7 +483,7 @@ out skel qt;
 	useHoverOnMapFeatures(map)
 
 	useEffect(() => {
-		if (!map || !center) return
+		if (!map || !target) return
 
 		const marker = state.vers.marker
 
@@ -486,12 +494,12 @@ out skel qt;
 					: Math.max(15, zoom)
 			console.log(
 				'will fly to in after OSM download from vers marker',
-				center,
+				target,
 				tailoredZoom,
 				destinationType
 			)
 			map.flyTo({
-				center,
+				target,
 				zoom: tailoredZoom,
 				pitch: 50, // pitch in degrees
 				bearing: 20, // bearing in degrees
@@ -500,11 +508,11 @@ out skel qt;
 				color: 'var(--darkerColor)',
 				draggable: true,
 			})
-				.setLngLat(center)
+				.setLngLat(target)
 				.addTo(map)
 
 			setState((state) => ({ ...state, vers: { ...state.vers, marker } }))
-			setLatLngClicked({ lng: center[0], lat: center[1] })
+			setLatLngClicked({ lng: target[0], lat: target[1] })
 
 			function onDragEnd() {
 				const { lng, lat } = marker.getLngLat()
@@ -519,10 +527,10 @@ out skel qt;
 
 			marker.on('dragend', onDragEnd)
 		}
-	}, [center, map, state.vers, setState])
+	}, [target, map, state.vers, setState])
 
 	const lesGaresProches =
-		center && gares && sortGares(gares, center).slice(0, 30)
+		target && gares && sortGares(gares, target).slice(0, 30)
 
 	useEffect(() => {
 		if (!lesGaresProches) return

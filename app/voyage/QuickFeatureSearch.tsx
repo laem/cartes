@@ -114,25 +114,48 @@ export default function QuickFeatureSearch({
 						`}
 					>
 						{!doFilter && (
-							<li
-								key="photos"
-								css={`
-									${quickSearchButtonStyle(searchParams.photos === 'oui')}
-								`}
-							>
-								<Link
-									href={setSearchParams(
-										{
-											...omit(['photos'], searchParams),
-											...(searchParams.photos ? {} : { photos: 'oui' }),
-										},
-										true,
-										true
-									)}
+							<>
+								<li
+									key="photos"
+									css={`
+										${quickSearchButtonStyle(searchParams.photos === 'oui')}
+									`}
 								>
-									<img src={'/icons/photo.svg'} />
-								</Link>
-							</li>
+									<Link
+										href={setSearchParams(
+											{
+												...omit(['photos'], searchParams),
+												...(searchParams.photos ? {} : { photos: 'oui' }),
+											},
+											true,
+											true
+										)}
+									>
+										<img src={'/icons/photo.svg'} />
+									</Link>
+								</li>
+								<li
+									key="transit"
+									css={`
+										${quickSearchButtonStyle(searchParams.transports === 'oui')}
+									`}
+								>
+									<Link
+										href={setSearchParams(
+											{
+												...omit(['transports'], searchParams),
+												...(searchParams.transports
+													? {}
+													: { transports: 'oui' }),
+											},
+											true,
+											true
+										)}
+									>
+										<img src={'/icons/bus.svg'} />
+									</Link>
+								</li>
+							</>
 						)}
 						{filteredCategories.map((category) => {
 							return (

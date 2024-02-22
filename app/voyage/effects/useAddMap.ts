@@ -67,6 +67,10 @@ export default function useAddMap(
 			if (window.location.hash === defaultHash && mobile) geolocate.trigger()
 		})
 
+		newMap.on('moveend', (e) => {
+			setBbox(newMap.getBounds().toArray())
+		})
+
 		return () => {
 			setMap(null)
 			newMap?.remove()
