@@ -152,7 +152,12 @@ export default function QuickFeatureSearch({
 											true
 										)}
 									>
-										<img src={'/icons/bus.svg'} />
+										<img
+											src={'/transports.svg'}
+											css={`
+												filter: none !important;
+											`}
+										/>
 									</Link>
 								</li>
 							</>

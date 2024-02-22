@@ -39,7 +39,7 @@ export default function useSearchLocalTransit(map, active, center, zoom) {
 	console.log('chartreuse', stopTimes)
 
 	useEffect(() => {
-		if (!map || !stops.length) return
+		if (!map || !stops.length || !active) return
 		const markers = stops.map((stop) => {
 			const element = document.createElement('div')
 			const size = goodIconSize(zoom, 1.3) + 'px'
@@ -48,7 +48,10 @@ export default function useSearchLocalTransit(map, active, center, zoom) {
 			background: chartreuse;
 			width: ${size}; height: auto;
 			`
-			element.innerHTML = stop.stop_name
+			const routes = stopTimes[stop.stop_id]?.routes
+			element.innerHTML =
+				stop.stop_name +
+				(routes && routes.length ? routes[0].route_short_name : '')
 
 			element.addEventListener('click', () => {
 				console.log(stop)
@@ -63,5 +66,5 @@ export default function useSearchLocalTransit(map, active, center, zoom) {
 		return () => {
 			markers.map((marker) => marker.remove())
 		}
-	}, [map, stops, zoom])
+	}, [map, stops, stopTimes, zoom])
 }
