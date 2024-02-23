@@ -2,8 +2,8 @@ import css from '@/components/css/convertToJs'
 import { useState } from 'react'
 import { nowAsYYMMDD } from './Route'
 
+const now = new Date()
 export default function Calendar({ data }) {
-	console.log('DD', data)
 	const today = nowAsYYMMDD('-')
 	const [day, setDay] = useState(today)
 
@@ -89,7 +89,12 @@ export default function Calendar({ data }) {
 										<strong>{hour % 24} h</strong>
 										<ul>
 											{entries.map((entry) => (
-												<li key={entry.arrival_time}>
+												<li
+													key={entry.arrival_time}
+													css={`
+														opacity: ${entry.arrivalDate < now ? 0.3 : 1};
+													`}
+												>
 													{entry.arrival_time.split(':')[1]}
 												</li>
 											))}
