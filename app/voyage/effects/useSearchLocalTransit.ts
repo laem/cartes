@@ -36,22 +36,27 @@ export default function useSearchLocalTransit(map, active, center, zoom) {
 		doFetch()
 	}, [stops, setStopTimes])
 
-	console.log('chartreuse', stopTimes)
-
 	useEffect(() => {
 		if (!map || !stops.length || !active) return
 		const markers = stops.map((stop) => {
+			const routes = stopTimes[stop.stop_id]?.routes
+
+			const jsx = `<div><div>${stop.stop_name}</div>
+${
+	routes &&
+	`
+				<ul>${routes.map((route) => `<li>${route.route_short_name}</li>`)}</ul>`
+}</div>`
+
 			const element = document.createElement('div')
 			const size = goodIconSize(zoom, 1.3) + 'px'
+
 			element.style.cssText = `
 			display: block;
 			background: chartreuse;
 			width: ${size}; height: auto;
 			`
-			const routes = stopTimes[stop.stop_id]?.routes
-			element.innerHTML =
-				stop.stop_name +
-				(routes && routes.length ? routes[0].route_short_name : '')
+			element.innerHTML = jsx
 
 			element.addEventListener('click', () => {
 				console.log(stop)
