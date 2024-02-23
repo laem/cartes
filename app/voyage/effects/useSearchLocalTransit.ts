@@ -43,16 +43,21 @@ export default function useSearchLocalTransit(map, active, center, zoom) {
 			const routes = stopTimes[stop.stop_id]?.routes
 			console.log('olive', routes)
 
-			const jsx = `<div><div>${stop.stop_name}</div>
+			const jsx = `<div><div style="padding: 0 .2rem">${stop.stop_name}</div>
 ${
-	routes &&
-	`
-				<ul>${routes
+	routes
+		? `
+				<ul style="list-style-type: none">${routes
 					.map(
 						(route) =>
-							`<li style="background: #${route.route_color}; color: #${route.route_text_color}">${route.route_short_name}</li>`
+							`<li style="${`
+							padding: 0 .2rem;
+							font-weight: bold;
+							  background: #${route.route_color};
+								color: #${route.route_text_color}`}">${route.route_short_name}</li>`
 					)
 					.join('')}</ul>`
+		: ''
 }</div>`
 
 			const element = document.createElement('div')
@@ -60,7 +65,7 @@ ${
 
 			element.style.cssText = `
 			display: block;
-			background: chartreuse;
+			background: var(--lightestColor);
 			width: ${size}; height: auto;
 			`
 			element.innerHTML = jsx
