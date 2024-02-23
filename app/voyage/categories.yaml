@@ -58,7 +58,7 @@
   open by default: true
   icon: https://cdn.jsdelivr.net/gh/mapbox/maki/icons/bank.svg
 - name: Hôtel
-  query: '[tourism=hotel]'
+  query: '["tourism"~"hotel|chalet"]'
   open by default: true
   icon: https://cdn.jsdelivr.net/gh/mapbox/maki/icons/lodging.svg
 - name: vue
