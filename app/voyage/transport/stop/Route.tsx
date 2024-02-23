@@ -1,6 +1,7 @@
 import css from '@/components/css/convertToJs'
 import Emoji from '@/components/Emoji'
 import { findContrastedTextColor } from '@/components/utils/colors'
+import { omit } from '@/components/utils/utils'
 import { useState } from 'react'
 import Calendar from './Calendar'
 
@@ -29,25 +30,35 @@ export default function Route({ route, stops }) {
 	const now = new Date()
 
 	const augmentedStops = stops
+
 		.map((stop) => {
 			const time = timeFromHHMMSS(stop.arrival_time)
 
-			// in Bretagne unified GTFS, all the GTFS are normalized to use this technique to specify trip days
-			const calendarDate = stop.trip.calendarDates[0].date
-			const serializedDay = '' + calendarDate,
-				year = serializedDay.slice(0, 4),
-				month = serializedDay.slice(4, 6),
-				day = serializedDay.slice(6)
-			const arrivalDate = toDate({ year, month, day }, time)
+			// in Bretagne unified GTFS, all the GTFS were normalized with a technique where each trip has one calendar date only
+			const dates = stop.trip.calendarDates
+				.map((calendarDateObject) => {
+					if (calendarDateObject.exception_type === 2) return false
+					const { date: calendarDate } = calendarDateObject
 
-			const isFuture = arrivalDate > now
+					const serializedDay = '' + calendarDate,
+						year = serializedDay.slice(0, 4),
+						month = serializedDay.slice(4, 6),
+						day = serializedDay.slice(6)
+					const arrivalDate = toDate({ year, month, day }, time)
 
-			return {
-				...stop,
-				isFuture,
-				arrivalDate,
-			}
+					const isFuture = arrivalDate > now
+
+					return {
+						isFuture,
+						arrivalDate,
+						day: `${year}-${month}-${day}`,
+					}
+				})
+				.filter(Boolean)
+
+			return dates.map((el) => ({ ...omit(['trip'], stop), ...el }))
 		})
+		.flat()
 		.sort((a, b) => a.arrivalDate - b.arrivalDate)
 
 	/*
@@ -84,7 +95,7 @@ export default function Route({ route, stops }) {
 			? (direction === 1 ? nameParts.reverse() : nameParts).join(' → ')
 			: rawName
 
-	console.log('ROUTE', route, stopSelection)
+	console.log('olive route stop selection', route, stopSelection, stops)
 	return (
 		<li
 			css={`

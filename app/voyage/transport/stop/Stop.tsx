@@ -19,9 +19,7 @@ export const findStopId = (tags) => {
 	return stopId
 }
 export default function Stop({ tags, data }) {
-	console.log('tags', tags)
-
-	console.log('bus data', data)
+	console.log('olive bus data', data, 'tags', tags)
 	if (!data || !data.routes) return null
 
 	return (

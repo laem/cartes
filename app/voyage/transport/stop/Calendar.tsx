@@ -7,9 +7,7 @@ export default function Calendar({ data }) {
 	const today = nowAsYYMMDD('-')
 	const [day, setDay] = useState(today)
 
-	const actualTimes = data.filter((el) =>
-		el.trip.calendarDates.find((d) => d.date === +day.replace(/-/g, ''))
-	)
+	const actualTimes = data.filter((el) => el.day === day)
 
 	// 48 and not 24, because the bus passing at 2h this night will be marked as
 	// passing at 25h
