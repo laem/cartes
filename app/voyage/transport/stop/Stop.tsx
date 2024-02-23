@@ -33,20 +33,23 @@ export default function Stop({ tags, data }) {
 					<Route
 						key={route.route_id}
 						route={route}
-						stops={data.stops
-							.map((stop) => {
-								// We thought one trip can be shared with multiple stops, hence
-								// transmitting less info with a trip dictionnary than a
-								// stop.trip property
-								const trip = data.trips.find((t) => t.trip_id === stop.trip_id)
-								return { ...stop, trip }
-							})
-							.filter((stop) => stop.trip.route_id === route.route_id)}
+						stops={enrichStopWithTrip(trips, stops).filter(
+							(stop) => stop.trip.route_id === route.route_id
+						)}
 					/>
 				))}
 			</ul>
 		</div>
 	)
 }
+
+export const enrichStopWithTrip = (trips, stops) =>
+	stops.map((stop) => {
+		// We thought one trip can be shared with multiple stops, hence
+		// transmitting less info with a trip dictionnary than a
+		// stop.trip property
+		const trip = data.trips.find((t) => t.trip_id === stop.trip_id)
+		return { ...stop, trip }
+	})
 
 export const transportKeys = ['ref:FR:STAR']
