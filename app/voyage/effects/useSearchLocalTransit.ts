@@ -1,3 +1,4 @@
+import css from '@/components/css/convertToJs'
 import { goodIconSize } from '@/components/voyage/mapUtils'
 import maplibregl from 'maplibre-gl'
 import { useEffect, useState } from 'react'
@@ -40,12 +41,18 @@ export default function useSearchLocalTransit(map, active, center, zoom) {
 		if (!map || !stops.length || !active) return
 		const markers = stops.map((stop) => {
 			const routes = stopTimes[stop.stop_id]?.routes
+			console.log('olive', routes)
 
 			const jsx = `<div><div>${stop.stop_name}</div>
 ${
 	routes &&
 	`
-				<ul>${routes.map((route) => `<li>${route.route_short_name}</li>`)}</ul>`
+				<ul>${routes
+					.map(
+						(route) =>
+							`<li style="background: #${route.route_color}; color: #${route.route_text_color}">${route.route_short_name}</li>`
+					)
+					.join('')}</ul>`
 }</div>`
 
 			const element = document.createElement('div')
