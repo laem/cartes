@@ -33,12 +33,9 @@ export default function Stop({ tags, data }) {
 					<Route
 						key={route.route_id}
 						route={route}
-						stops={data.stops
-							.map((stop) => {
-								const trip = data.trips.find((t) => t.trip_id === stop.trip_id)
-								return { ...stop, trip }
-							})
-							.filter((stop) => stop.trip.route_id === route.route_id)}
+						stops={data.stops.filter(
+							(stop) => stop.trip.route_id === route.route_id
+						)}
 					/>
 				))}
 			</ul>
