@@ -12,6 +12,7 @@ import Stop, { isNotTransportStop, transportKeys } from './transport/stop/Stop'
 
 export default function OsmFeature({ data, transportStopData }) {
 	if (!data.tags) return null
+	console.log('tags', data.tags)
 	const {
 		name,
 		description,
@@ -49,8 +50,6 @@ export default function OsmFeature({ data, transportStopData }) {
 		}),
 		keyValueTags = translatedTags.filter(([, t]) => t.length === 2),
 		soloTags = translatedTags.filter(([, t]) => t.length === 1)
-
-	console.log('kvt', keyValueTags)
 
 	return (
 		<div

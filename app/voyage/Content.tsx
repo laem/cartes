@@ -71,6 +71,12 @@ export default function Content({
 
 	const wikidataPictureUrl = wikidata?.pictureUrl
 	const wikiFeatureImage =
+		!tagImage && // We can't easily detect if tagImage is the same as wiki* image
+		// e.g.
+		// https://commons.wikimedia.org/w/index.php?title=Special:Redirect/file/Cathédrale Sainte-Croix d'Orléans 2008 PD 33.JPG&width=500
+		// https://upload.wikimedia.org/wikipedia/commons/thumb/f/fc/Cathédrale_Sainte-Croix_d'Orléans_2008_PD_33.JPG/300px-Cathédrale_Sainte-Croix_d'Orléans_2008_PD_33.JPG
+		// are the same but with a different URL
+		// hence prefer tag image, but this is questionable
 		osmFeature &&
 		(osmFeature.tags?.wikimedia_commons
 			? getThumb(osmFeature.tags.wikimedia_commons, 500)
