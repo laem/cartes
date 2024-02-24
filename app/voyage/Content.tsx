@@ -53,7 +53,9 @@ export default function Content({
 }) {
 	const url = osmFeature?.tags?.website || osmFeature?.tags?.['contact:website']
 	const ogImages = useOgImageFetcher(url),
-		ogImage = ogImages[url]
+		ogImage = ogImages[url],
+		tagImage = osmFeature?.tags?.image,
+		mainImage = tagImage || ogImage // makes a useless request for ogImage that won't be displayed to prefer mainImage : TODO also display OG
 
 	const [tutorials, setTutorials] = useLocalStorage('tutorials', {})
 	const introductionRead = tutorials.introduction,
@@ -198,9 +200,9 @@ export default function Content({
 								}}
 							/>
 						)}
-						{ogImage && (
+						{mainImage && (
 							<FeatureImage
-								src={ogImage}
+								src={mainImage}
 								css={`
 									width: 100%;
 									height: 6rem;

@@ -33,6 +33,7 @@ export default function OsmFeature({ data, transportStopData }) {
 		'ref:FR:Allocine': allocine,
 		wikipedia,
 		wikidata,
+		image,
 		...rest
 	} = data.tags
 
