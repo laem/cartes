@@ -45,13 +45,6 @@ export default function useAddMap(
 			trackUserLocation: true,
 		})
 
-		const style = Object.values(styles).find((style) => style.url === styleUrl)
-		newMap.addControl(
-			new maplibregl.AttributionControl({
-				customAttribution: style.attribution,
-			})
-		)
-
 		newMap.addControl(geolocate)
 
 		geolocate.on('geolocate', function (e) {
@@ -85,6 +78,19 @@ export default function useAddMap(
 			newMap?.remove()
 		}
 	}, [setMap, setZoom, setBbox, mapContainerRef, mobile]) // styleUrl not listed on purpose
+
+	useEffect(() => {
+		if (!map) return
+		const style = Object.values(styles).find((style) => style.url === styleUrl)
+		const attribution = new maplibregl.AttributionControl({
+			customAttribution: style.attribution,
+		})
+		map.addControl(attribution)
+
+		return () => {
+			map.removeControl(attribution)
+		}
+	}, [map, styleUrl])
 
 	return map
 }
