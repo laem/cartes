@@ -54,7 +54,9 @@
     - argent
     - distributeur
   title: Distributeur de billets
-  query: '[amenity=atm]'
+  query:
+    - '[amenity=atm]'
+    - '[atm=yes]'
   open by default: true
   icon: https://cdn.jsdelivr.net/gh/mapbox/maki/icons/bank.svg
 - name: Hôtel
