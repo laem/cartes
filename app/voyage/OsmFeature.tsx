@@ -31,6 +31,7 @@ export default function OsmFeature({ data, transportStopData }) {
 		'brand:wikidata': brandWikidata,
 		'brand:wikipedia': brandWikipedia,
 		'ref:FR:Allocine': allocine,
+		'ref:mhs': mérimée,
 		wikipedia,
 		wikidata,
 		image,
@@ -84,6 +85,15 @@ export default function OsmFeature({ data, transportStopData }) {
 			)}
 			<Address tags={data.tags} />
 			{wikipedia && wikipedia.includes(':') && <Wikipedia name={wikipedia} />}
+			{mérimée && (
+				<a
+					href={`https://www.pop.culture.gouv.fr/notice/merimee/${mérimée}`}
+					target="_blank"
+					title="Lien vers la fiche sur la plateforme ouverte du patrimoine"
+				>
+					🏛️ Fiche patrimoine
+				</a>
+			)}
 			{phone && (
 				<div>
 					<a href={`tel:${phone}`}>

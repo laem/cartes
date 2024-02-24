@@ -28,6 +28,7 @@ export default function Wikipedia({ name }) {
 	return (
 		<div
 			css={`
+			margin-top: .4rem;
 				position: relative;
 				${
 					shortenText?.length > 100 &&
@@ -53,7 +54,7 @@ export default function Wikipedia({ name }) {
 						shortenText?.length > 100
 							? ''
 							: `
-				    margin-bottom: 1.4rem`
+				    margin-bottom: .8rem`
 					}
 				}
 				img {
