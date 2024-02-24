@@ -31,6 +31,7 @@ import useTransportStopData from './transport/useTransportStopData'
 import useDrawSearchResults from './effects/useDrawSearchResults'
 import useRightClick from './effects/useRightClick'
 import useSearchLocalTransit from './effects/useSearchLocalTransit'
+import CenteredCross from './CenteredCross'
 
 export const defaultState = {
 	depuis: { inputValue: null, choice: false },
@@ -608,6 +609,7 @@ out skel qt;
 					itinerary,
 				}}
 			/>
+			{searchParams.transports && <CenteredCross />}
 			<div ref={mapContainerRef} />
 		</MapContainer>
 	)
