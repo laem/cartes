@@ -33,6 +33,7 @@ export const styles = {
 		name: 'Plan IGN',
 		image: 'IGN.svg',
 		imageAlt: "Logo de l'IGN",
+		attribution: '© IGN',
 	},
 	train: {
 		url: railStyle(key),

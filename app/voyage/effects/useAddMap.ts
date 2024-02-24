@@ -1,6 +1,7 @@
 import maplibregl from 'maplibre-gl'
 import { useEffect, useState } from 'react'
 import { useMediaQuery } from 'usehooks-ts'
+import { styles } from '../styles/styles'
 
 const defaultCenter =
 	// Saint Malo [-1.9890417068124002, 48.66284934737089]
@@ -26,6 +27,7 @@ export default function useAddMap(
 			center: defaultCenter,
 			zoom: defaultZoom,
 			hash: true,
+			attributionControl: false,
 		})
 		newMap.addControl(
 			new maplibregl.NavigationControl({
@@ -42,6 +44,13 @@ export default function useAddMap(
 			},
 			trackUserLocation: true,
 		})
+
+		const style = Object.values(styles).find((style) => style.url === styleUrl)
+		newMap.addControl(
+			new maplibregl.AttributionControl({
+				customAttribution: style.attribution,
+			})
+		)
 
 		newMap.addControl(geolocate)
 
