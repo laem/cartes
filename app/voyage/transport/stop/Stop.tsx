@@ -33,7 +33,7 @@ export default function Stop({ tags, data }) {
 					<Route
 						key={route.route_id}
 						route={route}
-						stops={enrichStopWithTrip(trips, stops).filter(
+						stops={enrichStopWithTrip(data.trips, data.stops).filter(
 							(stop) => stop.trip.route_id === route.route_id
 						)}
 					/>
@@ -48,7 +48,7 @@ export const enrichStopWithTrip = (trips, stops) =>
 		// We thought one trip can be shared with multiple stops, hence
 		// transmitting less info with a trip dictionnary than a
 		// stop.trip property
-		const trip = data.trips.find((t) => t.trip_id === stop.trip_id)
+		const trip = trips.find((t) => t.trip_id === stop.trip_id)
 		return { ...stop, trip }
 	})
 
