@@ -1,5 +1,8 @@
 import { useEffect } from 'react'
 
+/***
+ * This hook draws transit lines on the map.
+ */
 export default function useDrawTransport(map, data, styleKey) {
 	const routesGeojson = data?.routesGeojson,
 		stopId = data?.stopId
@@ -9,7 +12,9 @@ export default function useDrawTransport(map, data, styleKey) {
 		console.log('onload redraw')
 
 		/* Lower the opacity of all style layers.
-		 * Replaced by setting the "dataviz" style
+		 * Replaced by setting the "dataviz" style, but we're losing essential
+		 * things like POIs, might be interesting to consider this option, or
+		 * alternatively make the dataviz style better
 		 *
 		const layerIds = map.getLayersOrder()
 		layerIds.map((layerId) => {
