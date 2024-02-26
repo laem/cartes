@@ -101,8 +101,10 @@ export default function Map({ searchParams }) {
 		() => choice && [choice.longitude, choice.latitude],
 		[choice]
 	)
+	console.log('blue', target)
 
 	const transportStopData = useTransportStopData(osmFeature)
+
 	useEffect(() => {
 		if (!transportStopData || !transportStopData.routesGeojson) return
 		console.log('debug', transportStopData.routesGeojson)
@@ -464,14 +466,15 @@ out skel qt;
 
 			console.log('will set OSMfeature after loading it from the URL')
 			setOsmFeature(element)
-			console.log('should fly to', center)
+			console.log('should fly to', target)
 			if (!choice || choice.osmId !== featureId) {
 				console.log(
+					'blue',
 					'will fly to in after OSM download from url query param',
-					center
+					target
 				)
 				map.flyTo({
-					center,
+					target,
 					zoom: 18,
 					pitch: 50, // pitch in degrees
 					bearing: 20, // bearing in degrees
@@ -479,7 +482,7 @@ out skel qt;
 			}
 		}
 		request()
-	}, [map, featureType, featureId, choice, osmFeature])
+	}, [map, featureType, featureId, choice, osmFeature, target])
 
 	useHoverOnMapFeatures(map)
 

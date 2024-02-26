@@ -31,7 +31,8 @@ export default function useWikidata(osmFeature, state) {
 			const json = await request.json()
 			if (!json.statements) return
 
-			const pictureStatement = json.statements.P18[0]
+			const p18 = json.statements.P18
+			const pictureStatement = p18 && p18[0]
 			if (!pictureStatement) return
 			const pictureName = pictureStatement.value.content
 
