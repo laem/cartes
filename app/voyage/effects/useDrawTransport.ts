@@ -3,18 +3,9 @@ import { useEffect } from 'react'
 /***
  * This hook draws transit lines on the map.
  */
-export default function useDrawTransport(map, data, styleKey) {
-	const rawRoutesGeojson = data?.routesGeojson,
-		stopId = data?.stopId
-
-	// In Rennes, one crazy bus network is the football stadium route, code E4
-	// Since the agency did not give it colors, it's hard to draw it on a map
-	// Moreover, it should be handled as an exceptional bus, not a regular one
-	// This is easy to check through the data, see that it runs only on selected
-	// days / hours and display it to the user TODO
-	const routesGeojson = rawRoutesGeojson?.filter(
-		({ route }) => route.route_color
-	)
+export default function useDrawTransport(map, data, styleKey, drawKey) {
+	console.log('forestgreen', data)
+	const routesGeojson = data?.routesGeojson
 
 	useEffect(() => {
 		if (!map || !routesGeojson) return
@@ -43,22 +34,25 @@ export default function useDrawTransport(map, data, styleKey) {
 			if (property) property.map((p) => map.setPaintProperty(layerId, p, 0.3))
 		})
 		*/
-		const featureCollection = routesGeojson.reduce(
-			(memo, next) =>
-				console.log('ROUTE', next.route) || {
-					type: 'FeatureCollection',
-					features: [
-						...memo.features,
-						...next.shapes.features,
-						...next.stops.features.map((f) => ({
-							...f,
-							properties: { route_color: '#' + next.route.route_color },
-						})),
-					],
-				},
-			{ features: [] }
-		)
-		const id = 'routes-stopId-' + stopId
+		const featureCollection =
+			routesGeojson.type === 'FeatureCollection'
+				? routesGeojson
+				: routesGeojson.reduce(
+						(memo, next) =>
+							console.log('ROUTE', next.route) || {
+								type: 'FeatureCollection',
+								features: [
+									...memo.features,
+									...next.shapes.features,
+									...next.stops.features.map((f) => ({
+										...f,
+										properties: { route_color: '#' + next.route.route_color },
+									})),
+								],
+							},
+						{ features: [] }
+				  )
+		const id = 'routes-stopId-' + drawKey
 		try {
 			const source = map.getSource(id)
 			if (source) return
@@ -69,12 +63,17 @@ export default function useDrawTransport(map, data, styleKey) {
 				source: id,
 				type: 'line',
 				id: id + '-lines',
-				filter: ['in', '$type', 'LineString'],
+				filter: ['all', ['in', '$type', 'LineString'], ['has', 'route_color']],
 				layout: {
 					'line-join': 'round',
 					'line-cap': 'round',
 				},
 				paint: {
+					// In Rennes, one crazy bus network is the football stadium route, code E4
+					// Since the agency did not give it colors, it's hard to draw it on a map
+					// Moreover, it should be handled as an exceptional bus, not a regular one
+					// This is easy to check through the data, see that it runs only on selected
+					// days / hours and display it to the user TODO
 					'line-color': ['get', 'route_color'],
 					'line-width': [
 						'interpolate',
@@ -138,5 +137,5 @@ export default function useDrawTransport(map, data, styleKey) {
 				console.log('Caught error undrawing useDrawTransport', e)
 			}
 		}
-	}, [map, routesGeojson, stopId, styleKey])
+	}, [map, routesGeojson, drawKey, styleKey])
 }

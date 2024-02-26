@@ -33,6 +33,7 @@ import useRightClick from './effects/useRightClick'
 import useSearchLocalTransit from './effects/useSearchLocalTransit'
 import useSetTargetMarkerAndZoom from './effects/useSetTargetMarkerAndZoom'
 import useTransportStopData from './transport/useTransportStopData'
+import useDrawTransportsMap from './effects/useDrawTransportsMap'
 
 export const defaultState = {
 	depuis: { inputValue: null, choice: false },
@@ -120,7 +121,21 @@ export default function Map({ searchParams }) {
 
 	useSearchLocalTransit(map, searchParams.transports === 'oui', center, zoom)
 
-	useDrawTransport(map, transportStopData, safeStyleKey)
+	useDrawTransportsMap(
+		map,
+		searchParams.transports === 'oui',
+		center,
+		safeStyleKey,
+		setTempStyle
+	)
+
+	useDrawTransport(
+		map,
+		transportStopData,
+		safeStyleKey,
+		transportStopData?.stopId
+	)
+
 	const [gares, setGares] = useState(null)
 	const [clickedGare, clickGare] = useState(null)
 	const [bikeRoute, setBikeRoute] = useState(null)
@@ -499,7 +514,7 @@ out skel qt;
 					itinerary,
 				}}
 			/>
-			{searchParams.transports && <CenteredCross />}
+			{searchParams.transports === 'oui' && <CenteredCross />}
 			<div ref={mapContainerRef} />
 		</MapContainer>
 	)
