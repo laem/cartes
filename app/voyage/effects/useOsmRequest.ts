@@ -79,7 +79,7 @@ export default function useOsmRequest(map, lieu, choice) {
 					nodeCenter
 				)
 				map.flyTo({
-					nodeCenter,
+					center: nodeCenter,
 					zoom: 18,
 					pitch: 50, // pitch in degrees
 					bearing: 20, // bearing in degrees

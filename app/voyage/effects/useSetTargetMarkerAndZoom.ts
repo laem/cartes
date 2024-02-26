@@ -25,7 +25,7 @@ export default function useSetTargetMarkerAndZoom(
 				destinationType
 			)
 			map.flyTo({
-				target,
+				center: target,
 				zoom: tailoredZoom,
 				pitch: 50, // pitch in degrees
 				bearing: 20, // bearing in degrees
