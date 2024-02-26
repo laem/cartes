@@ -51,21 +51,30 @@ export default function GeoInputOptions({
 	)
 }
 
+const safe = (text) => (text != null ? text : '')
 export const buildLocationText = (item) => {
 	if (item.street) return buildAddress((key) => item[key] || '')
-	const nameIncludes = (what) =>
-		item.name && item.name.toLowerCase().includes((what || '').toLowerCase())
+
+	const nameIncludes = (what) => {
+		if (!what) return true
+		return (
+			item.name && item.name.toLowerCase().includes((what || '').toLowerCase())
+		)
+	}
 
 	const displayCity = !nameIncludes(item.city),
 		displayCountry = !nameIncludes(item.country) && item.country !== 'France' // these web apps are mostly designed for metropolitan France
 	const displayDépartement = item.country === 'France' // French people will probably not search for cities with the same name, hence small, abroad
 
-	const locationText = `${item.name || ''} ${
-		displayCity ? item.city + (displayCountry ? ' - ' : '') : ''
-	} ${displayDépartement ? item.county : ''} ${
-		displayCountry ? item.country : ''
+	// This is far from perfect, to iterate
+	const locationText = `${safe(item.name)} ${
+		displayCity ? safe(item.city) + (displayCountry ? ' - ' : '') : ''
+	} ${displayDépartement ? safe(item.county) : ''} ${
+		displayCountry ? safe(item.country) : ''
 	}`
 
+	if (locationText.includes('undefined'))
+		console.log('blue', item, locationText)
 	return locationText
 }
 
