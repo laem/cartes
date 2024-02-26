@@ -1,5 +1,40 @@
 import { useEffect } from 'react'
 
+const mergeRoutes = (geojson) => {
+	// TODO I can't yet understand why so many geojsons for one route, and how to
+	// draw them correctly.
+	// Iterating on client for now, then will be cached on the server
+	return geojson
+	const { features: rawFeatures } = geojson
+
+	const reduced = rawFeatures.reduce((memo, next) => {
+		const id = next.properties.route_id
+		const already = memo[id]
+		return { ...memo, [id]: [...(already || []), next] }
+	}, {})
+
+	console.log('pink', reduced['PENNARBED:111'])
+
+	const features = Object.entries(reduced)
+		.map(
+			([id, list]) =>
+				Array.isArray(list) && {
+					...list[0],
+					geometry: {
+						type: 'LineString',
+						coordinates: list
+							.slice(0, 10)
+							.map((el) => el.geometry.coordinates)
+							.flat(),
+					},
+				}
+		)
+		.filter(Boolean)
+
+	console.log('forestgreen reduced', features)
+
+	return { ...geojson, features }
+}
 /***
  * This hook draws transit lines on the map.
  */
@@ -36,7 +71,7 @@ export default function useDrawTransport(map, data, styleKey, drawKey) {
 		*/
 		const featureCollection =
 			routesGeojson.type === 'FeatureCollection'
-				? routesGeojson
+				? mergeRoutes(routesGeojson)
 				: routesGeojson.reduce(
 						(memo, next) =>
 							console.log('ROUTE', next.route) || {
@@ -78,7 +113,7 @@ export default function useDrawTransport(map, data, styleKey, drawKey) {
 					'line-width': [
 						'let',
 						'importance',
-						['match', ['get', 'route_type'], 0, 1.6, 1, 2.6, 2, 4, 3, 1, 0.5],
+						['match', ['get', 'route_type'], 0, 1.6, 1, 2.6, 2, 3, 3, 0.8, 0.8],
 						[
 							'interpolate',
 							['linear', 1],
