@@ -497,6 +497,7 @@ out skel qt;
 					? 12
 					: Math.max(15, zoom)
 			console.log(
+				'blue',
 				'will fly to in after OSM download from vers marker',
 				target,
 				tailoredZoom,
@@ -530,6 +531,10 @@ out skel qt;
 			}
 
 			marker.on('dragend', onDragEnd)
+			return () => {
+				marker.off('dragend', onDragEnd)
+				marker.remove()
+			}
 		}
 	}, [target, map, state.vers, setState])
 
