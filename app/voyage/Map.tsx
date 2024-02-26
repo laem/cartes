@@ -110,7 +110,7 @@ export default function Map({ searchParams }) {
 		if (!transportStopData || !transportStopData.routesGeojson) return
 		console.log('debug', transportStopData.routesGeojson)
 
-		setTempStyle('dataviz')
+		setTempStyle('transit')
 
 		return () => {
 			console.log('will unset')

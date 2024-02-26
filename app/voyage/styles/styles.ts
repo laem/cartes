@@ -42,6 +42,7 @@ export const styles = {
 		emoji: '🛤️',
 	},
 	transit: {
+		// Taken from MapTiler's dataviz style
 		url: transit(key),
 		name: 'Fond léger',
 		emoji: '⬜️',

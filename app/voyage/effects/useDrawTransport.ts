@@ -12,7 +12,8 @@ export default function useDrawTransport(map, data, styleKey) {
 		console.log('onload redraw')
 
 		/* Lower the opacity of all style layers.
-		 * Replaced by setting the "dataviz" style, but we're losing essential
+		 * Replaced by setting the "transit" style taken from MapTiler's dataviz
+		 * clean styl, but we're losing essential
 		 * things like POIs, might be interesting to consider this option, or
 		 * alternatively make the dataviz style better
 		 *
