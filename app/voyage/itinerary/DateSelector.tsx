@@ -2,11 +2,22 @@
 
 import useSetSearchParams from '@/components/useSetSearchParams'
 import { useState } from 'react'
-import { initialDate } from '../GareInfo'
 import { DialogButton } from '../UI'
 
-export default function DateSelector({ date }) {
-	const [localDate, setLocalDate] = useState(date)
+export const initialDate = (type = 'date') => {
+	const stringDate = new Date().toLocaleString('fr')
+	const [date, hour] = stringDate.split(' ')
+
+	const day = date.split('/').reverse().join('-')
+	if (type === 'day') return day
+
+	return day + 'T' + hour.slice(0, -3)
+}
+
+// Can be type date (day + hour) or type day
+export default function DateSelector({ date, type = 'date' }) {
+	const defaultDate = initialDate(type)
+	const [localDate, setLocalDate] = useState(date || defaultDate)
 	const setSearchParams = useSetSearchParams()
 	return (
 		<div
@@ -25,11 +36,11 @@ export default function DateSelector({ date }) {
 			`}
 		>
 			<input
-				type="datetime-local"
-				id="trainDate"
-				name="trainDate"
+				type={type === 'date' ? 'datetime-local' : 'date'}
+				id="date"
+				name="date"
 				value={localDate}
-				min={initialDate()}
+				min={defaultDate}
 				onChange={(e) => {
 					const value = e.target.value
 					// changing e.g. the weekday starting with the 0 diigt with the keyboard will make value '' on firefox, LOL
@@ -38,7 +49,13 @@ export default function DateSelector({ date }) {
 			/>
 			{date !== localDate && (
 				<DialogButton
-					onClick={() => setSearchParams({ date: encodeDate(localDate) })}
+					onClick={() =>
+						setSearchParams(
+							type === 'date'
+								? { date: encodeDate(localDate) }
+								: { day: encodeDate(localDate) }
+						)
+					}
 					css={`
 						font-size: 100%;
 					`}

@@ -4,7 +4,6 @@ const mergeRoutes = (geojson) => {
 	// TODO I can't yet understand why so many geojsons for one route, and how to
 	// draw them correctly.
 	// Iterating on client for now, then will be cached on the server
-	return geojson
 	const { features: rawFeatures } = geojson
 
 	const reduced = rawFeatures.reduce((memo, next) => {
@@ -23,7 +22,7 @@ const mergeRoutes = (geojson) => {
 					geometry: {
 						type: 'LineString',
 						coordinates: list
-							.slice(0, 10)
+							.slice(0, 1)
 							.map((el) => el.geometry.coordinates)
 							.flat(),
 					},

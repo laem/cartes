@@ -15,6 +15,7 @@ import PlaceSearch from './PlaceSearch'
 import QuickFeatureSearch from './QuickFeatureSearch'
 import SetDestination from './SetDestination'
 import StyleChooser from './styles/StyleChooser'
+import TransportMap from './transport/TransportMap'
 import { DialogButton, ModalCloseButton } from './UI'
 import useOgImageFetcher from './useOgImageFetcher'
 import useWikidata from './useWikidata'
@@ -177,6 +178,9 @@ export default function Content({
 				</section>
 			)}
 
+			{searchParams.transports === 'oui' && (
+				<TransportMap {...{ day: searchParams.day }} />
+			)}
 			<Itinerary
 				{...{ itinerary, bikeRouteProfile, setBikeRouteProfile, searchParams }}
 			/>

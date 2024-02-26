@@ -1,11 +1,5 @@
 import { useState } from 'react'
-
-export const initialDate = () => {
-	const stringDate = new Date().toLocaleString('fr')
-	const [date, hour] = stringDate.split(' ')
-
-	return date.split('/').reverse().join('-') + 'T' + hour.slice(0, -3)
-}
+import { initialDate } from './itinerary/DateSelector'
 
 export default function GareInfo({ clickedGare }) {
 	const [date, setDate] = useState(initialDate())
