@@ -7,7 +7,6 @@ import { sortGares } from './gares'
 
 import useSetSearchParams from '@/components/useSetSearchParams'
 import { getCategory } from '@/components/voyage/categories'
-import { extractOsmFeature } from '@/components/voyage/fetchPhoton'
 import MapButtons from '@/components/voyage/MapButtons'
 import { goodIconSize } from '@/components/voyage/mapUtils'
 import { centerOfMass } from '@turf/turf'
@@ -17,22 +16,23 @@ import useImageSearch from './effects/useImageSearch'
 import useItinerary from './itinerary/useItinerary'
 import useItineraryFromUrl from './itinerary/useItineraryFromUrl'
 import ModalSwitch from './ModalSwitch'
-import { disambiguateWayRelation, osmRequest } from './osmRequest'
+import { disambiguateWayRelation } from './osmRequest'
 import { styles } from './styles/styles'
 import { MapContainer, MapHeader } from './UI'
 import useHoverOnMapFeatures from './useHoverOnMapFeatures'
 import useTerrainControl from './useTerrainControl'
-import { decodePlace, encodePlace } from './utils'
+import { encodePlace } from './utils'
 import { useZoneImages } from './ZoneImages'
 
+import CenteredCross from './CenteredCross'
 import { clickableClasses } from './clickableLayers'
-import useDrawTransport from './effects/useDrawTransport'
-import useTransportStopData from './transport/useTransportStopData'
 import useDrawSearchResults from './effects/useDrawSearchResults'
+import useDrawTransport from './effects/useDrawTransport'
+import useOsmRequest from './effects/useOsmRequest'
 import useRightClick from './effects/useRightClick'
 import useSearchLocalTransit from './effects/useSearchLocalTransit'
-import CenteredCross from './CenteredCross'
 import useSetTargetMarkerAndZoom from './effects/useSetTargetMarkerAndZoom'
+import useTransportStopData from './transport/useTransportStopData'
 
 export const defaultState = {
 	depuis: { inputValue: null, choice: false },
@@ -63,7 +63,6 @@ export default function Map({ searchParams }) {
 	const resetInput = (which) =>
 		setState({ ...state, [which]: defaultState[which] })
 
-	const [osmFeature, setOsmFeature] = useState(null)
 	const [latLngClicked, setLatLngClicked] = useState(null)
 	const [bikeRouteProfile, setBikeRouteProfile] = useState('safety')
 	const [distanceMode, setDistanceMode] = useState(false)
@@ -75,11 +74,7 @@ export default function Map({ searchParams }) {
 
 	const setSearchParams = useSetSearchParams()
 
-	const place = searchParams.lieu,
-		[featureType, featureId] = place
-			? decodePlace(place)
-			: extractOsmFeature(state.vers.choice)
-
+	const lieu = searchParams.lieu
 	const category = getCategory(searchParams)
 
 	const showOpenOnly = searchParams.o
@@ -101,6 +96,12 @@ export default function Map({ searchParams }) {
 	const target = useMemo(
 		() => choice && [choice.longitude, choice.latitude],
 		[choice]
+	)
+
+	const [osmFeature, setOsmFeature] = useOsmRequest(
+		map,
+		lieu,
+		state.vers.choice
 	)
 
 	const transportStopData = useTransportStopData(osmFeature)
@@ -406,84 +407,6 @@ out skel qt;
 			map.off('click', onClick)
 		}
 	}, [map, setState, distanceMode, itineraryMode, gares])
-
-	useEffect(() => {
-		if (!map || !featureType || !featureId) return
-		if (osmFeature && osmFeature.id == featureId) return
-		const request = async () => {
-			console.log('Preparing OSM request ', featureType, featureId)
-			const full = ['way', 'relation'].includes(featureType)
-			const isNode = featureType === 'node'
-			if (!isNode && !full)
-				return console.log(
-					"This OSM feature is neither a node, a relation or a way, we don't know how to handle it"
-				)
-
-			const elements = await osmRequest(featureType, featureId, full)
-			if (!elements.length) return
-			console.log(
-				'OSM elements received',
-				elements,
-				' for ',
-				featureType,
-				featureId
-			)
-
-			const element = elements.find((el) => el.id == featureId)
-
-			const featureCollectionFromOsmNodes = (nodes) => {
-				console.log('yanodes', nodes)
-				const fc = {
-					type: 'FeatureCollection',
-					features: nodes.map((el) => ({
-						type: 'Feature',
-						properties: {},
-						geometry: {
-							type: 'Point',
-							coordinates: [el.lon, el.lat],
-						},
-					})),
-				}
-				console.log('centerofmass', fc, centerOfMass(fc))
-				return fc
-			}
-			const relation = elements.find((el) => el.id == featureId),
-				adminCenter =
-					relation &&
-					relation.members?.find((el) => el.role === 'admin_centre'),
-				adminCenterNode =
-					adminCenter && elements.find((el) => el.id == adminCenter.ref)
-
-			console.log('admincenter', relation, adminCenter, adminCenterNode)
-			const nodeCenter = adminCenterNode
-				? [adminCenterNode.lon, adminCenterNode.lat]
-				: !full
-				? [element.lon, element.lat]
-				: centerOfMass(
-						featureCollectionFromOsmNodes(
-							elements.filter((el) => el.lat && el.lon)
-						)
-				  ).geometry.coordinates
-
-			console.log('will set OSMfeature after loading it from the URL')
-			setOsmFeature(element)
-			console.log('should fly to', nodeCenter)
-			if (!choice || choice.osmId !== featureId) {
-				console.log(
-					'blue',
-					'will fly to in after OSM download from url query param',
-					nodeCenter
-				)
-				map.flyTo({
-					nodeCenter,
-					zoom: 18,
-					pitch: 50, // pitch in degrees
-					bearing: 20, // bearing in degrees
-				})
-			}
-		}
-		request()
-	}, [map, featureType, featureId, choice, osmFeature])
 
 	useHoverOnMapFeatures(map)
 
