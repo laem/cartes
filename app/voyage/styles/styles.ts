@@ -1,5 +1,6 @@
 import railStyle from './railStyle'
 import voyageStyle from './voyage'
+import transit from './transit'
 
 const key = process.env.NEXT_PUBLIC_MAPTILER
 
@@ -40,8 +41,8 @@ export const styles = {
 		name: 'Carte des rails',
 		emoji: '🛤️',
 	},
-	dataviz: {
-		url: maptilerUrl('dataviz'),
+	transit: {
+		url: transit(key),
 		name: 'Fond léger',
 		emoji: '⬜️',
 	},
