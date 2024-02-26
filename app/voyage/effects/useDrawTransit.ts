@@ -128,6 +128,7 @@ export default function useDrawTransit(map, transit, selectedConnection) {
 		})
 		const bbox = getBbox(featureCollection)
 
+		console.log('blue will fit bounds')
 		map.fitBounds(bbox, {
 			//TODO make it right with mobile snap, this is very basic
 			padding: isMobile

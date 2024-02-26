@@ -32,6 +32,7 @@ import useDrawSearchResults from './effects/useDrawSearchResults'
 import useRightClick from './effects/useRightClick'
 import useSearchLocalTransit from './effects/useSearchLocalTransit'
 import CenteredCross from './CenteredCross'
+import useSetTargetMarkerAndZoom from './effects/useSetTargetMarkerAndZoom'
 
 export const defaultState = {
 	depuis: { inputValue: null, choice: false },
@@ -101,7 +102,6 @@ export default function Map({ searchParams }) {
 		() => choice && [choice.longitude, choice.latitude],
 		[choice]
 	)
-	console.log('blue', target)
 
 	const transportStopData = useTransportStopData(osmFeature)
 
@@ -247,6 +247,7 @@ out skel qt;
 
 		fetchBikeRoute()
 	}, [target, clickedGare, bikeRouteProfile])
+
 	useEffect(() => {
 		async function fetchGares() {
 			const res = await fetch('/gares.json')
@@ -454,7 +455,7 @@ out skel qt;
 					adminCenter && elements.find((el) => el.id == adminCenter.ref)
 
 			console.log('admincenter', relation, adminCenter, adminCenterNode)
-			const center = adminCenterNode
+			const nodeCenter = adminCenterNode
 				? [adminCenterNode.lon, adminCenterNode.lat]
 				: !full
 				? [element.lon, element.lat]
@@ -466,15 +467,15 @@ out skel qt;
 
 			console.log('will set OSMfeature after loading it from the URL')
 			setOsmFeature(element)
-			console.log('should fly to', target)
+			console.log('should fly to', nodeCenter)
 			if (!choice || choice.osmId !== featureId) {
 				console.log(
 					'blue',
 					'will fly to in after OSM download from url query param',
-					target
+					nodeCenter
 				)
 				map.flyTo({
-					target,
+					nodeCenter,
 					zoom: 18,
 					pitch: 50, // pitch in degrees
 					bearing: 20, // bearing in degrees
@@ -482,61 +483,19 @@ out skel qt;
 			}
 		}
 		request()
-	}, [map, featureType, featureId, choice, osmFeature, target])
+	}, [map, featureType, featureId, choice, osmFeature])
 
 	useHoverOnMapFeatures(map)
 
-	useEffect(() => {
-		if (!map || !target) return
-
-		const marker = state.vers.marker
-
-		if (!marker) {
-			const destinationType = state.vers.choice.type,
-				tailoredZoom = ['city'].includes(destinationType)
-					? 12
-					: Math.max(15, zoom)
-			console.log(
-				'blue',
-				'will fly to in after OSM download from vers marker',
-				target,
-				tailoredZoom,
-				destinationType
-			)
-			map.flyTo({
-				target,
-				zoom: tailoredZoom,
-				pitch: 50, // pitch in degrees
-				bearing: 20, // bearing in degrees
-			})
-			const marker = new maplibregl.Marker({
-				color: 'var(--darkerColor)',
-				draggable: true,
-			})
-				.setLngLat(target)
-				.addTo(map)
-
-			setState((state) => ({ ...state, vers: { ...state.vers, marker } }))
-			setLatLngClicked({ lng: target[0], lat: target[1] })
-
-			function onDragEnd() {
-				const { lng, lat } = marker.getLngLat()
-				setState((state) => ({
-					...state,
-					vers: {
-						...state.vers,
-						choice: { latitude: lat, longitude: lng },
-					},
-				}))
-			}
-
-			marker.on('dragend', onDragEnd)
-			return () => {
-				marker.off('dragend', onDragEnd)
-				marker.remove()
-			}
-		}
-	}, [target, map, state.vers, setState])
+	useSetTargetMarkerAndZoom(
+		map,
+		target,
+		state.vers.marker,
+		state.vers.choice.type,
+		setState,
+		setLatLngClicked,
+		zoom
+	)
 
 	const lesGaresProches =
 		target && gares && sortGares(gares, target).slice(0, 30)
