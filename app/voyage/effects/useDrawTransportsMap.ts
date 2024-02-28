@@ -1,12 +1,13 @@
 import { useEffect, useState } from 'react'
 import useDrawTransport from './useDrawTransport'
 
-export default function useDrawTransitMap(
+export default function useDrawTransportsMap(
 	map,
 	active,
 	center,
 	safeStyleKey,
-	setTempStyle
+	setTempStyle,
+	day
 ) {
 	const [data, setData] = useState(null)
 	useEffect(() => {
@@ -18,7 +19,7 @@ export default function useDrawTransitMap(
 		}
 	}, [setTempStyle, active, map])
 	useEffect(() => {
-		if (!active || !center) return
+		if (!active || !center || !day) return
 
 		const doFetch = async () => {
 			const [longitude, latitude] = center
@@ -26,7 +27,10 @@ export default function useDrawTransitMap(
 			const response = await fetch(
 				//'https://motis.cartes.app/gtfs/stopTimes/' + stopId,
 
-				`http://localhost:3000/agencyArea/${latitude}/${longitude}/${format}`,
+				`http://localhost:3000/agencyArea/${latitude}/${longitude}/${format}?day=${day.replace(
+					/-/g,
+					''
+				)}`,
 				{ mode: 'cors' }
 			)
 			const json = await response.json()
@@ -34,13 +38,14 @@ export default function useDrawTransitMap(
 			setData(json)
 		}
 		doFetch()
-	}, [setData, center, active])
+	}, [setData, center, active, day])
 
 	useDrawTransport(
 		map,
 		{ routesGeojson: data },
 		safeStyleKey,
-		'transitMap' + center?.join('|')
+		'transitMap' + center?.join('|') + day,
+		day
 	)
 	console.log('forestgreen map', data)
 	return data

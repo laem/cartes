@@ -3,6 +3,7 @@ import Emoji from '@/components/Emoji'
 import { findContrastedTextColor } from '@/components/utils/colors'
 import { omit } from '@/components/utils/utils'
 import { useState } from 'react'
+import DayView from '../DayView'
 import Calendar from './Calendar'
 
 export const nowAsYYMMDD = (delimiter = '') => {
@@ -170,6 +171,7 @@ export default function Route({ route, stops }) {
 				</button>
 			</ul>
 			{calendarOpen && <Calendar data={augmentedStops} />}
+			<DayView data={augmentedStops} />
 		</li>
 	)
 }

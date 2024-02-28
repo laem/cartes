@@ -126,7 +126,8 @@ export default function Map({ searchParams }) {
 		searchParams.transports === 'oui',
 		center,
 		safeStyleKey,
-		setTempStyle
+		setTempStyle,
+		searchParams.day
 	)
 
 	useDrawTransport(

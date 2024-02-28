@@ -9,8 +9,8 @@ export default function useTransportStopData(osmFeature) {
 		const stopId = findStopId(osmFeature.tags)
 		const doFetch = async () => {
 			const response = await fetch(
-				'https://motis.cartes.app/gtfs/stopTimes/' + stopId,
-				//'http://localhost:3000/stopTimes/' + stopId,
+				//'https://motis.cartes.app/gtfs/stopTimes/' + stopId,
+				'http://localhost:3000/stopTimes/' + stopId,
 				{ mode: 'cors' }
 			)
 			const json = await response.json()

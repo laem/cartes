@@ -37,7 +37,7 @@ const mergeRoutes = (geojson) => {
 /***
  * This hook draws transit lines on the map.
  */
-export default function useDrawTransport(map, data, styleKey, drawKey) {
+export default function useDrawTransport(map, data, styleKey, drawKey, day) {
 	console.log('forestgreen', data)
 	const routesGeojson = data?.routesGeojson
 
