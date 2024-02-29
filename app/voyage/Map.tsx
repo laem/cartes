@@ -124,10 +124,10 @@ export default function Map({ searchParams }) {
 	useDrawTransportsMap(
 		map,
 		searchParams.transports === 'oui',
-		center,
 		safeStyleKey,
 		setTempStyle,
-		searchParams.day
+		searchParams.day,
+		bbox
 	)
 
 	useDrawTransport(

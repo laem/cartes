@@ -77,11 +77,11 @@ export default function useDrawTransport(map, data, styleKey, drawKey, day) {
 								type: 'FeatureCollection',
 								features: [
 									...memo.features,
-									...next.shapes.features,
-									...next.stops.features.map((f) => ({
+									...(next.shapes?.features || next.features),
+									...(next.stops?.features.map((f) => ({
 										...f,
 										properties: { route_color: '#' + next.route.route_color },
-									})),
+									})) || []),
 								],
 							},
 						{ features: [] }

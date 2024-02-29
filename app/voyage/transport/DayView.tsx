@@ -37,7 +37,7 @@ export default function DayView({ data }) {
 			>
 				<li
 					css={`
-					${/* this is au pif, use https://github.com/mourner/suncalc */}
+						/* this is au pif, use https://github.com/mourner/suncalc */
 						width: 25%;
 						background: var(--darkerColor);
 					`}
