@@ -10,6 +10,13 @@
 	"engines": {
 		"node": ">=18"
 	},
+	"scripts": {
+		"dev": "LOCAL_GTFS_SERVER=true next dev -p 8080",
+		"build": "next build",
+		"start": "next start -p 8080",
+		"lint": "next lint",
+		"generate-ferry-svg": "npx --yes  @svgr/cli --no-svgo --ref --replace-attr-values ../1ccc23d5/megaexpressfour.png=public/megaexpressfour.png -- components/ferry/mega-express-four.svg > components/ferry/Mega.tsx"
+	},
 	"browserslist": [
 		"> 1% in FR",
 		"not ie < 11"
@@ -171,12 +178,5 @@
 		"yaml": "^2.0.1",
 		"yarn": "^1.22.10",
 		"yjs": "^13.5.35"
-	},
-	"scripts": {
-		"dev": "next dev -p 8080",
-		"build": "next build",
-		"start": "next start -p 8080",
-		"lint": "next lint",
-		"generate-ferry-svg": "npx --yes  @svgr/cli --no-svgo --ref --replace-attr-values ../1ccc23d5/megaexpressfour.png=public/megaexpressfour.png -- components/ferry/mega-express-four.svg > components/ferry/Mega.tsx"
 	}
 }

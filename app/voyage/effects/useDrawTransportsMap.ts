@@ -1,4 +1,5 @@
 import { useEffect, useMemo, useState } from 'react'
+import { gtfsServerUrl } from '../serverUrls'
 import useDrawTransport from './useDrawTransport'
 
 export default function useDrawTransportsMap(
@@ -26,7 +27,7 @@ export default function useDrawTransportsMap(
 			const [[longitude2, latitude], [longitude, latitude2]] = bbox
 
 			const url = (format) =>
-				`http://localhost:3000/agencyArea/${latitude}/${longitude}/${latitude2}/${longitude2}/${format}/?${
+				`${gtfsServerUrl}/agencyArea/${latitude}/${longitude}/${latitude2}/${longitude2}/${format}/?${
 					day ? `day=${formattedDay}` : ''
 				}`
 			const format = !data ? 'geojson' : 'prefetch'

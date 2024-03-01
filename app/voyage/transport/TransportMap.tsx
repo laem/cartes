@@ -3,6 +3,7 @@ import Link from 'next/link'
 import { o } from 'ramda'
 import { useEffect, useState } from 'react'
 import DateSelector from '../itinerary/DateSelector'
+import { gtfsServerUrl } from '../serverUrls'
 import { RouteName } from './stop/Route'
 
 export default function TransportMap({
@@ -17,7 +18,7 @@ export default function TransportMap({
 		if (!routesParam) return
 
 		const doFetch = async () => {
-			const request = await fetch(`http://localhost:3000/routes/${routesParam}`)
+			const request = await fetch(`${gtfsServerUrl}/routes/${routesParam}`)
 			const json = await request.json()
 
 			setRoutes(json)

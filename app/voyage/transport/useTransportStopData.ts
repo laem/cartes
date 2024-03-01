@@ -1,4 +1,5 @@
 import { useEffect, useState } from 'react'
+import { gtfsServerUrl } from '../serverUrls'
 import { findStopId, isNotTransportStop } from './stop/Stop'
 
 export default function useTransportStopData(osmFeature) {
@@ -8,11 +9,9 @@ export default function useTransportStopData(osmFeature) {
 		if (isNotTransportStop(osmFeature.tags)) return
 		const stopId = findStopId(osmFeature.tags)
 		const doFetch = async () => {
-			const response = await fetch(
-				//'https://motis.cartes.app/gtfs/stopTimes/' + stopId,
-				'http://localhost:3000/stopTimes/' + stopId,
-				{ mode: 'cors' }
-			)
+			const response = await fetch(gtfsServerUrl + '/stopTimes/' + stopId, {
+				mode: 'cors',
+			})
 			const json = await response.json()
 
 			setData({ ...json, stopId })
