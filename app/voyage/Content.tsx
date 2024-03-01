@@ -51,6 +51,7 @@ export default function Content({
 	transportStopData,
 	clickedPoint,
 	resetClickedPoint,
+	transportsData,
 }) {
 	const url = osmFeature?.tags?.website || osmFeature?.tags?.['contact:website']
 	const ogImages = useOgImageFetcher(url),
@@ -179,7 +180,13 @@ export default function Content({
 			)}
 
 			{searchParams.transports === 'oui' && (
-				<TransportMap {...{ day: searchParams.day }} />
+				<TransportMap
+					{...{
+						day: searchParams.day,
+						data: transportsData,
+						selectedAgency: searchParams.agence,
+					}}
+				/>
 			)}
 			<Itinerary
 				{...{ itinerary, bikeRouteProfile, setBikeRouteProfile, searchParams }}

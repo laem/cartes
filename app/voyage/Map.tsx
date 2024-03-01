@@ -121,7 +121,7 @@ export default function Map({ searchParams }) {
 
 	useSearchLocalTransit(map, searchParams.transports === 'oui', center, zoom)
 
-	useDrawTransportsMap(
+	const transportsData = useDrawTransportsMap(
 		map,
 		searchParams.transports === 'oui',
 		safeStyleKey,
@@ -129,6 +129,28 @@ export default function Map({ searchParams }) {
 		searchParams.day,
 		bbox
 	)
+
+	const agencyId = searchParams.agence
+	const agency = useMemo(() => {
+		const agencyData =
+			transportsData && transportsData.find((el) => el[0] === agencyId)
+		return agencyData && { id: agencyData[0], ...agencyData[1] }
+	}, [agencyId]) // including transportsData provokes a loop : maplibre bbox updated -> transportsData recreated -> etc
+
+	console.log('pink agency', agency)
+
+	useEffect(() => {
+		if (!map || !agency) return
+
+		const bbox = agency.bbox
+
+		const mapLibreBBox = [
+			[bbox[2], bbox[1]],
+			[bbox[0], bbox[3]],
+		]
+		console.log('pink will fitbounds', mapLibreBBox)
+		map.fitBounds(mapLibreBBox)
+	}, [map, agency])
 
 	useDrawTransport(
 		map,
@@ -501,6 +523,7 @@ out skel qt;
 						transportStopData,
 						clickedPoint,
 						resetClickedPoint,
+						transportsData,
 					}}
 				/>
 			</MapHeader>
