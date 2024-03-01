@@ -200,3 +200,14 @@
   name: cotravail
   query: '[amenity=coworking_space]'
   icon: coworking
+- title: Cordonnier
+  category: Divers
+  name: Cordonnier
+  dictionary:
+    - cordonnerie
+    - chaussures
+    - resemmelage
+    - clefs
+    - lacets
+  query: '[craft=shoemaker]'
+  icon: shoes

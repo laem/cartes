@@ -121,11 +121,11 @@ export const computeMotisTrip = async (start, destination, date) => {
 
 						const customAttributes = {
 							route_color: isTGV
-								? '#b8175e'
+								? colors.TGV
 								: isOUIGO
-								? '#0193c9'
+								? colors.OUIGO
 								: frenchTrainType === 'TER'
-								? '#034EA2'
+								? colors.TER
 								: route_color && '#' + route_color,
 							route_text_color: isTGV
 								? '#fff'
@@ -185,4 +185,10 @@ export const computeMotisTrip = async (start, destination, date) => {
 		console.error('Error fetching motis server', e)
 		return { state: 'error' }
 	}
+}
+
+export const colors = {
+	TGV: '#b8175e',
+	OUIGO: '#0193c9',
+	TER: '#034EA2',
 }
