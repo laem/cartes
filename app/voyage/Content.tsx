@@ -185,6 +185,7 @@ export default function Content({
 						day: searchParams.day,
 						data: transportsData,
 						selectedAgency: searchParams.agence,
+						routesParam: searchParams.routes,
 					}}
 				/>
 			)}

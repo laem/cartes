@@ -58,6 +58,7 @@ export default function useDrawTransportsMap(
 	const drawData = useMemo(() => {
 		return { routesGeojson: data?.map(([agencyId, { geojson }]) => geojson) }
 	}, [data])
+
 	useDrawTransport(
 		map,
 		drawData,

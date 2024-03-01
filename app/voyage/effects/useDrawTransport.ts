@@ -1,3 +1,4 @@
+import useSetSearchParams from '@/components/useSetSearchParams'
 import { useEffect } from 'react'
 
 const mergeRoutes = (geojson) => {
@@ -40,6 +41,8 @@ const mergeRoutes = (geojson) => {
 export default function useDrawTransport(map, data, styleKey, drawKey, day) {
 	console.log('forestgreen', data)
 	const routesGeojson = data?.routesGeojson
+
+	const setSearchParams = useSetSearchParams()
 
 	useEffect(() => {
 		if (!map || !routesGeojson) return
@@ -93,10 +96,12 @@ export default function useDrawTransport(map, data, styleKey, drawKey, day) {
 			console.log('will (re)draw transport route geojson')
 			map.addSource(id, { type: 'geojson', data: featureCollection })
 
+			const linesId = id + '-lines'
+
 			map.addLayer({
 				source: id,
 				type: 'line',
-				id: id + '-lines',
+				id: linesId,
 				filter: ['all', ['in', '$type', 'LineString'], ['has', 'route_color']],
 				layout: {
 					'line-join': 'round',
@@ -159,6 +164,22 @@ export default function useDrawTransport(map, data, styleKey, drawKey, day) {
 						4,
 					],
 				},
+			})
+
+			map.on('click', linesId, (e) => {
+				setSearchParams({
+					routes: e.features
+						.map((feature) => feature.properties.route_id)
+						.join('|'),
+				})
+			})
+
+			map.on('mouseenter', linesId, () => {
+				map.getCanvas().style.cursor = 'pointer'
+			})
+			// Change it back to a pointer when it leaves.
+			map.on('mouseleave', linesId, () => {
+				map.getCanvas().style.cursor = 'auto'
 			})
 		} catch (e) {
 			console.log('Caught error drawing useDrawTransport', e)

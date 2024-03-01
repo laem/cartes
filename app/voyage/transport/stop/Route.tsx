@@ -27,7 +27,7 @@ const toDate = ({ year, month, day }, time) => {
 	return new Date(+year, +month - 1, +day, ...time)
 }
 
-export default function Route({ route, stops }) {
+export default function Route({ route, stops = [] }) {
 	const [calendarOpen, setCalendarOpen] = useState(false)
 	const now = new Date()
 
@@ -73,11 +73,6 @@ export default function Route({ route, stops }) {
 
 	const stopSelection = augmentedStops.filter((el) => el.isFuture).slice(0, 4)
 
-	const color = route.route_color
-		? findContrastedTextColor(route.route_color, true)
-		: '#ffffff'
-	const backgroundColor = route.route_color ? `#${route.route_color}` : 'grey'
-
 	const directions = stops.map(({ trip }) => trip.direction_id)
 	const hasMultipleTripDirections = directions.find((d) => d !== directions[0])
 	const direction = directions[0],
@@ -104,31 +99,7 @@ export default function Route({ route, stops }) {
 				margin-top: 0.8rem;
 			`}
 		>
-			<small
-				css={`
-					strong {
-						background: ${backgroundColor};
-						padding: 0 0.2rem;
-						border-radius: 0.3rem;
-						color: ${color};
-					}
-					span {
-						text-decoration: underline;
-						text-decoration-color: ${backgroundColor};
-						text-decoration-thickness: 2px;
-					}
-					white-space: nowrap;
-					width: 100%;
-					overflow: scroll;
-					height: 1.2rem;
-					&::-webkit-scrollbar {
-						display: none;
-					}
-					scrollbar-width: none;
-				`}
-			>
-				🚍️ <strong>{route.route_short_name}</strong> <span>{name}</span>
-			</small>
+			<RouteName route={route} name={name} />
 			{hasMultipleTripDirections && (
 				<div
 					style={css`
@@ -173,6 +144,42 @@ export default function Route({ route, stops }) {
 			{calendarOpen && <Calendar data={augmentedStops} />}
 			<DayView data={augmentedStops} />
 		</li>
+	)
+}
+
+export const RouteName = ({ route, name = undefined }) => {
+	const color = route.route_color
+		? findContrastedTextColor(route.route_color, true)
+		: '#ffffff'
+	const backgroundColor = route.route_color ? `#${route.route_color}` : 'grey'
+
+	return (
+		<small
+			css={`
+				strong {
+					background: ${backgroundColor};
+					padding: 0 0.2rem;
+					border-radius: 0.3rem;
+					color: ${color};
+				}
+				span {
+					text-decoration: underline;
+					text-decoration-color: ${backgroundColor};
+					text-decoration-thickness: 2px;
+				}
+				white-space: nowrap;
+				width: 100%;
+				overflow: scroll;
+				height: 1.2rem;
+				&::-webkit-scrollbar {
+					display: none;
+				}
+				scrollbar-width: none;
+			`}
+		>
+			🚍️ <strong>{route.route_short_name}</strong>{' '}
+			<span>{name || route.route_long_name}</span>
+		</small>
 	)
 }
 
