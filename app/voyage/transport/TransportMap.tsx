@@ -7,7 +7,13 @@ export default function TransportMap({ day, data, selectedAgency }) {
 	const setSearchParams = useSetSearchParams()
 	if (!data) return
 
-	if (selectedAgency) return selectedAgency
+	if (selectedAgency)
+		return (
+			<Agency
+				data={data.find(([id]) => id === selectedAgency)[1]}
+				backUrl={setSearchParams({ agence: undefined }, true)}
+			/>
+		)
 	return (
 		<section>
 			<h2>Explorer les transports en commun</h2>
@@ -22,6 +28,17 @@ export default function TransportMap({ day, data, selectedAgency }) {
 					</li>
 				))}
 			</ol>
+		</section>
+	)
+}
+
+const Agency = ({ data, backUrl }) => {
+	console.log('pink agency', data)
+	return (
+		<section>
+			<Link href={backUrl}>← Retour à la liste</Link>
+			<h3>{data.agency.agency_name}</h3>
+			<p>Cliquez sur une ligne pour l'explorer.</p>
 		</section>
 	)
 }
