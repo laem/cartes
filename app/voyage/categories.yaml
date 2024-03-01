@@ -15,9 +15,9 @@
     - diner
     - déjeuner
     - pizza
-  query: 
-    -'[amenity=restaurant]'
-    -'[vending=pizza]'
+  query:
+    - '[amenity=restaurant]'
+    - '[vending=pizza]'
   icon: https://cdn.jsdelivr.net/gh/mapbox/maki/icons/restaurant.svg
 - name: cafe
   title: Café, bar et pub
