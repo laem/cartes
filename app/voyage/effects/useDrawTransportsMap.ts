@@ -25,28 +25,44 @@ export default function useDrawTransportsMap(
 		const doFetch = async () => {
 			const [[longitude2, latitude], [longitude, latitude2]] = bbox
 
-			const format = 'geojson'
+			const url = (format) =>
+				`http://localhost:3000/agencyArea/${latitude}/${longitude}/${latitude2}/${longitude2}/${format}/?${
+					day ? `day=${formattedDay}` : ''
+				}`
+			const format = !data ? 'geojson' : 'prefetch'
 			const formattedDay = day?.replace(/-/g, '')
-			const response = await fetch(
-				//'https://motis.cartes.app/gtfs/stopTimes/' + stopId,
+			const request = await fetch(url(format), { mode: 'cors' })
+			const json = await request.json()
 
-				`http://localhost:3000/agencyArea/${latitude}/${longitude}/${latitude2}/${longitude2}/${format}${
-					day ? `?day=${formattedDay}` : ''
-				}`,
+			if (format === 'geojson') return setData(json)
+
+			const agencies = data.map(([id]) => id),
+				newAgencies = json.filter((agency) => !agencies.includes(agency))
+
+			console.log('pink prefect new agencies', agencies, json, newAgencies)
+			if (!newAgencies.length) return
+
+			const dataRequest = await fetch(
+				url('geojson') + `&selection=${newAgencies.join('|')}`,
 				{ mode: 'cors' }
 			)
-			const json = await response.json()
 
-			setData(json)
+			const dataJson = await dataRequest.json()
+			console.log('pink dataJSON', dataJson)
+
+			setData([...data, ...dataJson])
 		}
 		doFetch()
 	}, [setData, bbox, active, day])
 
+	const drawData = useMemo(() => {
+		return { routesGeojson: data?.map(([agencyId, { geojson }]) => geojson) }
+	}, [data])
 	useDrawTransport(
 		map,
-		{ routesGeojson: data?.map(([agencyId, { geojson }]) => geojson) },
+		drawData,
 		safeStyleKey,
-		'transitMap' + JSON.stringify(bbox) + day,
+		'transitMap' + (data || []).map(([id]) => id) + day, // TODO When the selection of agencies will change, the map will redraw, which is a problem : only new agencies should be added
 		day
 	)
 	console.log('forestgreen map', data)
