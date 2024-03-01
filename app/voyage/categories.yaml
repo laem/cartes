@@ -60,6 +60,12 @@
   open by default: true
   icon: https://cdn.jsdelivr.net/gh/mapbox/maki/icons/bank.svg
 - name: Hôtel
+  dictionary:
+    - chambre d'hôte
+    - gîte
+    - hébergement
+    - nuit
+    - dormir
   query: '["tourism"~"hotel|chalet|guest_house"]'
   open by default: true
   icon: https://cdn.jsdelivr.net/gh/mapbox/maki/icons/lodging.svg
