@@ -20,19 +20,19 @@ export default function useDrawTransportsMap(
 		}
 	}, [setTempStyle, active, map])
 	useEffect(() => {
-		if (!active || !day || !bbox) return
+		if (!active || !bbox) return
 
 		const doFetch = async () => {
 			const [[longitude2, latitude], [longitude, latitude2]] = bbox
 
 			const format = 'geojson'
+			const formattedDay = day?.replace(/-/g, '')
 			const response = await fetch(
 				//'https://motis.cartes.app/gtfs/stopTimes/' + stopId,
 
-				`http://localhost:3000/agencyArea/${latitude}/${longitude}/${latitude2}/${longitude2}/${format}?day=${day.replace(
-					/-/g,
-					''
-				)}`,
+				`http://localhost:3000/agencyArea/${latitude}/${longitude}/${latitude2}/${longitude2}/${format}${
+					day ? `?day=${formattedDay}` : ''
+				}`,
 				{ mode: 'cors' }
 			)
 			const json = await response.json()
