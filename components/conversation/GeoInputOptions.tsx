@@ -92,6 +92,7 @@ const Option = ({
 	const { osm_key: osmKey, osm_value: osmValue } = option
 
 	const locationText = buildLocationText(option)
+	console.log({ locationText })
 	const foundIcon = icons.find(
 		([key]) => key === osmKey + '_' + osmValue || key === osmValue
 	)
@@ -137,11 +138,15 @@ const Option = ({
 				onClick={(e) => {
 					const newState = { ...data, choice: { ...option, inputValue } }
 
+					const value =
+						rulesPath === 'transport . avion'
+							? option.city
+							: option.name || option.city
 					const entry = [
 						rulesPath +
 							' . ' +
 							{ depuis: 'départ', vers: 'arrivée' }[whichInput],
-						`'${option.name || option.city}'`,
+						`'${value}'`,
 					]
 
 					dispatchUpdateSituation(entry[0])(entry[1])

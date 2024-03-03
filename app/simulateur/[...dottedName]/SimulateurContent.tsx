@@ -4,6 +4,11 @@ import { useEngine2 } from '@/providers/EngineWrapper'
 import Simulation from 'Components/Simulation'
 import SimulationResults from 'Components/SimulationResults'
 
+const getSituationValue = (validatedSituation, dottedName) => {
+	const value = validatedSituation[dottedName]
+	if (value.startsWith("'") && value.endsWith("'")) return value.slice(1, -1)
+	return value
+}
 const SimulateurContent = ({ objectives, rules, config, searchParams }) => {
 	const objective = objectives[0]
 	const rule = rules[objective]
@@ -15,13 +20,12 @@ const SimulateurContent = ({ objectives, rules, config, searchParams }) => {
 	const SubTitle = () => {
 		if (objective !== 'transport . avion . impact') return null
 		return (
-			<small>
-				{validatedSituation['transport . avion . départ']} ↔{' '}
-				{validatedSituation['transport . avion . arrivée']}
-			</small>
+			<div>
+				{getSituationValue(validatedSituation, 'transport . avion . départ')} ⇄{' '}
+				{getSituationValue(validatedSituation, 'transport . avion . arrivée')}
+			</div>
 		)
 	}
-
 	return (
 		<div className="ui__ container">
 			<div
