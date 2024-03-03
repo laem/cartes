@@ -10,9 +10,11 @@ const SimulationResults = ({
 	rule,
 	opacity,
 	hideResults,
+	SubTitle,
 }) => {
 	const { dottedName, title, nodeValue } = evaluation
 	const { icônes, formule } = rule
+
 	return (
 		<div
 			key={dottedName}
@@ -61,6 +63,7 @@ const SimulationResults = ({
 				>
 					{title}
 				</h1>
+				{SubTitle && <SubTitle />}
 			</div>
 			<>
 				<div

@@ -1,12 +1,8 @@
 'use client'
 import { getSituation } from '@/components/utils/simulationUtils'
 import { useEngine2 } from '@/providers/EngineWrapper'
-import CustomSimulateurEnding from 'Components/CustomSimulateurEnding'
-import Emoji from 'Components/Emoji'
 import Simulation from 'Components/Simulation'
 import SimulationResults from 'Components/SimulationResults'
-import Link from 'next/link'
-import { utils } from 'publicodes'
 
 const SimulateurContent = ({ objectives, rules, config, searchParams }) => {
 	const objective = objectives[0]
@@ -15,6 +11,16 @@ const SimulateurContent = ({ objectives, rules, config, searchParams }) => {
 	const validatedSituation = getSituation(searchParams, rules)
 	const engine = useEngine2(rules, validatedSituation, objective)
 	const evaluation = engine.evaluate(objective)
+
+	const SubTitle = () => {
+		if (objective !== 'transport . avion . impact') return null
+		return (
+			<small>
+				{validatedSituation['transport . avion . départ']} ↔{' '}
+				{validatedSituation['transport . avion . arrivée']}
+			</small>
+		)
+	}
 
 	return (
 		<div className="ui__ container">
@@ -31,6 +37,7 @@ const SimulateurContent = ({ objectives, rules, config, searchParams }) => {
 						rules,
 						searchParams,
 						objectives,
+						SubTitle,
 					}}
 				/>
 
