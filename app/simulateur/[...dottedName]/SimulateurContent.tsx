@@ -6,6 +6,7 @@ import SimulationResults from 'Components/SimulationResults'
 
 const getSituationValue = (validatedSituation, dottedName) => {
 	const value = validatedSituation[dottedName]
+	if (value == null) return
 	if (value.startsWith("'") && value.endsWith("'")) return value.slice(1, -1)
 	return value
 }
@@ -19,10 +20,18 @@ const SimulateurContent = ({ objectives, rules, config, searchParams }) => {
 
 	const SubTitle = () => {
 		if (objective !== 'transport . avion . impact') return null
+		const origin = getSituationValue(
+				validatedSituation,
+				'transport . avion . départ'
+			),
+			destination = getSituationValue(
+				validatedSituation,
+				'transport . avion . arrivée'
+			)
+		if (!(origin && destination)) return null
 		return (
 			<div>
-				{getSituationValue(validatedSituation, 'transport . avion . départ')} ⇄{' '}
-				{getSituationValue(validatedSituation, 'transport . avion . arrivée')}
+				{origin} ⇄ {destination}
 			</div>
 		)
 	}
