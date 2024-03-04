@@ -153,6 +153,60 @@
 
 ################################
 
+- name: Oeuvre d'art
+  category: Tourisme
+  dictionary:
+    - statue
+    - sculpture
+    - fresque
+    - mosaïque
+  query: '[tourism=artwork]'
+  icon: tourism_artwork
+- name: Attraction
+  category: Tourisme
+  dictionary:
+    - bâtiment
+    - site
+    - siècle
+    - cathédrale
+    - église
+    - musée
+    - place
+    - pont
+  query: '[tourism=attraction]'
+  icon: tourism_attraction
+  - name: Information
+  category: Tourisme
+  dictionary:
+    - panneau
+    - information
+    - horaires
+    - plan
+    - direction
+    - nature
+  query: '[tourism=information]'
+  icon: tourism_information
+   - name: Pic-Nic
+  category: Tourisme
+  dictionary:
+    - picnic
+    - table
+    - banc
+    - casse-croute
+  query: '[tourism=picnic_site]'
+  icon: tourism_picnic_site
+   - name: Camping
+  category: Tourisme
+  dictionary:
+    - camping
+    - camping-car
+    - tente
+    - caravane
+   query: '[tourism~"camp_site|caravan_site"]'
+   icon: tourism_camp_site
+  
+################################
+
 - name: Vêtements
   category: Commerces
   dictionary:
