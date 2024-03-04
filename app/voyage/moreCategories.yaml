@@ -175,7 +175,7 @@
     - pont
   query: '[tourism=attraction]'
   icon: tourism_attraction
-  - name: Information
+- name: Information
   category: Tourisme
   dictionary:
     - panneau
@@ -186,7 +186,7 @@
     - nature
   query: '[tourism=information]'
   icon: tourism_information
-   - name: Pic-Nic
+- name: Pic-Nic
   category: Tourisme
   dictionary:
     - picnic
@@ -195,7 +195,7 @@
     - casse-croute
   query: '[tourism=picnic_site]'
   icon: tourism_picnic_site
-   - name: Camping
+- name: Camping
   category: Tourisme
   dictionary:
     - camping
