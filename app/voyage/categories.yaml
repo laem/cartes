@@ -69,7 +69,7 @@
     - hébergement
     - nuit
     - dormir
-  query: '["tourism"~"hotel|chalet|guest_house"]'
+  query: '["tourism"~"hotel|chalet|guest_house|apartment"]'
   open by default: true
   icon: https://cdn.jsdelivr.net/gh/mapbox/maki/icons/lodging.svg
 - name: vue
