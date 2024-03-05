@@ -8,7 +8,7 @@ const category = {
 	'open by default': true,
 }
 
-const radius = 150 // metres
+const radius = 120 // metres
 const getLastPoint = (features) => features[0].geometry.coordinates.slice(-1)[0]
 export default function useFetchDrawBikeParkings(map, cycling) {
 	const [features, setFeatures] = useState(null)
