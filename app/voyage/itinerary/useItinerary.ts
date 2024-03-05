@@ -5,6 +5,7 @@ import useDrawTransit from '../effects/useDrawTransit'
 import { decodeDate, initialDate } from './DateSelector'
 import { computeMotisTrip } from './motisRequest'
 import useDrawRoute from './useDrawRoute'
+import useFetchDrawBikeParkings from './useFetchDrawBikeParkings'
 
 const serializePoints = (points) => {
 	if (points.length === 0) return undefined
@@ -34,6 +35,7 @@ export default function useItinerary(
 	// stop) nor walk
 
 	useDrawTransit(map, routes?.transit, selectedConnection)
+	useFetchDrawBikeParkings(map, routes?.cycling)
 
 	const updateRoute = (key, value) =>
 		setRoutes((routes) => ({ ...(routes || {}), [key]: value }))
@@ -176,6 +178,7 @@ export default function useItinerary(
 		}
 	}, [map, points, setPoints, itineraryMode])
 
+	/* Routing requests are made here */
 	useEffect(() => {
 		if (points.length < 2) {
 			setRoutes(null)
