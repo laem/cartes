@@ -9,7 +9,6 @@ import useSetSearchParams from '@/components/useSetSearchParams'
 import { getCategory } from '@/components/voyage/categories'
 import MapButtons from '@/components/voyage/MapButtons'
 import { goodIconSize } from '@/components/voyage/mapUtils'
-import { centerOfMass } from '@turf/turf'
 import useAddMap, { defaultZoom } from './effects/useAddMap'
 import useDrawQuickSearchFeatures from './effects/useDrawQuickSearchFeatures'
 import useImageSearch from './effects/useImageSearch'
@@ -34,6 +33,7 @@ import useSearchLocalTransit from './effects/useSearchLocalTransit'
 import useSetTargetMarkerAndZoom from './effects/useSetTargetMarkerAndZoom'
 import useTransportStopData from './transport/useTransportStopData'
 import useDrawTransportsMap from './effects/useDrawTransportsMap'
+import useOverpassRequest from './effects/useOverpassRequest'
 
 export const defaultState = {
 	depuis: { inputValue: null, choice: false },
@@ -178,85 +178,20 @@ export default function Map({ searchParams }) {
 		date,
 	}
 	console.log('itinerary', itinerary)
-	const [features, setFeatures] = useState([])
-	console.log('baobab features', features)
 
-	useEffect(() => {
-		if (!map || !category) return
+	const simpleArrayBbox = useMemo(() => {
+		if (!map) return
+		const mapLibreBbox = map.getBounds().toArray(),
+			bbox = [
+				mapLibreBbox[0][1],
+				mapLibreBbox[0][0],
+				mapLibreBbox[1][1],
+				mapLibreBbox[1][0],
+			]
+		return bbox
+	}, [map])
 
-		const fetchCategories = async () => {
-			const mapLibreBbox = map.getBounds().toArray(),
-				bbox = [
-					mapLibreBbox[0][1],
-					mapLibreBbox[0][0],
-					mapLibreBbox[1][1],
-					mapLibreBbox[1][0],
-				].join(',')
-
-			const queries =
-				typeof category.query === 'string' ? [category.query] : category.query
-
-			const queryCore = queries
-				.map((query) => {
-					return `nw${query}(${bbox});`
-				})
-				.join('')
-			// TODO we're missing the "r" in "nwr" for "relations"
-			const overpassRequest = `
-[out:json];
-(
-${queryCore}
-);
-
-out body;
->;
-out skel qt;
-
-`
-
-			console.log('overpass', overpassRequest)
-			const url = `https://overpass-api.de/api/interpreter?data=${encodeURIComponent(
-				overpassRequest
-			)}`
-			console.log(url)
-			const request = await fetch(url)
-			const json = await request.json()
-
-			const nodesOrWays = json.elements.filter((element) => {
-				if (!['way', 'node'].includes(element.type)) return false // TODO relations should be handled
-				return true
-			})
-
-			const waysNodes = nodesOrWays
-				.filter((el) => el.type === 'way')
-				.map((el) => el.nodes)
-				.flat()
-			const interestingElements = nodesOrWays.filter(
-				(el) => !waysNodes.find((id) => id === el.id)
-			)
-			const nodeElements = interestingElements.map((element) => {
-				if (element.type === 'node') return element
-				const nodes = element.nodes.map((id) =>
-						json.elements.find((el) => el.id === id)
-					),
-					polygon = {
-						type: 'Feature',
-						geometry: {
-							type: 'Polygon',
-							coordinates: [nodes.map(({ lat, lon }) => [lon, lat])],
-						},
-					}
-				const center = centerOfMass(polygon)
-
-				const [lon, lat] = center.geometry.coordinates
-
-				return { ...element, lat, lon, polygon }
-			})
-
-			setFeatures(nodeElements)
-		}
-		fetchCategories()
-	}, [category, map])
+	const [features] = useOverpassRequest(simpleArrayBbox, category)
 
 	const onSearchResultClick = (feature) => {
 		resetInput('vers')
