@@ -1,6 +1,18 @@
 import { centerOfMass } from '@turf/turf'
 import { useEffect, useState } from 'react'
 
+export const buildOverpassRequest = (queryCore) => `
+[out:json];
+(
+${queryCore}
+);
+
+out body;
+>;
+out skel qt;
+
+`
+
 export default function useOverpassRequest(bbox, category) {
 	const [features, setFeatures] = useState([])
 	useEffect(() => {
@@ -16,17 +28,7 @@ export default function useOverpassRequest(bbox, category) {
 				})
 				.join('')
 			// TODO we're missing the "r" in "nwr" for "relations"
-			const overpassRequest = `
-[out:json];
-(
-${queryCore}
-);
-
-out body;
->;
-out skel qt;
-
-`
+			const overpassRequest = buildOverpassRequest(queryCore)
 
 			console.log('overpass', overpassRequest)
 			const url = `https://overpass-api.de/api/interpreter?data=${encodeURIComponent(
