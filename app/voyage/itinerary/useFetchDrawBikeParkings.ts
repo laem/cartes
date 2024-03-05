@@ -1,10 +1,17 @@
 import { useEffect, useState } from 'react'
+import useDrawQuickSearchFeatures from '../effects/useDrawQuickSearchFeatures'
 import { buildOverpassRequest } from '../effects/useOverpassRequest'
+
+const category = {
+	name: 'Arceaux vélo',
+	icon: 'parking',
+	'open by default': true,
+}
 
 const radius = 150 // metres
 const getLastPoint = (features) => features[0].geometry.coordinates.slice(-1)[0]
 export default function useFetchDrawBikeParkings(map, cycling) {
-	const [data, setData] = useState(null)
+	const [features, setFeatures] = useState(null)
 	const lastPoint = cycling?.features && getLastPoint(cycling.features)
 
 	const queryCore =
@@ -24,7 +31,7 @@ export default function useFetchDrawBikeParkings(map, cycling) {
 			const request = await fetch(url)
 			const json = await request.json()
 
-			setData(json.elements)
+			setFeatures(json.elements)
 		}
 		doFetch()
 
@@ -33,7 +40,15 @@ export default function useFetchDrawBikeParkings(map, cycling) {
 		// overpass bbox
 		// overpass query -> points
 		// draw on map -> v1
-	}, [queryCore, setData])
+	}, [queryCore, setFeatures])
 
-	console.log('indigo', data)
+	const backgroundColor = 'indigo'
+	useDrawQuickSearchFeatures(
+		map,
+		features,
+		false,
+		category,
+		() => null,
+		backgroundColor
+	)
 }

@@ -1,6 +1,11 @@
 import { computeCssVariable } from '@/components/utils/colors'
 import { fromHTML } from '@/components/utils/htmlUtils'
-export default async function buildSvgImage(imageUrl, then) {
+
+export default async function buildSvgImage(
+	imageUrl,
+	then,
+	backgroundColor = computeCssVariable('--color')
+) {
 	console.log('useDrawQuickSearchFeatures inside build svg image', imageUrl)
 	const imageRequest = await fetch(imageUrl)
 	const imageText = await imageRequest.text()
@@ -13,9 +18,7 @@ export default async function buildSvgImage(imageUrl, then) {
 	const svgSize = svg.getAttribute('width'), // Icons must be square !
 		xyr = svgSize / 2
 	const backgroundDisk = `<circle
-     style="fill:${encodeURIComponent(
-				computeCssVariable('--color')
-			)};fill-rule:evenodd"
+     style="fill:${encodeURIComponent(backgroundColor)};fill-rule:evenodd"
      cx="${xyr}"
      cy="${xyr}"
      r="${xyr}" />`
