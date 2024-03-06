@@ -85,14 +85,3 @@
     - film
   query: '[amenity=cinema]'
   icon: https://cdn.jsdelivr.net/gh/mapbox/maki/icons/cinema.svg
-- name: Concert
-  dictionary:
-    - musique
-    - concert
-  query: 
-    - '[amenity=music_venue]'
-    - '[amenity=bar][live_music=yes]'
-    - '[amenity=theatre][theatre:type=concert_hall]'
-    - '[amenity=nightclub]'
-    - '[amenity=festival_grounds]'
-  icon: https://cdn.jsdelivr.net/gh/mapbox/maki/icons/music.svg
