@@ -161,7 +161,7 @@
     - fresque
     - mosaïque
   query: '[tourism=artwork]'
-  icon: tourism_artwork
+  icon: https://cdn.jsdelivr.net/gh/osmandapp/OsmAnd-resources/icons/svg/tourist/artwork.svg
 - name: Attraction
   category: Tourisme
   dictionary:
@@ -174,7 +174,8 @@
     - place
     - pont
   query: '[tourism=attraction]'
-  icon: tourism_attraction
+  icon: https://cdn.jsdelivr.net/gh/osmandapp/OsmAnd-resources/icons/svg/tourist/attraction.svg
+
 - name: Information
   category: Tourisme
   dictionary:
@@ -185,7 +186,7 @@
     - direction
     - nature
   query: '[tourism=information]'
-  icon: tourism_information
+  icon: https://cdn.jsdelivr.net/gh/osmandapp/OsmAnd-resources/icons/svg/special/information.svg
 - name: Pic-Nic
   category: Tourisme
   dictionary:
@@ -194,7 +195,7 @@
     - banc
     - casse-croute
   query: '[tourism=picnic_site]'
-  icon: tourism_picnic_site
+  icon: https://cdn.jsdelivr.net/gh/osmandapp/OsmAnd-resources/icons/svg/tourist/picnic.svg
 - name: Camping
   category: Tourisme
   dictionary:
@@ -202,9 +203,9 @@
     - camping-car
     - tente
     - caravane
-   query: '[tourism~"camp_site|caravan_site"]'
-   icon: tourism_camp_site
-  
+  query: '[tourism~"camp_site|caravan_site"]'
+  icon: https://cdn.jsdelivr.net/gh/osmandapp/OsmAnd-resources/icons/svg/accommodation/camping.svg
+
 ################################
 
 - name: Vêtements
