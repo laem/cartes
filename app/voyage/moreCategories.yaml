@@ -49,8 +49,23 @@
 
 ################################
 
+- name: Musique
+  dictionary:
+    - concert
+    - festival
+    - scène
+  query:
+    - '[amenity=music_venue]'
+    - '[amenity=bar][live_music=yes]'
+    - '[amenity=theatre]["theatre:type"=concert_hall]'
+    - '[amenity=nightclub]'
+    - '[amenity=festival_grounds]'
+    - '[amenity=theatre]' # Exemple : salle de concert à Brest https://www.openstreetmap.org/way/42531718#map=18/48.38500/-4.48092
+  icon: https://cdn.jsdelivr.net/gh/mapbox/maki/icons/music.svg
+  category: Loisirs
+
 - name: piscine
-  category: Loisirs & sports
+  category: Sports
   dictionary:
     - bain
     - nage
@@ -58,14 +73,14 @@
   query: '[leisure=sports_centre][sport=swimming]'
   icon: https://cdn.jsdelivr.net/gh/osmandapp/OsmAnd-resources/icons/svg/sport/swimming_indoor.svg
 - name: stade
-  category: Loisirs & sports
+  category: Sports
   dictionary:
     - foot
     - athlétisme
   query: '[leisure=pitch]'
   icon: https://cdn.jsdelivr.net/gh/osmandapp/OsmAnd-resources/icons/svg/sport/stadium.svg
 - name: gymnase
-  category: Loisirs & sports
+  category: Sports
   dictionary:
     - badminton
     - tennis
@@ -76,19 +91,19 @@
   icon: https://cdn.jsdelivr.net/gh/osmandapp/OsmAnd-resources/icons/svg/sport/gymnasium.svg
 
 - name: plage
-  category: Loisirs & sports
+  category: Tourisme
   query: '[natural=beach]'
   icon: https://cdn.jsdelivr.net/gh/mapbox/maki/icons/beach.svg
 
 - name: Jeux pour enfants
-  category: Loisirs & sports
+  category: Loisirs
   dictionary:
     - terrain de jeu
   query: '[leisure=playground]'
   icon: playground
 
 - name: Surf
-  category: Loisirs & sports
+  category: Sports
   query: '[sport=surfing]'
   icon: surf
 
