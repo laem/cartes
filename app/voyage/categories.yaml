@@ -41,7 +41,9 @@
     - verdure
     - jardin
     - square
-  query: '[leisure=park]'
+  query:
+    - '[leisure~"park|nature_reserve"]'
+    - '[boundary=national_park]'
   icon: tree
   open by default: true
 - name: bus
