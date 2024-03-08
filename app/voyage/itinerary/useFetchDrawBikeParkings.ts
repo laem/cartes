@@ -42,7 +42,7 @@ export default function useFetchDrawBikeParkings(map, cycling) {
 		// draw on map -> v1
 	}, [queryCore, setFeatures])
 
-	const backgroundColor = 'indigo'
+	const backgroundColor = '#57bff5'
 	useDrawQuickSearchFeatures(
 		map,
 		cycling && features,
