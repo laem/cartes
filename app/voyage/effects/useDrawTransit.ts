@@ -49,7 +49,7 @@ export default function useDrawTransit(map, transit, selectedConnection) {
 			source: id,
 			type: 'line',
 			id: id + '-lines-contour',
-			filter: ['in', '$type', 'LineString'],
+			filter: ['==', ['get', 'move_type'], 'Transport'],
 			layout: {
 				'line-join': 'round',
 				'line-cap': 'round',
@@ -73,7 +73,8 @@ export default function useDrawTransit(map, transit, selectedConnection) {
 			source: id,
 			type: 'line',
 			id: id + '-lines',
-			filter: ['in', '$type', 'LineString'],
+			filter: ['==', ['get', 'move_type'], 'Transport'],
+
 			layout: {
 				'line-join': 'round',
 				'line-cap': 'round',
@@ -91,6 +92,21 @@ export default function useDrawTransit(map, transit, selectedConnection) {
 					18,
 					12,
 				],
+			},
+		})
+		map.addLayer({
+			source: id,
+			type: 'line',
+			id: id + '-lines-walking',
+			filter: ['==', ['get', 'move_type'], 'Walk'],
+			layout: {
+				'line-join': 'round',
+				'line-cap': 'round',
+			},
+			paint: {
+				'line-color': '#8f53c1',
+				'line-width': 4,
+				'line-dasharray': [1, 2],
 			},
 		})
 		map.addLayer({
@@ -138,6 +154,7 @@ export default function useDrawTransit(map, transit, selectedConnection) {
 
 		return () => {
 			map.removeLayer(id + '-lines')
+			map.removeLayer(id + '-lines-walking')
 			map.removeLayer(id + '-lines-contour')
 			map.removeLayer(id + '-points')
 			const source = map.getSource(id)
