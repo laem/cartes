@@ -23,7 +23,9 @@ export default function BikeRouteRésumé({
 				padding: 0.6rem;
 				color: var(--darkestColor);
 				line-height: 1.4rem;
-				border: 4px solid var(--darkColor);
+				border: ${mode === 'cycling'
+					? '4px solid var(--lightColor)'
+					: '4px dotted #8f53c1'};
 				margin-top: 1.4rem;
 				border-radius: 0.5rem;
 				@media (min-width: 1200px) {
@@ -50,17 +52,13 @@ export default function BikeRouteRésumé({
 				<CircularIcon
 					src={'/bike.svg'}
 					alt="Icône d'un vélo"
-					background={
-						mode !== 'cycling' ? 'var(--lightColor)' : 'var(--darkColor)'
-					}
+					background={mode !== 'cycling' ? 'lightgrey' : 'var(--lightColor)'}
 					onClick={() => setMode('cycling')}
 				/>
 				<CircularIcon
 					src={'/walking.svg'}
 					alt="Icône d'une personne qui marche"
-					background={
-						mode === 'cycling' ? 'var(--lightColor)' : 'var(--darkColor)'
-					}
+					background={mode === 'walking' ? '#8f53c1' : 'lightgrey'}
 					onClick={() => setMode('walking')}
 				/>
 			</div>
