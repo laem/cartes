@@ -12,8 +12,12 @@ export default function Transit({ data, searchParams }) {
 	if (data.state === 'loading') return <TransitLoader />
 	if (data.state === 'error')
 		return <p>Pas de transport en commun trouvé :( </p>
-	const connections = data?.connections
-	if (!connections?.length) return null
+	const rawConnections = data?.connections
+	if (!rawConnections?.length) return null
+
+	const connections = rawConnections.filter(
+		(connection) => connectionStart(connection) > stamp(data.date)
+	)
 
 	const firstDate = connectionStart(connections[0]) // We assume Motis orders them by start date, when you start to walk. Could also be intersting to query the first end date
 
@@ -221,6 +225,8 @@ const Frise = ({
 
 	const barWidth = ((to - from) / length) * 100,
 		left = ((from - rangeFrom) / length) * 100
+
+	console.log('indigo frise', from, rangeFrom, to, barWidth, left)
 
 	return (
 		<div
