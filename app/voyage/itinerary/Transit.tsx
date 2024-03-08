@@ -12,10 +12,9 @@ export default function Transit({ data, searchParams }) {
 	if (data.state === 'loading') return <TransitLoader />
 	if (data.state === 'error')
 		return <p>Pas de transport en commun trouvé :( </p>
-	const rawConnections = data?.connections
-	if (!rawConnections?.length) return null
+	if (!data?.connections) return null
 
-	const connections = rawConnections.filter(
+	const connections = data.connections.filter(
 		(connection) => connectionStart(connection) > stamp(data.date)
 	)
 
@@ -24,12 +23,12 @@ export default function Transit({ data, searchParams }) {
 	const bestConnection = findBestConnection(connections)
 
 	const firstStop = Math.min(
-			...data.connections.map(
+			...connections.map(
 				(connection) => connection.stops[0].departure.schedule_time
 			)
 		),
 		lastStop = Math.max(
-			...data.connections.map(
+			...connections.map(
 				(connection) => connection.stops.slice(-1)[0].arrival.schedule_time
 			)
 		)
@@ -49,8 +48,16 @@ export default function Transit({ data, searchParams }) {
 			`}
 		>
 			<p>Il existe des transports en commun pour ce trajet. </p>
-			<LateWarning firstDate={firstDate} date={data.date} />
 			<DateSelector date={data.date} />
+			<div
+				css={`
+					p {
+						text-align: right;
+					}
+				`}
+			>
+				<LateWarning firstDate={firstDate} date={data.date} />
+			</div>
 			{bestConnection && <BestConnection bestConnection={bestConnection} />}
 
 			<Connections
@@ -71,13 +78,17 @@ const LateWarning = ({ date, firstDate }) => {
 
 	const displayDiff = Math.round(diffHours)
 	if (diffHours > 12)
-		return <p>😓 Le prochain trajet est dans plus de {displayDiff} heures</p>
+		return <p>😓 Le prochain trajet part plus de {displayDiff} heures après.</p>
 	if (diffHours > 4)
-		return <p> 😔 Le prochain trajet est dans plus de {displayDiff} heures</p>
+		return (
+			<p> 😔 Le prochain trajet part plus de {displayDiff} heures après.</p>
+		)
 	if (diffHours > 2)
-		return <p> ⏳ Le prochain trajet est dans plus de {displayDiff} heures</p>
+		return (
+			<p> ⏳ Le prochain trajet part plus de {displayDiff} heures après.</p>
+		)
 	if (diffHours > 1)
-		return <p> ⏳ Le prochain trajet est dans plus d'une heure</p>
+		return <p> ⏳ Le prochain trajet part plus d'une heure après.</p>
 	return null
 }
 
@@ -167,7 +178,7 @@ const Connection = ({
 			onClick={() => setSelectedConnection(index)}
 		>
 			<Frise
-				range={[stamp(date), endTime]}
+				connectionsTimeRange={connectionsTimeRange}
 				transports={connection.transports}
 				connection={connection}
 				connectionRange={[
@@ -216,17 +227,16 @@ export const humanDuration = (seconds) => {
 	return { interval: `toutes les ${text}`, single: text }
 }
 const Frise = ({
-	range: [rangeFrom, rangeTo],
+	connectionsTimeRange,
 	connection,
 	connectionRange: [from, to],
 	transports,
 }) => {
-	const length = rangeTo - rangeFrom
+	const { from: absoluteFrom, to: absoluteTo } = connectionsTimeRange
+	const length = absoluteTo - absoluteFrom
 
 	const barWidth = ((to - from) / length) * 100,
-		left = ((from - rangeFrom) / length) * 100
-
-	console.log('indigo frise', from, rangeFrom, to, barWidth, left)
+		left = ((from - absoluteFrom) / length) * 100
 
 	return (
 		<div
@@ -245,7 +255,7 @@ const Frise = ({
 			<div
 				css={`
 					position: absolute;
-					left: ${left}%;
+					left: calc(1rem + ${left}%);
 					width: ${barWidth}%;
 					top: 50%;
 					transform: translateY(-50%);
