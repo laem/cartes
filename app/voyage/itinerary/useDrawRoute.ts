@@ -38,8 +38,8 @@ export default function useDrawRoute(itineraryMode, map, geojson, id) {
 				},
 				distance: {
 					'line-width': 2,
-					'line-color': '#5B099F90',
-					'line-dasharray': [0, 3],
+					'line-color': '#185abd60',
+					'line-dasharray': [8, 8],
 				},
 				cycling: {
 					'line-color': '#5B099F',
