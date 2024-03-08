@@ -161,12 +161,14 @@ const Option = ({
 				/>
 				<span>
 					<Highlighter
+						autoEscape={true}
 						searchWords={[inputValue]}
 						textToHighlight={option.name}
 						highlightStyle={highlightStyle}
 					/>
 					<span style={{ opacity: 0.6, fontSize: '75%', marginLeft: '.6em' }}>
 						<Highlighter
+							autoEscape={true}
 							highlightStyle={highlightStyle}
 							searchWords={[inputValue]}
 							textToHighlight={locationText}
