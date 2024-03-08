@@ -34,11 +34,11 @@ export default function useDrawRoute(itineraryMode, map, geojson, id) {
 			paint: {
 				walking: {
 					'line-color': '#5B099F',
-					'line-width': 8,
+					'line-width': 0, // I wasn't able to make a dasharray contour
 				},
 				distance: {
-					'line-width': 3,
-					'line-color': '#5B099F',
+					'line-width': 2,
+					'line-color': '#5B099F90',
 					'line-dasharray': [0, 3],
 				},
 				cycling: {
@@ -58,15 +58,15 @@ export default function useDrawRoute(itineraryMode, map, geojson, id) {
 			},
 			paint: {
 				walking: {
-					'line-color': '#B482DD',
-					'line-width': 6,
-					'line-dasharray': [0, 2],
+					'line-color': '#8f53c1',
+					'line-width': 4,
+					'line-dasharray': [1, 2],
 				},
 				distance: {
 					'line-width': 0,
 				},
 				cycling: {
-					'line-color': '#B482DD',
+					'line-color': '#8585ea',
 					'line-width': 5,
 				},
 			}[id],
