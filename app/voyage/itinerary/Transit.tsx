@@ -19,6 +19,18 @@ export default function Transit({ data, searchParams }) {
 
 	const bestConnection = findBestConnection(connections)
 
+	const firstStop = Math.min(
+			...data.connections.map(
+				(connection) => connection.stops[0].departure.schedule_time
+			)
+		),
+		lastStop = Math.max(
+			...data.connections.map(
+				(connection) => connection.stops.slice(-1)[0].arrival.schedule_time
+			)
+		)
+
+	console.log('indigo', data, firstStop, lastStop)
 	return (
 		<div
 			css={`
@@ -42,8 +54,8 @@ export default function Transit({ data, searchParams }) {
 				date={data.date}
 				selectedConnection={searchParams.choix || 0}
 				connectionsTimeRange={{
-					from: data.interval_begin,
-					to: data.interval_end,
+					from: firstStop,
+					to: lastStop,
 				}}
 			/>
 		</div>
@@ -139,7 +151,6 @@ const Connection = ({
 	connectionsTimeRange,
 	selected,
 }) => {
-	console.log('prune', connection)
 	return (
 		<li
 			css={`
