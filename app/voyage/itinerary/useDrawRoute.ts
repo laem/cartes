@@ -66,7 +66,7 @@ export default function useDrawRoute(itineraryMode, map, geojson, id) {
 					'line-width': 0,
 				},
 				cycling: {
-					'line-color': '#8585ea',
+					'line-color': '#57bff5',
 					'line-width': 5,
 				},
 			}[id],
