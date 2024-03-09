@@ -1,6 +1,7 @@
 import CircularIcon from '@/components/CircularIcon'
 import css from '@/components/css/convertToJs'
 import { useState } from 'react'
+import LightsWarning from './LightsWarning'
 import ProfileChooser from './ProfileChooser'
 
 export default function BikeRouteRésumé({
@@ -117,6 +118,12 @@ const ModeContent = ({ mode, data, setBikeRouteProfile, bikeRouteProfile }) => {
 						bikeRouteProfile,
 						setBikeRouteProfile,
 					}}
+				/>
+			)}
+			{mode === 'cycling' && feature.geometry.coordinates[0] && (
+				<LightsWarning
+					longitude={feature.geometry.coordinates[0][0]}
+					latitude={feature.geometry.coordinates[0][1]}
 				/>
 			)}
 		</div>

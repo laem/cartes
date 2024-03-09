@@ -166,6 +166,7 @@
 		"reselect": "^4.1.8",
 		"string-replace-to-array": "^2.1.0",
 		"styled-components": "^6.1.1",
+		"suncalc": "^1.9.0",
 		"svg-path-parser": "^1.1.0",
 		"svgmoji": "^3.2.0",
 		"swr": "^2.2.0",
