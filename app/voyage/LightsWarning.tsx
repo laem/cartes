@@ -5,6 +5,20 @@ const dateFormatter = Intl.DateTimeFormat('fr-FR', {
 	hour: 'numeric',
 	minute: 'numeric',
 })
+
+const roundFormat = (date) => {
+	const dateString = dateFormatter.format(date)
+
+	const [hours, minutes] = dateString.split(':')
+
+	const simplified =
+		+minutes <= 15
+			? +hours + 'h'
+			: +minutes <= 30 || +minutes <= 45
+			? `${hours}h30`
+			: +hours + 1 + 'h'
+	return '' + simplified
+}
 export default function LightsWarning({ longitude, latitude }) {
 	// These times seem more secure than sunrise and sunset
 	const { goldenHourEnd, goldenHour } = sunCalc.getTimes(
@@ -46,8 +60,8 @@ export default function LightsWarning({ longitude, latitude }) {
 				/>{' '}
 				<span>
 					N'oubliez pas vos lumières{' '}
-					<strong>avant {dateFormatter.format(goldenHourEnd)}</strong> et{' '}
-					<strong>après {dateFormatter.format(goldenHour)}</strong>.
+					<strong>avant {roundFormat(goldenHourEnd)}</strong> et{' '}
+					<strong>après {roundFormat(goldenHour)}</strong>.
 				</span>
 			</small>
 		</div>
