@@ -30,7 +30,7 @@ export const styles = {
 		hasTerrain: true,
 	},
 	ign: {
-		url: 'https://wxs.ign.fr/static/vectorTiles/styles/PLAN.IGN/essentiels/standard.json',
+		url: 'https://data.geopf.fr/annexes/ressources/vectorTiles/styles/PLAN.IGN/standard.json',
 		name: 'Plan IGN',
 		image: 'IGN.svg',
 		imageAlt: "Logo de l'IGN",
