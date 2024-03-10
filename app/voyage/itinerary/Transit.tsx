@@ -12,7 +12,7 @@ export default function Transit({ data, searchParams }) {
 	if (data.state === 'loading') return <TransitLoader />
 	if (data.state === 'error')
 		return <p>Pas de transport en commun trouvé :( </p>
-	if (!data?.connections) return null
+	if (!data?.connections || !data.connections.length) return null
 
 	const connections = data.connections.filter(
 		(connection) => connectionStart(connection) > stamp(data.date)
