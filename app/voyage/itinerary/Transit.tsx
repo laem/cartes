@@ -316,7 +316,11 @@ export const Transport = ({ transport }) => {
 	const background = transport.route_color || '#d3b2ee'
 
 	const textColor =
-		transport.route_text_color || findContrastedTextColor(background, true)
+		(transport.route_text_color &&
+			(transport.route_text_color !== transport.route_color
+				? transport.route_text_color
+				: null)) ||
+		findContrastedTextColor(background, true)
 
 	const ref = useRef<HTMLDivElement>(null)
 	const { width = 0, height = 0 } = useResizeObserver({
@@ -327,6 +331,7 @@ export const Transport = ({ transport }) => {
 
 	const displayImage = constraint === 'none'
 	const name = transport.shortName?.toUpperCase().replace(/TRAM\s?/g, 'T')
+	console.log('orange', transport, name)
 
 	useEffect(() => {
 		if (isOverflow)
