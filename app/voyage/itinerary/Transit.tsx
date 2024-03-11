@@ -391,6 +391,17 @@ ${
 const transportIcon = (frenchTrainType, routeType) => {
 	if (frenchTrainType) return `/transit/${frenchTrainType.toLowerCase()}.svg`
 	if (!routeType) return '/icons/bus.svg'
-	const found = { 0: '/icons/bus.svg', 1: '/icons/subway.svg' }[routeType]
+	const found = {
+		0: '/icons/tram.svg',
+		1: '/icons/metro.svg',
+		2: '/icons/train.svg',
+		3: '/icons/bus.svg',
+		4: '/icons/ferry.svg',
+		5: '/icons/tram.svg', // so rare
+		6: '/icons/téléphérique.svg',
+		7: '/icons/funiculaire.svg',
+		11: '/icons/trolleybus.svg',
+		12: '/icons/train.svg', // how to represent this ?
+	}[routeType]
 	return found || '/icons/bus.svg'
 }
