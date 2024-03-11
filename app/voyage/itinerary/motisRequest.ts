@@ -83,7 +83,7 @@ export const computeMotisTrip = async (start, destination, date) => {
 							(trip) => trip.id.line_id === transport.move.line_id
 						)
 
-						const tripId = trip?.id.id.split('_')[1] // `bretagne_` prefix added by Motis it seems, coming from its config.ini file that names schedules with ids
+						const tripId = trip?.id.id.split('_').slice(1).join('_') // `bretagne_` prefix added by Motis it seems, coming from its config.ini file that names schedules with ids
 						const doFetch = async () => {
 							try {
 								if (!tripId) return {}
