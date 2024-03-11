@@ -372,9 +372,9 @@ ${
 		: isWhiteColor(textColor) && `filter: invert(1)`
 }
 			`}
-			title={`${constraint} ${humanDuration(transport.seconds).single} de ${
+			title={`${humanDuration(transport.seconds).single} de ${
 				transport.frenchTrainType || transport.move.name || 'marche'
-			}`}
+			} ${transport.route_long_name || ''}`}
 		>
 			{transport.move.name ? (
 				<span
