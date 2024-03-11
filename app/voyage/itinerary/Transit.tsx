@@ -390,7 +390,6 @@ ${
 //TODO complete with spec possibilities https://gtfs.org/fr/schedule/reference/#routestxt
 const transportIcon = (frenchTrainType, routeType) => {
 	if (frenchTrainType) return `/transit/${frenchTrainType.toLowerCase()}.svg`
-	if (!routeType) return '/icons/bus.svg'
 	const found = {
 		0: '/icons/tram.svg',
 		1: '/icons/metro.svg',
