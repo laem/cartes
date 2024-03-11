@@ -54,12 +54,16 @@ export const getBestIntervals = (connections, best) => {
 		(connection) => connection.stops[0].departure.time
 	)
 
+	if (departures.length === 1) return 'une fois par jour'
+
 	const dates = departures.map((departure) => dateFromMotis(departure))
 
 	const intervals = departures
 		.map((date, i) => i > 0 && date - departures[i - 1])
 		.filter(Boolean)
 	const max = Math.max(...intervals)
+
+	console.log('orange max', max, intervals)
 	const description = `au moins ${humanDuration(max).interval}`
 	return description
 }
