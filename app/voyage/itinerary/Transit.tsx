@@ -1,7 +1,7 @@
 import useSetSearchParams from '@/components/useSetSearchParams'
 import { findContrastedTextColor } from '@/components/utils/colors'
 import Image from 'next/image'
-import { useRef } from 'react'
+import { useEffect, useRef, useState } from 'react'
 import { useResizeObserver } from 'usehooks-ts'
 import BestConnection from './BestConnection'
 import DateSelector from './DateSelector'
@@ -304,7 +304,15 @@ const Frise = ({
 		</div>
 	)
 }
+
+function isOverflowX(element) {
+	if (!element) return null
+	return (
+		element.scrollWidth != Math.max(element.offsetWidth, element.clientWidth)
+	)
+}
 export const Transport = ({ transport }) => {
+	const [constraint, setConstraint] = useState('none')
 	const background = transport.route_color || '#d3b2ee'
 
 	const textColor =
@@ -315,12 +323,29 @@ export const Transport = ({ transport }) => {
 		ref,
 		box: 'border-box',
 	})
+	const isOverflow = isOverflowX(ref.current)
 
-	const displayImage = width > 30
+	const displayImage = constraint === 'none'
+	const name = transport.shortName?.toUpperCase().replace(/TRAM\s?/g, 'T')
+
+	useEffect(() => {
+		if (isOverflow)
+			setConstraint(constraint === 'none' ? 'noImage' : 'smallest')
+	}, [setConstraint, isOverflow, constraint])
+
 	return (
 		<span
 			ref={ref}
 			css={`
+			${
+				constraint == 'smallest' &&
+				`
+		  strong {
+			  border: 2px solid white;
+				z-index: 1
+		  }
+			`
+			}
 				display: inline-block;
 				width: 100%;
 				background: ${background};
@@ -340,7 +365,7 @@ ${
 		: isWhiteColor(textColor) && `filter: invert(1)`
 }
 			`}
-			title={`${humanDuration(transport.seconds).single} de ${
+			title={`${constraint} ${humanDuration(transport.seconds).single} de ${
 				transport.frenchTrainType || transport.move.name || 'marche'
 			}`}
 		>
@@ -363,10 +388,10 @@ ${
 							color: ${textColor};
 							line-height: 1.2rem;
 							border-radius: 0.4rem;
-							text-transform: uppercase;
+							white-space: nowrap;
 						`}
 					>
-						{transport.frenchTrainType || transport.shortName}
+						{transport.frenchTrainType || name}
 					</strong>
 				</span>
 			) : transport.move_type === 'Walk' ? (

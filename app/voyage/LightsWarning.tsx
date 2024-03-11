@@ -38,6 +38,7 @@ export default function LightsWarning({ longitude, latitude }) {
 					padding: 0 0.3rem;
 					border-radius: 0.2rem;
 					box-shadow: -1px 0px 1px red;
+					white-space: nowrap;
 				}
 				> small {
 					display: flex;
