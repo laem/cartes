@@ -1,4 +1,5 @@
 import useSetSearchParams from '@/components/useSetSearchParams'
+import { findContrastedTextColor } from '@/components/utils/colors'
 import Image from 'next/image'
 import { useRef } from 'react'
 import { useResizeObserver } from 'usehooks-ts'
@@ -304,7 +305,10 @@ const Frise = ({
 	)
 }
 export const Transport = ({ transport }) => {
-	const background = transport.route_color || 'rgb(211, 178, 238)'
+	const background = transport.route_color || '#d3b2ee'
+
+	const textColor =
+		transport.route_text_color || findContrastedTextColor(background, true)
 
 	const ref = useRef<HTMLDivElement>(null)
 	const { width = 0, height = 0 } = useResizeObserver({
@@ -333,8 +337,7 @@ export const Transport = ({ transport }) => {
 ${
 	transport.frenchTrainType
 		? `filter: brightness(0) invert(1);`
-		: transport.route_text_color?.toLowerCase().includes('ffffff') &&
-		  `filter: invert(1)`
+		: isWhiteColor(textColor) && `filter: invert(1)`
 }
 			`}
 			title={`${humanDuration(transport.seconds).single} de ${
@@ -357,9 +360,7 @@ ${
 					<strong
 						css={`
 							background: ${background};
-							color: ${transport.route_text_color
-								? transport.route_text_color
-								: 'white'};
+							color: ${textColor};
 							line-height: 1.2rem;
 							border-radius: 0.4rem;
 							text-transform: uppercase;
@@ -403,4 +404,13 @@ const transportIcon = (frenchTrainType, routeType) => {
 		12: '/icons/train.svg', // how to represent this ?
 	}[routeType]
 	return found || '/icons/bus.svg'
+}
+
+const isWhiteColor = (unsafeColor) => {
+	if (!unsafeColor) return false
+
+	if (unsafeColor.toLowerCase().includes('ffffff')) return true
+
+	console.log('orange', unsafeColor)
+	if (unsafeColor === 'white') return true
 }
