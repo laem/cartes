@@ -315,13 +315,11 @@ function isOverflowX(element) {
 }
 export const Transport = ({ transport }) => {
 	const [constraint, setConstraint] = useState('none')
-	const background = transport.route_color || '#d3b2ee'
+	const background = transport.route_color,
+		color = transport.route_text_color
 
 	const textColor =
-		(transport.route_text_color &&
-			(transport.route_text_color !== transport.route_color
-				? transport.route_text_color
-				: null)) ||
+		(color && (color !== background ? color : null)) ||
 		findContrastedTextColor(background, true)
 
 	const ref = useRef<HTMLDivElement>(null)

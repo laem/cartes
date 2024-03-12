@@ -126,12 +126,12 @@ export const computeMotisTrip = async (start, destination, date) => {
 								? colors.OUIGO
 								: frenchTrainType === 'TER'
 								? colors.TER
-								: route_color && '#' + route_color,
+								: handleColor(route_color, '#d3b2ee'),
 							route_text_color: isTGV
 								? '#fff'
 								: isOUIGO
 								? '#fff'
-								: route_text_color && '#' + route_text_color,
+								: handleColor(route_text_color, '#000000'),
 						}
 						const attributes = {
 							...gtfsAttributes,
@@ -150,6 +150,7 @@ export const computeMotisTrip = async (start, destination, date) => {
 						return {
 							...transport,
 							...attributes,
+
 							route_color_darker: attributes.route_color
 								? lightenColor(attributes.route_color, -20)
 								: '#5b099f',
@@ -191,4 +192,12 @@ export const colors = {
 	TGV: '#b8175e',
 	OUIGO: '#0193c9',
 	TER: '#034EA2',
+}
+function handleColor(rawColor, defaultColor) {
+	if (!rawColor) return defaultColor
+	if (rawColor.startsWith('#')) return rawColor
+	if (rawColor.match(/^([0-9A-Fa-f])+$/) && rawColor.length === 6)
+		return '#' + rawColor
+	console.log('Unrecognized route color', rawColor)
+	return defaultColor
 }
