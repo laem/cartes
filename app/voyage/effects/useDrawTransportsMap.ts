@@ -59,7 +59,7 @@ export default function useDrawTransportsMap(
 	const drawData = useMemo(() => {
 		return {
 			routesGeojson: data?.map(([agencyId, { geojson }]) =>
-				addDefaultColor(geojson)
+				agencyId == 1187 ? addDefaultColor(geojson) : geojson
 			),
 		}
 	}, [data])
