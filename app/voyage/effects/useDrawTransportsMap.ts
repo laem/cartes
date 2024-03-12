@@ -57,7 +57,11 @@ export default function useDrawTransportsMap(
 	}, [setData, bbox, active, day])
 
 	const drawData = useMemo(() => {
-		return { routesGeojson: data?.map(([agencyId, { geojson }]) => geojson) }
+		return {
+			routesGeojson: data?.map(([agencyId, { geojson }]) =>
+				addDefaultColor(geojson)
+			),
+		}
 	}, [data])
 
 	useDrawTransport(
@@ -70,3 +74,16 @@ export default function useDrawTransportsMap(
 	console.log('forestgreen map', data)
 	return data
 }
+
+const addDefaultColor = (featureCollection) => ({
+	type: 'FeatureCollection',
+	features: featureCollection.features.map((feature) => ({
+		...feature,
+		properties: {
+			...feature.properties,
+			route_color: '#821a73',
+			//	width: 2,
+			opacity: 0.001 * feature.properties.dates.length,
+		},
+	})),
+})

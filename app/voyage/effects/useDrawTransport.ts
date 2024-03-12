@@ -46,7 +46,7 @@ export default function useDrawTransport(map, data, styleKey, drawKey, day) {
 
 	useEffect(() => {
 		if (!map || !routesGeojson) return
-		console.log('onload redraw')
+		console.log('turquoise', routesGeojson)
 
 		/* Lower the opacity of all style layers.
 		 * Replaced by setting the "transit" style taken from MapTiler's dataviz
@@ -114,6 +114,7 @@ export default function useDrawTransport(map, data, styleKey, drawKey, day) {
 					// This is easy to check through the data, see that it runs only on selected
 					// days / hours and display it to the user TODO
 					'line-color': ['get', 'route_color'],
+					'line-opacity': ['get', 'opacity'],
 					'line-width': [
 						'let',
 						'importance',
