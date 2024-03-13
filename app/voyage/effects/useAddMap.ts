@@ -77,7 +77,7 @@ export default function useAddMap(
 			setMap(null)
 			newMap?.remove()
 		}
-	}, [setMap, setZoom, setBbox, mapContainerRef, mobile]) // styleUrl not listed on purpose
+	}, [setMap, setZoom, setBbox, mapContainerRef]) // styleUrl not listed on purpose
 
 	useEffect(() => {
 		if (!map) return
