@@ -134,32 +134,6 @@ export default function QuickFeatureSearch({
 										<img src={'/icons/photo.svg'} />
 									</Link>
 								</li>
-								<li
-									key="transit"
-									css={`
-										${quickSearchButtonStyle(searchParams.transports === 'oui')}
-									`}
-								>
-									<Link
-										href={setSearchParams(
-											{
-												...omit(['transports'], searchParams),
-												...(searchParams.transports
-													? {}
-													: { transports: 'oui' }),
-											},
-											true,
-											true
-										)}
-									>
-										<img
-											src={'/transports.svg'}
-											css={`
-												filter: none !important;
-											`}
-										/>
-									</Link>
-								</li>
 							</>
 						)}
 						{filteredCategories.map((category) => {

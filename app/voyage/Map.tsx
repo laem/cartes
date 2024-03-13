@@ -471,6 +471,7 @@ export default function Map({ searchParams }) {
 					setDistanceMode,
 					map,
 					itinerary,
+					searchParams,
 				}}
 			/>
 			{searchParams.transports === 'oui' && <CenteredCross />}

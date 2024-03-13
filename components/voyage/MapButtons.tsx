@@ -1,9 +1,11 @@
 'use client'
 
 import useMeasureDistance from '@/app/voyage/useMeasureDistance'
+import Link from 'next/link'
 import styled from 'styled-components'
 import css from '../css/convertToJs'
-import Emoji from '../Emoji'
+import useSetSearchParams from '../useSetSearchParams'
+import { omit } from '../utils/utils'
 import ItineraryButton, { ResetIcon } from './itinerary/ItineraryButton'
 
 export const MapButtonsWrapper = styled.div`
@@ -23,8 +25,7 @@ export const MapButton = styled.div`
 	border-radius: 4px;
 	box-shadow: 0 0 0 2px rgba(0, 0, 0, 0.1);
 	padding: 0.1rem;
-	background: white;
-	opacity: 0.8;
+	background: #ffffff85;
 	img {
 		width: 1.5rem;
 		height: auto;
@@ -62,10 +63,31 @@ export default function MapButtons({
 	distanceMode,
 	map,
 	itinerary,
+	searchParams,
 }) {
 	const [distance, resetDistance] = useMeasureDistance(map, distanceMode)
+	const setSearchParams = useSetSearchParams()
 	return (
 		<MapButtonsWrapper>
+			<MapButton>
+				<Link
+					href={setSearchParams(
+						{
+							...omit(['transports'], searchParams),
+							...(searchParams.transports ? {} : { transports: 'oui' }),
+						},
+						true,
+						true
+					)}
+				>
+					<img
+						src={'/transports.svg'}
+						css={`
+							filter: none !important;
+						`}
+					/>
+				</Link>
+			</MapButton>
 			<MapButton>
 				<button
 					onClick={() => setStyleChooser(!styleChooser)}
