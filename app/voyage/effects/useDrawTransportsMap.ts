@@ -59,7 +59,7 @@ export default function useDrawTransportsMap(
 	const drawData = useMemo(() => {
 		return {
 			routesGeojson: data?.map(([agencyId, { geojson }]) =>
-				agencyId == 1187 ? addDefaultColor(geojson) : geojson
+				agencyId == '1187' ? addDefaultColor(geojson) : geojson
 			),
 		}
 	}, [data])
@@ -75,15 +75,21 @@ export default function useDrawTransportsMap(
 	return data
 }
 
-const addDefaultColor = (featureCollection) => ({
-	type: 'FeatureCollection',
-	features: featureCollection.features.map((feature) => ({
-		...feature,
-		properties: {
-			...feature.properties,
-			route_color: '#821a73',
-			//	width: 2,
-			opacity: 0.001 * feature.properties.dates.length,
-		},
-	})),
-})
+const addDefaultColor = (featureCollection) => {
+	const maxCount = Math.max(
+		...featureCollection.features.map((feature) => feature.properties.count)
+	)
+	return {
+		type: 'FeatureCollection',
+		features: featureCollection.features.map((feature) => ({
+			...feature,
+			properties: {
+				...feature.properties,
+				route_color: '#821a73',
+				//	width: 2,
+				route_type: 2,
+				opacity: Math.max(feature.properties.count / maxCount, 0.1),
+			},
+		})),
+	}
+}
