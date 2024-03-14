@@ -139,31 +139,11 @@ export default function useDrawTransport(map, data, styleKey, drawKey, day) {
 				id: id + '-points',
 				filter: ['in', '$type', 'Point'],
 				paint: {
-					'circle-radius': [
-						'interpolate',
-						['linear', 1],
-						['zoom'],
-						0,
-						0.1,
-						12,
-						1,
-						18,
-						10,
-					],
+					'circle-radius': ['get', 'width'],
 					'circle-color': 'white',
 					'circle-pitch-alignment': 'map',
 					'circle-stroke-color': ['get', 'route_color'],
-					'circle-stroke-width': [
-						'interpolate',
-						['linear', 1],
-						['zoom'],
-						0,
-						0.1,
-						12,
-						1,
-						18,
-						4,
-					],
+					'circle-stroke-width': 2,
 				},
 			})
 

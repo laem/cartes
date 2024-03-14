@@ -76,20 +76,44 @@ export default function useDrawTransportsMap(
 }
 
 const addDefaultColor = (featureCollection) => {
-	const maxCount = Math.max(
-		...featureCollection.features.map((feature) => feature.properties.count)
+	const maxCountLine = Math.max(
+		...featureCollection.features
+			.map(
+				(feature) =>
+					feature.geometry.type === 'LineString' && feature.properties.count
+			)
+			.filter(Boolean)
 	)
+	const maxCountPoint = Math.max(
+		...featureCollection.features
+			.map(
+				(feature) =>
+					feature.geometry.type === 'Point' && feature.properties.count
+			)
+			.filter(Boolean)
+	)
+	console.log('cyan', featureCollection)
 	return {
 		type: 'FeatureCollection',
-		features: featureCollection.features.map((feature) => ({
-			...feature,
-			properties: {
-				...feature.properties,
-				route_color: '#821a73',
-				//	width: 2,
-				route_type: 2,
-				opacity: Math.max(feature.properties.count / maxCount, 0.1),
-			},
-		})),
+		features: featureCollection.features.map((feature) =>
+			feature.geometry.type === 'Point'
+				? {
+						...feature,
+						properties: {
+							width:
+								Math.max(feature.properties.count / maxCountPoint, 0.1) * 10,
+						},
+				  }
+				: {
+						...feature,
+						properties: {
+							...feature.properties,
+							route_color: '#821a73',
+							//	width: 2,
+							route_type: 2,
+							opacity: Math.max(feature.properties.count / maxCountLine, 0.1),
+						},
+				  }
+		),
 	}
 }
