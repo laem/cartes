@@ -100,8 +100,9 @@ const addDefaultColor = (featureCollection) => {
 				? {
 						...feature,
 						properties: {
-							width:
-								Math.max(feature.properties.count / maxCountPoint, 0.1) * 10,
+							width: Math.max(feature.properties.count / maxCountPoint, 0.1),
+							'circle-stroke-color': '#0a2e52',
+							'circle-color': '#185abd',
 						},
 				  }
 				: {
@@ -109,7 +110,6 @@ const addDefaultColor = (featureCollection) => {
 						properties: {
 							...feature.properties,
 							route_color: '#821a73',
-							//	width: 2,
 							route_type: 2,
 							opacity: Math.max(feature.properties.count / maxCountLine, 0.1),
 						},
@@ -117,3 +117,18 @@ const addDefaultColor = (featureCollection) => {
 		),
 	}
 }
+
+const circleRadiusGenerator = (
+	what: 'radius' | 'stroke' = 'radius',
+	multiplier = 1
+) => [
+	'interpolate',
+	['linear', 1],
+	['zoom'],
+	0,
+	0.1 * multiplier,
+	12,
+	1 * multiplier,
+	18,
+	(what === 'radius' ? 10 : 4) * multiplier,
+]
