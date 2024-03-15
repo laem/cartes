@@ -95,6 +95,7 @@ const addDefaultColor = (featureCollection) => {
 				? {
 						...feature,
 						properties: {
+							...feature.properties,
 							width: Math.max(feature.properties.count / maxCountPoint, 0.1),
 							'circle-stroke-color': '#0a2e52',
 							'circle-color': '#185abd',

@@ -125,10 +125,11 @@ export default function useDrawTransport(map, data, styleKey, drawKey, day) {
 					],
 				},
 			})
+			const pointsId = id + '-points'
 			map.addLayer({
 				source: id,
 				type: 'circle',
-				id: id + '-points',
+				id: pointsId,
 				filter: ['in', '$type', 'Point'],
 				paint: {
 					'circle-radius': [
@@ -160,11 +161,23 @@ export default function useDrawTransport(map, data, styleKey, drawKey, day) {
 				},
 			})
 
+			/*
 			map.on('click', linesId, (e) => {
 				setSearchParams({
 					routes: e.features
 						.map((feature) => feature.properties.route_id)
 						.join('|'),
+				})
+			})
+			*/
+			map.on('click', pointsId, (e) => {
+				console.log('click', e)
+				const feature = e.features[0],
+					stopId = feature.properties.stopId,
+					gare = stopId.split('-').slice(-1)[0]
+
+				setSearchParams({
+					gare,
 				})
 			})
 
