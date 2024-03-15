@@ -103,7 +103,7 @@ export function ZoneImages({ zoneImages: images, panoramaxImages }) {
 				>
 					{panoramaxThumb && (
 						<a
-							href={`https://panoramax.fr/photos#focus=pic&map=${window.location.hash.slice(
+							href={`https://api.panoramax.xyz/#focus=pic&map=${window.location.hash.slice(
 								1
 							)}&pic=${panoramaxImage.id}`}
 							target="_blank"
