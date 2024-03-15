@@ -161,15 +161,13 @@ export default function useDrawTransport(map, data, styleKey, drawKey, day) {
 				},
 			})
 
-			/*
 			map.on('click', linesId, (e) => {
 				setSearchParams({
 					routes: e.features
-						.map((feature) => feature.properties.route_id)
+						.map((feature) => feature.properties.routeId)
 						.join('|'),
 				})
 			})
-			*/
 			map.on('click', pointsId, (e) => {
 				console.log('click', e)
 				const feature = e.features[0],

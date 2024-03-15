@@ -28,7 +28,13 @@ export default function TransportMap({
 
 	const setSearchParams = useSetSearchParams()
 
-	if (routes) return <Routes routes={routes} />
+	if (routes)
+		return (
+			<Routes
+				routes={routes}
+				resetUrl={setSearchParams({ routes: undefined }, true)}
+			/>
+		)
 	if (!data) return
 
 	if (selectedAgency)
@@ -67,23 +73,27 @@ const Agency = ({ data, backUrl }) => {
 	)
 }
 
-const Routes = ({ routes }) => {
+const Routes = ({ routes, resetUrl }) => {
 	console.log('pink', routes)
+
 	return (
-		<ol
-			css={`
-				margin: 1rem 0;
-				list-style-type: none;
-				li {
-					margin: 0.6rem 0;
-				}
-			`}
-		>
-			{routes.map((route) => (
-				<li key={route.route_id}>
-					<RouteName route={route} />
-				</li>
-			))}
-		</ol>
+		<section>
+			<Link href={resetUrl}>Retour aux agences</Link>
+			<ol
+				css={`
+					margin: 1rem 0;
+					list-style-type: none;
+					li {
+						margin: 0.6rem 0;
+					}
+				`}
+			>
+				{routes.map((route) => (
+					<li key={route.route_id}>
+						<RouteName route={route} />
+					</li>
+				))}
+			</ol>
+		</section>
 	)
 }
