@@ -13,8 +13,6 @@ const mergeRoutes = (geojson) => {
 		return { ...memo, [id]: [...(already || []), next] }
 	}, {})
 
-	console.log('pink', reduced['PENNARBED:111'])
-
 	const features = Object.entries(reduced)
 		.map(
 			([id, list]) =>
@@ -31,22 +29,18 @@ const mergeRoutes = (geojson) => {
 		)
 		.filter(Boolean)
 
-	console.log('forestgreen reduced', features)
-
 	return { ...geojson, features }
 }
 /***
  * This hook draws transit lines on the map.
  */
 export default function useDrawTransport(map, data, styleKey, drawKey, day) {
-	console.log('forestgreen', data)
 	const routesGeojson = data?.routesGeojson
 
 	const setSearchParams = useSetSearchParams()
 
 	useEffect(() => {
 		if (!map || !routesGeojson) return
-		console.log('turquoise', routesGeojson)
 
 		/* Lower the opacity of all style layers.
 		 * Replaced by setting the "transit" style taken from MapTiler's dataviz
@@ -75,25 +69,23 @@ export default function useDrawTransport(map, data, styleKey, drawKey, day) {
 			routesGeojson.type === 'FeatureCollection'
 				? mergeRoutes(routesGeojson)
 				: routesGeojson.reduce(
-						(memo, next) =>
-							console.log('ROUTE', next.route) || {
-								type: 'FeatureCollection',
-								features: [
-									...memo.features,
-									...(next.shapes?.features || next.features),
-									...(next.stops?.features.map((f) => ({
-										...f,
-										properties: { route_color: '#' + next.route.route_color },
-									})) || []),
-								],
-							},
+						(memo, next) => ({
+							type: 'FeatureCollection',
+							features: [
+								...memo.features,
+								...(next.shapes?.features || next.features),
+								...(next.stops?.features.map((f) => ({
+									...f,
+									properties: { route_color: '#' + next.route.route_color },
+								})) || []),
+							],
+						}),
 						{ features: [] }
 				  )
 		const id = 'routes-stopId-' + drawKey
 		try {
 			const source = map.getSource(id)
 			if (source) return
-			console.log('will (re)draw transport route geojson')
 			map.addSource(id, { type: 'geojson', data: featureCollection })
 
 			const linesId = id + '-lines'

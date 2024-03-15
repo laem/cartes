@@ -11,7 +11,6 @@ export default function useDrawTransportsMap(
 	bbox
 ) {
 	const [data, setData] = useState(null)
-	console.log('purple bbox', bbox)
 	useEffect(() => {
 		if (!map || !active) return
 
@@ -40,7 +39,6 @@ export default function useDrawTransportsMap(
 			const agencies = data.map(([id]) => id),
 				newAgencies = json.filter((agency) => !agencies.includes(agency))
 
-			console.log('pink prefect new agencies', agencies, json, newAgencies)
 			if (!newAgencies.length) return
 
 			const dataRequest = await fetch(
@@ -49,7 +47,6 @@ export default function useDrawTransportsMap(
 			)
 
 			const dataJson = await dataRequest.json()
-			console.log('pink dataJSON', dataJson)
 
 			setData([...data, ...dataJson])
 		}
@@ -71,7 +68,6 @@ export default function useDrawTransportsMap(
 		'transitMap' + (data || []).map(([id]) => id) + day, // TODO When the selection of agencies will change, the map will redraw, which is a problem : only new agencies should be added
 		day
 	)
-	console.log('forestgreen map', data)
 	return data
 }
 
@@ -92,7 +88,6 @@ const addDefaultColor = (featureCollection) => {
 			)
 			.filter(Boolean)
 	)
-	console.log('cyan', featureCollection)
 	return {
 		type: 'FeatureCollection',
 		features: featureCollection.features.map((feature) =>
@@ -117,18 +112,3 @@ const addDefaultColor = (featureCollection) => {
 		),
 	}
 }
-
-const circleRadiusGenerator = (
-	what: 'radius' | 'stroke' = 'radius',
-	multiplier = 1
-) => [
-	'interpolate',
-	['linear', 1],
-	['zoom'],
-	0,
-	0.1 * multiplier,
-	12,
-	1 * multiplier,
-	18,
-	(what === 'radius' ? 10 : 4) * multiplier,
-]
