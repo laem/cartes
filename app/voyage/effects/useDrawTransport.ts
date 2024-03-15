@@ -13,8 +13,6 @@ const mergeRoutes = (geojson) => {
 		return { ...memo, [id]: [...(already || []), next] }
 	}, {})
 
-	console.log('pink', reduced['PENNARBED:111'])
-
 	const features = Object.entries(reduced)
 		.map(
 			([id, list]) =>
@@ -31,22 +29,18 @@ const mergeRoutes = (geojson) => {
 		)
 		.filter(Boolean)
 
-	console.log('forestgreen reduced', features)
-
 	return { ...geojson, features }
 }
 /***
  * This hook draws transit lines on the map.
  */
 export default function useDrawTransport(map, data, styleKey, drawKey, day) {
-	console.log('forestgreen', data)
 	const routesGeojson = data?.routesGeojson
 
 	const setSearchParams = useSetSearchParams()
 
 	useEffect(() => {
 		if (!map || !routesGeojson) return
-		console.log('turquoise', routesGeojson)
 
 		/* Lower the opacity of all style layers.
 		 * Replaced by setting the "transit" style taken from MapTiler's dataviz
@@ -75,25 +69,23 @@ export default function useDrawTransport(map, data, styleKey, drawKey, day) {
 			routesGeojson.type === 'FeatureCollection'
 				? mergeRoutes(routesGeojson)
 				: routesGeojson.reduce(
-						(memo, next) =>
-							console.log('ROUTE', next.route) || {
-								type: 'FeatureCollection',
-								features: [
-									...memo.features,
-									...(next.shapes?.features || next.features),
-									...(next.stops?.features.map((f) => ({
-										...f,
-										properties: { route_color: '#' + next.route.route_color },
-									})) || []),
-								],
-							},
+						(memo, next) => ({
+							type: 'FeatureCollection',
+							features: [
+								...memo.features,
+								...(next.shapes?.features || next.features),
+								...(next.stops?.features.map((f) => ({
+									...f,
+									properties: { route_color: '#' + next.route.route_color },
+								})) || []),
+							],
+						}),
 						{ features: [] }
 				  )
 		const id = 'routes-stopId-' + drawKey
 		try {
 			const source = map.getSource(id)
 			if (source) return
-			console.log('will (re)draw transport route geojson')
 			map.addSource(id, { type: 'geojson', data: featureCollection })
 
 			const linesId = id + '-lines'
@@ -133,10 +125,11 @@ export default function useDrawTransport(map, data, styleKey, drawKey, day) {
 					],
 				},
 			})
+			const pointsId = id + '-points'
 			map.addLayer({
 				source: id,
 				type: 'circle',
-				id: id + '-points',
+				id: pointsId,
 				filter: ['in', '$type', 'Point'],
 				paint: {
 					'circle-radius': [
@@ -144,34 +137,45 @@ export default function useDrawTransport(map, data, styleKey, drawKey, day) {
 						['linear', 1],
 						['zoom'],
 						0,
-						0.1,
+						['*', 10, ['get', 'width']],
 						12,
-						1,
+						['*', 20, ['get', 'width']],
 						18,
-						10,
+						['*', 50, ['get', 'width']],
 					],
-					'circle-color': 'white',
-					'circle-pitch-alignment': 'map',
-					'circle-stroke-color': ['get', 'route_color'],
 					'circle-stroke-width': [
 						'interpolate',
 						['linear', 1],
 						['zoom'],
 						0,
-						0.1,
+						['*', 2, ['get', 'width']],
 						12,
-						1,
+						['*', 5, ['get', 'width']],
 						18,
-						4,
+						['*', 10, ['get', 'width']],
 					],
+					'circle-stroke-color': ['get', 'circle-stroke-color'],
+
+					'circle-pitch-alignment': 'map',
+					'circle-color': ['get', 'circle-color'],
 				},
 			})
 
 			map.on('click', linesId, (e) => {
 				setSearchParams({
 					routes: e.features
-						.map((feature) => feature.properties.route_id)
+						.map((feature) => feature.properties.routeId)
 						.join('|'),
+				})
+			})
+			map.on('click', pointsId, (e) => {
+				console.log('click', e)
+				const feature = e.features[0],
+					stopId = feature.properties.stopId,
+					gare = stopId.split('-').slice(-1)[0]
+
+				setSearchParams({
+					gare,
 				})
 			})
 

@@ -160,7 +160,10 @@ export default function Map({ searchParams }) {
 	)
 
 	const [gares, setGares] = useState(null)
-	const [clickedGare, clickGare] = useState(null)
+
+	const uic = searchParams.gare
+	const clickedGare = gares && gares.find((g) => g.uic.includes(uic))
+	const clickGare = (uic) => setSearchParams({ gare: uic })
 	const [bikeRoute, setBikeRoute] = useState(null)
 	const [resetItinerary, routes, date] = useItinerary(
 		map,
@@ -368,7 +371,7 @@ export default function Map({ searchParams }) {
 				// wait for the searchParam update to proceed
 				const uic = element.tags?.uic_ref,
 					gare = gares && gares.find((g) => g.uic.includes(uic))
-				if (uic && gare) clickGare(gare)
+				if (uic && gare) clickGare(gare.uic)
 			}
 		}
 
@@ -379,7 +382,7 @@ export default function Map({ searchParams }) {
 			if (!map) return
 			map.off('click', onClick)
 		}
-	}, [map, setState, distanceMode, itineraryMode, gares])
+	}, [map, setState, distanceMode, itineraryMode, gares, clickGare])
 
 	useHoverOnMapFeatures(map)
 
@@ -417,7 +420,7 @@ export default function Map({ searchParams }) {
 			element.append(image)
 
 			element.addEventListener('click', () => {
-				clickGare(gare.uic === clickedGare?.uic ? null : gare)
+				clickGare(gare.uic === clickedGare?.uic ? null : gare.uic)
 			})
 
 			const marker = new maplibregl.Marker({ element })
@@ -428,7 +431,7 @@ export default function Map({ searchParams }) {
 		return () => {
 			markers.map((marker) => marker.remove())
 		}
-	}, [lesGaresProches, map, zoom])
+	}, [lesGaresProches, map, zoom, clickGare, clickedGare?.uic])
 
 	return (
 		<MapContainer>

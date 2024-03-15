@@ -11,7 +11,6 @@ export default function useDrawTransportsMap(
 	bbox
 ) {
 	const [data, setData] = useState(null)
-	console.log('purple bbox', bbox)
 	useEffect(() => {
 		if (!map || !active) return
 
@@ -40,7 +39,6 @@ export default function useDrawTransportsMap(
 			const agencies = data.map(([id]) => id),
 				newAgencies = json.filter((agency) => !agencies.includes(agency))
 
-			console.log('pink prefect new agencies', agencies, json, newAgencies)
 			if (!newAgencies.length) return
 
 			const dataRequest = await fetch(
@@ -49,7 +47,6 @@ export default function useDrawTransportsMap(
 			)
 
 			const dataJson = await dataRequest.json()
-			console.log('pink dataJSON', dataJson)
 
 			setData([...data, ...dataJson])
 		}
@@ -59,7 +56,7 @@ export default function useDrawTransportsMap(
 	const drawData = useMemo(() => {
 		return {
 			routesGeojson: data?.map(([agencyId, { geojson }]) =>
-				agencyId == 1187 ? addDefaultColor(geojson) : geojson
+				agencyId == '1187' ? addDefaultColor(geojson) : geojson
 			),
 		}
 	}, [data])
@@ -71,19 +68,48 @@ export default function useDrawTransportsMap(
 		'transitMap' + (data || []).map(([id]) => id) + day, // TODO When the selection of agencies will change, the map will redraw, which is a problem : only new agencies should be added
 		day
 	)
-	console.log('forestgreen map', data)
 	return data
 }
 
-const addDefaultColor = (featureCollection) => ({
-	type: 'FeatureCollection',
-	features: featureCollection.features.map((feature) => ({
-		...feature,
-		properties: {
-			...feature.properties,
-			route_color: '#821a73',
-			//	width: 2,
-			opacity: 0.001 * feature.properties.dates.length,
-		},
-	})),
-})
+const addDefaultColor = (featureCollection) => {
+	const maxCountLine = Math.max(
+		...featureCollection.features
+			.map(
+				(feature) =>
+					feature.geometry.type === 'LineString' && feature.properties.count
+			)
+			.filter(Boolean)
+	)
+	const maxCountPoint = Math.max(
+		...featureCollection.features
+			.map(
+				(feature) =>
+					feature.geometry.type === 'Point' && feature.properties.count
+			)
+			.filter(Boolean)
+	)
+	return {
+		type: 'FeatureCollection',
+		features: featureCollection.features.map((feature) =>
+			feature.geometry.type === 'Point'
+				? {
+						...feature,
+						properties: {
+							...feature.properties,
+							width: Math.max(feature.properties.count / maxCountPoint, 0.1),
+							'circle-stroke-color': '#0a2e52',
+							'circle-color': '#185abd',
+						},
+				  }
+				: {
+						...feature,
+						properties: {
+							...feature.properties,
+							route_color: '#821a73',
+							route_type: 2,
+							opacity: Math.max(feature.properties.count / maxCountLine, 0.1),
+						},
+				  }
+		),
+	}
+}

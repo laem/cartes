@@ -90,7 +90,8 @@ export default function Content({
 		zoneImages ||
 		panoramaxImages ||
 		!clickTipRead ||
-		clickedPoint
+		clickedPoint ||
+		searchParams.gare
 
 	const hasFeature = choice || osmFeature
 	const hasDestination = choice || osmFeature || clickedPoint,
@@ -260,7 +261,7 @@ export default function Content({
 									title="Fermer l'encart gare"
 									onClick={() => {
 										console.log('will yo2')
-										clickGare(null)
+										clickGare(undefined)
 									}}
 								/>
 								{bikeRoute && (
