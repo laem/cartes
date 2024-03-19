@@ -13,6 +13,10 @@ import Stop, { isNotTransportStop, transportKeys } from './transport/stop/Stop'
 export default function OsmFeature({ data, transportStopData }) {
 	if (!data.tags) return null
 	console.log('tags', data.tags)
+
+	const id = data.id
+	const featureType = data.type || data.featureType
+
 	const {
 		name,
 		description,
@@ -32,6 +36,7 @@ export default function OsmFeature({ data, transportStopData }) {
 		'brand:wikidata': brandWikidata,
 		'brand:wikipedia': brandWikipedia,
 		'ref:FR:Allocine': allocine,
+		'leisure': leisure,
 		'ref:mhs': mérimée,
 		wikipedia,
 		wikidata,
@@ -121,6 +126,15 @@ export default function OsmFeature({ data, transportStopData }) {
 					title="Lien vers la fiche cinéma sur Allocine"
 				>
 					Fiche Allociné
+				</a>
+			)}
+			{leisure && leisure=='playground' && (
+				<a
+					href={`https://playguide.eu/app/osm/${featureType}/${id}`}
+					target="_blank"
+					title="Lien vers la fiche de l'aire sur PlayGuide"
+				>
+					Fiche PlayGuide
 				</a>
 			)}
 			<Brand {...{ brand, brandWikidata, brandWikipedia }} />
