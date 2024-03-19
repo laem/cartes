@@ -46,8 +46,12 @@ export default function ClickedPoint({
 				margin: 1rem 0;
 			`}
 		>
-			<strong>Distance</strong>
-			<Distance origin={origin} destination={{ longitude, latitude }} />
+			{origin && (
+				<>
+					<strong>Distance</strong>
+					<Distance origin={origin} destination={{ longitude, latitude }} />
+				</>
+			)}
 			<strong>Coordonnées</strong>
 			<LatLong {...{ latitude, longitude }} />
 		</div>
