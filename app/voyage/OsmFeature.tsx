@@ -9,10 +9,21 @@ import parseOpeningHours from 'opening_hours'
 import { getTagLabels } from './osmTagLabels'
 import Brand, { Wikidata } from './tags/Brand'
 import Stop, { isNotTransportStop, transportKeys } from './transport/stop/Stop'
+import Image from 'next/image'
 
 export default function OsmFeature({ data, transportStopData }) {
 	if (!data.tags) return null
 	console.log('tags', data.tags)
+
+	const id = data.id
+	const featureType = data.type || data.featureType
+
+	// Copy tags here that could be important to qualify the object with icons :
+	// they should not be extracted, just copied
+
+	const { leisure } = data.tags
+	// Extract here tags that do not qualify the object : they won't be available
+	// anymore in `rest`
 	const {
 		name,
 		description,
@@ -121,6 +132,30 @@ export default function OsmFeature({ data, transportStopData }) {
 					title="Lien vers la fiche cinéma sur Allocine"
 				>
 					Fiche Allociné
+				</a>
+			)}
+			{leisure && leisure == 'playground' && (
+				<a
+					href={`https://playguide.eu/app/osm/${featureType}/${id}`}
+					target="_blank"
+					title="Lien vers la fiche de l'aire sur PlayGuide"
+					css={`
+						display: flex;
+						align-items: center;
+						img {
+							margin-right: 0.6rem;
+							width: 1.2rem;
+							height: auto;
+						}
+					`}
+				>
+					<Image
+						src="https://playguide.eu/assets/logo-pentagon.svg"
+						alt="Logo du site PlayGuide"
+						width="10"
+						height="10"
+					/>
+					Fiche PlayGuide
 				</a>
 			)}
 			<Brand {...{ brand, brandWikidata, brandWikipedia }} />
