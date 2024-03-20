@@ -9,6 +9,7 @@ import parseOpeningHours from 'opening_hours'
 import { getTagLabels } from './osmTagLabels'
 import Brand, { Wikidata } from './tags/Brand'
 import Stop, { isNotTransportStop, transportKeys } from './transport/stop/Stop'
+import Image from 'next/image'
 
 export default function OsmFeature({ data, transportStopData }) {
 	if (!data.tags) return null
@@ -138,7 +139,22 @@ export default function OsmFeature({ data, transportStopData }) {
 					href={`https://playguide.eu/app/osm/${featureType}/${id}`}
 					target="_blank"
 					title="Lien vers la fiche de l'aire sur PlayGuide"
+					css={`
+						display: flex;
+						align-items: center;
+						img {
+							margin-right: 0.6rem;
+							width: 1.2rem;
+							height: auto;
+						}
+					`}
 				>
+					<Image
+						src="https://playguide.eu/assets/logo-pentagon.svg"
+						alt="Logo du site PlayGuide"
+						width="10"
+						height="10"
+					/>
 					Fiche PlayGuide
 				</a>
 			)}
