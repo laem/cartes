@@ -17,6 +17,12 @@ export default function OsmFeature({ data, transportStopData }) {
 	const id = data.id
 	const featureType = data.type || data.featureType
 
+	// Copy tags here that could be important to qualify the object with icons :
+	// they should not be extracted, just copied
+
+	const { leisure } = data.tags
+	// Extract here tags that do not qualify the object : they won't be available
+	// anymore in `rest`
 	const {
 		name,
 		description,
@@ -36,7 +42,6 @@ export default function OsmFeature({ data, transportStopData }) {
 		'brand:wikidata': brandWikidata,
 		'brand:wikipedia': brandWikipedia,
 		'ref:FR:Allocine': allocine,
-		'leisure': leisure,
 		'ref:mhs': mérimée,
 		wikipedia,
 		wikidata,
@@ -128,7 +133,7 @@ export default function OsmFeature({ data, transportStopData }) {
 					Fiche Allociné
 				</a>
 			)}
-			{leisure && leisure=='playground' && (
+			{leisure && leisure == 'playground' && (
 				<a
 					href={`https://playguide.eu/app/osm/${featureType}/${id}`}
 					target="_blank"
