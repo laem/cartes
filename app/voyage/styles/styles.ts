@@ -37,7 +37,7 @@ export const styles = {
 		imageAlt: "Logo de l'IGN",
 		attribution: '© IGN',
 	},
-	vélo: { url: cyclOsm(key), name: 'Carte cyclable', emoji: '🚲️' },
+	cycling: { url: cyclOsm(key), name: 'Carte cyclable', emoji: '🚲️' },
 	train: {
 		url: railStyle(key),
 		name: 'Carte des rails',
