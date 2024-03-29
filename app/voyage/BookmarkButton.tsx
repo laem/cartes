@@ -5,8 +5,11 @@ import { useLocalStorage } from 'usehooks-ts'
 export const pointHash = (point) => point.geometry.coordinates.join('|')
 
 export default function BookmarkButton({ clickedPoint }) {
-	console.log('cyan', clickedPoint)
+	console.log('purple bookemarkbutton', clickedPoint)
 	const [bookmarks, setBookmarks] = useLocalStorage('bookmarks', [])
+	const properties =
+		clickedPoint.data?.features?.length > 0 &&
+		clickedPoint.data.features[0].properties
 	const feature = {
 		type: 'Feature',
 		geometry: {
@@ -16,7 +19,7 @@ export default function BookmarkButton({ clickedPoint }) {
 				clickedPoint.latitude.toFixed(4),
 			],
 		},
-		properties: {},
+		properties,
 	}
 
 	const same = bookmarks.find((point) => {

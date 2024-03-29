@@ -27,14 +27,16 @@ export default function Address({ tags, noPrefix }) {
 	)
 }
 
-export const buildAddress = (t: object, noPrefix) => {
+export const buildAddress = (t: object, noPrefix = false) => {
 	const g = (key) => {
 		const value = noPrefix ? t[key] : t[`addr:` + key] || t['contact:' + key]
 		return value || ''
 	}
 
-	return `${g('housenumber')} ${g('street')} ${
+	const address = `${g('housenumber')} ${g('street')} ${
 		g('postcode') || g('city') || g('state') ? ', ' : ''
 	} ${g('postcode')} ${g('city')} ${g('state')}
 `
+	if (address.trim() === '') return null
+	return address
 }

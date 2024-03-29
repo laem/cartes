@@ -137,8 +137,10 @@ export default function MapButtons({
 						src={'/star.svg'}
 						css={`
 							filter: none !important;
+
 						`}
 					/>
+
 				</Link>
 			</MapButton>
 		</MapButtonsWrapper>
