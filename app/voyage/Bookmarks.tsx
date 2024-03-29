@@ -21,7 +21,11 @@ export default function Favoris() {
 				`}
 			>
 				{bookmarks.map((bookmark) => (
-					<Bookmark key={pointHash(bookmark)} bookmark={bookmark} />
+					<Bookmark
+						key={pointHash(bookmark)}
+						bookmark={bookmark}
+						setBookmarks={setBookmarks}
+					/>
 				))}
 			</ul>
 			<h3>Itinéraires</h3>
@@ -30,7 +34,7 @@ export default function Favoris() {
 	)
 }
 
-const Bookmark = ({ bookmark }) => {
+const Bookmark = ({ bookmark, setBookmarks }) => {
 	const address = buildAddress(bookmark.properties, true)
 	console.log('purple add', address, bookmark.properties)
 	return (
@@ -40,6 +44,9 @@ const Bookmark = ({ bookmark }) => {
 				display: flex;
 				justify-content: space-between;
 				align-items: center;
+				padding: 0.3rem 0;
+				margin-bottom: 0.4rem;
+				border-bottom: 1px solid var(--lightestColor);
 			`}
 		>
 			{address ? (
@@ -65,7 +72,7 @@ const Bookmark = ({ bookmark }) => {
 					}
 				`}
 				onClick={() =>
-					setBookmarks(
+					setBookmarks((bookmarks) =>
 						bookmarks.filter((point) => {
 							if (point.geometry.type !== 'Point') return true
 							return pointHash(point) !== pointHash(bookmark)
