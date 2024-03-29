@@ -8,7 +8,16 @@ export default function useDrawBookmarks(map) {
 
 	useEffect(() => {
 		const markers = bookmarks.map((bookmark) => {
-			const marker = new maplibregl.Marker()
+			const el = document.createElement('div')
+			el.innerHTML = `
+			<img src="/pin.svg" width="40px" height="40px" alt="Marque page"/>
+			`
+
+			el.addEventListener('click', () => {
+				window.alert('plop')
+			})
+
+			const marker = new maplibregl.Marker({ element: el })
 				.setLngLat({
 					lng: bookmark.geometry.coordinates[0],
 					lat: bookmark.geometry.coordinates[1],

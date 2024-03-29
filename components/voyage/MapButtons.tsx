@@ -50,8 +50,13 @@ height: 4rem;
 		margin: 0;
 	}
 	a {
+		width: 100%;
+		height: 100%;
 		text-decoration: none;
 		color: inherit;
+		display: flex;
+		align-items: center;
+		justify-content: center;
 	}
 `
 
@@ -117,7 +122,7 @@ export default function MapButtons({
 				)}
 			</MapButton>
 			<ItineraryButton {...itinerary} />
-			<MapButton>
+			<MapButton $active={searchParams.favoris === 'oui'}>
 				<Link
 					href={setSearchParams(
 						{
