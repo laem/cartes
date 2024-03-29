@@ -22,6 +22,7 @@ import useWikidata from './useWikidata'
 import { ZoneImages } from './ZoneImages'
 import BookmarkButton from './BookmarkButton'
 import Bookmarks from './Bookmarks'
+import QuickBookmarks from './QuickBookmarks'
 
 const getMinimumQuickSearchZoom = (mobile) => (mobile ? 10.5 : 12) // On a small screen, 70 %  of the tiles are not visible, hence this rule
 
@@ -187,6 +188,7 @@ export default function Content({
 							}}
 						/>
 					)}
+					<QuickBookmarks />
 				</section>
 			)}
 

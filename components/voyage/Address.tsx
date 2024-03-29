@@ -40,3 +40,42 @@ export const buildAddress = (t: object, noPrefix = false) => {
 	if (address.trim() === '') return null
 	return address
 }
+
+export const AddressDisc = ({ t, noPrefix = false }) => {
+	const g = (key) => {
+		const value = noPrefix ? t[key] : t[`addr:` + key] || t['contact:' + key]
+		const shorterValue = [
+			['avenue', 'av.'],
+			['boulevard', 'bd.'],
+			['rue', 'r.'],
+			['carrefour', 'car.'],
+		].reduce((memo, [from, to]) => memo.replace(from, to), value.toLowerCase())
+		return shorterValue || ''
+	}
+	return (
+		<div
+			css={`
+				display: flex;
+				flex-direction: column;
+				align-items: center;
+				padding: 0.6rem 0;
+				justify-content: space-between;
+				width: 4rem;
+				height: 4rem;
+				border-radius: 4rem;
+				border: 1px solid var(--color);
+				font-size: 80%;
+				overflow: hidden;
+				> span,
+				> strong {
+					text-align: center;
+					line-height: 0.8rem;
+					max-width: 4rem;
+				}
+			`}
+		>
+			<strong>{g('housenumber')}</strong>
+			<span>{g('street')}</span>
+		</div>
+	)
+}
