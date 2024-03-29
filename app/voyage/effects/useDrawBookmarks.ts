@@ -10,7 +10,7 @@ export default function useDrawBookmarks(map) {
 		const markers = bookmarks.map((bookmark) => {
 			const el = document.createElement('div')
 			el.innerHTML = `
-			<img src="/pin.svg" width="40px" height="40px" alt="Marque page"/>
+			<img src="/pin.svg" width="40px" height="40px" alt="Marque page" style="filter: drop-shadow(0 0 0.2rem white);"/>
 			`
 
 			el.addEventListener('click', () => {
