@@ -28,8 +28,8 @@ export default function voyageStyle(key) {
 				paint: {
 					'background-color': {
 						stops: [
-							[6, 'hsl(47,79%,94%)'],
-							[14, 'hsl(42,49%,93%)'],
+							[6, '#dfecbe'],
+							[14, '#dfecbe'],
 						],
 					},
 				},
@@ -1790,21 +1790,21 @@ export default function voyageStyle(key) {
 				maxzoom: 22,
 				layout: { visibility: 'visible' },
 				paint: {
-					'line-color': 'hsl(0, 0%, 70%)',
+					'line-color': 'hsl(0, 0%, 40%)',
 					'line-width': [
 						'interpolate',
 						['linear', 1],
 						['zoom'],
 						3,
-						0.75,
+						0.5,
 						4,
-						0.8,
+						0.6,
 						11,
-						['case', ['<=', ['get', 'admin_level'], 6], 1.75, 1.5],
+						['case', ['<=', ['get', 'admin_level'], 6], 0.8, 0.75],
 						18,
-						['case', ['<=', ['get', 'admin_level'], 6], 3, 2],
+						['case', ['<=', ['get', 'admin_level'], 6], 1.5, 1],
 					],
-					'line-dasharray': [2, 1],
+					'line-dasharray': [1, 1],
 				},
 				filter: [
 					'all',
