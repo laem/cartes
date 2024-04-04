@@ -1032,7 +1032,7 @@ export default function voyageStyle(key) {
 					visibility: 'visible',
 				},
 				paint: {
-					'line-color': '#C6C2B3',
+					'line-color': 'Silver',
 					'line-width': [
 						'interpolate',
 						['linear', 2],
@@ -1390,7 +1390,7 @@ export default function voyageStyle(key) {
 					visibility: 'visible',
 				},
 				paint: {
-					'line-color': '#E6E1D1',
+					'line-color': 'LightGray',
 					'line-width': [
 						'interpolate',
 						['linear', 2],
