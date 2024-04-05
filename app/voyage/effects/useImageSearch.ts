@@ -23,35 +23,42 @@ const serializeBbox = (bbox) => {
 	return bboxString
 }
 export default function useImageSearch(map, zoom, bbox, active) {
-	const [bboxImages, setBboxImages] = useState({})
+	const [imageCache, setImageCache] = useState([])
 
 	const bboxString = serializeBbox(bbox)
+	console.log('yellow imageCache size ', imageCache.length)
 
-	const images = useMemo(
-		() => bboxImages[bboxString] || [],
-		[bboxString, bboxImages]
-	)
 	useEffect(() => {
 		if (!active) return
 		if (!bboxString) return
-		if (images.length) return
+		console.log('yellow will request images', bboxString)
 		const makeRequest = async () => {
 			const url = `https://commons.wikimedia.org/w/api.php?action=query&list=geosearch&gsbbox=${bboxString}&gsnamespace=6&gslimit=30&format=json&origin=*`
 			const request = await fetch(url)
 
 			const json = await request.json()
 			const newImages = json.query.geosearch
-			if (newImages.length)
-				setBboxImages((old) => ({ ...old, [bboxString]: newImages }))
+			const trulyNewImages = newImages.filter(
+				(newImage) =>
+					!imageCache.find((image) => image.pageid === newImage.pageid)
+			)
+			console.log('yellow truly new images', trulyNewImages.length)
+
+			if (trulyNewImages.length)
+				setImageCache((old) => [...old, ...trulyNewImages])
 		}
 		makeRequest()
-	}, [setBboxImages, bboxString, images, active])
+	}, [setImageCache, bboxString, imageCache, active])
 
+	// We could memoize the selection of images that is in the bbox view,
+	// but MapLibre probably doesn't draw images outside of the window ! At least
+	// we hope so
 	useEffect(() => {
 		if (!map) return
+		if (!active) return
 
-		if (!images.length) return
-		const markers = images.map((image) => {
+		if (!bboxImages.length) return
+		const markers = bboxImages.map((image) => {
 			const element = document.createElement('a')
 			element.href =
 				'https://commons.wikimedia.org/wiki/' + encodeURIComponent(image.title)
@@ -85,7 +92,7 @@ export default function useImageSearch(map, zoom, bbox, active) {
 		return () => {
 			markers.map((marker) => marker.remove())
 		}
-	}, [map, zoom, images])
+	}, [map, zoom, bboxImages, active])
 
-	return images
+	return bboxImages
 }
