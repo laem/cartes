@@ -55,6 +55,7 @@ export default function Content({
 	resetClickedPoint,
 	transportsData,
 	geolocation,
+	focusImage,
 }) {
 	const vers = state.slice(-1)[0],
 		osmFeature = vers && vers.osmFeature
@@ -270,6 +271,7 @@ export default function Content({
 						<ZoneImages
 							zoneImages={bboxImages || zoneImages} // bbox includes zone, usually
 							panoramaxImages={panoramaxImages}
+							focusImage={focusImage}
 						/>
 						{hasDestination && (
 							<SetDestination

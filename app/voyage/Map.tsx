@@ -36,6 +36,7 @@ import useOverpassRequest from './effects/useOverpassRequest'
 import useRightClick from './effects/useRightClick'
 import useSearchLocalTransit from './effects/useSearchLocalTransit'
 import useTransportStopData from './transport/useTransportStopData'
+import FocusedImage from './FocusedImage'
 
 export const defaultState = {
 	depuis: { inputValue: null, choice: false },
@@ -47,6 +48,7 @@ export default function Map({ searchParams }) {
 	const mapContainerRef = useRef(null)
 	const [zoom, setZoom] = useState(defaultZoom)
 	const [bbox, setBbox] = useState(null)
+	const [focusedImage, focusImage] = useState(null)
 	const center = useMemo(
 		() =>
 			bbox && [(bbox[0][0] + bbox[1][0]) / 2, (bbox[0][1] + bbox[1][1]) / 2],
@@ -99,7 +101,8 @@ export default function Map({ searchParams }) {
 		map,
 		zoom,
 		bbox,
-		searchParams.photos === 'oui'
+		searchParams.photos === 'oui',
+		focusImage
 	)
 
 	if (process.env.NEXT_PUBLIC_MAPTILER == null) {
@@ -483,6 +486,7 @@ export default function Map({ searchParams }) {
 						transportsData,
 						geolocation,
 						bboxImages,
+						focusImage,
 					}}
 				/>
 			</MapHeader>
@@ -498,6 +502,7 @@ export default function Map({ searchParams }) {
 					searchParams,
 				}}
 			/>
+			{focusedImage && <FocusedImage {...{ focusedImage, focusImage }} />}
 			{searchParams.transports === 'oui' && <CenteredCross />}
 			{map && <MapComponents map={map} />}
 			<div ref={mapContainerRef} />

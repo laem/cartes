@@ -22,7 +22,7 @@ const serializeBbox = (bbox) => {
 		bboxString = `${lat2}|${lng2}|${lat1}|${lng1}`
 	return bboxString
 }
-export default function useImageSearch(map, zoom, bbox, active) {
+export default function useImageSearch(map, zoom, bbox, active, focusImage) {
 	const [imageCache, setImageCache] = useState([])
 
 	const bboxString = serializeBbox(bbox)
@@ -72,14 +72,6 @@ export default function useImageSearch(map, zoom, bbox, active) {
 
 		if (!bboxImages.length) return
 		const markers = bboxImages.map((image) => {
-			const element = document.createElement('a')
-			element.href =
-				'https://commons.wikimedia.org/wiki/' + encodeURIComponent(image.title)
-			element.setAttribute('target', '_blank')
-			element.style.cssText = `
-			display: block;
-
-			`
 			const size = goodIconSize(zoom, 1.3) + 'px'
 
 			const img = document.createElement('img')
@@ -91,13 +83,12 @@ export default function useImageSearch(map, zoom, bbox, active) {
 			object-fit: cover
 			`
 			img.alt = image.title
-			element.append(img)
 
-			element.addEventListener('click', () => {
-				console.log(image)
+			img.addEventListener('click', () => {
+				focusImage(image)
 			})
 
-			const marker = new maplibregl.Marker({ element })
+			const marker = new maplibregl.Marker({ element: img })
 				.setLngLat({ lng: image.lon, lat: image.lat })
 				.addTo(map)
 			return marker

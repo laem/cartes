@@ -57,7 +57,11 @@ export function useZoneImages({ latLngClicked, setLatLngClicked }) {
 	]
 }
 
-export function ZoneImages({ zoneImages: images, panoramaxImages }) {
+export function ZoneImages({
+	zoneImages: images,
+	panoramaxImages,
+	focusImage,
+}) {
 	console.log('panoramax', panoramaxImages)
 
 	const panoramaxImage = panoramaxImages && panoramaxImages[0],
@@ -69,6 +73,7 @@ export function ZoneImages({ zoneImages: images, panoramaxImages }) {
 			const title = json.title,
 				url = getThumb(title, 400)
 			return {
+				...json,
 				url,
 				fullUrl: `https://commons.wikimedia.org/wiki/${title.replace(
 					' ',
@@ -141,18 +146,27 @@ export function ZoneImages({ zoneImages: images, panoramaxImages }) {
 					)}
 					{imageUrls &&
 						imageUrls.length > 0 &&
-						imageUrls.map(({ url, fullUrl }) => (
-							<li key={fullUrl}>
-								<a href={fullUrl} target="_blank">
-									<FeatureImage
-										src={url}
-										alt="Image de terrain issue de Wikimedia Commons"
-										width="150"
-										height="150"
-									/>
-								</a>
-							</li>
-						))}
+						imageUrls.map((image) => {
+							const { url, fullUrl } = image
+							return (
+								<li key={fullUrl}>
+									<button
+										onClick={() => focusImage(image)}
+										css={`
+											margin: 0;
+											padding: 0;
+										`}
+									>
+										<FeatureImage
+											src={url}
+											alt="Image de terrain issue de Wikimedia Commons"
+											width="150"
+											height="150"
+										/>
+									</button>
+								</li>
+							)
+						})}
 				</ul>
 			)}
 		</div>
