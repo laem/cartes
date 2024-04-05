@@ -365,6 +365,7 @@ export default function Map({ searchParams }) {
 					},
 					'merge'
 				)
+
 				// We store longitude and latitude in order to, in some cases, avoid a
 				// subsequent fetch request on link share
 				setSearchParams({

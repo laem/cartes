@@ -10,7 +10,7 @@ import { steps } from 'framer-motion'
 export default function useOsmRequest(allez, state, setState) {
 	useEffect(() => {
 		const asyncStateUpdate = async () => {
-			console.log('cornflowerblue allez', allez)
+			console.log('cornflowerblue allez', allez, state)
 			const newPoints = allez.map(async (point) => {
 				if (!point || point === '') return null
 				const [name, osmCode, longitude, latitude] = point.split('|')
@@ -78,8 +78,12 @@ export default function useOsmRequest(allez, state, setState) {
 								)
 						  ).geometry.coordinates
 
-					console.log('will set OSMfeature after loading it from the URL')
-					return element
+					console.log(
+						'will set OSMfeature after loading it from the URL',
+						element,
+						nodeCenter
+					)
+					return { ...element, lat: nodeCenter[1], lon: nodeCenter[0] }
 
 					/* TODO do this elsewhere, we don't want a dependency to map here
 			console.log('should fly to', nodeCenter)

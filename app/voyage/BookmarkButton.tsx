@@ -5,7 +5,7 @@ import { useLocalStorage } from 'usehooks-ts'
 export const pointHash = (point) => point.geometry.coordinates.join('|')
 
 export default function BookmarkButton({ clickedPoint, osmFeature }) {
-	console.log('purple bookemarkbutton', clickedPoint, osmFeature)
+	console.log('yellow bookemarkbutton', clickedPoint, osmFeature)
 
 	const [bookmarks, setBookmarks] = useLocalStorage('bookmarks', [])
 	const properties = clickedPoint

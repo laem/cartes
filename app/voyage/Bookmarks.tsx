@@ -58,7 +58,6 @@ const Bookmark = ({ bookmark, setBookmarks }) => {
 		>
 			{name ? (
 				<div>
-					t{' '}
 					<SoloTags
 						tags={processTags(bookmark.properties)[1]}
 						iconsOnly={true}

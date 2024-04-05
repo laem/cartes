@@ -1,4 +1,5 @@
 import turfDistance from '@turf/distance'
+import { centerOfMass } from '@turf/turf'
 export const osmRequest = async (featureType, id, full) => {
 	const request = await fetch(
 		`https://api.openstreetmap.org/api/0.6/${featureType}/${id}${
@@ -45,8 +46,29 @@ export const disambiguateWayRelation = async (
 
 	if (!request1.length && request2.length)
 		return [request2.find((el) => el.type === 'relation'), 'relation']
-	if (!request2.length && request1.length)
-		return [request1.find((el) => el.type === 'way'), 'way']
+	if (!request2.length && request1.length) {
+		const way = request1.find((el) => el.type === 'way')
+		const enrichedWay = enrichOsmWayWithNodesCoordinates(way, request1)
+		console.log('yellow', request1, enrichedWay)
+
+		return [enrichedWay, 'way']
+	}
 
 	return [null, null]
+}
+
+export const enrichOsmWayWithNodesCoordinates = (way, elements) => {
+	const nodes = way.nodes.map((id) => elements.find((el) => el.id === id)),
+		polygon = {
+			type: 'Feature',
+			geometry: {
+				type: 'Polygon',
+				coordinates: [nodes.map(({ lat, lon }) => [lon, lat])],
+			},
+		}
+	const center = centerOfMass(polygon)
+
+	const [lon, lat] = center.geometry.coordinates
+
+	return { ...way, lat, lon, polygon }
 }
