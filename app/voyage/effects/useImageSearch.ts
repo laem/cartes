@@ -63,7 +63,9 @@ export default function useImageSearch(map, zoom, bbox, active) {
 			const size = goodIconSize(zoom, 1.3) + 'px'
 
 			const img = document.createElement('img')
-			img.src = `https://commons.wikimedia.org/w/index.php?title=Special:Redirect/file/${image.title}&width=150`
+			img.src = `https://commons.wikimedia.org/w/index.php?title=Special:Redirect/file/${encodeURIComponent(
+				image.title
+			)}&width=150`
 			img.style.cssText = `
 			width: ${size};height: ${size};border-radius: ${size};
 			object-fit: cover
