@@ -39,7 +39,6 @@ export default function Favoris() {
 const Bookmark = ({ bookmark, setBookmarks }) => {
 	const address = buildAddress(bookmark.properties, true)
 	const name = bookmark.properties.name
-	console.log('purple bookmark', bookmark, address, bookmark.properties)
 
 	return (
 		<li
@@ -59,11 +58,11 @@ const Bookmark = ({ bookmark, setBookmarks }) => {
 		>
 			{name ? (
 				<div>
+					t{' '}
 					<SoloTags
 						tags={processTags(bookmark.properties)[1]}
 						iconsOnly={true}
 					/>
-
 					<span>{name}</span>
 				</div>
 			) : address ? (

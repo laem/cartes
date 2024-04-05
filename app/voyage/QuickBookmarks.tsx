@@ -1,9 +1,14 @@
+import useSetSearchParams from '@/components/useSetSearchParams'
+import {
+	AddressDisc,
+	AddressDiscContainer,
+	buildAddress,
+} from '@/components/voyage/Address'
+import { SoloTags } from '@/components/voyage/Tags'
+import Link from 'next/link'
 import { useLocalStorage } from 'usehooks-ts'
 import { pointHash } from './BookmarkButton'
-import Image from 'next/image'
-import { AddressDisc, buildAddress } from '@/components/voyage/Address'
-import Link from 'next/link'
-import useSetSearchParams from '@/components/useSetSearchParams'
+import { processTags } from './OsmFeature'
 
 export default function QuickBookmarks() {
 	const [bookmarks] = useLocalStorage('bookmarks', [])
@@ -58,6 +63,7 @@ export default function QuickBookmarks() {
 
 const QuickBookmark = ({ bookmark }) => {
 	const address = buildAddress(bookmark.properties, true)
+	const name = bookmark.properties.name
 	console.log('bookmark', bookmark)
 	return (
 		<li
@@ -70,7 +76,15 @@ const QuickBookmark = ({ bookmark }) => {
 				margin-bottom: 0.4rem;
 			`}
 		>
-			{address ? (
+			{name ? (
+				<AddressDiscContainer>
+					<SoloTags
+						tags={processTags(bookmark.properties)[1]}
+						iconsOnly={true}
+					/>
+					<span>{name}</span>
+				</AddressDiscContainer>
+			) : address ? (
 				<AddressDisc {...{ t: bookmark.properties, noPrefix: true }} />
 			) : (
 				<div>

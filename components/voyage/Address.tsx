@@ -1,5 +1,7 @@
 // Inspired by https://github.com/zbycz/osmapp/blob/master/src/services/helpers.ts#L107
 
+import styled from 'styled-components'
+
 export const addressKeys = [
 	'addr:place',
 	'addr:street',
@@ -54,30 +56,33 @@ export const AddressDisc = ({ t, noPrefix = false }) => {
 		return shorterValue || ''
 	}
 	return (
-		<div
-			css={`
-				display: flex;
-				flex-direction: column;
-				align-items: center;
-				padding: 0.6rem 0;
-				justify-content: space-between;
-				width: 4rem;
-				height: 4rem;
-				border-radius: 4rem;
-				background: var(--darkColor);
-				color: white;
-				font-size: 80%;
-				overflow: hidden;
-				> span,
-				> strong {
-					text-align: center;
-					line-height: 0.9rem;
-					max-width: 4rem;
-				}
-			`}
-		>
+		<AddressDiscContainer>
 			<strong>{g('housenumber')}</strong>
 			<span>{g('street')}</span>
-		</div>
+		</AddressDiscContainer>
 	)
 }
+
+export const AddressDiscContainer = styled.div`
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	padding: 0.6rem 0;
+	justify-content: space-between;
+	width: 4rem;
+	height: 4rem;
+	border-radius: 4rem;
+	background: var(--darkColor);
+	color: white;
+	font-size: 80%;
+	overflow: hidden;
+	> span,
+	> strong {
+		text-align: center;
+		line-height: 0.9rem;
+		max-width: 4rem;
+	}
+	img {
+		filter: invert(0) !important;
+	}
+`
