@@ -1,4 +1,5 @@
 import useSetSearchParams from '@/components/useSetSearchParams'
+import Image from 'next/image'
 import {
 	AddressDisc,
 	AddressDiscContainer,
@@ -14,6 +15,27 @@ export default function QuickBookmarks() {
 	const [bookmarks] = useLocalStorage('bookmarks', [])
 	const setSearchParams = useSetSearchParams()
 	const bookmarksUrl = setSearchParams({ favoris: 'oui' }, true)
+	if (!bookmarks?.length)
+		return (
+			<p
+				css={`
+					color: #666;
+					line-height: 1.2rem;
+					margin: 0.6rem 0 0.2rem 0;
+					img {
+						height: 1rem;
+						width: 1rem;
+						vertical-align: middle;
+					}
+				`}
+			>
+				<small>
+					Ajoutez des favoris avec l'étoile{' '}
+					<Image src="/star.svg" alt="" width="10" height="10" /> après une
+					recherche.
+				</small>
+			</p>
+		)
 	return (
 		<section
 			css={`

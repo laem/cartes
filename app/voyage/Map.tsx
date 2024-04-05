@@ -205,6 +205,9 @@ export default function Map({ searchParams }) {
 		setOsmFeature(feature)
 	}
 
+	//TODO this hook should be used easily with some tweaks to draw the borders of
+	// the clicked feature, and an icon
+
 	useDrawQuickSearchFeatures(
 		map,
 		features,
