@@ -96,7 +96,7 @@ export default function Content({
 		clickedPoint ||
 		searchParams.gare
 
-	const bookmarkable = clickedPoint // later : choice || osmFeature
+	const bookmarkable = clickedPoint || osmFeature // later : choice
 
 	const hasDestination = osmFeature || clickedPoint,
 		destination = hasDestination && {
@@ -192,7 +192,9 @@ export default function Content({
 				</section>
 			)}
 
-			{bookmarkable && <BookmarkButton clickedPoint={clickedPoint} />}
+			{bookmarkable && (
+				<BookmarkButton clickedPoint={clickedPoint} osmFeature={osmFeature} />
+			)}
 			{searchParams.favoris === 'oui' && <Bookmarks />}
 			{searchParams.transports === 'oui' && (
 				<TransportMap

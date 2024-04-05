@@ -2,13 +2,36 @@ import { useLocalStorage } from 'usehooks-ts'
 import { pointHash } from './BookmarkButton'
 import Image from 'next/image'
 import { AddressDisc, buildAddress } from '@/components/voyage/Address'
+import Link from 'next/link'
+import useSetSearchParams from '@/components/useSetSearchParams'
 
 export default function QuickBookmarks() {
 	const [bookmarks] = useLocalStorage('bookmarks', [])
-	console.log('purple', bookmarks)
+	const setSearchParams = useSetSearchParams()
+	const bookmarksUrl = setSearchParams({ favoris: 'oui' }, true)
 	return (
-		<section>
-			<h2>Mes favoris</h2>
+		<section
+			css={`
+				h3 {
+					font-size: 90%;
+					color: #666;
+					font-weight: 500;
+					margin: 0.2rem 0;
+				}
+				h3 + p {
+					margin-left: 1rem;
+				}
+				header {
+					display: flex;
+					justify-content: space-between;
+					align-items: center;
+				}
+			`}
+		>
+			<header>
+				<h2>Mes favoris</h2>
+				<Link href={bookmarksUrl}>Modifier</Link>
+			</header>
 
 			<h3>Adresses</h3>
 			<ul
@@ -35,7 +58,7 @@ export default function QuickBookmarks() {
 
 const QuickBookmark = ({ bookmark }) => {
 	const address = buildAddress(bookmark.properties, true)
-	console.log('purple add', address, bookmark.properties)
+	console.log('bookmark', bookmark)
 	return (
 		<li
 			key={pointHash(bookmark)}
@@ -45,7 +68,6 @@ const QuickBookmark = ({ bookmark }) => {
 				align-items: center;
 				padding: 0.3rem 0;
 				margin-bottom: 0.4rem;
-				border-bottom: 1px solid var(--lightestColor);
 			`}
 		>
 			{address ? (

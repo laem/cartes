@@ -36,7 +36,7 @@ export default function Tags({ tags }) {
 	)
 }
 
-export function SoloTags({ tags }) {
+export function SoloTags({ tags, iconsOnly }) {
 	return (
 		<ul
 			css={`
@@ -65,7 +65,7 @@ export function SoloTags({ tags }) {
 			{tags.map(([raw, tag]) => (
 				<li key={tag}>
 					<Icons tags={raw} />
-					<span>{tag}</span>
+					{!iconsOnly && <span>{tag}</span>}
 				</li>
 			))}
 		</ul>

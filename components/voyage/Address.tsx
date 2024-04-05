@@ -44,6 +44,7 @@ export const buildAddress = (t: object, noPrefix = false) => {
 export const AddressDisc = ({ t, noPrefix = false }) => {
 	const g = (key) => {
 		const value = noPrefix ? t[key] : t[`addr:` + key] || t['contact:' + key]
+		if (value == null) return ''
 		const shorterValue = [
 			['avenue', 'av.'],
 			['boulevard', 'bd.'],
@@ -63,13 +64,14 @@ export const AddressDisc = ({ t, noPrefix = false }) => {
 				width: 4rem;
 				height: 4rem;
 				border-radius: 4rem;
-				border: 1px solid var(--color);
+				background: var(--darkColor);
+				color: white;
 				font-size: 80%;
 				overflow: hidden;
 				> span,
 				> strong {
 					text-align: center;
-					line-height: 0.8rem;
+					line-height: 0.9rem;
 					max-width: 4rem;
 				}
 			`}

@@ -4,20 +4,27 @@ import { useLocalStorage } from 'usehooks-ts'
 
 export const pointHash = (point) => point.geometry.coordinates.join('|')
 
-export default function BookmarkButton({ clickedPoint }) {
-	console.log('purple bookemarkbutton', clickedPoint)
+export default function BookmarkButton({ clickedPoint, osmFeature }) {
+	console.log('purple bookemarkbutton', clickedPoint, osmFeature)
+
 	const [bookmarks, setBookmarks] = useLocalStorage('bookmarks', [])
-	const properties =
-		clickedPoint.data?.features?.length > 0 &&
-		clickedPoint.data.features[0].properties
+	const properties = clickedPoint
+		? clickedPoint.data?.features?.length > 0 &&
+		  clickedPoint.data.features[0].properties
+		: { ...(osmFeature.tags || {}), id: osmFeature.id, type: osmFeature.type }
+
+	const coordinates = clickedPoint
+		? [
+				clickedPoint.longitude.toFixed(4), // this is ~ 10 m precision, we don't want more than one bookmark every 10 meters
+				clickedPoint.latitude.toFixed(4),
+		  ]
+		: [osmFeature.lon.toFixed(4), osmFeature.lat.toFixed(4)]
+
 	const feature = {
 		type: 'Feature',
 		geometry: {
 			type: 'Point',
-			coordinates: [
-				clickedPoint.longitude.toFixed(4), // this is ~ 10 m precision, we don't want more than one bookmark every 10 meters
-				clickedPoint.latitude.toFixed(4),
-			],
+			coordinates,
 		},
 		properties,
 	}
@@ -49,10 +56,11 @@ export default function BookmarkButton({ clickedPoint }) {
 						  )
 						: setBookmarks([...bookmarks, feature])
 				}
+				title={same ? 'Enlever des favoris' : 'Mettre en favori'}
 			>
 				<Image
 					src={same ? '/star-full.svg' : '/star.svg'}
-					alt={same ? 'Enlever des favoris' : 'Mettre en favori'}
+					alt="Icône d'ajout de favori"
 					width="10"
 					height="10"
 				/>

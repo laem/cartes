@@ -2,6 +2,8 @@ import { useLocalStorage } from 'usehooks-ts'
 import { pointHash } from './BookmarkButton'
 import Image from 'next/image'
 import { buildAddress } from '@/components/voyage/Address'
+import { SoloTags } from '@/components/voyage/Tags'
+import { processTags } from './OsmFeature'
 
 export default function Favoris() {
 	const [bookmarks, setBookmarks] = useLocalStorage('bookmarks', [])
@@ -36,7 +38,9 @@ export default function Favoris() {
 
 const Bookmark = ({ bookmark, setBookmarks }) => {
 	const address = buildAddress(bookmark.properties, true)
-	console.log('purple add', address, bookmark.properties)
+	const name = bookmark.properties.name
+	console.log('purple bookmark', bookmark, address, bookmark.properties)
+
 	return (
 		<li
 			key={pointHash(bookmark)}
@@ -47,9 +51,22 @@ const Bookmark = ({ bookmark, setBookmarks }) => {
 				padding: 0.3rem 0;
 				margin-bottom: 0.4rem;
 				border-bottom: 1px solid var(--lightestColor);
+				> div {
+					display: flex;
+					align-items: center;
+				}
 			`}
 		>
-			{address ? (
+			{name ? (
+				<div>
+					<SoloTags
+						tags={processTags(bookmark.properties)[1]}
+						iconsOnly={true}
+					/>
+
+					<span>{name}</span>
+				</div>
+			) : address ? (
 				<address
 					css={`
 						line-height: 1.2rem;
