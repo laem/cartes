@@ -35,6 +35,7 @@ export default function Content({
 	bikeRouteProfile,
 	clickGare,
 	zoneImages,
+	bboxImages,
 	panoramaxImages,
 	resetZoneImages,
 	state,
@@ -91,6 +92,7 @@ export default function Content({
 	const hasContent =
 		osmFeature ||
 		zoneImages ||
+		bboxImages ||
 		panoramaxImages ||
 		!clickTipRead ||
 		clickedPoint ||
@@ -266,7 +268,7 @@ export default function Content({
 							/>
 						)}
 						<ZoneImages
-							zoneImages={zoneImages}
+							zoneImages={bboxImages || zoneImages} // bbox includes zone, usually
 							panoramaxImages={panoramaxImages}
 						/>
 						{hasDestination && (

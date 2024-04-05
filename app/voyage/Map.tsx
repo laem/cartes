@@ -95,7 +95,12 @@ export default function Map({ searchParams }) {
 		setLatLngClicked,
 	})
 
-	useImageSearch(map, zoom, bbox, searchParams.photos === 'oui')
+	const bboxImages = useImageSearch(
+		map,
+		zoom,
+		bbox,
+		searchParams.photos === 'oui'
+	)
 
 	if (process.env.NEXT_PUBLIC_MAPTILER == null) {
 		throw new Error(
@@ -477,6 +482,7 @@ export default function Map({ searchParams }) {
 						resetClickedPoint,
 						transportsData,
 						geolocation,
+						bboxImages,
 					}}
 				/>
 			</MapHeader>

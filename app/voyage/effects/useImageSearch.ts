@@ -86,4 +86,6 @@ export default function useImageSearch(map, zoom, bbox, active) {
 			markers.map((marker) => marker.remove())
 		}
 	}, [map, zoom, images])
+
+	return images
 }
