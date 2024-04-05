@@ -87,7 +87,6 @@ export default function Map({ searchParams }) {
 
 	const setSearchParams = useSetSearchParams()
 
-	const lieu = searchParams.lieu
 	const category = getCategory(searchParams)
 
 	const showOpenOnly = searchParams.o
@@ -361,7 +360,6 @@ export default function Map({ searchParams }) {
 
 			if (element) {
 				console.log('reset OSMfeature after click on POI')
-				console.log('will set lieu searchparam after click on POI')
 				console.log('indigo element', element)
 				const { lng: longitude, lat: latitude } = e.lngLat
 				replaceArrayIndex(
@@ -406,9 +404,30 @@ export default function Map({ searchParams }) {
 
 	useHoverOnMapFeatures(map)
 
-	/* Transform this to handle the last itinery point if alone (just a POI url),
+	useEffect(() => {
+		if (!map || !vers || !vers.osmFeature) return
+
+		const tailoredZoom =
+			/* ['city'].includes(vers.choice.type)
+			? 12
+			: */
+			Math.max(15, zoom)
+		console.log(
+			'blue',
+			'will fly to in after OSM download from vers marker',
+			vers,
+			tailoredZoom
+		)
+		map.flyTo({
+			center: [vers.longitude, vers.latitude],
+			zoom: tailoredZoom,
+			pitch: 50, // pitch in degrees
+			bearing: 20, // bearing in degrees
+		})
+	}, [vers, zoom])
+	/* TODO Transform this to handle the last itinery point if alone (just a POI url),
 	 * but also to add markers to all the steps of the itinerary */
-	/*
+	/* Should be merged with the creation of route markers
 	useSetTargetMarkerAndZoom(
 		map,
 		target,
