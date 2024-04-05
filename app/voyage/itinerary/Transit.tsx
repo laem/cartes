@@ -20,7 +20,12 @@ export default function Transit({ data, searchParams }) {
 	)
 
 	if (connections.length < 1)
-		return <p>🫣 Pas de transport en commun à cette heure-ci</p>
+		return (
+			<section>
+				<p>🫣 Pas de transport en commun à cette heure-ci</p>
+				<DateSelector date={data.date} />
+			</section>
+		)
 
 	const firstDate = connectionStart(connections[0]) // We assume Motis orders them by start date, when you start to walk. Could also be intersting to query the first end date
 
