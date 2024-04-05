@@ -57,28 +57,20 @@ export function useZoneImages({ latLngClicked, setLatLngClicked }) {
 	]
 }
 
-export function ZoneImages({
-	zoneImages: images,
-	panoramaxImages,
-	focusImage,
-}) {
+export function ZoneImages({ zoneImages, panoramaxImages, focusImage }) {
 	console.log('panoramax', panoramaxImages)
 
 	const panoramaxImage = panoramaxImages && panoramaxImages[0],
 		panoramaxThumb = panoramaxImage?.assets?.thumb
 
-	const imageUrls =
-		images &&
-		images.map((json) => {
+	const images =
+		zoneImages &&
+		zoneImages.map((json) => {
 			const title = json.title,
 				url = getThumb(title, 400)
 			return {
 				...json,
 				url,
-				fullUrl: `https://commons.wikimedia.org/wiki/${title.replace(
-					' ',
-					'_'
-				)}`,
 			}
 		})
 	return (
@@ -91,7 +83,7 @@ export function ZoneImages({
 				}
 			`}
 		>
-			{(panoramaxThumb || imageUrls?.length > 0) && (
+			{(panoramaxThumb || images?.length > 0) && (
 				<ul
 					css={`
 						margin: 0 0 0.4rem 0;
@@ -144,12 +136,12 @@ export function ZoneImages({
 							</div>
 						</a>
 					)}
-					{imageUrls &&
-						imageUrls.length > 0 &&
-						imageUrls.map((image) => {
-							const { url, fullUrl } = image
+					{images &&
+						images.length > 0 &&
+						images.map((image) => {
+							const { url } = image
 							return (
-								<li key={fullUrl}>
+								<li key={url}>
 									<button
 										onClick={() => focusImage(image)}
 										css={`

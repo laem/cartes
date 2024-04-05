@@ -1,5 +1,6 @@
 import { useMediaQuery } from 'usehooks-ts'
 import { ModalCloseButton } from './UI'
+import Image from 'next/image'
 
 export default function FocusedImage({ focusedImage, focusImage }) {
 	const mobile = useMediaQuery('(max-width: 800px)')
@@ -7,6 +8,11 @@ export default function FocusedImage({ focusedImage, focusImage }) {
 		focusedImage.title
 	)}`
 	console.log('yellow', focusedImage)
+
+	const fullUrl = `https://commons.wikimedia.org/wiki/${focusedImage.title.replace(
+		' ',
+		'_'
+	)}`
 	return (
 		<section
 			css={`
@@ -28,7 +34,7 @@ export default function FocusedImage({ focusedImage, focusImage }) {
 
 				`}
 
-				img {
+				> figure > img {
 					--shadow-color: 45deg 2% 36%;
 					--shadow-elevation-medium: 0.3px 0.5px 0.7px
 							hsl(var(--shadow-color) / 0.36),
@@ -49,7 +55,7 @@ export default function FocusedImage({ focusedImage, focusImage }) {
 						: `
 					width: 100%;
 					height: fit-content;
-					max-height: 90vh;
+					max-height: 80vh;
 
 					`}
 				}
@@ -59,8 +65,41 @@ export default function FocusedImage({ focusedImage, focusImage }) {
 				}
 			`}
 		>
-			<img src={src} />
 			<ModalCloseButton onClick={() => focusImage(null)} />
+			<figure>
+				<img src={src} />
+				<figcaption
+					css={`
+						a {
+							background: var(--lightestColor);
+							color: var(--darkestColor);
+							padding: 0 0.6rem;
+							border-radius: 0.4rem;
+							display: flex;
+							justify-content: end;
+							align-items: center;
+						}
+						width: fit-content;
+						margin: auto;
+						margin-right: 0;
+						img {
+							width: 1rem;
+							height: auto;
+							margin-right: 0.4rem;
+						}
+					`}
+				>
+					<a href={fullUrl} target="_blank">
+						<Image
+							src="/wikimedia-commones-logo.svg"
+							width="10"
+							height="10"
+							alt="Logo de Wikimedia Commons"
+						/>
+						<small>Lien original</small>
+					</a>
+				</figcaption>
+			</figure>
 		</section>
 	)
 }
