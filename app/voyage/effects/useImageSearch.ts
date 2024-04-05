@@ -26,7 +26,23 @@ export default function useImageSearch(map, zoom, bbox, active) {
 	const [imageCache, setImageCache] = useState([])
 
 	const bboxString = serializeBbox(bbox)
-	console.log('yellow imageCache size ', imageCache.length)
+	console.log('yellow imageCache size ', imageCache.length, imageCache, bbox)
+
+	// We could memoize the selection of images that is in the bbox view,
+	// but MapLibre probably doesn't draw images outside of the window ! At least
+	// we hope so
+	// ... but we need to filter them for the content view !
+	const bboxImages = useMemo(
+		() =>
+			imageCache.filter(
+				({ lat, lon }) =>
+					lon > bbox[0][0] &&
+					lon < bbox[1][0] &&
+					lat < bbox[1][1] &&
+					lat > bbox[0][1]
+			),
+		[imageCache, bboxString]
+	)
 
 	useEffect(() => {
 		if (!active) return
@@ -50,9 +66,6 @@ export default function useImageSearch(map, zoom, bbox, active) {
 		makeRequest()
 	}, [setImageCache, bboxString, imageCache, active])
 
-	// We could memoize the selection of images that is in the bbox view,
-	// but MapLibre probably doesn't draw images outside of the window ! At least
-	// we hope so
 	useEffect(() => {
 		if (!map) return
 		if (!active) return
