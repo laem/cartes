@@ -10,12 +10,14 @@ import Link from 'next/link'
 import { useLocalStorage } from 'usehooks-ts'
 import { pointHash } from './BookmarkButton'
 import { processTags } from './OsmFeature'
+import { DialogButton } from './UI'
 
 export default function QuickBookmarks() {
 	const [bookmarks] = useLocalStorage('bookmarks', [])
+	const [tutorials, setTutorials] = useLocalStorage('tutorials', {})
 	const setSearchParams = useSetSearchParams()
 	const bookmarksUrl = setSearchParams({ favoris: 'oui' }, true)
-	if (!bookmarks?.length)
+	if (!tutorials.bookmarks && !bookmarks?.length)
 		return (
 			<p
 				css={`
@@ -32,55 +34,65 @@ export default function QuickBookmarks() {
 				<small>
 					Ajoutez des favoris avec l'étoile{' '}
 					<Image src="/star.svg" alt="" width="10" height="10" /> après une
-					recherche.
+					recherche
 				</small>
+				<DialogButton
+					css={`
+						font-size: 80%;
+						margin-left: 0.3rem;
+					`}
+					onClick={() => setTutorials({ ...tutorials, bookmarks: true })}
+				>
+					OK
+				</DialogButton>
 			</p>
 		)
-	return (
-		<section
-			css={`
-				h3 {
-					font-size: 90%;
-					color: #666;
-					font-weight: 500;
-					margin: 0.2rem 0;
-				}
-				h3 + p {
-					margin-left: 1rem;
-				}
-				header {
-					display: flex;
-					justify-content: space-between;
-					align-items: center;
-				}
-			`}
-		>
-			<header>
-				<h2>Mes favoris</h2>
-				<Link href={bookmarksUrl}>Modifier</Link>
-			</header>
-
-			<h3>Adresses</h3>
-			<ul
+	if (bookmarks?.length)
+		return (
+			<section
 				css={`
-					padding-left: 0.6rem;
-					display: flex;
-					align-items: center;
-					li {
+					h3 {
+						font-size: 90%;
+						color: #666;
+						font-weight: 500;
+						margin: 0.2rem 0;
+					}
+					h3 + p {
+						margin-left: 1rem;
+					}
+					header {
 						display: flex;
+						justify-content: space-between;
 						align-items: center;
-						margin: 0 0.4rem;
 					}
 				`}
 			>
-				{bookmarks.map((bookmark) => (
-					<QuickBookmark key={pointHash(bookmark)} bookmark={bookmark} />
-				))}
-			</ul>
-			<h3>Itinéraires</h3>
-			<p>Bientôt.</p>
-		</section>
-	)
+				<header>
+					<h2>Mes favoris</h2>
+					<Link href={bookmarksUrl}>Modifier</Link>
+				</header>
+
+				<h3>Adresses</h3>
+				<ul
+					css={`
+						padding-left: 0.6rem;
+						display: flex;
+						align-items: center;
+						li {
+							display: flex;
+							align-items: center;
+							margin: 0 0.4rem;
+						}
+					`}
+				>
+					{bookmarks.map((bookmark) => (
+						<QuickBookmark key={pointHash(bookmark)} bookmark={bookmark} />
+					))}
+				</ul>
+				<h3>Itinéraires</h3>
+				<p>Bientôt.</p>
+			</section>
+		)
 }
 
 const QuickBookmark = ({ bookmark }) => {
