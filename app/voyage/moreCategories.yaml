@@ -99,7 +99,10 @@
   category: Loisirs
   dictionary:
     - terrain de jeu
-  query: '[leisure=playground]'
+    - manège
+  query: 
+    - '[leisure=playground]'
+    - '[attraction=carousel]'
   icon: playground
 
 - name: Surf
