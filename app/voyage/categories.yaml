@@ -36,6 +36,15 @@
     - superette
   query: '["shop"~"convenience|supermarket"]'
   icon: https://cdn.jsdelivr.net/gh/mapbox/maki/icons/convenience.svg
+- name: eau
+  dictionary:
+    - boire
+    - fontaine
+    - eau potable
+    - robinet
+  query: '[amenity=drinking_water]'
+  icon: https://cdn.jsdelivr.net/gh/mapbox/maki/icons/water.svg
+  open by default: true
 - name: parc
   dictionary:
     - verdure
