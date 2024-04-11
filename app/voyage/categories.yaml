@@ -47,6 +47,14 @@
     - '[drinking_water=yes]'
   icon: https://cdn.jsdelivr.net/gh/mapbox/maki/icons/water.svg
   open by default: true
+- name: toilettes
+  dictionary:
+    - WC
+    - waters
+  query:
+    - '[amenity=toilets]'
+  icon: toilets
+  open by default: true
 - name: parc
   dictionary:
     - verdure
