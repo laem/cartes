@@ -42,7 +42,9 @@
     - fontaine
     - eau potable
     - robinet
-  query: '[amenity=drinking_water]'
+  query:
+    - '[amenity=drinking_water]'
+    - '[drinking_water=yes]'
   icon: https://cdn.jsdelivr.net/gh/mapbox/maki/icons/water.svg
   open by default: true
 - name: parc
