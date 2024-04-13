@@ -99,7 +99,10 @@
   category: Loisirs
   dictionary:
     - terrain de jeu
-  query: '[leisure=playground]'
+    - aire de jeu
+  query:
+    - '[leisure=playground]'
+    - '[landuse=recreation_ground]'
   icon: playground
 
 - name: Surf
