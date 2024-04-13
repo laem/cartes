@@ -190,6 +190,8 @@ export default function useDrawQuickSearchFeatures(
 		)
 
 		return () => {
+			// TODO for whatever reason to be found, features are not removed until
+			// the request is finished
 			const baseId = `features-${category.name}-`
 			safeRemove(map)(
 				[
