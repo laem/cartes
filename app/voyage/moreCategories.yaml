@@ -116,6 +116,15 @@
     - clinique
   query: '[amenity=hospital]'
   icon: https://cdn.jsdelivr.net/gh/mapbox/maki/icons/hospital.svg
+- name: clinique
+  category: Santé
+  dictionary:
+    - hôpital
+    - urgences
+  query:
+    - '[amenity=clinic]'
+    - '[healthcare=clinic]'
+  icon: https://cdn.jsdelivr.net/gh/mapbox/maki/icons/hospital.svg
 - name: médecin
   category: Santé
   dictionary:
