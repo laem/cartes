@@ -92,11 +92,12 @@
 - name: fitness
   category: Sports
   dictionary:
-    - exercicice
+    - exercice
     - entrainement
-  query: '[fitness_station=*]'
+    - muscu
+  query: '[fitness_station]'
   icon: https://cdn.jsdelivr.net/gh/osmandapp/OsmAnd-resources/icons/svg/sport/fitness_station.svg
-  
+
 - name: plage
   category: Tourisme
   query: '[natural=beach]'
