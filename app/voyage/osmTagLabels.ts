@@ -34,7 +34,7 @@ export const tagNameCorrespondance = (key) => {
 		official_name: 'Nom officiel',
 		'payment:cash': 'Paiement en liquide',
 		'payment:card': 'Paiement par carte',
-		'payment:contactless': 'Paiement sans-contact',
+		'payment:contactless': 'Paiement sans contact',
 		'opening_hours:signed': 'Horaires affichés',
 		'internet_access:fee': 'Accès Internet payant',
 		'brand:website': 'Site de la marque',
