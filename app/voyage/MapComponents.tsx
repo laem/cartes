@@ -9,4 +9,4 @@ function MapComponents({ map, vers }) {
 	return null
 }
 
-export default memo(MapComponents)
+export default MapComponents

@@ -2,11 +2,16 @@ import { useMemo } from 'react'
 import useDrawQuickSearchFeatures from './useDrawQuickSearchFeatures'
 
 export default function useDrawOsmFeaturePolygon(map, osmFeature) {
-	const features = useMemo(() => (osmFeature ? [osmFeature] : []), [osmFeature])
-	console.log('darkblue features', features)
-	useDrawQuickSearchFeatures(map, features, false, {
-		name: 'vers',
-		icon: 'search-result',
-		'open by default': true,
-	})
+	const code = osmFeature?.id
+	const features = useMemo(() => (osmFeature ? [osmFeature] : []), [code])
+	const category = useMemo(
+		() => ({
+			name: 'vers-' + code,
+			icon: 'search-result',
+			'open by default': true,
+		}),
+		[code]
+	)
+	console.log('darkblue features', osmFeature?.id)
+	useDrawQuickSearchFeatures(map, features, false, category)
 }

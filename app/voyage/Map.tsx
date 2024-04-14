@@ -21,7 +21,7 @@ import { disambiguateWayRelation } from './osmRequest'
 import { styles } from './styles/styles'
 import useHoverOnMapFeatures from './useHoverOnMapFeatures'
 import useTerrainControl from './useTerrainControl'
-import { encodePlace } from './utils'
+import { encodePlace, fitBoundsConsideringModal } from './utils'
 
 import { replaceArrayIndex } from '@/components/utils/utils'
 import CenteredCross from './CenteredCross'
@@ -37,6 +37,9 @@ import useRightClick from './effects/useRightClick'
 import useSearchLocalTransit from './effects/useSearchLocalTransit'
 import useTransportStopData from './transport/useTransportStopData'
 import FocusedImage from './FocusedImage'
+import getBbox from '@turf/bbox'
+import { isMonday } from 'date-fns'
+import { useMediaQuery } from 'usehooks-ts'
 
 export const defaultState = {
 	depuis: { inputValue: null, choice: false },
@@ -46,6 +49,7 @@ export const defaultState = {
 
 export default function Map({ searchParams }) {
 	const mapContainerRef = useRef(null)
+	const isMobile = useMediaQuery('(max-width: 800px)')
 	const [zoom, setZoom] = useState(defaultZoom)
 	const [bbox, setBbox] = useState(null)
 	const [focusedImage, focusImage] = useState(null)
@@ -63,6 +67,7 @@ export default function Map({ searchParams }) {
 	// In this query param is stored an array of points. If only one, it's just a
 	// place focused on.
 	const [state, setState] = useState([])
+	console.log('darkBlue state', state)
 
 	const allez = useMemo(() => {
 		return searchParams.allez ? searchParams.allez.split('->') : []
@@ -115,6 +120,7 @@ export default function Map({ searchParams }) {
 		() => console.log('darkblue state changed') || state?.slice(-1)[0],
 		[state]
 	)
+	console.log('darkBlue vers', vers)
 	const choice = vers && vers.choice
 	const target = useMemo(
 		() => choice && [choice.longitude, choice.latitude],
@@ -421,13 +427,20 @@ export default function Map({ searchParams }) {
 			vers,
 			tailoredZoom
 		)
-		map.flyTo({
-			center: [vers.longitude, vers.latitude],
-			zoom: tailoredZoom,
-			pitch: 50, // pitch in degrees
-			bearing: 20, // bearing in degrees
-		})
-	}, [vers])
+		console.log('darkBlue bbox', vers.osmFeature)
+		if (vers.osmFeature.polygon) {
+			const bbox = getBbox(vers.osmFeature.polygon)
+			console.log('darkBlue bbox', bbox)
+			map.fitBounds(bbox)
+			fitBoundsConsideringModal(isMobile, bbox, map)
+		} else
+			map.flyTo({
+				center: [vers.longitude, vers.latitude],
+				zoom: tailoredZoom,
+				pitch: 50, // pitch in degrees
+				bearing: 20, // bearing in degrees
+			})
+	}, [map, vers])
 	/* TODO Transform this to handle the last itinery point if alone (just a POI url),
 	 * but also to add markers to all the steps of the itinerary */
 	/* Should be merged with the creation of route markers

@@ -108,9 +108,16 @@ export const enrichOsmFeatureWithPolyon = (element, elements) => {
 			? buildWayPolygon(element, elements)
 			: element.type === 'relation'
 			? osmToGeojson({ elements }).features.find(
-					(feature) => feature.geometry.type === 'Polygon'
+					(feature) =>
+						['Polygon', 'MultiPolygon'].includes(feature.geometry.type) // A merge may be necessary, or rather a rewrite of drawquickSearch's addSource ways features
 			  )
-			: new Error('Wrong osm type for a polygon')
+			: undefined
+
+	if (polygon === undefined) {
+		const message = 'Tried to enrich wrong OSM type element'
+		console.log('darkBlue', message, element, osmToGeojson({ elements }))
+		throw new Error(message)
+	}
 
 	console.log('darkblue polygon', polygon)
 	const center = centerOfMass(polygon)

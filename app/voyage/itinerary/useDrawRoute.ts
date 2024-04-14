@@ -2,6 +2,7 @@ import { useEffect } from 'react'
 import { letterFromIndex } from './Steps'
 import { useMediaQuery } from 'usehooks-ts'
 import getBbox from '@turf/bbox'
+import { fitBoundsConsideringModal } from '../utils'
 
 /*
  * Draws the walk or cycle route provided by BRouter directly as Geojson
@@ -121,12 +122,7 @@ export default function useDrawRoute(itineraryMode, map, geojson, id) {
 				(f) => f.geometry.type === 'Point' && f.properties.key != null
 			).length > 1
 		)
-			map.fitBounds(bbox, {
-				//TODO make it right with mobile snap, this is very basic
-				padding: isMobile
-					? { top: 50, bottom: 400, left: 50, right: 50 }
-					: { top: 100, bottom: 100, left: 600, right: 100 },
-			})
+			fitBoundsConsideringModal(isMobile, bbox, map)
 
 		return () => {
 			// There's something I don't understand in MapLibre's lifecycle...
