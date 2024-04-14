@@ -1,9 +1,7 @@
-import { extractOsmFeature } from '@/components/voyage/fetchPhoton'
 import { centerOfMass } from '@turf/turf'
-import { useEffect, useState } from 'react'
-import { osmRequest } from '../osmRequest'
+import { useEffect } from 'react'
+import { enrichOsmWayWithNodesCoordinates, osmRequest } from '../osmRequest'
 import { decodePlace } from '../utils'
-import { steps } from 'framer-motion'
 
 // TODO this function will enrich the array of steps stored in the URL
 // with an osm object if relevant and if it's not been done already
@@ -32,6 +30,7 @@ export default function useOsmRequest(allez, state, setState) {
 						)
 
 					const elements = await osmRequest(featureType, featureId, full)
+
 					if (!elements.length) return
 					console.log(
 						'OSM elements received',
@@ -83,7 +82,10 @@ export default function useOsmRequest(allez, state, setState) {
 						element,
 						nodeCenter
 					)
-					return { ...element, lat: nodeCenter[1], lon: nodeCenter[0] }
+					const polygon =
+						element.type === 'way' &&
+						enrichOsmWayWithNodesCoordinates(element, elements).polygon
+					return { ...element, lat: nodeCenter[1], lon: nodeCenter[0], polygon }
 
 					/* TODO do this elsewhere, we don't want a dependency to map here
 			console.log('should fly to', nodeCenter)

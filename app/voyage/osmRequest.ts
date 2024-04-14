@@ -30,7 +30,12 @@ export const disambiguateWayRelation = async (
 		const node2 = request2.find((el) => el.type === 'node')
 		if (!node1)
 			return [request2.find((el) => el.type === 'relation'), 'relation']
-		if (!node2) return [request1.find((el) => el.type === 'way'), 'way']
+		if (!node2) {
+			const way = request1.find((el) => el.type === 'way')
+			const enrichedWay = enrichOsmWayWithNodesCoordinates(way, request1)
+
+			return [enrichedWay, 'way']
+		}
 		const reference = [referenceLatLng.lng, referenceLatLng.lat]
 		const distance1 = turfDistance([node1.lon, node1.lat], reference)
 		const distance2 = turfDistance([node2.lon, node2.lat], reference)
@@ -39,8 +44,12 @@ export const disambiguateWayRelation = async (
 			distance1,
 			distance2
 		)
-		if (distance1 < distance2)
-			return [request1.find((el) => el.type === 'way'), 'way']
+		if (distance1 < distance2) {
+			const way = request1.find((el) => el.type === 'way')
+			const enrichedWay = enrichOsmWayWithNodesCoordinates(way, request1)
+
+			return [enrichedWay, 'way']
+		}
 		return [request2.find((el) => el.type === 'relation'), 'relation']
 	}
 
@@ -49,7 +58,7 @@ export const disambiguateWayRelation = async (
 	if (!request2.length && request1.length) {
 		const way = request1.find((el) => el.type === 'way')
 		const enrichedWay = enrichOsmWayWithNodesCoordinates(way, request1)
-		console.log('yellow', request1, enrichedWay)
+		console.log('darkBlue', request1, enrichedWay)
 
 		return [enrichedWay, 'way']
 	}

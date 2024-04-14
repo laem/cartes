@@ -120,6 +120,8 @@ export default function Map({ searchParams }) {
 
 	useOsmRequest(allez, state, setState)
 
+	console.log('darkBlue 2', vers?.osmFeature)
+
 	const transportStopData = useTransportStopData(vers?.osmFeature)
 
 	useEffect(() => {
