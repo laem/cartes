@@ -111,7 +111,10 @@ export default function Map({ searchParams }) {
 	}
 
 	console.log('indigo', state)
-	const vers = state?.slice(-1)[0]
+	const vers = useMemo(
+		() => console.log('darkblue state changed') || state?.slice(-1)[0],
+		[state]
+	)
 	const choice = vers && vers.choice
 	const target = useMemo(
 		() => choice && [choice.longitude, choice.latitude],
@@ -119,8 +122,6 @@ export default function Map({ searchParams }) {
 	)
 
 	useOsmRequest(allez, state, setState)
-
-	console.log('darkBlue 2', vers?.osmFeature)
 
 	const transportStopData = useTransportStopData(vers?.osmFeature)
 

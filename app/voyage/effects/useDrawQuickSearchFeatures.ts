@@ -17,10 +17,7 @@ export default function useDrawQuickSearchFeatures(
 ) {
 	const setSearchParams = useSetSearchParams()
 	useEffect(() => {
-		console.log('olivier should draw ', features, category)
 		if (!map || !features || features.length < 1 || !category) return
-
-		console.log('olivier will draw ', features.length, features[0])
 
 		const featuresWithOpen = features.map((f) => {
 			if (!f.tags || !f.tags.opening_hours) {
