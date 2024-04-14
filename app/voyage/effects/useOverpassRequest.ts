@@ -1,6 +1,5 @@
-import { centerOfMass } from '@turf/turf'
 import { useEffect, useState } from 'react'
-import { enrichOsmWayWithNodesCoordinates } from '../osmRequest'
+import { enrichOsmFeatureWithPolyon } from '../osmRequest'
 
 export const buildOverpassRequest = (queryCore) => `
 [out:json];
@@ -53,7 +52,7 @@ export default function useOverpassRequest(bbox, category) {
 			)
 			const nodeElements = interestingElements.map((element) => {
 				if (element.type === 'node') return element
-				return enrichOsmWayWithNodesCoordinates(element, json.elements)
+				return enrichOsmFeatureWithPolyon(element, json.elements)
 			})
 
 			setFeatures(nodeElements)

@@ -1,5 +1,7 @@
 import turfDistance from '@turf/distance'
 import { centerOfMass } from '@turf/turf'
+import osmToGeojson from 'osmtogeojson'
+
 export const osmRequest = async (featureType, id, full) => {
 	const request = await fetch(
 		`https://api.openstreetmap.org/api/0.6/${featureType}/${id}${
@@ -32,7 +34,7 @@ export const disambiguateWayRelation = async (
 			return [request2.find((el) => el.type === 'relation'), 'relation']
 		if (!node2) {
 			const way = request1.find((el) => el.type === 'way')
-			const enrichedWay = enrichOsmWayWithNodesCoordinates(way, request1)
+			const enrichedWay = enrichOsmFeatureWithPolyon(way, request1)
 
 			return [enrichedWay, 'way']
 		}
@@ -46,7 +48,7 @@ export const disambiguateWayRelation = async (
 		)
 		if (distance1 < distance2) {
 			const way = request1.find((el) => el.type === 'way')
-			const enrichedWay = enrichOsmWayWithNodesCoordinates(way, request1)
+			const enrichedWay = enrichOsmFeatureWithPolyon(way, request1)
 
 			return [enrichedWay, 'way']
 		}
@@ -57,7 +59,7 @@ export const disambiguateWayRelation = async (
 		return [request2.find((el) => el.type === 'relation'), 'relation']
 	if (!request2.length && request1.length) {
 		const way = request1.find((el) => el.type === 'way')
-		const enrichedWay = enrichOsmWayWithNodesCoordinates(way, request1)
+		const enrichedWay = enrichOsmFeatureWithPolyon(way, request1)
 		console.log('darkBlue', request1, enrichedWay)
 
 		return [enrichedWay, 'way']
@@ -66,7 +68,7 @@ export const disambiguateWayRelation = async (
 	return [null, null]
 }
 
-export const enrichOsmWayWithNodesCoordinates = (way, elements) => {
+const buildWayPolygon = (way, elements) => {
 	const nodes = way.nodes.map((id) => elements.find((el) => el.id === id)),
 		polygon = {
 			type: 'Feature',
@@ -75,9 +77,45 @@ export const enrichOsmWayWithNodesCoordinates = (way, elements) => {
 				coordinates: [nodes.map(({ lat, lon }) => [lon, lat])],
 			},
 		}
+	return polygon
+}
+// This does not seem to suffice, OSM relations are more complicated than that
+// so we fallback to a library even if it adds 35 kb for now
+/*
+const buildRelationMultiPolygon = (relation, elements) => {
+	const ways = relation.members
+		.filter(({ type, role, ref }) => type === 'way' && role === 'outer')
+		.map(({ ref }) => elements.find((el) => el.id === ref))
+
+	const polygon = {
+		type: 'Feature',
+		geometry: {
+			type: 'Polygon',
+			coordinates: ways.map((way) =>
+				way.nodes
+					.map((id) => elements.find((el) => el.id === id))
+					.map(({ lat, lon }) => [lon, lat])
+			),
+		},
+	}
+	console.log('darkblue polygon', polygon)
+	return polygon
+}
+*/
+export const enrichOsmFeatureWithPolyon = (element, elements) => {
+	const polygon =
+		element.type === 'way'
+			? buildWayPolygon(element, elements)
+			: element.type === 'relation'
+			? osmToGeojson({ elements }).features.find(
+					(feature) => feature.geometry.type === 'Polygon'
+			  )
+			: new Error('Wrong osm type for a polygon')
+
+	console.log('darkblue polygon', polygon)
 	const center = centerOfMass(polygon)
 
 	const [lon, lat] = center.geometry.coordinates
 
-	return { ...way, lat, lon, polygon }
+	return { ...element, lat, lon, polygon }
 }

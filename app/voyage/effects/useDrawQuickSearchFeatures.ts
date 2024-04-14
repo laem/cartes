@@ -12,7 +12,7 @@ export default function useDrawQuickSearchFeatures(
 	features,
 	showOpenOnly,
 	category,
-	setOsmFeature,
+	setOsmFeature = () => null,
 	backgroundColor
 ) {
 	const setSearchParams = useSetSearchParams()

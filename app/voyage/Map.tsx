@@ -525,7 +525,7 @@ export default function Map({ searchParams }) {
 			/>
 			{focusedImage && <FocusedImage {...{ focusedImage, focusImage }} />}
 			{searchParams.transports === 'oui' && <CenteredCross />}
-			{map && <MapComponents map={map} />}
+			{map && <MapComponents map={map} vers={vers} />}
 			<div ref={mapContainerRef} />
 		</MapContainer>
 	)

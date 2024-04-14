@@ -1,6 +1,6 @@
 import { centerOfMass } from '@turf/turf'
 import { useEffect } from 'react'
-import { enrichOsmWayWithNodesCoordinates, osmRequest } from '../osmRequest'
+import { enrichOsmFeatureWithPolyon, osmRequest } from '../osmRequest'
 import { decodePlace } from '../utils'
 
 // TODO this function will enrich the array of steps stored in the URL
@@ -83,8 +83,8 @@ export default function useOsmRequest(allez, state, setState) {
 						nodeCenter
 					)
 					const polygon =
-						element.type === 'way' &&
-						enrichOsmWayWithNodesCoordinates(element, elements).polygon
+						['way', 'relation'].includes(element.type) &&
+						enrichOsmFeatureWithPolyon(element, elements).polygon
 					return { ...element, lat: nodeCenter[1], lon: nodeCenter[0], polygon }
 
 					/* TODO do this elsewhere, we don't want a dependency to map here
