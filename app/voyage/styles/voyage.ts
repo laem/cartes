@@ -3019,7 +3019,7 @@ export default function voyageStyle(key) {
 					'icon-allow-overlap': true,
 				},
 				paint: {
-					'text-color': 'hsl(0,0%,20%)',
+					'text-color': 'black',
 					'text-halo-blur': 0.5,
 					'text-halo-color': 'hsl(0,0%,100%)',
 					'text-halo-width': 0.8,
