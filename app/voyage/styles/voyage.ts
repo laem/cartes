@@ -2648,7 +2648,7 @@ export default function voyageStyle(key) {
 					],
 				},
 				paint: {
-					'text-color': 'hsl(0,0%,25%)',
+					'text-color': 'hsl(0,0%,15%)',
 					'icon-opacity': 1,
 					'text-opacity': [
 						'step',
@@ -3019,7 +3019,7 @@ export default function voyageStyle(key) {
 					'icon-allow-overlap': true,
 				},
 				paint: {
-					'text-color': 'black',
+					'text-color': 'hsl(0,0%,10%)',
 					'text-halo-blur': 0.5,
 					'text-halo-color': 'hsl(0,0%,100%)',
 					'text-halo-width': 0.8,
