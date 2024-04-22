@@ -1,13 +1,13 @@
 import useSetSearchParams from '@/components/useSetSearchParams'
 import { Reorder, useDragControls } from 'framer-motion'
 import Image from 'next/image'
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import { setStatePart } from '../SetDestination'
 
 export default function Steps({ state }) {
 	const steps = state
 
-	console.log('indigo reorder', steps)
+	console.log('indigo steps', steps)
 
 	const setSearchParams = useSetSearchParams()
 
@@ -65,7 +65,6 @@ const Item = ({ index, step, setSearchParams, beingSearched, state }) => {
 	const controls = useDragControls()
 	const [undoValue, setUndoValue] = useState(null)
 	const key = step?.key
-	console.log('indigo reorder key', key)
 	return (
 		<Reorder.Item
 			key={key}

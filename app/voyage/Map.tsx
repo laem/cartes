@@ -190,7 +190,8 @@ export default function Map({ searchParams }) {
 		itineraryMode,
 		bikeRouteProfile,
 		searchParams,
-		state
+		state,
+		zoom
 	)
 
 	const itinerary = {

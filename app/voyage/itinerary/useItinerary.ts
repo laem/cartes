@@ -9,14 +9,24 @@ import useFetchDrawBikeParkings from './useFetchDrawBikeParkings'
 import { geoSerializeSteps } from './areStepsEqual'
 import { buildAllezPart, removeStatePart } from '../SetDestination'
 import { letterFromIndex } from './Steps'
+import { useMediaQuery } from 'usehooks-ts'
 
 export default function useItinerary(
 	map,
 	itineraryMode,
 	bikeRouteProfile,
 	searchParams,
-	state
+	state,
+	zoom
 ) {
+	const desktop = useMediaQuery('(min-width: 800px)')
+	useEffect(() => {
+		if (!map) return
+		if (state.length === 2 && state[0] == null && state[1] !== null) {
+			console.log('zoom', zoom)
+			map.flyTo({ zoom: zoom - 2, padding: { bottom: desktop ? 0 : 400 } })
+		}
+	}, [state, map, desktop])
 	//TODO
 	const [routes, setRoutes] = useState(null)
 	const date = decodeDate(searchParams.date) || initialDate()
