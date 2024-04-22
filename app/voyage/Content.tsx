@@ -90,14 +90,21 @@ export default function Content({
 
 	const recherche = state.findIndex((el) => el == null || el.key == null)
 
-	const hasContent =
-		osmFeature ||
-		zoneImages ||
-		bboxImages ||
-		panoramaxImages ||
-		!clickTipRead ||
-		clickedPoint ||
-		searchParams.gare
+	const content = [
+		osmFeature,
+		zoneImages,
+		bboxImages,
+		panoramaxImages,
+		!clickTipRead,
+		clickedPoint,
+		searchParams.gare,
+	]
+
+	const hasContent = content.some((el) =>
+		el != null && Array.isArray(el) ? el.length > 0 : el
+	)
+
+	console.log('indigo hascontent', hasContent, content, clickedPoint)
 
 	const bookmarkable = clickedPoint || osmFeature // later : choice
 
@@ -269,21 +276,23 @@ export default function Content({
 							panoramaxImages={panoramaxImages}
 							focusImage={focusImage}
 						/>
-						<PlaceButtonList>
-							{hasDestination && (
-								<SetDestination
-									clickedPoint={clickedPoint}
-									geolocation={geolocation}
-									searchParams={searchParams}
-								/>
-							)}
-							{bookmarkable && (
-								<BookmarkButton
-									clickedPoint={clickedPoint}
-									osmFeature={osmFeature}
-								/>
-							)}
-						</PlaceButtonList>
+						{(hasDestination || bookmarkable) && (
+							<PlaceButtonList>
+								{hasDestination && (
+									<SetDestination
+										clickedPoint={clickedPoint}
+										geolocation={geolocation}
+										searchParams={searchParams}
+									/>
+								)}
+								{bookmarkable && (
+									<BookmarkButton
+										clickedPoint={clickedPoint}
+										osmFeature={osmFeature}
+									/>
+								)}
+							</PlaceButtonList>
+						)}
 						{clickedGare ? (
 							<div>
 								<ModalCloseButton
