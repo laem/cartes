@@ -290,7 +290,9 @@
 - title: Espace de cotravail (coworking)
   category: Divers
   name: cotravail
-  query: '[amenity=coworking_space]'
+  query:
+    - '[amenity=coworking_space]'
+    - '[office=coworking]'
   icon: coworking
 - title: Cordonnier
   category: Divers
