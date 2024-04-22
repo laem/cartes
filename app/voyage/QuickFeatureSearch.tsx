@@ -171,7 +171,7 @@ export default function QuickFeatureSearch({
 				>
 					<button
 						onClick={() => {
-							setSnap(1)
+							setSnap(1, 'QuickFeatureSearch')
 							setShowMore(!showMore)
 						}}
 					>

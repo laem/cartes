@@ -121,15 +121,17 @@ export default function Content({
 
 	useEffect(() => {
 		if (clickedPoint) {
-			setSnap(1)
+			setSnap(1, 'Content')
 		}
 	}, [clickedPoint, setSnap])
+
 	useEffect(() => {
 		if (!showSearch) return
-		if (zoom > minimumQuickSearchZoom) {
-			setSnap(2)
-		}
-	}, [showSearch, zoom])
+		if (snap === 3)
+			if (zoom > minimumQuickSearchZoom) {
+				setSnap(2, 'Content')
+			}
+	}, [showSearch, zoom, snap])
 
 	if (!introductionRead)
 		return (
@@ -213,6 +215,7 @@ export default function Content({
 					bikeRouteProfile,
 					setBikeRouteProfile,
 					searchParams,
+					setSnap,
 					close: () => {
 						setSearchParams({ allez: undefined })
 						itinerary.setItineraryMode(false)

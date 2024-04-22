@@ -107,7 +107,7 @@ export default function PlaceSearch({
 						value={value || ''}
 						ref={autoFocus && autofocusInputRef}
 						onClick={(e) => {
-							setSnap(0)
+							setSnap(0, 'PlaceSearch')
 							e.preventDefault()
 							e.stopPropagation()
 
@@ -166,7 +166,7 @@ export default function PlaceSearch({
 								whichInput: 'vers', // legacy
 								data: step,
 								updateState: (newData) => {
-									setSnap(1)
+									setSnap(1, 'PlaceSearch')
 									// this is questionable; see first comment in this file
 									setState(replaceArrayIndex(state, stepIndex, newData))
 

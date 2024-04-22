@@ -52,7 +52,6 @@ export default function useItinerary(
 	 */
 	const serializedPoints = geoSerializeSteps(state)
 
-	console.log('indigo geo', serializedPoints)
 	const points = useMemo(() => {
 		const points = state
 			.map((step, index) => {
@@ -91,7 +90,6 @@ export default function useItinerary(
 		[points]
 	)
 
-	console.log('linestrings', linestrings)
 	const rawDistance = linestrings
 		.map((el) => el.properties['track-length'] / 1000)
 		.reduce((memo, next) => memo + next, 0)
@@ -103,7 +101,6 @@ export default function useItinerary(
 		}),
 		[points, linestrings]
 	)
-	console.log('useDrawRoute from outside', map, geojson)
 	useDrawRoute(itineraryMode, map, geojson, 'distance')
 	useDrawRoute(
 		itineraryMode,
@@ -200,7 +197,6 @@ export default function useItinerary(
 			const url = `https://brouter.osc-fr1.scalingo.io/brouter?lonlats=${lonLats}&profile=${profile}&alternativeidx=0&format=geojson`
 			const res = await fetch(url)
 			const json = await res.json()
-			console.log('Brouter route json', json)
 			if (!json.features) return
 			return json
 		}

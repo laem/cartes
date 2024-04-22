@@ -1,3 +1,4 @@
+import { useEffect } from 'react'
 import BikeRouteRésumé from '../BikeRouteRésumé'
 import { ContentSection } from '../ContentUI'
 import { ModalCloseButton } from '../UI'
@@ -11,8 +12,13 @@ export default function Itinerary({
 	searchParams,
 	close,
 	state,
+	setSnap,
 }) {
 	if (!itinerary.itineraryMode) return null
+
+	useEffect(() => {
+		setSnap(1, 'Itinerary')
+	}, [setSnap])
 
 	return (
 		<ContentSection>

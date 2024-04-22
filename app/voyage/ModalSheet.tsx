@@ -12,10 +12,9 @@ export default function ModalSheet(props) {
 	const [isOpen, setOpen] = useState(false)
 	const ref = useRef<SheetRef>()
 	const setSnap = useCallback(
-		(i: number) => {
-			console.log('snapp to ' + i)
+		(i: number, fromComponent) => {
+			console.log('snapp to ' + i, ' from component ', fromComponent)
 
-			console.log('modal sheet ref current', ref.current)
 			ref.current?.snapTo(i)
 		},
 		[ref]
