@@ -101,11 +101,7 @@ export default function Content({
 
 	const bookmarkable = clickedPoint || osmFeature // later : choice
 
-	const hasDestination = osmFeature || clickedPoint,
-		destination = hasDestination && {
-			longitude: hasDestination.longitude,
-			latitude: hasDestination.latitude,
-		}
+	const hasDestination = osmFeature || clickedPoint
 
 	const showSearch = recherche > -1 || !(osmFeature || itinerary.itineraryMode) // at first, on desktop, we kept the search bar considering we have room. But this divergence brings dev complexity
 
@@ -276,7 +272,7 @@ export default function Content({
 						<PlaceButtonList>
 							{hasDestination && (
 								<SetDestination
-									destination={destination}
+									clickedPoint={clickedPoint}
 									geolocation={geolocation}
 									searchParams={searchParams}
 								/>

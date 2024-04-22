@@ -10,6 +10,7 @@ const snapPoints = [-50, 0.5, 150, 100, 0],
 export default function ModalSheet(props) {
 	const [trackedSnap, setTrackedSnap] = useState(initialSnap)
 	const [isOpen, setOpen] = useState(false)
+
 	const ref = useRef<SheetRef>()
 	const setSnap = useCallback(
 		(i: number, fromComponent) => {
