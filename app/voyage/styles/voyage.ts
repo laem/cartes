@@ -490,8 +490,8 @@ export default function voyageStyle(key) {
 				paint: {
 					'line-color': {
 						stops: [
-							[10, 'hsl(205,61%,63%)'],
-							[16, 'hsl(205,67%,47%)'],
+							[10, '#9cb0e3'],
+							[16, '#c2cff0'],
 						],
 					},
 					'line-width': 1.1,
@@ -1989,8 +1989,8 @@ export default function voyageStyle(key) {
 					'text-letter-spacing': 0.1,
 				},
 				paint: {
-					'text-color': 'hsl(205,84%,39%)',
-					'text-halo-color': 'hsla(0, 100%, 100%, 0.45)',
+					'text-color': 'white',
+					'text-halo-color': '#3051a4',
 					'text-halo-width': 1.5,
 				},
 				metadata: {},
@@ -2069,12 +2069,11 @@ export default function voyageStyle(key) {
 					'symbol-placement': 'line',
 				},
 				paint: {
-					'text-color': 'hsl(205,84%,39%)',
+					'text-color': 'white',
 					'text-halo-blur': 0.5,
-					'text-halo-color': 'hsla(0, 0%, 100%, 0.15)',
 					'text-halo-width': 1,
 				},
-				filter: ['all', ['==', 'subclass', 'ferry']],
+				filter: ['all', ['==', 'class', 'ferry']],
 			},
 			{
 				id: 'Oneway',
@@ -2155,7 +2154,7 @@ export default function voyageStyle(key) {
 				metadata: {},
 				filter: [
 					'all',
-					['!in', 'subclass', 'ferry', 'gondola', 'cable_car'],
+					['!in', 'class', 'ferry', 'gondola', 'cable_car'],
 					['!in', 'class', 'service'],
 				],
 			},
