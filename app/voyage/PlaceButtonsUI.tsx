@@ -5,16 +5,21 @@ import styled from 'styled-components'
 export const PlaceButtonList = styled.ul`
 	padding: 0;
 	list-style-type: none;
+	margin-bottom: 1vh;
+	display: flex;
+	align-items: center;
 `
 
 export const PlaceButton = styled.li`
+	margin-right: 0.6rem;
 	button {
 		border-radius: 0.6rem;
 		background: var(--color);
-		width: 6rem;
-		height: 4rem;
-		padding: 0.4rem 0;
+		width: 5rem;
+		height: 4.2rem;
+		padding: 0.5rem 0;
 		color: white;
+
 		> div:first-child  {
 			background: white;
 			height: 1.8rem;

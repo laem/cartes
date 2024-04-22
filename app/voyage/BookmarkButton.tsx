@@ -1,6 +1,7 @@
 import distance from '@turf/distance'
 import Image from 'next/image'
 import { useLocalStorage } from 'usehooks-ts'
+import { PlaceButton } from './PlaceButtonsUI'
 
 export const pointHash = (point) => point.geometry.coordinates.join('|')
 
@@ -34,17 +35,7 @@ export default function BookmarkButton({ clickedPoint, osmFeature }) {
 		return pointHash(point) === pointHash(feature)
 	})
 	return (
-		<div
-			css={`
-				text-align: right;
-				button {
-				}
-				img {
-					width: 2rem;
-					height: auto;
-				}
-			`}
-		>
+		<PlaceButton>
 			<button
 				onClick={() =>
 					same
@@ -58,13 +49,16 @@ export default function BookmarkButton({ clickedPoint, osmFeature }) {
 				}
 				title={same ? 'Enlever des favoris' : 'Mettre en favori'}
 			>
-				<Image
-					src={same ? '/star-full.svg' : '/star.svg'}
-					alt="Icône d'ajout de favori"
-					width="10"
-					height="10"
-				/>
+				<div>
+					<Image
+						src={same ? '/star-full.svg' : '/star.svg'}
+						alt="Icône d'ajout de favori"
+						width="50"
+						height="50"
+					/>
+				</div>
+				<div>Favori</div>
 			</button>
-		</div>
+		</PlaceButton>
 	)
 }

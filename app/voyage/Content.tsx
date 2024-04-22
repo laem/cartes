@@ -3,28 +3,26 @@ import { getThumb } from '@/components/wikidata'
 import { useEffect } from 'react'
 import { useLocalStorage } from 'usehooks-ts'
 import BikeRouteRésumé from './BikeRouteRésumé'
-import ClickedPoint from './ClickedPoint'
-import { ContentSection, ExplanationWrapper } from './ContentUI'
-import Explanations from './explanations.mdx'
-import { FeatureImage } from './FeatureImage'
-import GareInfo from './GareInfo'
-import Itinerary from './itinerary/Itinerary'
-import { defaultState } from './Map'
-import OsmFeature from './OsmFeature'
-import PlaceSearch from './PlaceSearch'
-import QuickFeatureSearch from './QuickFeatureSearch'
-import SetDestination from './SetDestination'
-import StyleChooser from './styles/StyleChooser'
-import TransportMap from './transport/TransportMap'
-import { DialogButton, ModalCloseButton } from './UI'
-import useOgImageFetcher from './useOgImageFetcher'
-import useWikidata from './useWikidata'
-import { ZoneImages } from './ZoneImages'
 import BookmarkButton from './BookmarkButton'
 import Bookmarks from './Bookmarks'
-import QuickBookmarks from './QuickBookmarks'
-import PlaceButtons from './PlaceButtons'
+import ClickedPoint from './ClickedPoint'
+import { ContentSection, ExplanationWrapper } from './ContentUI'
+import { FeatureImage } from './FeatureImage'
+import GareInfo from './GareInfo'
+import OsmFeature from './OsmFeature'
 import { PlaceButtonList } from './PlaceButtonsUI'
+import PlaceSearch from './PlaceSearch'
+import QuickBookmarks from './QuickBookmarks'
+import QuickFeatureSearch from './QuickFeatureSearch'
+import SetDestination from './SetDestination'
+import { DialogButton, ModalCloseButton } from './UI'
+import { ZoneImages } from './ZoneImages'
+import Explanations from './explanations.mdx'
+import Itinerary from './itinerary/Itinerary'
+import StyleChooser from './styles/StyleChooser'
+import TransportMap from './transport/TransportMap'
+import useOgImageFetcher from './useOgImageFetcher'
+import useWikidata from './useWikidata'
 
 const getMinimumQuickSearchZoom = (mobile) => (mobile ? 10.5 : 12) // On a small screen, 70 %  of the tiles are not visible, hence this rule
 
@@ -197,9 +195,6 @@ export default function Content({
 				</section>
 			)}
 
-			{bookmarkable && (
-				<BookmarkButton clickedPoint={clickedPoint} osmFeature={osmFeature} />
-			)}
 			{searchParams.favoris === 'oui' && <Bookmarks />}
 			{searchParams.transports === 'oui' && (
 				<TransportMap
@@ -281,6 +276,12 @@ export default function Content({
 									destination={destination}
 									geolocation={geolocation}
 									searchParams={searchParams}
+								/>
+							)}
+							{bookmarkable && (
+								<BookmarkButton
+									clickedPoint={clickedPoint}
+									osmFeature={osmFeature}
 								/>
 							)}
 						</PlaceButtonList>
