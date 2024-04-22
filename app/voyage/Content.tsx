@@ -23,6 +23,8 @@ import { ZoneImages } from './ZoneImages'
 import BookmarkButton from './BookmarkButton'
 import Bookmarks from './Bookmarks'
 import QuickBookmarks from './QuickBookmarks'
+import PlaceButtons from './PlaceButtons'
+import { PlaceButtonList } from './PlaceButtonsUI'
 
 const getMinimumQuickSearchZoom = (mobile) => (mobile ? 10.5 : 12) // On a small screen, 70 %  of the tiles are not visible, hence this rule
 
@@ -273,13 +275,15 @@ export default function Content({
 							panoramaxImages={panoramaxImages}
 							focusImage={focusImage}
 						/>
-						{hasDestination && (
-							<SetDestination
-								destination={destination}
-								geolocation={geolocation}
-								searchParams={searchParams}
-							/>
-						)}
+						<PlaceButtonList>
+							{hasDestination && (
+								<SetDestination
+									destination={destination}
+									geolocation={geolocation}
+									searchParams={searchParams}
+								/>
+							)}
+						</PlaceButtonList>
 						{clickedGare ? (
 							<div>
 								<ModalCloseButton
