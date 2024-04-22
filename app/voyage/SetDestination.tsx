@@ -42,7 +42,14 @@ export default function SetDestination({
 }) {
 	const setSearchParams = useSetSearchParams()
 
-	//const destinationPart = `${destination.longitude}|${destination.latitude}`
+	const destinationPart = destination
+		? buildAllezPart(
+				'Point sur la carte',
+				null,
+				destination.longitude,
+				destination.latitude
+		  )
+		: searchParams.allez || ''
 
 	const search = {
 		allez: geolocation
@@ -51,8 +58,8 @@ export default function SetDestination({
 					null,
 					geolocation.longitude,
 					geolocation.latitude
-			  )}->${searchParams.allez}`
-			: `->${searchParams.allez}`,
+			  )}->${destinationPart}`
+			: `->${destinationPart}`,
 	}
 
 	const href = setSearchParams(search, true, false)
