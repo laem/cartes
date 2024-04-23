@@ -56,9 +56,9 @@ export default function Content({
 	transportsData,
 	geolocation,
 	focusImage,
+	vers,
+	osmFeature,
 }) {
-	const vers = state.slice(-1)[0],
-		osmFeature = vers && vers.osmFeature
 	const url = osmFeature?.tags?.website || osmFeature?.tags?.['contact:website']
 	const ogImages = useOgImageFetcher(url),
 		ogImage = ogImages[url],
@@ -200,7 +200,7 @@ export default function Content({
 				</section>
 			)}
 
-			{searchParams.favoris === 'oui' && <Bookmarks />}
+			{searchParams.favoris === 'oui' && !hasContent && <Bookmarks />}
 			{searchParams.transports === 'oui' && (
 				<TransportMap
 					{...{

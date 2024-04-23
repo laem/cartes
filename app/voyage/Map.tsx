@@ -129,7 +129,8 @@ export default function Map({ searchParams }) {
 
 	useOsmRequest(allez, state, setState)
 
-	const transportStopData = useTransportStopData(vers?.osmFeature)
+	const osmFeature = vers?.osmFeature
+	const transportStopData = useTransportStopData(osmFeature)
 
 	useEffect(() => {
 		if (!transportStopData || !transportStopData.routesGeojson) return
@@ -415,7 +416,7 @@ export default function Map({ searchParams }) {
 	useHoverOnMapFeatures(map)
 
 	useEffect(() => {
-		if (!map || !vers || !vers.osmFeature) return
+		if (!map || !vers || !osmFeature) return
 
 		const tailoredZoom = //TODO should be defined by the feature's polygon if any
 			/* ['city'].includes(vers.choice.type)
@@ -428,9 +429,8 @@ export default function Map({ searchParams }) {
 			vers,
 			tailoredZoom
 		)
-		console.log('darkBlue bbox', vers.osmFeature)
-		if (vers.osmFeature.polygon) {
-			const bbox = getBbox(vers.osmFeature.polygon)
+		if (osmFeature.polygon) {
+			const bbox = getBbox(osmFeature.polygon)
 			console.log('darkBlue bbox', bbox)
 			map.fitBounds(bbox)
 			fitBoundsConsideringModal(isMobile, bbox, map)
@@ -441,7 +441,7 @@ export default function Map({ searchParams }) {
 				pitch: 50, // pitch in degrees
 				bearing: 20, // bearing in degrees
 			})
-	}, [map, vers])
+	}, [map, vers, osmFeature])
 	/* TODO Transform this to handle the last itinery point if alone (just a POI url),
 	 * but also to add markers to all the steps of the itinerary */
 	/* Should be merged with the creation of route markers
@@ -523,6 +523,8 @@ export default function Map({ searchParams }) {
 						geolocation,
 						bboxImages,
 						focusImage,
+						vers,
+						osmFeature,
 					}}
 				/>
 			</MapHeader>
