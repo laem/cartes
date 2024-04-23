@@ -4,12 +4,25 @@ import Image from 'next/image'
 import { buildAddress } from '@/components/voyage/Address'
 import { SoloTags } from '@/components/voyage/Tags'
 import { processTags } from './OsmFeature'
+import { ModalCloseButton } from './UI'
+import useSetSearchParams from '@/components/useSetSearchParams'
 
 export default function Favoris() {
+	const setSearchParams = useSetSearchParams()
 	const [bookmarks, setBookmarks] = useLocalStorage('bookmarks', [])
 	console.log('purple', bookmarks)
 	return (
-		<section>
+		<section
+			css={`
+				position: relative;
+			`}
+		>
+			<ModalCloseButton
+				title="Fermer l'encart favoris"
+				onClick={() => {
+					setSearchParams({ favoris: undefined })
+				}}
+			></ModalCloseButton>
 			<h2>Mes favoris</h2>
 
 			<h3>Adresses</h3>

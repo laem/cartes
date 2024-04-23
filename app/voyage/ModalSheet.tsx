@@ -11,6 +11,9 @@ export default function ModalSheet(props) {
 	const [trackedSnap, setTrackedSnap] = useState(initialSnap)
 	const [isOpen, setOpen] = useState(false)
 
+	const { osmFeature, styleChooser, searchParams } = props
+	const bookmarksView = searchParams.favoris === 'oui'
+
 	const ref = useRef<SheetRef>()
 	const setSnap = useCallback(
 		(i: number, fromComponent) => {
@@ -26,7 +29,7 @@ export default function ModalSheet(props) {
 	}, [setOpen])
 
 	useEffect(() => {
-		if (!props.osmFeature && !props.styleChooser) return
+		if (!osmFeature && !styleChooser && !bookmarksView) return
 
 		setOpen(true)
 		const timeout = () => {
@@ -36,7 +39,7 @@ export default function ModalSheet(props) {
 		return () => {
 			clearTimeout(timeout)
 		}
-	}, [setSnap, props.osmFeature, props.styleChooser])
+	}, [setSnap, osmFeature, styleChooser, bookmarksView])
 
 	return (
 		<>
