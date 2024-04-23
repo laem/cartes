@@ -27,8 +27,12 @@ export default function ClickedPoint({
 			>
 				<strong>Adresse</strong>
 				<Address tags={item} noPrefix={true} />
-				<strong>Distance</strong>
-				<Distance origin={origin} destination={{ longitude, latitude }} />
+				{origin && (
+					<>
+						<strong>Distance</strong>
+						<Distance origin={origin} destination={{ longitude, latitude }} />
+					</>
+				)}
 			</div>
 		)
 
