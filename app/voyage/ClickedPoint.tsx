@@ -1,4 +1,3 @@
-import { buildLocationText } from '@/components/conversation/GeoInputOptions'
 import Address from '@/components/voyage/Address'
 import computeDistance from '@turf/distance'
 

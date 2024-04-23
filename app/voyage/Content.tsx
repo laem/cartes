@@ -319,10 +319,18 @@ export default function Content({
 								transportStopData={transportStopData}
 							/>
 						) : clickedPoint ? (
-							<ClickedPoint
-								clickedPoint={clickedPoint}
-								geolocation={geolocation}
-							/>
+							<>
+								<ModalCloseButton
+									title="Fermer l'encart point d'intéret"
+									onClick={() => {
+										resetClickedPoint()
+									}}
+								/>
+								<ClickedPoint
+									clickedPoint={clickedPoint}
+									geolocation={geolocation}
+								/>
+							</>
 						) : (
 							!clickTipRead && (
 								<div>
