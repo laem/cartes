@@ -26,7 +26,8 @@ export const PlaceButton = styled.li`
 			width: 1.8rem;
 			border-radius: 1rem;
 			margin: 0 auto 0.2rem;
-			img {
+			img,
+			svg {
 				width: 100%;
 				height: 100%;
 				padding: 0.25rem;

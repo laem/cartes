@@ -23,6 +23,7 @@ import StyleChooser from './styles/StyleChooser'
 import TransportMap from './transport/TransportMap'
 import useOgImageFetcher from './useOgImageFetcher'
 import useWikidata from './useWikidata'
+import ShareButton from './ShareButton'
 
 const getMinimumQuickSearchZoom = (mobile) => (mobile ? 10.5 : 12) // On a small screen, 70 %  of the tiles are not visible, hence this rule
 
@@ -290,6 +291,9 @@ export default function Content({
 										clickedPoint={clickedPoint}
 										osmFeature={osmFeature}
 									/>
+								)}
+								{bookmarkable && (
+									<ShareButton {...{ clickedPoint, osmFeature }} />
 								)}
 							</PlaceButtonList>
 						)}
