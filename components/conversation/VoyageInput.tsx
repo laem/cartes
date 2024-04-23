@@ -105,7 +105,9 @@ export default function VoyageInput({
 		})
 		if (v.length > 2) {
 			if (db === 'osm') {
-				fetch(`https://photon.komoot.io/api/?q=${v}&limit=6&layer=city&lang=fr`)
+				fetch(
+					`https://photon.komoot.io/api/?q=${v}&limit=6&layer=city&layer=district&lang=fr`
+				)
 					.then((res) => res.json())
 					.then((json) => {
 						setState((state) => ({
@@ -196,18 +198,20 @@ export default function VoyageInput({
 									</LightButton>
 								</small>
 							)}
-							{depuis.results && depuis.inputValue !== '' && !state.validated && (
-								<GeoInputOptions
-									{...{
-										whichInput: 'depuis',
-										data: state['depuis'],
-										updateState: (newData) =>
-											setState((state) => ({ ...state, depuis: newData })),
-										rulesPath,
-										dispatchUpdateSituation,
-									}}
-								/>
-							)}
+							{depuis.results &&
+								depuis.inputValue !== '' &&
+								!state.validated && (
+									<GeoInputOptions
+										{...{
+											whichInput: 'depuis',
+											data: state['depuis'],
+											updateState: (newData) =>
+												setState((state) => ({ ...state, depuis: newData })),
+											rulesPath,
+											dispatchUpdateSituation,
+										}}
+									/>
+								)}
 						</>
 					)}
 					{depuis.choice && (

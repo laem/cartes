@@ -28,6 +28,7 @@ export default function GeoInputOptions({
 	rulesPath = '',
 	dispatchUpdateSituation = () => () => null,
 }) {
+	console.log('LightSeaGreen DATA', data)
 	return data?.results.length > 0 ? (
 		<ul>
 			{removeDuplicates(data.results)
