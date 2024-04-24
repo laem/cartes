@@ -9,6 +9,7 @@ import Image from 'next/image'
 import { getArrayIndex, replaceArrayIndex } from '@/components/utils/utils'
 import { buildAllezPart, setStatePart } from './SetDestination'
 import { buildAddress } from '@/components/voyage/Address'
+import { isStepBeingSearched } from './itinerary/Steps'
 
 const useAutoFocus = () => {
 	const inputRef = useCallback((inputElement) => {
@@ -98,6 +99,8 @@ export default function PlaceSearch({
 							width: 83vw;
 
 							margin-bottom: 0;
+							${state.some(isStepBeingSearched) &&
+							`border: 3px solid yellow !important`}
 						}
 						position: relative;
 					`}

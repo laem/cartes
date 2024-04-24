@@ -51,7 +51,7 @@ export default function Steps({ state }) {
 							index,
 							step,
 							setSearchParams,
-							beingSearched: step === null || (!step.key && step.inputValue),
+							beingSearched: isStepBeingSearched(step),
 							state,
 						}}
 					/>
@@ -178,3 +178,6 @@ const Dots = () => (
 )
 
 export const letterFromIndex = (index) => String.fromCharCode(65 + (index % 26))
+
+export const isStepBeingSearched = (step) =>
+	step === null || (!step.key && step.inputValue)
