@@ -8,7 +8,13 @@ import Image from 'next/image'
 
 export default function ShareButton({ osmFeature, clickedPoint }) {
 	console.log('purple share', osmFeature, clickedPoint)
-	const url = `https://cartes.app/?allez=${
+
+	const urlBase =
+		process.env.NEXT_PUBLIC_NODE_ENV === 'development'
+			? 'http://localhost:8080'
+			: 'https://' + process.env.VERCEL_URL
+
+	const url = `${urlBase}/?allez=${
 		osmFeature
 			? buildAllezPart(
 					osmFeature.tags?.name,
