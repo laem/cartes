@@ -90,7 +90,9 @@ export default function QuickBookmarks() {
 					))}
 				</ul>
 				<h3>Itinéraires</h3>
-				<p>Bientôt.</p>
+				<p>
+					<small>À venir.</small>
+				</p>
 			</section>
 		)
 }

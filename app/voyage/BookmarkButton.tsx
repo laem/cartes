@@ -51,7 +51,7 @@ export default function BookmarkButton({ clickedPoint, osmFeature }) {
 			>
 				<div>
 					<Image
-						src={same ? '/star-full.svg' : '/star.svg'}
+						src={same ? '/star-full-gold.svg' : '/star.svg'}
 						alt="Icône d'ajout de favori"
 						width="50"
 						height="50"

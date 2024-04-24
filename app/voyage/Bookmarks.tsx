@@ -23,7 +23,7 @@ export default function Favoris() {
 					setSearchParams({ favoris: undefined })
 				}}
 			></ModalCloseButton>
-			<h2>Mes favoris</h2>
+			<h2>Gérer mes favoris</h2>
 
 			<h3>Adresses</h3>
 			<ul
@@ -44,7 +44,9 @@ export default function Favoris() {
 				))}
 			</ul>
 			<h3>Itinéraires</h3>
-			<p>Bientôt.</p>
+			<p>
+				<small>À venir.</small>
+			</p>
 		</section>
 	)
 }
