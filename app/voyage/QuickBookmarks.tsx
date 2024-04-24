@@ -11,6 +11,7 @@ import { useLocalStorage } from 'usehooks-ts'
 import { pointHash } from './BookmarkButton'
 import { processTags } from './OsmFeature'
 import { DialogButton } from './UI'
+import {buildAllezPart} from './SetDestination'
 
 export default function QuickBookmarks() {
 	const [bookmarks] = useLocalStorage('bookmarks', [])
@@ -101,6 +102,7 @@ const QuickBookmark = ({ bookmark }) => {
 	const address = buildAddress(bookmark.properties, true)
 	const name = bookmark.properties.name
 	console.log('bookmark', bookmark)
+	const url = bookmark.properties.id ? buildAllezPart
 	return (
 		<li
 			key={pointHash(bookmark)}
