@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<svg:svg
+   width="24"
+   height="24"
+   version="1.1"
+   id="svg1"
+   sodipodi:docname="check-circle.svg"
+   inkscape:version="1.3.1 (9b9bdc1480, 2023-11-25, custom)"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns:svg="http://www.w3.org/2000/svg">
+  <svg:defs
+     id="defs1" />
+  <sodipodi:namedview
+     id="namedview1"
+     pagecolor="#ffffff"
+     bordercolor="#000000"
+     borderopacity="0.25"
+     inkscape:showpageshadow="2"
+     inkscape:pageopacity="0.0"
+     inkscape:pagecheckerboard="0"
+     inkscape:deskcolor="#d1d1d1"
+     inkscape:zoom="19.221253"
+     inkscape:cx="13.552706"
+     inkscape:cy="13.578719"
+     inkscape:window-width="1920"
+     inkscape:window-height="1055"
+     inkscape:window-x="0"
+     inkscape:window-y="0"
+     inkscape:window-maximized="1"
+     inkscape:current-layer="svg1" />
+  <svg:circle
+     style="fill:#2988e6;fill-opacity:1;stroke-width:15.672;stroke-linecap:round;stroke-linejoin:bevel"
+     id="path2"
+     cx="11.98024"
+     cy="12.025967"
+     r="11.864678" />
+  <link
+     type="text/css"
+     rel="stylesheet"
+     id="dark-mode-custom-link" />
+  <link
+     type="text/css"
+     rel="stylesheet"
+     id="dark-mode-general-link" />
+  <style
+     lang="en"
+     type="text/css"
+     id="dark-mode-custom-style" />
+  <style
+     lang="en"
+     type="text/css"
+     id="dark-mode-native-style" />
+  <style
+     lang="en"
+     type="text/css"
+     id="dark-mode-native-sheet" />
+  <svg:path
+     d="m 10.541642,19.384166 -6.3142542,-6.314258 2.1042564,-2.104256 4.2099978,4.210001 8.417027,-8.4185104 2.105744,2.1042565 z"
+     style="fill:#ffffff;fill-opacity:1;stroke-width:1.48816"
+     id="path1" />
+</svg:svg>

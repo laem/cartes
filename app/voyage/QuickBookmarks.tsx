@@ -110,7 +110,7 @@ const QuickBookmark = ({ bookmark, oldAllez }) => {
 			bookmark.properties.id && buildAddress(bookmark.properties, false),
 		address = photonAddress || osmAddress
 
-	const name = bookmark.properties.name
+	const name = bookmark.properties.customName || bookmark.properties.name
 	console.log('lightblue bookmark', bookmark)
 	const destination = geoFeatureToDestination(bookmark)
 	const setSearchParams = useSetSearchParams()

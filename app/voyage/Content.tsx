@@ -206,7 +206,7 @@ export default function Content({
 				</section>
 			)}
 
-			{searchParams.favoris === 'oui' && !hasContent && <Bookmarks />}
+			{searchParams.favoris === 'oui' && <Bookmarks />}
 			{searchParams.transports === 'oui' && (
 				<TransportMap
 					{...{
