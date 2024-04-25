@@ -14,9 +14,9 @@ export default function useOsmRequest(allez, state, setState) {
 				const [name, osmCode, longitude, latitude] = point.split('|')
 				console.log('cornflowerblue debug', osmCode, point)
 
-				const found = state.find(
-					(point) => osmCode !== '' && point.osmCode === osmCode
-				)
+				const found = state
+					.filter(Boolean)
+					.find((point) => osmCode !== '' && point.osmCode === osmCode)
 				if (found) return found // already cached, don't make useless requests
 
 				const [featureType, featureId] = decodePlace(osmCode)
