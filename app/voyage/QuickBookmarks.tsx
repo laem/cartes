@@ -73,33 +73,39 @@ export default function QuickBookmarks() {
 					<Link href={bookmarksUrl}>Modifier</Link>
 				</header>
 
-				<h3>Adresses</h3>
-				<ul
-					css={`
-						padding-left: 0.6rem;
-						display: flex;
-						align-items: center;
-						> li {
+				<section>
+					<h3>Adresses</h3>
+					<ul
+						css={`
+							padding-left: 0.6rem;
 							display: flex;
 							align-items: center;
-							margin: 0 0.4rem;
-						}
-					`}
-				>
-					{bookmarks.map((bookmark) => (
-						<QuickBookmark key={pointHash(bookmark)} bookmark={bookmark} />
-					))}
-				</ul>
-				<h3>Itinéraires</h3>
-				<p>
-					<small>À venir.</small>
-				</p>
+							> li {
+								display: flex;
+								align-items: center;
+								margin: 0 0.4rem;
+							}
+						`}
+					>
+						{bookmarks.map((bookmark) => (
+							<QuickBookmark key={pointHash(bookmark)} bookmark={bookmark} />
+						))}
+					</ul>
+					<h3>Itinéraires</h3>
+					<p>
+						<small>À venir.</small>
+					</p>
+				</section>
 			</section>
 		)
 }
 
 const QuickBookmark = ({ bookmark }) => {
-	const address = buildAddress(bookmark.properties, true)
+	const photonAddress = buildAddress(bookmark.properties, true),
+		osmAddress =
+			bookmark.properties.id && buildAddress(bookmark.properties, false),
+		address = photonAddress || osmAddress
+
 	const name = bookmark.properties.name
 	console.log('lightblue bookmark', bookmark)
 	const destination = geoFeatureToDestination(bookmark)
@@ -129,7 +135,9 @@ const QuickBookmark = ({ bookmark }) => {
 						<span>{name}</span>
 					</AddressDiscContainer>
 				) : address ? (
-					<AddressDisc {...{ t: bookmark.properties, noPrefix: true }} />
+					<AddressDisc
+						{...{ t: bookmark.properties, noPrefix: osmAddress == null }}
+					/>
 				) : (
 					<div>
 						Point <small>{pointHash(bookmark)}</small>

@@ -18,6 +18,7 @@ export default function useAddMap(
 	setGeolocation
 ) {
 	const [map, setMap] = useState(null)
+	const [geolocate, setGeolocate] = useState(null)
 	const mobile = useMediaQuery('(max-width: 800px)')
 	useEffect(() => {
 		if (!mapContainerRef.current) return undefined
@@ -45,6 +46,8 @@ export default function useAddMap(
 			},
 			trackUserLocation: true,
 		})
+
+		setGeolocate(geolocate)
 
 		newMap.addControl(geolocate)
 
@@ -75,7 +78,7 @@ export default function useAddMap(
 			setMap(null)
 			newMap?.remove()
 		}
-	}, [setMap, setZoom, setBbox, mapContainerRef]) // styleUrl not listed on purpose
+	}, [setMap, setZoom, setBbox, mapContainerRef, setGeolocate]) // styleUrl not listed on purpose
 
 	useEffect(() => {
 		if (!map) return
@@ -90,5 +93,8 @@ export default function useAddMap(
 		}
 	}, [map, styleUrl])
 
-	return map
+	const triggerGeolocation = geolocate
+		? () => geolocate.trigger()
+		: () => 'Not ready'
+	return [map, triggerGeolocation]
 }

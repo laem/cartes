@@ -11,6 +11,8 @@ import { buildAllezPart, setStatePart } from './SetDestination'
 import { buildAddress } from '@/components/voyage/Address'
 import { isStepBeingSearched } from './itinerary/Steps'
 
+const positionTriggers = ['ma pos', 'position', 'ici', 'géoloc', 'geoloc']
+
 const useAutoFocus = () => {
 	const inputRef = useCallback((inputElement) => {
 		if (inputElement) {
@@ -34,6 +36,7 @@ export default function PlaceSearch({
 	searchParams,
 	autoFocus = false,
 	stepIndex,
+	triggerGeolocation,
 }) {
 	if (stepIndex == null) throw new Error('Step index necessary')
 	const [localSearch, setLocalSearch] = useState(true)
@@ -147,87 +150,114 @@ export default function PlaceSearch({
 				</InputStyle>
 			</div>
 			{step.inputValue !== '' &&
-				(!step.choice || step.choice.inputValue !== step.inputValue) &&
-				(step.results ? (
-					<div
-						css={`
-							ul {
-								background: var(--darkerColor);
-								border-radius: 0.4rem;
-								padding: 0.6rem 0;
-								list-style-type: none;
-								margin-top: 0.2rem;
-								${!sideSheet &&
-								`
+				(!step.choice || step.choice.inputValue !== step.inputValue) && (
+					<div>
+						{value != null &&
+							positionTriggers.some((trigger) =>
+								value.toLowerCase().startsWith(trigger)
+							) && (
+								<div>
+									<button onClick={() => triggerGeolocation()}>
+										<span
+											css={`
+												background-position: 50%;
+												background-repeat: no-repeat;
+												display: block;
+												display: inline-block;
+												width: 1rem;
+												height: 1rem;
+												margin-right: 0.4rem;
+												vertical-align: sub;
+												background-image: url("data:image/svg+xml;charset=utf-8,%3Csvg xmlns='http://www.w3.org/2000/svg' width='29' height='29' fill='%23333' viewBox='0 0 20 20'%3E%3Cpath d='M10 4C9 4 9 5 9 5v.1A5 5 0 0 0 5.1 9H5s-1 0-1 1 1 1 1 1h.1A5 5 0 0 0 9 14.9v.1s0 1 1 1 1-1 1-1v-.1a5 5 0 0 0 3.9-3.9h.1s1 0 1-1-1-1-1-1h-.1A5 5 0 0 0 11 5.1V5s0-1-1-1m0 2.5a3.5 3.5 0 1 1 0 7 3.5 3.5 0 1 1 0-7'/%3E%3Ccircle cx='10' cy='10' r='2'/%3E%3C/svg%3E");
+											`}
+										/>
+										Ma position
+									</button>
+								</div>
+							)}
+
+						{step.results ? (
+							<div
+								css={`
+									ul {
+										background: var(--darkerColor);
+										border-radius: 0.4rem;
+										padding: 0.6rem 0;
+										list-style-type: none;
+										margin-top: 0.2rem;
+										${!sideSheet &&
+										`
 									width: auto
 								`}
-							}
-						`}
-					>
-						<GeoInputOptions
-							{...{
-								whichInput: 'vers', // legacy
-								data: step,
-								updateState: (newData) => {
-									setSnap(1, 'PlaceSearch')
-									// this is questionable; see first comment in this file
-									setState(replaceArrayIndex(state, stepIndex, newData))
+									}
+								`}
+							>
+								<GeoInputOptions
+									{...{
+										whichInput: 'vers', // legacy
+										data: step,
+										updateState: (newData) => {
+											setSnap(1, 'PlaceSearch')
+											// this is questionable; see first comment in this file
+											setState(replaceArrayIndex(state, stepIndex, newData))
 
-									console.log('ici', newData)
-									const { osmId, featureType, longitude, latitude, name } =
-										newData.choice
+											console.log('ici', newData)
+											const { osmId, featureType, longitude, latitude, name } =
+												newData.choice
 
-									const address = buildAddress(newData.choice, true)
-									const isOsmFeature = osmId && featureType
-									setSearchParams({
-										allez: setStatePart(
-											stepIndex,
-											state,
-											buildAllezPart(
-												name || address,
-												isOsmFeature ? encodePlace(featureType, osmId) : '',
-												longitude,
-												latitude
-											)
-										),
-										q: undefined,
-									})
-								},
-							}}
-						/>
-						<label
-							css={`
-								text-align: right;
-								margin: 0 0 auto auto;
-								display: block;
-								width: 9rem;
-								margin-top: 0.2rem;
-								background: var(--darkerColor);
-								color: white;
-								padding: 0rem 0.6rem 0rem;
-								border-radius: 0.3rem;
-								> span {
-									margin-left: 0.4rem;
-								}
-							`}
-						>
-							<input
-								type="checkbox"
-								defaultChecked={localSearch}
-								onClick={() => {
-									setLocalSearch(!localSearch)
-									onInputChange(
-										stepIndex,
-										!localSearch
-									)(state.slice(-1)[0].inputValue)
-								}}
-							/>
-							<span style={css``}>Rechercher ici</span>
-						</label>
+											const address = buildAddress(newData.choice, true)
+											const isOsmFeature = osmId && featureType
+											setSearchParams({
+												allez: setStatePart(
+													stepIndex,
+													state,
+													buildAllezPart(
+														name || address,
+														isOsmFeature ? encodePlace(featureType, osmId) : '',
+														longitude,
+														latitude
+													)
+												),
+												q: undefined,
+											})
+										},
+									}}
+								/>
+								<label
+									css={`
+										text-align: right;
+										margin: 0 0 auto auto;
+										display: block;
+										width: 9rem;
+										margin-top: 0.2rem;
+										background: var(--darkerColor);
+										color: white;
+										padding: 0rem 0.6rem 0rem;
+										border-radius: 0.3rem;
+										> span {
+											margin-left: 0.4rem;
+										}
+									`}
+								>
+									<input
+										type="checkbox"
+										defaultChecked={localSearch}
+										onClick={() => {
+											setLocalSearch(!localSearch)
+											onInputChange(
+												stepIndex,
+												!localSearch
+											)(state.slice(-1)[0].inputValue)
+										}}
+									/>
+									<span style={css``}>Rechercher ici</span>
+								</label>
+							</div>
+						) : (
+							'Chargement..'
+						)}
 					</div>
-				) : (
-					'Chargement..'
-				))}
+				)}
 		</div>
 	)
 }

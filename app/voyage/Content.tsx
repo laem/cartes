@@ -6,7 +6,7 @@ import BikeRouteRésumé from './BikeRouteRésumé'
 import BookmarkButton from './BookmarkButton'
 import Bookmarks from './Bookmarks'
 import ClickedPoint from './ClickedPoint'
-import { ContentSection, ExplanationWrapper } from './ContentUI'
+import { ContentSection, ContentWrapper, ExplanationWrapper } from './ContentUI'
 import { FeatureImage } from './FeatureImage'
 import GareInfo from './GareInfo'
 import OsmFeature from './OsmFeature'
@@ -59,6 +59,7 @@ export default function Content({
 	focusImage,
 	vers,
 	osmFeature,
+	triggerGeolocation,
 }) {
 	const url = osmFeature?.tags?.website || osmFeature?.tags?.['contact:website']
 	const ogImages = useOgImageFetcher(url),
@@ -150,7 +151,7 @@ export default function Content({
 		)
 
 	return (
-		<section>
+		<ContentWrapper>
 			{showSearch && (
 				<section>
 					<PlaceSearch
@@ -164,6 +165,7 @@ export default function Content({
 							searchParams,
 							autoFocus: recherche != null,
 							stepIndex: recherche,
+							triggerGeolocation,
 						}}
 					/>
 					{/* TODO reuse the name overlay and only that ?
@@ -359,6 +361,6 @@ export default function Content({
 					</ContentSection>
 				)
 			)}
-		</section>
+		</ContentWrapper>
 	)
 }

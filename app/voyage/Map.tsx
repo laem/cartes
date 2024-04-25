@@ -74,7 +74,7 @@ export default function Map({ searchParams }) {
 	}, [searchParams.allez])
 
 	const [geolocation, setGeolocation] = useState(null)
-	const map = useAddMap(
+	const [map, triggerGeolocation] = useAddMap(
 		styleUrl,
 		setZoom,
 		setBbox,
@@ -521,6 +521,7 @@ export default function Map({ searchParams }) {
 						resetClickedPoint,
 						transportsData,
 						geolocation,
+						triggerGeolocation,
 						bboxImages,
 						focusImage,
 						vers,

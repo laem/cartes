@@ -8,7 +8,7 @@ import { buildAddress } from '@/components/voyage/Address'
 export const geoFeatureToDestination = (feature) => {
 	if (feature.properties.id) {
 		return buildAllezPart(
-			feature.properties.name,
+			feature.properties.name || buildAddress(feature.properties, false),
 			encodePlace(feature.properties.type, feature.properties.id),
 			+feature.geometry.coordinates[0],
 			+feature.geometry.coordinates[1]
