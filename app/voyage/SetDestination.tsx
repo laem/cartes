@@ -2,6 +2,17 @@ import useSetSearchParams from '@/components/useSetSearchParams'
 import Link from 'next/link'
 import Image from 'next/image'
 import { PlaceButton } from './PlaceButtonsUI'
+import { encodePlace } from './utils'
+
+export const geoOsmFeatureToDestination = (feature) => {
+	const destination = buildAllezPart(
+		feature.properties.name,
+		encodePlace(feature.properties.type, feature.properties.id),
+		+feature.geometry.coordinates[0],
+		+feature.geometry.coordinates[1]
+	)
+	return destination
+}
 
 // We don't need full precision, just 5 decimals ~ 1m
 // https://wiki.openstreetmap.org/wiki/Precision_of_coordinates
