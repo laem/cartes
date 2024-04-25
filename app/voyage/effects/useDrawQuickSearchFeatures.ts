@@ -5,20 +5,19 @@ import { useEffect } from 'react'
 import buildSvgImage from './buildSvgImage'
 import useSetSearchParams from '@/components/useSetSearchParams'
 import { encodePlace } from '../utils'
+import { buildAllezPart } from '../SetDestination'
 
 export default function useDrawQuickSearchFeatures(
 	map,
 	features,
 	showOpenOnly,
 	category,
-	setOsmFeature,
+	setOsmFeature = () => null,
 	backgroundColor
 ) {
 	const setSearchParams = useSetSearchParams()
 	useEffect(() => {
 		if (!map || !features || features.length < 1 || !category) return
-
-		console.log('olivier will draw ', features.length, features[0])
 
 		const featuresWithOpen = features.map((f) => {
 			if (!f.tags || !f.tags.opening_hours) {
@@ -161,6 +160,7 @@ export default function useDrawQuickSearchFeatures(
 
 				map.on('click', baseId + 'points', async (e) => {
 					const feature = e.features[0]
+					const { lng: longitude, lat: latitude } = e.lngLat
 					const properties = feature.properties,
 						tagsRaw = properties.tags
 					console.log('quickSearchOSMfeatureClick', feature)
@@ -168,7 +168,12 @@ export default function useDrawQuickSearchFeatures(
 						typeof tagsRaw === 'string' ? JSON.parse(tagsRaw) : tagsRaw
 
 					setSearchParams({
-						lieu: encodePlace(properties.featureType, properties.id),
+						allez: buildAllezPart(
+							tags?.name || 'sans nom',
+							encodePlace(properties.featureType, properties.id),
+							longitude,
+							latitude
+						),
 					})
 
 					const osmFeature = { ...properties, tags }

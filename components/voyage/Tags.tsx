@@ -36,7 +36,7 @@ export default function Tags({ tags }) {
 	)
 }
 
-export function SoloTags({ tags }) {
+export function SoloTags({ tags, iconsOnly, compact }) {
 	return (
 		<ul
 			css={`
@@ -44,7 +44,7 @@ export function SoloTags({ tags }) {
 				display: flex;
 				align-items: center;
 				> li {
-					margin-right: 0.6rem;
+					margin-right: ${compact ? '0' : '0.6rem'};
 					display: flex;
 					align-items: center;
 				}
@@ -65,7 +65,7 @@ export function SoloTags({ tags }) {
 			{tags.map(([raw, tag]) => (
 				<li key={tag}>
 					<Icons tags={raw} />
-					<span>{tag}</span>
+					{!iconsOnly && <span>{tag}</span>}
 				</li>
 			))}
 		</ul>

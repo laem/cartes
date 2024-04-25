@@ -10,13 +10,15 @@ const snapPoints = [-50, 0.5, 150, 100, 0],
 export default function ModalSheet(props) {
 	const [trackedSnap, setTrackedSnap] = useState(initialSnap)
 	const [isOpen, setOpen] = useState(false)
-	console.log('prune', isOpen)
+
+	const { osmFeature, styleChooser, searchParams } = props
+	const bookmarksView = searchParams.favoris === 'oui'
+
 	const ref = useRef<SheetRef>()
 	const setSnap = useCallback(
-		(i: number) => {
-			console.log('snapp to ' + i)
+		(i: number, fromComponent) => {
+			console.log('snapp to ' + i, ' from component ', fromComponent)
 
-			console.log('modal sheet ref current', ref.current)
 			ref.current?.snapTo(i)
 		},
 		[ref]
@@ -27,7 +29,8 @@ export default function ModalSheet(props) {
 	}, [setOpen])
 
 	useEffect(() => {
-		if (!props.osmFeature && !props.styleChooser) return
+		console.log('cyan modal', osmFeature)
+		if (!osmFeature && !styleChooser && !bookmarksView) return
 
 		setOpen(true)
 		const timeout = () => {
@@ -37,7 +40,7 @@ export default function ModalSheet(props) {
 		return () => {
 			clearTimeout(timeout)
 		}
-	}, [setSnap, props.osmFeature, props.styleChooser])
+	}, [setSnap, osmFeature, styleChooser, bookmarksView])
 
 	return (
 		<>
@@ -58,7 +61,7 @@ export default function ModalSheet(props) {
 			>
 				<Sheet.Container
 					css={`
-						background-color: var(--lightestColor) !important;
+						background-color: var(--lightestColor2) !important;
 					`}
 				>
 					<Sheet.Header

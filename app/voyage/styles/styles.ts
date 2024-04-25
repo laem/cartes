@@ -2,6 +2,7 @@ import railStyle from './railStyle'
 import cyclOsm from './cyclOsmStyle'
 import voyageStyle from './voyage'
 import transit from './transit'
+import testStreetComplete from './test-street-complete'
 
 const key = process.env.NEXT_PUBLIC_MAPTILER
 
@@ -48,5 +49,11 @@ export const styles = {
 		url: transit(key),
 		name: 'Fond léger',
 		emoji: '⬜️',
+	},
+	streetComplete: {
+		// Taken from MapTiler's dataviz style
+		url: testStreetComplete,
+		name: 'Street Complete',
+		emoji: '🧪',
 	},
 }

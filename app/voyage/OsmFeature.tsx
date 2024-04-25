@@ -55,12 +55,7 @@ export default function OsmFeature({ data, transportStopData }) {
 
 	const filteredRest = omit([...addressKeys, ...transportKeys], rest)
 
-	const translatedTags = Object.entries(filteredRest).map(([key, value]) => {
-			const tagLabels = getTagLabels(key, value)
-			return [{ [key]: value }, tagLabels]
-		}),
-		keyValueTags = translatedTags.filter(([, t]) => t.length === 2),
-		soloTags = translatedTags.filter(([, t]) => t.length === 1)
+	const [keyValueTags, soloTags] = processTags(filteredRest)
 
 	return (
 		<div
@@ -166,6 +161,16 @@ export default function OsmFeature({ data, transportStopData }) {
 	)
 }
 
+export const processTags = (filteredRest) => {
+	const translatedTags = Object.entries(filteredRest).map(([key, value]) => {
+			const tagLabels = getTagLabels(key, value)
+			return [{ [key]: value }, tagLabels]
+		}),
+		keyValueTags = translatedTags.filter(([, t]) => t.length === 2),
+		soloTags = translatedTags.filter(([, t]) => t.length === 1)
+
+	return [keyValueTags, soloTags]
+}
 const cleanHttp = (v) => v.replace(/https?:\/\//g, '').replace(/www\./g, '')
 
 const getOh = (opening_hours) => {

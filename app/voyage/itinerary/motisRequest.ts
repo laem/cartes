@@ -112,20 +112,24 @@ export const computeMotisTrip = async (start, destination, date) => {
 						const isTGV = isTGVStop || isBretagneTGV
 						//TODO this should be a configuration file that sets not only main
 						//colors, but gradients, icons (ouigo, inoui, tgv, ter, etc.)
-						const transportType = trip?.id.id.split('_')[0],
+						const sourceGtfs = trip?.id.id.split('_')[0],
 							frenchTrainType = isOUIGO
 								? 'OUIGO'
 								: isTGV
 								? 'TGV'
-								: transportType && { tgv: 'TGV', ter: 'TER' }[transportType]
+								: sourceGtfs
+								? sourceGtfs.includes('horaires-des-lignes-ter-sncf')
+									? 'TER'
+									: sourceGtfs.includes('horaires-des-tgv') && 'TGV'
+								: null
 
 						const customAttributes = {
 							route_color: isTGV
-								? colors.TGV
+								? trainColors.TGV
 								: isOUIGO
-								? colors.OUIGO
+								? trainColors.OUIGO
 								: frenchTrainType === 'TER'
-								? colors.TER
+								? trainColors.TER
 								: handleColor(route_color, '#d3b2ee'),
 							route_text_color: isTGV
 								? '#fff'
@@ -188,12 +192,12 @@ export const computeMotisTrip = async (start, destination, date) => {
 	}
 }
 
-export const colors = {
+export const trainColors = {
 	TGV: '#b8175e',
 	OUIGO: '#0193c9',
 	TER: '#034EA2',
 }
-function handleColor(rawColor, defaultColor) {
+export function handleColor(rawColor, defaultColor) {
 	if (!rawColor) return defaultColor
 	if (rawColor.startsWith('#')) return rawColor
 	if (rawColor.match(/^([0-9A-Fa-f])+$/) && rawColor.length === 6)

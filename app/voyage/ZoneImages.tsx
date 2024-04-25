@@ -57,23 +57,20 @@ export function useZoneImages({ latLngClicked, setLatLngClicked }) {
 	]
 }
 
-export function ZoneImages({ zoneImages: images, panoramaxImages }) {
+export function ZoneImages({ zoneImages, panoramaxImages, focusImage }) {
 	console.log('panoramax', panoramaxImages)
 
 	const panoramaxImage = panoramaxImages && panoramaxImages[0],
 		panoramaxThumb = panoramaxImage?.assets?.thumb
 
-	const imageUrls =
-		images &&
-		images.map((json) => {
+	const images =
+		zoneImages &&
+		zoneImages.map((json) => {
 			const title = json.title,
 				url = getThumb(title, 400)
 			return {
+				...json,
 				url,
-				fullUrl: `https://commons.wikimedia.org/wiki/${title.replace(
-					' ',
-					'_'
-				)}`,
 			}
 		})
 	return (
@@ -86,7 +83,7 @@ export function ZoneImages({ zoneImages: images, panoramaxImages }) {
 				}
 			`}
 		>
-			{(panoramaxThumb || imageUrls?.length > 0) && (
+			{(panoramaxThumb || images?.length > 0) && (
 				<ul
 					css={`
 						margin: 0 0 0.4rem 0;
@@ -139,20 +136,29 @@ export function ZoneImages({ zoneImages: images, panoramaxImages }) {
 							</div>
 						</a>
 					)}
-					{imageUrls &&
-						imageUrls.length > 0 &&
-						imageUrls.map(({ url, fullUrl }) => (
-							<li key={fullUrl}>
-								<a href={fullUrl} target="_blank">
-									<FeatureImage
-										src={url}
-										alt="Image de terrain issue de Wikimedia Commons"
-										width="150"
-										height="150"
-									/>
-								</a>
-							</li>
-						))}
+					{images &&
+						images.length > 0 &&
+						images.map((image) => {
+							const { url } = image
+							return (
+								<li key={url}>
+									<button
+										onClick={() => focusImage(image)}
+										css={`
+											margin: 0;
+											padding: 0;
+										`}
+									>
+										<FeatureImage
+											src={url}
+											alt="Image de terrain issue de Wikimedia Commons"
+											width="150"
+											height="150"
+										/>
+									</button>
+								</li>
+							)
+						})}
 				</ul>
 			)}
 		</div>

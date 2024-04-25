@@ -1,4 +1,7 @@
 import turfDistance from '@turf/distance'
+import { centerOfMass } from '@turf/turf'
+import osmToGeojson from 'osmtogeojson'
+
 export const osmRequest = async (featureType, id, full) => {
 	const request = await fetch(
 		`https://api.openstreetmap.org/api/0.6/${featureType}/${id}${
@@ -29,7 +32,12 @@ export const disambiguateWayRelation = async (
 		const node2 = request2.find((el) => el.type === 'node')
 		if (!node1)
 			return [request2.find((el) => el.type === 'relation'), 'relation']
-		if (!node2) return [request1.find((el) => el.type === 'way'), 'way']
+		if (!node2) {
+			const way = request1.find((el) => el.type === 'way')
+			const enrichedWay = enrichOsmFeatureWithPolyon(way, request1)
+
+			return [enrichedWay, 'way']
+		}
 		const reference = [referenceLatLng.lng, referenceLatLng.lat]
 		const distance1 = turfDistance([node1.lon, node1.lat], reference)
 		const distance2 = turfDistance([node2.lon, node2.lat], reference)
@@ -38,15 +46,83 @@ export const disambiguateWayRelation = async (
 			distance1,
 			distance2
 		)
-		if (distance1 < distance2)
-			return [request1.find((el) => el.type === 'way'), 'way']
+		if (distance1 < distance2) {
+			const way = request1.find((el) => el.type === 'way')
+			const enrichedWay = enrichOsmFeatureWithPolyon(way, request1)
+
+			return [enrichedWay, 'way']
+		}
 		return [request2.find((el) => el.type === 'relation'), 'relation']
 	}
 
 	if (!request1.length && request2.length)
 		return [request2.find((el) => el.type === 'relation'), 'relation']
-	if (!request2.length && request1.length)
-		return [request1.find((el) => el.type === 'way'), 'way']
+	if (!request2.length && request1.length) {
+		const way = request1.find((el) => el.type === 'way')
+		const enrichedWay = enrichOsmFeatureWithPolyon(way, request1)
+		console.log('darkBlue', request1, enrichedWay)
+
+		return [enrichedWay, 'way']
+	}
 
 	return [null, null]
+}
+
+const buildWayPolygon = (way, elements) => {
+	const nodes = way.nodes.map((id) => elements.find((el) => el.id === id)),
+		polygon = {
+			type: 'Feature',
+			geometry: {
+				type: 'Polygon',
+				coordinates: [nodes.map(({ lat, lon }) => [lon, lat])],
+			},
+		}
+	return polygon
+}
+// This does not seem to suffice, OSM relations are more complicated than that
+// so we fallback to a library even if it adds 35 kb for now
+/*
+const buildRelationMultiPolygon = (relation, elements) => {
+	const ways = relation.members
+		.filter(({ type, role, ref }) => type === 'way' && role === 'outer')
+		.map(({ ref }) => elements.find((el) => el.id === ref))
+
+	const polygon = {
+		type: 'Feature',
+		geometry: {
+			type: 'Polygon',
+			coordinates: ways.map((way) =>
+				way.nodes
+					.map((id) => elements.find((el) => el.id === id))
+					.map(({ lat, lon }) => [lon, lat])
+			),
+		},
+	}
+	console.log('darkblue polygon', polygon)
+	return polygon
+}
+*/
+export const enrichOsmFeatureWithPolyon = (element, elements) => {
+	const polygon =
+		element.type === 'way'
+			? buildWayPolygon(element, elements)
+			: element.type === 'relation'
+			? osmToGeojson({ elements }).features.find(
+					(feature) =>
+						['Polygon', 'MultiPolygon'].includes(feature.geometry.type) // A merge may be necessary, or rather a rewrite of drawquickSearch's addSource ways features
+			  )
+			: undefined
+
+	if (polygon === undefined) {
+		const message = 'Tried to enrich wrong OSM type element'
+		console.log('darkBlue', message, element, osmToGeojson({ elements }))
+		throw new Error(message)
+	}
+
+	console.log('darkblue polygon', polygon)
+	const center = centerOfMass(polygon)
+
+	const [lon, lat] = center.geometry.coordinates
+
+	return { ...element, lat, lon, polygon }
 }

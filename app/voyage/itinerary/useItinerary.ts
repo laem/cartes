@@ -6,24 +6,28 @@ import { decodeDate, initialDate } from './DateSelector'
 import { computeMotisTrip } from './motisRequest'
 import useDrawRoute from './useDrawRoute'
 import useFetchDrawBikeParkings from './useFetchDrawBikeParkings'
+import { geoSerializeSteps } from './areStepsEqual'
+import { buildAllezPart, removeStatePart } from '../SetDestination'
+import { letterFromIndex } from './Steps'
+import { useMediaQuery } from 'usehooks-ts'
 
-const serializePoints = (points) => {
-	if (points.length === 0) return undefined
-	const result = points
-		// We don't need full precision, just 5 decimals ~ 1m
-		// https://wiki.openstreetmap.org/wiki/Precision_of_coordinates
-		.map(({ geometry: { coordinates } }) =>
-			coordinates.map((coordinate) => (+coordinate).toFixed(5)).join('|')
-		)
-		.join(';')
-	return result
-}
 export default function useItinerary(
 	map,
 	itineraryMode,
 	bikeRouteProfile,
-	searchParams
+	searchParams,
+	state,
+	zoom
 ) {
+	const desktop = useMediaQuery('(min-width: 800px)')
+	useEffect(() => {
+		if (!map) return
+		if (state.length === 2 && state[0] == null && state[1] !== null) {
+			console.log('zoom', zoom)
+			map.flyTo({ zoom: zoom - 2, padding: { bottom: desktop ? 0 : 400 } })
+		}
+	}, [state, map, desktop])
+	//TODO
 	const [routes, setRoutes] = useState(null)
 	const date = decodeDate(searchParams.date) || initialDate()
 	const selectedConnection = searchParams.choix
@@ -39,13 +43,7 @@ export default function useItinerary(
 
 	const updateRoute = (key, value) =>
 		setRoutes((routes) => ({ ...(routes || {}), [key]: value }))
-	const setSearchParams = useSetSearchParams(),
-		setPoints = useCallback(
-			(newPoints) =>
-				console.log('motis newPoints', serializePoints(newPoints)) ||
-				setSearchParams({ allez: serializePoints(newPoints) }),
-			[setSearchParams]
-		)
+	const setSearchParams = useSetSearchParams()
 
 	/*
 	 * {
@@ -62,39 +60,46 @@ export default function useItinerary(
   }
 }
 	 */
-	const allez = searchParams.allez
+	const serializedPoints = geoSerializeSteps(state)
+
 	const points = useMemo(() => {
-		const coordinates = allez,
-			rawPoints = coordinates?.split(';').map((el) => el.split('|')) || [],
-			points = rawPoints.map(([lon, lat]) => ({
-				type: 'Feature',
-				geometry: {
-					type: 'Point',
-					coordinates: [+lon, +lat],
-				},
-				properties: {},
-			}))
+		const points = state
+			.map((step, index) => {
+				if (step == null) return
+				const { longitude, latitude, key } = step
+				return {
+					type: 'Feature',
+					geometry: {
+						type: 'Point',
+						coordinates: [+longitude, +latitude],
+					},
+					properties: { key, letter: letterFromIndex(index) },
+				}
+			})
+			.filter(Boolean)
 		return points
-	}, [allez])
+	}, [serializedPoints])
 
 	const linestrings = useMemo(
-		() => [
-			{
-				type: 'Feature',
-				properties: {},
+		() =>
+			points.length < 1
+				? []
+				: [
+						{
+							type: 'Feature',
+							properties: {},
 
-				geometry: {
-					type: 'LineString',
-					coordinates: points.map((point) => {
-						return point.geometry.coordinates
-					}),
-				},
-			},
-		],
+							geometry: {
+								type: 'LineString',
+								coordinates: points.map((point) => {
+									return point.geometry.coordinates
+								}),
+							},
+						},
+				  ],
 		[points]
 	)
 
-	console.log('linestrings', linestrings)
 	const rawDistance = linestrings
 		.map((el) => el.properties['track-length'] / 1000)
 		.reduce((memo, next) => memo + next, 0)
@@ -106,7 +111,6 @@ export default function useItinerary(
 		}),
 		[points, linestrings]
 	)
-	console.log('useDrawRoute from outside', map, geojson)
 	useDrawRoute(itineraryMode, map, geojson, 'distance')
 	useDrawRoute(
 		itineraryMode,
@@ -133,21 +137,19 @@ export default function useItinerary(
 
 			// If a feature was clicked, remove it from the map
 			if (features?.length) {
-				const id = features[0].properties.id
-				setPoints(points.filter((p) => p.properties.id !== id))
+				const key = features[0].properties.key
+				setSearchParams({ allez: removeStatePart(key, state) })
 			} else {
-				const point = {
-					type: 'Feature',
-					geometry: {
-						type: 'Point',
-						coordinates: [e.lngLat.lng, e.lngLat.lat],
-					},
-					properties: {
-						id: String(new Date().getTime()),
-					},
-				}
-
-				setPoints([...points, point])
+				setSearchParams({
+					allez:
+						points.map((point) => point.properties.key + '->').join('') +
+						buildAllezPart(
+							'Point sur la carte',
+							null,
+							e.lngLat.lng,
+							e.lngLat.lat
+						),
+				})
 			}
 		}
 		const onMouseMove = (e) => {
@@ -176,7 +178,7 @@ export default function useItinerary(
 			map.off('mousemove', onMouseMove)
 			map.getCanvas().style.cursor = 'pointer'
 		}
-	}, [map, points, setPoints, itineraryMode])
+	}, [map, serializedPoints, setSearchParams, itineraryMode])
 
 	/* Routing requests are made here */
 	useEffect(() => {
@@ -205,7 +207,6 @@ export default function useItinerary(
 			const url = `https://brouter.osc-fr1.scalingo.io/brouter?lonlats=${lonLats}&profile=${profile}&alternativeidx=0&format=geojson`
 			const res = await fetch(url)
 			const json = await res.json()
-			console.log('Brouter route json', json)
 			if (!json.features) return
 			return json
 		}
@@ -241,10 +242,13 @@ export default function useItinerary(
 			return
 		}
 
-		async function fetchTrainRoute(points, itineraryDistance, date) {
+		async function fetchTrainRoute(multiplePoints, itineraryDistance, date) {
 			const minTransitDistance = 0.5 // please walk or bike
 			if (itineraryDistance < minTransitDistance) return null
-			if (points.length > 2) return
+			const points =
+				multiplePoints.length > 2
+					? [multiplePoints[0], multiplePoints.slice(-1)[0]]
+					: multiplePoints
 			const lonLats = points.map(
 				({
 					geometry: {
@@ -286,7 +290,7 @@ export default function useItinerary(
 		map.removeLayer('measure-lines')
 		map.removeLayer('measure-points')
 		map.removeSource('measure-points')
-	}, [itineraryMode, map, points])
+	}, [itineraryMode, map, serializedPoints])
 
 	/* Not sure it's useful to display the distance in this multimodal new mode
 	const computedDistance = isNaN(rawDistance)
@@ -298,6 +302,6 @@ export default function useItinerary(
 		: Math.round(rawDistance) + ' km'
 
 */
-	const resetItinerary = () => setPoints([])
+	const resetItinerary = () => setSearchParams({ allez: undefined })
 	return [resetItinerary, routes, date]
 }
