@@ -1,6 +1,4 @@
 - key: safety
   name: Sécurisé
-- key: fastbike #shortest gives crazy durations !
-  name: Court
 - key: trekking
-  name: Rando
+  name: Court
