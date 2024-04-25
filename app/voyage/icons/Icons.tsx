@@ -11,6 +11,9 @@ export default function Icons({ tags }) {
 				li {
 					margin-right: 0.2rem;
 				}
+				li:last-child {
+					margin-right: 0;
+				}
 
 				filter: invert(16%) sepia(24%) saturate(3004%) hue-rotate(180deg)
 					brightness(89%) contrast(98%);
