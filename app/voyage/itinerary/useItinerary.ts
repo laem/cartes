@@ -125,6 +125,7 @@ export default function useItinerary(
 		'walking'
 	)
 
+	const oldAllez = searchParams.allez
 	useEffect(() => {
 		if (!map || !itineraryMode) return
 
@@ -140,15 +141,19 @@ export default function useItinerary(
 				const key = features[0].properties.key
 				setSearchParams({ allez: removeStatePart(key, state) })
 			} else {
+				const allezPart = buildAllezPart(
+					'Point sur la carte',
+					null,
+					e.lngLat.lng,
+					e.lngLat.lat
+				)
+				const allez = oldAllez?.startsWith('->')
+					? allezPart + oldAllez
+					: points.map((point) => point.properties.key + '->').join('') +
+					  allezPart
+
 				setSearchParams({
-					allez:
-						points.map((point) => point.properties.key + '->').join('') +
-						buildAllezPart(
-							'Point sur la carte',
-							null,
-							e.lngLat.lng,
-							e.lngLat.lat
-						),
+					allez,
 				})
 			}
 		}
@@ -178,7 +183,7 @@ export default function useItinerary(
 			map.off('mousemove', onMouseMove)
 			map.getCanvas().style.cursor = 'pointer'
 		}
-	}, [map, serializedPoints, setSearchParams, itineraryMode])
+	}, [map, serializedPoints, setSearchParams, itineraryMode, oldAllez])
 
 	/* Routing requests are made here */
 	useEffect(() => {
