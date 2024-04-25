@@ -12,6 +12,7 @@ export default function useOsmRequest(allez, state, setState) {
 			const newPoints = allez.map(async (point) => {
 				if (!point || point === '') return null
 				const [name, osmCode, longitude, latitude] = point.split('|')
+				console.log('cornflowerblue debug', osmCode, point)
 
 				const found = state.find(
 					(point) => osmCode !== '' && point.osmCode === osmCode
