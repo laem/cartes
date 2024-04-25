@@ -1935,12 +1935,7 @@ export default function voyageStyle(key) {
 					'symbol-placement': 'point',
 				},
 				paint: {
-					'text-color': {
-						stops: [
-							[1, 'hsl(203,54%,54%)'],
-							[4, 'hsl(203,72%,39%)'],
-						],
-					},
+					'text-color': 'white',
 					'text-opacity': [
 						'step',
 						['zoom'],
@@ -1951,12 +1946,7 @@ export default function voyageStyle(key) {
 						1,
 					],
 					'text-halo-blur': 1,
-					'text-halo-color': {
-						stops: [
-							[1, 'hsla(196, 72%, 80%, 0.05)'],
-							[3, 'hsla(200, 100%, 88%, 0.75)'],
-						],
-					},
+					'text-halo-color': '#35a',
 					'text-halo-width': 1,
 				},
 				metadata: {},
