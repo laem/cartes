@@ -3,15 +3,36 @@ import Link from 'next/link'
 import Image from 'next/image'
 import { PlaceButton } from './PlaceButtonsUI'
 import { encodePlace } from './utils'
+import { buildAddress } from '@/components/voyage/Address'
 
-export const geoOsmFeatureToDestination = (feature) => {
-	const destination = buildAllezPart(
-		feature.properties.name,
-		encodePlace(feature.properties.type, feature.properties.id),
-		+feature.geometry.coordinates[0],
-		+feature.geometry.coordinates[1]
-	)
-	return destination
+export const geoFeatureToDestination = (feature) => {
+	if (feature.properties.id) {
+		return buildAllezPart(
+			feature.properties.name,
+			encodePlace(feature.properties.type, feature.properties.id),
+			+feature.geometry.coordinates[0],
+			+feature.geometry.coordinates[1]
+		)
+	}
+	if (feature.properties.osm_id) {
+		const name = buildAddress(feature.properties, true)
+		return buildAllezPart(
+			name,
+			encodePlace(feature.properties.osm_type, feature.properties.osm_id),
+			+feature.geometry.coordinates[0],
+			+feature.geometry.coordinates[1]
+		)
+	}
+	if (feature.coordinates) {
+		return buildAllezPart(
+			'Point sur la carte',
+			null,
+			feature.geometry.coordinates[0],
+			feature.geometry.coordinates[1]
+		)
+	}
+
+	return null
 }
 
 // We don't need full precision, just 5 decimals ~ 1m

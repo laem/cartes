@@ -11,7 +11,7 @@ import { useLocalStorage } from 'usehooks-ts'
 import { pointHash } from './BookmarkButton'
 import { processTags } from './OsmFeature'
 import { DialogButton } from './UI'
-import { buildAllezPart, geoOsmFeatureToDestination } from './SetDestination'
+import { buildAllezPart, geoFeatureToDestination } from './SetDestination'
 
 export default function QuickBookmarks() {
 	const [bookmarks] = useLocalStorage('bookmarks', [])
@@ -79,7 +79,7 @@ export default function QuickBookmarks() {
 						padding-left: 0.6rem;
 						display: flex;
 						align-items: center;
-						li {
+						> li {
 							display: flex;
 							align-items: center;
 							margin: 0 0.4rem;
@@ -102,7 +102,7 @@ const QuickBookmark = ({ bookmark }) => {
 	const address = buildAddress(bookmark.properties, true)
 	const name = bookmark.properties.name
 	console.log('lightblue bookmark', bookmark)
-	const destination = name ? geoOsmFeatureToDestination(bookmark) : undefined
+	const destination = geoFeatureToDestination(bookmark)
 	const setSearchParams = useSetSearchParams()
 	return (
 		<li
@@ -113,12 +113,16 @@ const QuickBookmark = ({ bookmark }) => {
 				align-items: center;
 				padding: 0.3rem 0;
 				margin-bottom: 0.4rem;
+				a {
+					text-decoration: none;
+				}
 			`}
 		>
 			<Link href={setSearchParams({ allez: destination }, true)}>
 				{name ? (
 					<AddressDiscContainer>
 						<SoloTags
+							compact={true}
 							tags={processTags(bookmark.properties)[1]}
 							iconsOnly={true}
 						/>

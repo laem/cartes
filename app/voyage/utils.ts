@@ -9,7 +9,8 @@ export const decodePlace = (place) => {
 	return [correspondance[letter], id]
 }
 
-export const encodePlace = (featureType, id) => featureType.slice(0, 1) + id
+export const encodePlace = (featureType, id) =>
+	featureType.slice(0, 1).toLowerCase() + id
 
 export const fitBoundsConsideringModal = (isMobile, bbox, map) =>
 	map.fitBounds(bbox, {

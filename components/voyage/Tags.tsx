@@ -36,7 +36,7 @@ export default function Tags({ tags }) {
 	)
 }
 
-export function SoloTags({ tags, iconsOnly }) {
+export function SoloTags({ tags, iconsOnly, compact }) {
 	return (
 		<ul
 			css={`
@@ -44,7 +44,7 @@ export function SoloTags({ tags, iconsOnly }) {
 				display: flex;
 				align-items: center;
 				> li {
-					margin-right: 0.6rem;
+					margin-right: ${compact ? '0' : '0.6rem'};
 					display: flex;
 					align-items: center;
 				}
