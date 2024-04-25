@@ -9,10 +9,13 @@ import Image from 'next/image'
 export default function ShareButton({ osmFeature, clickedPoint }) {
 	console.log('purple share', osmFeature, clickedPoint)
 
+	const branchUrl = process.env.NEXT_PUBLIC_VERCEL_BRANCH_URL,
+		isMaster = branchUrl.includes('-git-master-'),
+		domain = isMaster ? 'cartes.app' : branchUrl
 	const urlBase =
 		process.env.NEXT_PUBLIC_NODE_ENV === 'development'
 			? 'http://localhost:8080'
-			: 'https://' + process.env.NEXT_PUBLIC_VERCEL_BRANCH_URL
+			: 'https://' + domain
 
 	const url = `${urlBase}/?allez=${
 		osmFeature
