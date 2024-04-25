@@ -35,8 +35,9 @@
 - name: Libanais
   category: Manger et boire
   dictionary:
-    - bain
-    - nage
+    - falafel
+    - houmous
+    - sandwich
   query: '[amenity=restaurant][cuisine~lebanese]'
   icon: https://cdn.jsdelivr.net/gh/osmandapp/OsmAnd-resources/icons/svg/food/restaurant.svg
 - name: Fast food
