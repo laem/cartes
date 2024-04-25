@@ -2,7 +2,7 @@ import GeoInputOptions from '@/components/conversation/GeoInputOptions'
 import { InputStyle } from '@/components/conversation/UI'
 import css from '@/components/css/convertToJs'
 import fetchPhoton from '@/components/voyage/fetchPhoton'
-import { useCallback, useEffect, useState } from 'react'
+import { useCallback, useEffect, useRef, useState } from 'react'
 import { encodePlace } from './utils'
 import Logo from '@/public/voyage.svg'
 import Image from 'next/image'
@@ -10,6 +10,7 @@ import { getArrayIndex, replaceArrayIndex } from '@/components/utils/utils'
 import { buildAllezPart, setStatePart } from './SetDestination'
 import { buildAddress } from '@/components/voyage/Address'
 import { isStepBeingSearched } from './itinerary/Steps'
+import Link from 'next/link'
 
 const positionTriggers = ['ma pos', 'position', 'ici', 'géoloc', 'geoloc']
 
@@ -37,7 +38,9 @@ export default function PlaceSearch({
 	autoFocus = false,
 	stepIndex,
 	triggerGeolocation,
+	geolocation,
 }) {
+	console.log('lightblue step', stepIndex)
 	if (stepIndex == null) throw new Error('Step index necessary')
 	const [localSearch, setLocalSearch] = useState(true)
 	const urlSearchQuery = searchParams.q
@@ -48,7 +51,6 @@ export default function PlaceSearch({
 	const value = step.inputValue
 
 	const autofocusInputRef = useAutoFocus()
-	console.log('cornflowerblue search', stepIndex, state)
 
 	const onInputChange =
 		(stepIndex = -1, localSearch = false) =>
@@ -149,33 +151,48 @@ export default function PlaceSearch({
 					)}
 				</InputStyle>
 			</div>
+			<div>
+				{state.length > 1 &&
+					stepIndex === 0 && // TODO for VIA geolocal, less prioritary
+					(geolocation ? (
+						<Link
+							href={setSearchParams(
+								{
+									allez:
+										buildAllezPart(
+											'Ma position',
+											null,
+											geolocation.longitude,
+											geolocation.latitude
+										) + searchParams.allez,
+								},
+								true
+							)}
+						>
+							Depuis ma position
+						</Link>
+					) : (
+						<button onClick={() => triggerGeolocation()}>
+							<span
+								css={`
+									background-position: 50%;
+									background-repeat: no-repeat;
+									display: block;
+									display: inline-block;
+									width: 1rem;
+									height: 1rem;
+									margin-right: 0.4rem;
+									vertical-align: sub;
+									background-image: url("data:image/svg+xml;charset=utf-8,%3Csvg xmlns='http://www.w3.org/2000/svg' width='29' height='29' fill='%23333' viewBox='0 0 20 20'%3E%3Cpath d='M10 4C9 4 9 5 9 5v.1A5 5 0 0 0 5.1 9H5s-1 0-1 1 1 1 1 1h.1A5 5 0 0 0 9 14.9v.1s0 1 1 1 1-1 1-1v-.1a5 5 0 0 0 3.9-3.9h.1s1 0 1-1-1-1-1-1h-.1A5 5 0 0 0 11 5.1V5s0-1-1-1m0 2.5a3.5 3.5 0 1 1 0 7 3.5 3.5 0 1 1 0-7'/%3E%3Ccircle cx='10' cy='10' r='2'/%3E%3C/svg%3E");
+								`}
+							/>
+							Me géolocaliser
+						</button>
+					))}
+			</div>
 			{step.inputValue !== '' &&
 				(!step.choice || step.choice.inputValue !== step.inputValue) && (
 					<div>
-						{value != null &&
-							positionTriggers.some((trigger) =>
-								value.toLowerCase().startsWith(trigger)
-							) && (
-								<div>
-									<button onClick={() => triggerGeolocation()}>
-										<span
-											css={`
-												background-position: 50%;
-												background-repeat: no-repeat;
-												display: block;
-												display: inline-block;
-												width: 1rem;
-												height: 1rem;
-												margin-right: 0.4rem;
-												vertical-align: sub;
-												background-image: url("data:image/svg+xml;charset=utf-8,%3Csvg xmlns='http://www.w3.org/2000/svg' width='29' height='29' fill='%23333' viewBox='0 0 20 20'%3E%3Cpath d='M10 4C9 4 9 5 9 5v.1A5 5 0 0 0 5.1 9H5s-1 0-1 1 1 1 1 1h.1A5 5 0 0 0 9 14.9v.1s0 1 1 1 1-1 1-1v-.1a5 5 0 0 0 3.9-3.9h.1s1 0 1-1-1-1-1-1h-.1A5 5 0 0 0 11 5.1V5s0-1-1-1m0 2.5a3.5 3.5 0 1 1 0 7 3.5 3.5 0 1 1 0-7'/%3E%3Ccircle cx='10' cy='10' r='2'/%3E%3C/svg%3E");
-											`}
-										/>
-										Ma position
-									</button>
-								</div>
-							)}
-
 						{step.results ? (
 							<div
 								css={`

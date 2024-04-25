@@ -165,6 +165,7 @@ export default function Content({
 							searchParams,
 							autoFocus: recherche != null,
 							stepIndex: recherche,
+							geolocation,
 							triggerGeolocation,
 						}}
 					/>
