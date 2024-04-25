@@ -12,7 +12,7 @@ export default function ShareButton({ osmFeature, clickedPoint }) {
 	const urlBase =
 		process.env.NEXT_PUBLIC_NODE_ENV === 'development'
 			? 'http://localhost:8080'
-			: 'https://' + process.env.NEXT_PUBLIC_VERCEL_URL
+			: 'https://' + process.env.NEXT_PUBLIC_VERCEL_BRANCH_URL
 
 	const url = `${urlBase}/?allez=${
 		osmFeature
