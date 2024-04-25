@@ -200,7 +200,9 @@ export default function Content({
 							}}
 						/>
 					)}
-					{searchParams.favoris !== 'oui' && <QuickBookmarks />}
+					{searchParams.favoris !== 'oui' && (
+						<QuickBookmarks oldAllez={searchParams.allez} />
+					)}
 				</section>
 			)}
 

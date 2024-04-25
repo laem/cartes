@@ -1,19 +1,19 @@
 import useSetSearchParams from '@/components/useSetSearchParams'
-import Image from 'next/image'
 import {
 	AddressDisc,
 	AddressDiscContainer,
 	buildAddress,
 } from '@/components/voyage/Address'
 import { SoloTags } from '@/components/voyage/Tags'
+import Image from 'next/image'
 import Link from 'next/link'
 import { useLocalStorage } from 'usehooks-ts'
 import { pointHash } from './BookmarkButton'
 import { processTags } from './OsmFeature'
+import { geoFeatureToDestination } from './SetDestination'
 import { DialogButton } from './UI'
-import { buildAllezPart, geoFeatureToDestination } from './SetDestination'
 
-export default function QuickBookmarks() {
+export default function QuickBookmarks({ oldAllez }) {
 	const [bookmarks] = useLocalStorage('bookmarks', [])
 	const [tutorials, setTutorials] = useLocalStorage('tutorials', {})
 	const setSearchParams = useSetSearchParams()
@@ -88,7 +88,11 @@ export default function QuickBookmarks() {
 						`}
 					>
 						{bookmarks.map((bookmark) => (
-							<QuickBookmark key={pointHash(bookmark)} bookmark={bookmark} />
+							<QuickBookmark
+								key={pointHash(bookmark)}
+								bookmark={bookmark}
+								oldAllez={oldAllez}
+							/>
 						))}
 					</ul>
 					<h3>Itinéraires</h3>
@@ -100,7 +104,7 @@ export default function QuickBookmarks() {
 		)
 }
 
-const QuickBookmark = ({ bookmark }) => {
+const QuickBookmark = ({ bookmark, oldAllez }) => {
 	const photonAddress = buildAddress(bookmark.properties, true),
 		osmAddress =
 			bookmark.properties.id && buildAddress(bookmark.properties, false),
@@ -110,6 +114,10 @@ const QuickBookmark = ({ bookmark }) => {
 	console.log('lightblue bookmark', bookmark)
 	const destination = geoFeatureToDestination(bookmark)
 	const setSearchParams = useSetSearchParams()
+
+	const allez = oldAllez?.startsWith('->')
+		? destination + oldAllez
+		: destination
 	return (
 		<li
 			key={pointHash(bookmark)}
@@ -124,7 +132,7 @@ const QuickBookmark = ({ bookmark }) => {
 				}
 			`}
 		>
-			<Link href={setSearchParams({ allez: destination }, true)}>
+			<Link href={setSearchParams({ allez }, true)}>
 				{name ? (
 					<AddressDiscContainer>
 						<SoloTags
