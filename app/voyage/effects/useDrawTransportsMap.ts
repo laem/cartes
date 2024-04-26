@@ -82,7 +82,8 @@ export default function useDrawTransportsMap(
 						properties: omit(['polyline'], polylineObject),
 					})),
 				}
-				return agencyId == '1187' ? addDefaultColor(geojson) : geojson
+				return addDefaultColor(geojson)
+				//return agencyId == '1187' ? addDefaultColor(geojson) : geojson
 			}),
 		}
 	}, [data])
