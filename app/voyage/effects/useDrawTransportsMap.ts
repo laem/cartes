@@ -81,8 +81,8 @@ export default function useDrawTransportsMap(
 		map,
 		drawData,
 		safeStyleKey,
-		'transitMap' + (data || []).map(([id]) => id) + day, // TODO When the selection of agencies will change, the map will redraw, which is a problem : only new agencies should be added
-		day
+		'transitMap' // + (data || []).map(([id]) => id) + (day || ''), // TODO When the selection of agencies will change, the map will redraw, which is a problem : only new agencies should be added
+		// See https://github.com/laem/futureco/pull/226
 	)
 	return data
 }

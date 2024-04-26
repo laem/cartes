@@ -34,13 +34,14 @@ const mergeRoutes = (geojson) => {
 /***
  * This hook draws transit lines on the map.
  */
-export default function useDrawTransport(map, data, styleKey, drawKey, day) {
+export default function useDrawTransport(map, data, styleKey, drawKey) {
 	const routesGeojson = data?.routesGeojson
 
 	const setSearchParams = useSetSearchParams()
 
 	useEffect(() => {
 		if (!map || !routesGeojson) return
+		if (styleKey !== 'transit') return
 
 		/* Lower the opacity of all style layers.
 		 * Replaced by setting the "transit" style taken from MapTiler's dataviz
@@ -82,13 +83,14 @@ export default function useDrawTransport(map, data, styleKey, drawKey, day) {
 						}),
 						{ features: [] }
 				  )
-		const id = 'routes-stopId-' + drawKey
+		const id = 'transport-routes-' + drawKey
+		const linesId = id + '-lines'
+		const pointsId = id + '-points'
+		console.log('darkblue', drawKey)
 		try {
 			const source = map.getSource(id)
 			if (source) return
 			map.addSource(id, { type: 'geojson', data: featureCollection })
-
-			const linesId = id + '-lines'
 
 			map.addLayer({
 				source: id,
@@ -125,7 +127,6 @@ export default function useDrawTransport(map, data, styleKey, drawKey, day) {
 					],
 				},
 			})
-			const pointsId = id + '-points'
 			map.addLayer({
 				source: id,
 				type: 'circle',
@@ -160,6 +161,7 @@ export default function useDrawTransport(map, data, styleKey, drawKey, day) {
 					'circle-color': ['get', 'circle-color'],
 				},
 			})
+			console.log('darkBlue did add layer id ', pointsId, map._mapId)
 
 			map.on('click', linesId, (e) => {
 				setSearchParams({
@@ -191,15 +193,12 @@ export default function useDrawTransport(map, data, styleKey, drawKey, day) {
 		}
 
 		return () => {
-			try {
-				map.removeLayer(id + '-lines')
-				map.removeLayer(id + '-points')
-				const source = map.getSource(id)
-				if (source) {
-					map.removeSource(id)
-				}
-			} catch (e) {
-				console.log('Caught error undrawing useDrawTransport', e)
+			console.log('darkblue', map._mapId, map.getLayersOrder())
+			map.removeLayer(linesId)
+			map.removeLayer(pointsId)
+			const source = map.getSource(id)
+			if (source) {
+				map.removeSource(id)
 			}
 		}
 	}, [map, routesGeojson, drawKey, styleKey])

@@ -280,7 +280,9 @@ export default function Map({ searchParams }) {
 		// diff seems to fail because of a undefined sprite error showed in the
 		// console
 		// hence this diff: false. We're not loosing much
-		map.setStyle(styleUrl, { diff: false }) //setting styleKey!== 'base' doesn't work, probably because the error comes from switching from base to another ?
+		// UPDATE 26 april 2024, maplibre 4.1.3, seems to be working now, hence
+		// diff: true :)
+		map.setStyle(styleUrl, { diff: true }) //setting styleKey!== 'base' doesn't work, probably because the error comes from switching from base to another ?
 		setTimeout(() => {
 			// Hack : I haven't found a way to know when this style change is done, hence this setTimeout, absolutely not a UI problem but could be too quick ?
 			setSafeStyleKey(styleKey)
