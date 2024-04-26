@@ -1,6 +1,8 @@
 import { useEffect, useMemo, useState } from 'react'
 import { gtfsServerUrl } from '../serverUrls'
 import useDrawTransport from './useDrawTransport'
+import mapboxPolyline from '@mapbox/polyline'
+import { omit } from '@/components/utils/utils'
 
 export default function useDrawTransportsMap(
 	map,
@@ -71,9 +73,17 @@ export default function useDrawTransportsMap(
 
 	const drawData = useMemo(() => {
 		return {
-			routesGeojson: data?.map(([agencyId, { geojson }]) =>
-				agencyId == '1187' ? addDefaultColor(geojson) : geojson
-			),
+			routesGeojson: data?.map(([agencyId, { polylines }]) => {
+				const geojson = {
+					type: 'FeatureCollection',
+					features: polylines.map((polylineObject) => ({
+						type: 'Feature',
+						geometry: mapboxPolyline.toGeoJSON(polylineObject.polyline),
+						properties: omit(['polyline'], polylineObject),
+					})),
+				}
+				return agencyId == '1187' ? addDefaultColor(geojson) : geojson
+			}),
 		}
 	}, [data])
 
