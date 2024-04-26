@@ -22,6 +22,7 @@ export default function useDrawTransportsMap(
 	useEffect(() => {
 		if (!active || !bbox) return
 
+		const abortController = new AbortController()
 		const doFetch = async () => {
 			const [[longitude2, latitude], [longitude, latitude2]] = bbox
 
@@ -31,26 +32,41 @@ export default function useDrawTransportsMap(
 				}`
 			const format = !data ? 'geojson' : 'prefetch'
 			const formattedDay = day?.replace(/-/g, '')
-			const request = await fetch(url(format), { mode: 'cors' })
-			const json = await request.json()
 
-			if (format === 'geojson') return setData(json)
+			try {
+				const request = await fetch(url(format), {
+					mode: 'cors',
+					signal: abortController.signal,
+				})
+				const json = await request.json()
 
-			const agencies = data.map(([id]) => id),
-				newAgencies = json.filter((agency) => !agencies.includes(agency))
+				if (format === 'geojson') return setData(json)
 
-			if (!newAgencies.length) return
+				const agencies = data.map(([id]) => id),
+					newAgencies = json.filter((agency) => !agencies.includes(agency))
 
-			const dataRequest = await fetch(
-				url('geojson') + `&selection=${newAgencies.join('|')}`,
-				{ mode: 'cors' }
-			)
+				if (!newAgencies.length) return
 
-			const dataJson = await dataRequest.json()
+				const dataRequest = await fetch(
+					url('geojson') + `&selection=${newAgencies.join('|')}`,
+					{ mode: 'cors' }
+				)
 
-			setData([...data, ...dataJson])
+				const dataJson = await dataRequest.json()
+
+				setData([...data, ...dataJson])
+			} catch (e) {
+				if (abortController.signal.aborted) {
+					console.log(
+						"Requête précédente annulée, sûrement suite à un changement de bbox avant que la requête n'ait eu le temps de finir"
+					)
+				}
+			}
 		}
 		doFetch()
+		return () => {
+			abortController.abort()
+		}
 	}, [setData, bbox, active, day])
 
 	const drawData = useMemo(() => {
