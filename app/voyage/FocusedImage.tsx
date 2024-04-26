@@ -7,7 +7,6 @@ export default function FocusedImage({ focusedImage, focusImage }) {
 	const src = `https://commons.wikimedia.org/w/index.php?title=Special:Redirect/file/${encodeURIComponent(
 		focusedImage.title
 	)}`
-	console.log('yellow', focusedImage)
 
 	const fullUrl = `https://commons.wikimedia.org/wiki/${focusedImage.title.replace(
 		' ',

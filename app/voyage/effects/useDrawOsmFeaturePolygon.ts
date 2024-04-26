@@ -12,6 +12,5 @@ export default function useDrawOsmFeaturePolygon(map, osmFeature) {
 		}),
 		[code]
 	)
-	console.log('darkblue features', osmFeature?.id)
 	useDrawQuickSearchFeatures(map, features, false, category)
 }

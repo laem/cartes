@@ -15,7 +15,6 @@ export default function Transit({ data, searchParams }) {
 		return <p>Pas de transport en commun trouvé :( </p>
 	if (!data?.connections || !data.connections.length) return null
 
-	console.log('indigo connections', data.connections, data.date)
 	const connections = data.connections.filter(
 		(connection) => connectionStart(connection) > stamp(data.date)
 	)
@@ -43,7 +42,6 @@ export default function Transit({ data, searchParams }) {
 			)
 		)
 
-	console.log('indigo', data, firstStop, lastStop)
 	return (
 		<div
 			css={`

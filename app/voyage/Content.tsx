@@ -106,21 +106,11 @@ export default function Content({
 		el != null && Array.isArray(el) ? el.length > 0 : el
 	)
 
-	console.log('indigo hascontent', hasContent, content, clickedPoint)
-
 	const bookmarkable = clickedPoint || osmFeature // later : choice
 
 	const hasDestination = osmFeature || clickedPoint
 
 	const showSearch = recherche > -1 || !(osmFeature || itinerary.itineraryMode) // at first, on desktop, we kept the search bar considering we have room. But this divergence brings dev complexity
-
-	console.log(
-		'purple',
-		recherche,
-		showSearch,
-		itinerary.itineraryMode,
-		osmFeature
-	)
 
 	const minimumQuickSearchZoom = getMinimumQuickSearchZoom(!sideSheet)
 

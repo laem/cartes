@@ -7,8 +7,6 @@ import { setStatePart } from '../SetDestination'
 export default function Steps({ state }) {
 	const steps = state
 
-	console.log('indigo steps', steps)
-
 	const setSearchParams = useSetSearchParams()
 
 	if (!steps?.length) return null

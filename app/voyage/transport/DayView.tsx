@@ -72,7 +72,6 @@ export default function DayView({ data }) {
 					const stopSeconds = seconds(arrivalDate)
 
 					const position = ((stopSeconds - startOfDay) / secondsRange) * 100
-					console.log('purple', stopSeconds, startOfDay, secondsRange)
 					return (
 						<li
 							key={seconds}

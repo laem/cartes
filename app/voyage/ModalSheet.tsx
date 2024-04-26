@@ -29,7 +29,6 @@ export default function ModalSheet(props) {
 	}, [setOpen])
 
 	useEffect(() => {
-		console.log('cyan modal', osmFeature)
 		if (!osmFeature && !styleChooser && !bookmarksView) return
 
 		setOpen(true)

@@ -8,11 +8,9 @@ import { decodePlace } from '../utils'
 export default function useOsmRequest(allez, state, setState) {
 	useEffect(() => {
 		const asyncStateUpdate = async () => {
-			console.log('cornflowerblue allez', allez, state)
 			const newPoints = allez.map(async (point) => {
 				if (!point || point === '') return null
 				const [name, osmCode, longitude, latitude] = point.split('|')
-				console.log('cornflowerblue debug', osmCode, point)
 
 				const found = state
 					.filter(Boolean)
@@ -109,7 +107,6 @@ export default function useOsmRequest(allez, state, setState) {
 				return { osmCode, longitude, latitude, name, osmFeature, key: point }
 			})
 			const newState = await Promise.all(newPoints)
-			console.log('cornflowerblue ns', newState)
 			setState(newState)
 		}
 

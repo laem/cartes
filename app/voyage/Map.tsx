@@ -67,7 +67,6 @@ export default function Map({ searchParams }) {
 	// In this query param is stored an array of points. If only one, it's just a
 	// place focused on.
 	const [state, setState] = useState([])
-	console.log('darkBlue state', state)
 
 	const allez = useMemo(() => {
 		return searchParams.allez ? searchParams.allez.split('->') : []
@@ -115,12 +114,7 @@ export default function Map({ searchParams }) {
 		)
 	}
 
-	console.log('indigo', state)
-	const vers = useMemo(
-		() => console.log('darkblue state changed') || state?.slice(-1)[0],
-		[state]
-	)
-	console.log('darkBlue vers', vers)
+	const vers = useMemo(() => state?.slice(-1)[0], [state])
 	const choice = vers && vers.choice
 	const target = useMemo(
 		() => choice && [choice.longitude, choice.latitude],
@@ -371,7 +365,6 @@ export default function Map({ searchParams }) {
 
 			if (element) {
 				console.log('reset OSMfeature after click on POI')
-				console.log('indigo element', element)
 				const { lng: longitude, lat: latitude } = e.lngLat
 				replaceArrayIndex(
 					state,
@@ -431,7 +424,6 @@ export default function Map({ searchParams }) {
 		)
 		if (osmFeature.polygon) {
 			const bbox = getBbox(osmFeature.polygon)
-			console.log('darkBlue bbox', bbox)
 			map.fitBounds(bbox)
 			fitBoundsConsideringModal(isMobile, bbox, map)
 		} else

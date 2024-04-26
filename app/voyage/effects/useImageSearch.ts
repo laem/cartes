@@ -26,7 +26,6 @@ export default function useImageSearch(map, zoom, bbox, active, focusImage) {
 	const [imageCache, setImageCache] = useState([])
 
 	const bboxString = serializeBbox(bbox)
-	console.log('yellow imageCache size ', imageCache.length, imageCache, bbox)
 
 	// We could memoize the selection of images that is in the bbox view,
 	// but MapLibre probably doesn't draw images outside of the window ! At least
@@ -47,7 +46,6 @@ export default function useImageSearch(map, zoom, bbox, active, focusImage) {
 	useEffect(() => {
 		if (!active) return
 		if (!bboxString) return
-		console.log('yellow will request images', bboxString)
 		const makeRequest = async () => {
 			const url = `https://commons.wikimedia.org/w/api.php?action=query&list=geosearch&gsbbox=${bboxString}&gsnamespace=6&gslimit=30&format=json&origin=*`
 			const request = await fetch(url)
@@ -58,7 +56,6 @@ export default function useImageSearch(map, zoom, bbox, active, focusImage) {
 				(newImage) =>
 					!imageCache.find((image) => image.pageid === newImage.pageid)
 			)
-			console.log('yellow truly new images', trulyNewImages.length)
 
 			if (trulyNewImages.length)
 				setImageCache((old) => [...old, ...trulyNewImages])

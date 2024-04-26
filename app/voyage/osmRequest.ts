@@ -60,7 +60,6 @@ export const disambiguateWayRelation = async (
 	if (!request2.length && request1.length) {
 		const way = request1.find((el) => el.type === 'way')
 		const enrichedWay = enrichOsmFeatureWithPolyon(way, request1)
-		console.log('darkBlue', request1, enrichedWay)
 
 		return [enrichedWay, 'way']
 	}
@@ -98,7 +97,6 @@ const buildRelationMultiPolygon = (relation, elements) => {
 			),
 		},
 	}
-	console.log('darkblue polygon', polygon)
 	return polygon
 }
 */
@@ -115,11 +113,9 @@ export const enrichOsmFeatureWithPolyon = (element, elements) => {
 
 	if (polygon === undefined) {
 		const message = 'Tried to enrich wrong OSM type element'
-		console.log('darkBlue', message, element, osmToGeojson({ elements }))
 		throw new Error(message)
 	}
 
-	console.log('darkblue polygon', polygon)
 	const center = centerOfMass(polygon)
 
 	const [lon, lat] = center.geometry.coordinates

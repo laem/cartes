@@ -56,7 +56,6 @@ const Bookmark = ({ bookmark, setBookmarks }) => {
 	const address = buildAddress(bookmark.properties, true)
 	const name = bookmark.properties.customName || bookmark.properties.name
 	const [edition, setEdition] = useState(false)
-	console.log('darkblue bookmark', bookmark)
 	const updateBookmark = (edition) =>
 		setBookmarks((bookmarks) =>
 			bookmarks.map((point) => {

@@ -30,13 +30,10 @@ export default function useDrawSearchResults(map, state, setOsmFeature) {
 		doFetch()
 		return () => {
 			setFeatures([])
-
-			console.log('cerisier reset features')
 		}
 	}, [map, setFeatures, results])
 
 	useDrawQuickSearchFeatures(map, features, false, category, setOsmFeature)
-	console.log('olivier osm features', features)
 }
 
 const category = {

@@ -97,7 +97,6 @@ const Option = ({
 	const foundIcon =
 		icons.find(([key]) => key === osmKey + '_' + osmValue) ||
 		icons.find(([key]) => key === osmValue)
-	console.log('cyan', option, foundIcon)
 	const urlBase = `https://cdn.jsdelivr.net/gh/osmandapp/OsmAnd-resources/icons/svg/`
 	const iconPath = foundIcon ? urlBase + foundIcon[1] : `/dot.svg`
 

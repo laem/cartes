@@ -6,8 +6,6 @@ import { PlaceButton } from './PlaceButtonsUI'
 export const pointHash = (point) => point.geometry.coordinates.join('|')
 
 export default function BookmarkButton({ clickedPoint, osmFeature }) {
-	console.log('yellow bookemarkbutton', clickedPoint, osmFeature)
-
 	const [bookmarks, setBookmarks] = useLocalStorage('bookmarks', [])
 	const properties = clickedPoint
 		? clickedPoint.data?.features?.length > 0 &&

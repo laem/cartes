@@ -115,7 +115,6 @@ export default function useDrawRoute(itineraryMode, map, geojson, id) {
 		)
 
 		const bbox = getBbox(geojson)
-		console.log('indigo geojson', geojson)
 
 		if (
 			geojson.features.filter(

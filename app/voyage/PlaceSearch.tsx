@@ -40,7 +40,6 @@ export default function PlaceSearch({
 	triggerGeolocation,
 	geolocation,
 }) {
-	console.log('lightblue step', stepIndex)
 	if (stepIndex == null) throw new Error('Step index necessary')
 	const [localSearch, setLocalSearch] = useState(true)
 	const urlSearchQuery = searchParams.q
@@ -64,7 +63,6 @@ export default function PlaceSearch({
 				}
 				//validated: false, // TODO was important or not ? could be stored in each state array entries and calculated ?
 			)
-			console.log('indigo newState', newState)
 			setState(newState)
 			if (v?.length > 2) {
 				const hash = window.location.hash,
