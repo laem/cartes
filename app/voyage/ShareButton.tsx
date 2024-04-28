@@ -10,7 +10,7 @@ export default function ShareButton({ osmFeature, clickedPoint }) {
 	console.log('purple share', osmFeature, clickedPoint)
 
 	const branchUrl = process.env.NEXT_PUBLIC_VERCEL_BRANCH_URL,
-		isMaster = branchUrl.includes('-git-master-'),
+		isMaster = branchUrl?.includes('-git-master-'),
 		domain = isMaster ? 'cartes.app' : branchUrl
 	const urlBase =
 		process.env.NEXT_PUBLIC_NODE_ENV === 'development'
