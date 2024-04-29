@@ -98,6 +98,14 @@ export default function useDrawTransportsMap(
 	return data
 }
 
+// Here we make counts for a GTFS agency, to know which lines are relatively
+// frequent. But I don't think it's the right approach, it should be absolute.
+//
+// If my agency is poor, the best line shouldn't be green even if it's the
+// most frequent one. Paris' lest frequent subway shouldn't be red either, it's
+// still one of the best line of the country.
+//
+// Also, these metrics should be computed server-side.
 const addDefaultColor = (featureCollection) => {
 	const maxCountLine = Math.max(
 		...featureCollection.features
