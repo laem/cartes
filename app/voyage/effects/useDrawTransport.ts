@@ -83,6 +83,7 @@ export default function useDrawTransport(map, data, styleKey, drawKey) {
 						}),
 						{ features: [] }
 				  )
+		console.log('ROUTESGEO', featureCollection)
 		const id = 'transport-routes-' + drawKey
 		const linesId = id + '-lines'
 		const pointsId = id + '-points'
@@ -166,7 +167,7 @@ export default function useDrawTransport(map, data, styleKey, drawKey) {
 			map.on('click', linesId, (e) => {
 				setSearchParams({
 					routes: e.features
-						.map((feature) => feature.properties.routeId)
+						.map((feature) => feature.properties.route_id)
 						.join('|'),
 				})
 			})

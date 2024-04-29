@@ -73,18 +73,24 @@ export default function useDrawTransportsMap(
 
 	const drawData = useMemo(() => {
 		return {
-			routesGeojson: data?.map(([agencyId, { polylines }]) => {
-				const geojson = {
-					type: 'FeatureCollection',
-					features: polylines.map((polylineObject) => ({
-						type: 'Feature',
-						geometry: mapboxPolyline.toGeoJSON(polylineObject.polyline),
-						properties: omit(['polyline'], polylineObject),
-					})),
-				}
-				return addDefaultColor(geojson)
-				//return agencyId == '1187' ? addDefaultColor(geojson) : geojson
-			}),
+			routesGeojson: data
+				?.map(([agencyId, { polylines, features }]) => {
+					if (agencyId != 1187) return null
+					const geojson = {
+						type: 'FeatureCollection',
+						features: polylines
+							? polylines.map((polylineObject) => ({
+									type: 'Feature',
+									geometry: mapboxPolyline.toGeoJSON(polylineObject.polyline),
+									properties: omit(['polyline'], polylineObject),
+							  }))
+							: features,
+					}
+
+					return addDefaultColor(geojson)
+					//return agencyId == '1187' ? addDefaultColor(geojson) : geojson
+				})
+				.filter(Boolean),
 		}
 	}, [data])
 
