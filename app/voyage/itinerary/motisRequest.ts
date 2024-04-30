@@ -195,7 +195,21 @@ export const computeMotisTrip = async (start, destination, date) => {
 export const trainColors = {
 	TGV: '#b8175e',
 	OUIGO: '#0193c9',
+	'Train TER': '#034EA2',
 	TER: '#034EA2',
+	'TGV INOUI': '#b8175e',
+	'INTERCITES de nuit': '#28166f',
+	/*
+		'Lyria',
+		'Train',
+		'Train TER',
+		'Car TER',
+		'Car',
+		'Navette',
+		'INTERCITES',
+		'TramTrain',
+		'ICE',
+		*/
 }
 export function handleColor(rawColor, defaultColor) {
 	if (!rawColor) return defaultColor

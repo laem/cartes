@@ -3,6 +3,7 @@ import { gtfsServerUrl } from '../serverUrls'
 import useDrawTransport from './useDrawTransport'
 import mapboxPolyline from '@mapbox/polyline'
 import { omit } from '@/components/utils/utils'
+import { trainColors } from '../itinerary/motisRequest'
 
 export default function useDrawTransportsMap(
 	map,
@@ -10,9 +11,10 @@ export default function useDrawTransportsMap(
 	safeStyleKey,
 	setTempStyle,
 	day,
-	bbox
+	bbox,
+	agence
 ) {
-	const [data, setData] = useState(null)
+	const [data, setData] = useState([])
 	useEffect(() => {
 		if (!map || !active) return
 
@@ -21,6 +23,7 @@ export default function useDrawTransportsMap(
 			setTempStyle(null)
 		}
 	}, [setTempStyle, active, map])
+
 	useEffect(() => {
 		if (!active || !bbox) return
 
@@ -29,20 +32,14 @@ export default function useDrawTransportsMap(
 			const [[longitude2, latitude], [longitude, latitude2]] = bbox
 
 			const url = (format) =>
-				`${gtfsServerUrl}/agencyArea/${latitude}/${longitude}/${latitude2}/${longitude2}/${format}/?${
-					day ? `day=${formattedDay}` : ''
-				}`
-			const format = !data ? 'geojson' : 'prefetch'
-			const formattedDay = day?.replace(/-/g, '')
+				`${gtfsServerUrl}/agencyArea/${latitude}/${longitude}/${latitude2}/${longitude2}/${format}/`
 
 			try {
-				const request = await fetch(url(format), {
+				const request = await fetch(url('prefetch'), {
 					mode: 'cors',
 					signal: abortController.signal,
 				})
 				const json = await request.json()
-
-				if (format === 'geojson') return setData(json)
 
 				const agencies = data.map(([id]) => id),
 					newAgencies = json.filter((agency) => !agencies.includes(agency))
@@ -50,8 +47,11 @@ export default function useDrawTransportsMap(
 				if (!newAgencies.length) return
 
 				const dataRequest = await fetch(
-					url('geojson') + `&selection=${newAgencies.join('|')}`,
-					{ mode: 'cors' }
+					url('geojson') + (agence || newAgencies.join('|')),
+					{
+						mode: 'cors',
+						signal: abortController.signal,
+					}
 				)
 
 				const dataJson = await dataRequest.json()
@@ -69,13 +69,12 @@ export default function useDrawTransportsMap(
 		return () => {
 			abortController.abort()
 		}
-	}, [setData, bbox, active, day])
+	}, [setData, bbox, active, day, agence])
 
 	const drawData = useMemo(() => {
 		return {
 			routesGeojson: data
 				?.map(([agencyId, { polylines, features }]) => {
-					if (agencyId != 1187) return null
 					const geojson = {
 						type: 'FeatureCollection',
 						features: polylines
@@ -87,8 +86,7 @@ export default function useDrawTransportsMap(
 							: features,
 					}
 
-					return addDefaultColor(geojson)
-					//return agencyId == '1187' ? addDefaultColor(geojson) : geojson
+					return agencyId == '1187' ? addDefaultColor(geojson) : geojson
 				})
 				.filter(Boolean),
 		}
@@ -129,6 +127,8 @@ const addDefaultColor = (featureCollection) => {
 			)
 			.filter(Boolean)
 	)
+
+	console.log('indigo', featureCollection)
 	return {
 		type: 'FeatureCollection',
 		features: featureCollection.features.map((feature) =>
@@ -146,11 +146,30 @@ const addDefaultColor = (featureCollection) => {
 						...feature,
 						properties: {
 							...feature.properties,
-							route_color: '#821a73',
+							route_color: trainColor(feature.properties),
 							route_type: 2,
 							opacity: Math.max(feature.properties.count / maxCountLine, 0.1),
 						},
 				  }
 		),
 	}
+}
+
+// Lol, the SNCF GTFS is so poor
+const trainColor = (properties) => {
+	return trainColors[properties.sncfTrainType] || 'blue'
+	const givenColor = properties.route_color
+	if (givenColor) return givenColor
+	const route = properties.route_long_name
+
+	if (
+		[
+			'Paris - Briançon',
+			'Paris - Rodez / Albi',
+			'Paris Austerlitz - Latour de Carole',
+		]
+	)
+		return '#28166f'
+
+	return '#821a73'
 }

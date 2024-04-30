@@ -145,7 +145,8 @@ export default function Map({ searchParams }) {
 		safeStyleKey,
 		setTempStyle,
 		searchParams.day,
-		bbox
+		bbox,
+		searchParams.agence
 	)
 
 	const agencyId = searchParams.agence

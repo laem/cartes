@@ -88,6 +88,32 @@ export default function useDrawTransport(map, data, styleKey, drawKey) {
 		const linesId = id + '-lines'
 		const pointsId = id + '-points'
 		console.log('darkblue', drawKey)
+
+		const onClickLogRoutes = (e) => {
+			console.log(
+				'purple',
+				e.features.map(
+					({ properties }) =>
+						properties.route_long_name + '   ' + properties.stopList
+				)
+			)
+
+			setSearchParams({
+				routes: e.features
+					.map((feature) => feature.properties.route_id)
+					.join('|'),
+			})
+		}
+		const onClickLogStop = (e) => {
+			console.log('click', e)
+			const feature = e.features[0],
+				stopId = feature.properties.stopId,
+				gare = stopId.split('-').slice(-1)[0]
+
+			setSearchParams({
+				gare,
+			})
+		}
 		try {
 			const source = map.getSource(id)
 			if (source) return
@@ -164,23 +190,8 @@ export default function useDrawTransport(map, data, styleKey, drawKey) {
 			})
 			console.log('darkBlue did add layer id ', pointsId, map._mapId)
 
-			map.on('click', linesId, (e) => {
-				setSearchParams({
-					routes: e.features
-						.map((feature) => feature.properties.route_id)
-						.join('|'),
-				})
-			})
-			map.on('click', pointsId, (e) => {
-				console.log('click', e)
-				const feature = e.features[0],
-					stopId = feature.properties.stopId,
-					gare = stopId.split('-').slice(-1)[0]
-
-				setSearchParams({
-					gare,
-				})
-			})
+			map.on('click', linesId, onClickLogRoutes)
+			map.on('click', pointsId, onClickLogStop)
 
 			map.on('mouseenter', linesId, () => {
 				map.getCanvas().style.cursor = 'pointer'
@@ -195,6 +206,8 @@ export default function useDrawTransport(map, data, styleKey, drawKey) {
 
 		return () => {
 			console.log('darkblue', map._mapId, map.getLayersOrder())
+			map.off('click', linesId, onClickLogRoutes)
+			map.off('click', pointsId, onClickLogStop)
 			map.removeLayer(linesId)
 			map.removeLayer(pointsId)
 			const source = map.getSource(id)

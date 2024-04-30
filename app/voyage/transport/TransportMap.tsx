@@ -35,7 +35,8 @@ export default function TransportMap({
 				resetUrl={setSearchParams({ routes: undefined }, true)}
 			/>
 		)
-	if (!data) return
+
+	if (!data || !data.length) return
 
 	if (selectedAgency)
 		return (
