@@ -15,7 +15,7 @@ export default function TransportMap({
 	const [routes, setRoutes] = useState(null)
 
 	useEffect(() => {
-		if (!routesParam || !data) return
+		if (!routesParam || !data) return setRoutes([])
 
 		/* async, not needed yet since the agency data includes routes
 		const doFetch = async () => {
@@ -89,7 +89,12 @@ const Routes = ({ routes, resetUrl }) => {
 
 	return (
 		<section>
-			<Link href={resetUrl}>Retour aux agences</Link>
+			{routes.length > 0 ? (
+				<Link href={resetUrl}>Effacer les routes</Link>
+			) : (
+				'👉️ Cliquez pour explorer les routes'
+			)}
+
 			<ol
 				css={`
 					margin: 1rem 0;

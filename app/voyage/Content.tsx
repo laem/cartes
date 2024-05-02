@@ -190,9 +190,10 @@ export default function Content({
 							}}
 						/>
 					)}
-					{searchParams.favoris !== 'oui' && (
-						<QuickBookmarks oldAllez={searchParams.allez} />
-					)}
+					{searchParams.favoris !== 'oui' &&
+						searchParams.transports !== 'oui' && (
+							<QuickBookmarks oldAllez={searchParams.allez} />
+						)}
 				</section>
 			)}
 
