@@ -299,7 +299,7 @@ export default function Content({
 									title="Fermer l'encart gare"
 									onClick={() => {
 										console.log('will yo2')
-										clickGare(undefined)
+										setSearchParams({ gare: undefined, stop: undefined })
 									}}
 								/>
 								{bikeRoute && (

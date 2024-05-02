@@ -113,6 +113,7 @@ export default function useDrawTransport(map, data, styleKey, drawKey) {
 
 			setSearchParams({
 				gare,
+				stop: feature.properties.name,
 			})
 		}
 		try {

@@ -13,7 +13,8 @@ export default function useDrawTransportsMap(
 	day,
 	bbox,
 	agence,
-	routesParam
+	routesParam,
+	stop
 ) {
 	const [data, setData] = useState([])
 	useEffect(() => {
@@ -85,18 +86,24 @@ export default function useDrawTransportsMap(
 						: featuresRaw
 					const geojson = {
 						type: 'FeatureCollection',
-						features: routesParam
-							? features.filter((route) =>
-									routesParam.split('|').includes(route.properties.route_id)
-							  )
-							: features,
+						features:
+							routesParam || stop
+								? features.filter(
+										(route) =>
+											(!routesParam ||
+												routesParam
+													.split('|')
+													.includes(route.properties.route_id)) &&
+											(!stop || route.properties.stopList?.includes(stop))
+								  )
+								: features,
 					}
 
 					return addDefaultColor(geojson, agencyId)
 				})
 				.filter(Boolean),
 		}
-	}, [data, routesParam])
+	}, [data, routesParam, stop])
 
 	useDrawTransport(
 		map,

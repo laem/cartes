@@ -146,7 +146,8 @@ export default function Map({ searchParams }) {
 		searchParams.day,
 		bbox,
 		searchParams.agence,
-		searchParams.routes
+		searchParams.routes,
+		searchParams.stop
 	)
 
 	const agencyId = searchParams.agence
