@@ -64,7 +64,6 @@ export default function TransportMap({
 }
 
 const Agency = ({ data, backUrl }) => {
-	console.log('pink agency', data)
 	return (
 		<section>
 			<Link href={backUrl}>← Retour à la liste des réseaux</Link>

@@ -125,11 +125,11 @@ export const computeMotisTrip = async (start, destination, date) => {
 
 						const customAttributes = {
 							route_color: isTGV
-								? trainColors.TGV
+								? trainColors.TGV['color']
 								: isOUIGO
-								? trainColors.OUIGO
+								? trainColors.OUIGO['color']
 								: frenchTrainType === 'TER'
-								? trainColors.TER
+								? trainColors.TER['color']
 								: handleColor(route_color, '#d3b2ee'),
 							route_text_color: isTGV
 								? '#fff'
@@ -193,23 +193,19 @@ export const computeMotisTrip = async (start, destination, date) => {
 }
 
 export const trainColors = {
-	TGV: '#b8175e',
-	OUIGO: '#0193c9',
-	'Train TER': '#034EA2',
-	TER: '#034EA2',
-	'TGV INOUI': '#b8175e',
-	'INTERCITES de nuit': '#28166f',
-	/*
-		'Lyria',
-		'Train',
-		'Train TER',
-		'Car TER',
-		'Car',
-		'Navette',
-		'INTERCITES',
-		'TramTrain',
-		'ICE',
-		*/
+	TGV: { color: '#b8175e' },
+	OUIGO: { color: '#e60075', border: '#0096ca' },
+	'Train TER': { color: '#004da4' },
+	TER: { color: '#004da4' },
+	'TGV INOUI': { color: '#9b2743' },
+	'INTERCITES de nuit': { color: '#28166f' },
+	INTERCITES: { color: 'Teal' },
+	'Car TER': { color: '#004da4', pointillés: true },
+	Car: { color: '#004da4', pointillés: true },
+	Lyria: { color: '#eb0a28' },
+	ICE: { color: '#f01414' },
+	TramTrain: { color: '#004da4' },
+	Navette: { color: '#004da4', pointillés: true },
 }
 export function handleColor(rawColor, defaultColor) {
 	if (!rawColor) return defaultColor

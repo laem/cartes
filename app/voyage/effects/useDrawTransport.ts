@@ -94,7 +94,7 @@ export default function useDrawTransport(map, data, styleKey, drawKey) {
 				'purple',
 				e.features.map(
 					({ properties }) =>
-						properties.route_long_name + '   ' + properties.stopList
+						properties.route_long_name + '   ' + properties.sncfTrainType
 				)
 			)
 

@@ -1,9 +1,9 @@
+import { omit } from '@/components/utils/utils'
+import mapboxPolyline from '@mapbox/polyline'
 import { useEffect, useMemo, useState } from 'react'
+import { trainColors } from '../itinerary/motisRequest'
 import { gtfsServerUrl } from '../serverUrls'
 import useDrawTransport from './useDrawTransport'
-import mapboxPolyline from '@mapbox/polyline'
-import { omit } from '@/components/utils/utils'
-import { trainColors } from '../itinerary/motisRequest'
 
 export default function useDrawTransportsMap(
 	map,
@@ -157,9 +157,15 @@ const addDefaultColor = (featureCollection) => {
 
 // Lol, the SNCF GTFS is so poor
 const trainColor = (properties) => {
-	return trainColors[properties.sncfTrainType] || 'blue'
-	const givenColor = properties.route_color
+	/* not sure the colors provided by SNCF are great compared to colors by train
+	 * type
+	 *
+	const givenColor = handleColor(properties.route_color, null)
+	console.log('GIVEN', givenColor)
 	if (givenColor) return givenColor
+
+	*/
+	return trainColors[properties.sncfTrainType]?.color || 'chartreuse'
 	const route = properties.route_long_name
 
 	if (
