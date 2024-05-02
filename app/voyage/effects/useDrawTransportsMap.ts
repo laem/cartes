@@ -1,7 +1,7 @@
 import { omit } from '@/components/utils/utils'
 import mapboxPolyline from '@mapbox/polyline'
 import { useEffect, useMemo, useState } from 'react'
-import { trainColors } from '../itinerary/motisRequest'
+import { handleColor, trainColors } from '../itinerary/motisRequest'
 import { gtfsServerUrl } from '../serverUrls'
 import useDrawTransport from './useDrawTransport'
 
@@ -86,7 +86,7 @@ export default function useDrawTransportsMap(
 							: features,
 					}
 
-					return agencyId == '1187' ? addDefaultColor(geojson) : geojson
+					return addDefaultColor(geojson, agencyId)
 				})
 				.filter(Boolean),
 		}
@@ -110,7 +110,7 @@ export default function useDrawTransportsMap(
 // still one of the best line of the country.
 //
 // Also, these metrics should be computed server-side.
-const addDefaultColor = (featureCollection) => {
+const addDefaultColor = (featureCollection, agencyId) => {
 	const maxCountLine = Math.max(
 		...featureCollection.features
 			.map(
@@ -137,7 +137,10 @@ const addDefaultColor = (featureCollection) => {
 						...feature,
 						properties: {
 							...feature.properties,
-							width: Math.max(feature.properties.count / maxCountPoint, 0.1),
+							width: Math.max(
+								Math.sqrt(feature.properties.count / maxCountPoint),
+								0.2
+							),
 							'circle-stroke-color': '#0a2e52',
 							'circle-color': '#185abd',
 						},
@@ -146,9 +149,12 @@ const addDefaultColor = (featureCollection) => {
 						...feature,
 						properties: {
 							...feature.properties,
-							route_color: trainColor(feature.properties),
+							route_color:
+								agencyId === '1187'
+									? trainColor(feature.properties)
+									: handleColor(feature.properties.route_color, 'gray'),
 							route_type: 2,
-							opacity: Math.max(feature.properties.count / maxCountLine, 0.1),
+							opacity: Math.max(feature.properties.count / maxCountLine, 0.1), //also tried sqrt here, but the opacity mix is really interesting even on high values
 						},
 				  }
 		),

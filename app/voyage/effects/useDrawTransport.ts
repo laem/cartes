@@ -43,7 +43,7 @@ export default function useDrawTransport(map, data, styleKey, drawKey) {
 		if (!map || !routesGeojson) return
 		if (styleKey !== 'transit') return
 
-		/* Lower the opacity of all style layers.
+		/* Old idea : lower the opacity of all style layers.
 		 * Replaced by setting the "transit" style taken from MapTiler's dataviz
 		 * clean styl, but we're losing essential
 		 * things like POIs, might be interesting to consider this option, or
@@ -66,6 +66,7 @@ export default function useDrawTransport(map, data, styleKey, drawKey) {
 			if (property) property.map((p) => map.setPaintProperty(layerId, p, 0.3))
 		})
 		*/
+		// TODO this is overly complicated
 		const featureCollection =
 			routesGeojson.type === 'FeatureCollection'
 				? mergeRoutes(routesGeojson)
@@ -105,9 +106,9 @@ export default function useDrawTransport(map, data, styleKey, drawKey) {
 			})
 		}
 		const onClickLogStop = (e) => {
-			console.log('click', e)
+			console.log('purple stop', e.features)
 			const feature = e.features[0],
-				stopId = feature.properties.stopId,
+				stopId = feature.properties.id,
 				gare = stopId.split('-').slice(-1)[0]
 
 			setSearchParams({
@@ -165,7 +166,7 @@ export default function useDrawTransport(map, data, styleKey, drawKey) {
 						['linear', 1],
 						['zoom'],
 						0,
-						['*', 10, ['get', 'width']],
+						['*', 0.1, ['get', 'width']],
 						12,
 						['*', 20, ['get', 'width']],
 						18,
@@ -176,7 +177,7 @@ export default function useDrawTransport(map, data, styleKey, drawKey) {
 						['linear', 1],
 						['zoom'],
 						0,
-						['*', 2, ['get', 'width']],
+						['*', 0.1, ['get', 'width']],
 						12,
 						['*', 5, ['get', 'width']],
 						18,
