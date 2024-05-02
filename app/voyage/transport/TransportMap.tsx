@@ -12,12 +12,10 @@ export default function TransportMap({
 	selectedAgency,
 	routesParam,
 }) {
-	const [routes, setRoutes] = useState(null)
-
+	/* async, not needed yet since the agency data includes routes
 	useEffect(() => {
 		if (!routesParam || !data) return setRoutes([])
 
-		/* async, not needed yet since the agency data includes routes
 		const doFetch = async () => {
 			const request = await fetch(`${gtfsServerUrl}/routes/${routesParam}`)
 			const json = await request.json()
@@ -25,17 +23,19 @@ export default function TransportMap({
 			setRoutes(json)
 		}
 		doFetch()
+
+	}, [routesParam, setRoutes, data])
     */
 
-		const routesDemanded = routesParam.split('|')
-		const nextRoutes = data.reduce((memo, [, { features }]) => {
+	const routesDemanded = routesParam?.split('|')
+	const routes =
+		routesParam &&
+		data.reduce((memo, [, { features }]) => {
 			const found = features.filter((feature) =>
 				routesDemanded.includes(feature.properties.route_id)
 			)
 			return [...memo, ...found]
 		}, [])
-		setRoutes(nextRoutes)
-	}, [routesParam, setRoutes, data])
 
 	const setSearchParams = useSetSearchParams()
 
