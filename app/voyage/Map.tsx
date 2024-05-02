@@ -24,7 +24,10 @@ import useTerrainControl from './useTerrainControl'
 import { encodePlace, fitBoundsConsideringModal } from './utils'
 
 import { replaceArrayIndex } from '@/components/utils/utils'
+import getBbox from '@turf/bbox'
+import { useMediaQuery } from 'usehooks-ts'
 import CenteredCross from './CenteredCross'
+import FocusedImage from './FocusedImage'
 import MapComponents from './MapComponents'
 import { buildAllezPart } from './SetDestination'
 import { clickableClasses } from './clickableLayers'
@@ -36,10 +39,6 @@ import useOverpassRequest from './effects/useOverpassRequest'
 import useRightClick from './effects/useRightClick'
 import useSearchLocalTransit from './effects/useSearchLocalTransit'
 import useTransportStopData from './transport/useTransportStopData'
-import FocusedImage from './FocusedImage'
-import getBbox from '@turf/bbox'
-import { isMonday } from 'date-fns'
-import { useMediaQuery } from 'usehooks-ts'
 
 export const defaultState = {
 	depuis: { inputValue: null, choice: false },
@@ -146,7 +145,8 @@ export default function Map({ searchParams }) {
 		setTempStyle,
 		searchParams.day,
 		bbox,
-		searchParams.agence
+		searchParams.agence,
+		searchParams.routes
 	)
 
 	const agencyId = searchParams.agence

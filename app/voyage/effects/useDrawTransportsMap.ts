@@ -12,7 +12,8 @@ export default function useDrawTransportsMap(
 	setTempStyle,
 	day,
 	bbox,
-	agence
+	agence,
+	routesParam
 ) {
 	const [data, setData] = useState([])
 	useEffect(() => {
@@ -74,15 +75,20 @@ export default function useDrawTransportsMap(
 	const drawData = useMemo(() => {
 		return {
 			routesGeojson: data
-				?.map(([agencyId, { polylines, features }]) => {
+				?.map(([agencyId, { polylines, features: featuresRaw }]) => {
+					const features = polylines
+						? polylines.map((polylineObject) => ({
+								type: 'Feature',
+								geometry: mapboxPolyline.toGeoJSON(polylineObject.polyline),
+								properties: omit(['polyline'], polylineObject),
+						  }))
+						: featuresRaw
 					const geojson = {
 						type: 'FeatureCollection',
-						features: polylines
-							? polylines.map((polylineObject) => ({
-									type: 'Feature',
-									geometry: mapboxPolyline.toGeoJSON(polylineObject.polyline),
-									properties: omit(['polyline'], polylineObject),
-							  }))
+						features: routesParam
+							? features.filter((route) =>
+									routesParam.split('|').includes(route.properties.route_id)
+							  )
 							: features,
 					}
 
@@ -90,7 +96,7 @@ export default function useDrawTransportsMap(
 				})
 				.filter(Boolean),
 		}
-	}, [data])
+	}, [data, routesParam])
 
 	useDrawTransport(
 		map,
