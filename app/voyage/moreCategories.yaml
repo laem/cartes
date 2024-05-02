@@ -166,6 +166,49 @@
 
 ################################
 
+- name: compostage
+  category: Ecologie
+  dictionary:
+    - composteur
+  query: '[recycling:organic=yes]'  
+  icon: amenity_recycling
+- name: recyclage verre
+  category: Ecologie
+  dictionary:
+    - bouteille
+  query: '[amenity:recycling][recycling:glass_bottles=yes]'
+  icon: amenity_recycling
+  - name: recyclage vêtements
+  category: Ecologie
+  dictionary:
+    - vêtements
+  query: '[amenity:recycling][recycling:clothes=yes]'
+  icon: amenity_recycling
+  - name: recyclage emballage
+  category: Ecologie
+  dictionary:
+    - emballage
+    - canette
+    - carton
+    - papier
+    - plastique
+  query: 
+    - '[recycling:cans=yes]'
+    - '[recycling:plastic_bottles=yes]'
+    - '[recycling:paper_packaging=yes]'
+    - '[recycling:paper=yes]'
+    - '[recycling:plastic_packaging=yes]'
+  icon: amenity_recycling
+  - name: recyclage piles
+  category: Ecologie
+  dictionary:
+    - piles
+    - batterie
+  query: '[amenity:recycling][recycling:batteries=yes]'
+  icon: amenity_recycling
+  
+################################
+
 - name: Journaux
   category: Culture
   dictionary:
