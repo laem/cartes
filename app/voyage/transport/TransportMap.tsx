@@ -15,8 +15,9 @@ export default function TransportMap({
 	const [routes, setRoutes] = useState(null)
 
 	useEffect(() => {
-		if (!routesParam) return
+		if (!routesParam || !data) return
 
+		/* async, not needed yet since the agency data includes routes
 		const doFetch = async () => {
 			const request = await fetch(`${gtfsServerUrl}/routes/${routesParam}`)
 			const json = await request.json()
@@ -24,7 +25,17 @@ export default function TransportMap({
 			setRoutes(json)
 		}
 		doFetch()
-	}, [routesParam, setRoutes])
+    */
+
+		const routesDemanded = routesParam.split('|')
+		const nextRoutes = data.reduce((memo, [, { features }]) => {
+			const found = features.filter((feature) =>
+				routesDemanded.includes(feature.properties.route_id)
+			)
+			return [...memo, ...found]
+		}, [])
+		setRoutes(nextRoutes)
+	}, [routesParam, setRoutes, data])
 
 	const setSearchParams = useSetSearchParams()
 
@@ -83,16 +94,35 @@ const Routes = ({ routes, resetUrl }) => {
 				css={`
 					margin: 1rem 0;
 					list-style-type: none;
-					li {
+					> li {
 						margin: 0.6rem 0;
 					}
 				`}
 			>
-				{routes.map((route) => (
-					<li key={route.route_id}>
-						<RouteName route={route} />
-					</li>
-				))}
+				{routes.map((route) => {
+					const stopList = route.properties.stopList
+					return (
+						<li key={route.properties.route_id}>
+							<RouteName route={route.properties} />
+							{stopList.length ? (
+								<details>
+									<summary>Arrêts</summary>
+									<ol
+										css={`
+											margin-left: 2rem;
+										`}
+									>
+										{stopList.map((stop) => (
+											<li key={stop}>{stop}</li>
+										))}
+									</ol>
+								</details>
+							) : (
+								'Direct'
+							)}
+						</li>
+					)
+				})}
 			</ol>
 		</section>
 	)
