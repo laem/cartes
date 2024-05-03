@@ -30,12 +30,23 @@ export default function TransportMap({
 	const routesDemanded = routesParam?.split('|')
 	const routes =
 		routesParam &&
-		data.reduce((memo, [, { features }]) => {
-			const found = features.filter((feature) =>
-				routesDemanded.includes(feature.properties.route_id)
-			)
-			return [...memo, ...found]
-		}, [])
+		data.reduce(
+			(
+				memo,
+				[
+					,
+					{
+						geojson: { features },
+					},
+				]
+			) => {
+				const found = features.filter((feature) =>
+					routesDemanded.includes(feature.properties.route_id)
+				)
+				return [...memo, ...found]
+			},
+			[]
+		)
 
 	const setSearchParams = useSetSearchParams()
 

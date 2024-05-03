@@ -16,7 +16,8 @@ export default function useDrawTransportsMap(
 	agence,
 	routesParam,
 	stop,
-	trainType
+	trainType,
+	noCache
 ) {
 	const [data, setData] = useState([])
 	useEffect(() => {
@@ -51,7 +52,9 @@ export default function useDrawTransportsMap(
 				if (!newAgencies.length) return
 
 				const dataRequest = await fetch(
-					url('geojson') + (agence || newAgencies.join('|')),
+					url('geojson') +
+						(agence || newAgencies.join('|')) +
+						(noCache ? `?noCache=${noCache}` : ''),
 					{
 						mode: 'cors',
 						signal: abortController.signal,
@@ -73,20 +76,26 @@ export default function useDrawTransportsMap(
 		return () => {
 			abortController.abort()
 		}
-	}, [setData, bbox, active, day, agence])
+	}, [setData, bbox, active, day, agence, noCache])
 
 	const drawData = useMemo(() => {
 		return {
 			routesGeojson: data
-				?.map(([agencyId, { polylines, features: featuresRaw }]) => {
-					const features = polylines
-						? polylines.map((polylineObject) => ({
-								type: 'Feature',
-								geometry: mapboxPolyline.toGeoJSON(polylineObject.polyline),
-								properties: omit(['polyline'], polylineObject),
-						  }))
-						: featuresRaw
-					/* Splines don't work : seeminlgy straight equal LineString diverge
+				?.map(
+					([
+						agencyId,
+						{
+							geojson: { polylines, features: featuresRaw },
+						},
+					]) => {
+						const features = polylines
+							? polylines.map((polylineObject) => ({
+									type: 'Feature',
+									geometry: mapboxPolyline.toGeoJSON(polylineObject.polyline),
+									properties: omit(['polyline'], polylineObject),
+							  }))
+							: featuresRaw
+						/* Splines don't work : seeminlgy straight equal LineString diverge
 					 * because of splines
 					const features = straightFeatures.map((feature) =>
 						feature.geometry.type === 'LineString'
@@ -94,29 +103,30 @@ export default function useDrawTransportsMap(
 							: feature
 					)
 					*/
-					const geojson = {
-						type: 'FeatureCollection',
-						features:
-							routesParam || stop || trainType
-								? features.filter(
-										(route) =>
-											(!routesParam ||
-												routesParam
-													.split('|')
-													.includes(route.properties.route_id)) &&
-											(!stop || route.properties.stopList?.includes(stop)) &&
-											(!trainType ||
-												trainType === 'tout' ||
-												console.log('chartreuse', route.properties) ||
-												trainTypeSncfMapping[trainType].includes(
-													route.properties.sncfTrainType
-												))
-								  )
-								: features,
-					}
+						const geojson = {
+							type: 'FeatureCollection',
+							features:
+								routesParam || stop || trainType
+									? features.filter(
+											(route) =>
+												(!routesParam ||
+													routesParam
+														.split('|')
+														.includes(route.properties.route_id)) &&
+												(!stop || route.properties.stopList?.includes(stop)) &&
+												(!trainType ||
+													trainType === 'tout' ||
+													console.log('chartreuse', route.properties) ||
+													trainTypeSncfMapping[trainType].includes(
+														route.properties.sncfTrainType
+													))
+									  )
+									: features,
+						}
 
-					return addDefaultColor(geojson, agencyId)
-				})
+						return addDefaultColor(geojson, agencyId)
+					}
+				)
 				.filter(Boolean),
 		}
 	}, [data, routesParam, stop, trainType])
@@ -144,7 +154,7 @@ const addDefaultColor = (featureCollection, agencyId) => {
 		...featureCollection.features
 			.map(
 				(feature) =>
-					feature.geometry.type === 'LineString' && feature.properties.count
+					feature.geometry.type === 'LineString' && feature.properties.perDay
 			)
 			.filter(Boolean)
 	)
@@ -152,12 +162,13 @@ const addDefaultColor = (featureCollection, agencyId) => {
 		...featureCollection.features
 			.map(
 				(feature) =>
-					feature.geometry.type === 'Point' && feature.properties.count
+					feature.geometry.type === 'Point' && feature.properties.perDay
 			)
 			.filter(Boolean)
 	)
 
 	console.log('indigo', featureCollection)
+	const isSncf = agencyId === '1187'
 	return {
 		type: 'FeatureCollection',
 		features: featureCollection.features.map((feature) =>
@@ -166,10 +177,11 @@ const addDefaultColor = (featureCollection, agencyId) => {
 						...feature,
 						properties: {
 							...feature.properties,
-							width: Math.max(
-								Math.sqrt(feature.properties.count / maxCountPoint),
-								0.2
-							),
+							width:
+								classifyStopFrequency(
+									feature.properties.perDay,
+									isSncf ? 15 : 30
+								) / (isSncf ? 1 : 2.5),
 							'circle-stroke-color': '#0a2e52',
 							'circle-color': '#185abd',
 						},
@@ -178,18 +190,33 @@ const addDefaultColor = (featureCollection, agencyId) => {
 						...feature,
 						properties: {
 							...feature.properties,
-							route_color:
-								agencyId === '1187'
-									? trainColor(feature.properties)
-									: handleColor(feature.properties.route_color, 'gray'),
-							route_type: 2,
-							opacity: Math.max(feature.properties.count / maxCountLine, 0.1), //also tried sqrt here, but the opacity mix is really interesting even on high values
+							route_color: isSncf
+								? trainColor(feature.properties)
+								: handleColor(feature.properties.route_color, 'gray'),
+							width: {
+								0: 1.6,
+								1: 2.6,
+								2: 3,
+								3: 0.8,
+								undefined: 0.8,
+							}[feature.properties.route_type],
+							opacity: classifyStopFrequency(feature.properties.perDay, 1),
 						},
 				  }
 		),
 	}
 }
 
+const classifyStopFrequency = (perDayRaw, tuning = 20) => {
+	const perDay = perDayRaw / tuning
+	const perWeek = perDay * 7
+	if (perWeek < 1) return 1 / 5
+	if (perDay < 3) return 2 / 5
+	const perHour = perDay / 12 // could be tweaked
+	if (perHour < 1) return 3 / 5
+	if (perHour < 6) return 4 / 5
+	return 5 / 5
+}
 // Lol, the SNCF GTFS is so poor
 const trainColor = (properties) => {
 	/* not sure the colors provided by SNCF are great compared to colors by train

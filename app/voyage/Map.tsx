@@ -149,7 +149,8 @@ export default function Map({ searchParams }) {
 		searchParams.agence,
 		searchParams.routes,
 		searchParams.stop,
-		searchParams['type de train']
+		searchParams['type de train'],
+		searchParams.noCache
 	)
 
 	const agencyId = searchParams.agence
