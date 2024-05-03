@@ -84,6 +84,14 @@ export default function useDrawTransportsMap(
 								properties: omit(['polyline'], polylineObject),
 						  }))
 						: featuresRaw
+					/* Splines don't work : seeminlgy straight equal LineString diverge
+					 * because of splines
+					const features = straightFeatures.map((feature) =>
+						feature.geometry.type === 'LineString'
+							? bezierSpline(feature)
+							: feature
+					)
+					*/
 					const geojson = {
 						type: 'FeatureCollection',
 						features:
