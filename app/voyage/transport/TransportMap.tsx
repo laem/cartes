@@ -1,16 +1,16 @@
 import useSetSearchParams from '@/components/useSetSearchParams'
 import Link from 'next/link'
-import { o } from 'ramda'
-import { useEffect, useState } from 'react'
 import DateSelector from '../itinerary/DateSelector'
-import { gtfsServerUrl } from '../serverUrls'
 import { RouteName } from './stop/Route'
+import SncfSelect from './SncfSelect'
 
 export default function TransportMap({
 	day,
 	data,
 	selectedAgency,
 	routesParam,
+	trainType,
+	setTrainType,
 }) {
 	/* async, not needed yet since the agency data includes routes
 	useEffect(() => {
@@ -39,37 +39,38 @@ export default function TransportMap({
 
 	const setSearchParams = useSetSearchParams()
 
-	if (routes)
-		return (
-			<Routes
-				routes={routes}
-				resetUrl={setSearchParams({ routes: undefined }, true)}
-			/>
-		)
-
-	if (!data || !data.length) return
-
-	if (selectedAgency)
-		return (
-			<Agency
-				data={data.find(([id]) => id === selectedAgency)[1]}
-				backUrl={setSearchParams({ agence: undefined }, true)}
-			/>
-		)
 	return (
 		<section>
-			<h2>Explorer les transports en commun</h2>
-			<DateSelector type="day" date={day} />
-
-			<ol>
-				{data.map(([agencyId, { agency, bbox, geojson }]) => (
-					<li key={agencyId}>
-						<Link href={setSearchParams({ agence: agencyId }, true)}>
-							{agency.agency_name}
-						</Link>
-					</li>
-				))}
-			</ol>
+			<section>
+				<h2>Explorer les transports en commun</h2>
+				<DateSelector type="day" date={day} />
+				{!selectedAgency && data?.length > 0 && (
+					<ol>
+						{data.map(([agencyId, { agency, bbox, geojson }]) => (
+							<li key={agencyId}>
+								<Link href={setSearchParams({ agence: agencyId }, true)}>
+									{agency.agency_name}
+								</Link>
+							</li>
+						))}
+					</ol>
+				)}
+			</section>
+			{routes && (
+				<Routes
+					routes={routes}
+					resetUrl={setSearchParams({ routes: undefined }, true)}
+				/>
+			)}
+			{data?.length > 0 && !routes && selectedAgency && (
+				<Agency
+					data={data.find(([id]) => id === selectedAgency)[1]}
+					backUrl={setSearchParams({ agence: undefined }, true)}
+				/>
+			)}
+			{selectedAgency == '1187' && (
+				<SncfSelect {...{ data, setTrainType, trainType }} />
+			)}
 		</section>
 	)
 }

@@ -205,6 +205,9 @@ export default function Content({
 						data: transportsData,
 						selectedAgency: searchParams.agence,
 						routesParam: searchParams.routes,
+						trainType: searchParams['type de train'],
+						setTrainType: (trainType) =>
+							setSearchParams({ 'type de train': trainType }),
 					}}
 				/>
 			)}

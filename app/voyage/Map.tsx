@@ -147,7 +147,8 @@ export default function Map({ searchParams }) {
 		bbox,
 		searchParams.agence,
 		searchParams.routes,
-		searchParams.stop
+		searchParams.stop,
+		searchParams['type de train']
 	)
 
 	const agencyId = searchParams.agence

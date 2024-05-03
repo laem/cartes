@@ -4,6 +4,7 @@ import { useEffect, useMemo, useState } from 'react'
 import { handleColor, trainColors } from '../itinerary/motisRequest'
 import { gtfsServerUrl } from '../serverUrls'
 import useDrawTransport from './useDrawTransport'
+import { trainTypeSncfMapping } from '../transport/SncfSelect'
 
 export default function useDrawTransportsMap(
 	map,
@@ -14,7 +15,8 @@ export default function useDrawTransportsMap(
 	bbox,
 	agence,
 	routesParam,
-	stop
+	stop,
+	trainType
 ) {
 	const [data, setData] = useState([])
 	useEffect(() => {
@@ -95,14 +97,20 @@ export default function useDrawTransportsMap(
 					const geojson = {
 						type: 'FeatureCollection',
 						features:
-							routesParam || stop
+							routesParam || stop || trainType
 								? features.filter(
 										(route) =>
 											(!routesParam ||
 												routesParam
 													.split('|')
 													.includes(route.properties.route_id)) &&
-											(!stop || route.properties.stopList?.includes(stop))
+											(!stop || route.properties.stopList?.includes(stop)) &&
+											(!trainType ||
+												trainType === 'tout' ||
+												console.log('chartreuse', route.properties) ||
+												trainTypeSncfMapping[trainType].includes(
+													route.properties.sncfTrainType
+												))
 								  )
 								: features,
 					}
@@ -111,7 +119,7 @@ export default function useDrawTransportsMap(
 				})
 				.filter(Boolean),
 		}
-	}, [data, routesParam, stop])
+	}, [data, routesParam, stop, trainType])
 
 	useDrawTransport(
 		map,
