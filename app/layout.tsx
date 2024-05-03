@@ -1,30 +1,7 @@
-import Providers from '@/providers/Providers'
-import Nav, { NavFooter } from 'Components/Nav'
+import { Analytics } from '@vercel/analytics/react'
 import StyledComponentsRegistry from '../lib/registry'
 import './globals.css'
-import { Analytics } from '@vercel/analytics/react'
-
-/*
-// If loading a variable font, you don't need to specify the font weight
-const inter = Inter({
-	subsets: ['latin'],
-	display: 'swap',
-	variable: '--font-inter',
-})
-className={inter.className}>
-*/
-
-export const metadata = {
-	title: 'Futureco',
-	description: "L'empreinte climat de notre quotidien",
-	metadataBase: new URL('https://futur.eco'),
-	openGraph: {
-		images: ['https://futur.eco/logo.svg'],
-	},
-	twitter: {
-		card: 'summary_large_image',
-	},
-}
+import { ThemeColorsProvider } from '@/components/utils/colors'
 
 export default function RootLayout({
 	children,
@@ -43,11 +20,7 @@ export default function RootLayout({
 			</head>
 			<body>
 				<StyledComponentsRegistry>
-					<Providers>
-						<Nav />
-						{children}
-						<NavFooter />
-					</Providers>
+					<ThemeColorsProvider>{children}</ThemeColorsProvider>
 				</StyledComponentsRegistry>
 				<Analytics />
 			</body>
