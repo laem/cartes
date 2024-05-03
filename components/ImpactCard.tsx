@@ -1,5 +1,5 @@
 'use client'
-import scenarios from '@/app/scenarios/scenarios.yaml'
+import scenarios from '@/app/(futureco)/scenarios/scenarios.yaml'
 import Emoji from 'Components/Emoji'
 import animate from 'Components/ui/animate'
 import Link from 'next/link'

@@ -1,4 +1,4 @@
-import nationalData from '@/app/national/data.yaml'
+import nationalData from '@/app/(futureco)/national/data.yaml'
 import { utils } from 'publicodes'
 import voyageRules from '@/app/voyage/cout-voiture/data/rules.ts'
 

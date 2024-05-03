@@ -1,4 +1,3 @@
-import Wiki from '@/app/wiki/Wiki'
 import css from '@/components/css/convertToJs'
 
 export default function Brand({ brand, brandWikidata, brandWikipedia }) {

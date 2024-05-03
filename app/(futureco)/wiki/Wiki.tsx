@@ -8,7 +8,7 @@ import { utils } from 'publicodes'
 
 const { encodeRuleName } = utils
 
-import topElements from '@/app/wiki/topElements.yaml'
+import topElements from '@/app/(futureco)/wiki/topElements.yaml'
 import css from '@/components/css/convertToJs'
 import {
 	CardUnits,
