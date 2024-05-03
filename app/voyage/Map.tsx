@@ -136,11 +136,12 @@ export default function Map({ searchParams }) {
 		}
 	}, [setTempStyle, transportStopData])
 
-	useSearchLocalTransit(map, searchParams.transports === 'oui', center, zoom)
+	const isTransportsMode = searchParams.transports === 'oui'
+	useSearchLocalTransit(map, isTransportsMode, center, zoom)
 
 	const transportsData = useDrawTransportsMap(
 		map,
-		searchParams.transports === 'oui',
+		isTransportsMode,
 		safeStyleKey,
 		setTempStyle,
 		searchParams.day,
@@ -298,6 +299,7 @@ export default function Map({ searchParams }) {
 	// It also draws a polygon to show the search area for pictures
 	// (not obvious for the user though)
 	useEffect(() => {
+		if (isTransportsMode) return
 		const onClick = async (e) => {
 			console.log('click event', e)
 			setLatLngClicked(e.lngLat)
@@ -409,7 +411,15 @@ export default function Map({ searchParams }) {
 			if (!map) return
 			map.off('click', onClick)
 		}
-	}, [map, setState, distanceMode, itineraryMode, gares, clickGare])
+	}, [
+		map,
+		setState,
+		distanceMode,
+		itineraryMode,
+		gares,
+		clickGare,
+		isTransportsMode,
+	])
 
 	useHoverOnMapFeatures(map)
 
@@ -539,7 +549,7 @@ export default function Map({ searchParams }) {
 				}}
 			/>
 			{focusedImage && <FocusedImage {...{ focusedImage, focusImage }} />}
-			{searchParams.transports === 'oui' && <CenteredCross />}
+			{isTransportsMode && <CenteredCross />}
 			{map && <MapComponents map={map} vers={vers} />}
 			<div ref={mapContainerRef} />
 		</MapContainer>

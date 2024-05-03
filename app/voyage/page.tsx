@@ -1,5 +1,8 @@
 import { Metadata } from 'next'
-import Map from './Map'
+import dynamic from 'next/dynamic'
+const Map = dynamic(() => import('./Map'), {
+	ssr: false,
+})
 
 const title = `Voyagez, autrement.`
 const description1 =
