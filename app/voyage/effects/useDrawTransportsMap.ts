@@ -5,6 +5,7 @@ import { handleColor, trainColors } from '../itinerary/motisRequest'
 import { gtfsServerUrl } from '../serverUrls'
 import useDrawTransport from './useDrawTransport'
 import { trainTypeSncfMapping } from '../transport/SncfSelect'
+import { lightenColor } from '@/components/utils/colors'
 
 export default function useDrawTransportsMap(
 	map,
@@ -183,40 +184,58 @@ const addDefaultColor = (featureCollection, agencyId) => {
 	const isSncf = agencyId === '1187'
 	return {
 		type: 'FeatureCollection',
-		features: featureCollection.features.map((feature) =>
-			feature.geometry.type === 'Point'
-				? {
-						...feature,
-						properties: {
-							...feature.properties,
-							width:
-								classifyStopFrequency(
-									feature.properties.perDay,
-									isSncf ? 15 : 30
-								) / (isSncf ? 1 : 2.5),
-							'circle-stroke-color': 'black',
-							'circle-color': 'white',
-						},
-				  }
-				: {
-						...feature,
-						properties: {
-							...feature.properties,
-							route_color: isSncf
-								? trainColor(feature.properties)
-								: handleColor(feature.properties.route_color, 'gray'),
-							width: {
-								0: 1.6,
-								1: 2.6,
-								2: 3,
-								3: 0.8,
-								undefined: 0.8,
-							}[feature.properties.route_type],
-							opacity: classifyStopFrequency(feature.properties.perDay, 1),
-						},
-				  }
-		),
+		features: featureCollection.features.map((feature) => {
+			if (feature.geometry.type === 'Point') {
+				const [color, strokeColor] = stopColor(
+					featureCollection.features,
+					feature
+				)
+				return {
+					...feature,
+					properties: {
+						...feature.properties,
+						width:
+							classifyStopFrequency(
+								feature.properties.perDay,
+								isSncf ? 15 : 30
+							) / (isSncf ? 1 : 2.5),
+						'circle-stroke-color': strokeColor,
+						'circle-color': color,
+					},
+				}
+			}
+			return {
+				...feature,
+				properties: {
+					...feature.properties,
+					route_color: isSncf
+						? trainColor(feature.properties)
+						: handleColor(feature.properties.route_color, 'gray'),
+					width: {
+						0: 1.6,
+						1: 2.6,
+						2: 3,
+						3: 0.8,
+						undefined: 0.8,
+					}[feature.properties.route_type],
+					opacity: classifyStopFrequency(feature.properties.perDay, 1),
+				},
+			}
+		}),
 	}
+}
+
+const stopColor = (features, stop) => {
+	const list = features.filter((f) =>
+		f.properties.stopList?.includes(stop.properties.name)
+	)
+
+	if (list.length === 1) {
+		const color = handleColor(list[0].properties.route_color, 'gray')
+		console.log('yellow', color)
+		return [color, color.startsWith('#') ? lightenColor(color, -15) : 'black']
+	}
+	return ['white', 'black']
 }
 
 const classifyStopFrequency = (perDayRaw, tuning = 20) => {
