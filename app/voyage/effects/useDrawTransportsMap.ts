@@ -88,7 +88,7 @@ export default function useDrawTransportsMap(
 							geojson: { polylines, features: featuresRaw },
 						},
 					]) => {
-						const features = polylines
+						const unfilteredFeatures = polylines
 							? polylines.map((polylineObject) => ({
 									type: 'Feature',
 									geometry: mapboxPolyline.toGeoJSON(polylineObject.polyline),
@@ -103,6 +103,18 @@ export default function useDrawTransportsMap(
 							: feature
 					)
 					*/
+
+						const features =
+							agencyId === 'MAT'
+								? unfilteredFeatures.filter((feature) =>
+										feature.geometry.type === 'LineString'
+											? console.log(feature.properties) ||
+											  feature.properties.route_short_name.length > 2
+												? false
+												: true
+											: true
+								  )
+								: unfilteredFeatures
 						const geojson = {
 							type: 'FeatureCollection',
 							features:
@@ -182,8 +194,8 @@ const addDefaultColor = (featureCollection, agencyId) => {
 									feature.properties.perDay,
 									isSncf ? 15 : 30
 								) / (isSncf ? 1 : 2.5),
-							'circle-stroke-color': '#0a2e52',
-							'circle-color': '#185abd',
+							'circle-stroke-color': 'black',
+							'circle-color': 'white',
 						},
 				  }
 				: {
