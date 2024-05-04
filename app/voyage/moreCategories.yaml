@@ -167,25 +167,25 @@
 ################################
 
 - name: compostage
-  category: Ecologie
+  category: Recyclage
   dictionary:
     - composteur
   query: '[recycling:organic=yes]'  
   icon: amenity_recycling
 - name: recyclage verre
-  category: Ecologie
+  category: Recyclage
   dictionary:
     - bouteille
   query: '[amenity:recycling][recycling:glass_bottles=yes]'
   icon: amenity_recycling
   - name: recyclage vêtements
-  category: Ecologie
+  category: Recyclage
   dictionary:
     - vêtements
   query: '[amenity:recycling][recycling:clothes=yes]'
   icon: amenity_recycling
   - name: recyclage emballage
-  category: Ecologie
+  category: Recyclage
   dictionary:
     - emballage
     - canette
@@ -200,7 +200,7 @@
     - '[recycling:plastic_packaging=yes]'
   icon: amenity_recycling
   - name: recyclage piles
-  category: Ecologie
+  category: Recyclage
   dictionary:
     - piles
     - batterie
