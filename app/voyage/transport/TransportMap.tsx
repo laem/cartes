@@ -130,6 +130,10 @@ const Routes = ({ routes, resetUrl }) => {
 					return (
 						<li key={route.properties.route_id}>
 							<RouteName route={route.properties} />
+							<div>
+								Voyages par jour : {Math.round(route.properties.perDay)}. Par
+								heure : {Math.round(route.properties.perDay / 10)}
+							</div>
 							{stopList.length ? (
 								<small>
 									<details>

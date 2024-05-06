@@ -195,7 +195,7 @@ const addDefaultColor = (featureCollection, agencyId) => {
 							classifyStopFrequency(
 								feature.properties.perDay,
 								isSncf ? 15 : 30
-							) / (isSncf ? 1 : 2.5),
+							) / (isSncf ? 1 : 3),
 						'circle-stroke-color': strokeColor,
 						'circle-color': color,
 					},
@@ -215,7 +215,7 @@ const addDefaultColor = (featureCollection, agencyId) => {
 						3: 0.8,
 						undefined: 0.8,
 					}[feature.properties.route_type],
-					opacity: classifyStopFrequency(feature.properties.perDay, 1),
+					opacity: classifyStopFrequency(feature.properties.perDay, 2),
 				},
 			}
 		}),
@@ -235,7 +235,7 @@ const stopColor = (features, stop) => {
 	return ['white', 'black']
 }
 
-const classifyStopFrequency = (perDayRaw, tuning = 20) => {
+const classifyStopFrequency = (perDayRaw, tuning) => {
 	const perDay = perDayRaw / tuning
 	const perWeek = perDay * 7
 	if (perWeek < 1) return 1 / 5
