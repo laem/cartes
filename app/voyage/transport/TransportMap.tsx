@@ -135,6 +135,7 @@ const Routes = ({ routes, resetUrl }) => {
 								heure : {Math.round(route.properties.perDay / 10)}
 							</div>
 							{route.properties.isNight && <div>🌜️ Bus de nuit</div>}
+							{route.properties.isSchool && <div>🎒 Bus scolaire</div>}
 							{stopList.length ? (
 								<small>
 									<details>

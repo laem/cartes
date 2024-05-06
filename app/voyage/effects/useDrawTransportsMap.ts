@@ -94,7 +94,7 @@ export default function useDrawTransportsMap(
 							geojson: { polylines, features: featuresRaw },
 						},
 					]) => {
-						const unfilteredFeatures = polylines
+						const features = polylines
 							? polylines.map((polylineObject) => ({
 									type: 'Feature',
 									geometry: mapboxPolyline.toGeoJSON(polylineObject.polyline),
@@ -109,18 +109,6 @@ export default function useDrawTransportsMap(
 							: feature
 					)
 					*/
-
-						const features =
-							agencyId === 'MAT'
-								? unfilteredFeatures.filter((feature) =>
-										feature.geometry.type === 'LineString'
-											? console.log(feature.properties) ||
-											  feature.properties.route_short_name.length > 2
-												? false
-												: true
-											: true
-								  )
-								: unfilteredFeatures
 
 						const filteredFeatures = filterTransportFeatures(features, {
 							routesParam,

@@ -1,11 +1,26 @@
-import { capitalise0 } from '@/components/utils/utils'
+import { capitalise0, sortBy } from '@/components/utils/utils'
 import { trainColors } from '../itinerary/motisRequest'
 
 // these are filter functions that select lines depending on properties
 // then, another function will adapt to keep only the points where filtered
 // routes pass
 export const transitFilters = [
-	['tout', { filter: (data) => data }],
+	[
+		'régulières',
+		{
+			filter: ({ properties: { isNight, isSchool } }) => !(isNight || isSchool),
+		},
+	],
+	[
+		'fréquent',
+		{
+			filter: (feature) =>
+				console.log('cornflowerblue fréquent') ||
+				feature.properties.perDay > 100,
+		},
+	],
+	['bus de nuit', { filter: (data) => data.properties.isNight }],
+	['bus scolaire', { filter: (data) => data.properties.isSchool }],
 	['métro', { filter: (data) => data.properties.route_type === 1 }],
 	['tram', { filter: (data) => data.properties.route_type === 0 }],
 	[
@@ -15,16 +30,7 @@ export const transitFilters = [
 				console.log('yellow', data) || data.properties.route_type === 3,
 		},
 	],
-	[
-		'fréquent',
-		{
-			filter: (feature) =>
-				console.log('cornflowerblue fréquent') ||
-				feature.properties.perDay > 10000,
-		},
-	],
-	['bus de nuit', { filter: (data) => data.properties.isNight }],
-	['bus scolaire', { filter: (data) => data }],
+	//['tout', { filter: (data) => data }],
 ]
 export default function TransitFilter({
 	data,
@@ -68,28 +74,31 @@ export default function TransitFilter({
 					}
 				`}
 			>
-				{filtered.map(([key, selectedRoutes]) => {
-					return (
-						<label
-							key={key}
-							css={`
-								background: white;
-								padding: 0 0.6rem 0.1rem 0.4rem;
-								border-radius: 0.3rem;
-								border: 1px solid var(--darkColor);
-								color: var(--darkColor);
-								cursor: pointer;
-							`}
-						>
-							<input
-								type="radio"
-								checked={key === transitFilter}
-								onClick={() => setTransitFilter(key)}
-							/>
-							{capitalise0(key)} ({selectedRoutes})
-						</label>
-					)
-				})}
+				{sortBy(([, num]) => num === 0)(filtered).map(
+					([key, selectedRoutes]) => {
+						return (
+							<label
+								key={key}
+								css={`
+									background: white;
+									padding: 0 0.6rem 0.1rem 0.4rem;
+									border-radius: 0.3rem;
+									border: 1px solid var(--darkColor);
+									color: var(--darkColor);
+									cursor: pointer;
+									${selectedRoutes === 0 && ` color: gray`}
+								`}
+							>
+								<input
+									type="radio"
+									checked={key === transitFilter}
+									onClick={() => setTransitFilter(key)}
+								/>
+								{capitalise0(key)} ({selectedRoutes})
+							</label>
+						)
+					}
+				)}
 			</form>
 		</section>
 	)
