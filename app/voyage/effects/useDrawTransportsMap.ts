@@ -66,7 +66,9 @@ export default function useDrawTransportsMap(
 
 				const dataJson = await dataRequest.json()
 
-				setData([...data, ...dataJson])
+				if (noCache) {
+					setData(dataJson)
+				} else setData([...data, ...dataJson])
 			} catch (e) {
 				if (abortController.signal.aborted) {
 					console.log(
