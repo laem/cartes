@@ -1,10 +1,12 @@
 import css from '@/components/css/convertToJs'
+import Image from 'next/image'
 import Emoji from '@/components/Emoji'
 import { findContrastedTextColor } from '@/components/utils/colors'
 import { omit } from '@/components/utils/utils'
 import { useState } from 'react'
 import DayView from '../DayView'
 import Calendar from './Calendar'
+import { transportIcon } from '../../itinerary/Transit'
 
 export const nowAsYYMMDD = (delimiter = '') => {
 	var d = new Date(),
@@ -153,33 +155,55 @@ export const RouteName = ({ route, name = undefined }) => {
 		: '#ffffff'
 	const backgroundColor = route.route_color ? `#${route.route_color}` : 'grey'
 
+	if (route.route_long_name.includes('Ateliers')) console.log('stoptout', route)
 	return (
-		<small
+		<span
 			css={`
-				strong {
-					background: ${backgroundColor};
-					padding: 0 0.2rem;
-					border-radius: 0.3rem;
-					color: ${color};
+				display: flex;
+				align-items: center;
+				justify-content: start;
+				img {
+					height: 1.2rem;
+					width: auto;
+					margin-right: 0.2rem;
+					opacity: 0.6;
 				}
-				span {
-					text-decoration: underline;
-					text-decoration-color: ${backgroundColor};
-					text-decoration-thickness: 2px;
-				}
-				white-space: nowrap;
-				width: 100%;
-				overflow: scroll;
-				height: 1.2rem;
-				&::-webkit-scrollbar {
-					display: none;
-				}
-				scrollbar-width: none;
 			`}
 		>
-			🚍️ <strong>{route.route_short_name}</strong>{' '}
-			<span>{name || route.route_long_name}</span>
-		</small>
+			<Image
+				src={transportIcon(route.frenchTrainType, route.route_type, route)}
+				alt="Icône d'un bus"
+				width="100"
+				height="100"
+			/>
+			<small
+				css={`
+					strong {
+						background: ${backgroundColor};
+						padding: 0 0.2rem;
+						border-radius: 0.3rem;
+						color: ${color};
+					}
+					span {
+						text-decoration: underline;
+						text-decoration-color: ${backgroundColor};
+						text-decoration-thickness: 2px;
+					}
+
+					white-space: nowrap;
+					width: 100%;
+					overflow: scroll;
+					height: fit-content;
+					&::-webkit-scrollbar {
+						display: none;
+					}
+					scrollbar-width: none;
+				`}
+			>
+				<strong>{route.route_short_name}</strong>{' '}
+				<span>{name || route.route_long_name}</span>
+			</small>
+		</span>
 	)
 }
 

@@ -16,7 +16,7 @@ export const transitFilters = [
 		{
 			filter: (feature) =>
 				console.log('cornflowerblue fréquent') ||
-				feature.properties.perDay > 100,
+				feature.properties.perDay / 10 >= 6,
 		},
 	],
 	['bus de nuit', { filter: (data) => data.properties.isNight }],
