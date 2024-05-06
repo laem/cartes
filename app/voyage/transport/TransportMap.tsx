@@ -4,6 +4,7 @@ import DateSelector from '../itinerary/DateSelector'
 import { RouteName } from './stop/Route'
 import SncfSelect from './SncfSelect'
 import TransitFilter from './TransitFilter'
+import { sortBy } from '@/components/utils/utils'
 
 export default function TransportMap({
 	day,
@@ -31,8 +32,7 @@ export default function TransportMap({
     */
 
 	const routesDemanded = routesParam?.split('|')
-	const routes =
-		routesParam &&
+	const routes = sortBy((route) => -route.properties.perDay)(
 		data.reduce(
 			(
 				memo,
@@ -44,12 +44,17 @@ export default function TransportMap({
 				]
 			) => {
 				const found = features.filter((feature) =>
-					routesDemanded.includes(feature.properties.route_id)
+					routesDemanded
+						? routesDemanded.includes(feature.properties.route_id)
+						: feature.geometry.type === 'LineString'
 				)
 				return [...memo, ...found]
 			},
 			[]
 		)
+	)
+
+	console.log('pink routes', routes)
 
 	const setSearchParams = useSetSearchParams()
 
@@ -126,18 +131,20 @@ const Routes = ({ routes, resetUrl }) => {
 						<li key={route.properties.route_id}>
 							<RouteName route={route.properties} />
 							{stopList.length ? (
-								<details>
-									<summary>Arrêts</summary>
-									<ol
-										css={`
-											margin-left: 2rem;
-										`}
-									>
-										{stopList.map((stop) => (
-											<li key={stop}>{stop}</li>
-										))}
-									</ol>
-								</details>
+								<small>
+									<details>
+										<summary>Arrêts</summary>
+										<ol
+											css={`
+												margin-left: 2rem;
+											`}
+										>
+											{stopList.map((stop) => (
+												<li key={stop}>{stop}</li>
+											))}
+										</ol>
+									</details>
+								</small>
 							) : (
 								'Direct'
 							)}
