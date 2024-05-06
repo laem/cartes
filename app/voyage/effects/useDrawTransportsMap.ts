@@ -7,6 +7,7 @@ import useDrawTransport from './useDrawTransport'
 import { trainTypeSncfMapping } from '../transport/SncfSelect'
 import { lightenColor } from '@/components/utils/colors'
 import { transitFilters } from '../transport/TransitFilter'
+import { filterTransportFeatures } from '../transport/filterTransportFeatures'
 
 export default function useDrawTransportsMap(
 	map,
@@ -120,28 +121,17 @@ export default function useDrawTransportsMap(
 											: true
 								  )
 								: unfilteredFeatures
+
+						const filteredFeatures = filterTransportFeatures(features, {
+							routesParam,
+							stop,
+							trainType,
+							transitFilter,
+						})
+
 						const geojson = {
 							type: 'FeatureCollection',
-							features:
-								routesParam || stop || trainType || transitFilter
-									? features.filter(
-											(route) =>
-												(!routesParam ||
-													routesParam
-														.split('|')
-														.includes(route.properties.route_id)) &&
-												(!stop || route.properties.stopList?.includes(stop)) &&
-												(!trainType ||
-													trainType === 'tout' ||
-													trainTypeSncfMapping[trainType].includes(
-														route.properties.sncfTrainType
-													)) &&
-												(!transitFilter ||
-													transitFilters
-														.find(([key]) => key === transitFilter)[1]
-														.filter(route))
-									  )
-									: features,
+							features: filteredFeatures,
 						}
 
 						return addDefaultColor(geojson, agencyId)

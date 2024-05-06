@@ -1,11 +1,20 @@
 import { capitalise0 } from '@/components/utils/utils'
 import { trainColors } from '../itinerary/motisRequest'
 
+// these are filter functions that select lines depending on properties
+// then, another function will adapt to keep only the points where filtered
+// routes pass
 export const transitFilters = [
 	['tout', { filter: (data) => data }],
-	['métro', { filter: (data) => data }],
-	['tram', { filter: (data) => data }],
-	['bus', { filter: (data) => data }],
+	['métro', { filter: (data) => data.properties.route_type === 1 }],
+	['tram', { filter: (data) => data.properties.route_type === 0 }],
+	[
+		'bus',
+		{
+			filter: (data) =>
+				console.log('yellow', data) || data.properties.route_type === 3,
+		},
+	],
 	[
 		'fréquent',
 		{
