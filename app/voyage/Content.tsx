@@ -208,6 +208,8 @@ export default function Content({
 						trainType: searchParams['type de train'],
 						setTrainType: (trainType) =>
 							setSearchParams({ 'type de train': trainType }),
+						transitFilter: searchParams['filtre'],
+						setTransitFilter: (filter) => setSearchParams({ filtre: filter }),
 					}}
 				/>
 			)}

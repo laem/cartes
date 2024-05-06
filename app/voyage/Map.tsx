@@ -150,6 +150,7 @@ export default function Map({ searchParams }) {
 		searchParams.routes,
 		searchParams.stop,
 		searchParams['type de train'],
+		searchParams['filtre'],
 		searchParams.noCache
 	)
 

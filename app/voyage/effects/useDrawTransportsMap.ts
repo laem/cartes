@@ -6,6 +6,7 @@ import { gtfsServerUrl } from '../serverUrls'
 import useDrawTransport from './useDrawTransport'
 import { trainTypeSncfMapping } from '../transport/SncfSelect'
 import { lightenColor } from '@/components/utils/colors'
+import { transitFilters } from '../transport/TransitFilter'
 
 export default function useDrawTransportsMap(
 	map,
@@ -18,6 +19,7 @@ export default function useDrawTransportsMap(
 	routesParam,
 	stop,
 	trainType,
+	transitFilter,
 	noCache
 ) {
 	const [data, setData] = useState([])
@@ -119,7 +121,7 @@ export default function useDrawTransportsMap(
 						const geojson = {
 							type: 'FeatureCollection',
 							features:
-								routesParam || stop || trainType
+								routesParam || stop || trainType || transitFilter
 									? features.filter(
 											(route) =>
 												(!routesParam ||
@@ -129,10 +131,13 @@ export default function useDrawTransportsMap(
 												(!stop || route.properties.stopList?.includes(stop)) &&
 												(!trainType ||
 													trainType === 'tout' ||
-													console.log('chartreuse', route.properties) ||
 													trainTypeSncfMapping[trainType].includes(
 														route.properties.sncfTrainType
-													))
+													)) &&
+												(!transitFilter ||
+													transitFilters
+														.find(([key]) => key === transitFilter)[1]
+														.filter(route))
 									  )
 									: features,
 						}
@@ -142,7 +147,7 @@ export default function useDrawTransportsMap(
 				)
 				.filter(Boolean),
 		}
-	}, [data, routesParam, stop, trainType])
+	}, [data, routesParam, stop, trainType, transitFilter])
 
 	useDrawTransport(
 		map,

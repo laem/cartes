@@ -3,6 +3,7 @@ import Link from 'next/link'
 import DateSelector from '../itinerary/DateSelector'
 import { RouteName } from './stop/Route'
 import SncfSelect from './SncfSelect'
+import TransitFilter from './TransitFilter'
 
 export default function TransportMap({
 	day,
@@ -11,6 +12,8 @@ export default function TransportMap({
 	routesParam,
 	trainType,
 	setTrainType,
+	transitFilter,
+	setTransitFilter,
 }) {
 	/* async, not needed yet since the agency data includes routes
 	useEffect(() => {
@@ -82,6 +85,7 @@ export default function TransportMap({
 			{selectedAgency == '1187' && (
 				<SncfSelect {...{ data, setTrainType, trainType }} />
 			)}
+			<TransitFilter {...{ data, setTransitFilter, transitFilter }} />
 		</section>
 	)
 }
