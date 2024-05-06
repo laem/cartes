@@ -75,12 +75,6 @@ export default function TransportMap({
 					</ol>
 				)}
 			</section>
-			{routes && (
-				<Routes
-					routes={routes}
-					resetUrl={setSearchParams({ routes: undefined }, true)}
-				/>
-			)}
 			{data?.length > 0 && !routes && selectedAgency && (
 				<Agency
 					data={data.find(([id]) => id === selectedAgency)[1]}
@@ -91,6 +85,12 @@ export default function TransportMap({
 				<SncfSelect {...{ data, setTrainType, trainType }} />
 			)}
 			<TransitFilter {...{ data, setTransitFilter, transitFilter }} />
+			{routes && (
+				<Routes
+					routes={routes}
+					resetUrl={setSearchParams({ routes: undefined }, true)}
+				/>
+			)}
 		</section>
 	)
 }
@@ -134,6 +134,7 @@ const Routes = ({ routes, resetUrl }) => {
 								Voyages par jour : {Math.round(route.properties.perDay)}. Par
 								heure : {Math.round(route.properties.perDay / 10)}
 							</div>
+							{route.properties.isNight && <div>🌜️ Bus de nuit</div>}
 							{stopList.length ? (
 								<small>
 									<details>

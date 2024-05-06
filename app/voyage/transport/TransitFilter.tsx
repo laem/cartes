@@ -23,11 +23,7 @@ export const transitFilters = [
 				feature.properties.perDay > 10000,
 		},
 	],
-	[
-		'ligne 1',
-		{ filter: (feature) => feature.properties.route_short_name === '1' },
-	],
-	['bus de nuit', { filter: (data) => data }],
+	['bus de nuit', { filter: (data) => data.properties.isNight }],
 	['bus scolaire', { filter: (data) => data }],
 ]
 export default function TransitFilter({
