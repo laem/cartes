@@ -114,6 +114,7 @@ export default function TransportMap({
 			)}
 			{!stop && routes && (
 				<Routes
+					routesParam={routesParam}
 					routes={routes}
 					resetUrl={setSearchParams({ routes: undefined }, true)}
 				/>
@@ -132,12 +133,12 @@ const Agency = ({ data, backUrl }) => {
 	)
 }
 
-const Routes = ({ routes, resetUrl }) => {
+const Routes = ({ routes, resetUrl, routesParam }) => {
 	console.log('pink', routes)
 
 	return (
 		<section>
-			{routes.length > 0 ? (
+			{routesParam ? (
 				<Link href={resetUrl}>Effacer les routes</Link>
 			) : (
 				'👉️ Cliquez pour explorer les routes'
