@@ -3,7 +3,7 @@ import Link from 'next/link'
 import DateSelector from '../itinerary/DateSelector'
 import { RouteName } from './stop/Route'
 import SncfSelect from './SncfSelect'
-import TransitFilter from './TransitFilter'
+import TransitFilter, { transitFilters } from './TransitFilter'
 import { sortBy } from '@/components/utils/utils'
 import StopByName from './StopByName'
 import { ModalCloseButton } from '../UI'
@@ -35,6 +35,9 @@ export default function TransportMap({
 	}, [routesParam, setRoutes, data])
     */
 
+	const transitFilterFunction = transitFilters.find(
+		([key]) => key === transitFilter
+	)[1].filter
 	const routesDemanded = routesParam?.split('|')
 	const routes = sortBy((route) => -route.properties.perDay)(
 		data.reduce(
@@ -47,7 +50,8 @@ export default function TransportMap({
 					},
 				]
 			) => {
-				const found = features.filter((feature) =>
+				const filteredFeatures = features.filter(transitFilterFunction)
+				const found = filteredFeatures.filter((feature) =>
 					routesDemanded
 						? routesDemanded.includes(feature.properties.route_id)
 						: feature.geometry.type === 'LineString'
