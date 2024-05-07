@@ -1,31 +1,41 @@
+import { sortBy } from '@/components/utils/utils'
 import Stop from './stop/Stop'
 import useTransportStopData from './useTransportStopData'
+import { useMemo } from 'react'
 
 export default function StopByName({ stopName, data }) {
-	const stops = data
-		.map(
-			([
-				agencyId,
-				{
-					geojson: { features },
-				},
-			]) =>
-				features.filter(
-					(feature) =>
-						feature.geometry.type === 'Point' &&
-						feature.properties.name === stopName
+	const stopIds = useMemo(
+		() =>
+			data
+				.map(
+					([
+						agencyId,
+						{
+							geojson: { features },
+						},
+					]) =>
+						features.filter(
+							(feature) =>
+								feature.geometry.type === 'Point' &&
+								feature.properties.name === stopName
+						)
 				)
-		)
-		.flat()
 
-	return stops.map((feature) => (
-		<StopById key={feature.properties.id} id={feature.properties.id} />
-	))
+				.flat()
+				.map((feature) => feature.properties.id),
+		[stopName]
+	)
+
+	console.log('purple data', stopIds)
+
+	const entries = useTransportStopData(null, stopIds)
+	console.log('purple trips', entries)
+	const sorted = sortBy(([, { trips }]) => -trips.length)(entries)
+
+	return sorted.map(([id, data]) => <StopById key={id} data={data} />)
 }
 
-const StopById = ({ id }) => {
-	const data = useTransportStopData(null, id)
-
+const StopById = ({ data }) => {
 	console.log('olive stopbyid data', data)
 
 	return <Stop data={data} />

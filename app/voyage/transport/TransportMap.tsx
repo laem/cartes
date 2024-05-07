@@ -93,7 +93,7 @@ export default function TransportMap({
 						}}
 					/>
 					<h2>{stop}</h2>
-					<StopByName stopName={stop} data={data} />
+					{data?.length > 0 && <StopByName stopName={stop} data={data} />}
 				</section>
 			)}
 			{data?.length > 0 && !routes && selectedAgency && (

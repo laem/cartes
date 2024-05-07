@@ -2,23 +2,24 @@ import { useEffect, useState } from 'react'
 import { gtfsServerUrl } from '../serverUrls'
 import { findStopId, isNotTransportStop } from './stop/Stop'
 
-export default function useTransportStopData(osmFeature, gtfsStopId) {
-	const [data, setData] = useState(null)
+export default function useTransportStopData(osmFeature, gtfsStopIds) {
+	const [data, setData] = useState([])
 	useEffect(() => {
-		if (!gtfsStopId && (!osmFeature || !osmFeature.tags)) return
-		if (!gtfsStopId && isNotTransportStop(osmFeature.tags)) return
-		const stopId = gtfsStopId || findStopId(osmFeature.tags)
+		if (!gtfsStopIds && (!osmFeature || !osmFeature.tags)) return
+		if (!gtfsStopIds && isNotTransportStop(osmFeature.tags)) return
+		const stopIds = gtfsStopIds.join('|') || findStopId(osmFeature.tags)
+
 		const doFetch = async () => {
-			const response = await fetch(gtfsServerUrl + '/stopTimes/' + stopId, {
+			const response = await fetch(gtfsServerUrl + '/stopTimes/' + stopIds, {
 				mode: 'cors',
 			})
 			const json = await response.json()
 
-			setData({ ...json, stopId })
+			setData(json)
 		}
 		doFetch()
-	}, [setData, osmFeature, gtfsStopId])
-	if (!osmFeature && !gtfsStopId) return null
+	}, [setData, osmFeature, gtfsStopIds])
+	if (!osmFeature && !gtfsStopIds) return []
 	console.log('transportStopData', data)
 	return data
 }

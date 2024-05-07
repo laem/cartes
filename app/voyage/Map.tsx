@@ -126,7 +126,7 @@ export default function Map({ searchParams }) {
 	const transportStopData = useTransportStopData(osmFeature)
 
 	useEffect(() => {
-		if (!transportStopData || !transportStopData.routesGeojson) return
+		if (!transportStopData.length) return
 
 		setTempStyle('transit')
 
@@ -173,12 +173,8 @@ export default function Map({ searchParams }) {
 		map.fitBounds(mapLibreBBox)
 	}, [map, agency])
 
-	useDrawTransport(
-		map,
-		transportStopData,
-		safeStyleKey,
-		transportStopData?.stopId
-	)
+	const clickedStopData = transportStopData[0] || []
+	useDrawTransport(map, clickedStopData[1], safeStyleKey, clickedStopData[0])
 
 	const gares = []
 	const uic = searchParams.arret
@@ -515,7 +511,7 @@ export default function Map({ searchParams }) {
 						styleChooser,
 						setStyleChooser,
 						itinerary,
-						transportStopData,
+						transportStopData: clickedStopData[0],
 						clickedPoint,
 						resetClickedPoint,
 						transportsData,
