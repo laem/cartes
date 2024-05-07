@@ -7,7 +7,7 @@ export default function useTransportStopData(osmFeature, gtfsStopIds) {
 	useEffect(() => {
 		if (!gtfsStopIds && (!osmFeature || !osmFeature.tags)) return
 		if (!gtfsStopIds && isNotTransportStop(osmFeature.tags)) return
-		const stopIds = gtfsStopIds.join('|') || findStopId(osmFeature.tags)
+		const stopIds = gtfsStopIds?.join('|') || findStopId(osmFeature.tags)
 
 		const doFetch = async () => {
 			const response = await fetch(gtfsServerUrl + '/stopTimes/' + stopIds, {

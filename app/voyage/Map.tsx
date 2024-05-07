@@ -515,7 +515,7 @@ export default function Map({ searchParams }) {
 						styleChooser,
 						setStyleChooser,
 						itinerary,
-						transportStopData: clickedStopData[0],
+						transportStopData: clickedStopData[1],
 						clickedPoint,
 						resetClickedPoint,
 						transportsData,
