@@ -155,7 +155,10 @@ export const RouteName = ({ route, name = undefined }) => {
 		: '#ffffff'
 	const backgroundColor = route.route_color ? `#${route.route_color}` : 'grey'
 
-	if (route.route_long_name.includes('Ateliers')) console.log('stoptout', route)
+	const givenShortName = route.route_short_name,
+		shortName = givenShortName.match(/^[A-z]$/)
+			? givenShortName.toUpperCase()
+			: givenShortName
 	return (
 		<span
 			css={`
@@ -180,7 +183,7 @@ export const RouteName = ({ route, name = undefined }) => {
 				css={`
 					strong {
 						background: ${backgroundColor};
-						padding: 0 0.2rem;
+						padding: 0 0.25rem;
 						border-radius: 0.3rem;
 						color: ${color};
 					}
@@ -200,7 +203,7 @@ export const RouteName = ({ route, name = undefined }) => {
 					scrollbar-width: none;
 				`}
 			>
-				<strong>{route.route_short_name}</strong>{' '}
+				<strong>{shortName}</strong>{' '}
 				<span>{name || route.route_long_name}</span>
 			</small>
 		</span>
