@@ -1,12 +1,11 @@
-import css from '@/components/css/convertToJs'
-import Image from 'next/image'
 import Emoji from '@/components/Emoji'
 import { findContrastedTextColor } from '@/components/utils/colors'
 import { omit } from '@/components/utils/utils'
+import Image from 'next/image'
 import { useState } from 'react'
+import { transportIcon } from '../../itinerary/Transit'
 import DayView from '../DayView'
 import Calendar from './Calendar'
-import { transportIcon } from '../../itinerary/Transit'
 
 export const nowAsYYMMDD = (delimiter = '') => {
 	var d = new Date(),
@@ -76,7 +75,10 @@ export default function Route({ route, stops = [] }) {
 	const stopSelection = augmentedStops.filter((el) => el.isFuture).slice(0, 4)
 
 	const directions = stops.map(({ trip }) => trip.direction_id)
-	const hasMultipleTripDirections = directions.find((d) => d !== directions[0])
+	const otherDirection = directions[0] === 0 ? 1 : 0
+	const index = directions.findIndex((i) => i === otherDirection)
+	const hasMultipleTripDirections = index > -1
+	console.log('olive multiple', index, directions)
 	const direction = directions[0],
 		rawName = route.route_long_name,
 		// Here we're deriving the directed name from the raw name. They don't help
@@ -104,9 +106,12 @@ export default function Route({ route, stops = [] }) {
 			<RouteName route={route} name={name} />
 			{hasMultipleTripDirections && (
 				<div
-					style={css`
+					css={`
 						display: flex;
 						align-items: center;
+						small {
+							line-height: 1rem;
+						}
 					`}
 				>
 					<Emoji e="⚠️" />{' '}

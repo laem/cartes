@@ -22,11 +22,12 @@ export default function StopByName({ stopName, data }) {
 				)
 
 				.flat()
-				.map((feature) => feature.properties.id),
+				.map((feature) => feature.properties.ids)
+				.flat(),
 		[stopName]
 	)
 
-	console.log('purple data', stopIds)
+	console.log('purple data', data, stopIds)
 
 	const entries = useTransportStopData(null, stopIds)
 	console.log('purple trips', entries)
