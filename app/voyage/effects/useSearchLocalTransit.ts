@@ -6,8 +6,9 @@ import { useEffect, useState } from 'react'
 export default function useSearchLocalTransit(map, active, center, zoom) {
 	const [stops, setStops] = useState([])
 	const [stopTimes, setStopTimes] = useState({})
+	const notZoomEnough = zoom < 15
 	useEffect(() => {
-		if (!active || !center) return
+		if (!active || !center || notZoomEnough) return
 		const [longitude, latitude] = center,
 			distance = 200
 
@@ -20,7 +21,7 @@ export default function useSearchLocalTransit(map, active, center, zoom) {
 		}
 
 		doFetch()
-	}, [active, center, setStops])
+	}, [active, center, setStops, notZoomEnough])
 
 	useEffect(() => {
 		if (!stops.length) return
@@ -38,7 +39,7 @@ export default function useSearchLocalTransit(map, active, center, zoom) {
 	}, [stops, setStopTimes])
 
 	useEffect(() => {
-		if (!map || !stops.length || !active) return
+		if (!map || !stops.length || !active || notZoomEnough) return
 		const markers = stops.map((stop) => {
 			const routes = stopTimes[stop.stop_id]?.routes
 			console.log('olive', routes)
@@ -83,5 +84,5 @@ ${
 		return () => {
 			markers.map((marker) => marker.remove())
 		}
-	}, [map, stops, stopTimes, zoom])
+	}, [map, stops, stopTimes, zoom, notZoomEnough])
 }

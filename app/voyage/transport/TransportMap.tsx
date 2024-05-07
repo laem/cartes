@@ -131,8 +131,8 @@ const Routes = ({ routes, resetUrl }) => {
 						<li key={route.properties.route_id}>
 							<RouteName route={route.properties} />
 							<div>
-								Voyages par jour : {Math.round(route.properties.perDay)}. Par
-								heure : {Math.round(route.properties.perDay / 10)}
+								Voyages par jour : {Math.round(route.properties.perDay / 2)}.
+								Par heure : {Math.round(route.properties.perDay / 10 / 2)}
 							</div>
 							{route.properties.isNight && <div>🌜️ Bus de nuit</div>}
 							{route.properties.isSchool && <div>🎒 Bus scolaire</div>}
