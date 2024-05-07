@@ -1,3 +1,5 @@
+import Image from 'next/image'
+import triangle from '@/public/triangle.svg'
 import { nowStamp } from '../itinerary/motisRequest'
 import { nowAsYYMMDD } from './stop/Route'
 
@@ -39,10 +41,10 @@ export default function DayView({ data }) {
 						padding: 0 0.1rem;
 						span:first-child,
 						span:last-child {
-							font-size: 95%;
+							font-size: 85%;
 						}
 					}
-					margin-bottom: 0.2rem;
+					border: 1px solid var(--darkerColor);
 				`}
 			>
 				<li
@@ -79,7 +81,6 @@ export default function DayView({ data }) {
 			</ol>
 			<ol
 				css={`
-					height: 0.4rem;
 					position: relative;
 				`}
 			>
@@ -93,14 +94,17 @@ export default function DayView({ data }) {
 							css={`
 								position: absolute;
 								left: ${position}%;
-								width: 0px;
-								height: 100%;
-								border-left: 1px solid
-									${position > 75 || position < 25
-										? 'beige'
-										: 'var(--darkerColor)'};
+								height: fit-content;
+								line-height: 0;
+								img {
+									width: 0.4rem;
+									height: 0.4rem;
+									opacity: 0.4;
+								}
 							`}
-						></li>
+						>
+							<Image src={triangle} alt="" />
+						</li>
 					)
 				})}
 			</ol>
