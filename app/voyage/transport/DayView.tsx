@@ -13,6 +13,7 @@ export default function DayView({ data }) {
 	return (
 		<div
 			css={`
+				margin: 0.4rem 0;
 				width: 100%;
 				ol {
 					list-style-type: none;
@@ -22,49 +23,63 @@ export default function DayView({ data }) {
 		>
 			<ol
 				css={`
-					position: absolute;
-					left: 0;
-					top: 0;
 					width: 100%;
 					height: 100%;
 					display: flex;
 					li {
 						text-align: center;
 						height: 100%;
-						line-height: 2rem;
+						line-height: 1rem;
+						font-size: 85%;
+
+						display: flex;
+						justify-content: space-between;
+						align-items: center;
+						color: white;
+						padding: 0 0.1rem;
+						span:first-child,
+						span:last-child {
+							font-size: 95%;
+						}
 					}
+					margin-bottom: 0.2rem;
 				`}
 			>
 				<li
 					css={`
 						/* this is au pif, use https://github.com/mourner/suncalc */
-						width: 25%;
+						width: ${((8 - 2) / 24) * 100}%;
 						background: var(--darkerColor);
 					`}
 				>
-					🌜️
+					<span>2h</span>
+					<span>🌜️</span>
+					<span>8h</span>
 				</li>
 				<li
 					css={`
-						width: 50%;
+						width: ${((20 - 8) / 24) * 100}%;
 						background: beige;
 					`}
 				>
-					🌞
+					<span></span>
+					<span>🌞</span>
+					<span></span>
 				</li>
 				<li
 					css={`
-						width: 25%;
+						width: ${((26 - 20) / 24) * 100}%;
 						background: var(--darkerColor);
 					`}
 				>
-					🌜️
+					<span>20h</span>
+					<span>🌜️</span>
+					<span>2h</span>
 				</li>
 			</ol>
 			<ol
 				css={`
-					border: 2px solid var(--darkerColor);
-					height: 2rem;
+					height: 0.4rem;
 					position: relative;
 				`}
 			>
