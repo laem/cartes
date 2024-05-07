@@ -1,5 +1,6 @@
 import { capitalise0, sortBy } from '@/components/utils/utils'
 import { trainColors } from '../itinerary/motisRequest'
+import { isNil } from 'ramda'
 
 export const defaultTransitFilter = 'plan général'
 // these are filter functions that select lines depending on properties
@@ -16,9 +17,8 @@ export const transitFilters = [
 	[
 		'lignes principales',
 		{
-			filter: (feature) =>
-				console.log('cornflowerblue fréquent') ||
-				feature.properties.perDay / 10 >= 6,
+			filter: ({ properties: { isNight, isSchool, perDay } }) =>
+				perDay / 10 >= 6 && !(isNight || isSchool),
 		},
 	],
 	['bus de nuit', { filter: (data) => data.properties.isNight }],
