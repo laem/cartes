@@ -119,7 +119,10 @@ export default function useDrawTransportsMap(
 
 						const geojson = {
 							type: 'FeatureCollection',
-							features: filteredFeatures,
+							features: filteredFeatures.map((feature) => ({
+								...feature,
+								properties: { ...feature.properties, agencyId },
+							})),
 						}
 
 						return addDefaultColor(geojson, agencyId)

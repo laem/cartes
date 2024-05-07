@@ -148,7 +148,7 @@ export default function Map({ searchParams }) {
 		bbox,
 		searchParams.agence,
 		searchParams.routes,
-		searchParams.stop,
+		searchParams.arret,
 		searchParams['type de train'],
 		searchParams['filtre'],
 		searchParams.noCache
@@ -180,9 +180,8 @@ export default function Map({ searchParams }) {
 		transportStopData?.stopId
 	)
 
-	const [gares, setGares] = useState(null)
-
-	const uic = searchParams.gare
+	const gares = []
+	const uic = searchParams.arret
 	const clickedGare = gares && gares.find((g) => g.uic.includes(uic))
 	const clickGare = (uic) => setSearchParams({ gare: uic })
 	const [bikeRoute, setBikeRoute] = useState(null)
@@ -250,15 +249,6 @@ export default function Map({ searchParams }) {
 
 		fetchBikeRoute()
 	}, [target, clickedGare, bikeRouteProfile])
-
-	useEffect(() => {
-		async function fetchGares() {
-			const res = await fetch('/gares.json')
-			const json = await res.json()
-			setGares(json)
-		}
-		fetchGares()
-	}, [setGares])
 
 	useTerrainControl(map, style)
 

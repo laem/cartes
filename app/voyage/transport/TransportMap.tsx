@@ -5,6 +5,8 @@ import { RouteName } from './stop/Route'
 import SncfSelect from './SncfSelect'
 import TransitFilter from './TransitFilter'
 import { sortBy } from '@/components/utils/utils'
+import StopByName from './StopByName'
+import { ModalCloseButton } from '../UI'
 
 export default function TransportMap({
 	day,
@@ -15,6 +17,8 @@ export default function TransportMap({
 	setTrainType,
 	transitFilter,
 	setTransitFilter,
+	stop,
+	resetStop,
 }) {
 	/* async, not needed yet since the agency data includes routes
 	useEffect(() => {
@@ -75,17 +79,35 @@ export default function TransportMap({
 					</ol>
 				)}
 			</section>
+			{stop && (
+				<section
+					css={`
+						position: relative;
+						padding-top: 0.6rem;
+					`}
+				>
+					<ModalCloseButton
+						title="Fermer l'encart arrêt de transport"
+						onClick={() => {
+							setSearchParams({ arret: undefined })
+						}}
+					/>
+					<StopByName stopName={stop} data={data} />
+				</section>
+			)}
 			{data?.length > 0 && !routes && selectedAgency && (
 				<Agency
 					data={data.find(([id]) => id === selectedAgency)[1]}
 					backUrl={setSearchParams({ agence: undefined }, true)}
 				/>
 			)}
-			{selectedAgency == '1187' && (
+			{!stop && selectedAgency == '1187' && (
 				<SncfSelect {...{ data, setTrainType, trainType }} />
 			)}
-			<TransitFilter {...{ data, setTransitFilter, transitFilter }} />
-			{routes && (
+			{!stop && (
+				<TransitFilter {...{ data, setTransitFilter, transitFilter }} />
+			)}
+			{!stop && routes && (
 				<Routes
 					routes={routes}
 					resetUrl={setSearchParams({ routes: undefined }, true)}
@@ -138,7 +160,7 @@ const Routes = ({ routes, resetUrl }) => {
 							{route.properties.isSchool && <div>🎒 Bus scolaire</div>}
 							{stopList.length ? (
 								<small>
-									<details>
+									<details open={routes.length === 1}>
 										<summary>Arrêts</summary>
 										<ol
 											css={`

@@ -42,7 +42,6 @@ export default function useSearchLocalTransit(map, active, center, zoom) {
 		if (!map || !stops.length || !active || notZoomEnough) return
 		const markers = stops.map((stop) => {
 			const routes = stopTimes[stop.stop_id]?.routes
-			console.log('olive', routes)
 
 			const jsx = `<div><div style="padding: 0 .2rem">${stop.stop_name}</div>
 ${
