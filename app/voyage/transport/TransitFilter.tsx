@@ -1,18 +1,20 @@
 import { capitalise0, sortBy } from '@/components/utils/utils'
 import { trainColors } from '../itinerary/motisRequest'
 
+export const defaultTransitFilter = 'plan général'
 // these are filter functions that select lines depending on properties
 // then, another function will adapt to keep only the points where filtered
 // routes pass
+
 export const transitFilters = [
 	[
-		'régulières',
+		'plan général',
 		{
 			filter: ({ properties: { isNight, isSchool } }) => !(isNight || isSchool),
 		},
 	],
 	[
-		'fréquent',
+		'lignes principales',
 		{
 			filter: (feature) =>
 				console.log('cornflowerblue fréquent') ||
@@ -24,7 +26,7 @@ export const transitFilters = [
 	['métro', { filter: (data) => data.properties.route_type === 1 }],
 	['tram', { filter: (data) => data.properties.route_type === 0 }],
 	[
-		'bus',
+		'tous les bus',
 		{
 			filter: (data) =>
 				console.log('yellow', data) || data.properties.route_type === 3,
@@ -59,7 +61,11 @@ export default function TransitFilter({
 		return [key, selectedRoutes]
 	})
 	return (
-		<section>
+		<section
+			css={`
+				margin-top: 1rem;
+			`}
+		>
 			<form
 				css={`
 					width: 100%;

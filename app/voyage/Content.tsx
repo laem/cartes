@@ -24,6 +24,10 @@ import TransportMap from './transport/TransportMap'
 import useOgImageFetcher from './useOgImageFetcher'
 import useWikidata from './useWikidata'
 import ShareButton from './ShareButton'
+import {
+	defaultTransitFiler,
+	defaultTransitFilter,
+} from './transport/TransitFilter'
 
 const getMinimumQuickSearchZoom = (mobile) => (mobile ? 10.5 : 12) // On a small screen, 70 %  of the tiles are not visible, hence this rule
 
@@ -210,7 +214,7 @@ export default function Content({
 						trainType: searchParams['type de train'],
 						setTrainType: (trainType) =>
 							setSearchParams({ 'type de train': trainType }),
-						transitFilter: searchParams['filtre'],
+						transitFilter: searchParams['filtre'] || defaultTransitFilter,
 						setTransitFilter: (filter) => setSearchParams({ filtre: filter }),
 					}}
 				/>

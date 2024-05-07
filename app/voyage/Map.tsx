@@ -39,6 +39,10 @@ import useOverpassRequest from './effects/useOverpassRequest'
 import useRightClick from './effects/useRightClick'
 import useSearchLocalTransit from './effects/useSearchLocalTransit'
 import useTransportStopData from './transport/useTransportStopData'
+import {
+	defaultTransitFiler,
+	defaultTransitFilter,
+} from './transport/TransitFilter'
 
 export const defaultState = {
 	depuis: { inputValue: null, choice: false },
@@ -150,7 +154,7 @@ export default function Map({ searchParams }) {
 		searchParams.routes,
 		searchParams.arret,
 		searchParams['type de train'],
-		searchParams['filtre'],
+		searchParams['filtre'] || defaultTransitFilter,
 		searchParams.noCache
 	)
 
