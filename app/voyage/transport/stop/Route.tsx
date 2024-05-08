@@ -104,7 +104,7 @@ export default function Route({ route, stops = [] }) {
 			`}
 		>
 			<RouteName route={route} name={name} />
-			{hasMultipleTripDirections && (
+			{route.route_type === 3 && hasMultipleTripDirections && (
 				<div
 					css={`
 						display: flex;
