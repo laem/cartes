@@ -12,7 +12,11 @@ export const trainTypeSncfMapping = {
 export default function SncfSelect({ data, trainType, setTrainType }) {
 	const safeTrainType = trainType || 'Tout'
 	return (
-		<section>
+		<section
+			css={`
+				margin-top: 1rem;
+			`}
+		>
 			<form
 				css={`
 					width: 100%;

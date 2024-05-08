@@ -106,10 +106,9 @@ export default function TransportMap({
 					backUrl={setSearchParams({ agence: undefined }, true)}
 				/>
 			)}
-			{!stop && selectedAgency == '1187' && (
+			{!stop && selectedAgency == '1187' ? (
 				<SncfSelect {...{ data, setTrainType, trainType }} />
-			)}
-			{!stop && (
+			) : (
 				<TransitFilter {...{ data, setTransitFilter, transitFilter }} />
 			)}
 			{!stop && routes && (
