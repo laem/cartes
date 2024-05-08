@@ -70,7 +70,7 @@ export default function TransportMap({
 		<section>
 			<section>
 				<h2>Explorer les transports en commun</h2>
-				<DateSelector type="day" date={day} />
+				{false && <DateSelector type="day" date={day} />}
 				{!selectedAgency && data?.length > 0 && (
 					<ol>
 						{data.map(([agencyId, { agency, bbox, geojson }]) => (
