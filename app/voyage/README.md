@@ -27,7 +27,7 @@ To set it up on your local computer, just run :
 yarn && yarn dev
 ```
 
-You'll have to create your free MapTiler key and put it in a `env.local` file :
+You'll have to create your free MapTiler key and put it in a `.env.local` file at the root of the futureco folder:
 
 ```
 NEXT_PUBLIC_MAPTILER=YOUR_KEY
