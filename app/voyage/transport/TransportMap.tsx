@@ -110,7 +110,7 @@ export default memo(function TransportMap({
 				<Routes
 					routesParam={routesParam}
 					routes={routes}
-					resetUrl={setSearchParams({ routes: undefined }, true)}
+					setRoutes={(routes) => setSearchParams({ routes }, true)}
 				/>
 			)}
 		</section>
@@ -127,13 +127,13 @@ const Agency = ({ data, backUrl }) => {
 	)
 }
 
-const Routes = ({ routes, resetUrl, routesParam }) => {
+const Routes = ({ routes, setRoutes, routesParam }) => {
 	console.log('pink', routes)
 
 	return (
 		<section>
 			{routesParam ? (
-				<Link href={resetUrl}>Effacer les routes</Link>
+				<Link href={setRoutes(undefined)}>Effacer les routes</Link>
 			) : (
 				'👉️ Cliquez pour explorer les routes'
 			)}
@@ -150,8 +150,18 @@ const Routes = ({ routes, resetUrl, routesParam }) => {
 				{routes.map((route) => {
 					const stopList = route.properties.stopList
 					return (
-						<li key={route.properties.route_id}>
-							<RouteName route={route.properties} />
+						<li
+							key={route.properties.route_id}
+							css={`
+								a {
+									text-decoration: none;
+									color: inherit;
+								}
+							`}
+						>
+							<Link href={setRoutes(route.properties.route_id)}>
+								<RouteName route={route.properties} />
+							</Link>
 							<div>
 								Voyages par jour : {Math.round(route.properties.perDay / 2)}.
 								Par heure : {Math.round(route.properties.perDay / 10 / 2)}
