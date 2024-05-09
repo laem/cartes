@@ -102,6 +102,7 @@ export default function Route({ route, stops = [] }) {
 		<li
 			css={`
 				margin-top: 0.8rem;
+				margin-bottom: 1.4rem;
 			`}
 		>
 			<RouteName route={route} name={name} />

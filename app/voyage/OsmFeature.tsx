@@ -63,7 +63,7 @@ export default function OsmFeature({ data, transportStopData }) {
 				a {
 					color: var(--darkColor);
 				}
-				small {
+				> small {
 					line-height: 0.9rem;
 					display: inline-block;
 				}
