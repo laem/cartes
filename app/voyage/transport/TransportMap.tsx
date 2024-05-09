@@ -110,8 +110,10 @@ export default memo(function TransportMap({
 				<Routes
 					routesParam={routesParam}
 					routes={routes}
-					setRoutes={(routes) => setSearchParams({ routes }, true)}
-					setStopName={(stopName) => setSearchParams({ arret: stopName }, true)}
+					setRoutes={(routes, url = true) => setSearchParams({ routes }, url)}
+					setStopName={(stopName, url = true) =>
+						setSearchParams({ arret: stopName }, url)
+					}
 				/>
 			)}
 		</section>
@@ -142,9 +144,7 @@ const Routes = ({ routes, setRoutes, setStopName, routesParam }) => {
 			{routesParam ? (
 				<ModalCloseButton
 					title="Réinitialiser la sélection de lignes"
-					onClick={() => {
-						setRoutes(undefined)
-					}}
+					onClick={() => setRoutes(undefined, false)}
 				/>
 			) : (
 				'👉️ Cliquez pour explorer les routes'
@@ -174,10 +174,15 @@ const Routes = ({ routes, setRoutes, setStopName, routesParam }) => {
 							<Link href={setRoutes(route.properties.route_id)}>
 								<RouteName route={route.properties} />
 							</Link>
-							<div>
+							<small
+								css={`
+									text-align: right;
+									color: gray;
+								`}
+							>
 								Voyages par jour : {Math.round(route.properties.perDay / 2)}.
 								Par heure : {Math.round(route.properties.perDay / 10 / 2)}
-							</div>
+							</small>
 							{route.properties.isNight && <div>🌜️ Bus de nuit</div>}
 							{route.properties.isSchool && <div>🎒 Bus scolaire</div>}
 							{stopList.length ? (
