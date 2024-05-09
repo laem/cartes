@@ -132,9 +132,20 @@ const Routes = ({ routes, setRoutes, setStopName, routesParam }) => {
 	console.log('pink', routes)
 
 	return (
-		<section>
+		<section
+			css={`
+				position: relative;
+				margin-top: 0.6rem;
+				padding-top: 0.4rem;
+			`}
+		>
 			{routesParam ? (
-				<Link href={setRoutes(undefined)}>Effacer les routes</Link>
+				<ModalCloseButton
+					title="Réinitialiser la sélection de lignes"
+					onClick={() => {
+						setRoutes(undefined)
+					}}
+				/>
 			) : (
 				'👉️ Cliquez pour explorer les routes'
 			)}
