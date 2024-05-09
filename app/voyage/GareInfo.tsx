@@ -1,7 +1,7 @@
 import { useState } from 'react'
 import { initialDate } from './itinerary/DateSelector'
 
-export default function GareInfo({ clickedGare }) {
+export default function GareInfo({ nom, uic8 }) {
 	const [date, setDate] = useState(initialDate())
 	console.log(date)
 	return (
@@ -46,12 +46,10 @@ export default function GareInfo({ clickedGare }) {
 				min={initialDate()}
 				onChange={(e) => setDate(e.target.value)}
 			/>
-			<h2>Gare de {clickedGare.nom}</h2>
+			<h2>Gare de {nom}</h2>
 
 			<iframe
-				src={`https://tableau-sncf.vercel.app/station/stop_area:SNCF:${clickedGare.uic.slice(
-					2
-				)}?date=${date}`}
+				src={`https://tableau-sncf.vercel.app/station/stop_area:SNCF:${uic8}?date=${date}`}
 			/>
 		</div>
 	)

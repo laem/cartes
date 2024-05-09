@@ -10,6 +10,8 @@ import { getTagLabels } from './osmTagLabels'
 import Brand, { Wikidata } from './tags/Brand'
 import Stop, { isNotTransportStop, transportKeys } from './transport/stop/Stop'
 import Image from 'next/image'
+import GareInfo from './GareInfo'
+import { computeSncfUicControlDigit } from './utils'
 
 export default function OsmFeature({ data, transportStopData }) {
 	if (!data.tags) return null
@@ -89,6 +91,15 @@ export default function OsmFeature({ data, transportStopData }) {
 				</small>
 			)}
 			<Address tags={data.tags} />
+			{data.tags.uic_ref && (
+				<GareInfo
+					{...{
+						nom: data.tags.name,
+						uic8:
+							data.tags.uic_ref + computeSncfUicControlDigit(data.tags.uic_ref),
+					}}
+				/>
+			)}
 			{wikipedia && wikipedia.includes(':') && <Wikipedia name={wikipedia} />}
 			{mérimée && (
 				<a

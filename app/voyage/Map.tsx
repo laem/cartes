@@ -21,7 +21,11 @@ import { disambiguateWayRelation } from './osmRequest'
 import { styles } from './styles/styles'
 import useHoverOnMapFeatures from './useHoverOnMapFeatures'
 import useTerrainControl from './useTerrainControl'
-import { encodePlace, fitBoundsConsideringModal } from './utils'
+import {
+	computeSncfUicControlDigit,
+	encodePlace,
+	fitBoundsConsideringModal,
+} from './utils'
 
 import { replaceArrayIndex } from '@/components/utils/utils'
 import getBbox from '@turf/bbox'
@@ -188,9 +192,10 @@ export default function Map({ searchParams }) {
 	)
 
 	const gares = []
-	const uic = searchParams.arret
-	const clickedGare = gares && gares.find((g) => g.uic.includes(uic))
-	const clickGare = (uic) => setSearchParams({ gare: uic })
+
+	const clickedGare = null
+	const clickGare = (uic) => null // TODO train station + itinerary to be implemented again // setSearchParams({ gare: uic })
+
 	const [bikeRoute, setBikeRoute] = useState(null)
 	const [resetItinerary, routes, date] = useItinerary(
 		map,
@@ -397,9 +402,6 @@ export default function Map({ searchParams }) {
 				})
 				console.log('sill set OSMFeature', element)
 				// wait for the searchParam update to proceed
-				const uic = element.tags?.uic_ref,
-					gare = gares && gares.find((g) => g.uic.includes(uic))
-				if (uic && gare) clickGare(gare.uic)
 			}
 		}
 

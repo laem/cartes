@@ -19,3 +19,19 @@ export const fitBoundsConsideringModal = (isMobile, bbox, map) =>
 			? { top: 50, bottom: 400, left: 50, right: 50 }
 			: { top: 100, bottom: 100, left: 600, right: 100 },
 	})
+
+export const computeSncfUicControlDigit = (uic) => {
+	const multiplied = ('' + uic)
+		.replace(/^(00)?87/, '')
+		.split('')
+		.map((digit, index) => +digit * (index & 1 ? 1 : 2))
+	const sum = multiplied
+		.join('')
+		.split('')
+		.reduce((memo, next) => memo + +next, 0)
+
+	console.log('sum uic8', multiplied, sum)
+
+	const nextFactorOfTen = Math.round((sum + 5) / 10) * 10
+	return nextFactorOfTen - sum
+}

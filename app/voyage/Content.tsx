@@ -2,32 +2,27 @@ import useSetSearchParams from '@/components/useSetSearchParams'
 import { getThumb } from '@/components/wikidata'
 import { useEffect } from 'react'
 import { useLocalStorage } from 'usehooks-ts'
-import BikeRouteRésumé from './BikeRouteRésumé'
 import BookmarkButton from './BookmarkButton'
 import Bookmarks from './Bookmarks'
 import ClickedPoint from './ClickedPoint'
 import { ContentSection, ContentWrapper, ExplanationWrapper } from './ContentUI'
 import { FeatureImage } from './FeatureImage'
-import GareInfo from './GareInfo'
 import OsmFeature from './OsmFeature'
 import { PlaceButtonList } from './PlaceButtonsUI'
 import PlaceSearch from './PlaceSearch'
 import QuickBookmarks from './QuickBookmarks'
 import QuickFeatureSearch from './QuickFeatureSearch'
 import SetDestination from './SetDestination'
+import ShareButton from './ShareButton'
 import { DialogButton, ModalCloseButton } from './UI'
 import { ZoneImages } from './ZoneImages'
 import Explanations from './explanations.mdx'
 import Itinerary from './itinerary/Itinerary'
 import StyleChooser from './styles/StyleChooser'
+import { defaultTransitFilter } from './transport/TransitFilter'
 import TransportMap from './transport/TransportMap'
 import useOgImageFetcher from './useOgImageFetcher'
 import useWikidata from './useWikidata'
-import ShareButton from './ShareButton'
-import {
-	defaultTransitFiler,
-	defaultTransitFilter,
-} from './transport/TransitFilter'
 
 const getMinimumQuickSearchZoom = (mobile) => (mobile ? 10.5 : 12) // On a small screen, 70 %  of the tiles are not visible, hence this rule
 
@@ -300,27 +295,7 @@ export default function Content({
 								)}
 							</PlaceButtonList>
 						)}
-						{clickedGare ? (
-							<div>
-								<ModalCloseButton
-									title="Fermer l'encart gare"
-									onClick={() => {
-										console.log('will yo2')
-										setSearchParams({ gare: undefined, stop: undefined })
-									}}
-								/>
-								{bikeRoute && (
-									<BikeRouteRésumé
-										{...{
-											data: bikeRoute,
-											bikeRouteProfile,
-											setBikeRouteProfile,
-										}}
-									/>
-								)}
-								<GareInfo clickedGare={clickedGare} />
-							</div>
-						) : osmFeature ? (
+						{osmFeature ? (
 							<OsmFeature
 								data={osmFeature}
 								transportStopData={transportStopData}
