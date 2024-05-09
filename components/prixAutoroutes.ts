@@ -1,4 +1,4 @@
-import data from '@/app/voyage/cout-voiture/prix-autoroutes.csv'
+import data from '@/app/(futureco)/cout-voiture/prix-autoroutes.csv'
 
 const result = data.reduce((memo, next) => {
 	if (

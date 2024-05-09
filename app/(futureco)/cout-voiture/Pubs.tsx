@@ -1,6 +1,6 @@
 'use client'
 import Image from 'next/image'
-import rules from '@/app/voyage/cout-voiture/data/rules'
+import rules from '@/app/(futureco)/cout-voiture/data/rules'
 import Publicodes, { formatValue } from 'publicodes'
 import { styled } from 'styled-components'
 import pubs from './pubs.yaml'

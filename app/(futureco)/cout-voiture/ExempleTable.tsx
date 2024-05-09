@@ -52,7 +52,7 @@ export default function ExempleTable() {
 										<li key={element2.titre}>
 											<Link
 												href={{
-													pathname: '/voyage/cout-voiture',
+													pathname: '/cout-voiture',
 													query: {
 														lu: 'oui',
 														...encodeSituation(finalSituation),

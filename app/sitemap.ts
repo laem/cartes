@@ -1,6 +1,6 @@
 import nationalData from '@/app/(futureco)/national/data.yaml'
 import { utils } from 'publicodes'
-import voyageRules from '@/app/voyage/cout-voiture/data/rules.ts'
+import voyageRules from '@/app/(futureco)/cout-voiture/data/rules.ts'
 
 const lines = [
 	'https://futur.eco',
@@ -9,7 +9,7 @@ const lines = [
 	'https://futur.eco/scenarios',
 	'https://futur.eco/national',
 	'https://futur.eco/carburants/prix-a-la-pompe',
-	'https://futur.eco/voyage/cout-voiture',
+	'https://futur.eco/cout-voiture',
 ]
 
 const voyageLines = Object.entries(voyageRules).map(

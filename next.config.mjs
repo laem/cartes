@@ -29,23 +29,13 @@ const nextConfig = {
 		// !! WARN !!
 		ignoreBuildErrors: true,
 	},
-	async rewrites() {
-		return process.env.VOYAGE === 'oui'
-			? {
-					beforeFiles: [
-						// These rewrites are checked after headers/redirects
-						// and before all files including _next/public files which
-						// allows overriding page files
-						{
-							source: '/',
-							destination: '/voyage',
-						},
-					],
-			  }
-			: {}
-	},
 	async redirects() {
 		return [
+			{
+				source: '/voyage/cout-voiture',
+				destination: '/cout-voiture',
+				permanent: true,
+			},
 			{
 				source: '/ferry',
 				destination: '/simulateur/transport/ferry/empreinte-du-voyage',
@@ -62,6 +52,21 @@ const nextConfig = {
 				permanent: true,
 			},
 		]
+	},
+	async rewrites() {
+		return process.env.VOYAGE === 'oui'
+			? {
+					beforeFiles: [
+						// These rewrites are checked after headers/redirects
+						// and before all files including _next/public files which
+						// allows overriding page files
+						{
+							source: '/',
+							destination: '/voyage',
+						},
+					],
+			  }
+			: {}
 	},
 	webpack: (config, options) => {
 		config.module.rules.push({

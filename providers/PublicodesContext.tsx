@@ -2,7 +2,7 @@
 
 import React, { useContext, useEffect, useMemo, useState } from 'react'
 
-import rules from '@/app/voyage/cout-voiture/data/rules'
+import rules from '@/app/(futureco)/cout-voiture/data/rules'
 import { situationSelector } from '@/selectors/simulationSelectors'
 import Engine from 'publicodes'
 import { useSelector } from 'react-redux'

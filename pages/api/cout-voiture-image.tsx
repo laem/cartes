@@ -1,4 +1,4 @@
-import rules from '@/app/voyage/cout-voiture/data/rules'
+import rules from '@/app/(futureco)/cout-voiture/data/rules'
 import convert from '@/components/css/convertToJs'
 import { ImageResponse } from '@vercel/og'
 import Publicodes, { formatValue } from 'publicodes'
