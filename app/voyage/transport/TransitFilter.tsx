@@ -28,8 +28,7 @@ export const transitFilters = [
 	[
 		'tous les bus',
 		{
-			filter: (data) =>
-				console.log('yellow', data) || data.properties.route_type === 3,
+			filter: (data) => data.properties.route_type === 3,
 		},
 	],
 	//['tout', { filter: (data) => data }],
@@ -40,16 +39,7 @@ export default function TransitFilter({
 	setTransitFilter,
 }) {
 	if (!data || !data.length) return null
-	const features = data
-		.map(
-			([
-				agencyId,
-				{
-					geojson: { features },
-				},
-			]) => features
-		)
-		.flat()
+	const features = data.map(([agencyId, { features }]) => features).flat()
 	console.log('cornflowerblue data', data, features)
 	const filtered = transitFilters.map(([key, { filter }]) => {
 		const routes = features.filter(

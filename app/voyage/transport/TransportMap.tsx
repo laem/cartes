@@ -40,26 +40,15 @@ export default function TransportMap({
 	)[1].filter
 	const routesDemanded = routesParam?.split('|')
 	const routes = sortBy((route) => -route.properties.perDay)(
-		data.reduce(
-			(
-				memo,
-				[
-					,
-					{
-						geojson: { features },
-					},
-				]
-			) => {
-				const filteredFeatures = features.filter(transitFilterFunction)
-				const found = filteredFeatures.filter((feature) =>
-					routesDemanded
-						? routesDemanded.includes(feature.properties.route_id)
-						: feature.geometry.type === 'LineString'
-				)
-				return [...memo, ...found]
-			},
-			[]
-		)
+		data.reduce((memo, [, { features }]) => {
+			const filteredFeatures = features.filter(transitFilterFunction)
+			const found = filteredFeatures.filter((feature) =>
+				routesDemanded
+					? routesDemanded.includes(feature.properties.route_id)
+					: feature.geometry.type === 'LineString'
+			)
+			return [...memo, ...found]
+		}, [])
 	)
 
 	console.log('pink routes', routes)
@@ -73,7 +62,7 @@ export default function TransportMap({
 				{false && <DateSelector type="day" date={day} />}
 				{!selectedAgency && data?.length > 0 && (
 					<ol>
-						{data.map(([agencyId, { agency, bbox, geojson }]) => (
+						{data.map(([agencyId, { agency, bbox, features }]) => (
 							<li key={agencyId}>
 								<Link href={setSearchParams({ agence: agencyId }, true)}>
 									{agency.agency_name}

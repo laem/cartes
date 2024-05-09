@@ -1,46 +1,15 @@
 import useSetSearchParams from '@/components/useSetSearchParams'
 import { useEffect } from 'react'
 
-const mergeRoutes = (geojson) => {
-	// TODO I can't yet understand why so many geojsons for one route, and how to
-	// draw them correctly.
-	// Iterating on client for now, then will be cached on the server
-	const { features: rawFeatures } = geojson
-
-	const reduced = rawFeatures.reduce((memo, next) => {
-		const id = next.properties.route_id
-		const already = memo[id]
-		return { ...memo, [id]: [...(already || []), next] }
-	}, {})
-
-	const features = Object.entries(reduced)
-		.map(
-			([id, list]) =>
-				Array.isArray(list) && {
-					...list[0],
-					geometry: {
-						type: 'LineString',
-						coordinates: list
-							.slice(0, 1)
-							.map((el) => el.geometry.coordinates)
-							.flat(),
-					},
-				}
-		)
-		.filter(Boolean)
-
-	return { ...geojson, features }
-}
 /***
  * This hook draws transit lines on the map.
  */
-export default function useDrawTransport(map, data, styleKey, drawKey) {
-	const routesGeojson = data?.routesGeojson
-
+export default function useDrawTransport(map, features, styleKey, drawKey) {
+	console.log('indigo features', features, drawKey)
 	const setSearchParams = useSetSearchParams()
 
 	useEffect(() => {
-		if (!map || !routesGeojson) return
+		if (!map || !features?.length) return
 		if (styleKey !== 'transit') return
 
 		/* Old idea : lower the opacity of all style layers.
@@ -67,28 +36,14 @@ export default function useDrawTransport(map, data, styleKey, drawKey) {
 		})
 		*/
 		// TODO this is overly complicated
-		const featureCollection =
-			routesGeojson.type === 'FeatureCollection'
-				? mergeRoutes(routesGeojson)
-				: routesGeojson.reduce(
-						(memo, next) => ({
-							type: 'FeatureCollection',
-							features: [
-								...memo.features,
-								...(next.shapes?.features || next.features),
-								...(next.stops?.features.map((f) => ({
-									...f,
-									properties: { route_color: '#' + next.route.route_color },
-								})) || []),
-							],
-						}),
-						{ features: [] }
-				  )
-		console.log('ROUTESGEO', featureCollection)
+		const featureCollection = {
+			type: 'FeatureCollection',
+			features,
+		}
+
 		const id = 'transport-routes-' + drawKey
 		const linesId = id + '-lines'
 		const pointsId = id + '-points'
-		console.log('darkblue', drawKey)
 
 		const onClickRoutes = (e) => {
 			console.log(
@@ -218,5 +173,5 @@ export default function useDrawTransport(map, data, styleKey, drawKey) {
 				map.removeSource(id)
 			}
 		}
-	}, [map, routesGeojson, drawKey, styleKey])
+	}, [map, features, drawKey, styleKey])
 }
