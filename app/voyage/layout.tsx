@@ -1,5 +1,9 @@
 import { Metadata } from 'next'
 import css from '@/components/css/convertToJs'
+import { Analytics } from '@vercel/analytics/react'
+import StyledComponentsRegistry from '../../lib/registry'
+import '../globals.css'
+import { ThemeColorsProvider } from '@/components/utils/colors'
 
 const title = `Voyagez, autrement.`
 const description1 =
@@ -25,13 +29,30 @@ export async function generateMetadata(
 }
 export default function ({ children }) {
 	return (
-		<div
-			style={css`
-				background: #dfecbe;
-				min-height: 100vh;
-			`}
-		>
-			{children}
-		</div>
+		<html lang="fr">
+			<head>
+				<link
+					rel="search"
+					type="application/opensearchdescription+xml"
+					title="Voyage"
+					href="https://futur.eco/voyage-search.xml"
+				/>
+			</head>
+			<body>
+				<StyledComponentsRegistry>
+					<ThemeColorsProvider>
+						<div
+							style={css`
+								background: #dfecbe;
+								min-height: 100vh;
+							`}
+						>
+							{children}
+						</div>
+					</ThemeColorsProvider>
+				</StyledComponentsRegistry>
+				<Analytics />
+			</body>
+		</html>
 	)
 }

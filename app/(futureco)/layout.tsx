@@ -1,5 +1,9 @@
+import { ThemeColorsProvider } from '@/components/utils/colors'
 import Providers from '@/providers/Providers'
+import { Analytics } from '@vercel/analytics/react'
 import Nav, { NavFooter } from 'Components/Nav'
+import StyledComponentsRegistry from '../../lib/registry'
+import '../globals.css'
 
 export const metadata = {
 	title: 'Futureco',
@@ -13,16 +17,25 @@ export const metadata = {
 	},
 }
 
-export default function RootLayout({
+export default function FuturecoLayout({
 	children,
 }: {
 	children: React.ReactNode
 }) {
 	return (
-		<Providers>
-			<Nav />
-			{children}
-			<NavFooter />
-		</Providers>
+		<html lang="fr">
+			<body>
+				<StyledComponentsRegistry>
+					<ThemeColorsProvider>
+						<Providers>
+							<Nav />
+							{children}
+							<NavFooter />
+						</Providers>
+					</ThemeColorsProvider>
+				</StyledComponentsRegistry>
+				<Analytics />
+			</body>
+		</html>
 	)
 }
