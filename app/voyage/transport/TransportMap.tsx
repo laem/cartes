@@ -7,19 +7,26 @@ import TransitFilter, { transitFilters } from './TransitFilter'
 import { sortBy } from '@/components/utils/utils'
 import StopByName from './StopByName'
 import { ModalCloseButton } from '../UI'
+import { memo } from 'react'
 
-export default function TransportMap({
+export default memo(function TransportMap({
 	day,
 	data,
 	selectedAgency,
 	routesParam,
 	trainType,
-	setTrainType,
 	transitFilter,
-	setTransitFilter,
 	stop,
-	resetStop,
 }) {
+	console.log('TransportMap')
+	const setSearchParams = useSetSearchParams()
+
+	const setTransitFilter = (filter) => setSearchParams({ filtre: filter })
+
+	const setTrainType = (trainType) =>
+		setSearchParams({ 'type de train': trainType })
+
+	const resetStop = () => setSearchParams({ arret: undefined })
 	/* async, not needed yet since the agency data includes routes
 	useEffect(() => {
 		if (!routesParam || !data) return setRoutes([])
@@ -52,8 +59,6 @@ export default function TransportMap({
 	)
 
 	console.log('pink routes', routes)
-
-	const setSearchParams = useSetSearchParams()
 
 	return (
 		<section>
@@ -110,7 +115,7 @@ export default function TransportMap({
 			)}
 		</section>
 	)
-}
+})
 
 const Agency = ({ data, backUrl }) => {
 	return (
@@ -162,8 +167,8 @@ const Routes = ({ routes, resetUrl, routesParam }) => {
 												margin-left: 2rem;
 											`}
 										>
-											{stopList.map((stop) => (
-												<li key={stop}>{stop}</li>
+											{stopList.map((stop, index) => (
+												<li key={index}>{stop}</li>
 											))}
 										</ol>
 									</details>
