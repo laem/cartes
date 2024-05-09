@@ -6,6 +6,7 @@ import { useState } from 'react'
 import { transportIcon } from '../../itinerary/Transit'
 import DayView from '../DayView'
 import Calendar from './Calendar'
+import { handleColor } from '../../itinerary/motisRequest'
 
 export const nowAsYYMMDD = (delimiter = '') => {
 	var d = new Date(),
@@ -158,7 +159,7 @@ export const RouteName = ({ route, name = undefined }) => {
 	const color = route.route_color
 		? findContrastedTextColor(route.route_color, true)
 		: '#ffffff'
-	const backgroundColor = route.route_color ? `#${route.route_color}` : 'grey'
+	const backgroundColor = handleColor(route.route_color, 'gray')
 
 	const givenShortName = route.route_short_name,
 		shortName = givenShortName.match(/^[A-z]$/)
