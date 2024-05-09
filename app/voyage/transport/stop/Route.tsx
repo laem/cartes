@@ -162,7 +162,7 @@ export const RouteName = ({ route, name = undefined }) => {
 		: '#ffffff'
 	const backgroundColor = handleColor(route.route_color, 'gray')
 
-	const givenShortName = route.route_short_name,
+	const givenShortName = route.route_short_name || '',
 		shortName = givenShortName.match(/^[A-z]$/)
 			? givenShortName.toUpperCase()
 			: givenShortName
