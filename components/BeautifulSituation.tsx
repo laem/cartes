@@ -27,7 +27,7 @@ const displayHandlers = [
 	},
 ]
 
-//http://localhost:8080/voyage/cout-voiture/og?dottedName=voyage . trajet voiture . coût trajet par personne&title=Coût du trajet en voiture&emojis=🪙🚗&_action=reset&lu=true&voyage.trajet+voiture.départ='Brest'&voyage.trajet+voiture.arrivée='Rennes'&voyage.trajet+voiture.distance=242&voyage.trajet+voiture.péages.prix+calculé.prix+2018=0&voyage.trajet.voyageurs=1&voyage.voiture.motorisation='diesel'&voyage.voiture.occasion=non&voyage.voiture.km+annuels=12000&voyage.voiture.coût+de+possession.entretien+thermique=840+€&voyage.trajet+voiture.prix+carburant=2&voyage.voiture.consommation+thermique=6&voyage.voiture.prix+d'achat+neuf=18000&voyage.voiture.coût+de+possession.assurance=527+€%2Fan&voyage.voiture.coûts+divers.parking=600+€%2Fan&voyage.voiture.coûts+divers.pv=40
+//http://localhost:8080/cout-voiture/og?dottedName=voyage . trajet voiture . coût trajet par personne&title=Coût du trajet en voiture&emojis=🪙🚗&_action=reset&lu=true&voyage.trajet+voiture.départ='Brest'&voyage.trajet+voiture.arrivée='Rennes'&voyage.trajet+voiture.distance=242&voyage.trajet+voiture.péages.prix+calculé.prix+2018=0&voyage.trajet.voyageurs=1&voyage.voiture.motorisation='diesel'&voyage.voiture.occasion=non&voyage.voiture.km+annuels=12000&voyage.voiture.coût+de+possession.entretien+thermique=840+€&voyage.trajet+voiture.prix+carburant=2&voyage.voiture.consommation+thermique=6&voyage.voiture.prix+d'achat+neuf=18000&voyage.voiture.coût+de+possession.assurance=527+€%2Fan&voyage.voiture.coûts+divers.parking=600+€%2Fan&voyage.voiture.coûts+divers.pv=40
 
 const findRuleEndingWith = (entries, ending) =>
 	entries.find(

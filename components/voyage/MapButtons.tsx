@@ -74,7 +74,7 @@ export default function MapButtons({
 	const setSearchParams = useSetSearchParams()
 	return (
 		<MapButtonsWrapper>
-			<MapButton>
+			<MapButton $active={searchParams.transports === 'oui'}>
 				<Link
 					href={setSearchParams(
 						{
@@ -93,7 +93,7 @@ export default function MapButtons({
 					/>
 				</Link>
 			</MapButton>
-			<MapButton>
+			<MapButton $active={styleChooser}>
 				<button
 					onClick={() => setStyleChooser(!styleChooser)}
 					title={'Choisir un autre style de fond de carte'}
@@ -137,10 +137,8 @@ export default function MapButtons({
 						src={'/star.svg'}
 						css={`
 							filter: none !important;
-
 						`}
 					/>
-
 				</Link>
 			</MapButton>
 		</MapButtonsWrapper>

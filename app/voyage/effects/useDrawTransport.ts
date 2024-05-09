@@ -1,49 +1,18 @@
 import useSetSearchParams from '@/components/useSetSearchParams'
 import { useEffect } from 'react'
 
-const mergeRoutes = (geojson) => {
-	// TODO I can't yet understand why so many geojsons for one route, and how to
-	// draw them correctly.
-	// Iterating on client for now, then will be cached on the server
-	const { features: rawFeatures } = geojson
-
-	const reduced = rawFeatures.reduce((memo, next) => {
-		const id = next.properties.route_id
-		const already = memo[id]
-		return { ...memo, [id]: [...(already || []), next] }
-	}, {})
-
-	const features = Object.entries(reduced)
-		.map(
-			([id, list]) =>
-				Array.isArray(list) && {
-					...list[0],
-					geometry: {
-						type: 'LineString',
-						coordinates: list
-							.slice(0, 1)
-							.map((el) => el.geometry.coordinates)
-							.flat(),
-					},
-				}
-		)
-		.filter(Boolean)
-
-	return { ...geojson, features }
-}
 /***
  * This hook draws transit lines on the map.
  */
-export default function useDrawTransport(map, data, styleKey, drawKey) {
-	const routesGeojson = data?.routesGeojson
-
+export default function useDrawTransport(map, features, styleKey, drawKey) {
+	console.log('indigo features', features, drawKey)
 	const setSearchParams = useSetSearchParams()
 
 	useEffect(() => {
-		if (!map || !routesGeojson) return
+		if (!map || !features?.length) return
 		if (styleKey !== 'transit') return
 
-		/* Lower the opacity of all style layers.
+		/* Old idea : lower the opacity of all style layers.
 		 * Replaced by setting the "transit" style taken from MapTiler's dataviz
 		 * clean styl, but we're losing essential
 		 * things like POIs, might be interesting to consider this option, or
@@ -66,27 +35,44 @@ export default function useDrawTransport(map, data, styleKey, drawKey) {
 			if (property) property.map((p) => map.setPaintProperty(layerId, p, 0.3))
 		})
 		*/
-		const featureCollection =
-			routesGeojson.type === 'FeatureCollection'
-				? mergeRoutes(routesGeojson)
-				: routesGeojson.reduce(
-						(memo, next) => ({
-							type: 'FeatureCollection',
-							features: [
-								...memo.features,
-								...(next.shapes?.features || next.features),
-								...(next.stops?.features.map((f) => ({
-									...f,
-									properties: { route_color: '#' + next.route.route_color },
-								})) || []),
-							],
-						}),
-						{ features: [] }
-				  )
+		// TODO this is overly complicated
+		const featureCollection = {
+			type: 'FeatureCollection',
+			features,
+		}
+
 		const id = 'transport-routes-' + drawKey
 		const linesId = id + '-lines'
 		const pointsId = id + '-points'
-		console.log('darkblue', drawKey)
+
+		const onClickRoutes = (e) => {
+			console.log(
+				'purple',
+				e.features.map(
+					({ properties }) =>
+						properties.route_long_name + '   ' + properties.sncfTrainType
+				)
+			)
+
+			setSearchParams({
+				routes: e.features
+					.map((feature) => feature.properties.route_id)
+					.join('|'),
+			})
+		}
+		const onClickStop = (e) => {
+			console.log('purple stop', e.features)
+			const feature = e.features[0],
+				agence = feature.properties.agencyId,
+				arret = feature.properties.name
+			//stopId = feature.properties.id,
+			//, gare = stopId.split('-').slice(-1)[0]
+
+			setSearchParams({
+				agence,
+				arret,
+			})
+		}
 		try {
 			const source = map.getSource(id)
 			if (source) return
@@ -110,20 +96,15 @@ export default function useDrawTransport(map, data, styleKey, drawKey) {
 					'line-color': ['get', 'route_color'],
 					'line-opacity': ['get', 'opacity'],
 					'line-width': [
-						'let',
-						'importance',
-						['match', ['get', 'route_type'], 0, 1.6, 1, 2.6, 2, 3, 3, 0.8, 0.8],
-						[
-							'interpolate',
-							['linear', 1],
-							['zoom'],
-							3,
-							['*', ['var', 'importance'], 0.2],
-							12,
-							['*', ['var', 'importance'], 2.5],
-							18,
-							['*', ['var', 'importance'], 4],
-						],
+						'interpolate',
+						['linear', 1],
+						['zoom'],
+						3,
+						['*', ['get', 'width'], 0.2],
+						12,
+						['*', ['get', 'width'], 2.5],
+						18,
+						['*', ['get', 'width'], 4],
 					],
 				},
 			})
@@ -138,6 +119,8 @@ export default function useDrawTransport(map, data, styleKey, drawKey) {
 						['linear', 1],
 						['zoom'],
 						0,
+						['*', 0.1, ['get', 'width']],
+						6,
 						['*', 10, ['get', 'width']],
 						12,
 						['*', 20, ['get', 'width']],
@@ -149,7 +132,9 @@ export default function useDrawTransport(map, data, styleKey, drawKey) {
 						['linear', 1],
 						['zoom'],
 						0,
-						['*', 2, ['get', 'width']],
+						['*', 0.1, ['get', 'width']],
+						6,
+						['*', 3, ['get', 'width']],
 						12,
 						['*', 5, ['get', 'width']],
 						18,
@@ -163,23 +148,8 @@ export default function useDrawTransport(map, data, styleKey, drawKey) {
 			})
 			console.log('darkBlue did add layer id ', pointsId, map._mapId)
 
-			map.on('click', linesId, (e) => {
-				setSearchParams({
-					routes: e.features
-						.map((feature) => feature.properties.routeId)
-						.join('|'),
-				})
-			})
-			map.on('click', pointsId, (e) => {
-				console.log('click', e)
-				const feature = e.features[0],
-					stopId = feature.properties.stopId,
-					gare = stopId.split('-').slice(-1)[0]
-
-				setSearchParams({
-					gare,
-				})
-			})
+			map.on('click', linesId, onClickRoutes)
+			map.on('click', pointsId, onClickStop)
 
 			map.on('mouseenter', linesId, () => {
 				map.getCanvas().style.cursor = 'pointer'
@@ -194,6 +164,8 @@ export default function useDrawTransport(map, data, styleKey, drawKey) {
 
 		return () => {
 			console.log('darkblue', map._mapId, map.getLayersOrder())
+			map.off('click', linesId, onClickRoutes)
+			map.off('click', pointsId, onClickStop)
 			map.removeLayer(linesId)
 			map.removeLayer(pointsId)
 			const source = map.getSource(id)
@@ -201,5 +173,5 @@ export default function useDrawTransport(map, data, styleKey, drawKey) {
 				map.removeSource(id)
 			}
 		}
-	}, [map, routesGeojson, drawKey, styleKey])
+	}, [map, features, drawKey, styleKey])
 }

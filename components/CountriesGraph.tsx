@@ -1,5 +1,5 @@
 'use client'
-import pays from '@/app/carburants/prix-a-la-pompe/pays.yaml'
+import pays from '@/app/(futureco)/carburants/prix-a-la-pompe/pays.yaml'
 
 const CountriesGraph = ({}) => {
 	const max = Math.max(...Object.values(pays))

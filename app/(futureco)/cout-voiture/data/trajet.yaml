@@ -23,7 +23,7 @@ trajet voiture . coût trajet par personne:
   titre: Un trajet en voiture (aller)
   icônes: 🪙🚗
   exposé:
-    url: '/voyage/cout-voiture'
+    url: '/cout-voiture'
     titre: Coût d'un trajet en voiture
   description: |
     Voici un modèle de calcul du coût d'un trajet en voiture par personne.

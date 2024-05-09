@@ -426,9 +426,10 @@ ${
 }
 
 //TODO complete with spec possibilities https://gtfs.org/fr/schedule/reference/#routestxt
-const transportIcon = (frenchTrainType, routeType) => {
+export const transportIcon = (frenchTrainType, routeType, route) => {
 	if (frenchTrainType) return `/transit/${frenchTrainType.toLowerCase()}.svg`
-	const found = {
+
+	const correspondance = {
 		0: '/icons/tram.svg',
 		1: '/icons/metro.svg',
 		2: '/icons/train.svg',
@@ -439,7 +440,9 @@ const transportIcon = (frenchTrainType, routeType) => {
 		7: '/icons/funiculaire.svg',
 		11: '/icons/trolleybus.svg',
 		12: '/icons/train.svg', // how to represent this ?
-	}[routeType]
+	}
+	if (route?.route_id === 'BIBUS:C') return correspondance[6] // LOL, merci bibus, you had one job...
+	const found = correspondance[routeType]
 	return found || '/icons/bus.svg'
 }
 

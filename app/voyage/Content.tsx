@@ -24,6 +24,10 @@ import TransportMap from './transport/TransportMap'
 import useOgImageFetcher from './useOgImageFetcher'
 import useWikidata from './useWikidata'
 import ShareButton from './ShareButton'
+import {
+	defaultTransitFiler,
+	defaultTransitFilter,
+} from './transport/TransitFilter'
 
 const getMinimumQuickSearchZoom = (mobile) => (mobile ? 10.5 : 12) // On a small screen, 70 %  of the tiles are not visible, hence this rule
 
@@ -190,9 +194,10 @@ export default function Content({
 							}}
 						/>
 					)}
-					{searchParams.favoris !== 'oui' && (
-						<QuickBookmarks oldAllez={searchParams.allez} />
-					)}
+					{searchParams.favoris !== 'oui' &&
+						searchParams.transports !== 'oui' && (
+							<QuickBookmarks oldAllez={searchParams.allez} />
+						)}
 				</section>
 			)}
 
@@ -204,6 +209,9 @@ export default function Content({
 						data: transportsData,
 						selectedAgency: searchParams.agence,
 						routesParam: searchParams.routes,
+						stop: searchParams.arret,
+						trainType: searchParams['type de train'],
+						transitFilter: searchParams['filtre'] || defaultTransitFilter,
 					}}
 				/>
 			)}
@@ -298,7 +306,7 @@ export default function Content({
 									title="Fermer l'encart gare"
 									onClick={() => {
 										console.log('will yo2')
-										clickGare(undefined)
+										setSearchParams({ gare: undefined, stop: undefined })
 									}}
 								/>
 								{bikeRoute && (

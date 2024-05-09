@@ -1,6 +1,6 @@
 - transport . ferry . empreinte du voyage
 - transport . avion . impact
-- url: /voyage/cout-voiture
+- url: /cout-voiture
   titre: Coût d'un trajet en voiture
   icônes: 🚗
   unités:
@@ -19,7 +19,7 @@
   unités:
     - €
 - plaque de cuisson . impact
-- url: /voyage
+- url: https://cartes.app
   titre: Voyagez, autrement
   image: voyage-vignette.png
   inversedColor: true

@@ -1,4 +1,4 @@
-import getQuestionsConfig from '@/app/simulateur/[...dottedName]/configBuilder'
+import getQuestionsConfig from '@/app/(futureco)/simulateur/[...dottedName]/configBuilder'
 import { DottedName } from 'modele-social'
 import Engine from 'publicodes'
 import {

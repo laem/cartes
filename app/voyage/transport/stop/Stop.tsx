@@ -1,5 +1,6 @@
 import { useEffect, useState } from 'react'
 import Route from './Route'
+import { sortBy } from '@/components/utils/utils'
 
 export const isNotTransportStop = (tags) =>
 	!tags || tags.public_transport !== 'platform'
@@ -29,7 +30,7 @@ export default function Stop({ tags, data }) {
 					list-style-type: none;
 				`}
 			>
-				{data.routes.map((route) => (
+				{sortBy((route) => -route.tripsCount)(data.routes).map((route) => (
 					<Route
 						key={route.route_id}
 						route={route}

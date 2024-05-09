@@ -1,7 +1,7 @@
 import setDefaultsToZero from './setDefaultsToZero'
 import transformRules from './transformRules'
-import voyageRules from '@/app/voyage/cout-voiture/data/rules'
-import carburantRules from '@/app/carburants/prix-a-la-pompe/rules'
+import voyageRules from '@/app/(futureco)/cout-voiture/data/rules'
+import carburantRules from '@/app/(futureco)/carburants/prix-a-la-pompe/rules'
 
 export async function getRules(
 	ruleSet: 'NGC' | 'futureco' | 'voyage' | 'carburants'

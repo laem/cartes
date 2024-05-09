@@ -7,7 +7,7 @@ const ShareButton = dynamic(() => import('Components/ShareButton'), {
 
 import { title } from '../utils/publicodesUtils'
 import dynamic from 'next/dynamic'
-import { ogImageURL } from '@/app/voyage/cout-voiture/ogImageUrl'
+import { ogImageURL } from '@/app/(futureco)/cout-voiture/ogImageUrl'
 import Image from 'next/image'
 import dimensions from '../simulationImageDimensions'
 

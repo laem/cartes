@@ -24,7 +24,10 @@ import useTerrainControl from './useTerrainControl'
 import { encodePlace, fitBoundsConsideringModal } from './utils'
 
 import { replaceArrayIndex } from '@/components/utils/utils'
+import getBbox from '@turf/bbox'
+import { useMediaQuery } from 'usehooks-ts'
 import CenteredCross from './CenteredCross'
+import FocusedImage from './FocusedImage'
 import MapComponents from './MapComponents'
 import { buildAllezPart } from './SetDestination'
 import { clickableClasses } from './clickableLayers'
@@ -36,10 +39,10 @@ import useOverpassRequest from './effects/useOverpassRequest'
 import useRightClick from './effects/useRightClick'
 import useSearchLocalTransit from './effects/useSearchLocalTransit'
 import useTransportStopData from './transport/useTransportStopData'
-import FocusedImage from './FocusedImage'
-import getBbox from '@turf/bbox'
-import { isMonday } from 'date-fns'
-import { useMediaQuery } from 'usehooks-ts'
+import {
+	defaultTransitFiler,
+	defaultTransitFilter,
+} from './transport/TransitFilter'
 
 export const defaultState = {
 	depuis: { inputValue: null, choice: false },
@@ -127,7 +130,7 @@ export default function Map({ searchParams }) {
 	const transportStopData = useTransportStopData(osmFeature)
 
 	useEffect(() => {
-		if (!transportStopData || !transportStopData.routesGeojson) return
+		if (!transportStopData.length) return
 
 		setTempStyle('transit')
 
@@ -137,15 +140,22 @@ export default function Map({ searchParams }) {
 		}
 	}, [setTempStyle, transportStopData])
 
-	useSearchLocalTransit(map, searchParams.transports === 'oui', center, zoom)
+	const isTransportsMode = searchParams.transports === 'oui'
+	useSearchLocalTransit(map, isTransportsMode, center, zoom)
 
 	const transportsData = useDrawTransportsMap(
 		map,
-		searchParams.transports === 'oui',
+		isTransportsMode,
 		safeStyleKey,
 		setTempStyle,
 		searchParams.day,
-		bbox
+		bbox,
+		searchParams.agence,
+		searchParams.routes,
+		searchParams.arret,
+		searchParams['type de train'],
+		searchParams['filtre'] || defaultTransitFilter,
+		searchParams.noCache
 	)
 
 	const agencyId = searchParams.agence
@@ -167,16 +177,11 @@ export default function Map({ searchParams }) {
 		map.fitBounds(mapLibreBBox)
 	}, [map, agency])
 
-	useDrawTransport(
-		map,
-		transportStopData,
-		safeStyleKey,
-		transportStopData?.stopId
-	)
+	const clickedStopData = transportStopData[0] || []
+	useDrawTransport(map, clickedStopData[1], safeStyleKey, clickedStopData[0])
 
-	const [gares, setGares] = useState(null)
-
-	const uic = searchParams.gare
+	const gares = []
+	const uic = searchParams.arret
 	const clickedGare = gares && gares.find((g) => g.uic.includes(uic))
 	const clickGare = (uic) => setSearchParams({ gare: uic })
 	const [bikeRoute, setBikeRoute] = useState(null)
@@ -245,15 +250,6 @@ export default function Map({ searchParams }) {
 		fetchBikeRoute()
 	}, [target, clickedGare, bikeRouteProfile])
 
-	useEffect(() => {
-		async function fetchGares() {
-			const res = await fetch('/gares.json')
-			const json = await res.json()
-			setGares(json)
-		}
-		fetchGares()
-	}, [setGares])
-
 	useTerrainControl(map, style)
 
 	useEffect(() => {
@@ -295,6 +291,7 @@ export default function Map({ searchParams }) {
 	// It also draws a polygon to show the search area for pictures
 	// (not obvious for the user though)
 	useEffect(() => {
+		if (isTransportsMode) return
 		const onClick = async (e) => {
 			console.log('click event', e)
 			setLatLngClicked(e.lngLat)
@@ -406,7 +403,15 @@ export default function Map({ searchParams }) {
 			if (!map) return
 			map.off('click', onClick)
 		}
-	}, [map, setState, distanceMode, itineraryMode, gares, clickGare])
+	}, [
+		map,
+		setState,
+		distanceMode,
+		itineraryMode,
+		gares,
+		clickGare,
+		isTransportsMode,
+	])
 
 	useHoverOnMapFeatures(map)
 
@@ -510,7 +515,7 @@ export default function Map({ searchParams }) {
 						styleChooser,
 						setStyleChooser,
 						itinerary,
-						transportStopData,
+						transportStopData: clickedStopData[1],
 						clickedPoint,
 						resetClickedPoint,
 						transportsData,
@@ -536,7 +541,7 @@ export default function Map({ searchParams }) {
 				}}
 			/>
 			{focusedImage && <FocusedImage {...{ focusedImage, focusImage }} />}
-			{searchParams.transports === 'oui' && <CenteredCross />}
+			{isTransportsMode && <CenteredCross />}
 			{map && <MapComponents map={map} vers={vers} />}
 			<div ref={mapContainerRef} />
 		</MapContainer>
