@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<OpenSearchDescription xmlns="http://a9.com/-/spec/opensearch/1.1/">
+  <ShortName>Cartes</ShortName>
+  <Description>Rechercher un lieu avec Cartes</Description>
+  <InputEncoding>UTF-8</InputEncoding>
+  <Image width="32" height="32" type="image/svg">https://cartes.app/icon-192.png</Image>
+  <Url type="text/html" method="GET" template="https://cartes.app/?q={searchTerms}"/>
+</OpenSearchDescription>

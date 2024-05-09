@@ -74,7 +74,7 @@ export default function PlaceSearch({
 	const onDestinationChange = onInputChange(stepIndex, localSearch)
 
 	useEffect(() => {
-		if (!urlSearchQuery || value != null) return
+		if (!urlSearchQuery || value) return
 
 		onDestinationChange(urlSearchQuery)
 	}, [urlSearchQuery, onDestinationChange, value])

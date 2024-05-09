@@ -34,8 +34,8 @@ export default function ({ children }) {
 				<link
 					rel="search"
 					type="application/opensearchdescription+xml"
-					title="Voyage"
-					href="https://futur.eco/voyage-search.xml"
+					title="Cartes"
+					href="https://cartes.app/cartes-search.xml"
 				/>
 			</head>
 			<body>
