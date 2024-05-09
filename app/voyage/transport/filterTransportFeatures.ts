@@ -6,27 +6,29 @@ export const filterTransportFeatures = (
 	{ routesParam, stop, trainType, transitFilter }
 ) => {
 	if (routesParam || stop || trainType || transitFilter) {
-		const routes = features.filter(
-			(route) =>
+		const filteredFeatures = features.filter(
+			(feature) =>
 				(!routesParam ||
-					routesParam.split('|').includes(route.properties.route_id)) &&
-				(!stop || route.properties.stopList?.includes(stop)) &&
+					routesParam.split('|').includes(feature.properties.route_id)) &&
+				(!stop ||
+					feature.properties.stopList?.includes(stop) ||
+					feature.properties.name === stop) &&
 				(!trainType ||
 					trainType === 'tout' ||
 					trainTypeSncfMapping[trainType].includes(
-						route.properties.sncfTrainType
+						feature.properties.sncfTrainType
 					)) &&
 				(!transitFilter ||
 					transitFilters
 						.find(([key]) => key === transitFilter)[1]
-						.filter(route))
+						.filter(feature))
 		)
-		if (stop) return routes
+		if (stop) return filteredFeatures
 		const relevantStops = new Set(
-			routes.map((route) => route.properties.stopList).flat()
+			features.map((route) => route.properties.stopList).flat()
 		)
 		return [
-			...routes,
+			...features,
 			...features.filter(
 				(feature) =>
 					feature.geometry.type === 'Point' &&
