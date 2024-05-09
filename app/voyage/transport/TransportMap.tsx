@@ -111,6 +111,7 @@ export default memo(function TransportMap({
 					routesParam={routesParam}
 					routes={routes}
 					setRoutes={(routes) => setSearchParams({ routes }, true)}
+					setStopName={(stopName) => setSearchParams({ arret: stopName }, true)}
 				/>
 			)}
 		</section>
@@ -127,7 +128,7 @@ const Agency = ({ data, backUrl }) => {
 	)
 }
 
-const Routes = ({ routes, setRoutes, routesParam }) => {
+const Routes = ({ routes, setRoutes, setStopName, routesParam }) => {
 	console.log('pink', routes)
 
 	return (
@@ -178,7 +179,9 @@ const Routes = ({ routes, setRoutes, routesParam }) => {
 											`}
 										>
 											{stopList.map((stop, index) => (
-												<li key={index}>{stop}</li>
+												<li key={index}>
+													<Link href={setStopName(stop)}>{stop}</Link>
+												</li>
 											))}
 										</ol>
 									</details>
