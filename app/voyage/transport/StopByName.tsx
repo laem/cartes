@@ -7,18 +7,12 @@ export default function StopByName({ stopName, data }) {
 	const stopIds = useMemo(
 		() =>
 			data
-				.map(
-					([
-						agencyId,
-						{
-							geojson: { features },
-						},
-					]) =>
-						features.filter(
-							(feature) =>
-								feature.geometry.type === 'Point' &&
-								feature.properties.name === stopName
-						)
+				.map(([agencyId, { features }]) =>
+					features.filter(
+						(feature) =>
+							feature.geometry.type === 'Point' &&
+							feature.properties.name === stopName
+					)
 				)
 
 				.flat()

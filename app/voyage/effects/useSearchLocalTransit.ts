@@ -2,8 +2,10 @@ import css from '@/components/css/convertToJs'
 import { goodIconSize } from '@/components/voyage/mapUtils'
 import maplibregl from 'maplibre-gl'
 import { useEffect, useState } from 'react'
+import { gtfsServerUrl } from '../serverUrls'
 
 export default function useSearchLocalTransit(map, active, center, zoom) {
+	return null
 	const [stops, setStops] = useState([])
 	const [stopTimes, setStopTimes] = useState({})
 	const notZoomEnough = zoom < 15
@@ -12,7 +14,7 @@ export default function useSearchLocalTransit(map, active, center, zoom) {
 		const [longitude, latitude] = center,
 			distance = 200
 
-		const url = `https://motis.cartes.app/gtfs/geoStops/${latitude}/${longitude}/${distance}`
+		const url = `${gtfsServerUrl}/geoStops/${latitude}/${longitude}/${distance}`
 
 		const doFetch = async () => {
 			const request = await fetch(url)
@@ -29,7 +31,7 @@ export default function useSearchLocalTransit(map, active, center, zoom) {
 		const doFetch = () => {
 			stops.map(async (stop) => {
 				const id = stop.stop_id
-				const url = `https://motis.cartes.app/gtfs/stopTimes/${id}`
+				const url = `${gtfsServerUrl}/stopTimes/${id}`
 				const request = await fetch(url)
 				const json = await request.json()
 				setStopTimes((stopTimes) => ({ ...stopTimes, [id]: json }))

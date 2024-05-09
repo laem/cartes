@@ -129,6 +129,8 @@ export default function Map({ searchParams }) {
 	const osmFeature = vers?.osmFeature
 	const transportStopData = useTransportStopData(osmFeature)
 
+	console.log({ transportStopData })
+
 	useEffect(() => {
 		if (!transportStopData.length) return
 
@@ -178,7 +180,12 @@ export default function Map({ searchParams }) {
 	}, [map, agency])
 
 	const clickedStopData = transportStopData[0] || []
-	useDrawTransport(map, clickedStopData[1], safeStyleKey, clickedStopData[0])
+	useDrawTransport(
+		map,
+		clickedStopData[1]?.features,
+		safeStyleKey,
+		clickedStopData[0]
+	)
 
 	const gares = []
 	const uic = searchParams.arret
