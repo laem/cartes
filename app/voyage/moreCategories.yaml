@@ -110,7 +110,7 @@
     - terrain de jeu
     - manège
     - aire de jeu
-  query: 
+  query:
     - '[leisure=playground]'
     - '[landuse=recreation_ground]'
     - '[attraction=carousel]'
@@ -267,6 +267,15 @@
     - shopping
   query: '[shop=mall]'
   icon: shop
+- name: Casier à Colis
+  category: Commerces
+  dictionary:
+    - locker
+    - pickup
+    - colis
+  query: '[amenity=parcel_locker]'
+  icon: parcel_locker
+################################
 
 - name: Police
   category: Divers
