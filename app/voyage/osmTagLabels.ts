@@ -12,7 +12,17 @@ export const getTagLabels = (key, value) => {
 
 	const values = value.split(';'),
 		translatedValues = values.map(
-			(v) => field.options?.[v] || translateBasics(v)
+			(v) => {
+				const optionValue = field.options?.[v]
+				switch (typeof optionValue) {
+					case 'string':
+						return optionValue
+					case 'object':
+						if (optionValue.title) return optionValue.title
+					default:
+						return translateBasics(v)
+				}
+			}
 		)
 	return [field.label, translatedValues.join(' - ')]
 }
