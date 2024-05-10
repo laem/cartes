@@ -34,7 +34,10 @@
     - magasin
     - hypermarché
     - superette
-  query: '["shop"~"convenience|supermarket"]'
+    - marché
+  query: 
+    - '["shop"~"convenience|supermarket"]'
+    - '[amenity=marketplace]'
   icon: https://cdn.jsdelivr.net/gh/mapbox/maki/icons/convenience.svg
 - name: eau
   dictionary:
