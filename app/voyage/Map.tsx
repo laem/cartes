@@ -37,7 +37,7 @@ import { buildAllezPart } from './SetDestination'
 import { clickableClasses } from './clickableLayers'
 import useDrawSearchResults from './effects/useDrawSearchResults'
 import useDrawTransport from './effects/useDrawTransport'
-import useDrawTransportsMap from './effects/useDrawTransportsMap'
+import useFetchTransportMap from './effects/useFetchTransportMap'
 import useOsmRequest from './effects/useOsmRequest'
 import useOverpassRequest from './effects/useOverpassRequest'
 import useRightClick from './effects/useRightClick'
@@ -149,7 +149,7 @@ export default function Map({ searchParams }) {
 	const isTransportsMode = searchParams.transports === 'oui'
 	useSearchLocalTransit(map, isTransportsMode, center, zoom)
 
-	const transportsData = useDrawTransportsMap(
+	const transportsData = useFetchTransportMap(
 		map,
 		isTransportsMode,
 		safeStyleKey,
@@ -551,7 +551,19 @@ export default function Map({ searchParams }) {
 			/>
 			{focusedImage && <FocusedImage {...{ focusedImage, focusImage }} />}
 			{isTransportsMode && <CenteredCross />}
-			{map && <MapComponents map={map} vers={vers} />}
+			{map && (
+				<MapComponents
+					{...{
+						map,
+						vers,
+						transportsData,
+						setTempStyle,
+						isTransportsMode,
+						styleKey,
+						searchParams,
+					}}
+				/>
+			)}
 			<div ref={mapContainerRef} />
 		</MapContainer>
 	)

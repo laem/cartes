@@ -30,6 +30,7 @@ export const addDefaultColor = (features, agencyId) => {
 
 */
 	const isSncf = agencyId === '1187'
+
 	return features.map((feature) => {
 		if (feature.geometry.type === 'Point') {
 			const [color, strokeColor] = stopColor(features, feature)
@@ -39,7 +40,7 @@ export const addDefaultColor = (features, agencyId) => {
 					...feature.properties,
 					width:
 						classifyStopFrequency(feature.properties.perDay, isSncf ? 15 : 30) /
-						(isSncf ? 1 : 3),
+						(isSncf ? 1 : 6),
 					'circle-stroke-color': strokeColor,
 					'circle-color': color,
 				},

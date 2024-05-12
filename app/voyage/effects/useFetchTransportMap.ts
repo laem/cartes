@@ -4,7 +4,7 @@ import useDrawTransport from './useDrawTransport'
 import { filterTransportFeatures } from '../transport/filterTransportFeatures'
 import { decodeTransportsData } from '../transport/decodeTransportsData'
 
-export default function useDrawTransportsMap(
+export default function useFetchTransportMap(
 	map,
 	active,
 	safeStyleKey,
@@ -19,15 +19,6 @@ export default function useDrawTransportsMap(
 	noCache
 ) {
 	const [data, setData] = useState([])
-	useEffect(() => {
-		if (!map || !active) return
-
-		setTempStyle('transit')
-		return () => {
-			setTempStyle(null)
-		}
-	}, [setTempStyle, active, map])
-
 	useEffect(() => {
 		if (!active || !bbox) return
 
@@ -84,27 +75,5 @@ export default function useDrawTransportsMap(
 		}
 	}, [setData, bbox, active, day, agence, noCache])
 
-	const drawData = useMemo(() => {
-		console.log('memo', data)
-		return data
-			.map(([, { features }]) => {
-				const filteredFeatures = filterTransportFeatures(features, {
-					routesParam,
-					stop,
-					trainType,
-					transitFilter,
-				})
-				return filteredFeatures
-			})
-			.flat()
-	}, [data, routesParam, stop, trainType, transitFilter])
-
-	useDrawTransport(
-		map,
-		drawData,
-		safeStyleKey,
-		'transitMap' // + (data || []).map(([id]) => id) + (day || ''), // TODO When the selection of agencies will change, the map will redraw, which is a problem : only new agencies should be added
-		// See https://github.com/laem/futureco/pull/226
-	)
-	return data
+	return active ? data : null
 }

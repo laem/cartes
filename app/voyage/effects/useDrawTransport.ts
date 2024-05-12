@@ -4,13 +4,12 @@ import { useEffect } from 'react'
 /***
  * This hook draws transit lines on the map.
  */
-export default function useDrawTransport(map, features, styleKey, drawKey) {
+export default function useDrawTransport(map, features, drawKey) {
 	console.log('indigo features', features, drawKey)
 	const setSearchParams = useSetSearchParams()
 
 	useEffect(() => {
 		if (!map || !features?.length) return
-		if (styleKey !== 'transit') return
 
 		/* Old idea : lower the opacity of all style layers.
 		 * Replaced by setting the "transit" style taken from MapTiler's dataviz
@@ -163,6 +162,7 @@ export default function useDrawTransport(map, features, styleKey, drawKey) {
 		}
 
 		return () => {
+			if (!map) return
 			console.log('darkblue', map._mapId, map.getLayersOrder())
 			map.off('click', linesId, onClickRoutes)
 			map.off('click', pointsId, onClickStop)
@@ -173,5 +173,5 @@ export default function useDrawTransport(map, features, styleKey, drawKey) {
 				map.removeSource(id)
 			}
 		}
-	}, [map, features, drawKey, styleKey])
+	}, [map, features, drawKey])
 }
