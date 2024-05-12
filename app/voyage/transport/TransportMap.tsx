@@ -174,6 +174,34 @@ const Routes = ({ routes, setRoutes, setStopName, routesParam }) => {
 							<Link href={setRoutes(route.properties.route_id)}>
 								<RouteName route={route.properties} />
 							</Link>
+							{route.properties.isNight && <div>🌜️ Bus de nuit</div>}
+							{route.properties.isSchool && <div>🎒 Bus scolaire</div>}
+							<span
+								css={`
+									margin-right: 1rem;
+								`}
+							>
+								{stopList.length ? (
+									<small>
+										<details open={routes.length === 1}>
+											<summary>Arrêts</summary>
+											<ol
+												css={`
+													margin-left: 2rem;
+												`}
+											>
+												{stopList.map((stop, index) => (
+													<li key={index}>
+														<Link href={setStopName(stop)}>{stop}</Link>
+													</li>
+												))}
+											</ol>
+										</details>
+									</small>
+								) : (
+									'Direct'
+								)}
+							</span>
 							<small
 								css={`
 									text-align: right;
@@ -183,28 +211,6 @@ const Routes = ({ routes, setRoutes, setStopName, routesParam }) => {
 								Voyages par jour : {Math.round(route.properties.perDay / 2)}.
 								Par heure : {Math.round(route.properties.perDay / 10 / 2)}
 							</small>
-							{route.properties.isNight && <div>🌜️ Bus de nuit</div>}
-							{route.properties.isSchool && <div>🎒 Bus scolaire</div>}
-							{stopList.length ? (
-								<small>
-									<details open={routes.length === 1}>
-										<summary>Arrêts</summary>
-										<ol
-											css={`
-												margin-left: 2rem;
-											`}
-										>
-											{stopList.map((stop, index) => (
-												<li key={index}>
-													<Link href={setStopName(stop)}>{stop}</Link>
-												</li>
-											))}
-										</ol>
-									</details>
-								</small>
-							) : (
-								'Direct'
-							)}
 						</li>
 					)
 				})}
