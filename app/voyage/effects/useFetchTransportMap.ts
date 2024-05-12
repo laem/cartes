@@ -3,6 +3,7 @@ import { gtfsServerUrl } from '../serverUrls'
 import useDrawTransport from './useDrawTransport'
 import { filterTransportFeatures } from '../transport/filterTransportFeatures'
 import { decodeTransportsData } from '../transport/decodeTransportsData'
+import { omit } from '@/components/utils/utils'
 
 export default function useFetchTransportMap(
 	map,
@@ -34,16 +35,21 @@ export default function useFetchTransportMap(
 					mode: 'cors',
 					signal: abortController.signal,
 				})
-				const json = await request.json()
+				const relevantAgencyIds = await request.json()
 
-				const agencies = data.map(([id]) => id),
-					newAgencies = json.filter((agency) => !agencies.includes(agency))
+				const cacheAgencyIds = data.map(([id]) => id),
+					newAgencyIds = relevantAgencyIds.filter(
+						(id) => !cacheAgencyIds.includes(id)
+					)
 
-				if (!newAgencies.length) return
+				if (!newAgencyIds.length)
+					return setData(
+						data.filter(([agency]) => relevantAgencyIds.includes(agency))
+					)
 
 				const dataRequest = await fetch(
 					url('geojson') +
-						(agence || newAgencies.join('|')) +
+						(agence || newAgencyIds.join('|')) +
 						(noCache ? `?noCache=${noCache}` : ''),
 					{
 						mode: 'cors',
@@ -53,12 +59,17 @@ export default function useFetchTransportMap(
 
 				const dataJson = await dataRequest.json()
 
-				console.log('plop 1', dataJson)
-				const decoded = dataJson.map(decodeTransportsData)
-				console.log('plop 2', decoded)
+				const newAgencies = dataJson.map(decodeTransportsData)
 				if (noCache) {
-					setData(decoded)
-				} else setData([...data, ...decoded])
+					setData(newAgencies)
+				} else
+					setData([
+						...data.filter(
+							([id]) =>
+								relevantAgencyIds.includes(id) && !newAgencyIds.includes(id)
+						),
+						...newAgencies,
+					])
 			} catch (e) {
 				if (abortController.signal.aborted) {
 					console.log(

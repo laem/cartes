@@ -1,6 +1,7 @@
 import useDrawTransport from '@/app/voyage/effects/useDrawTransport'
 import { defaultTransitFilter } from '@/app/voyage/transport/TransitFilter'
 import { filterTransportFeatures } from '@/app/voyage/transport/filterTransportFeatures'
+import { sortBy } from '@/components/utils/utils'
 import { useEffect, useMemo } from 'react'
 
 export default function DrawTransportMaps({
@@ -18,24 +19,28 @@ export default function DrawTransportMaps({
 	}, [setTempStyle])
 
 	const {
-		routes,
+		routes: routesParam,
 		'type de train': trainType,
 		filtre: transitFilter = defaultTransitFilter,
 		arret: stop,
 	} = searchParams
 
+	const agencyIdsHash = sortBy((id) => id)(
+		transportsData.map(([id]) => id)
+	).join('')
+
 	const dataToDraw = useMemo(() => {
-		console.log('memo transport dataToDraw', transportsData)
+		console.log('memo transport dataToDraw', agencyIdsHash, transportsData)
 		return transportsData.map(([agencyId, { features }]) => {
 			const filteredFeatures = filterTransportFeatures(features, {
-				routes,
+				routesParam,
 				stop,
 				trainType,
 				transitFilter,
 			})
 			return [agencyId, filteredFeatures]
 		})
-	}, [transportsData, routes, stop, trainType, transitFilter])
+	}, [agencyIdsHash, routesParam, stop, trainType, transitFilter])
 
 	if (styleKey !== 'transit') return null
 

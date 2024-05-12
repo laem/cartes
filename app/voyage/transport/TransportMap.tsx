@@ -63,7 +63,7 @@ export default memo(function TransportMap({
 	return (
 		<section>
 			<section>
-				<h2>Explorer les transports en commun</h2>
+				<h2>Plans disponibles</h2>
 				{false && <DateSelector type="day" date={day} />}
 				{!selectedAgency && data?.length > 0 && (
 					<ol>
