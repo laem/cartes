@@ -13,7 +13,20 @@ export default function Transit({ data, searchParams }) {
 	if (data.state === 'loading') return <TransitLoader />
 	if (data.state === 'error')
 		return <p>Pas de transport en commun trouvé :( </p>
-	if (!data?.connections || !data.connections.length) return null
+	if (!data?.connections || !data.connections.length)
+		return (
+			<p
+				css={`
+					margin-top: 1rem;
+				`}
+			>
+				<small>
+					💡 Les transports en commun ne sont disponible qu'en Bretagne pour
+					l'instant. Car le développeur est breton et qu'il faut bien commencer
+					quelque part :)
+				</small>
+			</p>
+		)
 
 	const connections = data.connections.filter(
 		(connection) => connectionStart(connection) > stamp(data.date)

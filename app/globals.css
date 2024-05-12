@@ -123,6 +123,10 @@ h6 {
 p {
 	margin: 0 0 0.4rem;
 }
+small {
+	line-height: 1rem;
+	display: inline-block;
+}
 
 blockquote {
 	border-left: 0.4rem solid var(--color);
