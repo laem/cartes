@@ -19,12 +19,6 @@ export const styles = {
 		name: 'Satellite',
 		emoji: '🛰️',
 	},
-	winter: {
-		url: maptilerUrl('winter-v2'),
-		name: 'Hiver',
-		emoji: '⛄️',
-		hasTerrain: true,
-	},
 	outdoor: {
 		url: maptilerUrl('outdoor-v2'),
 		name: 'Extérieur',
@@ -33,7 +27,7 @@ export const styles = {
 	},
 	ign: {
 		url: 'https://data.geopf.fr/annexes/ressources/vectorTiles/styles/PLAN.IGN/standard.json',
-		name: 'Plan IGN',
+		name: 'IGN',
 		image: 'IGN.svg',
 		imageAlt: "Logo de l'IGN",
 		attribution: '© IGN',
@@ -49,6 +43,12 @@ export const styles = {
 		url: transit(key),
 		name: 'Fond léger',
 		emoji: '⬜️',
+	},
+	winter: {
+		url: maptilerUrl('winter-v2'),
+		name: 'Hiver',
+		emoji: '⛄️',
+		hasTerrain: true,
 	},
 	streetComplete: {
 		// Taken from MapTiler's dataviz style

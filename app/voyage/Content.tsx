@@ -109,7 +109,9 @@ export default function Content({
 
 	const hasDestination = osmFeature || clickedPoint
 
-	const showSearch = recherche > -1 || !(osmFeature || itinerary.itineraryMode) // at first, on desktop, we kept the search bar considering we have room. But this divergence brings dev complexity
+	const showSearch =
+		!styleChooser &&
+		(recherche > -1 || !(osmFeature || itinerary.itineraryMode)) // at first, on desktop, we kept the search bar considering we have room. But this divergence brings dev complexity
 
 	const minimumQuickSearchZoom = getMinimumQuickSearchZoom(!sideSheet)
 
@@ -227,7 +229,7 @@ export default function Content({
 			/>
 
 			{styleChooser ? (
-				<StyleChooser {...{ setStyleChooser, style }} />
+				<StyleChooser {...{ setStyleChooser, style, setSnap }} />
 			) : (
 				hasContent && (
 					<ContentSection>

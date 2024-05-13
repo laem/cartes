@@ -92,7 +92,9 @@ export default function Map({ searchParams }) {
 	const [bikeRouteProfile, setBikeRouteProfile] = useState('safety')
 	const [distanceMode, setDistanceMode] = useState(false)
 	const [itineraryMode, setItineraryMode] = useState(false)
-	const [styleChooser, setStyleChooser] = useState(false)
+	const styleChooser = searchParams['choix du style'] === 'oui',
+		setStyleChooser = (state) =>
+			setSearchParams({ 'choix du style': state ? 'oui' : undefined })
 
 	useItineraryFromUrl(allez, setItineraryMode, map)
 
