@@ -21,8 +21,8 @@ export const styles = {
 	},
 	outdoor: {
 		url: maptilerUrl('outdoor-v2'),
-		name: 'Extérieur',
-		emoji: '🏕️',
+		name: 'Randonnée (marche & vélo)',
+		emoji: '🚶',
 		hasTerrain: true,
 	},
 	ign: {
@@ -31,6 +31,12 @@ export const styles = {
 		image: 'IGN.svg',
 		imageAlt: "Logo de l'IGN",
 		attribution: '© IGN',
+	},
+	nature: {
+		url: maptilerUrl('topo-v2'),
+		name: 'Nature',
+		emoji: '🏕️',
+		hasTerrain: false,
 	},
 	cycling: { url: cyclOsm(key), name: 'Carte cyclable', emoji: '🚲️' },
 	train: {
