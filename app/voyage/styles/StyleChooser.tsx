@@ -6,6 +6,7 @@ import { styles } from './styles'
 
 export default function StyleChooser({ style, setStyleChooser, setSnap }) {
 	const setSearchParams = useSetSearchParams()
+	console.log(style)
 	return (
 		<section
 			css={`
@@ -25,55 +26,56 @@ export default function StyleChooser({ style, setStyleChooser, setSnap }) {
 					margin-top: 1rem;
 				`}
 			>
-				{Object.entries(styles).map(
-					([k, { emoji, name, id, image, imageAlt }]) => (
-						<li
-							key={k}
+				{Object.entries(styles).map(([k, { emoji, name, image, imageAlt }]) => (
+					<li
+						key={k}
+						css={`
+							margin: 0.2rem;
+							border: 1px solid var(--color);
+							border-radius: 0.4rem;
+							${style.key === k &&
+							`border: 2px solid var(--darkColor);
+								background: var(--lightestColor);
+								`}
+						`}
+					>
+						<Link
+							href={setSearchParams(
+								{ style: k, 'choix du style': undefined },
+								true,
+								false
+							)}
+							title={'Passer au style ' + name}
+							onClick={() => setTimeout(() => setSnap(3), 200)}
 							style={css`
-								margin: 0.2rem;
-								border: 1px solid var(--color);
-								background: var(--lighterColor);
-								border-radius: 0.4rem;
+								width: 8rem;
+								height: 6rem;
+								display: flex;
+								flex-direction: column;
+								justify-content: center;
+								align-items: center;
+								text-decoration: none;
+								color: inherit;
 							`}
 						>
-							<Link
-								href={setSearchParams(
-									{ style: k, 'choix du style': undefined },
-									true,
-									false
-								)}
-								title={'Passer au style ' + name}
-								onClick={() => setTimeout(() => setSnap(3), 200)}
-								style={css`
-									width: 8rem;
-									height: 6rem;
-									display: flex;
-									flex-direction: column;
-									justify-content: center;
-									align-items: center;
-									text-decoration: none;
-									color: inherit;
-								`}
-							>
-								{emoji ? (
-									<Emoji e={emoji} />
-								) : (
-									<img
-										src={'/' + image}
-										width="50"
-										height="50"
-										alt={imageAlt}
-										style={css`
-											width: 2rem;
-											height: 2rem;
-										`}
-									/>
-								)}
-								<div>{name}</div>
-							</Link>
-						</li>
-					)
-				)}
+							{emoji ? (
+								<Emoji e={emoji} />
+							) : (
+								<img
+									src={'/' + image}
+									width="50"
+									height="50"
+									alt={imageAlt}
+									style={css`
+										width: 2rem;
+										height: 2rem;
+									`}
+								/>
+							)}
+							<div>{name}</div>
+						</Link>
+					</li>
+				))}
 			</ul>
 		</section>
 	)

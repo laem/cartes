@@ -68,7 +68,7 @@ export default function Map({ searchParams }) {
 	const [safeStyleKey, setSafeStyleKey] = useState(null)
 	const [tempStyle, setTempStyle] = useState(null)
 	const styleKey = tempStyle || searchParams.style || 'base',
-		style = styles[styleKey],
+		style = { ...styles[styleKey], key: styleKey },
 		styleUrl = styles[styleKey].url
 
 	// In this query param is stored an array of points. If only one, it's just a

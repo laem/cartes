@@ -21,7 +21,7 @@ export const styles = {
 	},
 	outdoor: {
 		url: maptilerUrl('outdoor-v2'),
-		name: 'Randonnée (marche & vélo)',
+		name: 'Rando (marche & vélo)',
 		emoji: '🚶',
 		hasTerrain: true,
 	},
