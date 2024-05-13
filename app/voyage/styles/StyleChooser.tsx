@@ -3,6 +3,7 @@ import Emoji from '@/components/Emoji'
 import useSetSearchParams from '@/components/useSetSearchParams'
 import Link from 'next/link'
 import { styles } from './styles'
+import { ModalCloseButton } from '../UI'
 
 export default function StyleChooser({ style, setStyleChooser, setSnap }) {
 	const setSearchParams = useSetSearchParams()
@@ -13,8 +14,16 @@ export default function StyleChooser({ style, setStyleChooser, setSnap }) {
 				h2 {
 					margin-top: 0;
 				}
+				position: relative;
 			`}
 		>
+			<ModalCloseButton
+				title="Fermer l'encart de choix du style"
+				onClick={() => {
+					setTimeout(() => setSnap(3), 200)
+					setSearchParams({ 'choix du style': undefined })
+				}}
+			/>
 			<h2>Choisir le fond de carte</h2>
 			<ul
 				style={css`
@@ -40,13 +49,8 @@ export default function StyleChooser({ style, setStyleChooser, setSnap }) {
 						`}
 					>
 						<Link
-							href={setSearchParams(
-								{ style: k, 'choix du style': undefined },
-								true,
-								false
-							)}
+							href={setSearchParams({ style: k }, true, false)}
 							title={'Passer au style ' + name}
-							onClick={() => setTimeout(() => setSnap(3), 200)}
 							style={css`
 								width: 8rem;
 								height: 6rem;
