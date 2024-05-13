@@ -35,51 +35,49 @@ export default function StyleChooser({ style, setStyleChooser, setSnap }) {
 					margin-top: 1rem;
 				`}
 			>
-				{Object.entries(styles).map(([k, { emoji, name, image, imageAlt }]) => (
-					<li
-						key={k}
-						css={`
-							margin: 0.2rem;
-							border: 1px solid var(--color);
-							border-radius: 0.4rem;
-							${style.key === k &&
-							`border: 2px solid var(--darkColor);
-								background: var(--lightestColor);
-								`}
-						`}
-					>
-						<Link
-							href={setSearchParams({ style: k }, true, false)}
-							title={'Passer au style ' + name}
-							style={css`
-								width: 8rem;
-								height: 6rem;
-								display: flex;
-								flex-direction: column;
-								justify-content: center;
-								align-items: center;
-								text-decoration: none;
-								color: inherit;
+				{Object.entries(styles).map(([k, { name, imageAlt }]) => {
+					const image = k + '.png'
+
+					return (
+						<li
+							key={k}
+							css={`
+								margin: 0.2rem;
 							`}
 						>
-							{emoji ? (
-								<Emoji e={emoji} />
-							) : (
+							<Link
+								href={setSearchParams({ style: k }, true, false)}
+								title={'Passer au style ' + name}
+								css={`
+									display: flex;
+									flex-direction: column;
+									justify-content: center;
+									align-items: center;
+									text-decoration: none;
+									color: inherit;
+									${style.key === k && `color: var(--color); font-weight: bold`}
+								`}
+							>
 								<img
-									src={'/' + image}
+									src={'/styles/' + image}
 									width="50"
 									height="50"
 									alt={imageAlt}
-									style={css`
-										width: 2rem;
-										height: 2rem;
+									css={`
+										width: 6rem;
+										height: 6rem;
+										border-radius: 0.4rem;
+										border: 1px solid var(--lighterColor);
+										${style.key === k &&
+										`border: 3px solid var(--color);
+								`}
 									`}
 								/>
-							)}
-							<div>{name}</div>
-						</Link>
-					</li>
-				))}
+								<div>{name}</div>
+							</Link>
+						</li>
+					)
+				})}
 			</ul>
 		</section>
 	)

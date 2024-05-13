@@ -19,9 +19,11 @@ export const styles = {
 		name: 'Satellite',
 		emoji: '🛰️',
 	},
-	outdoor: {
+	rando: {
 		url: maptilerUrl('outdoor-v2'),
-		name: 'Rando (marche & vélo)',
+		name: 'Randonnée',
+		subtitle: '(marche & vélo)',
+		image: 'rando.png',
 		emoji: '🚶',
 		hasTerrain: true,
 	},
@@ -35,6 +37,7 @@ export const styles = {
 	nature: {
 		url: maptilerUrl('topo-v2'),
 		name: 'Nature',
+		image: 'nature.png',
 		emoji: '🏕️',
 		hasTerrain: false,
 	},
