@@ -91,8 +91,8 @@ const Styles = ({ style, styleList, setSearchParams }) => (
 							height="50"
 							alt={imageAlt}
 							css={`
-								width: 6rem;
-								height: 6rem;
+								width: 5.5rem;
+								height: 5.5rem;
 								border-radius: 0.4rem;
 								${style.key === k &&
 								`border: 3px solid var(--color);
