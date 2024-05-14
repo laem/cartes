@@ -41,13 +41,13 @@ export const styles = {
 		emoji: '🏕️',
 		hasTerrain: false,
 	},
-	cycling: { url: cyclOsm(key), name: 'Carte cyclable', emoji: '🚲️' },
-	train: {
+	cycling: { url: cyclOsm(key), name: 'Cyclable', emoji: '🚲️' },
+	rail: {
 		url: railStyle(key),
-		name: 'Carte des rails',
+		name: 'Rails',
 		emoji: '🛤️',
 	},
-	transit: {
+	light: {
 		// Taken from MapTiler's dataviz style
 		url: transit(key),
 		name: 'Fond léger',
@@ -59,10 +59,11 @@ export const styles = {
 		emoji: '⛄️',
 		hasTerrain: true,
 	},
-	streetComplete: {
+	'street-complete': {
 		// Taken from MapTiler's dataviz style
 		url: testStreetComplete,
 		name: 'Street Complete',
 		emoji: '🧪',
+		experimental: true,
 	},
 }

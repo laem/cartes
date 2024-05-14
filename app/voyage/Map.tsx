@@ -140,7 +140,7 @@ export default function Map({ searchParams }) {
 	useEffect(() => {
 		if (!transportStopData.length) return
 
-		setTempStyle('transit')
+		setTempStyle('light')
 
 		return () => {
 			console.log('will unset')
