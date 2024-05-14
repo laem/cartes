@@ -3,6 +3,7 @@ import { letterFromIndex } from './Steps'
 import { useMediaQuery } from 'usehooks-ts'
 import getBbox from '@turf/bbox'
 import { fitBoundsConsideringModal } from '../utils'
+import { computeSlopeGradient } from './computeSlopeGradient'
 
 /*
  * Draws the walk or cycle route provided by BRouter directly as Geojson
@@ -23,6 +24,7 @@ export default function useDrawRoute(itineraryMode, map, geojson, id) {
 		map.addSource(id, {
 			type: 'geojson',
 			data: geojson,
+			lineMetrics: true,
 		})
 
 		if (map) console.log('getsource2', id, map.getSource(id))
@@ -70,7 +72,7 @@ export default function useDrawRoute(itineraryMode, map, geojson, id) {
 				paint: {
 					walking: {
 						'line-color': '#8f53c1',
-						'line-width': 4,
+						'line-width': 1,
 						'line-dasharray': [1, 2],
 					},
 					distance: {
@@ -79,6 +81,16 @@ export default function useDrawRoute(itineraryMode, map, geojson, id) {
 					cycling: {
 						'line-color': '#57bff5',
 						'line-width': 5,
+						...(id === 'cycling'
+							? {
+									'line-gradient': [
+										'interpolate',
+										['linear'],
+										['line-progress'],
+										...computeSlopeGradient(geojson),
+									],
+							  }
+							: {}),
 					},
 				}[id],
 				filter: ['in', '$type', 'LineString'],
