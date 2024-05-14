@@ -12,7 +12,7 @@ export default function DrawTransportMaps({
 	searchParams,
 }) {
 	useEffect(() => {
-		setTempStyle('transit')
+		setTempStyle('light')
 		return () => {
 			setTempStyle(null)
 		}
@@ -42,7 +42,7 @@ export default function DrawTransportMaps({
 		})
 	}, [agencyIdsHash, routesParam, stop, trainType, transitFilter])
 
-	if (styleKey !== 'transit') return null
+	if (styleKey !== 'light') return null
 
 	return dataToDraw.map(([agencyId, features]) => (
 		<DrawTransportMap
