@@ -21,11 +21,8 @@ export default function Calendar({ data }) {
 
 	const stopByHour = actualTimes.reduce((memo, next) => {
 		const thisHour = next.arrival_time.split(':')[0]
-		console.log('DD', thisHour, Object.keys(hoursObject))
 		return { ...memo, [thisHour]: [...memo[thisHour], next] }
 	}, hoursObject)
-
-	console.log('DD', stopByHour)
 
 	return (
 		<div>

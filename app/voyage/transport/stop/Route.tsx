@@ -35,12 +35,13 @@ export default function Route({ route, stops = [] }) {
 
 	const augmentedStops = stops
 
-		.map((stop) => {
+		.map((stop, i) => {
 			const time = timeFromHHMMSS(stop.arrival_time)
 
-			// in Bretagne unified GTFS, all the GTFS were normalized with a technique where each trip has one calendar date only
+			// in Bretagne unified GTFS, all the GTFS were normalized with a technique where each trip has one calendar date entry only
 			const dates = stop.trip.calendarDates
 				.map((calendarDateObject) => {
+					if (!i) console.log('cdo', calendarDateObject)
 					if (calendarDateObject.exception_type === 2) return false
 					const { date: calendarDate } = calendarDateObject
 
@@ -65,6 +66,8 @@ export default function Route({ route, stops = [] }) {
 		.flat()
 		.sort((a, b) => a.arrivalDate - b.arrivalDate)
 
+	console.log('indigo', { augmentedStops })
+
 	/*
 	const byArrivalDate = new Map(
 		augmentedStops.map((el) => {
@@ -73,7 +76,11 @@ export default function Route({ route, stops = [] }) {
 	)
 	*/
 
-	const stopSelection = augmentedStops.filter((el) => el.isFuture).slice(0, 4)
+	const today = nowAsYYMMDD('-')
+	const stopsToday = augmentedStops.filter((el) => el.day === today)
+	console.log('stopsToday', stopsToday)
+
+	const stopSelection = stopsToday.filter((el) => el.isFuture).slice(0, 4)
 
 	const directions = stops.map(({ trip }) => trip.direction_id)
 	const otherDirection = directions[0] === 0 ? 1 : 0
@@ -151,7 +158,7 @@ export default function Route({ route, stops = [] }) {
 				</button>
 			</ul>
 			{calendarOpen && <Calendar data={augmentedStops} />}
-			<DayView data={augmentedStops} />
+			<DayView data={stopsToday} />
 		</li>
 	)
 }
