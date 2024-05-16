@@ -2,13 +2,22 @@ import { useEffect, useState } from 'react'
 import Route from './Route'
 import { sortBy } from '@/components/utils/utils'
 
-export const isNotTransportStop = (tags) =>
-	!tags || tags.public_transport !== 'platform'
+export const isNotTransportStop = (tags) => {
+	console.log('indigo stop tags', tags)
+	return !tags || !['platform', 'stop_position'].includes(tags.public_transport)
+}
 
 export const findStopId = (tags) => {
+	console.log('indigo stop tags', tags)
 	// ref:MobiBreizh = ILLENOO2:13602
 	// ref:STAR = 1320
 	// ref:bzh:IOAD = MARCHE
+
+	if (tags.network) {
+		const ref = tags.ref || tags['ref' + ':' + tags.network.toUpperCase()]
+		return tags.network.toUpperCase() + ':' + ref
+	}
+
 	const ref = Object.entries(tags).find(([k, v]) => k.match(/ref(\:FR)?\:.+/g))
 	if (!ref) return null
 	if (ref[1].split(':').length === 2) return ref[1]
