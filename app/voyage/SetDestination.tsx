@@ -49,10 +49,12 @@ export const buildAllezPart = (name, id, longitude, latitude) => {
 
 export const removeStatePart = (key: string | number, state: Array<object>) =>
 	state
-		.map((part, index) =>
-			(typeof key === 'string' ? part.key === key : index === key)
-				? false
-				: part.key
+		.map(
+			(part, index) =>
+				part != null &&
+				((typeof key === 'string' ? part.key === key : index === key)
+					? false
+					: part.key)
 		)
 		.filter(Boolean)
 		.join('->')

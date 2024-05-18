@@ -144,23 +144,35 @@ const Item = ({ index, step, setSearchParams, beingSearched, state }) => {
 				>
 					<Dots />
 				</div>
-				<Link
-					href={setSearchParams(
-						{ allez: removeStatePart(step.key, state) },
-						true
-					)}
-				>
-					<Image
-						src={closeIcon}
-						alt="Supprimer cette étape"
-						css={`
-							width: 1.2rem;
-							height: auto;
-						`}
-					/>
-				</Link>
+				<RemoveStepLink {...{ setSearchParams, stepKey: key, state }} />
 			</div>
 		</Reorder.Item>
+	)
+}
+
+const RemoveStepLink = ({ setSearchParams, stepKey, state }) => {
+	if (!stepKey)
+		return (
+			<div
+				css={`
+					width: 1.6rem;
+				`}
+			></div>
+		)
+	console.log('plopi', stepKey, state)
+	return (
+		<Link
+			href={setSearchParams({ allez: removeStatePart(stepKey, state) }, true)}
+		>
+			<Image
+				src={closeIcon}
+				alt="Supprimer cette étape"
+				css={`
+					width: 1.2rem;
+					height: auto;
+				`}
+			/>
+		</Link>
 	)
 }
 
