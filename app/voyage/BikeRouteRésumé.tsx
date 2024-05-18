@@ -79,7 +79,7 @@ const formatter = (digits) => (number) =>
 	new Intl.NumberFormat('fr-FR', { maximumSignificantDigits: digits }).format(
 		number
 	)
-const computeHumanDistance = (distance) => {
+export const computeHumanDistance = (distance) => {
 	if (distance >= 10000) return [Math.round(distance / 1000), 'km']
 	if (distance >= 1000) return [formatter(2)(distance / 1000), 'km']
 	if (distance >= 100) return [Math.round(distance / 100) * 100, 'm']

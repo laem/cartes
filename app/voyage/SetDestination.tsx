@@ -4,6 +4,8 @@ import Image from 'next/image'
 import { PlaceButton } from './PlaceButtonsUI'
 import { encodePlace } from './utils'
 import { buildAddress } from '@/components/voyage/Address'
+import turfDistance from '@turf/distance'
+import { computeHumanDistance } from './BikeRouteRésumé'
 
 export const geoFeatureToDestination = (feature) => {
 	if (feature.properties.id) {
@@ -96,6 +98,13 @@ export default function SetDestination({
 
 	const href = setSearchParams(search, true, false)
 
+	const destination = destinationPart.split('|').slice(2)
+	const origin = geolocation && [geolocation.longitude, geolocation.latitude]
+	const distance = origin && turfDistance(origin, destination)
+	const humanDistance = distance && computeHumanDistance(distance)
+
+	console.log('plop', destination, origin, distance)
+
 	return (
 		<PlaceButton>
 			<Link href={href}>
@@ -108,7 +117,13 @@ export default function SetDestination({
 							alt="Lancer le mode itinéraire"
 						/>
 					</div>
-					<div>Y aller</div>
+					{distance ? (
+						<div>
+							À {humanDistance[0]} {humanDistance[1]}
+						</div>
+					) : (
+						<div>Y aller</div>
+					)}
 				</button>
 			</Link>
 		</PlaceButton>
