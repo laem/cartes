@@ -19,6 +19,7 @@ export default function useItinerary(
 	state,
 	zoom
 ) {
+	const mode = searchParams.mode
 	const desktop = useMediaQuery('(min-width: 800px)')
 	useEffect(() => {
 		if (!map) return
@@ -38,7 +39,8 @@ export default function useItinerary(
 	// geojson shape for trains, buses (appart from straight lines from stop to
 	// stop) nor walk
 
-	useDrawTransit(map, routes?.transit, selectedConnection)
+	useDrawTransit(map, mode === 'transit' && routes?.transit, selectedConnection)
+
 	useFetchDrawBikeParkings(map, routes?.cycling)
 
 	const updateRoute = (key, value) =>
@@ -112,16 +114,23 @@ export default function useItinerary(
 		[points, linestrings]
 	)
 	useDrawRoute(itineraryMode, map, geojson, 'distance')
+
 	useDrawRoute(
 		itineraryMode,
 		map,
-		routes && routes.cycling !== 'loading' && routes.cycling,
+		mode === 'cycling' &&
+			routes &&
+			routes.cycling !== 'loading' &&
+			routes.cycling,
 		'cycling'
 	)
 	useDrawRoute(
 		itineraryMode,
 		map,
-		routes && routes.walking !== 'loading' && routes.walking,
+		mode === 'walking' &&
+			routes &&
+			routes.walking !== 'loading' &&
+			routes.walking,
 		'walking'
 	)
 
