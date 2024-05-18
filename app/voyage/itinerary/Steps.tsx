@@ -1,8 +1,10 @@
 import useSetSearchParams from '@/components/useSetSearchParams'
+import closeIcon from '@/public/remove-circle-stroke.svg'
 import { Reorder, useDragControls } from 'framer-motion'
 import Image from 'next/image'
-import { useEffect, useState } from 'react'
-import { setStatePart } from '../SetDestination'
+import Link from 'next/link'
+import { useState } from 'react'
+import { removeStatePart, setStatePart } from '../SetDestination'
 
 export default function Steps({ state }) {
 	const steps = state
@@ -124,8 +126,39 @@ const Item = ({ index, step, setSearchParams, beingSearched, state }) => {
 					</span>
 				)}
 			</div>
-			<div onPointerDown={(e) => controls.start(e)} className="reorder-handle">
-				<Dots />
+			<div
+				css={`
+					&,
+					a {
+						display: flex;
+						align-items: center;
+					}
+					> a {
+						margin-left: 0.4rem;
+					}
+				`}
+			>
+				<div
+					onPointerDown={(e) => controls.start(e)}
+					className="reorder-handle"
+				>
+					<Dots />
+				</div>
+				<Link
+					href={setSearchParams(
+						{ allez: removeStatePart(step.key, state) },
+						true
+					)}
+				>
+					<Image
+						src={closeIcon}
+						alt="Supprimer cette étape"
+						css={`
+							width: 1.2rem;
+							height: auto;
+						`}
+					/>
+				</Link>
 			</div>
 		</Reorder.Item>
 	)
