@@ -75,7 +75,21 @@ export default function BikeRouteRésumé({
 	)
 }
 
+const formatter = (digits) => (number) =>
+	new Intl.NumberFormat('fr-FR', { maximumSignificantDigits: digits }).format(
+		number
+	)
+const computeHumanDistance = (distance) => {
+	if (distance >= 10000) return [Math.round(distance / 1000), 'km']
+	if (distance >= 1000) return [formatter(2)(distance / 1000), 'km']
+	if (distance >= 100) return [Math.round(distance / 100) * 100, 'm']
+	if (distance >= 10) return [Math.round(distance / 10) * 10, 'm']
+
+	return [Math.round(distance / 10) * 10, 'm']
+}
+
 const ModeContent = ({ mode, data, setBikeRouteProfile, bikeRouteProfile }) => {
+	console.log('indigo sam', mode, data)
 	const features = data?.features
 	if (!features?.length) return null
 
@@ -84,7 +98,7 @@ const ModeContent = ({ mode, data, setBikeRouteProfile, bikeRouteProfile }) => {
 
 	const seconds = feature.properties['total-time'],
 		distance = feature.properties['track-length'],
-		km = Math.round(distance / 1000),
+		[humanDistance, unit] = computeHumanDistance(distance),
 		date = new Date(1000 * seconds).toISOString().substr(11, 8).split(':'),
 		heures = +date[0],
 		minutes = date[1]
@@ -95,7 +109,10 @@ const ModeContent = ({ mode, data, setBikeRouteProfile, bikeRouteProfile }) => {
 		<div>
 			<p>
 				À {mode === 'walking' ? 'pieds' : 'vélo'}, le trajet de{' '}
-				<strong>{km}&nbsp;km</strong> vous prendra{' '}
+				<strong>
+					{humanDistance}&nbsp;{unit}
+				</strong>{' '}
+				vous prendra{' '}
 				<strong>
 					{heures ? +heures + ` h et ` : ''}
 					{+minutes}&nbsp;min
