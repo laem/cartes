@@ -97,8 +97,8 @@ const ModeContent = ({ mode, data, setBikeRouteProfile, bikeRouteProfile }) => {
 				À {mode === 'walking' ? 'pieds' : 'vélo'}, le trajet de{' '}
 				<strong>{km}&nbsp;km</strong> vous prendra{' '}
 				<strong>
-					{heures ? heures + ` h et ` : ''}
-					{minutes}&nbsp;min
+					{heures ? +heures + ` h et ` : ''}
+					{+minutes}&nbsp;min
 				</strong>{' '}
 				pour{' '}
 				<strong
