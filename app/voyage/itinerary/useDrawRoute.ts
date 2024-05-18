@@ -72,7 +72,7 @@ export default function useDrawRoute(itineraryMode, map, geojson, id) {
 				paint: {
 					walking: {
 						'line-color': '#8f53c1',
-						'line-width': 1,
+						'line-width': 5,
 						'line-dasharray': [1, 2],
 					},
 					distance: {
