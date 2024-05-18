@@ -12,8 +12,9 @@ const __dirname = path.dirname(__filename)
 
 const nextConfig = {
 	experimental: {
-		serverComponentsExternalPackages: ['publicodes'],
+		reactCompiler: true,
 	},
+	serverComponentsExternalPackages: ['publicodes'],
 	compiler: {
 		styledComponents: true,
 	},
