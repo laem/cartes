@@ -6,6 +6,7 @@ export default function ProfileChooser({
 }) {
 	return (
 		<div>
+			Mode :
 			{profiles.map(({ key, name }) => (
 				<label
 					key={key}
