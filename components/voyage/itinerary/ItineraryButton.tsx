@@ -38,7 +38,7 @@ export const ItineraryIcon = () => (
 			height: 1.4rem;
 			margin: 0 !important;
 		`}
-		src={'/itinerary.svg'}
+		src={'/itinerary-circle-plain.svg'}
 		width="100"
 		height="100"
 		alt="Icône itinéraire"
