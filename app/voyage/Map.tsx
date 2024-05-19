@@ -227,7 +227,7 @@ export default function Map({ searchParams }) {
 
 	const onSearchResultClick = (feature) => {
 		setState([...state.slice(0, -1), defaultState.vers])
-		setOsmFeature(feature)
+		//setOsmFeature(feature) old function, this call seems useless now
 	}
 
 	//TODO this hook should be used easily with some tweaks to draw the borders of

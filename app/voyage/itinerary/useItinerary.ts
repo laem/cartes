@@ -243,7 +243,7 @@ export default function useItinerary(
 				points,
 				itineraryDistance,
 				'hiking-mountain',
-				4 // ~ 3 km/h donc 4 km = 1h20 minutes, au-dessus ça me semble peu pertinent de proposer la marche par défaut
+				10 // ~ 3 km/h donc 4 km = 1h20 minutes, au-dessus ça me semble peu pertinent de proposer la marche par défaut
 			)
 			updateRoute('walking', walking)
 		}

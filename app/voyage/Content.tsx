@@ -105,6 +105,17 @@ export default function Content({
 		el != null && Array.isArray(el) ? el.length > 0 : el
 	)
 
+	const showContent =
+		hasContent &&
+		// treat the case click on a OSM feature -> feature card -> click on "go
+		// there" -> it's ok to keep the card -> click on origin -> state.length ===
+		// 2 -> useless destination card
+		// Note : what we wanted to do would need a filter(Boolean), but in practice
+		// removing the card after the destination click is good too
+		!(state.length >= 2)
+
+	console.log('onglets', state)
+
 	const bookmarkable = clickedPoint || osmFeature // later : choice
 
 	const hasDestination = osmFeature || clickedPoint
@@ -221,7 +232,7 @@ export default function Content({
 					searchParams,
 					setSnap,
 					close: () => {
-						setSearchParams({ allez: undefined })
+						setSearchParams({ allez: undefined, mode: undefined })
 						itinerary.setItineraryMode(false)
 					},
 					state,
@@ -231,7 +242,7 @@ export default function Content({
 			{styleChooser ? (
 				<StyleChooser {...{ setStyleChooser, style, setSnap }} />
 			) : (
-				hasContent && (
+				showContent && (
 					<ContentSection>
 						{osmFeature && (
 							<ModalCloseButton
