@@ -38,14 +38,26 @@ export default function Meteo({ coordinates }) {
 	if (!data?.weather) return
 	const { weather } = data
 	const now = new Date()
-	const thisHour = sortBy((forecast) => new Date(forecast.dt * 1000))(
-		weather.forecast.filter(({ dt }) => new Date(dt * 1000) > now)
-	)[0]
-	console.log('meteo this hour', thisHour)
-	const rainIcon =
-		thisHour.rain['1h'] > 0
+	const relevantSorted = sortBy((forecast) => forecast.date)(
+		weather.forecast
+			.map((forecast) => ({ ...forecast, date: new Date(forecast.dt * 1000) }))
+			.filter((forecast) => forecast.date > now)
+	)
+
+	const thisHour = relevantSorted[0]
+	console.log('meteo forecast', relevantSorted)
+	const isRaining = thisHour.rain['1h'] > 0,
+		rainIcon = isRaining
 			? 'https://meteofrance.com/modules/custom/mf_tools_common_theme_public/svg/rain/pluie-moderee.svg'
 			: 'https://meteofrance.com/modules/custom/mf_tools_common_theme_public/svg/rain/pas-de-pluie.svg'
+
+	const rainAlt = isRaining
+		? `Il pleuvra ${thisHour.rain['1h']} mm dans l'heure`
+		: "Pas de pluie dans l'heure"
+	const weatherText = `À ${
+		weather.position.name
+	}, tendance : ${thisHour.weather.desc.toLowerCase()}; ${rainAlt}`
+
 	return (
 		<div
 			css={`
@@ -78,7 +90,13 @@ export default function Meteo({ coordinates }) {
 					height: 1.6rem;
 					margin-top: 0.3rem;
 				}
+				> div {
+					display: flex;
+					align-items: center;
+					justify-content: center;
+				}
 			`}
+			title={weatherText}
 		>
 			<small>{weather.position.name}</small>
 			<div>
@@ -88,7 +106,17 @@ export default function Meteo({ coordinates }) {
 					width="10"
 					height="10"
 				/>
-				<Image src={rainIcon} width="10" height="10" />
+				<Image
+					src={rainIcon}
+					width="10"
+					height="10"
+					alt={rainAlt}
+					css={`
+						background: var(--lighterColor);
+						border-radius: 1rem;
+						width: 1.4rem !important;
+					`}
+				/>
 			</div>
 		</div>
 	)
