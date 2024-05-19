@@ -57,7 +57,7 @@ export default function Wikipedia({ name }) {
 				    margin-bottom: .8rem`
 					}
 				}
-				img {
+				> p > img {
 					vertical-align: text-bottom;
 					margin-right: 0.3rem;
 				}
