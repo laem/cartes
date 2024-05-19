@@ -39,7 +39,11 @@ export default function useItinerary(
 	// geojson shape for trains, buses (appart from straight lines from stop to
 	// stop) nor walk
 
-	useDrawTransit(map, mode === 'transit' && routes?.transit, selectedConnection)
+	useDrawTransit(
+		map,
+		(!mode || mode === 'transit') && routes?.transit,
+		selectedConnection
+	)
 
 	useFetchDrawBikeParkings(map, routes?.cycling)
 
@@ -118,7 +122,7 @@ export default function useItinerary(
 	useDrawRoute(
 		itineraryMode,
 		map,
-		mode === 'cycling' &&
+		(!mode || mode === 'cycling') &&
 			routes &&
 			routes.cycling !== 'loading' &&
 			routes.cycling,
@@ -127,7 +131,7 @@ export default function useItinerary(
 	useDrawRoute(
 		itineraryMode,
 		map,
-		mode === 'walking' &&
+		(!mode || mode === 'walking') &&
 			routes &&
 			routes.walking !== 'loading' &&
 			routes.walking,
@@ -243,12 +247,12 @@ export default function useItinerary(
 				points,
 				itineraryDistance,
 				'hiking-mountain',
-				10 // ~ 3 km/h donc 4 km = 1h20 minutes, au-dessus ça me semble peu pertinent de proposer la marche par défaut
+				mode === 'walking' ? Infinity : 4 // ~ 3 km/h donc 4 km = 1h20 minutes, au-dessus ça me semble peu pertinent de proposer la marche par défaut
 			)
 			updateRoute('walking', walking)
 		}
 		fetchRoutes()
-	}, [points, setRoutes, bikeRouteProfile])
+	}, [points, setRoutes, bikeRouteProfile, mode])
 
 	useEffect(() => {
 		if (points.length < 2) {
