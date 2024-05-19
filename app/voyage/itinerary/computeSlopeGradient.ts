@@ -40,6 +40,10 @@ export function computeSlopeGradient(geojson) {
 	// then 0 % for 20 m
 	// hence the need to average
 	// We can do it every 10 meters
+	// Algo : we're splitting to 1m bits, disregarding the possibility that some
+	// semgents are < 1m
+	// Then averaging them to 10 m segments
+	// It's not very efficient but we don't care for this kind of load, feel free :)
 
 	const totalDistance = distanceColors.reduce((memo, next) => memo + next[0], 0)
 
@@ -70,72 +74,4 @@ export function computeSlopeGradient(geojson) {
 		//	littles.map((little) => Math.round(little * 10) / 10)
 	)
 	return lineProgressAveraged
-	/*
-	const segmentLength = 30,
-		segmentNumber = Math.floor(totalDistance / segmentLength),
-		averaged = [...new Array(segmentNumber)].map((_, i) => {
-			const from = segmentLength * i,
-				to = from + segmentLength
-
-			const elevationDifference = distanceColors.reduce(
-				(memo, next) => {
-					if (memo.done) return memo
-					const [distance, _, _, elevation] = next
-
-					if (memo.distance + next.distance > segmentLength)
-						return {
-							done: true,
-							elevation:
-								memo.elevation +
-								elevation * (distance / (segmentLength - memo.distance)),
-						}
-
-					else return {elevation: memo.elevation + elevation, distance: memo.distance + distance}
-
-				},
-				{ distance: 0, elevation: 0, done: false }
-			)
-		})
-
-/*
-	/*
-	const averaged = distanceColors.reduce((memo, next)=>{
-		const [distance,_, slope, elevationDifference] = next
-		const last = memo[memo.length-1]
-
-		const remainingToCloseSegment = 30 - last.distance
-
-		if (remainingToCloseSegment >= 0) {
-
-			return [...memo.slice(0, -1), {last.distance }]
-
-		}
-		if (remainingToCloseSegment < 0)
-
-	}, [{distance: 0}])
-	*/
-
-	console.log(
-		'indigo distanceColors',
-		averaged,
-		distanceColors.map(([distance, color, slope, difference]) =>
-			[
-				difference,
-				' sur ',
-				Math.round(distance * 10) / 10,
-				' m à ',
-				Math.round(slope * 10) / 10,
-				' %',
-			].join('')
-		)
-	)
-	const lineProgress = distanceColors.reduce(
-		(memo, [distance, color]) => {
-			const d = Math.min(1, memo.slice(-1)[0][0] + distance / totalDistance)
-			return [...memo, [d, color]]
-		},
-		[[0, distanceColors[0][1]]]
-	)
-	console.log('indigo', lineProgress)
-	return lineProgress.flat()
 }
