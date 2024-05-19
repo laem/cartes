@@ -73,7 +73,15 @@ export default function useDrawRoute(itineraryMode, map, geojson, id) {
 					walking: {
 						'line-color': '#8f53c1',
 						'line-width': 5,
-						'line-dasharray': [1, 2],
+						// I'm bricoling something here but I don't understand yet how it
+						// works precisely
+						'line-dasharray': {
+							stops: [
+								[0, [10, 2]],
+								[10, [3, 2]],
+								[16, [0.6, 2]],
+							],
+						},
 					},
 					distance: {
 						'line-width': 0,
