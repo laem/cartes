@@ -1,6 +1,4 @@
-import CircularIcon from '@/components/CircularIcon'
 import css from '@/components/css/convertToJs'
-import { useState } from 'react'
 import LightsWarning from './LightsWarning'
 import ProfileChooser from './ProfileChooser'
 
