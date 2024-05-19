@@ -60,7 +60,7 @@ export default function LightsWarning({ longitude, latitude }) {
 					alt="Icône représentant la lumière rouge arrière d'un vélo"
 				/>{' '}
 				<span>
-					N'oubliez pas vos lumières{' '}
+					N'oublie pas de briller{' '}
 					<strong>avant {roundFormat(goldenHourEnd)}</strong> et{' '}
 					<strong>après {roundFormat(goldenHour)}</strong>.
 				</span>

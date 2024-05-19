@@ -3,6 +3,8 @@
 import useSetSearchParams from '@/components/useSetSearchParams'
 import { useState } from 'react'
 import { DialogButton } from '../UI'
+import { useInterval } from 'usehooks-ts'
+import Link from 'next/link'
 
 export const initialDate = (type = 'date') => {
 	const stringDate = new Date().toLocaleString('fr')
@@ -63,9 +65,30 @@ export default function DateSelector({ date, type = 'date' }) {
 					OK
 				</DialogButton>
 			)}
+			{type === 'date' && (
+				<UpdateDate
+					date={date}
+					updateDate={(newDate) =>
+						setSearchParams({ date: encodeDate(newDate) }, true)
+					}
+				/>
+			)}
 		</div>
 	)
 }
 
+const newTimestamp = () => new Date().getTime() / 1000
+const UpdateDate = ({ date, updateDate }) => {
+	const [now, setNow] = useState(newTimestamp())
+
+	useInterval(() => {
+		setNow(newTimestamp())
+	}, 5 * 1000)
+	console.log('onglets now', now)
+	const isOutdated = now - new Date(date).getTime() / 1000 > 10
+
+	if (!isOutdated) return null
+	return <Link href={updateDate(initialDate())}>♻️</Link>
+}
 export const encodeDate = (date) => date?.replace(/:/, 'h')
 export const decodeDate = (date) => date?.replace(/h/, ':')

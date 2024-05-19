@@ -19,6 +19,7 @@ export default function useItinerary(
 	state,
 	zoom
 ) {
+	const mode = searchParams.mode
 	const desktop = useMediaQuery('(min-width: 800px)')
 	useEffect(() => {
 		if (!map) return
@@ -38,7 +39,12 @@ export default function useItinerary(
 	// geojson shape for trains, buses (appart from straight lines from stop to
 	// stop) nor walk
 
-	useDrawTransit(map, routes?.transit, selectedConnection)
+	useDrawTransit(
+		map,
+		(!mode || mode === 'transit') && routes?.transit,
+		selectedConnection
+	)
+
 	useFetchDrawBikeParkings(map, routes?.cycling)
 
 	const updateRoute = (key, value) =>
@@ -112,16 +118,23 @@ export default function useItinerary(
 		[points, linestrings]
 	)
 	useDrawRoute(itineraryMode, map, geojson, 'distance')
+
 	useDrawRoute(
 		itineraryMode,
 		map,
-		routes && routes.cycling !== 'loading' && routes.cycling,
+		(!mode || mode === 'cycling') &&
+			routes &&
+			routes.cycling !== 'loading' &&
+			routes.cycling,
 		'cycling'
 	)
 	useDrawRoute(
 		itineraryMode,
 		map,
-		routes && routes.walking !== 'loading' && routes.walking,
+		(!mode || mode === 'walking') &&
+			routes &&
+			routes.walking !== 'loading' &&
+			routes.walking,
 		'walking'
 	)
 
@@ -234,12 +247,12 @@ export default function useItinerary(
 				points,
 				itineraryDistance,
 				'hiking-mountain',
-				2 // ~ 3 km/h donc 2 km = 40 minutes, au-dessus ça me semble peu pertinent de proposer la marche par défaut
+				mode === 'walking' ? Infinity : 4 // ~ 3 km/h donc 4 km = 1h20 minutes, au-dessus ça me semble peu pertinent de proposer la marche par défaut
 			)
 			updateRoute('walking', walking)
 		}
 		fetchRoutes()
-	}, [points, setRoutes, bikeRouteProfile])
+	}, [points, setRoutes, bikeRouteProfile, mode])
 
 	useEffect(() => {
 		if (points.length < 2) {

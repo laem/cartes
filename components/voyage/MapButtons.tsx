@@ -25,12 +25,12 @@ export const MapButton = styled.div`
 	border-radius: 4px;
 	box-shadow: 0 0 0 2px rgba(0, 0, 0, 0.1);
 	padding: 0.1rem;
-	background: #ffffff85;
 	img {
 		width: 1.5rem;
 		height: auto;
 		vertical-align: bottom;
 	}
+	background: #ffffff85;
 	border: 0px solid lightgrey;
 	cursor: pointer;
 	${(p) =>

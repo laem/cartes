@@ -68,7 +68,6 @@ export default function Transit({ data, searchParams }) {
 				}
 			`}
 		>
-			<p>Il existe des transports en commun pour ce trajet. </p>
 			<DateSelector date={data.date} />
 			<div
 				css={`

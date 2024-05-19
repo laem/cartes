@@ -5,14 +5,12 @@ import LightsWarning from './LightsWarning'
 import ProfileChooser from './ProfileChooser'
 
 export default function BikeRouteRésumé({
-	walking,
-	cycling,
+	mode,
+	data,
 	bikeRouteProfile,
 	setBikeRouteProfile,
 }) {
-	const [mode, setMode] = useState('cycling') // TODO set automatically a guessed mode from distance and possibly then user preferences
-
-	if (cycling === 'loading' || walking === 'loading')
+	if (data === 'loading')
 		return <div>La roue tourne est en train de tourner</div>
 	return (
 		<div
@@ -33,42 +31,12 @@ export default function BikeRouteRésumé({
 				}
 			`}
 		>
-			{' '}
-			<div
-				css={`
-					> div {
-						position: absolute !important;
-						top: 0;
-						left: calc(50% - 1rem);
-						transform: translateX(-50%) translateY(-70%);
-						margin-right: 0.4rem;
-						width: 2rem;
-						height: auto;
-					}
-					> div:nth-child(2) {
-						left: calc(50% + 1rem);
-					}
-				`}
-			>
-				<CircularIcon
-					src={'/bike.svg'}
-					alt="Icône d'un vélo"
-					background={mode !== 'cycling' ? 'lightgrey' : 'var(--lightColor)'}
-					onClick={() => setMode('cycling')}
-				/>
-				<CircularIcon
-					src={'/walking.svg'}
-					alt="Icône d'une personne qui marche"
-					background={mode === 'walking' ? '#8f53c1' : 'lightgrey'}
-					onClick={() => setMode('walking')}
-				/>
-			</div>
 			<ModeContent
 				{...{
 					bikeRouteProfile,
 					setBikeRouteProfile,
 					mode,
-					data: mode === 'cycling' ? cycling : walking,
+					data,
 				}}
 			/>
 		</div>
@@ -132,7 +100,8 @@ const ModeContent = ({ mode, data, setBikeRouteProfile, bikeRouteProfile }) => {
 				>
 					{déniveléCumulé}&nbsp;m
 				</strong>{' '}
-				de dénivelé (<small>{dénivelé}&nbsp;m en absolu</small>).
+				de dénivelé{' '}
+				<small css="white-space: nowrap">({dénivelé}&nbsp;m en absolu)</small>.
 			</p>
 			{mode === 'cycling' && (
 				<ProfileChooser

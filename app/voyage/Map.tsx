@@ -21,11 +21,7 @@ import { disambiguateWayRelation } from './osmRequest'
 import { styles } from './styles/styles'
 import useHoverOnMapFeatures from './useHoverOnMapFeatures'
 import useTerrainControl from './useTerrainControl'
-import {
-	computeSncfUicControlDigit,
-	encodePlace,
-	fitBoundsConsideringModal,
-} from './utils'
+import { encodePlace, fitBoundsConsideringModal } from './utils'
 
 import { replaceArrayIndex } from '@/components/utils/utils'
 import getBbox from '@turf/bbox'
@@ -42,11 +38,9 @@ import useOsmRequest from './effects/useOsmRequest'
 import useOverpassRequest from './effects/useOverpassRequest'
 import useRightClick from './effects/useRightClick'
 import useSearchLocalTransit from './effects/useSearchLocalTransit'
+import Meteo from './meteo/Meteo'
+import { defaultTransitFilter } from './transport/TransitFilter'
 import useTransportStopData from './transport/useTransportStopData'
-import {
-	defaultTransitFiler,
-	defaultTransitFilter,
-} from './transport/TransitFilter'
 
 export const defaultState = {
 	depuis: { inputValue: null, choice: false },
@@ -233,7 +227,7 @@ export default function Map({ searchParams }) {
 
 	const onSearchResultClick = (feature) => {
 		setState([...state.slice(0, -1), defaultState.vers])
-		setOsmFeature(feature)
+		//setOsmFeature(feature) old function, this call seems useless now
 	}
 
 	//TODO this hook should be used easily with some tweaks to draw the borders of
@@ -553,6 +547,7 @@ export default function Map({ searchParams }) {
 			/>
 			{focusedImage && <FocusedImage {...{ focusedImage, focusImage }} />}
 			{isTransportsMode && <CenteredCross />}
+			<Meteo coordinates={center} />
 			{map && (
 				<MapComponents
 					{...{
