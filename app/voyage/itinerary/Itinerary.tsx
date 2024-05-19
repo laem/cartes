@@ -35,7 +35,7 @@ export default function Itinerary({
 
 	if (!itinerary.itineraryMode) return null
 	return (
-		<ContentSection>
+		<ContentSection css="margin-bottom: 1rem">
 			<ModalCloseButton title="Fermer l'encart itinéraire" onClick={close} />
 			<Steps state={state} />
 			{!itinerary.routes ? (
@@ -64,11 +64,21 @@ export default function Itinerary({
 							list-style-type: none;
 							display: flex;
 							align-items: center;
+							justify-content: space-evenly;
+							li {
+								margin: 0 0.4rem;
+							}
 						`}
 					>
 						{modes.map(([key, { label }]) => (
 							<li key={key}>
-								<Link href={setSearchParams({ mode: key }, true)} title={label}>
+								<Link
+									href={setSearchParams(
+										{ mode: mode === key ? undefined : key },
+										true
+									)}
+									title={label}
+								>
 									<CircularIcon
 										src={`/${key}.svg`}
 										alt={'Icône représentant le mode ' + label}
