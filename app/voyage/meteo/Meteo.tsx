@@ -62,8 +62,36 @@ export default function Meteo({ coordinates }) {
 		<div
 			css={`
 				position: fixed;
-				bottom: 2rem;
-				right: 1rem;
+				padding: 0.1rem;
+				width: 2rem;
+				height: 3.6rem;
+				right: -0.4rem;
+				bottom: 1.6rem;
+				> small {
+					display: none !important;
+				}
+				> div {
+					display: flex;
+					flex-direction: column;
+					align-items: center;
+					justify-content: space-evenly;
+				}
+
+				@media (min-width: 800px) {
+					bottom: 1rem;
+					right: 0rem;
+					width: 6rem;
+					height: 4.2rem;
+					> small {
+						display: block !important;
+					}
+
+					> div {
+						align-items: center;
+						justify-content: center;
+						flex-direction: row;
+					}
+				}
 				transform: translateX(-50%) translateY(-50%);
 				img {
 					width: 1.8rem;
@@ -79,21 +107,18 @@ export default function Meteo({ coordinates }) {
 				text-align: center;
 				border-radius: 4px;
 				box-shadow: 0 0 0 2px rgba(0, 0, 0, 0.1);
-				padding: 0.1rem;
-				width: 6rem;
-				height: 4rem;
 				small {
 					white-space: nowrap;
 					overflow-x: scroll;
+					scrollbar-width: none; /* Firefox */
+
 					max-width: 100%;
 					display: block;
 					height: 1.6rem;
 					margin-top: 0.3rem;
 				}
-				> div {
-					display: flex;
-					align-items: center;
-					justify-content: center;
+				small::-webkit-scrollbar {
+					display: none; /* Safari and Chrome */
 				}
 			`}
 			title={weatherText}
@@ -114,7 +139,7 @@ export default function Meteo({ coordinates }) {
 					css={`
 						background: var(--lighterColor);
 						border-radius: 1rem;
-						width: 1.4rem !important;
+						width: 1.3rem !important;
 					`}
 				/>
 			</div>
