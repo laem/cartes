@@ -17,6 +17,9 @@ export const modes = [
 	['walking', { label: 'marche', query: 'marche' }],
 ]
 
+export const modeKeyFromQuery = (myQuery) =>
+	(modes.find(([, { query }]) => query === myQuery) || [])[0]
+
 export default function Itinerary({
 	itinerary,
 	bikeRouteProfile,
@@ -28,8 +31,7 @@ export default function Itinerary({
 }) {
 	const setSearchParams = useSetSearchParams()
 
-	const mode = (modes.find(([, { query }]) => searchParams.mode === query) ||
-		[])[0]
+	const mode = modeKeyFromQuery(searchParams.mode)
 
 	useEffect(() => {
 		setSnap(1, 'Itinerary')

@@ -10,6 +10,7 @@ import { geoSerializeSteps } from './areStepsEqual'
 import { buildAllezPart, removeStatePart } from '../SetDestination'
 import { letterFromIndex } from './Steps'
 import { useMediaQuery } from 'usehooks-ts'
+import { modeKeyFromQuery } from './Itinerary'
 
 export default function useItinerary(
 	map,
@@ -19,7 +20,7 @@ export default function useItinerary(
 	state,
 	zoom
 ) {
-	const mode = searchParams.mode
+	const mode = modeKeyFromQuery(searchParams.mode)
 	const desktop = useMediaQuery('(min-width: 800px)')
 	useEffect(() => {
 		if (!map) return

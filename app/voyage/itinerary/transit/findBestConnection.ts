@@ -5,13 +5,14 @@ const connectionDuration = (connection) =>
 	connection.stops[0].departure.time
 
 export default function findBestConnection(connections) {
-	console.log('prune motis', connections)
+	console.log('bestConnection connections', connections)
 
 	/*
 	 * Very simple algorithm to find a best candidate
 	 * to be highlighted at the top
 	 * */
 	const selected = connections
+		// walk segments don't have trips. We want a direct connection, only one trip
 		.filter((connection) => connection.trips.length === 1)
 		//TODO this selection should probably made using distance, not time. Or both.
 		//it's ok to walk 20 min, and take the train for 10 min, if the train goes at
@@ -24,13 +25,14 @@ export default function findBestConnection(connections) {
 
 			return (
 				walkingTime <
-				// because why not ? See note above
-				(2 / 3) *
+				// experimental, not optimal at all. See note above
+				2 *
 					connection.transports.find(
 						(transport) => transport.move_type === 'Transport'
 					).seconds
 			)
 		})
+	console.log('bestConnection selected', selected)
 	if (!selected.length) return null
 
 	const best = selected.reduce((memo, next) => {
