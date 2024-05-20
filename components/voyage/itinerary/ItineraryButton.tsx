@@ -10,7 +10,10 @@ export default function ItineraryButton({
 }) {
 	return (
 		<MapButton $active={itineraryMode}>
-			<button onClick={() => setItineraryMode(!itineraryMode)}>
+			<button
+				onClick={() => setItineraryMode(!itineraryMode)}
+				title="Calculer un itinéraire"
+			>
 				<div>
 					<ItineraryIcon />
 				</div>

@@ -76,6 +76,7 @@ export default function MapButtons({
 		<MapButtonsWrapper>
 			<MapButton $active={searchParams.transports === 'oui'}>
 				<Link
+					title={'Voir la carte des transports en commun'}
 					href={setSearchParams(
 						{
 							...omit(['transports'], searchParams),
@@ -102,7 +103,10 @@ export default function MapButtons({
 				</button>
 			</MapButton>
 			<MapButton $active={distanceMode}>
-				<button onClick={() => setDistanceMode(!distanceMode)}>
+				<button
+					onClick={() => setDistanceMode(!distanceMode)}
+					title="Mesurer une distanace"
+				>
 					<div>
 						<DistanceIcon />
 					</div>
@@ -124,6 +128,7 @@ export default function MapButtons({
 			<ItineraryButton {...itinerary} />
 			<MapButton $active={searchParams.favoris === 'oui'}>
 				<Link
+					title="Gérer mes favoris"
 					href={setSearchParams(
 						{
 							...omit(['favoris'], searchParams),
