@@ -1,4 +1,4 @@
-import { Transport } from './Transit'
+import { TimelineTransportBlock, Transport } from './Transit'
 import Image from 'next/image'
 
 export default function BestConnection({ bestConnection }) {
@@ -41,7 +41,7 @@ export default function BestConnection({ bestConnection }) {
 							margin: 0 0.4rem;
 						`}
 					>
-						<Transport transport={transport} />
+						<TimelineTransportBlock transport={transport} />
 					</span>
 					passe <strong>{bestConnection.interval}</strong> à l'arrêt{' '}
 					<em

@@ -50,3 +50,18 @@ export const addProperty = (obj, key, value) => {
 
 	return retObj
 }
+
+export function isOverflowX(element) {
+	if (!element) return null
+	return (
+		element.scrollWidth != Math.max(element.offsetWidth, element.clientWidth)
+	)
+}
+export const isWhiteColor = (unsafeColor) => {
+	if (!unsafeColor) return false
+
+	if (unsafeColor.toLowerCase().includes('ffffff')) return true
+
+	console.log('orange', unsafeColor)
+	if (unsafeColor === 'white') return true
+}

@@ -1,5 +1,8 @@
 import { lightenColor } from '@/components/utils/colors'
-import { handleColor, trainColors } from '../itinerary/motisRequest'
+import {
+	handleColor,
+	trainColors,
+} from '@/app/voyage/itinerary/transit/motisRequest'
 
 // Here we make counts for a GTFS agency, to know which lines are relatively
 // frequent. But I don't think it's the right approach, it should be absolute.

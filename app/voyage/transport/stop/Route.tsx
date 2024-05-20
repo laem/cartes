@@ -3,10 +3,10 @@ import { findContrastedTextColor } from '@/components/utils/colors'
 import { omit } from '@/components/utils/utils'
 import Image from 'next/image'
 import { useState } from 'react'
-import { transportIcon } from '../../itinerary/Transit'
+import { transportIcon } from '../../itinerary/transit/Transit'
 import DayView from '../DayView'
 import Calendar from './Calendar'
-import { handleColor } from '../../itinerary/motisRequest'
+import { handleColor } from '../../itinerary/transit/motisRequest'
 
 export const nowAsYYMMDD = (delimiter = '') => {
 	var d = new Date(),

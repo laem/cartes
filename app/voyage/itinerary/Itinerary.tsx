@@ -3,17 +3,18 @@ import BikeRouteRésumé from '../BikeRouteRésumé'
 import { ContentSection } from '../ContentUI'
 import { ModalCloseButton } from '../UI'
 import Steps from './Steps'
-import Transit from './Transit'
+import Transit from './transit/Transit'
 import Image from 'next/image'
 import itineraryIcon from '@/public/itinerary-circle-plain.svg'
 import Link from 'next/link'
 import CircularIcon from '@/components/CircularIcon'
 import useSetSearchParams from '@/components/useSetSearchParams'
+import Timeline from './Timeline'
 
 export const modes = [
 	['cycling', { label: 'vélo' }],
-	['walking', { label: 'marche' }],
 	['transit', { label: 'Transports' }],
+	['walking', { label: 'marche' }],
 ]
 
 export default function Itinerary({
@@ -71,16 +72,23 @@ export default function Itinerary({
 						`}
 					>
 						{[
-							[undefined, { label: 'résumé', icon: 'frise' }],
+							[
+								undefined,
+								{
+									label: 'résumé',
+									icon: 'frise',
+									description: "Toutes les options en un clin d'oeuil",
+								},
+							],
 							...modes,
-						].map(([key, { label, icon }]) => (
+						].map(([key, { label, icon, description }]) => (
 							<li key={key}>
 								<Link
 									href={setSearchParams(
 										{ mode: mode === key ? undefined : key },
 										true
 									)}
-									title={label}
+									title={description || label}
 								>
 									<CircularIcon
 										src={`/${key || icon}.svg`}
@@ -93,6 +101,7 @@ export default function Itinerary({
 							</li>
 						))}
 					</ol>
+					{mode === undefined && <Timeline data={itinerary.routes} />}
 					{['cycling', 'walking'].includes(mode) && (
 						<BikeRouteRésumé
 							{...{

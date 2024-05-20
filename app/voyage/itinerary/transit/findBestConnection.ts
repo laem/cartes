@@ -1,4 +1,4 @@
-import { dateFromMotis, humanDuration } from './Transit'
+import { dateFromMotis, humanDuration } from './utils'
 
 const connectionDuration = (connection) =>
 	connection.stops.slice(-1)[0].arrival.time -

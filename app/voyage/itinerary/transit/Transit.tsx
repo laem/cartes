@@ -1,13 +1,25 @@
+import { isOverflowX, isWhiteColor } from '@/components/css/utils'
 import useSetSearchParams from '@/components/useSetSearchParams'
 import { findContrastedTextColor } from '@/components/utils/colors'
 import Image from 'next/image'
 import { useEffect, useRef, useState } from 'react'
 import { useResizeObserver } from 'usehooks-ts'
+import DateSelector from '../DateSelector'
 import BestConnection from './BestConnection'
-import DateSelector from './DateSelector'
-import findBestConnection, { getBestIntervals } from './findBestConnection'
-import { stamp } from './motisRequest'
+import { LateWarning } from './LateWarning'
 import TransitLoader from './TransitLoader'
+import findBestConnection from './findBestConnection'
+import transportIcon from './transportIcon'
+import {
+	connectionEnd,
+	connectionStart,
+	filterNextConnections,
+	formatMotis,
+	humanDuration,
+} from './utils'
+
+/* This is a megacomponent. Don't worry, it'll stay like this until the UX
+ * decisions are stabilized. We don't have many users yet */
 
 export default function Transit({ data, searchParams }) {
 	if (data.state === 'loading') return <TransitLoader />
@@ -28,11 +40,8 @@ export default function Transit({ data, searchParams }) {
 			</p>
 		)
 
-	const connections = data.connections.filter(
-		(connection) => connectionStart(connection) > stamp(data.date)
-	)
-
-	if (connections.length < 1)
+	const nextConnections = filterNextConnections(data)
+	if (nextConnections.length < 1)
 		return (
 			<section>
 				<p>🫣 Pas de transport en commun à cette heure-ci</p>
@@ -40,17 +49,17 @@ export default function Transit({ data, searchParams }) {
 			</section>
 		)
 
-	const firstDate = connectionStart(connections[0]) // We assume Motis orders them by start date, when you start to walk. Could also be intersting to query the first end date
+	const firstDate = connectionStart(nextConnections[0]) // We assume Motis orders them by start date, when you start to walk. Could also be intersting to query the first end date
 
-	const bestConnection = findBestConnection(connections)
+	const bestConnection = findBestConnection(nextConnections)
 
 	const firstStop = Math.min(
-			...connections.map(
+			...nextConnections.map(
 				(connection) => connection.stops[0].departure.schedule_time
 			)
 		),
 		lastStop = Math.max(
-			...connections.map(
+			...nextConnections.map(
 				(connection) => connection.stops.slice(-1)[0].arrival.schedule_time
 			)
 		)
@@ -80,8 +89,8 @@ export default function Transit({ data, searchParams }) {
 			</div>
 			{bestConnection && <BestConnection bestConnection={bestConnection} />}
 
-			<Connections
-				connections={connections}
+			<TransitTimeline
+				connections={nextConnections}
 				date={data.date}
 				selectedConnection={searchParams.choix || 0}
 				connectionsTimeRange={{
@@ -93,26 +102,7 @@ export default function Transit({ data, searchParams }) {
 	)
 }
 
-const LateWarning = ({ date, firstDate }) => {
-	const diffHours = (firstDate - stamp(date)) / (60 * 60)
-
-	const displayDiff = Math.round(diffHours)
-	if (diffHours > 12)
-		return <p>😓 Le prochain trajet part plus de {displayDiff} heures après.</p>
-	if (diffHours > 4)
-		return (
-			<p> 😔 Le prochain trajet part plus de {displayDiff} heures après.</p>
-		)
-	if (diffHours > 2)
-		return (
-			<p> ⏳ Le prochain trajet part plus de {displayDiff} heures après.</p>
-		)
-	if (diffHours > 1)
-		return <p> ⏳ Le prochain trajet part plus d'une heure après.</p>
-	return null
-}
-
-const Connections = ({
+const TransitTimeline = ({
 	connections,
 	date,
 	connectionsTimeRange,
@@ -168,15 +158,6 @@ const Connections = ({
 
 const correspondance = { Walk: 'Marche', Transport: 'Transport' }
 
-const startDateFormatter = Intl.DateTimeFormat('fr-FR', {
-	hour: 'numeric',
-	minute: 'numeric',
-})
-export const dateFromMotis = (timestamp) => new Date(timestamp * 1000)
-
-const formatMotis = (timestamp) =>
-	startDateFormatter.format(dateFromMotis(timestamp))
-
 const Connection = ({
 	connection,
 	endTime,
@@ -197,7 +178,7 @@ const Connection = ({
 			`}
 			onClick={() => setSelectedConnection(index)}
 		>
-			<Frise
+			<Line
 				connectionsTimeRange={connectionsTimeRange}
 				transports={connection.transports}
 				connection={connection}
@@ -210,45 +191,7 @@ const Connection = ({
 	)
 }
 
-const connectionStart = (connection) => connection.stops[0].departure.time
-
-const connectionEnd = (connection) => connection.stops.slice(-1)[0].arrival.time
-
-export const humanDuration = (seconds) => {
-	console.log('orange secondes', seconds)
-
-	if (seconds < 60) {
-		const text = `${seconds} secondes`
-
-		return { interval: `toutes les ${seconds} secondes`, single: text }
-	}
-	const minutes = seconds / 60
-	if (minutes > 15 - 2 && minutes < 15 + 2)
-		return { interval: `tous les quarts d'heure`, single: `Un quart d'heure` }
-	if (minutes > 30 - 4 && minutes < 30 + 4)
-		return { interval: `toutes les demi-heures`, single: `Une demi-heure` }
-	if (minutes > 45 - 4 && minutes < 45 + 4)
-		return {
-			interval: `tous les trois quarts d'heure`,
-			single: `trois quarts d'heure`,
-		}
-
-	if (minutes < 60) {
-		const text = `${Math.round(minutes)} min`
-		return { interval: `toutes les ${text}`, single: text }
-	}
-	const hours = minutes / 60
-
-	if (hours < 5) {
-		const rest = Math.round(minutes - hours * 60)
-
-		const text = `${Math.floor(hours)} h${rest > 0 ? ` ${rest} min` : ''}`
-		return { interval: `Toutes les ${text}`, single: text }
-	}
-	const text = `${Math.round(hours)} heures`
-	return { interval: `toutes les ${text}`, single: text }
-}
-const Frise = ({
+const Line = ({
 	connectionsTimeRange,
 	connection,
 	connectionRange: [from, to],
@@ -300,7 +243,7 @@ const Frise = ({
 								border-right: 2px solid white;
 							`}
 						>
-							<Transport transport={transport} />
+							<TimelineTransportBlock transport={transport} />
 						</li>
 					))}
 				</ul>
@@ -326,13 +269,7 @@ const Frise = ({
 	)
 }
 
-function isOverflowX(element) {
-	if (!element) return null
-	return (
-		element.scrollWidth != Math.max(element.offsetWidth, element.clientWidth)
-	)
-}
-export const Transport = ({ transport }) => {
+export const TimelineTransportBlock = ({ transport }) => {
 	const [constraint, setConstraint] = useState('none')
 	const background = transport.route_color,
 		color = transport.route_text_color
@@ -435,34 +372,4 @@ ${
 			)}
 		</span>
 	)
-}
-
-//TODO complete with spec possibilities https://gtfs.org/fr/schedule/reference/#routestxt
-export const transportIcon = (frenchTrainType, routeType, route) => {
-	if (frenchTrainType) return `/transit/${frenchTrainType.toLowerCase()}.svg`
-
-	const correspondance = {
-		0: '/icons/tram.svg',
-		1: '/icons/metro.svg',
-		2: '/icons/train.svg',
-		3: '/icons/bus.svg',
-		4: '/icons/ferry.svg',
-		5: '/icons/tram.svg', // so rare
-		6: '/icons/téléphérique.svg',
-		7: '/icons/funiculaire.svg',
-		11: '/icons/trolleybus.svg',
-		12: '/icons/train.svg', // how to represent this ?
-	}
-	if (route?.route_id === 'BIBUS:C') return correspondance[6] // LOL, merci bibus, you had one job...
-	const found = correspondance[routeType]
-	return found || '/icons/bus.svg'
-}
-
-const isWhiteColor = (unsafeColor) => {
-	if (!unsafeColor) return false
-
-	if (unsafeColor.toLowerCase().includes('ffffff')) return true
-
-	console.log('orange', unsafeColor)
-	if (unsafeColor === 'white') return true
 }

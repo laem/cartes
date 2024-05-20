@@ -1,5 +1,5 @@
 import { capitalise0 } from '@/components/utils/utils'
-import { trainColors } from '../itinerary/motisRequest'
+import { trainColors } from '@/app/voyage/itinerary/transit/motisRequest'
 
 export const trainTypeSncfMapping = {
 	tout: null,

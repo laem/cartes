@@ -1,5 +1,5 @@
 import { useEffect } from 'react'
-import { handleColor } from '../itinerary/motisRequest'
+import { handleColor } from '@/app/voyage/itinerary/transit/motisRequest'
 import { findContrastedTextColor } from '@/components/utils/colors'
 
 export default function useDrawTransit(map, transit, selectedConnection) {
