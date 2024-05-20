@@ -5,6 +5,7 @@ import { useState } from 'react'
 import { DialogButton } from '../UI'
 import { useInterval } from 'usehooks-ts'
 import Link from 'next/link'
+import Image from 'next/image'
 
 export const initialDate = (type = 'date') => {
 	const stringDate = new Date().toLocaleString('fr')
@@ -88,7 +89,20 @@ const UpdateDate = ({ date, updateDate }) => {
 	const isOutdated = now - new Date(date).getTime() / 1000 > 10
 
 	if (!isOutdated) return null
-	return <Link href={updateDate(initialDate())}>♻️</Link>
+	return (
+		<Link href={updateDate(initialDate())}>
+			<Image
+				src={'/invertIcon.svg'}
+				alt="Rafraichir l'heure de départ"
+				width="10"
+				height="10"
+				css={`
+					width: 1rem;
+					height: auto;
+				`}
+			/>
+		</Link>
+	)
 }
 export const encodeDate = (date) => date?.replace(/:/, 'h')
 export const decodeDate = (date) => date?.replace(/h/, ':')

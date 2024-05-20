@@ -70,7 +70,10 @@ export default function Itinerary({
 							}
 						`}
 					>
-						{modes.map(([key, { label }]) => (
+						{[
+							[undefined, { label: 'résumé', icon: 'frise' }],
+							...modes,
+						].map(([key, { label, icon }]) => (
 							<li key={key}>
 								<Link
 									href={setSearchParams(
@@ -80,7 +83,7 @@ export default function Itinerary({
 									title={label}
 								>
 									<CircularIcon
-										src={`/${key}.svg`}
+										src={`/${key || icon}.svg`}
 										alt={'Icône représentant le mode ' + label}
 										background={
 											mode !== key ? 'lightgrey' : 'var(--lightColor)'

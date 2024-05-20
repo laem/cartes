@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!-- Created with Inkscape (http://www.inkscape.org/) -->
+
+<svg
+   width="10"
+   height="10"
+   viewBox="0 0 2.6458333 2.6458333"
+   version="1.1"
+   id="svg1"
+   inkscape:version="1.2.2 (b0a8486541, 2022-12-01)"
+   sodipodi:docname="frise.svg"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:svg="http://www.w3.org/2000/svg">
+  <sodipodi:namedview
+     id="namedview1"
+     pagecolor="#b4b4b4"
+     bordercolor="#666666"
+     borderopacity="1.0"
+     inkscape:showpageshadow="2"
+     inkscape:pageopacity="0.0"
+     inkscape:pagecheckerboard="0"
+     inkscape:deskcolor="#d1d1d1"
+     inkscape:document-units="mm"
+     inkscape:zoom="30.091527"
+     inkscape:cx="-0.016615973"
+     inkscape:cy="6.8623968"
+     inkscape:window-width="1920"
+     inkscape:window-height="1055"
+     inkscape:window-x="0"
+     inkscape:window-y="0"
+     inkscape:window-maximized="0"
+     inkscape:current-layer="layer1"
+     showgrid="false" />
+  <defs
+     id="defs1" />
+  <g
+     inkscape:label="Layer 1"
+     inkscape:groupmode="layer"
+     id="layer1">
+    <g
+       id="g1"
+       transform="matrix(0.42101427,0,0,0.33171025,0.55449144,0.3916385)"
+       style="fill:none;fill-opacity:1;stroke:#000000;stroke-opacity:1">
+      <path
+         style="fill:none;fill-opacity:1;stroke:#000000;stroke-width:1.01143;stroke-linecap:butt;stroke-linejoin:miter;stroke-dasharray:none;stroke-opacity:1"
+         d="m 2.6502567,1.3437344 -2.67126119,-0.00202"
+         id="path1-5"
+         sodipodi:nodetypes="cc" />
+    </g>
+    <g
+       id="g1-3"
+       transform="matrix(0.45670887,0,0,0.33127922,0.85521455,0.92758524)"
+       style="fill:none;fill-opacity:1;stroke:#000000;stroke-opacity:1">
+      <path
+         style="fill:none;fill-opacity:1;stroke:#000000;stroke-width:1.01143;stroke-linecap:butt;stroke-linejoin:miter;stroke-dasharray:none;stroke-opacity:1"
+         d="m 2.6502567,1.3437344 -2.67126119,-0.00202"
+         id="path1-5-6"
+         sodipodi:nodetypes="cc" />
+    </g>
+    <g
+       id="g1-7"
+       transform="matrix(0.24311328,0,0,0.33422091,1.4359927,1.4940118)"
+       style="fill:none;fill-opacity:1;stroke:#000000;stroke-opacity:1">
+      <path
+         style="fill:none;fill-opacity:1;stroke:#000000;stroke-width:1.01143;stroke-linecap:butt;stroke-linejoin:miter;stroke-dasharray:none;stroke-opacity:1"
+         d="m 2.6502567,1.3437344 -2.67126119,-0.00202"
+         id="path1-5-5"
+         sodipodi:nodetypes="cc" />
+    </g>
+  </g>
+</svg>
