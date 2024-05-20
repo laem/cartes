@@ -2,6 +2,7 @@ import useSetSearchParams from '@/components/useSetSearchParams'
 import { Line } from './transit/Transit'
 import { defaultRouteColor, nowStamp } from './transit/motisRequest'
 import Link from 'next/link'
+import TransitSummary from './transit/TransitSummary'
 
 export default function Timeline({ data }) {
 	const setSearchParams = useSetSearchParams()
@@ -16,7 +17,6 @@ export default function Timeline({ data }) {
 		from: now,
 		to: now + max,
 	}
-	console.log('cyan range', connectionsTimeRange)
 	return (
 		<ol
 			css={`
@@ -68,6 +68,7 @@ export default function Timeline({ data }) {
 					/>
 				</Link>
 			)}
+			<TransitSummary data={data.transit} />
 		</ol>
 	)
 }

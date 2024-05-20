@@ -17,6 +17,9 @@ const Loader = styled.div`
 	flex-direction: column;
 	align-items: center;
 
+	small {
+		margin-bottom: 0.4rem;
+	}
 	> div {
 		width: 120px;
 		height: 20px;

@@ -7,9 +7,13 @@ import { useResizeObserver } from 'usehooks-ts'
 import DateSelector from '../DateSelector'
 import BestConnection from './BestConnection'
 import { LateWarning } from './LateWarning'
+import {
+	NoMoreTransitToday,
+	NoTransit,
+	TransitScopeLimit,
+} from './NoTransitMessages'
 import TransitLoader from './TransitLoader'
 import findBestConnection from './findBestConnection'
-import transportIcon from './transportIcon'
 import {
 	connectionEnd,
 	connectionStart,
@@ -17,37 +21,19 @@ import {
 	formatMotis,
 	humanDuration,
 } from './utils'
+import transportIcon from './transportIcon'
 
 /* This is a megacomponent. Don't worry, it'll stay like this until the UX
  * decisions are stabilized. We don't have many users yet */
 
 export default function Transit({ data, searchParams }) {
 	if (data.state === 'loading') return <TransitLoader />
-	if (data.state === 'error')
-		return <p>Pas de transport en commun trouvé :( </p>
+	if (data.state === 'error') return <NoTransit />
 	if (!data?.connections || !data.connections.length)
-		return (
-			<p
-				css={`
-					margin-top: 1rem;
-				`}
-			>
-				<small>
-					💡 Les transports en commun ne sont disponible qu'en Bretagne pour
-					l'instant. Car le développeur est breton et qu'il faut bien commencer
-					quelque part :)
-				</small>
-			</p>
-		)
+		return <TransitScopeLimit />
 
 	const nextConnections = filterNextConnections(data)
-	if (nextConnections.length < 1)
-		return (
-			<section>
-				<p>🫣 Pas de transport en commun à cette heure-ci</p>
-				<DateSelector date={data.date} />
-			</section>
-		)
+	if (nextConnections.length < 1) return <NoMoreTransitToday date={data.date} />
 
 	const firstDate = connectionStart(nextConnections[0]) // We assume Motis orders them by start date, when you start to walk. Could also be intersting to query the first end date
 
