@@ -55,13 +55,13 @@ export function computeSlopeGradient(geojson) {
 		)
 		.flat()
 
-	const chunkSize = 10
+	const chunkSize = 20
 	const averaged = []
 	for (let i = 0; i < littles.length; i += chunkSize) {
 		const chunk = littles.slice(i, i + chunkSize)
 		const sum = chunk.reduce((memo, next) => memo + next, 0)
 
-		averaged.push(sum / 10)
+		averaged.push(sum / chunkSize)
 	}
 
 	const lineProgressAveraged = averaged
