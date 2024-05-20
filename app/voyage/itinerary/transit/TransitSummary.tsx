@@ -1,4 +1,6 @@
 import BestConnection from './BestConnection'
+import Image from 'next/image'
+import transitIcon from '@/public/transit.svg'
 import {
 	NoMoreTransitToday,
 	NoTransit,
@@ -27,4 +29,24 @@ export default function TransitSummary({ itinerary }) {
 
 	const bestConnection = findBestConnection(nextConnections)
 	if (bestConnection) return <BestConnection bestConnection={bestConnection} />
+	return (
+		<div
+			css={`
+				display: flex;
+				align-items: center;
+				flex-wrap: wrap;
+				img {
+					width: 1.6rem;
+					height: auto;
+				}
+				p {
+					margin: 0;
+				}
+				margin: 0.6rem;
+			`}
+		>
+			<Image src={transitIcon} alt="Icône transport en commun" />
+			<p>Voir les {nextConnections.length} options de transport en commun</p>
+		</div>
+	)
 }
