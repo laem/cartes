@@ -4,13 +4,14 @@ import { defaultRouteColor, nowStamp } from './transit/motisRequest'
 import Link from 'next/link'
 import TransitSummary from './transit/TransitSummary'
 
-export default function Timeline({ data }) {
+export default function Timeline({ itinerary }) {
 	const setSearchParams = useSetSearchParams()
-	console.log('cyan', data)
 	const cyclingSeconds =
-		data.cycling?.features && +data.cycling.features[0].properties['total-time']
+		itinerary.routes.cycling?.features &&
+		+itinerary.routes.cycling.features[0].properties['total-time']
 	const walkingSeconds =
-		data.walking?.features && +data.walking.features[0].properties['total-time']
+		itinerary.routes.walking?.features &&
+		+itinerary.routes.walking.features[0].properties['total-time']
 	const max = Math.max(...[cyclingSeconds, walkingSeconds].filter(Boolean))
 	const now = nowStamp()
 	const connectionsTimeRange = {
@@ -28,7 +29,7 @@ export default function Timeline({ data }) {
 				}
 			`}
 		>
-			{data.cycling?.features && (
+			{itinerary.routes.cycling?.features && (
 				<Link href={setSearchParams({ mode: 'cycling' }, true)}>
 					<Line
 						{...{
@@ -48,7 +49,7 @@ export default function Timeline({ data }) {
 					/>
 				</Link>
 			)}
-			{data.walking?.features && (
+			{itinerary.routes.walking?.features && (
 				<Link href={setSearchParams({ mode: 'walking' }, true)}>
 					<Line
 						{...{
@@ -68,7 +69,7 @@ export default function Timeline({ data }) {
 					/>
 				</Link>
 			)}
-			<TransitSummary data={data.transit} />
+			<TransitSummary itinerary={itinerary} />
 		</ol>
 	)
 }

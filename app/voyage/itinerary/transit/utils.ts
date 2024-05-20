@@ -1,9 +1,7 @@
 import { stamp } from './motisRequest'
 
-export const filterNextConnections = (data) =>
-	data.connections.filter(
-		(connection) => connectionStart(connection) > stamp(data.date)
-	)
+export const filterNextConnections = (connections, date) =>
+	connections.filter((connection) => connectionStart(connection) > stamp(date))
 
 export const connectionStart = (connection) =>
 	connection.stops[0].departure.time

@@ -101,7 +101,7 @@ export default function Itinerary({
 							</li>
 						))}
 					</ol>
-					{mode === undefined && <Timeline data={itinerary.routes} />}
+					{mode === undefined && <Timeline itinerary={itinerary} />}
 					{['cycling', 'walking'].includes(mode) && (
 						<BikeRouteRésumé
 							{...{
@@ -113,14 +113,7 @@ export default function Itinerary({
 						/>
 					)}
 					{mode === 'transit' && (
-						<Transit
-							data={{
-								...itinerary.routes.transit,
-								date: itinerary.date,
-								setDate: itinerary.setDate,
-							}}
-							searchParams={searchParams}
-						/>
+						<Transit itinerary={itinerary} searchParams={searchParams} />
 					)}
 				</div>
 			)}
