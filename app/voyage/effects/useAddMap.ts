@@ -53,7 +53,7 @@ export default function useAddMap(
 
 		geolocate.on('geolocate', function (e) {
 			console.log('bleu ', e.coords)
-			setGeolocation((state) => e.coords)
+			setGeolocation(e.coords)
 		})
 
 		newMap.on('style.load', function () {
