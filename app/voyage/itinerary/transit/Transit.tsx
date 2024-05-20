@@ -191,7 +191,7 @@ const Connection = ({
 	)
 }
 
-const Line = ({
+export const Line = ({
 	connectionsTimeRange,
 	connection,
 	connectionRange: [from, to],
@@ -249,6 +249,7 @@ const Line = ({
 				</ul>
 				<div
 					css={`
+						margin-top: 0.1rem;
 						display: flex;
 						justify-content: space-between;
 						line-height: 1.2rem;
@@ -327,10 +328,10 @@ ${
 }
 			`}
 			title={`${humanDuration(transport.seconds).single} de ${
-				transport.frenchTrainType || transport.move.name || 'marche'
+				transport.frenchTrainType || transport.move?.name || 'marche'
 			} ${transport.route_long_name || ''}`}
 		>
-			{transport.move.name ? (
+			{transport.move?.name ? (
 				<span
 					css={`
 						display: flex;
@@ -359,6 +360,18 @@ ${
 				<Image
 					src={'/walking.svg'}
 					alt="Icône d'une personne qui marche"
+					width="100"
+					height="100"
+					css={`
+						height: 1.4rem !important;
+
+						margin: 0 !important;
+					`}
+				/>
+			) : transport.move_type === 'Cycle' ? (
+				<Image
+					src={'/cycling.svg'}
+					alt="Icône d'un vélo"
 					width="100"
 					height="100"
 					css={`

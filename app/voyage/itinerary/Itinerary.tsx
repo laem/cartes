@@ -94,7 +94,7 @@ export default function Itinerary({
 										src={`/${key || icon}.svg`}
 										alt={'Icône représentant le mode ' + label}
 										background={
-											mode !== key ? 'lightgrey' : 'var(--lightColor)'
+											mode !== key ? 'var(--lighterColor)' : 'var(--color)'
 										}
 									/>
 								</Link>

@@ -10,6 +10,8 @@ export const nowStamp = () => Math.round(Date.now() / 1000)
 
 export const stamp = (date) => Math.round(new Date(date).getTime() / 1000)
 
+export const defaultRouteColor = '#d3b2ee'
+
 export const buildRequestBody = (start, destination, date) => {
 	const begin = Math.round(new Date(date).getTime() / 1000),
 		end = datePlusHours(date, 2) // TODO This parameter should probably be modulated depending on the transit offer in the simulation setup. Or, query for the whole day at once, and filter them in the UI
@@ -130,7 +132,7 @@ export const computeMotisTrip = async (start, destination, date) => {
 								? trainColors.OUIGO['color']
 								: frenchTrainType === 'TER'
 								? trainColors.TER['color']
-								: handleColor(route_color, '#d3b2ee'),
+								: handleColor(route_color, defaultRouteColor),
 							route_text_color: isTGV
 								? '#fff'
 								: isOUIGO
