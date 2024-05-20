@@ -26,11 +26,12 @@ export default function Timeline({ itinerary }) {
 				}
 				a {
 					color: inherit;
+					text-decoration: none;
 				}
 			`}
 		>
 			{itinerary.routes.cycling?.features && (
-				<Link href={setSearchParams({ mode: 'cycling' }, true)}>
+				<Link href={setSearchParams({ mode: 'velo' }, true)}>
 					<Line
 						{...{
 							connectionsTimeRange,
@@ -50,7 +51,7 @@ export default function Timeline({ itinerary }) {
 				</Link>
 			)}
 			{itinerary.routes.walking?.features && (
-				<Link href={setSearchParams({ mode: 'walking' }, true)}>
+				<Link href={setSearchParams({ mode: 'marche' }, true)}>
 					<Line
 						{...{
 							connectionsTimeRange,
@@ -69,7 +70,10 @@ export default function Timeline({ itinerary }) {
 					/>
 				</Link>
 			)}
-			<TransitSummary itinerary={itinerary} />
+
+			<Link href={setSearchParams({ mode: 'commun' }, true)}>
+				<TransitSummary itinerary={itinerary} />
+			</Link>
 		</ol>
 	)
 }

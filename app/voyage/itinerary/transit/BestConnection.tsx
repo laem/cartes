@@ -1,10 +1,13 @@
 import { TimelineTransportBlock, Transport } from './Transit'
 import Image from 'next/image'
+import { routeTypeName } from './transportIcon'
 
 export default function BestConnection({ bestConnection }) {
 	console.log('prune best', bestConnection)
 	const transport = bestConnection.best.transports.find((t) => t.trip)
 	const stop = bestConnection.best.stops[transport.move.range.from].station.name
+
+	const transportType = routeTypeName(transport.route_type)
 	return (
 		<div
 			css={`
@@ -31,9 +34,9 @@ export default function BestConnection({ bestConnection }) {
 				height="10"
 			/>
 			<div>
-				<small>Il y a un trajet optimal</small>
+				<small>Il y a un {transportType} optimal !</small>
 				<p>
-					Le direct
+					Le {transportType} direct
 					<span
 						css={`
 							display: inline-block;

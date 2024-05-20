@@ -18,3 +18,20 @@ export default function (frenchTrainType, routeType, route) {
 	const found = correspondance[routeType]
 	return found || '/icons/bus.svg'
 }
+
+export const routeTypeName = (routeType) => {
+	const correspondance = {
+		0: 'tram',
+		1: 'métro',
+		2: 'train',
+		3: 'bus',
+		4: 'ferry',
+		5: 'tram à câble', // so rare
+		6: 'téléphérique',
+		7: 'funiculaire',
+		11: 'trolleybus',
+		12: 'monorail', // how to represent this ?
+	}
+
+	return correspondance[routeType]
+}

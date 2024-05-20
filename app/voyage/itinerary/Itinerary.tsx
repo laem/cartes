@@ -12,9 +12,9 @@ import useSetSearchParams from '@/components/useSetSearchParams'
 import Timeline from './Timeline'
 
 export const modes = [
-	['cycling', { label: 'vélo' }],
-	['transit', { label: 'Transports' }],
-	['walking', { label: 'marche' }],
+	['cycling', { label: 'vélo', query: 'velo' }],
+	['transit', { label: 'Transports', query: 'commun' }],
+	['walking', { label: 'marche', query: 'marche' }],
 ]
 
 export default function Itinerary({
@@ -28,7 +28,8 @@ export default function Itinerary({
 }) {
 	const setSearchParams = useSetSearchParams()
 
-	const mode = searchParams.mode
+	const mode = (modes.find(([, { query }]) => searchParams.mode === query) ||
+		[])[0]
 
 	useEffect(() => {
 		setSnap(1, 'Itinerary')
@@ -81,11 +82,11 @@ export default function Itinerary({
 								},
 							],
 							...modes,
-						].map(([key, { label, icon, description }]) => (
+						].map(([key, { label, icon, description, query }]) => (
 							<li key={key}>
 								<Link
 									href={setSearchParams(
-										{ mode: mode === key ? undefined : key },
+										{ mode: mode === key ? undefined : query },
 										true
 									)}
 									title={description || label}
