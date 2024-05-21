@@ -62,7 +62,7 @@ export const styles = {
 	'street-complete': {
 		// Taken from MapTiler's dataviz style
 		url: testStreetComplete,
-		name: 'Street Complete',
+		name: 'StreetComplete',
 		emoji: '🧪',
 		experimental: true,
 	},
