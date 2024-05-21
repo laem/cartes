@@ -1,4 +1,5 @@
 import { JSDOM } from 'jsdom'
+
 export async function GET(request) {
 	const requestUrl = new URL(request.url),
 		url = requestUrl.searchParams.get('url')

@@ -9,7 +9,7 @@ export default function useOgImageFetcher(url) {
 			try {
 				// Fetch HTML content of the given webpage
 				const response = await fetch(
-					'/voyage/getOgImage?url=' + encodeURIComponent(url)
+					'/getOgImage?url=' + encodeURIComponent(url)
 				)
 				const { ogImageContent = null } = await response.json()
 				console.log('OOOO', ogImageContent)
