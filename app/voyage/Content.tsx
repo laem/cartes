@@ -246,7 +246,7 @@ export default function Content({
 					<ContentSection>
 						{osmFeature && (
 							<ModalCloseButton
-								title="Fermer l'encart point d'intéret"
+								title="Fermer l'encart point d'intérêt"
 								onClick={() => {
 									console.log('will yo')
 									setSearchParams({ allez: undefined })
