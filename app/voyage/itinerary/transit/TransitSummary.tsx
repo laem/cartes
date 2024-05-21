@@ -12,6 +12,7 @@ import { connectionStart, filterNextConnections } from './utils'
 
 export default function TransitSummary({ itinerary }) {
 	const data = itinerary.routes.transit
+	if (!data) return null // Too short of a distance to use transit
 	console.log('summary', data)
 	if (data.state === 'loading') return <TransitLoader />
 	if (data.state === 'error') return <NoTransit />
