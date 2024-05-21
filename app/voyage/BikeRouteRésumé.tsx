@@ -54,6 +54,15 @@ export const computeHumanDistance = (distance) => {
 	return [Math.round(distance / 10) * 10, 'm']
 }
 
+const daysHoursMinutesFromSeconds = (seconds) => {
+	const secondsInDay = 24 * 60 * 60
+	const days = Math.floor(seconds / secondsInDay)
+	const rest = (seconds % secondsInDay) / (60 * 60)
+	const hours = Math.floor(rest)
+	const minutes = Math.round((rest - hours) * 60)
+	return [days, hours, minutes]
+}
+
 const ModeContent = ({ mode, data, setBikeRouteProfile, bikeRouteProfile }) => {
 	console.log('indigo sam', mode, data)
 	const features = data?.features
@@ -65,9 +74,7 @@ const ModeContent = ({ mode, data, setBikeRouteProfile, bikeRouteProfile }) => {
 	const seconds = feature.properties['total-time'],
 		distance = feature.properties['track-length'],
 		[humanDistance, unit] = computeHumanDistance(distance),
-		date = new Date(1000 * seconds).toISOString().substr(11, 8).split(':'),
-		heures = +date[0],
-		minutes = date[1]
+		[days, hours, minutes] = daysHoursMinutesFromSeconds(seconds)
 
 	const déniveléCumulé = feature.properties['filtered ascend']
 	const dénivelé = feature.properties['plain-ascend']
@@ -80,7 +87,8 @@ const ModeContent = ({ mode, data, setBikeRouteProfile, bikeRouteProfile }) => {
 				</strong>{' '}
 				vous prendra{' '}
 				<strong>
-					{heures ? +heures + ` h et ` : ''}
+					{days ? days + ` jour${days > 1 ? 's' : ''}, ` : ''}
+					{hours ? hours + ` h et ` : ''}
 					{+minutes}&nbsp;min
 				</strong>{' '}
 				pour{' '}
