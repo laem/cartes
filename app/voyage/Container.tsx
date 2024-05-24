@@ -22,6 +22,7 @@ import { defaultZoom } from './effects/useAddMap'
 import { getStyle } from './styles/styles'
 import useDrawItinerary from './itinerary/useDrawItinerary'
 import useFetchItinerary from './itinerary/useFetchItinerary'
+import useSetSearchParams from '@/components/useSetSearchParams'
 // Map is forced as dynamic since it can't be rendered by nextjs server-side.
 // There is almost no interest to do that anyway, except image screenshots
 const Map = dynamic(() => import('./Map'), {
@@ -35,11 +36,17 @@ export const defaultState = {
 }
 
 export default function Container({ searchParams }) {
+	const setSearchParams = useSetSearchParams()
 	const [focusedImage, focusImage] = useState(null)
 	const [bbox, setBbox] = useState(null)
 	const [zoom, setZoom] = useState(defaultZoom)
 	const [bboxImages, setBboxImages] = useState([])
 	const [latLngClicked, setLatLngClicked] = useState(null)
+	const clickedPoint = searchParams.clic?.split('|'),
+		resetClickedPoint = () => setSearchParams({ clic: undefined })
+
+	const [geolocation, setGeolocation] = useState(null)
+
 	const [safeStyleKey, setSafeStyleKey] = useState(null)
 	const [tempStyle, setTempStyle] = useState(null)
 	const styleKey = tempStyle || searchParams.style || 'base'
@@ -121,13 +128,6 @@ export default function Container({ searchParams }) {
 		searchParams.noCache
 	)
 
-	const agencyId = searchParams.agence
-	const agency = useMemo(() => {
-		const agencyData =
-			transportsData && transportsData.find((el) => el[0] === agencyId)
-		return agencyData && { id: agencyData[0], ...agencyData[1] }
-	}, [agencyId]) // including transportsData provokes a loop : maplibre bbox updated -> transportsData recreated -> etc
-
 	// TODO reintroduce gare display through the transport style option + the bike
 	// mode below
 	const gares = []
@@ -182,7 +182,6 @@ export default function Container({ searchParams }) {
 							resetClickedPoint,
 							transportsData,
 							geolocation,
-							triggerGeolocation,
 							bboxImages,
 							focusImage,
 							vers,
@@ -209,6 +208,7 @@ export default function Container({ searchParams }) {
 						category,
 						bbox,
 						setBbox,
+						setBboxImages,
 						gares,
 						clickGare,
 						clickedGare,
@@ -218,6 +218,12 @@ export default function Container({ searchParams }) {
 						styleChooser,
 						setStyleChooser,
 						itinerary,
+						clickedPoint,
+						setGeolocation,
+						setZoom,
+						setTempStyle,
+						center,
+						setState,
 					}}
 				/>
 			</MapContainer>

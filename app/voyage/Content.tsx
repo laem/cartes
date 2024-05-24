@@ -58,7 +58,6 @@ export default function Content({
 	focusImage,
 	vers,
 	osmFeature,
-	triggerGeolocation,
 }) {
 	const url = osmFeature?.tags?.website || osmFeature?.tags?.['contact:website']
 	const ogImages = useOgImageFetcher(url),
@@ -168,7 +167,6 @@ export default function Content({
 							autoFocus: recherche != null,
 							stepIndex: recherche,
 							geolocation,
-							triggerGeolocation,
 						}}
 					/>
 					{/* TODO reuse the name overlay and only that ?

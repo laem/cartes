@@ -20,7 +20,11 @@ export default function useSetSearchParams() {
 		},
 		[searchParams]
 	)
-	return (newSearchParams: object, noPush: boolean, clear: boolean) => {
+	return (
+		newSearchParams: object,
+		noPush: boolean = false,
+		clear: boolean = false
+	) => {
 		const newUrl =
 			pathname +
 			'?' +

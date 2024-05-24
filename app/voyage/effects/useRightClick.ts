@@ -1,7 +1,11 @@
+import useSetSearchParams from '@/components/useSetSearchParams'
 import { useEffect, useState } from 'react'
 
-export default function useRightClick(map) {
-	const [clickedPoint, setClickedPoint] = useState(null)
+export default function useRightClick(map, clickedPoint) {
+	const setSearchParams = useSetSearchParams()
+	const setClickedPoint = (clickedPoint) =>
+		setSearchParams({ clic: clickedPoint.join('|') })
+
 	const [data, setData] = useState(null)
 
 	useEffect(() => {

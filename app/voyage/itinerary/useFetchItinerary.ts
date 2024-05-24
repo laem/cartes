@@ -3,25 +3,25 @@ import distance from '@turf/distance'
 import { useEffect, useState } from 'react'
 import { decodeDate, initialDate } from './DateSelector'
 import { useMemoPointsFromState } from './useDrawItinerary'
+import { modeKeyFromQuery } from './Itinerary'
 
 export default function useFetchItinerary(
 	searchParams,
 	state,
-	bikeRouteProfile,
-	mode
+	bikeRouteProfile
 ) {
 	const [routes, setRoutes] = useState(null)
 	const date = decodeDate(searchParams.date) || initialDate()
-	const mode =
+	const mode = modeKeyFromQuery(searchParams.mode)
 
 	const updateRoute = (key, value) =>
 		setRoutes((routes) => ({ ...(routes || {}), [key]: value }))
 
-	const points = useMemoPointsFromState(state)
+	const [serializedPoints, points] = useMemoPointsFromState(state)
 
 	/* Routing requests are made here */
 	useEffect(() => {
-		if (state.filter(Boolean).length < 2) {
+		if (points.length < 2) {
 			setRoutes(null)
 			return
 		}

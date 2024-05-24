@@ -67,6 +67,12 @@ export default function Map({
 	safeStyleKey,
 	styleChooser,
 	setStyleChooser,
+	clickedPoint,
+	setZoom,
+	setGeolocation,
+	setTempStyle,
+	center,
+	setState,
 }) {
 	const isMobile = useMediaQuery('(max-width: 800px)')
 	const mapContainerRef = useRef(null)
@@ -74,7 +80,6 @@ export default function Map({
 	const style = getStyle(styleKey),
 		styleUrl = style.url
 
-	const [geolocation, setGeolocation] = useState(null)
 	const [map, triggerGeolocation] = useAddMap(
 		styleUrl,
 		setZoom,
@@ -82,6 +87,12 @@ export default function Map({
 		mapContainerRef,
 		setGeolocation
 	)
+
+	const shouldGeolocate = searchParams.geoloc
+	useEffect(() => {
+		if (!map || !shouldGeolocate) return
+		triggerGeolocation()
+	}, [map, triggerGeolocation, shouldGeolocate])
 
 	const [distanceMode, setDistanceMode] = useState(false)
 
@@ -110,6 +121,12 @@ export default function Map({
 	// TODO reactivate
 	useSearchLocalTransit(map, isTransportsMode, center, zoom)
 
+	const agencyId = searchParams.agence
+	const agency = useMemo(() => {
+		const agencyData =
+			transportsData && transportsData.find((el) => el[0] === agencyId)
+		return agencyData && { id: agencyData[0], ...agencyData[1] }
+	}, [agencyId]) // including transportsData provokes a loop : maplibre bbox updated -> transportsData recreated -> etc
 	useEffect(() => {
 		if (!map || !agency) return
 
@@ -208,7 +225,7 @@ export default function Map({
 		}, 300)
 	}, [styleUrl, map, styleKey, prevStyleKey])
 
-	const [clickedPoint, resetClickedPoint] = useRightClick(map)
+	useRightClick(map, clickedPoint)
 
 	// This hook lets the user click on the map to find OSM entities
 	// It also draws a polygon to show the search area for pictures
@@ -318,7 +335,7 @@ export default function Map({
 			}
 		}
 
-		if (!map || distanceMode || itineraryMode) return
+		if (!map || distanceMode || itinerary.itineraryMode) return
 
 		map.on('click', onClick)
 		return () => {
@@ -329,7 +346,7 @@ export default function Map({
 		map,
 		setState,
 		distanceMode,
-		itineraryMode,
+		itinerary.itineraryMode,
 		gares,
 		clickGare,
 		isTransportsMode,

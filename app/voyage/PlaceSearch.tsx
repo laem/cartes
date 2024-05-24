@@ -37,7 +37,6 @@ export default function PlaceSearch({
 	searchParams,
 	autoFocus = false,
 	stepIndex,
-	triggerGeolocation,
 	geolocation,
 }) {
 	if (stepIndex == null) throw new Error('Step index necessary')
@@ -170,7 +169,7 @@ export default function PlaceSearch({
 							Depuis ma position
 						</Link>
 					) : (
-						<button onClick={() => triggerGeolocation()}>
+						<button onClick={() => setSearchParams({ geoloc: 'oui' })}>
 							<span
 								css={`
 									background-position: 50%;
