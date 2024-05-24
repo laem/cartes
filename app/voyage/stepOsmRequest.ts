@@ -25,6 +25,7 @@ export const stepOsmRequest = async (point, state = []) => {
 		const elements = await osmRequest(featureType, featureId, full)
 
 		if (!elements.length) return
+		/*
 		console.log(
 			'OSM elements received',
 			elements,
@@ -32,11 +33,12 @@ export const stepOsmRequest = async (point, state = []) => {
 			featureType,
 			featureId
 		)
+		*/
 
 		const element = elements.find((el) => el.id == featureId)
 
 		const featureCollectionFromOsmNodes = (nodes) => {
-			console.log('yanodes', nodes)
+			//console.log('yanodes', nodes)
 			const fc = {
 				type: 'FeatureCollection',
 				features: nodes.map((el) => ({
@@ -48,7 +50,7 @@ export const stepOsmRequest = async (point, state = []) => {
 					},
 				})),
 			}
-			console.log('centerofmass', fc, centerOfMass(fc))
+			console.log('centerofmass', fc)
 			return fc
 		}
 
@@ -58,7 +60,7 @@ export const stepOsmRequest = async (point, state = []) => {
 			adminCenterNode =
 				adminCenter && elements.find((el) => el.id == adminCenter.ref)
 
-		console.log('admincenter', relation, adminCenter, adminCenterNode)
+		//console.log('admincenter', relation, adminCenter, adminCenterNode)
 		const nodeCenter = adminCenterNode
 			? [adminCenterNode.lon, adminCenterNode.lat]
 			: !full
@@ -69,11 +71,13 @@ export const stepOsmRequest = async (point, state = []) => {
 					)
 			  ).geometry.coordinates
 
+		/*
 		console.log(
 			'will set OSMfeature after loading it from the URL',
 			element,
 			nodeCenter
 		)
+		*/
 		const polygon =
 			['way', 'relation'].includes(element.type) &&
 			enrichOsmFeatureWithPolyon(element, elements).polygon

@@ -93,6 +93,8 @@ const nextConfig = {
 			...config.resolve.alias,
 			Components: path.resolve(__dirname, './components'),
 			Selectors: path.resolve(__dirname, './selectors'),
+			//https://github.com/Turfjs/turf/issues/2200
+			rbush: path.resolve(__dirname, '/node_modules/rbush/rbush.js'),
 		}
 
 		return config
