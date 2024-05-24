@@ -56,7 +56,7 @@ export default function Meteo({ coordinates }) {
 		: "Pas de pluie dans l'heure"
 	const weatherText = `À ${
 		weather.position.name
-	}, tendance : ${thisHour.weather.desc.toLowerCase()}; ${rainAlt}`
+	}, tendance : ${thisHour.weather.desc.toLowerCase()}; ${rainAlt}. Source Météo-France`
 
 	return (
 		<div
