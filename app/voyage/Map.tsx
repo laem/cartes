@@ -284,6 +284,8 @@ export default function Map({
 			const feature = features[0]
 			const openMapTilesId = '' + feature.id
 
+			// For "Vitré", a town, I'm getting id 18426612010. Looks like internal
+			// OMT id, that's wrong, we need OSM
 			const id = ['place', 'waterway'].includes(feature.sourceLayer)
 					? openMapTilesId
 					: openMapTilesId.slice(null, -1),
