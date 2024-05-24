@@ -441,7 +441,7 @@ export default function Map({
 	}, [lesGaresProches, map, zoom, clickGare, clickedGare?.uic])
 
 	return (
-		<div>
+		<>
 			<MapButtons
 				{...{
 					style,
@@ -469,6 +469,6 @@ export default function Map({
 				/>
 			)}
 			<div ref={mapContainerRef} />
-		</div>
+		</>
 	)
 }
