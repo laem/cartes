@@ -31,6 +31,7 @@ import useSearchLocalTransit from './effects/useSearchLocalTransit'
 import useImageSearch from './effects/useImageSearch'
 import { defaultState } from './Container'
 import useDrawItinerary from './itinerary/useDrawItinerary'
+import { setLazyProp } from 'next/dist/server/api-utils'
 
 if (process.env.NEXT_PUBLIC_MAPTILER == null) {
 	throw new Error('You have to configure env NEXT_PUBLIC_MAPTILER, see README')
@@ -73,6 +74,7 @@ export default function Map({
 	setTempStyle,
 	center,
 	setState,
+	setLatLngClicked,
 }) {
 	const isMobile = useMediaQuery('(max-width: 800px)')
 	const mapContainerRef = useRef(null)
@@ -351,6 +353,7 @@ export default function Map({
 		clickGare,
 		isTransportsMode,
 		setSearchParams,
+		setLatLngClicked,
 	])
 
 	useHoverOnMapFeatures(map)

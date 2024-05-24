@@ -221,6 +221,7 @@ export default function Container({ searchParams }) {
 						setTempStyle,
 						center,
 						setState,
+						setLatLngClicked,
 					}}
 				/>
 			</MapContainer>
