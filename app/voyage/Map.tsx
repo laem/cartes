@@ -29,7 +29,7 @@ import useOverpassRequest from './effects/useOverpassRequest'
 import useRightClick from './effects/useRightClick'
 import useSearchLocalTransit from './effects/useSearchLocalTransit'
 import useImageSearch from './effects/useImageSearch'
-import { defaultState } from './Container'
+import { defaultState } from './defaultState'
 import useDrawItinerary from './itinerary/useDrawItinerary'
 import { setLazyProp } from 'next/dist/server/api-utils'
 
