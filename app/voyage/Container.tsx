@@ -9,7 +9,7 @@ import ModalSwitch from './ModalSwitch'
 import { ContentWrapper, MapContainer } from './UI'
 import { useZoneImages } from './ZoneImages'
 import useImageSearch from './effects/useImageSearch'
-import useItineraryFromUrl from './itinerary/useItineraryFromUrl'
+import useSetItineraryModeFromUrl from './itinerary/useSetItineraryModeFromUrl'
 
 import dynamic from 'next/dynamic'
 import { useMediaQuery } from 'usehooks-ts'
@@ -20,6 +20,8 @@ import Meteo from './meteo/Meteo'
 import useTransportStopData from './transport/useTransportStopData'
 import { defaultZoom } from './effects/useAddMap'
 import { getStyle } from './styles/styles'
+import useDrawItinerary from './itinerary/useDrawItinerary'
+import useFetchItinerary from './itinerary/useFetchItinerary'
 // Map is forced as dynamic since it can't be rendered by nextjs server-side.
 // There is almost no interest to do that anyway, except image screenshots
 const Map = dynamic(() => import('./Map'), {
@@ -66,7 +68,25 @@ export default function Container({ searchParams }) {
 	// button down below, not sure if it's relevant, why not wait for the url to
 	// change ?
 	const [itineraryMode, setItineraryMode] = useState(false)
-	useItineraryFromUrl(allez, setItineraryMode)
+
+	// TODO this hook must be split between useFetchItineraryData and
+	// useDrawItinerary like useTransportMap was
+	const [resetItinerary, routes, date] = useFetchItinerary(
+		searchParams,
+		state,
+		bikeRouteProfile
+	)
+
+	const itinerary = {
+		bikeRouteProfile,
+		itineraryMode,
+		setItineraryMode,
+		reset: resetItinerary,
+		routes,
+		date,
+	}
+
+	useSetItineraryModeFromUrl(allez, setItineraryMode)
 
 	const category = getCategory(searchParams)
 
@@ -184,8 +204,6 @@ export default function Container({ searchParams }) {
 						transportStopData,
 						transportsData,
 						clickedStopData,
-						itineraryMode,
-						setItineraryMode,
 						bikeRouteProfile,
 						showOpenOnly,
 						category,
@@ -199,6 +217,7 @@ export default function Container({ searchParams }) {
 						safeStyleKey,
 						styleChooser,
 						setStyleChooser,
+						itinerary,
 					}}
 				/>
 			</MapContainer>

@@ -10,7 +10,6 @@ import MapButtons from '@/components/voyage/MapButtons'
 import { goodIconSize } from '@/components/voyage/mapUtils'
 import useAddMap, { defaultZoom } from './effects/useAddMap'
 import useDrawQuickSearchFeatures from './effects/useDrawQuickSearchFeatures'
-import useItinerary from './itinerary/useItinerary'
 import { disambiguateWayRelation } from './osmRequest'
 import { getStyle, styles } from './styles/styles'
 import useHoverOnMapFeatures from './useHoverOnMapFeatures'
@@ -31,6 +30,7 @@ import useRightClick from './effects/useRightClick'
 import useSearchLocalTransit from './effects/useSearchLocalTransit'
 import useImageSearch from './effects/useImageSearch'
 import { defaultState } from './Container'
+import useDrawItinerary from './itinerary/useDrawItinerary'
 
 if (process.env.NEXT_PUBLIC_MAPTILER == null) {
 	throw new Error('You have to configure env NEXT_PUBLIC_MAPTILER, see README')
@@ -52,8 +52,7 @@ export default function Map({
 	transportStopData,
 	transportsData,
 	clickedStopData,
-	itineraryMode,
-	setItineraryMode,
+	itinerary,
 	bikeRouteProfile,
 	showOpenOnly,
 	category,
@@ -130,25 +129,14 @@ export default function Map({
 		clickedStopData[0]
 	)
 
-	// TODO this hook must be split between useFetchItineraryData and
-	// useDrawItinerary like useTransportMap was
-	const [resetItinerary, routes, date] = useItinerary(
+	useDrawItinerary(
 		map,
-		itineraryMode,
-		bikeRouteProfile,
+		itinerary.itineraryMode,
 		searchParams,
 		state,
-		zoom
+		zoom,
+		itinerary.routes
 	)
-
-	const itinerary = {
-		bikeRouteProfile,
-		itineraryMode,
-		setItineraryMode,
-		reset: resetItinerary,
-		routes,
-		date,
-	}
 
 	const simpleArrayBbox = useMemo(() => {
 		if (!map) return
