@@ -105,7 +105,7 @@ export default function MapButtons({
 			<MapButton $active={distanceMode}>
 				<button
 					onClick={() => setDistanceMode(!distanceMode)}
-					title="Mesurer une distanace"
+					title="Mesurer une distance"
 				>
 					<div>
 						<DistanceIcon />
