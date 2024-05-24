@@ -23,6 +23,7 @@ import { defaultTransitFilter } from './transport/TransitFilter'
 import TransportMap from './transport/TransportMap'
 import useOgImageFetcher from './useOgImageFetcher'
 import useWikidata from './useWikidata'
+import getUrl from './osm/getUrl'
 
 const getMinimumQuickSearchZoom = (mobile) => (mobile ? 10.5 : 12) // On a small screen, 70 %  of the tiles are not visible, hence this rule
 
@@ -59,10 +60,12 @@ export default function Content({
 	vers,
 	osmFeature,
 }) {
-	const url = osmFeature?.tags?.website || osmFeature?.tags?.['contact:website']
+	const tags = osmFeature?.tags
+	const url = tags && getUrl(tags)
+
 	const ogImages = useOgImageFetcher(url),
 		ogImage = ogImages[url],
-		tagImage = osmFeature?.tags?.image,
+		tagImage = tags?.image,
 		mainImage = tagImage || ogImage // makes a useless request for ogImage that won't be displayed to prefer mainImage : TODO also display OG
 
 	const [tutorials, setTutorials] = useLocalStorage('tutorials', {})

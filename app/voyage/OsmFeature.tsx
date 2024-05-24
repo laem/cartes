@@ -12,6 +12,7 @@ import Stop, { isNotTransportStop, transportKeys } from './transport/stop/Stop'
 import Image from 'next/image'
 import GareInfo from './GareInfo'
 import { computeSncfUicControlDigit } from './utils'
+import getName from './osm/getName'
 
 export default function OsmFeature({ data, transportStopData }) {
 	if (!data.tags) return null
@@ -27,7 +28,6 @@ export default function OsmFeature({ data, transportStopData }) {
 	// Extract here tags that do not qualify the object : they won't be available
 	// anymore in `rest`
 	const {
-		name,
 		description,
 		'name:br': nameBrezhoneg,
 		opening_hours,
@@ -55,7 +55,8 @@ export default function OsmFeature({ data, transportStopData }) {
 	const phone = phone1 || phone2 || phone3,
 		website = website1 || website2
 
-	const filteredRest = omit([...addressKeys, ...transportKeys], rest)
+	const [name, nameKeys] = getName(data.tags)
+	const filteredRest = omit([addressKeys, transportKeys, nameKeys].flat(), rest)
 
 	const [keyValueTags, soloTags] = processTags(filteredRest)
 
