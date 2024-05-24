@@ -3,6 +3,20 @@
 /**
  * This component is a client component to hold state but does
  * not require the maplibre instance
+ *
+ * Depends on what we want :
+ * - make our servers work and serve a finished content page to the user and
+ * google's pagespeed
+ * - let requests be done by the user browser and start loading the map more
+ * quickly
+ *
+ * Note : some requests will be made on the server to generate metadata, doing
+ * them again client side is a bit of a waste (not totally, because data has to
+ * be transmitted to the user anyway ; it's data vs code)
+ *
+ * If the server path is chosen, useStates become fetch. Some useStates can't be
+ * server side, because used by client components that need the map e.g. for the
+ * bbox
  **/
 
 import { useMemo, useState } from 'react'
