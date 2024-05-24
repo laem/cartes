@@ -4,7 +4,7 @@ import Container from './Container'
 const Page = ({ searchParams }) => {
 	return (
 		<main id="voyage" style={{ height: '100%' }}>
-			<Container />
+			<Container searchParams={searchParams} />
 		</main>
 	)
 }

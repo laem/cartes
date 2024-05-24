@@ -22,7 +22,15 @@ const serializeBbox = (bbox) => {
 		bboxString = `${lat2}|${lng2}|${lat1}|${lng1}`
 	return bboxString
 }
-export default function useImageSearch(map, zoom, bbox, active, focusImage) {
+
+export default function useImageSearch(
+	map,
+	setBboxImages,
+	zoom,
+	bbox,
+	active,
+	focusImage
+) {
 	const [imageCache, setImageCache] = useState([])
 
 	const bboxString = serializeBbox(bbox)
@@ -42,6 +50,9 @@ export default function useImageSearch(map, zoom, bbox, active, focusImage) {
 			),
 		[imageCache, bboxString]
 	)
+	useEffect(() => {
+		setBboxImages(bboxImages)
+	}, [bboxImages])
 
 	useEffect(() => {
 		if (!active) return
@@ -94,6 +105,4 @@ export default function useImageSearch(map, zoom, bbox, active, focusImage) {
 			markers.map((marker) => marker.remove())
 		}
 	}, [map, zoom, bboxImages, active])
-
-	return bboxImages
 }

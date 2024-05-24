@@ -7,18 +7,12 @@ import { sortGares } from './gares'
 
 import useSetSearchParams from '@/components/useSetSearchParams'
 import MapButtons from '@/components/voyage/MapButtons'
-import { getCategory } from '@/components/voyage/categories'
 import { goodIconSize } from '@/components/voyage/mapUtils'
-import ModalSwitch from './ModalSwitch'
-import { ContentWrapper, MapContainer, MapHeader } from './UI'
-import { useZoneImages } from './ZoneImages'
 import useAddMap, { defaultZoom } from './effects/useAddMap'
 import useDrawQuickSearchFeatures from './effects/useDrawQuickSearchFeatures'
-import useImageSearch from './effects/useImageSearch'
 import useItinerary from './itinerary/useItinerary'
-import useItineraryFromUrl from './itinerary/useItineraryFromUrl'
 import { disambiguateWayRelation } from './osmRequest'
-import { styles } from './styles/styles'
+import { getStyle, styles } from './styles/styles'
 import useHoverOnMapFeatures from './useHoverOnMapFeatures'
 import useTerrainControl from './useTerrainControl'
 import { encodePlace, fitBoundsConsideringModal } from './utils'
@@ -27,33 +21,59 @@ import { replaceArrayIndex } from '@/components/utils/utils'
 import getBbox from '@turf/bbox'
 import { useMediaQuery } from 'usehooks-ts'
 import CenteredCross from './CenteredCross'
-import FocusedImage from './FocusedImage'
 import MapComponents from './MapComponents'
 import { buildAllezPart } from './SetDestination'
 import { clickableClasses } from './clickableLayers'
 import useDrawSearchResults from './effects/useDrawSearchResults'
 import useDrawTransport from './effects/useDrawTransport'
-import useFetchTransportMap from './effects/useFetchTransportMap'
-import useOsmRequest from './effects/useOsmRequest'
 import useOverpassRequest from './effects/useOverpassRequest'
 import useRightClick from './effects/useRightClick'
 import useSearchLocalTransit from './effects/useSearchLocalTransit'
-import Meteo from './meteo/Meteo'
-import { defaultTransitFilter } from './transport/TransitFilter'
-import useTransportStopData from './transport/useTransportStopData'
-import { defaultState } from './page'
+import useImageSearch from './effects/useImageSearch'
+import { defaultState } from './Container'
 
 if (process.env.NEXT_PUBLIC_MAPTILER == null) {
 	throw new Error('You have to configure env NEXT_PUBLIC_MAPTILER, see README')
 }
-export default function Map({ searchParams }) {
+
+/*******
+ * This component should hold only the hooks that depend on the map or are user
+ * interactions. Components that can be rendered server side to make beautiful and useful meta previews of URLs must be written in the Container component or above
+ *******/
+
+export default function Map({
+	searchParams,
+	state,
+	vers,
+	target,
+	zoom,
+	osmFeature,
+	isTransportsMode,
+	transportStopData,
+	transportsData,
+	clickedStopData,
+	itineraryMode,
+	setItineraryMode,
+	bikeRouteProfile,
+	showOpenOnly,
+	category,
+	bbox,
+	setBbox,
+	gares,
+	clickGare,
+	clickedGare,
+	setBboxImages,
+	focusImage,
+	styleKey,
+	safeStyleKey,
+	styleChooser,
+	setStyleChooser,
+}) {
+	const isMobile = useMediaQuery('(max-width: 800px)')
 	const mapContainerRef = useRef(null)
-	const [zoom, setZoom] = useState(defaultZoom)
-	const [safeStyleKey, setSafeStyleKey] = useState(null)
-	const [tempStyle, setTempStyle] = useState(null)
-	const styleKey = tempStyle || searchParams.style || 'base',
-		style = { ...styles[styleKey], key: styleKey },
-		styleUrl = styles[styleKey].url
+
+	const style = getStyle(styleKey),
+		styleUrl = style.url
 
 	const [geolocation, setGeolocation] = useState(null)
 	const [map, triggerGeolocation] = useAddMap(
@@ -64,13 +84,7 @@ export default function Map({ searchParams }) {
 		setGeolocation
 	)
 
-	const [latLngClicked, setLatLngClicked] = useState(null)
-
 	const [distanceMode, setDistanceMode] = useState(false)
-
-	const styleChooser = searchParams['choix du style'] === 'oui',
-		setStyleChooser = (state) =>
-			setSearchParams({ 'choix du style': state ? 'oui' : undefined })
 
 	const setSearchParams = useSetSearchParams()
 
@@ -85,7 +99,14 @@ export default function Map({ searchParams }) {
 		}
 	}, [setTempStyle, transportStopData])
 
-	const isTransportsMode = searchParams.transports === 'oui'
+	useImageSearch(
+		map,
+		setBboxImages,
+		zoom,
+		bbox,
+		searchParams.photos === 'oui',
+		focusImage
+	)
 
 	// TODO reactivate
 	useSearchLocalTransit(map, isTransportsMode, center, zoom)
@@ -141,6 +162,9 @@ export default function Map({ searchParams }) {
 		return bbox
 	}, [map])
 
+	/* The bbox could be computed from the URL hash, for this to run on the
+	 * server but I'm not sure we want it, and I'm not sure Next can get the hash
+	 * server-side, it's a client-side html element */
 	const [features] = useOverpassRequest(simpleArrayBbox, category)
 
 	const onSearchResultClick = (feature) => {
@@ -150,6 +174,7 @@ export default function Map({ searchParams }) {
 
 	//TODO this hook should be used easily with some tweaks to draw the borders of
 	// the clicked feature, and an icon
+	// Edit : we draw contours now, for the search results clicked feature
 
 	useDrawQuickSearchFeatures(
 		map,
@@ -242,6 +267,8 @@ export default function Map({ searchParams }) {
 					(f) => f.source === 'maptiler_planet' && allowedLayerProps(f)
 				)
 
+			console.log('clicked map features', rawFeatures)
+
 			if (!features.length || !features[0].id) {
 				console.log('no features', features)
 				return
@@ -318,10 +345,16 @@ export default function Map({ searchParams }) {
 		gares,
 		clickGare,
 		isTransportsMode,
+		setSearchParams,
 	])
 
 	useHoverOnMapFeatures(map)
 
+	/*
+	 *
+	 * Fly to hook
+	 *
+	 * */
 	useEffect(() => {
 		if (!map || !vers || !osmFeature) return
 
@@ -348,6 +381,7 @@ export default function Map({ searchParams }) {
 				bearing: 20, // bearing in degrees
 			})
 	}, [map, vers, osmFeature])
+
 	/* TODO Transform this to handle the last itinery point if alone (just a POI url),
 	 * but also to add markers to all the steps of the itinerary */
 	/* Should be merged with the creation of route markers
@@ -362,6 +396,8 @@ export default function Map({ searchParams }) {
 	)
 	*/
 
+	/* Abandoned code that should be revived. Traveling with train + bike is an
+	 * essential objective of Cartes */
 	const lesGaresProches =
 		target && gares && sortGares(gares, target).slice(0, 30)
 

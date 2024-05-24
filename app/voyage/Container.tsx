@@ -2,51 +2,24 @@
 
 /* Server rendered client components here */
 
-import maplibregl from 'maplibre-gl'
-import 'maplibre-gl/dist/maplibre-gl.css'
-import { useEffect, useMemo, useRef, useState } from 'react'
-import { createPolygon, createSearchBBox } from './createSearchPolygon'
-import { sortGares } from './gares'
+import { useMemo, useState } from 'react'
 
-import useSetSearchParams from '@/components/useSetSearchParams'
-import MapButtons from '@/components/voyage/MapButtons'
 import { getCategory } from '@/components/voyage/categories'
-import { goodIconSize } from '@/components/voyage/mapUtils'
 import ModalSwitch from './ModalSwitch'
-import { ContentWrapper, MapContainer, MapHeader } from './UI'
+import { ContentWrapper, MapContainer } from './UI'
 import { useZoneImages } from './ZoneImages'
-import useAddMap, { defaultZoom } from './effects/useAddMap'
-import useDrawQuickSearchFeatures from './effects/useDrawQuickSearchFeatures'
 import useImageSearch from './effects/useImageSearch'
-import useItinerary from './itinerary/useItinerary'
 import useItineraryFromUrl from './itinerary/useItineraryFromUrl'
-import { disambiguateWayRelation } from './osmRequest'
-import { styles } from './styles/styles'
-import useHoverOnMapFeatures from './useHoverOnMapFeatures'
-import useTerrainControl from './useTerrainControl'
-import { encodePlace, fitBoundsConsideringModal } from './utils'
 
-import { replaceArrayIndex } from '@/components/utils/utils'
-import getBbox from '@turf/bbox'
+import dynamic from 'next/dynamic'
 import { useMediaQuery } from 'usehooks-ts'
-import CenteredCross from './CenteredCross'
 import FocusedImage from './FocusedImage'
-import MapComponents from './MapComponents'
-import { buildAllezPart } from './SetDestination'
-import { clickableClasses } from './clickableLayers'
-import useDrawSearchResults from './effects/useDrawSearchResults'
-import useDrawTransport from './effects/useDrawTransport'
 import useFetchTransportMap from './effects/useFetchTransportMap'
 import useOsmRequest from './effects/useOsmRequest'
-import useOverpassRequest from './effects/useOverpassRequest'
-import useRightClick from './effects/useRightClick'
-import useSearchLocalTransit from './effects/useSearchLocalTransit'
 import Meteo from './meteo/Meteo'
-import { defaultTransitFilter } from './transport/TransitFilter'
 import useTransportStopData from './transport/useTransportStopData'
-import { defaultState } from './page'
-import dynamic from 'next/dynamic'
-import { MapContainer } from './UI'
+import { defaultZoom } from './effects/useAddMap'
+import { getStyle } from './styles/styles'
 // Map is forced as dynamic since it can't be rendered by nextjs server-side.
 // There is almost no interest to do that anyway, except image screenshots
 const Map = dynamic(() => import('./Map'), {
@@ -60,9 +33,20 @@ export const defaultState = {
 }
 
 export default function Container({ searchParams }) {
-	const isMobile = useMediaQuery('(max-width: 800px)')
 	const [focusedImage, focusImage] = useState(null)
 	const [bbox, setBbox] = useState(null)
+	const [zoom, setZoom] = useState(defaultZoom)
+	const [bboxImages, setBboxImages] = useState([])
+	const [latLngClicked, setLatLngClicked] = useState(null)
+	const [safeStyleKey, setSafeStyleKey] = useState(null)
+	const [tempStyle, setTempStyle] = useState(null)
+	const styleKey = tempStyle || searchParams.style || 'base'
+	const style = getStyle(styleKey),
+		styleUrl = style.url
+	const styleChooser = searchParams['choix du style'] === 'oui',
+		setStyleChooser = (state) =>
+			setSearchParams({ 'choix du style': state ? 'oui' : undefined })
+
 	const center = useMemo(
 		() =>
 			bbox && [(bbox[0][0] + bbox[1][0]) / 2, (bbox[0][1] + bbox[1][1]) / 2],
@@ -78,8 +62,11 @@ export default function Container({ searchParams }) {
 
 	const [bikeRouteProfile, setBikeRouteProfile] = useState('safety')
 
+	// TODO This could be a simple derived variable but we seem to be using it in a
+	// button down below, not sure if it's relevant, why not wait for the url to
+	// change ?
 	const [itineraryMode, setItineraryMode] = useState(false)
-	useItineraryFromUrl(allez, setItineraryMode, map)
+	useItineraryFromUrl(allez, setItineraryMode)
 
 	const category = getCategory(searchParams)
 
@@ -90,13 +77,6 @@ export default function Container({ searchParams }) {
 		setLatLngClicked,
 	})
 
-	const bboxImages = useImageSearch(
-		map,
-		zoom,
-		bbox,
-		searchParams.photos === 'oui',
-		focusImage
-	)
 	const vers = useMemo(() => state?.slice(-1)[0], [state])
 	const choice = vers && vers.choice
 	const target = useMemo(
@@ -110,6 +90,8 @@ export default function Container({ searchParams }) {
 
 	const transportStopData = useTransportStopData(osmFeature)
 	const clickedStopData = transportStopData[0] || []
+
+	const isTransportsMode = searchParams.transports === 'oui'
 
 	const transportsData = useFetchTransportMap(
 		isTransportsMode,
@@ -161,7 +143,7 @@ export default function Container({ searchParams }) {
 							state,
 							clickedGare,
 							clickGare,
-							bikeRoute,
+							//bikeRoute,
 							latLngClicked,
 							setLatLngClicked,
 							setBikeRouteProfile,
@@ -190,10 +172,36 @@ export default function Container({ searchParams }) {
 				</ContentWrapper>
 				<Meteo coordinates={center} />
 				{focusedImage && <FocusedImage {...{ focusedImage, focusImage }} />}
-				<Map searchParams={searchParams} />
+				<Map
+					{...{
+						searchParams,
+						state,
+						vers,
+						target,
+						osmFeature,
+						zoom,
+						isTransportsMode,
+						transportStopData,
+						transportsData,
+						clickedStopData,
+						itineraryMode,
+						setItineraryMode,
+						bikeRouteProfile,
+						showOpenOnly,
+						category,
+						bbox,
+						setBbox,
+						gares,
+						clickGare,
+						clickedGare,
+						focusImage,
+						styleKey,
+						safeStyleKey,
+						styleChooser,
+						setStyleChooser,
+					}}
+				/>
 			</MapContainer>
 		</main>
 	)
 }
-
-export default Page
