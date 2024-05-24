@@ -66,9 +66,9 @@ export default function Map({
 	focusImage,
 	styleKey,
 	safeStyleKey,
+	setSafeStyleKey,
 	styleChooser,
 	setStyleChooser,
-	clickedPoint,
 	setZoom,
 	setGeolocation,
 	setTempStyle,
@@ -225,9 +225,9 @@ export default function Map({
 			// Hack : I haven't found a way to know when this style change is done, hence this setTimeout, absolutely not a UI problem but could be too quick ?
 			setSafeStyleKey(styleKey)
 		}, 300)
-	}, [styleUrl, map, styleKey, prevStyleKey])
+	}, [styleUrl, map, styleKey, prevStyleKey, setSafeStyleKey])
 
-	useRightClick(map, clickedPoint)
+	useRightClick(map)
 
 	// This hook lets the user click on the map to find OSM entities
 	// It also draws a polygon to show the search area for pictures

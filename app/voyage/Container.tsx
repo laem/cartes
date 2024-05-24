@@ -32,11 +32,12 @@ import dynamic from 'next/dynamic'
 import FocusedImage from './FocusedImage'
 import { defaultZoom } from './effects/useAddMap'
 import useFetchTransportMap from './effects/useFetchTransportMap'
-import useOsmRequest, { stepOsmRequest } from './effects/useOsmRequest'
+import useOsmRequest from './effects/useOsmRequest'
 import useFetchItinerary from './itinerary/useFetchItinerary'
 import Meteo from './meteo/Meteo'
 import { getStyle } from './styles/styles'
 import useTransportStopData from './transport/useTransportStopData'
+import useGeocodeRightClick from './effects/useGeocodeRightClick'
 // Map is forced as dynamic since it can't be rendered by nextjs server-side.
 // There is almost no interest to do that anyway, except image screenshots
 const Map = dynamic(() => import('./Map'), {
@@ -52,6 +53,8 @@ export default function Container({ searchParams }) {
 	const [latLngClicked, setLatLngClicked] = useState(null)
 	const clickedPoint = searchParams.clic?.split('|'),
 		resetClickedPoint = () => setSearchParams({ clic: undefined })
+
+	const geocodedClickedPoint = useGeocodeRightClick(clickedPoint)
 
 	const [geolocation, setGeolocation] = useState(null)
 
@@ -186,7 +189,7 @@ export default function Container({ searchParams }) {
 							setStyleChooser,
 							itinerary,
 							transportStopData: clickedStopData[1],
-							clickedPoint,
+							geocodedClickedPoint,
 							resetClickedPoint,
 							transportsData,
 							geolocation,
@@ -226,13 +229,14 @@ export default function Container({ searchParams }) {
 						styleChooser,
 						setStyleChooser,
 						itinerary,
-						clickedPoint,
+						geocodedClickedPoint,
 						setGeolocation,
 						setZoom,
 						setTempStyle,
 						center,
 						setState,
 						setLatLngClicked,
+						setSafeStyleKey,
 					}}
 				/>
 			</MapContainer>

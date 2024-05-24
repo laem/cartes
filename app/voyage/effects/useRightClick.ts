@@ -1,12 +1,12 @@
 import useSetSearchParams from '@/components/useSetSearchParams'
 import { useEffect, useState } from 'react'
 
-export default function useRightClick(map, clickedPoint) {
+export default function useRightClick(map) {
 	const setSearchParams = useSetSearchParams()
 	const setClickedPoint = (clickedPoint) =>
-		setSearchParams({ clic: clickedPoint.join('|') })
-
-	const [data, setData] = useState(null)
+		setSearchParams({
+			clic: clickedPoint.map((coordinate) => coordinate.toFixed(4)).join('|'),
+		})
 
 	useEffect(() => {
 		if (!map) return
@@ -18,7 +18,7 @@ export default function useRightClick(map, clickedPoint) {
 
 		map.on('contextmenu', (e) => {
 			const { lat: latitude, lng: longitude } = e.lngLat
-			setClickedPoint({ latitude, longitude })
+			setClickedPoint([latitude, longitude])
 		})
 		map.on('touchstart', (e) => {
 			if (e.originalEvent.touches.length > 1) {
@@ -26,7 +26,7 @@ export default function useRightClick(map, clickedPoint) {
 			}
 			timeout = setTimeout(() => {
 				const { lat: latitude, lng: longitude } = e.lngLat
-				setClickedPoint({ latitude, longitude })
+				setClickedPoint([latitude, longitude])
 			}, 500)
 		})
 
@@ -40,22 +40,4 @@ export default function useRightClick(map, clickedPoint) {
 		map.on('gesturechange', clearClickTimeout)
 		map.on('gestureend', clearClickTimeout)
 	}, [map, setClickedPoint])
-
-	useEffect(() => {
-		if (!clickedPoint) return
-
-		const doFetch = async () => {
-			const request = await fetch(
-				`https://photon.komoot.io/reverse?lon=${clickedPoint.longitude}&lat=${clickedPoint.latitude}`
-			)
-			const json = await request.json()
-
-			setData(json)
-		}
-		doFetch()
-	}, [clickedPoint, setData])
-
-	const result = clickedPoint && { ...clickedPoint, data }
-
-	return [result, () => setClickedPoint(null)]
 }
