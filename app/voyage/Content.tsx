@@ -52,7 +52,7 @@ export default function Content({
 	styleChooser,
 	itinerary,
 	transportStopData,
-	clickedPoint,
+	geocodedClickedPoint,
 	resetClickedPoint,
 	transportsData,
 	geolocation,
@@ -99,7 +99,7 @@ export default function Content({
 		bboxImages,
 		panoramaxImages,
 		!clickTipRead,
-		clickedPoint,
+		geocodedClickedPoint,
 		searchParams.gare,
 	]
 
@@ -118,9 +118,9 @@ export default function Content({
 
 	console.log('onglets', state)
 
-	const bookmarkable = clickedPoint || osmFeature // later : choice
+	const bookmarkable = geocodedClickedPoint || osmFeature // later : choice
 
-	const hasDestination = osmFeature || clickedPoint
+	const hasDestination = osmFeature || geocodedClickedPoint
 
 	const showSearch =
 		!styleChooser &&
@@ -129,10 +129,10 @@ export default function Content({
 	const minimumQuickSearchZoom = getMinimumQuickSearchZoom(!sideSheet)
 
 	useEffect(() => {
-		if (clickedPoint) {
+		if (geocodedClickedPoint) {
 			setSnap(1, 'Content')
 		}
-	}, [clickedPoint, setSnap])
+	}, [geocodedClickedPoint, setSnap])
 
 	useEffect(() => {
 		if (!showSearch) return
@@ -293,19 +293,19 @@ export default function Content({
 							<PlaceButtonList>
 								{hasDestination && (
 									<SetDestination
-										clickedPoint={clickedPoint}
+										geocodedClickedPoint={geocodedClickedPoint}
 										geolocation={geolocation}
 										searchParams={searchParams}
 									/>
 								)}
 								{bookmarkable && (
 									<BookmarkButton
-										clickedPoint={clickedPoint}
+										geocodedClickedPoint={geocodedClickedPoint}
 										osmFeature={osmFeature}
 									/>
 								)}
 								{bookmarkable && (
-									<ShareButton {...{ clickedPoint, osmFeature }} />
+									<ShareButton {...{ geocodedClickedPoint, osmFeature }} />
 								)}
 							</PlaceButtonList>
 						)}
@@ -314,7 +314,7 @@ export default function Content({
 								data={osmFeature}
 								transportStopData={transportStopData}
 							/>
-						) : clickedPoint ? (
+						) : geocodedClickedPoint ? (
 							<>
 								<ModalCloseButton
 									title="Fermer l'encart point d'intéret"
@@ -323,7 +323,7 @@ export default function Content({
 									}}
 								/>
 								<ClickedPoint
-									clickedPoint={clickedPoint}
+									geocodedClickedPoint={geocodedClickedPoint}
 									geolocation={geolocation}
 								/>
 							</>

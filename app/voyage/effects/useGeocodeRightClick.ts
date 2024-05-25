@@ -1,9 +1,13 @@
 import { useEffect, useState } from 'react'
 
-export default function useGeocodeRightClick(clickedPoint) {
+export default function useGeocodeRightClick(stringClickedPoint) {
 	const [data, setData] = useState(null)
 	useEffect(() => {
-		if (!clickedPoint) return
+		if (!stringClickedPoint) {
+			setData(null)
+			return
+		}
+		const clickedPoint = stringClickedPoint.split('|')
 
 		const doFetch = async () => {
 			const request = await fetch(
@@ -11,16 +15,15 @@ export default function useGeocodeRightClick(clickedPoint) {
 			)
 			const json = await request.json()
 
-			setData(json)
+			const result = {
+				latitude: +clickedPoint[0],
+				longitude: +clickedPoint[1],
+				data: json,
+			}
+			setData(result)
 		}
 		doFetch()
-	}, [clickedPoint, setData])
+	}, [stringClickedPoint, setData])
 
-	const result = clickedPoint && {
-		latitude: clickedPoint[0],
-		longitude: clickedPoint[1],
-		data,
-	}
-
-	return result
+	return data
 }

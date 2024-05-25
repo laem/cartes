@@ -5,17 +5,17 @@ import { PlaceButton } from './PlaceButtonsUI'
 
 export const pointHash = (point) => point.geometry.coordinates.join('|')
 
-export default function BookmarkButton({ clickedPoint, osmFeature }) {
+export default function BookmarkButton({ geocodedClickedPoint, osmFeature }) {
 	const [bookmarks, setBookmarks] = useLocalStorage('bookmarks', [])
-	const properties = clickedPoint
-		? clickedPoint.data?.features?.length > 0 &&
-		  clickedPoint.data.features[0].properties
+	const properties = geocodedClickedPoint
+		? geocodedClickedPoint.data?.features?.length > 0 &&
+		  geocodedClickedPoint.data.features[0].properties
 		: { ...(osmFeature.tags || {}), id: osmFeature.id, type: osmFeature.type }
 
-	const coordinates = clickedPoint
+	const coordinates = geocodedClickedPoint
 		? [
-				clickedPoint.longitude.toFixed(4), // this is ~ 10 m precision, we don't want more than one bookmark every 10 meters
-				clickedPoint.latitude.toFixed(4),
+				geocodedClickedPoint.longitude.toFixed(4), // this is ~ 10 m precision, we don't want more than one bookmark every 10 meters
+				geocodedClickedPoint.latitude.toFixed(4),
 		  ]
 		: [osmFeature.lon.toFixed(4), osmFeature.lat.toFixed(4)]
 

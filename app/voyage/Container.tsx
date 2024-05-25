@@ -51,10 +51,9 @@ export default function Container({ searchParams }) {
 	const [zoom, setZoom] = useState(defaultZoom)
 	const [bboxImages, setBboxImages] = useState([])
 	const [latLngClicked, setLatLngClicked] = useState(null)
-	const clickedPoint = searchParams.clic?.split('|'),
-		resetClickedPoint = () => setSearchParams({ clic: undefined })
+	const resetClickedPoint = () => setSearchParams({ clic: undefined })
 
-	const geocodedClickedPoint = useGeocodeRightClick(clickedPoint)
+	const geocodedClickedPoint = useGeocodeRightClick(searchParams.clic)
 
 	const [geolocation, setGeolocation] = useState(null)
 

@@ -7,8 +7,8 @@ import shareIcon from '@/public/share.svg'
 import Image from 'next/image'
 import { getFetchUrlBase } from './serverUrls'
 
-export default function ShareButton({ osmFeature, clickedPoint }) {
-	console.log('purple share', osmFeature, clickedPoint)
+export default function ShareButton({ osmFeature, geocodedClickedPoint }) {
+	console.log('purple share', osmFeature, geocodedClickedPoint)
 
 	const urlBase = getFetchUrlBase()
 
@@ -23,8 +23,8 @@ export default function ShareButton({ osmFeature, clickedPoint }) {
 			: buildAllezPart(
 					'Point sur la carte',
 					null,
-					clickedPoint.longitude,
-					clickedPoint.latitude
+					geocodedClickedPoint.longitude,
+					geocodedClickedPoint.latitude
 			  )
 	}`
 	return (
