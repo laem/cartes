@@ -285,7 +285,7 @@ export default function Content({
 							/>
 						)}
 						<ZoneImages
-							zoneImages={bboxImages || zoneImages} // bbox includes zone, usually
+							zoneImages={bboxImages?.length > 0 ? bboxImages : zoneImages} // bbox includes zone, usually
 							panoramaxImages={panoramaxImages}
 							focusImage={focusImage}
 						/>
