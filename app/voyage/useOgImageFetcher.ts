@@ -1,3 +1,4 @@
+import fetchOgImage from '@/components/fetchOgImage'
 import { useState, useEffect } from 'react'
 
 export default function useOgImageFetcher(url) {
@@ -5,32 +6,14 @@ export default function useOgImageFetcher(url) {
 
 	useEffect(() => {
 		if (!url) return
-		const fetchOgImage = async () => {
-			try {
-				// Fetch HTML content of the given webpage
-				const response = await fetch(
-					'/getOgImage?url=' + encodeURIComponent(url)
-				)
-				const { ogImageContent = null } = await response.json()
-				console.log('OOOO', ogImageContent)
 
-				const fullImage = ogImageContent?.match(/https?:\/\//g)
-					? ogImageContent
-					: ogImageContent.startsWith('/')
-					? url + ogImageContent
-					: null
+		const asyncFetch = async () => {
+			const fullImage = await fetchOgImage(url)
 
-				console.log(ogImageContent, fullImage)
-
-				// Update the state with the found og:image content
-				setOGImages((ogImages) => ({ ...ogImages, [url]: fullImage }))
-			} catch (error) {
-				console.error('Error fetching OG image :', error)
-			}
+			// Update the state with the found og:image content
+			setOGImages((ogImages) => ({ ...ogImages, [url]: fullImage }))
 		}
-
-		// Call the fetchOGImage function when the component mounts
-		fetchOgImage()
+		asyncFetch()
 	}, [url, setOGImages])
 
 	return ogImages

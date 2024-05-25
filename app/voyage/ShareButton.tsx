@@ -5,17 +5,12 @@ import { buildAllezPart } from './SetDestination'
 import { encodePlace } from './utils'
 import shareIcon from '@/public/share.svg'
 import Image from 'next/image'
+import { getFetchUrlBase } from './serverUrls'
 
-export default function ShareButton({ osmFeature, clickedPoint }) {
-	console.log('purple share', osmFeature, clickedPoint)
+export default function ShareButton({ osmFeature, geocodedClickedPoint }) {
+	console.log('purple share', osmFeature, geocodedClickedPoint)
 
-	const branchUrl = process.env.NEXT_PUBLIC_VERCEL_BRANCH_URL,
-		isMaster = branchUrl?.includes('-git-master-'),
-		domain = isMaster ? 'cartes.app' : branchUrl
-	const urlBase =
-		process.env.NEXT_PUBLIC_NODE_ENV === 'development'
-			? 'http://localhost:8080'
-			: 'https://' + domain
+	const urlBase = getFetchUrlBase()
 
 	const url = `${urlBase}/?allez=${
 		osmFeature
@@ -28,8 +23,8 @@ export default function ShareButton({ osmFeature, clickedPoint }) {
 			: buildAllezPart(
 					'Point sur la carte',
 					null,
-					clickedPoint.longitude,
-					clickedPoint.latitude
+					geocodedClickedPoint.longitude,
+					geocodedClickedPoint.latitude
 			  )
 	}`
 	return (

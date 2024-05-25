@@ -72,18 +72,18 @@ export const setStatePart = (
 		.join('->')
 
 export default function SetDestination({
-	clickedPoint,
+	geocodedClickedPoint,
 	geolocation,
 	searchParams,
 }) {
 	const setSearchParams = useSetSearchParams()
 
-	const destinationPart = clickedPoint
+	const destinationPart = geocodedClickedPoint
 		? buildAllezPart(
 				'Point sur la carte',
 				null,
-				clickedPoint.longitude,
-				clickedPoint.latitude
+				geocodedClickedPoint.longitude,
+				geocodedClickedPoint.latitude
 		  )
 		: searchParams.allez || ''
 

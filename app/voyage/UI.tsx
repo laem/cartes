@@ -1,5 +1,7 @@
 'use client'
 
+import closeIcon from '@/public/close.svg'
+import Image from 'next/image'
 import styled from 'styled-components'
 
 export const MapContainer = styled.div`
@@ -23,31 +25,13 @@ export const MapContainer = styled.div`
 	color: var(--darkestColor);
 `
 
-export const MapHeader = styled.div`
+export const ContentWrapper = styled.div`
 	position: absolute;
 	top: min(2vh, 0.5rem);
 	left: min(4vw, 2rem);
 	z-index: 10;
-	h1 {
-		color: ${(p) =>
-			p.$style === 'satellite' ? 'white' : 'var(--darkerColor)'};
-		border-bottom: 5px solid var(--color);
-		display: inline-block;
-		padding: 0;
-		line-height: 1.8rem;
-		margin-top: 1rem;
-		@media (max-width: 800px) {
-			margin: 0;
-			margin-bottom: 0.4rem;
-			font-size: 120%;
-			border-bottom-width: 2px;
-			line-height: 1.2rem;
-		}
-	}
 `
 
-import Image from 'next/image'
-import closeIcon from '@/public/close.svg'
 const size = 1.3
 export const ModalCloseButton = (props) => (
 	<ModalCloseButtonButton {...props}>

@@ -67,3 +67,5 @@ export const styles = {
 		experimental: true,
 	},
 }
+
+export const getStyle = (styleKey) => ({ ...styles[styleKey], key: styleKey })

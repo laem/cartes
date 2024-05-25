@@ -4,6 +4,7 @@ import maplibregl from 'maplibre-gl'
 import { useEffect, useState } from 'react'
 import { gtfsServerUrl } from '../serverUrls'
 
+// TODO reactivate
 export default function useSearchLocalTransit(map, active, center, zoom) {
 	return null
 	const [stops, setStops] = useState([])

@@ -6,17 +6,10 @@ import { decodeTransportsData } from '../transport/decodeTransportsData'
 import { omit } from '@/components/utils/utils'
 
 export default function useFetchTransportMap(
-	map,
 	active,
-	safeStyleKey,
-	setTempStyle,
 	day,
 	bbox,
 	agence,
-	routesParam,
-	stop,
-	trainType,
-	transitFilter,
 	noCache
 ) {
 	const [data, setData] = useState([])

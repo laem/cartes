@@ -2,9 +2,10 @@ import Address from '@/components/voyage/Address'
 import computeDistance from '@turf/distance'
 
 export default function ClickedPoint({
-	clickedPoint: { latitude, longitude, data },
+	geocodedClickedPoint: { latitude, longitude, data },
 	geolocation,
 }) {
+	console.log('clickedPoint', latitude, longitude, data)
 	const origin = geolocation
 	if (!data)
 		return (
