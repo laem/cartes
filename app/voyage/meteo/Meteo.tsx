@@ -4,6 +4,7 @@ import { useEffect, useState } from 'react'
 import { MapButton } from '@/components/voyage/MapButtons'
 import Link from 'next/link'
 import logoMeteoFrance from '@/public/meteo-france.svg'
+import { useMediaQuery } from 'usehooks-ts'
 
 const buildIconUrl = (icon) =>
 	'https://meteofrance.com/modules/custom/mf_tools_common_theme_public/svg/weather/' +
@@ -12,6 +13,13 @@ const buildIconUrl = (icon) =>
 export default function Meteo({ coordinates }) {
 	const [data, setData] = useState(null)
 	const [codePostal, setCodePostal] = useState(null)
+	const [extended, extend] = useState(true)
+
+	const mobile = useMediaQuery('(max-width: 800px)')
+
+	useEffect(() => {
+		if (mobile) extend(false)
+	}, [mobile, extend])
 
 	const codeInsee = data?.weather?.position?.insee
 
@@ -90,6 +98,7 @@ export default function Meteo({ coordinates }) {
 
 	return (
 		<div
+			onClick={() => extend(!extended)}
 			css={`
 				position: fixed;
 				padding: 0.1rem;
@@ -107,7 +116,8 @@ export default function Meteo({ coordinates }) {
 					justify-content: space-evenly;
 				}
 
-				@media (min-width: 800px) {
+				${extended &&
+				`
 					bottom: 1rem;
 					right: 0rem;
 					width: 6rem;
@@ -121,7 +131,7 @@ export default function Meteo({ coordinates }) {
 						justify-content: center;
 						flex-direction: row;
 					}
-				}
+				`}
 				transform: translateX(-50%) translateY(-50%);
 				img {
 					width: 1.8rem;
@@ -151,6 +161,8 @@ export default function Meteo({ coordinates }) {
 					display: none; /* Safari and Chrome */
 				}
 				> a {
+					${extended
+						? `
 					color: inherit;
 					display: flex;
 					align-items: center;
@@ -159,6 +171,8 @@ export default function Meteo({ coordinates }) {
 						width: 1.2rem;
 						height: auto;
 					}
+					`
+						: `display: none`}
 				}
 			`}
 			title={weatherText}
@@ -166,6 +180,7 @@ export default function Meteo({ coordinates }) {
 			{codePostal ? (
 				<Link
 					href={`http://meteofrance.com/previsions-meteo-france/${weather.position.name}/${codePostal}`}
+					onClick={(e) => e.stopPropagation()}
 				>
 					<Image src={logoMeteoFrance} alt="Logo Météo-France" />
 					<small>{weather.position.name}</small>

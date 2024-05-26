@@ -1,0 +1,95 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<svg
+   inkscape:version="1.2.2 (b0a8486541, 2022-12-01)"
+   sodipodi:docname="meteo-france.svg"
+   version="1.1"
+   viewBox="0 0 600 600"
+   height="600"
+   width="600"
+   data-name="Calque 1"
+   id="ccf56f4b-2a39-45ee-af6e-4481bfcbcb86"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:svg="http://www.w3.org/2000/svg"
+   xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+   xmlns:cc="http://creativecommons.org/ns#"
+   xmlns:dc="http://purl.org/dc/elements/1.1/">
+  <metadata
+     id="metadata872">
+    <rdf:RDF>
+      <cc:Work
+         rdf:about="">
+        <dc:format>image/svg+xml</dc:format>
+        <dc:type
+           rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
+        <dc:title>mf-logo</dc:title>
+      </cc:Work>
+    </rdf:RDF>
+  </metadata>
+  <defs
+     id="defs870" />
+  <sodipodi:namedview
+     inkscape:current-layer="g878"
+     inkscape:window-maximized="1"
+     inkscape:window-y="0"
+     inkscape:window-x="0"
+     inkscape:cy="38.211562"
+     inkscape:cx="-23.299733"
+     inkscape:zoom="0.53648683"
+     showgrid="false"
+     id="namedview868"
+     inkscape:window-height="1055"
+     inkscape:window-width="1920"
+     inkscape:pageshadow="2"
+     inkscape:pageopacity="0"
+     guidetolerance="10"
+     gridtolerance="10"
+     objecttolerance="10"
+     borderopacity="1"
+     inkscape:document-rotation="0"
+     bordercolor="#666666"
+     pagecolor="#ffffff"
+     inkscape:showpageshadow="2"
+     inkscape:pagecheckerboard="true"
+     inkscape:deskcolor="#d1d1d1" />
+  <title
+     id="title833">mf-logo</title>
+  <g
+     id="g878"
+     transform="matrix(3.0336487,0,0,3.0336487,-606.34867,-279.18334)">
+    <rect
+       x="216.80916"
+       y="108.13432"
+       width="167.33113"
+       height="167.33113"
+       rx="13.424847"
+       ry="13.424847"
+       style="fill:none;stroke:#005892;stroke-width:10.4048;stroke-dasharray:none;stroke-opacity:1"
+       id="rect837" />
+    <polygon
+       points="43.11,20.79 44.05,17.65 46.29,19.98 "
+       style="fill:#005891"
+       id="polygon839"
+       transform="matrix(7.9909806,0,0,7.9909806,-15.169013,-9.2531806)" />
+    <path
+       d="m 361.4459,191.79989 a 60.651543,60.651543 0 0 0 -10.70792,-34.52104 l -5.43387,2.07765 a 58.973437,58.973437 0 0 1 10.78783,32.44339 55.936864,55.936864 0 0 1 -47.94588,55.05786 221.11043,221.11043 0 0 1 -1.83793,-110.27554 58.334158,58.334158 0 0 1 20.77655,6.31287 l 1.35847,-5.11421 a 60.571633,60.571633 0 0 0 -20.77655,-6.4727 158.54105,158.54105 0 0 1 8.55035,-23.17385 h -7.99098 a 172.60518,172.60518 0 0 0 -7.99099,22.7743 v 0 a 60.971182,60.971182 0 0 0 0,121.86245 h 2.07767 c 2.07765,7.43162 4.47494,15.02305 7.43161,22.77429 h 7.43161 c -3.03658,-7.99097 -5.6736,-15.98195 -7.99099,-23.41357 a 60.971182,60.971182 0 0 0 52.26102,-60.3319 z"
+       style="fill:#005891;stroke-width:7.99098"
+       id="path841"
+       inkscape:connector-curvature="0" />
+    <path
+       d="m 299.03634,127.95195 h -7.43161"
+       style="fill:#ffffff;stroke-width:7.99098"
+       id="path843"
+       inkscape:connector-curvature="0" />
+  </g>
+  <rect
+     x="-3005.2107"
+     y="-1655.2089"
+     width="586.62561"
+     height="586.62561"
+     rx="47.06451"
+     ry="47.06451"
+     style="fill:#005892;fill-opacity:1;stroke-width:28.0146"
+     id="rect837-6" />
+</svg>
