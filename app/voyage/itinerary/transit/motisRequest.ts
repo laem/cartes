@@ -37,7 +37,7 @@ export const buildRequestBody = (start, destination, date) => {
 				{
 					mode_type: 'FootPPR',
 					mode: {
-						search_options: { profile: 'default', duration_limit: 1800 },
+						search_options: { profile: 'distance_only', duration_limit: 1800 },
 					},
 				},
 			],
@@ -46,7 +46,9 @@ export const buildRequestBody = (start, destination, date) => {
 			destination_modes: [
 				{
 					mode_type: 'FootPPR',
-					mode: { search_options: { profile: 'default', duration_limit: 900 } },
+					mode: {
+						search_options: { profile: 'distance_only', duration_limit: 900 },
+					},
 				},
 			],
 			search_type: 'Accessibility',
