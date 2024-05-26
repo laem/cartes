@@ -26,6 +26,11 @@ export default function manifest(): MetadataRoute.Manifest {
 					sizes: '192x192',
 					type: 'image/png',
 				},
+				{
+					src: 'https://cartes.app/voyage-512.png',
+					sizes: '512x512',
+					type: 'image/png',
+				},
 			],
 		}
 	} else
