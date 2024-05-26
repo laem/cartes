@@ -1,9 +1,8 @@
-import { sortBy } from 'ramda'
-import Image from 'next/image'
-import { useEffect, useState } from 'react'
-import { MapButton } from '@/components/voyage/MapButtons'
-import Link from 'next/link'
+import { sortBy } from '@/components/utils/utils'
 import logoMeteoFrance from '@/public/meteo-france.svg'
+import Image from 'next/image'
+import Link from 'next/link'
+import { useEffect, useState } from 'react'
 import { useMediaQuery } from 'usehooks-ts'
 
 const buildIconUrl = (icon) =>
@@ -96,6 +95,7 @@ export default function Meteo({ coordinates }) {
 		weather.position.name
 	}, tendance : ${thisHour.weather.desc.toLowerCase()}; ${rainAlt}. Source Météo-France`
 
+	const temperature = Math.round(thisHour.T.value)
 	return (
 		<div
 			onClick={() => extend(!extended)}
@@ -103,7 +103,8 @@ export default function Meteo({ coordinates }) {
 				position: fixed;
 				padding: 0.1rem;
 				width: 2rem;
-				height: 3.6rem;
+				padding: 0.3rem 0;
+				height: 4.8rem;
 				right: -0.4rem;
 				bottom: 1.6rem;
 				> small {
@@ -120,13 +121,15 @@ export default function Meteo({ coordinates }) {
 				`
 					bottom: 1rem;
 					right: 0rem;
-					width: 6rem;
+					width: 6.5rem;
+					padding: .4rem 0;
 					height: 4.2rem;
 					> small {
 						display: block !important;
 					}
 
 					> div {
+					margin-top: .4rem;
 						align-items: center;
 						justify-content: center;
 						flex-direction: row;
@@ -147,7 +150,7 @@ export default function Meteo({ coordinates }) {
 				text-align: center;
 				border-radius: 4px;
 				box-shadow: 0 0 0 2px rgba(0, 0, 0, 0.1);
-				small {
+				> small {
 					white-space: nowrap;
 					overflow-x: scroll;
 					scrollbar-width: none; /* Firefox */
@@ -157,7 +160,7 @@ export default function Meteo({ coordinates }) {
 					height: 1.6rem;
 					margin-top: 0.3rem;
 				}
-				small::-webkit-scrollbar {
+				> small::-webkit-scrollbar {
 					display: none; /* Safari and Chrome */
 				}
 				> a {
@@ -189,6 +192,14 @@ export default function Meteo({ coordinates }) {
 				<small>{weather.position.name}</small>
 			)}
 			<div>
+				<small
+					css={`
+						color: #555;
+						font-size: 80%;
+					`}
+				>
+					{temperature}°
+				</small>
 				<Image
 					src={buildIconUrl(thisHour.weather.icon)}
 					alt={thisHour.weather.desc}
