@@ -14,6 +14,8 @@ export default function BestConnection({ bestConnection }) {
 				background: white;
 				margin: 0.6rem 0;
 				border: 2px solid gold;
+				border-radius: 0.8rem;
+
 				padding: 0 0.4rem;
 				display: flex;
 				align-items: center;
