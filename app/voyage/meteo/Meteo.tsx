@@ -3,6 +3,7 @@ import Image from 'next/image'
 import { useEffect, useState } from 'react'
 import { MapButton } from '@/components/voyage/MapButtons'
 import Link from 'next/link'
+import logoMeteoFrance from '@/public/meteo-france.svg'
 
 const buildIconUrl = (icon) =>
 	'https://meteofrance.com/modules/custom/mf_tools_common_theme_public/svg/weather/' +
@@ -149,6 +150,16 @@ export default function Meteo({ coordinates }) {
 				small::-webkit-scrollbar {
 					display: none; /* Safari and Chrome */
 				}
+				> a {
+					color: inherit;
+					display: flex;
+					align-items: center;
+					justify-content: center;
+					img {
+						width: 1.2rem;
+						height: auto;
+					}
+				}
 			`}
 			title={weatherText}
 		>
@@ -156,6 +167,7 @@ export default function Meteo({ coordinates }) {
 				<Link
 					href={`http://meteofrance.com/previsions-meteo-france/${weather.position.name}/${codePostal}`}
 				>
+					<Image src={logoMeteoFrance} alt="Logo Météo-France" />
 					<small>{weather.position.name}</small>
 				</Link>
 			) : (
