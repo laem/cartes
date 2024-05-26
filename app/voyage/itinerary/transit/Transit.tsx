@@ -195,7 +195,7 @@ export const Line = ({
 		<div
 			css={`
 				height: 4rem;
-				width: calc(100% - 4rem);
+				width: calc(100% - 1rem);
 				padding: 0.4rem 0;
 				margin: 0;
 				margin-top: 0.3rem;
