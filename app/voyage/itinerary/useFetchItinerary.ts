@@ -4,12 +4,14 @@ import { useEffect, useState } from 'react'
 import { decodeDate, initialDate } from './DateSelector'
 import { useMemoPointsFromState } from './useDrawItinerary'
 import { modeKeyFromQuery } from './Itinerary'
+import useSetSearchParams from '@/components/useSetSearchParams'
 
 export default function useFetchItinerary(
 	searchParams,
 	state,
 	bikeRouteProfile
 ) {
+	const setSearchParams = useSetSearchParams()
 	const [routes, setRoutes] = useState(null)
 	const date = decodeDate(searchParams.date) || initialDate()
 	const mode = modeKeyFromQuery(searchParams.mode)

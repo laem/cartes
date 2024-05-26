@@ -102,8 +102,10 @@ export default function SetDestination({
 
 	const destination = destinationPart.split('|').slice(2)
 	const origin = geolocation && [geolocation.longitude, geolocation.latitude]
+
 	const distance = origin && turfDistance(origin, destination)
-	const humanDistance = distance && computeHumanDistance(distance)
+	console.log('distance', origin, distance)
+	const humanDistance = distance && computeHumanDistance(distance * 1000)
 
 	console.log('plop', destination, origin, distance)
 

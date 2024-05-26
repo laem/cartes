@@ -89,16 +89,17 @@ export default function Map({
 		mapContainerRef,
 		setGeolocation
 	)
+	const setSearchParams = useSetSearchParams()
 
 	const shouldGeolocate = searchParams.geoloc
 	useEffect(() => {
 		if (!map || !shouldGeolocate) return
+		console.log('will trigger maplibregeolocate')
 		triggerGeolocation()
-	}, [map, triggerGeolocation, shouldGeolocate])
+		setSearchParams({ geoloc: undefined })
+	}, [map, triggerGeolocation, shouldGeolocate, setSearchParams])
 
 	const [distanceMode, setDistanceMode] = useState(false)
-
-	const setSearchParams = useSetSearchParams()
 
 	useEffect(() => {
 		if (!transportStopData.length) return
