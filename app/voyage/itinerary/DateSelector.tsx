@@ -68,7 +68,7 @@ export default function DateSelector({ date, type = 'date' }) {
 			)}
 			{type === 'date' && (
 				<UpdateDate
-					date={date}
+					date={localDate}
 					updateDate={(newDate) =>
 						setSearchParams({ date: encodeDate(newDate) }, true)
 					}
@@ -85,7 +85,6 @@ const UpdateDate = ({ date, updateDate }) => {
 	useInterval(() => {
 		setNow(newTimestamp())
 	}, 5 * 1000)
-	console.log('onglets now', now)
 	const isOutdated = now - new Date(date).getTime() / 1000 > 10
 
 	if (!isOutdated) return null
@@ -97,8 +96,10 @@ const UpdateDate = ({ date, updateDate }) => {
 				width="10"
 				height="10"
 				css={`
-					width: 1rem;
+					width: 1.5rem;
 					height: auto;
+					vertical-align: middle;
+					margin-left: 0.2rem;
 				`}
 			/>
 		</Link>
