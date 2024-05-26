@@ -129,7 +129,6 @@ export default function Meteo({ coordinates }) {
 					}
 
 					> div {
-					margin-top: .4rem;
 						align-items: center;
 						justify-content: center;
 						flex-direction: row;
@@ -150,7 +149,8 @@ export default function Meteo({ coordinates }) {
 				text-align: center;
 				border-radius: 4px;
 				box-shadow: 0 0 0 2px rgba(0, 0, 0, 0.1);
-				> small {
+				> small,
+				> a small {
 					white-space: nowrap;
 					overflow-x: scroll;
 					scrollbar-width: none; /* Firefox */
