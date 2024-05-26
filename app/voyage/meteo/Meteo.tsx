@@ -2,6 +2,7 @@ import { sortBy } from 'ramda'
 import Image from 'next/image'
 import { useEffect, useState } from 'react'
 import { MapButton } from '@/components/voyage/MapButtons'
+import Link from 'next/link'
 
 const buildIconUrl = (icon) =>
 	'https://meteofrance.com/modules/custom/mf_tools_common_theme_public/svg/weather/' +
@@ -9,6 +10,34 @@ const buildIconUrl = (icon) =>
 	'.svg'
 export default function Meteo({ coordinates }) {
 	const [data, setData] = useState(null)
+	const [codePostal, setCodePostal] = useState(null)
+
+	const codeInsee = data?.weather?.position?.insee
+
+	useEffect(() => {
+		if (!codeInsee) return
+
+		const doFetch = async () => {
+			try {
+				// Why ? dunno
+				const realCode = codeInsee.slice(0, 5)
+				const request = await fetch(
+					`https://geo.api.gouv.fr/communes/${realCode}?fields=codesPostaux`
+				)
+				const json = await request.json()
+
+				if (json.codesPostaux) {
+					setCodePostal(json.codesPostaux[0])
+				}
+			} catch (e) {
+				console.log(
+					'Impossible de récupérer le code postal à partir du code INSEE pour afficher le lien Météo-France',
+					e
+				)
+			}
+		}
+		doFetch()
+	}, [codeInsee])
 
 	useEffect(() => {
 		if (!coordinates) return
@@ -123,7 +152,15 @@ export default function Meteo({ coordinates }) {
 			`}
 			title={weatherText}
 		>
-			<small>{weather.position.name}</small>
+			{codePostal ? (
+				<Link
+					href={`http://meteofrance.com/previsions-meteo-france/${weather.position.name}/${codePostal}`}
+				>
+					<small>{weather.position.name}</small>
+				</Link>
+			) : (
+				<small>{weather.position.name}</small>
+			)}
 			<div>
 				<Image
 					src={buildIconUrl(thisHour.weather.icon)}
