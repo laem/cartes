@@ -66,6 +66,6 @@ export const getBestIntervals = (connections, best) => {
 	const max = Math.max(...intervals)
 
 	console.log('orange max', max, intervals)
-	const description = `au moins ${humanDuration(max).interval}`
+	const description = humanDuration(max).interval
 	return description
 }

@@ -1,5 +1,5 @@
-import { TimelineTransportBlock, Transport } from './Transit'
 import Image from 'next/image'
+import { TimelineTransportBlock } from './Transit'
 import { routeTypeName } from './transportIcon'
 
 export default function BestConnection({ bestConnection }) {
