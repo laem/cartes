@@ -1,6 +1,7 @@
 import Image from 'next/image'
 import { TimelineTransportBlock } from './Transit'
 import { routeTypeName } from './transportIcon'
+import { capitalise0 } from 'publicodes'
 
 export default function BestConnection({ bestConnection }) {
 	console.log('prune best', bestConnection)
@@ -56,6 +57,15 @@ export default function BestConnection({ bestConnection }) {
 					>
 						{stop}
 					</em>
+					.
+				</p>
+				<p>
+					⌚️{' '}
+					{capitalise0(
+						bestConnection.nextDepartures
+							.map((departure) => departure.toLowerCase())
+							.join(', ')
+					)}
 					.
 				</p>
 			</div>

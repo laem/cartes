@@ -1,3 +1,4 @@
+import { humanDepartureTime } from '../../transport/stop/Route'
 import { dateFromMotis, humanDuration } from './utils'
 
 const connectionDuration = (connection) =>
@@ -41,7 +42,23 @@ export default function findBestConnection(connections) {
 		return memo
 	}, null)
 
-	return { best, interval: getBestIntervals(connections, best) }
+	const nextDepartures = selected
+		.filter((connection) => bestSignature(connection) === bestSignature(best))
+		.map((connection) => {
+			try {
+				const departure = connection.stops[0].departure.time
+				const humanTime = humanDepartureTime(new Date(departure * 1000), true)
+				return humanTime
+			} catch (e) {
+				console.log('Error building best connection next departures', e)
+			}
+		})
+
+	return {
+		best,
+		interval: getBestIntervals(connections, best),
+		nextDepartures,
+	}
 }
 
 export const bestSignature = (connection) => connection.trips[0].id.line_id

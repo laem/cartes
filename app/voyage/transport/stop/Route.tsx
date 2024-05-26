@@ -150,7 +150,7 @@ export default function Route({ route, stops = [] }) {
 			>
 				{stopSelection.map((stop, i) => (
 					<li key={stop.trip_id}>
-						<StopTime stop={stop} doPrefix={i === 0} />
+						<small>{humanDepartureTime(stop.arrivalDate, i === 0)}</small>
 					</li>
 				))}
 				<button onClick={() => setCalendarOpen(!calendarOpen)}>
@@ -224,34 +224,22 @@ export const RouteName = ({ route, name = undefined }) => {
 	)
 }
 
-const StopTime = ({ stop, doPrefix }) => {
-	const d = stop.arrivalDate
+export const humanDepartureTime = (date, doPrefix) => {
+	const departure = date.getTime()
 	const now = new Date()
 
-	const seconds = (d.getTime() - now.getTime()) / 1000
-	const minutes = seconds / 60
+	const seconds = (departure - now.getTime()) / 1000
 
 	const prefix = doPrefix ? 'Dans ' : ''
+	const minutes = seconds / 60
 
-	if (seconds < 60)
-		return (
-			<small>
-				{prefix}
-				{Math.round(seconds)} sec
-			</small>
-		)
-	if (minutes < 60)
-		return (
-			<small>
-				{prefix}
-				{Math.round(minutes)} min
-			</small>
-		)
+	if (seconds < 60) return `${prefix} ${Math.round(seconds)} sec`
+	if (minutes < 60) return `${prefix} ${Math.round(minutes)} min`
 
 	const prefix2 = doPrefix ? 'À ' : ''
-	const hours = d.getHours(),
+	const hours = date.getHours(),
 		humanHours = +hours >= 10 ? hours : '0' + hours
-	const human = `${prefix2}${humanHours}h${d.getMinutes()}`
+	const human = `${prefix2}${humanHours}h${date.getMinutes()}`
 
-	return <small>{human}</small>
+	return human
 }
