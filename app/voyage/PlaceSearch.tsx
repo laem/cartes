@@ -65,7 +65,7 @@ export default function PlaceSearch({
 			setState(newState)
 			if (v?.length > 2) {
 				const hash = window.location.hash,
-					local = hash.split('/').slice(1, 3)
+					local = hash && hash.split('/').slice(1, 3)
 
 				fetchPhoton(v, setState, stepIndex, localSearch && local, zoom)
 			}
