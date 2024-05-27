@@ -54,6 +54,11 @@ export const tagNameCorrespondance = (key) => {
 		short_name: 'Diminutif',
 		old_name: 'Ancien nom',
 		indoor_seating: "Sièges à l'intérieur",
+		'capacity:disabled': 'Place de parking PMR'
+		'website:menu': 'Menu'
+		'building:levels': "Nombre d'étages"
+		'emergency:phone': "Numéro d'urgence"
+		'opening_hours:emergency': "Horaires en cas d'urgence"
 	}[key]
 	return found || key
 }
