@@ -114,7 +114,7 @@ export default function Content({
 		// 2 -> useless destination card
 		// Note : what we wanted to do would need a filter(Boolean), but in practice
 		// removing the card after the destination click is good too
-		!(state.length >= 2)
+		!(itinerary.itineraryMode && state.length >= 2)
 
 	console.log('onglets', state)
 
