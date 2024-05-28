@@ -169,6 +169,7 @@
 		"remark-mdx-frontmatter": "^3.0.0",
 		"remark-toc": "^9.0.0",
 		"reselect": "^4.1.8",
+		"sharp": "^0.33.4",
 		"string-replace-to-array": "^2.1.0",
 		"styled-components": "^6.1.1",
 		"suncalc": "^1.9.0",
