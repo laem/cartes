@@ -103,8 +103,8 @@ export default function Content({
 		searchParams.gare,
 	]
 
-	const hasContent = content.some((el) =>
-		el != null && Array.isArray(el) ? el.length > 0 : el
+	const hasContent = content.some(
+		(el) => el != null && (!Array.isArray(el) || el.length > 0)
 	)
 
 	const showContent =
@@ -285,7 +285,11 @@ export default function Content({
 							/>
 						)}
 						<ZoneImages
-							zoneImages={bboxImages?.length > 0 ? bboxImages : zoneImages} // bbox includes zone, usually
+							zoneImages={
+								searchParams.photos === 'oui' && bboxImages?.length > 0
+									? bboxImages
+									: zoneImages
+							} // bbox includes zone, usually
 							panoramaxImages={panoramaxImages}
 							focusImage={focusImage}
 						/>
