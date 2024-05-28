@@ -13,21 +13,26 @@ export default function ShareButton({ osmFeature, geocodedClickedPoint }) {
 
 	const urlBase = getFetchUrlBase()
 
-	const url = `${urlBase}/?allez=${
-		osmFeature
-			? buildAllezPart(
-					osmFeature.tags?.name,
-					encodePlace(osmFeature.type, osmFeature.id),
-					osmFeature.lon,
-					osmFeature.lat
-			  )
-			: buildAllezPart(
-					'Point sur la carte',
-					null,
-					geocodedClickedPoint.longitude,
-					geocodedClickedPoint.latitude
-			  )
-	}`
+	const url = encodeURI(
+		`${urlBase}/?allez=${
+			osmFeature
+				? buildAllezPart(
+						osmFeature.tags?.name,
+						encodePlace(osmFeature.type, osmFeature.id),
+						osmFeature.lon,
+						osmFeature.lat
+				  )
+				: buildAllezPart(
+						'Point sur la carte',
+						null,
+						geocodedClickedPoint.longitude,
+						geocodedClickedPoint.latitude
+				  )
+		}`
+	)
+	const text =
+		getName(osmFeature.tags || {}) ||
+		`Lon ${geocodedClickedPoint.longitude} | lat ${geocodedClickedPoint.lat}`
 	return (
 		<PlaceButton>
 			{navigator.share ? (
@@ -39,11 +44,9 @@ export default function ShareButton({ osmFeature, geocodedClickedPoint }) {
 					onClick={() => {
 						navigator
 							.share({
-								text:
-									getName(osmFeature.tags || {}) ||
-									`Lon ${geocodedClickedPoint.longitude} | lat ${geocodedClickedPoint.lat}`,
+								text,
 								url,
-								title: `Partager ce lieu`,
+								title: text,
 							})
 							.then(() => console.log('Successful share'))
 							.catch((error) => console.log('Error sharing', error))
