@@ -2,16 +2,38 @@ import turfDistance from '@turf/distance'
 import { centerOfMass } from '@turf/turf'
 import osmToGeojson from 'osmtogeojson'
 
+const apiUrlBase = `https://api.openstreetmap.org/api/0.6`
 export const osmRequest = async (featureType, id, full) => {
 	const request = await fetch(
-		`https://api.openstreetmap.org/api/0.6/${featureType}/${id}${
-			full ? '/full' : ''
-		}.json`
+		`${apiUrlBase}/${featureType}/${id}${full ? '/full' : ''}.json`
 	)
 	if (!request.ok) return []
 	const json = await request.json()
 
-	return json.elements
+	const elements = json.elements
+
+	if (featureType === 'node' && elements.length === 1) {
+		try {
+			const tags = elements[0].tags || {}
+			// handle this use case https://wiki.openstreetmap.org/wiki/Relation:associatedStreet
+			// example : https://www.openstreetmap.org/node/3663795073
+			if (tags['addr:housenumber'] && !tags['addr:street']) {
+				const relationRequest = await fetch(
+					`${apiUrlBase}/node/${id}/relations.json`
+				)
+				const json = await relationRequest.json()
+				const {
+					tags: { name, type },
+				} = json.elements[0]
+				if (type === 'associatedStreet') {
+					return [{ ...elements[0], tags: { ...tags, 'addr:street': name } }]
+				}
+			}
+		} catch (e) {
+			return elements
+		}
+	}
+	return elements
 }
 
 export const disambiguateWayRelation = async (
