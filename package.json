@@ -81,7 +81,7 @@
 		"@adobe/css-tools": "^4.3.1",
 		"@babel/runtime": "^7.22.6",
 		"@mapbox/polyline": "^1.2.1",
-		"@next/mdx": "^14.2.3",
+		"@next/mdx": "^15.0.0-rc.0",
 		"@openstreetmap/id-tagging-schema": "^6.4.1",
 		"@opentelemetry/api": "^1.4.1",
 		"@pmmmwh/react-refresh-webpack-plugin": "^0.5.1",
