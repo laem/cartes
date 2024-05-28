@@ -11,19 +11,17 @@ export const getTagLabels = (key, value) => {
 	if (!field) return [key, translateBasics(value)]
 
 	const values = value.split(';'),
-		translatedValues = values.map(
-			(v) => {
-				const optionValue = field.options?.[v]
-				switch (typeof optionValue) {
-					case 'string':
-						return optionValue
-					case 'object':
-						if (optionValue.title) return optionValue.title
-					default:
-						return translateBasics(v)
-				}
+		translatedValues = values.map((v) => {
+			const optionValue = field.options?.[v]
+			switch (typeof optionValue) {
+				case 'string':
+					return optionValue
+				case 'object':
+					if (optionValue.title) return optionValue.title
+				default:
+					return translateBasics(v)
 			}
-		)
+		})
 	return [field.label, translatedValues.join(' - ')]
 }
 
@@ -54,6 +52,11 @@ export const tagNameCorrespondance = (key) => {
 		short_name: 'Diminutif',
 		old_name: 'Ancien nom',
 		indoor_seating: "Sièges à l'intérieur",
+		'capacity:disabled': 'Place de parking PMR',
+		'website:menu': 'Menu',
+		'building:levels': "Nombre d'étages",
+		'emergency:phone': "Numéro d'urgence",
+		'opening_hours:emergency': "Horaires en cas d'urgence",
 	}[key]
 	return found || key
 }
