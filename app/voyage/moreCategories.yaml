@@ -166,6 +166,52 @@
 
 ################################
 
+- name: compost
+  category: Poubelles
+  dictionary:
+    - composteur
+    - compost
+    - déchets organiques
+  query: '["recycling:organic"="yes"]'
+  icon: recycling
+- name: verre
+  category: Poubelles
+  dictionary:
+    - bouteille
+  query: '[amenity=recycling]["recycling:glass_bottles"=yes]'
+  icon: recycling
+- name: vêtements
+  category: Poubelles
+  dictionary:
+    - coton
+    - tissus
+  query: '[amenity=recycling]["recycling:clothes"=yes]'
+  icon: recycling
+- name: plastique et emballages
+  category: Poubelles
+  dictionary:
+    - canette
+    - carton
+    - papier
+    - poubelle jaune
+  query:
+    - '["recycling:cans"=yes]'
+    - '["recycling:plastic"=yes]'
+    - '["recycling:plastic_bottles"=yes]'
+    - '["recycling:paper_packaging"=yes]'
+    - '["recycling:paper"=yes]'
+    - '["recycling:plastic_packaging"=yes]'
+  icon: recycling
+- name: piles et batteries
+  category: Poubelles
+  dictionary:
+    - piles
+    - batterie
+  query: '[amenity=recycling]["recycling:batteries"=yes]'
+  icon: recycling
+
+################################
+
 - name: Journaux
   category: Culture
   dictionary:
