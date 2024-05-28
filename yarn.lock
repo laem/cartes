@@ -1911,7 +1911,7 @@
   dependencies:
     glob "10.3.10"
 
-"@next/mdx@^14.0.2":
+"@next/mdx@^14.2.3":
   version "14.2.3"
   resolved "https://registry.yarnpkg.com/@next/mdx/-/mdx-14.2.3.tgz#f914cc8c2caf05cbf2ed10eff3a79977faa3eced"
   integrity sha512-oVz7BWpoLQ9dKvCKxPIX9X6BILPTrpTJnYDn2lAsZvK7J9Ela6xNm57vNwgZ8q7xw1THSDdSlbPNgIalM7U/+A==
