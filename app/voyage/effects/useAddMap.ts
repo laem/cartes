@@ -19,7 +19,7 @@ export default function useAddMap(
 ) {
 	const [map, setMap] = useState(null)
 	const [geolocate, setGeolocate] = useState(null)
-	const mobile = useMediaQuery('(max-width: 800px)')
+	const isMobile = useMediaQuery('(max-width: 800px)')
 	useEffect(() => {
 		if (!mapContainerRef.current) return undefined
 
@@ -66,8 +66,8 @@ export default function useAddMap(
 			setZoom(Math.round(newMap.getZoom()))
 			setBbox(newMap.getBounds().toArray())
 
-			console.log('MOBILE', mobile, window.location.hash, defaultHash)
-			if (window.location.hash === defaultHash && mobile) geolocate.trigger()
+			console.log('MOBILE', isMobile, window.location.hash, defaultHash)
+			if (window.location.hash === defaultHash && isMobile) geolocate.trigger()
 		})
 
 		newMap.on('moveend', (e) => {
@@ -78,7 +78,7 @@ export default function useAddMap(
 			setMap(null)
 			newMap?.remove()
 		}
-	}, [setMap, setZoom, setBbox, mapContainerRef, setGeolocate]) // styleUrl not listed on purpose
+	}, [setMap, setZoom, setBbox, mapContainerRef, setGeolocate, isMobile]) // styleUrl not listed on purpose
 
 	useEffect(() => {
 		if (!map) return
