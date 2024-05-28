@@ -6,6 +6,7 @@ import { encodePlace } from './utils'
 import shareIcon from '@/public/share.svg'
 import Image from 'next/image'
 import { getFetchUrlBase } from './serverUrls'
+import getName from './osm/getName'
 
 export default function ShareButton({ osmFeature, geocodedClickedPoint }) {
 	console.log('purple share', osmFeature, geocodedClickedPoint)
@@ -37,7 +38,13 @@ export default function ShareButton({ osmFeature, geocodedClickedPoint }) {
 					title="Cliquez pour partager le lien"
 					onClick={() => {
 						navigator
-							.share({ text, url, title, color, label })
+							.share({
+								text:
+									getName(osmFeature.tags || {}) ||
+									`Lon ${geocodedClickedPoint.longitude} | lat ${geocodedClickedPoint.lat}`,
+								url,
+								title: `Partager ce lieu`,
+							})
 							.then(() => console.log('Successful share'))
 							.catch((error) => console.log('Error sharing', error))
 					}}
@@ -58,7 +65,7 @@ export default function ShareButton({ osmFeature, geocodedClickedPoint }) {
 export const DesktopShareButton = ({ url }) => {
 	const [copySuccess, setCopySuccess] = useState(false)
 
-	function copyToClipboard() {
+	function copyToClipboard(e) {
 		navigator.clipboard.writeText(url).then(
 			function () {
 				setCopySuccess(true)
