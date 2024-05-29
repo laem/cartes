@@ -163,7 +163,7 @@ export default function OsmFeature({ data, transportStopData }) {
 				)}
 			</div>
 			{description && <small>{description}</small>}
-			{!frenchAdminLevel && (
+			{adminLevel && !frenchAdminLevel && (
 				<div>
 					<span>Niveau administratif : {adminLevel}</span>
 				</div>
