@@ -4,7 +4,11 @@ import {
 	tagValueCorrespondance,
 } from '@/app/voyage/osmTagLabels'
 
-const isSecondary = ([k, v]) => k.startsWith('source:')
+const beginningsOfSecondaryTags = ['source:', 'fixme:', 'note']
+
+const isSecondary = ([k, v]) =>
+	beginningsOfSecondaryTags.some((begining) => k.startsWith(begining))
+
 export default function Tags({ tags }) {
 	return (
 		<ul
@@ -17,18 +21,22 @@ export default function Tags({ tags }) {
 				img {
 					opacity: 0.7;
 				}
+				display: flex;
+				flex-direction: column;
 			`}
 		>
-			{tags.map(([raw, [k, v]]) => (
+			{tags.map(([raw, [k, v]], i) => (
 				<li
 					key={k + v}
 					css={`
-						${isSecondary(Object.entries(raw)[0]) && `font-size: 80%`}
+						${isSecondary(Object.entries(raw)[0]) &&
+						`font-size: 80%; order: ${1000 + i}`}
 					`}
 				>
 					<Icons tags={raw} />
 					<span>
-						{tagNameCorrespondance(k)} : {tagValueCorrespondance(v)}
+						<span>{tagNameCorrespondance(k)}</span> :{' '}
+						<span>{tagValueCorrespondance(v)}</span>
 					</span>
 				</li>
 			))}

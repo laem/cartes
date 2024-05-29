@@ -7,5 +7,7 @@ export default function getName(tags) {
 }
 
 export const getNameKeys = (tags) => {
-	return Object.keys(tags).filter((key) => key.startsWith('name:'))
+	return Object.keys(tags).filter(
+		(key) => key === 'name' || key.startsWith('name:')
+	)
 }
