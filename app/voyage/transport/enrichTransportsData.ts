@@ -43,7 +43,7 @@ export const addDefaultColor = (features, agencyId) => {
 					...feature.properties,
 					width:
 						classifyStopFrequency(feature.properties.perDay, isSncf ? 15 : 30) /
-						(isSncf ? 1 : 6),
+						(isSncf ? 1.8 : 6),
 					'circle-stroke-color': strokeColor,
 					'circle-color': color,
 				},
@@ -56,13 +56,14 @@ export const addDefaultColor = (features, agencyId) => {
 				route_color: isSncf
 					? trainColor(feature.properties)
 					: handleColor(feature.properties.route_color, 'gray'),
-				width: {
-					0: 1.6,
-					1: 2.6,
-					2: 3,
-					3: 0.8,
-					undefined: 0.8,
-				}[feature.properties.route_type],
+				width:
+					{
+						0: 1.6,
+						1: 2.6,
+						2: 3,
+						3: 0.8,
+						undefined: 0.8,
+					}[feature.properties.route_type] * 0.6,
 				opacity: classifyStopFrequency(feature.properties.perDay, 2),
 			},
 		}

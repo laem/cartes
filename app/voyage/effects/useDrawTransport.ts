@@ -68,7 +68,7 @@ export default function useDrawTransport(map, features, drawKey) {
 			//, gare = stopId.split('-').slice(-1)[0]
 
 			setSearchParams({
-				agence,
+				//agence, not sure why we should filter by agency here ?
 				arret,
 			})
 		}
