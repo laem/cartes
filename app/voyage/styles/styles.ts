@@ -19,6 +19,11 @@ export const styles = {
 		name: 'Satellite',
 		emoji: '🛰️',
 	},
+	satelliteHybrid: {
+		url: maptilerUrl('hybrid'),
+		name: 'Satellite + rues',
+		emoji: '🛰️',
+	},
 	rando: {
 		url: maptilerUrl('outdoor-v2'),
 		name: 'Randonnée',

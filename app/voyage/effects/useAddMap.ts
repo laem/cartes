@@ -1,5 +1,5 @@
 import maplibregl from 'maplibre-gl'
-import { useEffect, useState } from 'react'
+import { useEffect, useMemo, useState } from 'react'
 import { useMediaQuery } from 'usehooks-ts'
 import { styles } from '../styles/styles'
 import { replaceArrayIndex } from '@/components/utils/utils'
@@ -65,9 +65,6 @@ export default function useAddMap(
 
 			setZoom(Math.round(newMap.getZoom()))
 			setBbox(newMap.getBounds().toArray())
-
-			console.log('MOBILE', isMobile, window.location.hash, defaultHash)
-			if (window.location.hash === defaultHash && isMobile) geolocate.trigger()
 		})
 
 		newMap.on('moveend', (e) => {
@@ -78,7 +75,19 @@ export default function useAddMap(
 			setMap(null)
 			newMap?.remove()
 		}
-	}, [setMap, setZoom, setBbox, mapContainerRef, setGeolocate, isMobile]) // styleUrl not listed on purpose
+	}, [setMap, setZoom, setBbox, mapContainerRef, setGeolocate]) // styleUrl not listed on purpose
+
+	const triggerGeolocation = useMemo(
+		() => (geolocate ? () => geolocate.trigger() : () => 'Not ready'),
+		[geolocate]
+	)
+
+	useEffect(() => {
+		if (!map || !isMobile || window.location.hash !== defaultHash) return
+		setTimeout(() => {
+			triggerGeolocation()
+		}, 2000)
+	}, [map, isMobile, triggerGeolocation])
 
 	useEffect(() => {
 		if (!map) return
@@ -93,8 +102,5 @@ export default function useAddMap(
 		}
 	}, [map, styleUrl])
 
-	const triggerGeolocation = geolocate
-		? () => geolocate.trigger()
-		: () => 'Not ready'
 	return [map, triggerGeolocation]
 }
