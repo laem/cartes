@@ -9,7 +9,7 @@ import Image from 'next/image'
 import languageIcon from '@/public/language.svg'
 import parseOpeningHours from 'opening_hours'
 import GareInfo from './GareInfo'
-import getName, { getNameKeys } from './osm/getName'
+import getName, { getNameKeys, getNames } from './osm/getName'
 import { getTagLabels } from './osmTagLabels'
 import Brand, { Wikidata } from './tags/Brand'
 import Stop, { isNotTransportStop, transportKeys } from './transport/stop/Stop'
@@ -141,7 +141,7 @@ export default function OsmFeature({ data, transportStopData }) {
 					</summary>
 					<h3>Noms dans les autres langues : </h3>
 					<ul>
-						{nameKeys.map((key) => (
+						{getNames(tags).map(([key, [value, altNames]]) => (
 							<li key={key}>
 								<span
 									css={`
@@ -150,7 +150,7 @@ export default function OsmFeature({ data, transportStopData }) {
 								>
 									{key.replace('name:', '')}
 								</span>{' '}
-								: {tags[key]}
+								: {value} {altNames.length > 0 && `, ${altNames.join(', ')}`}
 							</li>
 						))}
 					</ul>
