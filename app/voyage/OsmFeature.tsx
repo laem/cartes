@@ -46,11 +46,27 @@ export default function OsmFeature({ data, transportStopData }) {
 		'brand:wikipedia': brandWikipedia,
 		'ref:FR:Allocine': allocine,
 		'ref:mhs': mérimée,
+		admin_level: adminLevel,
 		wikipedia,
 		wikidata,
 		image,
 		...rest
 	} = data.tags
+
+	const isFrenchAdministration =
+		data.tags['ref:FR:SIREN'] || data.tags['ref:INSEE'] // this is an attempt, edge cases can exist
+	const frenchAdminLevel =
+		isFrenchAdministration &&
+		{
+			3: 'Outre-mer français',
+			4: 'Région française',
+			5: 'Circonscription départementale',
+			6: 'Département',
+			7: 'Arrondissement départemental',
+			8: 'Commune',
+			9: 'Arrondissement municipal',
+			10: 'Quartier',
+		}[adminLevel]
 
 	const phone = phone1 || phone2 || phone3,
 		website = website1 || website2
@@ -60,6 +76,15 @@ export default function OsmFeature({ data, transportStopData }) {
 	const filteredRest = omit([addressKeys, transportKeys, nameKeys].flat(), rest)
 
 	const [keyValueTags, soloTags] = processTags(filteredRest)
+
+	const filteredSoloTags = frenchAdminLevel
+		? [
+				...soloTags.filter((tag) => {
+					return !['Limite administrative', 'Frontière'].includes(tag[1][0])
+				}),
+				['hexagone-contour.svg', [frenchAdminLevel]],
+		  ]
+		: soloTags
 
 	return (
 		<div
@@ -74,7 +99,7 @@ export default function OsmFeature({ data, transportStopData }) {
 			`}
 		>
 			{' '}
-			<SoloTags tags={soloTags} />
+			<SoloTags tags={filteredSoloTags} />
 			<h2
 				css={`
 					margin: 0;
@@ -91,6 +116,11 @@ export default function OsmFeature({ data, transportStopData }) {
 					<Emoji extra="1F3F4-E0066-E0072-E0062-E0072-E0065-E007F" />{' '}
 					{nameBrezhoneg}
 				</small>
+			)}
+			{!frenchAdminLevel && (
+				<div>
+					<span>Niveau administratif : {adminLevel}</span>
+				</div>
 			)}
 			<Address tags={data.tags} />
 			{data.tags.uic_ref && (

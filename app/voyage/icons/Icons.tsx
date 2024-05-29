@@ -1,7 +1,7 @@
 import getIcons from './getIcons'
 
 export default function Icons({ tags }) {
-	const icons = getIcons(tags)
+	const icons = typeof tags === 'string' ? [tags] : getIcons(tags)
 	return (
 		<ul
 			css={`
