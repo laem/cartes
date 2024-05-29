@@ -21,6 +21,7 @@ export const styles = {
 	},
 	satelliteHybrid: {
 		url: maptilerUrl('hybrid'),
+		title: 'satellite avec superposition des noms de lieux et rues',
 		name: 'Hybride',
 		emoji: '🛰️',
 	},

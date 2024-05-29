@@ -62,7 +62,7 @@ const Styles = ({ style, styleList, setSearchParams }) => (
 			margin-top: 1rem;
 		`}
 	>
-		{styleList.map(([k, { name, imageAlt }]) => {
+		{styleList.map(([k, { name, imageAlt, title }]) => {
 			const image = k + '.png'
 
 			return (
@@ -74,7 +74,7 @@ const Styles = ({ style, styleList, setSearchParams }) => (
 				>
 					<Link
 						href={setSearchParams({ style: k }, true, false)}
-						title={'Passer au style ' + name}
+						title={'Passer au style ' + (title || name)}
 						css={`
 							display: flex;
 							flex-direction: column;
