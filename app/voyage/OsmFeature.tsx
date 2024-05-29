@@ -5,18 +5,20 @@ import ContactAndSocial from '@/components/voyage/ContactAndSocial'
 import OsmLinks from '@/components/voyage/OsmLinks'
 import Tags, { SoloTags } from '@/components/voyage/Tags'
 import Wikipedia from '@/components/voyage/Wikipedia'
+import Image from 'next/image'
+import languageIcon from '@/public/language.svg'
 import parseOpeningHours from 'opening_hours'
+import GareInfo from './GareInfo'
+import getName, { getNameKeys } from './osm/getName'
 import { getTagLabels } from './osmTagLabels'
 import Brand, { Wikidata } from './tags/Brand'
 import Stop, { isNotTransportStop, transportKeys } from './transport/stop/Stop'
-import Image from 'next/image'
-import GareInfo from './GareInfo'
 import { computeSncfUicControlDigit } from './utils'
-import getName, { nameKeys } from './osm/getName'
 
 export default function OsmFeature({ data, transportStopData }) {
 	if (!data.tags) return null
-	console.log('tags', data.tags)
+	const { tags } = data
+	console.log('tags', tags)
 
 	const id = data.id
 	const featureType = data.type || data.featureType
@@ -24,7 +26,7 @@ export default function OsmFeature({ data, transportStopData }) {
 	// Copy tags here that could be important to qualify the object with icons :
 	// they should not be extracted, just copied
 
-	const { leisure } = data.tags
+	const { leisure } = tags
 	// Extract here tags that do not qualify the object : they won't be available
 	// anymore in `rest`
 	const {
@@ -51,10 +53,9 @@ export default function OsmFeature({ data, transportStopData }) {
 		wikidata,
 		image,
 		...rest
-	} = data.tags
+	} = tags
 
-	const isFrenchAdministration =
-		data.tags['ref:FR:SIREN'] || data.tags['ref:INSEE'] // this is an attempt, edge cases can exist
+	const isFrenchAdministration = tags['ref:FR:SIREN'] || tags['ref:INSEE'] // this is an attempt, edge cases can exist
 	const frenchAdminLevel =
 		isFrenchAdministration &&
 		{
@@ -71,7 +72,8 @@ export default function OsmFeature({ data, transportStopData }) {
 	const phone = phone1 || phone2 || phone3,
 		website = website1 || website2
 
-	const name = getName(data.tags)
+	const name = getName(tags)
+	const nameKeys = getNameKeys(tags)
 
 	const filteredRest = omit([addressKeys, transportKeys, nameKeys].flat(), rest)
 
@@ -100,35 +102,78 @@ export default function OsmFeature({ data, transportStopData }) {
 		>
 			{' '}
 			<SoloTags tags={filteredSoloTags} />
-			<h2
+			<div
 				css={`
-					margin: 0;
-					margin-bottom: 0.3rem;
-					font-size: 140%;
-					line-height: 1.3rem;
+					position: relative;
+					margin-bottom: 0.8rem;
+					h2 {
+						margin: 0;
+						margin-bottom: 0.3rem;
+						font-size: 140%;
+						line-height: 1.3rem;
+					}
+					details {
+						margin-top: -2rem;
+						summary {
+							display: block;
+							text-align: right;
+						}
+						summary img {
+							width: 1.2rem;
+							height: auto;
+						}
+						ul {
+							margin-left: 1.6rem;
+						}
+					}
+					small {
+						text-align: right;
+					}
+					h3 {
+						font-size: 105%;
+					}
 				`}
 			>
-				{name}
-			</h2>
+				<h2>{name}</h2>
+				<details css={``}>
+					<summary title="Nom du lieu dans d'autres langues">
+						<Image src={languageIcon} alt="Icône polyglotte" />
+					</summary>
+					<h3>Noms dans les autres langues : </h3>
+					<ul>
+						{nameKeys.map((key) => (
+							<li key={key}>
+								<span
+									css={`
+										color: gray;
+									`}
+								>
+									{key.replace('name:', '')}
+								</span>{' '}
+								: {tags[key]}
+							</li>
+						))}
+					</ul>
+				</details>
+				{nameBrezhoneg && nameBrezhoneg !== name && (
+					<small>
+						<Emoji extra="1F3F4-E0066-E0072-E0062-E0072-E0065-E007F" />{' '}
+						{nameBrezhoneg}
+					</small>
+				)}
+			</div>
 			{description && <small>{description}</small>}
-			{nameBrezhoneg && (
-				<small>
-					<Emoji extra="1F3F4-E0066-E0072-E0062-E0072-E0065-E007F" />{' '}
-					{nameBrezhoneg}
-				</small>
-			)}
 			{!frenchAdminLevel && (
 				<div>
 					<span>Niveau administratif : {adminLevel}</span>
 				</div>
 			)}
-			<Address tags={data.tags} />
-			{data.tags.uic_ref && (
+			<Address tags={tags} />
+			{tags.uic_ref && (
 				<GareInfo
 					{...{
-						nom: data.tags.name,
-						uic8:
-							data.tags.uic_ref + computeSncfUicControlDigit(data.tags.uic_ref),
+						nom: tags.name,
+						uic8: tags.uic_ref + computeSncfUicControlDigit(tags.uic_ref),
 					}}
 				/>
 			)}
@@ -160,8 +205,8 @@ export default function OsmFeature({ data, transportStopData }) {
 			<ContactAndSocial
 				{...{ email: email || email2, instagram, facebook, siret }}
 			/>
-			{!isNotTransportStop(data.tags) && (
-				<Stop tags={data.tags} data={transportStopData} />
+			{!isNotTransportStop(tags) && (
+				<Stop tags={tags} data={transportStopData} />
 			)}
 			{allocine && (
 				<a
