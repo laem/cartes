@@ -1,14 +1,13 @@
 import useSetSearchParams from '@/components/useSetSearchParams'
-import { useEffect, useMemo, useState } from 'react'
+import { useEffect, useMemo } from 'react'
 import { useMediaQuery } from 'usehooks-ts'
 import { buildAllezPart, removeStatePart } from '../SetDestination'
 import useDrawTransit from '../effects/useDrawTransit'
-import { decodeDate, initialDate } from './DateSelector'
+import { modeKeyFromQuery } from './Itinerary'
 import { letterFromIndex } from './Steps'
+import { geoSerializeSteps } from './areStepsEqual'
 import useDrawRoute from './useDrawRoute'
 import useFetchDrawBikeParkings from './useFetchDrawBikeParkings'
-import { geoSerializeSteps } from './areStepsEqual'
-import { modeKeyFromQuery } from './Itinerary'
 
 export default function useItinerary(
 	map,
@@ -133,6 +132,7 @@ export default function useItinerary(
 				})
 			}
 		}
+
 		const onMouseMove = (e) => {
 			const features =
 				points &&

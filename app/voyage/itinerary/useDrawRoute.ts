@@ -1,7 +1,6 @@
-import { useEffect } from 'react'
-import { letterFromIndex } from './Steps'
-import { useMediaQuery } from 'usehooks-ts'
 import getBbox from '@turf/bbox'
+import { useEffect } from 'react'
+import { useMediaQuery } from 'usehooks-ts'
 import { fitBoundsConsideringModal } from '../utils'
 import { computeSlopeGradient } from './computeSlopeGradient'
 
