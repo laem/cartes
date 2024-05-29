@@ -10,8 +10,6 @@ export const connectionEnd = (connection) =>
 	connection.stops.slice(-1)[0].arrival.time
 
 export const humanDuration = (seconds) => {
-	console.log('orange secondes', seconds)
-
 	if (seconds < 60) {
 		const text = `${seconds} secondes`
 

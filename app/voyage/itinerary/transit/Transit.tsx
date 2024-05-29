@@ -27,6 +27,7 @@ import transportIcon from './transportIcon'
  * decisions are stabilized. We don't have many users yet */
 
 export default function Transit({ itinerary, searchParams }) {
+	console.log('orange', itinerary)
 	const data = itinerary.routes.transit,
 		date = itinerary.date
 	if (data.state === 'loading') return <TransitLoader />
@@ -278,7 +279,6 @@ export const TimelineTransportBlock = ({ transport }) => {
 
 	const displayImage = constraint === 'none'
 	const name = transport.shortName?.toUpperCase().replace(/TRAM\s?/g, 'T')
-	console.log('orange', transport, name)
 
 	useEffect(() => {
 		if (isOverflow)

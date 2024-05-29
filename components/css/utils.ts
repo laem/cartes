@@ -62,6 +62,5 @@ export const isWhiteColor = (unsafeColor) => {
 
 	if (unsafeColor.toLowerCase().includes('ffffff')) return true
 
-	console.log('orange', unsafeColor)
 	if (unsafeColor === 'white') return true
 }
