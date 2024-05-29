@@ -31,7 +31,7 @@ export default function ShareButton({ osmFeature, geocodedClickedPoint }) {
 		}`
 	)
 	const text =
-		getName(osmFeature.tags || {}) ||
+		getName(osmFeature?.tags || {}) ||
 		`Lon ${geocodedClickedPoint.longitude} | lat ${geocodedClickedPoint.lat}`
 	return (
 		<PlaceButton>

@@ -12,6 +12,7 @@ import { pointHash } from './BookmarkButton'
 import { processTags } from './OsmFeature'
 import { geoFeatureToDestination } from './SetDestination'
 import { DialogButton } from './UI'
+import getName from './osm/getName'
 
 export default function QuickBookmarks({ oldAllez }) {
 	const [bookmarks] = useLocalStorage('bookmarks', [])
@@ -110,7 +111,8 @@ const QuickBookmark = ({ bookmark, oldAllez }) => {
 			bookmark.properties.id && buildAddress(bookmark.properties, false),
 		address = photonAddress || osmAddress
 
-	const name = bookmark.properties.customName || bookmark.properties.name
+	const { customName, short_name } = bookmark.properties
+	const name = customName || short_name || getName(bookmark.properties)
 	const destination = geoFeatureToDestination(bookmark)
 	const setSearchParams = useSetSearchParams()
 

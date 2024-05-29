@@ -15,7 +15,7 @@ export default function ClickedPoint({
 			</div>
 		)
 	const feature = data.features[0],
-		item = feature?.properties
+		item = feature?.properties || {}
 	const isAddress = item.street
 
 	if (isAddress)
