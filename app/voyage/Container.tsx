@@ -38,6 +38,7 @@ import Meteo from './meteo/Meteo'
 import { getStyle } from './styles/styles'
 import useTransportStopData from './transport/useTransportStopData'
 import useGeocodeRightClick from './effects/useGeocodeRightClick'
+import useOverpassRequest from './effects/useOverpassRequest'
 // Map is forced as dynamic since it can't be rendered by nextjs server-side.
 // There is almost no interest to do that anyway, except image screenshots
 const Map = dynamic(() => import('./Map'), {
@@ -165,6 +166,22 @@ export default function Container({ searchParams }) {
 		fetchBikeRoute()
 	}, [target, clickedGare, bikeRouteProfile])
 	*/
+
+	/* The bbox could be computed from the URL hash, for this to run on the
+	 * server but I'm not sure we want it, and I'm not sure Next can get the hash
+	 * server-side, it's a client-side html element */
+	const simpleArrayBbox = useMemo(() => {
+		if (!bbox) return
+		return [bbox[0][1], bbox[0][0], bbox[1][1], bbox[1][0]]
+	}, [bbox])
+
+	const [quickSearchFeatures] = useOverpassRequest(simpleArrayBbox, category)
+	const quickSearchFeaturesLoaded =
+		quickSearchFeatures &&
+		category &&
+		(quickSearchFeatures.length === 0 ||
+			quickSearchFeatures[0]?.categoryName === category.name)
+
 	return (
 		<main id="voyage" style={{ height: '100%' }}>
 			<MapContainer>
@@ -198,6 +215,7 @@ export default function Container({ searchParams }) {
 							focusImage,
 							vers,
 							osmFeature,
+							quickSearchFeaturesLoaded,
 						}}
 					/>
 				</ContentWrapper>
@@ -238,6 +256,7 @@ export default function Container({ searchParams }) {
 						setState,
 						setLatLngClicked,
 						setSafeStyleKey,
+						quickSearchFeatures,
 					}}
 				/>
 			</MapContainer>

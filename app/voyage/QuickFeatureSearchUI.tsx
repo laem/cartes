@@ -1,6 +1,8 @@
 'use client'
 
-const width = '2.2rem'
+import styled from 'styled-components'
+
+const quickSearchButtonwidth = '2.2rem'
 
 export const goldCladding = `
 border-color: gold !important;
@@ -8,7 +10,8 @@ background: #f8f3e0 !important;
 `
 export const quickSearchButtonStyle = (clicked, background, filter) => `
 	& {
-		border-radius: ${width};
+	position: relative;
+		border-radius: ${quickSearchButtonwidth};
 
 		margin-right: 0.2rem;
 		img {
@@ -16,10 +19,12 @@ export const quickSearchButtonStyle = (clicked, background, filter) => `
 		}
 		border: 2px solid var(--lighterColor);
 				text-align: center;
+
 	}
-	& > * {
-		width: ${width};
-		height: ${width};
+
+	& > a, & > button {
+		width: ${quickSearchButtonwidth};
+		height: ${quickSearchButtonwidth};
 		padding: 0;
 		display: flex;
 		align-items: center;
@@ -53,4 +58,27 @@ export const quickSearchButtonStyle = (clicked, background, filter) => `
 	}`
 		}
 
+`
+export const SpinningDiscBorder = styled.div`
+	position: absolute;
+	top: 0;
+	left: 0;
+	display: block;
+	width: calc(${quickSearchButtonwidth} - 0px);
+	padding: 3px;
+	aspect-ratio: 1;
+	border-radius: 50%;
+	background: white;
+	--_m: conic-gradient(#0000 10%, #000), linear-gradient(#000 0 0) content-box;
+	-webkit-mask: var(--_m);
+	mask: var(--_m);
+	-webkit-mask-composite: source-out;
+	mask-composite: subtract;
+	animation: l3 1s infinite linear;
+
+	@keyframes l3 {
+		to {
+			transform: rotate(1turn);
+		}
+	}
 `

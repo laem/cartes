@@ -75,6 +75,7 @@ export default function Map({
 	center,
 	setState,
 	setLatLngClicked,
+	quickSearchFeatures,
 }) {
 	const isMobile = useMediaQuery('(max-width: 800px)')
 	const mapContainerRef = useRef(null)
@@ -158,23 +159,6 @@ export default function Map({
 		itinerary.routes
 	)
 
-	const simpleArrayBbox = useMemo(() => {
-		if (!map) return
-		const mapLibreBbox = map.getBounds().toArray(),
-			bbox = [
-				mapLibreBbox[0][1],
-				mapLibreBbox[0][0],
-				mapLibreBbox[1][1],
-				mapLibreBbox[1][0],
-			]
-		return bbox
-	}, [map])
-
-	/* The bbox could be computed from the URL hash, for this to run on the
-	 * server but I'm not sure we want it, and I'm not sure Next can get the hash
-	 * server-side, it's a client-side html element */
-	const [features] = useOverpassRequest(simpleArrayBbox, category)
-
 	const onSearchResultClick = (feature) => {
 		setState([...state.slice(0, -1), defaultState.vers])
 		//setOsmFeature(feature) old function, this call seems useless now
@@ -186,7 +170,7 @@ export default function Map({
 
 	useDrawQuickSearchFeatures(
 		map,
-		features,
+		quickSearchFeatures,
 		showOpenOnly,
 		category,
 		onSearchResultClick

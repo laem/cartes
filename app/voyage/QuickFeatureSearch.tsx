@@ -8,7 +8,11 @@ import { useMemo, useState } from 'react'
 import categories from './categories.yaml'
 import MoreCategories from './MoreCategories'
 import moreCategories from './moreCategories.yaml'
-import { goldCladding, quickSearchButtonStyle } from './QuickFeatureSearchUI'
+import {
+	SpinningDiscBorder,
+	goldCladding,
+	quickSearchButtonStyle,
+} from './QuickFeatureSearchUI'
 
 export const categoryIconUrl = (category) => {
 	if (!category.icon)
@@ -34,13 +38,14 @@ export const threshold = 0.1
 export const exactThreshold = 0.01
 
 export default function QuickFeatureSearch({
-	searchParams, // dunno why params is not getting updated here, but updates hash though, we need searchParams
+	searchParams,
 	searchInput,
 	setSnap,
+	loaded,
 }) {
 	const categorySet = getCategory(searchParams)
 	const [showMore, setShowMore] = useState(false)
-	const hasLieu = searchParams.lieu
+	const hasLieu = searchParams.allez
 	const setSearchParams = useSetSearchParams()
 	const doFilter = !hasLieu && searchInput?.length > 2
 	const filteredCategories = useMemo(
@@ -137,17 +142,17 @@ export default function QuickFeatureSearch({
 							</>
 						)}
 						{filteredCategories.map((category) => {
+							const theOne = categorySet?.name === category.name
 							return (
 								<li
 									key={category.name}
 									css={`
-										${quickSearchButtonStyle(
-											categorySet?.name === category.name
-										)};
+										${quickSearchButtonStyle(theOne)};
 										${category.score < exactThreshold && goldCladding}
 									`}
 									title={category.title || category.name}
 								>
+									{theOne && !loaded && <SpinningDiscBorder />}
 									<Link
 										href={getNewSearchParamsLink(category)}
 										replace={true}

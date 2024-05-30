@@ -50,10 +50,12 @@ export default function useOverpassRequest(bbox, category) {
 			const interestingElements = nodesOrWays.filter(
 				(el) => !waysNodes.find((id) => id === el.id)
 			)
-			const nodeElements = interestingElements.map((element) => {
-				if (element.type === 'node') return element
-				return enrichOsmFeatureWithPolyon(element, json.elements)
-			})
+			const nodeElements = interestingElements
+				.map((element) => {
+					if (element.type === 'node') return element
+					return enrichOsmFeatureWithPolyon(element, json.elements)
+				})
+				.map((element) => ({ ...element, categoryName: category.name }))
 
 			setFeatures(nodeElements)
 		}

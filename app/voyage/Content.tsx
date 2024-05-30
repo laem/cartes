@@ -59,6 +59,7 @@ export default function Content({
 	focusImage,
 	vers,
 	osmFeature,
+	quickSearchFeaturesLoaded,
 }) {
 	const tags = osmFeature?.tags
 	const url = tags && getUrl(tags)
@@ -200,6 +201,7 @@ export default function Content({
 								searchParams,
 								searchInput: vers?.inputValue,
 								setSnap,
+								loaded: quickSearchFeaturesLoaded,
 							}}
 						/>
 					)}
