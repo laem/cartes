@@ -24,6 +24,34 @@ const serializeBbox = (bbox) => {
 	return bboxString
 }
 
+export const handleWikimediaGeosearchImages = (json) =>
+	Object.values(json.query.pages).map((page) => {
+		const {
+			GPSLatitude: { value: lat },
+			GPSLongitude: { value: lon },
+			Assessments: { value: assessment } = {},
+			DateTime: { value: date } = {},
+			Artist: { value: artistHtmlTag },
+			ImageDescription: { value: description } = {},
+		} = page.imageinfo[0].extmetadata
+
+		return {
+			...omit(['imageinfo'], page),
+			lat,
+			lon,
+			assessment,
+			date,
+			artistHtmlTag,
+			description,
+		}
+	})
+
+// Thanks https://stackoverflow.com/questions/24529853/how-to-get-more-info-within-only-one-geosearch-call-via-wikipedia-api
+// We'd also like to sort query results by good `assessment` or by other
+// factors, but were unable to find documentation on this complex API
+export const getWikimediaGeosearchUrl = (bboxString: string) =>
+	`https://commons.wikimedia.org/w/api.php?action=query&prop=imageinfo&iiprop=extmetadata&generator=geosearch&ggsbbox=${bboxString}&ggsnamespace=6&ggslimit=30&format=json&origin=*`
+
 export default function useImageSearch(
 	map,
 	setBboxImages,
@@ -59,32 +87,12 @@ export default function useImageSearch(
 		if (!active) return
 		if (!bboxString) return
 		const makeRequest = async () => {
-			// Thanks https://stackoverflow.com/questions/24529853/how-to-get-more-info-within-only-one-geosearch-call-via-wikipedia-api
-			// We'd also like to sort query results by good `assessment` or by other
-			// factors, but were unable to find documentation on this complex API
-			const url = `https://commons.wikimedia.org/w/api.php?action=query&prop=imageinfo&iiprop=extmetadata&generator=geosearch&ggsbbox=${bboxString}&ggsnamespace=6&ggslimit=30&format=json&origin=*`
+			const url = getWikimediaGeosearchUrl(bboxString)
+
 			const request = await fetch(url)
 
 			const json = await request.json()
-			const newImages = Object.values(json.query.pages).map((page) => {
-				const {
-					GPSLatitude: { value: lat },
-					GPSLongitude: { value: lon },
-					Assessments: { value: assessment } = {},
-					DateTime: { value: date } = {},
-					Artist: { value: artistHtmlTag },
-					ImageDescription: { value: description } = {},
-				} = page.imageinfo[0].extmetadata
-				return {
-					...omit(['imageinfo'], page),
-					lat,
-					lon,
-					assessment,
-					date,
-					artistHtmlTag,
-					description,
-				}
-			})
+			const newImages = handleWikimediaGeosearchImages(json)
 
 			console.log('green', newImages)
 			const trulyNewImages = newImages.filter(

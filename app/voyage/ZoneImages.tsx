@@ -3,6 +3,10 @@ import { useEffect, useState } from 'react'
 import { createSearchBBox } from './createSearchPolygon'
 import { FeatureImage } from './FeatureImage'
 import Image from 'next/image'
+import {
+	getWikimediaGeosearchUrl,
+	handleWikimediaGeosearchImages,
+} from './effects/useImageSearch'
 
 export function useZoneImages({ latLngClicked, setLatLngClicked }) {
 	const [wikimedia, setWikimedia] = useState(null)
@@ -12,13 +16,16 @@ export function useZoneImages({ latLngClicked, setLatLngClicked }) {
 		if (!latLngClicked) return
 		const makeRequest = async () => {
 			const { lat1, lng1, lat2, lng2 } = createSearchBBox(latLngClicked)
+			const bboxString = `${lat2}|${lng2}|${lat1}|${lng1}`
 
-			const url = `https://commons.wikimedia.org/w/api.php?action=query&list=geosearch&gsbbox=${lat2}|${lng2}|${lat1}|${lng1}&gsnamespace=6&gslimit=500&format=json&origin=*`
+			const url = getWikimediaGeosearchUrl(bboxString)
+
 			setWikimedia([])
 			const request = await fetch(url)
 
 			const json = await request.json()
-			const images = json.query.geosearch
+			const images = handleWikimediaGeosearchImages(json)
+
 			if (images.length) setWikimedia(images)
 			if (!images.length) {
 				setWikimedia(null)
