@@ -1,3 +1,4 @@
+import { omit } from '@/components/utils/utils'
 import { goodIconSize } from '@/components/voyage/mapUtils'
 import maplibregl from 'maplibre-gl'
 import { useEffect, useMemo, useState } from 'react'
@@ -58,11 +59,34 @@ export default function useImageSearch(
 		if (!active) return
 		if (!bboxString) return
 		const makeRequest = async () => {
-			const url = `https://commons.wikimedia.org/w/api.php?action=query&list=geosearch&gsbbox=${bboxString}&gsnamespace=6&gslimit=30&format=json&origin=*`
+			// Thanks https://stackoverflow.com/questions/24529853/how-to-get-more-info-within-only-one-geosearch-call-via-wikipedia-api
+			// We'd also like to sort query results by good `assessment` or by other
+			// factors, but were unable to find documentation on this complex API
+			const url = `https://commons.wikimedia.org/w/api.php?action=query&prop=imageinfo&iiprop=extmetadata&generator=geosearch&ggsbbox=${bboxString}&ggsnamespace=6&ggslimit=30&format=json&origin=*`
 			const request = await fetch(url)
 
 			const json = await request.json()
-			const newImages = json.query.geosearch
+			const newImages = Object.values(json.query.pages).map((page) => {
+				const {
+					GPSLatitude: { value: lat },
+					GPSLongitude: { value: lon },
+					Assessments: { value: assessment } = {},
+					DateTime: { value: date } = {},
+					Artist: { value: artistHtmlTag },
+					ImageDescription: { value: description } = {},
+				} = page.imageinfo[0].extmetadata
+				return {
+					...omit(['imageinfo'], page),
+					lat,
+					lon,
+					assessment,
+					date,
+					artistHtmlTag,
+					description,
+				}
+			})
+
+			console.log('green', newImages)
 			const trulyNewImages = newImages.filter(
 				(newImage) =>
 					!imageCache.find((image) => image.pageid === newImage.pageid)

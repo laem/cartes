@@ -69,34 +69,42 @@ export default function FocusedImage({ focusedImage, focusImage }) {
 				<img src={src} />
 				<figcaption
 					css={`
+						background: var(--lightestColor);
+						color: var(--darkestColor);
+						padding: 0 0.6rem;
+						border-radius: 0.4rem;
 						a {
-							background: var(--lightestColor);
-							color: var(--darkestColor);
-							padding: 0 0.6rem;
-							border-radius: 0.4rem;
-							display: flex;
-							justify-content: end;
-							align-items: center;
+							text-decoration: none;
+							color: var(--darkerColor);
 						}
+						align-items: center;
+						display: block;
+						margin: 0 0 0 auto;
 						width: fit-content;
-						margin: auto;
-						margin-right: 0;
 						img {
 							width: 1rem;
 							height: auto;
-							margin-right: 0.4rem;
+							margin-right: 0.1rem;
+							vertical-align: sub;
 						}
 					`}
 				>
-					<a href={fullUrl} target="_blank">
+					<a href={fullUrl} target="_blank" title="Image Wikimedia Commons">
 						<Image
 							src="/wikimedia-commones-logo.svg"
 							width="10"
 							height="10"
 							alt="Logo de Wikimedia Commons"
 						/>
-						<small>Lien original</small>
-					</a>
+					</a>{' '}
+					<small>par</small>{' '}
+					<small
+						dangerouslySetInnerHTML={{ __html: focusedImage.artistHtmlTag }}
+					></small>
+					{' - '}
+					<small title={focusedImage.date}>
+						{focusedImage.date.slice(0, 4)}
+					</small>
 				</figcaption>
 			</figure>
 		</section>
