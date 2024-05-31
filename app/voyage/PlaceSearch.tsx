@@ -11,6 +11,7 @@ import { buildAllezPart, setStatePart } from './SetDestination'
 import { buildAddress } from '@/components/voyage/Address'
 import { isStepBeingSearched } from './itinerary/Steps'
 import Link from 'next/link'
+import { useLocalStorage } from 'usehooks-ts'
 
 const positionTriggers = ['ma pos', 'position', 'ici', 'géoloc', 'geoloc']
 
@@ -78,21 +79,39 @@ export default function PlaceSearch({
 		onDestinationChange(urlSearchQuery)
 	}, [urlSearchQuery, onDestinationChange, value])
 
+	const [tutorials, setTutorials] = useLocalStorage('tutorials', {})
+	const introductionRead = tutorials.introduction
+
 	return (
 		<div>
 			<div
 				css={`
 					display: flex;
 					justify-content: center;
-					> img {
-						width: 2rem;
+					button {
+						margin: 0;
+						padding: 0;
 						margin-right: 0.4rem;
-						height: auto;
+						> img {
+							width: 2rem;
+							height: auto;
+							vertical-align: middle;
+						}
 					}
 					${sideSheet && `margin: .4rem 0`}
 				`}
 			>
-				<Image src={Logo} alt="Logo de Cartes.app" width="100" height="100" />
+				<button
+					title="À propos de Cartes"
+					onClick={() =>
+						setTutorials((tutorials) => ({
+							...tutorials,
+							introduction: !tutorials.introduction,
+						}))
+					}
+				>
+					<Image src={Logo} alt="Logo de Cartes.app" width="100" height="100" />
+				</button>
 				<InputStyle
 					css={`
 						color: white;
