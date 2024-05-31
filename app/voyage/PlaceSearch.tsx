@@ -88,7 +88,7 @@ export default function PlaceSearch({
 				css={`
 					display: flex;
 					justify-content: center;
-					button {
+					> button {
 						margin: 0;
 						padding: 0;
 						margin-right: 0.4rem;
