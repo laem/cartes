@@ -105,7 +105,7 @@ export default function Content({
 	]
 
 	const hasContent = content.some(
-		(el) => el != null && (!Array.isArray(el) || el.length > 0)
+		(el) => el && (!Array.isArray(el) || el.length > 0)
 	)
 
 	const showContent =
