@@ -59,7 +59,6 @@ export const tagNameCorrespondance = (key) => {
 		'opening_hours:emergency': "Horaires en cas d'urgence",
 		'ref:INSEE': 'Code INSEE',
 		'ref:FR:SIREN': 'Code SIREN',
-		'ref:FR:SIRET': 'Code SIRET',
 		'ref:FR:NAF': 'Code NAF',
 		'ref:FR:FANTOIR': 'Code FANTOIR',
 		'ref:FR:FINESS': 'Code FINESS',
