@@ -4,7 +4,7 @@ import {
 	tagValueCorrespondance,
 } from '@/app/voyage/osmTagLabels'
 
-const beginningsOfSecondaryTags = ['source:', 'fixme:', 'note']
+const beginningsOfSecondaryTags = ['source:', 'fixme:', 'note', 'ref:']
 
 const isSecondary = ([k, v]) =>
 	beginningsOfSecondaryTags.some((begining) => k.startsWith(begining))
