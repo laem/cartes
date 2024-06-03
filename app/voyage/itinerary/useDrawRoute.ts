@@ -87,7 +87,7 @@ export default function useDrawRoute(itineraryMode, map, geojson, id) {
 					},
 					cycling: {
 						'line-color': '#57bff5',
-						'line-width': 5,
+						'line-width': 3,
 						...(id === 'cycling'
 							? {
 									'line-gradient': [
@@ -104,6 +104,25 @@ export default function useDrawRoute(itineraryMode, map, geojson, id) {
 			},
 			'distance' + 'Points'
 		)
+		if (id === 'cycling')
+			map.addLayer(
+				{
+					id: id + 'secureCycling',
+					type: 'line',
+					source: id,
+					layout: {
+						'line-join': 'round',
+						'line-cap': 'round',
+					},
+					paint: {
+						'line-color': '#90ee90',
+						'line-width': 3,
+						'line-offset': 6,
+					},
+					filter: ['in', '$type', 'LineString'],
+				},
+				'distance' + 'Points'
+			)
 		map.addLayer(
 			{
 				id: id + 'Contour',
