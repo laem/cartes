@@ -6,6 +6,7 @@ import buildSvgImage from './buildSvgImage'
 import useSetSearchParams from '@/components/useSetSearchParams'
 import { encodePlace } from '../utils'
 import { buildAllezPart } from '../SetDestination'
+import { safeRemove } from './utils'
 
 export default function useDrawQuickSearchFeatures(
 	map,
@@ -209,23 +210,4 @@ export default function useDrawQuickSearchFeatures(
 			)
 		}
 	}, [features, map, showOpenOnly, category])
-}
-
-const safeRemove = (map) => (layers, sources) => {
-	if (!map) return
-
-	layers.map((layer) => {
-		const test = map.getLayer(layer)
-		if (test) {
-			console.log('useDrawQuickSearchFeatures will remove layer', layer)
-			map.removeLayer(layer)
-		}
-	})
-	sources.map((source) => {
-		const test = map.getSource(source)
-		if (test) {
-			console.log('useDrawQuickSearchFeatures will remove source', source)
-			map.removeSource(source)
-		}
-	})
 }

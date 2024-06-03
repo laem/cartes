@@ -3,12 +3,14 @@ import { useEffect } from 'react'
 import { useMediaQuery } from 'usehooks-ts'
 import { fitBoundsConsideringModal } from '../utils'
 import { computeSlopeGradient } from './computeSlopeGradient'
+import { safeRemove } from '../effects/utils'
 
 /*
  * Draws the walk or cycle route provided by BRouter directly as Geojson
  * */
 export default function useDrawRoute(isItineraryMode, map, geojson, id) {
 	const isMobile = useMediaQuery('(max-width: 800px)')
+	const styleLoadStatus = map?.isStyleLoaded()
 	useEffect(() => {
 		if (
 			!isItineraryMode ||
@@ -107,7 +109,7 @@ export default function useDrawRoute(isItineraryMode, map, geojson, id) {
 		if (id === 'cycling')
 			map.addLayer(
 				{
-					id: id + 'secureCycling',
+					id: id + 'SecureCycling',
 					type: 'line',
 					source: id,
 					layout: {
@@ -166,21 +168,23 @@ export default function useDrawRoute(isItineraryMode, map, geojson, id) {
 			// "this.style is undefined" when redimensioning the browser window, need
 			// to catch it
 			// We're operating on a stale style / map
+			if (!styleLoadStatus) return
 			try {
-				console.log(
-					'will remove useDrawRoute' + id,
-					map._mapId,
-					map.getLayer(id + 'Points')
+				const baseId = id
+				console.log('will try to remove source and layers id ', id)
+				safeRemove(map)(
+					[
+						baseId + 'Line',
+						baseId + 'Contour',
+						baseId + 'Points',
+						baseId + 'PointsSymbols',
+						baseId + 'SecureCycling',
+					],
+					[baseId]
 				)
-
-				map.removeLayer(id + 'Line')
-				map.removeLayer(id + 'Contour')
-				map.removeLayer(id + 'Points')
-				map.removeLayer(id + 'PointsSymbols')
-				map.removeSource(id)
 			} catch (e) {
 				console.log('Could not remove useDrawRoute layers or source', e)
 			}
 		}
-	}, [isItineraryMode, geojson, map, id])
+	}, [isItineraryMode, geojson, map, id, styleLoadStatus])
 }

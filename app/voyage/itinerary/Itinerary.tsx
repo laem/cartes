@@ -85,7 +85,7 @@ export default function Itinerary({
 							],
 							...modes,
 						].map(([key, { label, icon, description, query }]) => (
-							<li key={key}>
+							<li key={key || 'undefined'}>
 								<Link
 									href={setSearchParams(
 										{ mode: mode === key ? undefined : query },

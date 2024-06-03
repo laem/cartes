@@ -214,7 +214,7 @@ const Dots = () => (
 			}
 		`}
 	>
-		{[...new Array(9)].map((index) => (
+		{[...new Array(9)].map((_, index) => (
 			<span key={index}></span>
 		))}
 	</span>
