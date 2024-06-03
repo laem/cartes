@@ -102,7 +102,7 @@ export default function useDrawItinerary(
 
 	const oldAllez = searchParams.allez
 	useEffect(() => {
-		if (!map || !isItineraryMode) return
+		if (!map || !isItineraryMode || mode !== 'transit') return
 
 		const onClick = (e) => {
 			const features =
@@ -159,7 +159,7 @@ export default function useDrawItinerary(
 			map.off('mousemove', onMouseMove)
 			map.getCanvas().style.cursor = 'pointer'
 		}
-	}, [map, serializedPoints, setSearchParams, isItineraryMode, oldAllez])
+	}, [map, serializedPoints, setSearchParams, isItineraryMode, oldAllez, mode])
 
 	// GeoJSON object to hold our measurement features
 
