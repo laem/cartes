@@ -1,9 +1,8 @@
-import { Metadata } from 'next'
 import css from '@/components/css/convertToJs'
-import { Analytics } from '@vercel/analytics/react'
+import { ThemeColorsProvider } from '@/components/utils/colors'
+import { Metadata } from 'next'
 import StyledComponentsRegistry from '../../lib/registry'
 import '../globals.css'
-import { ThemeColorsProvider } from '@/components/utils/colors'
 
 const title = `Cartes`
 const description1 =
@@ -52,7 +51,6 @@ export default function ({ children }) {
 						</div>
 					</ThemeColorsProvider>
 				</StyledComponentsRegistry>
-				<Analytics />
 			</body>
 		</html>
 	)
