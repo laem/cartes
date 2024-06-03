@@ -90,7 +90,7 @@ export default function useDrawRoute(isItineraryMode, map, geojson, id) {
 					},
 					cycling: {
 						'line-color': '#57bff5',
-						'line-width': 3,
+						'line-width': 2,
 						...(id === 'cycling'
 							? {
 									'line-gradient': [
@@ -118,9 +118,9 @@ export default function useDrawRoute(isItineraryMode, map, geojson, id) {
 						'line-cap': 'round',
 					},
 					paint: {
-						'line-color': '#90ee90',
+						'line-color': 'SeaGreen',
 						'line-width': 3,
-						'line-offset': 6,
+						'line-offset': 5,
 					},
 					filter: ['in', '$type', 'LineString'],
 				},
@@ -147,7 +147,7 @@ export default function useDrawRoute(isItineraryMode, map, geojson, id) {
 					},
 					cycling: {
 						'line-color': '#5B099F',
-						'line-width': 8,
+						'line-width': 4,
 					},
 				}[id],
 				filter: ['in', '$type', 'LineString'],
