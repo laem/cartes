@@ -10,7 +10,7 @@ import { safeRemove } from '../effects/utils'
  * */
 export default function useDrawRoute(isItineraryMode, map, geojson, id) {
 	const isMobile = useMediaQuery('(max-width: 800px)')
-	const styleLoadStatus = map?.isStyleLoaded()
+
 	useEffect(() => {
 		if (
 			!isItineraryMode ||
@@ -169,7 +169,7 @@ export default function useDrawRoute(isItineraryMode, map, geojson, id) {
 			// "this.style is undefined" when redimensioning the browser window, need
 			// to catch it
 			// We're operating on a stale style / map
-			if (!styleLoadStatus) return
+			if (!map) return
 			try {
 				const baseId = id
 				console.log('will try to remove source and layers id ', id)
@@ -187,5 +187,5 @@ export default function useDrawRoute(isItineraryMode, map, geojson, id) {
 				console.log('Could not remove useDrawRoute layers or source', e)
 			}
 		}
-	}, [isItineraryMode, geojson, map, id, styleLoadStatus])
+	}, [isItineraryMode, geojson, map, id])
 }

@@ -8,10 +8,10 @@ import { sortGares } from './gares'
 import useSetSearchParams from '@/components/useSetSearchParams'
 import MapButtons from '@/components/voyage/MapButtons'
 import { goodIconSize } from '@/components/voyage/mapUtils'
-import useAddMap, { defaultZoom } from './effects/useAddMap'
+import useAddMap from './effects/useAddMap'
 import useDrawQuickSearchFeatures from './effects/useDrawQuickSearchFeatures'
 import { disambiguateWayRelation } from './osmRequest'
-import { getStyle, styles } from './styles/styles'
+import { getStyle } from './styles/styles'
 import useHoverOnMapFeatures from './useHoverOnMapFeatures'
 import useTerrainControl from './useTerrainControl'
 import { encodePlace, fitBoundsConsideringModal } from './utils'
@@ -23,15 +23,13 @@ import CenteredCross from './CenteredCross'
 import MapComponents from './MapComponents'
 import { buildAllezPart } from './SetDestination'
 import { clickableClasses } from './clickableLayers'
+import { defaultState } from './defaultState'
 import useDrawSearchResults from './effects/useDrawSearchResults'
 import useDrawTransport from './effects/useDrawTransport'
-import useOverpassRequest from './effects/useOverpassRequest'
+import useImageSearch from './effects/useImageSearch'
 import useRightClick from './effects/useRightClick'
 import useSearchLocalTransit from './effects/useSearchLocalTransit'
-import useImageSearch from './effects/useImageSearch'
-import { defaultState } from './defaultState'
 import useDrawItinerary from './itinerary/useDrawItinerary'
-import { setLazyProp } from 'next/dist/server/api-utils'
 
 if (process.env.NEXT_PUBLIC_MAPTILER == null) {
 	throw new Error('You have to configure env NEXT_PUBLIC_MAPTILER, see README')
@@ -80,7 +78,7 @@ export default function Map({
 	const isMobile = useMediaQuery('(max-width: 800px)')
 	const mapContainerRef = useRef(null)
 
-	const style = getStyle(styleKey),
+	const style = useMemo(() => getStyle(styleKey), [styleKey]),
 		styleUrl = style.url
 
 	const [map, triggerGeolocation] = useAddMap(
@@ -199,6 +197,8 @@ export default function Map({
 	useEffect(() => {
 		if (!map) return
 		if (styleKey === prevStyleKey) return
+
+		console.log('salut redraw')
 
 		// diff seems to fail because of a undefined sprite error showed in the
 		// console

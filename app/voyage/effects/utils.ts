@@ -4,14 +4,14 @@ export const safeRemove = (map) => (layers, sources) => {
 	layers.map((layer) => {
 		const test = map.getLayer(layer)
 		if (test) {
-			console.log('safeRemove will remove layer', layer)
+			//console.log('safeRemove will remove layer', layer)
 			map.removeLayer(layer)
 		}
 	})
 	sources.map((source) => {
 		const test = map.getSource(source)
 		if (test) {
-			console.log('safeRemove will remove source', source)
+			//console.log('safeRemove will remove source', source)
 			map.removeSource(source)
 		}
 	})

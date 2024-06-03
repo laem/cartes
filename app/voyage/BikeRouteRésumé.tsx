@@ -64,7 +64,6 @@ const daysHoursMinutesFromSeconds = (seconds) => {
 }
 
 const ModeContent = ({ mode, data, setBikeRouteProfile, bikeRouteProfile }) => {
-	console.log('indigo sam', mode, data)
 	const features = data?.features
 	if (!features?.length) return null
 

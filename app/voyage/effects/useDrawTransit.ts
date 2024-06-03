@@ -7,8 +7,6 @@ export default function useDrawTransit(map, transit, selectedConnection) {
 	const connection =
 		transit?.connections && transit.connections[selectedConnection || 0]
 
-	const styleLoadStatus = map?.isStyleLoaded()
-
 	useEffect(() => {
 		if (!map || !connection) return
 
@@ -170,7 +168,6 @@ export default function useDrawTransit(map, transit, selectedConnection) {
 		})
 
 		return () => {
-			if (!styleLoadStatus) return
 			safeRemove(map)(
 				[
 					id + '-lines',
@@ -182,5 +179,5 @@ export default function useDrawTransit(map, transit, selectedConnection) {
 				[id]
 			)
 		}
-	}, [map, connection, styleLoadStatus])
+	}, [map, connection])
 }

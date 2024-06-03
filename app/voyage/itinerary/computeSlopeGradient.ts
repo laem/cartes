@@ -22,7 +22,7 @@ export function computeSlopeGradient(geojson) {
 		if (slope < 12) return 'OrangeRed'
 		return 'crimson'
 	}
-	console.log('indigo', geojson)
+	//console.log('indigo', geojson)
 	const coordinates = geojson.features[0].geometry.coordinates
 
 	const distanceColors = coordinates
@@ -68,10 +68,12 @@ export function computeSlopeGradient(geojson) {
 		.map((slope, i) => [(i * chunkSize) / totalDistance, slopeColor(slope)])
 		.flat()
 
+	/*
 	console.log(
 		'distanceco',
 		lineProgressAveraged
 		//	littles.map((little) => Math.round(little * 10) / 10)
 	)
+	*/
 	return lineProgressAveraged
 }
