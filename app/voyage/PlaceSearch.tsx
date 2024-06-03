@@ -118,6 +118,9 @@ export default function PlaceSearch({
 						input {
 							max-width: 22rem;
 							width: 83vw;
+							background: var(--lightestColor);
+							color: var(--darkColor);
+							border: none;
 
 							margin-bottom: 0;
 							${state.some(isStepBeingSearched) &&
