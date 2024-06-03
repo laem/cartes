@@ -159,7 +159,6 @@ const RemoveStepLink = ({ setSearchParams, stepKey, state }) => {
 				`}
 			></div>
 		)
-	console.log('plopi', stepKey, state)
 	return (
 		<Link
 			href={setSearchParams({ allez: removeStatePart(stepKey, state) }, true)}

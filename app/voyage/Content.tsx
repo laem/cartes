@@ -117,8 +117,6 @@ export default function Content({
 		// removing the card after the destination click is good too
 		!(itinerary.isItineraryMode && state.length >= 2)
 
-	console.log('onglets', state)
-
 	const bookmarkable = geocodedClickedPoint || osmFeature // later : choice
 
 	const hasDestination = osmFeature || geocodedClickedPoint
