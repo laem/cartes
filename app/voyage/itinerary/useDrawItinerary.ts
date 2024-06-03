@@ -9,9 +9,9 @@ import { geoSerializeSteps } from './areStepsEqual'
 import useDrawRoute from './useDrawRoute'
 import useFetchDrawBikeParkings from './useFetchDrawBikeParkings'
 
-export default function useItinerary(
+export default function useDrawItinerary(
 	map,
-	itineraryMode,
+	isItineraryMode,
 	searchParams,
 	state,
 	zoom,
@@ -79,10 +79,10 @@ export default function useItinerary(
 		}),
 		[points, linestrings]
 	)
-	useDrawRoute(itineraryMode, map, geojson, 'distance')
+	useDrawRoute(isItineraryMode, map, geojson, 'distance')
 
 	useDrawRoute(
-		itineraryMode,
+		isItineraryMode,
 		map,
 		(!mode || mode === 'cycling') &&
 			routes &&
@@ -91,7 +91,7 @@ export default function useItinerary(
 		'cycling'
 	)
 	useDrawRoute(
-		itineraryMode,
+		isItineraryMode,
 		map,
 		(!mode || mode === 'walking') &&
 			routes &&
@@ -102,7 +102,7 @@ export default function useItinerary(
 
 	const oldAllez = searchParams.allez
 	useEffect(() => {
-		if (!map || !itineraryMode) return
+		if (!map || !isItineraryMode) return
 
 		const onClick = (e) => {
 			const features =
@@ -144,7 +144,7 @@ export default function useItinerary(
 		}
 
 		/*
-		if (!itineraryMode) {
+		if (!isItineraryMode) {
 			map.off('click', onClick)
 			map.off('mousemove', onMouseMove)
 			return
@@ -154,24 +154,24 @@ export default function useItinerary(
 		map.on('click', onClick)
 		map.on('mousemove', onMouseMove)
 		return () => {
-			if (!map || !itineraryMode) return
+			if (!map || !isItineraryMode) return
 			map.off('click', onClick)
 			map.off('mousemove', onMouseMove)
 			map.getCanvas().style.cursor = 'pointer'
 		}
-	}, [map, serializedPoints, setSearchParams, itineraryMode, oldAllez])
+	}, [map, serializedPoints, setSearchParams, isItineraryMode, oldAllez])
 
 	// GeoJSON object to hold our measurement features
 
 	useEffect(() => {
-		if (!map || itineraryMode || map.getSource) return
+		if (!map || isItineraryMode || map.getSource) return
 		const source = map.getSource('measure-points')
 		if (!source) return
 
 		map.removeLayer('measure-lines')
 		map.removeLayer('measure-points')
 		map.removeSource('measure-points')
-	}, [itineraryMode, map, serializedPoints])
+	}, [isItineraryMode, map, serializedPoints])
 
 	/* Not sure it's useful to display the distance in this multimodal new mode
 	const computedDistance = isNaN(rawDistance)

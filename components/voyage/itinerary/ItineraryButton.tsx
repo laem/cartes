@@ -1,24 +1,22 @@
-import useItinerary from '@/app/voyage/itinerary/useItinerary'
 import css from '@/components/css/convertToJs'
-import Emoji from '@/components/Emoji'
 import { MapButton } from '../MapButtons'
 
 export default function ItineraryButton({
-	setItineraryMode,
-	itineraryMode,
+	setIsItineraryMode,
+	isItineraryMode,
 	reset,
 }) {
 	return (
-		<MapButton $active={itineraryMode}>
+		<MapButton $active={isItineraryMode}>
 			<button
-				onClick={() => setItineraryMode(!itineraryMode)}
+				onClick={() => setIsItineraryMode(!isItineraryMode)}
 				title="Calculer un itinéraire"
 			>
 				<div>
 					<ItineraryIcon />
 				</div>
 			</button>
-			{itineraryMode && (
+			{isItineraryMode && (
 				<button
 					onClick={() => reset()}
 					css={`

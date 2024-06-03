@@ -152,7 +152,7 @@ export default function Map({
 
 	useDrawItinerary(
 		map,
-		itinerary.itineraryMode,
+		itinerary.isItineraryMode,
 		searchParams,
 		state,
 		zoom,
@@ -324,7 +324,7 @@ export default function Map({
 			}
 		}
 
-		if (!map || distanceMode || itinerary.itineraryMode) return
+		if (!map || distanceMode || itinerary.isItineraryMode) return
 
 		map.on('click', onClick)
 		return () => {
@@ -335,7 +335,7 @@ export default function Map({
 		map,
 		setState,
 		distanceMode,
-		itinerary.itineraryMode,
+		itinerary.isItineraryMode,
 		gares,
 		clickGare,
 		isTransportsMode,

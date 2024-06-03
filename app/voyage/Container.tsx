@@ -87,7 +87,7 @@ export default function Container({ searchParams }) {
 	// TODO This could be a simple derived variable but we seem to be using it in a
 	// button down below, not sure if it's relevant, why not wait for the url to
 	// change ?
-	const [itineraryMode, setItineraryMode] = useState(false)
+	const [isItineraryMode, setIsItineraryMode] = useState(false)
 
 	// TODO this hook must be split between useFetchItineraryData and
 	// useDrawItinerary like useTransportMap was
@@ -99,14 +99,14 @@ export default function Container({ searchParams }) {
 
 	const itinerary = {
 		bikeRouteProfile,
-		itineraryMode,
-		setItineraryMode,
+		isItineraryMode,
+		setIsItineraryMode,
 		reset: resetItinerary,
 		routes,
 		date,
 	}
 
-	useSetItineraryModeFromUrl(allez, setItineraryMode)
+	useSetItineraryModeFromUrl(allez, setIsItineraryMode)
 
 	const category = getCategory(searchParams)
 

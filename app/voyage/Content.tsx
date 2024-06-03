@@ -115,7 +115,7 @@ export default function Content({
 		// 2 -> useless destination card
 		// Note : what we wanted to do would need a filter(Boolean), but in practice
 		// removing the card after the destination click is good too
-		!(itinerary.itineraryMode && state.length >= 2)
+		!(itinerary.isItineraryMode && state.length >= 2)
 
 	console.log('onglets', state)
 
@@ -125,7 +125,7 @@ export default function Content({
 
 	const showSearch =
 		!styleChooser &&
-		(recherche > -1 || !(osmFeature || itinerary.itineraryMode)) // at first, on desktop, we kept the search bar considering we have room. But this divergence brings dev complexity
+		(recherche > -1 || !(osmFeature || itinerary.isItineraryMode)) // at first, on desktop, we kept the search bar considering we have room. But this divergence brings dev complexity
 
 	const minimumQuickSearchZoom = getMinimumQuickSearchZoom(!sideSheet)
 
@@ -236,7 +236,7 @@ export default function Content({
 					setSnap,
 					close: () => {
 						setSearchParams({ allez: undefined, mode: undefined })
-						itinerary.setItineraryMode(false)
+						itinerary.setIsItineraryMode(false)
 					},
 					state,
 				}}

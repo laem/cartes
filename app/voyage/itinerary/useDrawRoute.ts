@@ -7,11 +7,11 @@ import { computeSlopeGradient } from './computeSlopeGradient'
 /*
  * Draws the walk or cycle route provided by BRouter directly as Geojson
  * */
-export default function useDrawRoute(itineraryMode, map, geojson, id) {
+export default function useDrawRoute(isItineraryMode, map, geojson, id) {
 	const isMobile = useMediaQuery('(max-width: 800px)')
 	useEffect(() => {
 		if (
-			!itineraryMode ||
+			!isItineraryMode ||
 			!map ||
 			!geojson ||
 			!geojson.features ||
@@ -182,5 +182,5 @@ export default function useDrawRoute(itineraryMode, map, geojson, id) {
 				console.log('Could not remove useDrawRoute layers or source', e)
 			}
 		}
-	}, [itineraryMode, geojson, map, id])
+	}, [isItineraryMode, geojson, map, id])
 }
