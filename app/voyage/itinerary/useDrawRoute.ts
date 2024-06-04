@@ -10,6 +10,7 @@ import { safeRemove } from '../effects/utils'
  * */
 export default function useDrawRoute(isItineraryMode, map, geojson, id) {
 	const isMobile = useMediaQuery('(max-width: 800px)')
+	if (id === 'cycling') console.log('plop', geojson)
 
 	useEffect(() => {
 		if (
@@ -63,6 +64,11 @@ export default function useDrawRoute(isItineraryMode, map, geojson, id) {
 			id + 'PointsSymbols'
 		)
 
+		const fullLinestringFilter = [
+			'all',
+			['in', '$type', 'LineString'],
+			['!', ['has', 'isSafePath']],
+		]
 		map.addLayer(
 			{
 				id: id + 'Line',
@@ -104,7 +110,7 @@ export default function useDrawRoute(isItineraryMode, map, geojson, id) {
 							: {}),
 					},
 				}[id],
-				filter: ['in', '$type', 'LineString'],
+				filter: fullLinestringFilter,
 			},
 			'distance' + 'Points'
 		)
@@ -119,14 +125,23 @@ export default function useDrawRoute(isItineraryMode, map, geojson, id) {
 						'line-cap': 'round',
 					},
 					paint: {
-						'line-color': 'SeaGreen',
+						'line-color': [
+							'match',
+							['get', 'isSafePath'],
+							'oui',
+							'SeaGreen',
+							'non',
+							'red',
+							'blue',
+						],
 						'line-width': 3,
-						'line-offset': 5,
+						'line-offset': 3,
 					},
-					filter: ['in', '$type', 'LineString'],
+					filter: ['has', 'isSafePath'],
 				},
 				'distance' + 'Points'
 			)
+
 		map.addLayer(
 			{
 				id: id + 'Contour',
@@ -151,7 +166,7 @@ export default function useDrawRoute(isItineraryMode, map, geojson, id) {
 						'line-width': 4,
 					},
 				}[id],
-				filter: ['in', '$type', 'LineString'],
+				filter: fullLinestringFilter,
 			},
 			'distance' + 'Line'
 		)

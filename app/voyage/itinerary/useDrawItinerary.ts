@@ -8,7 +8,12 @@ import { letterFromIndex } from './Steps'
 import { geoSerializeSteps } from './areStepsEqual'
 import useDrawRoute from './useDrawRoute'
 import useFetchDrawBikeParkings from './useFetchDrawBikeParkings'
+import brouterResultToSegments from '@/components/cycling/brouterResultToSegments'
 
+const joinFeatureCollections = (elements) => ({
+	type: 'FeatureCollection',
+	features: elements.map((element) => element.features).flat(),
+})
 export default function useDrawItinerary(
 	map,
 	isItineraryMode,
@@ -87,7 +92,10 @@ export default function useDrawItinerary(
 		(!mode || mode === 'cycling') &&
 			routes &&
 			routes.cycling !== 'loading' &&
-			routes.cycling,
+			joinFeatureCollections([
+				routes.cycling,
+				brouterResultToSegments(routes.cycling),
+			]),
 		'cycling'
 	)
 	useDrawRoute(
@@ -106,7 +114,6 @@ export default function useDrawItinerary(
 
 		const awaitingNewStep =
 			state.length < 2 || state.some((step) => step == null)
-		console.log('awaiting', state)
 		const onClick = (e) => {
 			const features =
 				points &&
