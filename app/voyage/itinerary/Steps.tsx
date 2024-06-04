@@ -1,5 +1,6 @@
 import useSetSearchParams from '@/components/useSetSearchParams'
 import closeIcon from '@/public/remove-circle-stroke.svg'
+import addIcon from '@/public/add-circle-stroke.svg'
 import { Reorder, useDragControls } from 'framer-motion'
 import Image from 'next/image'
 import Link from 'next/link'
@@ -13,12 +14,18 @@ export default function Steps({ state }) {
 
 	if (!steps?.length) return null
 
+	const allez = steps.map((step) => step?.key).join('->')
+
 	return (
 		<section
 			css={`
 				margin: 0.6rem 0 2.6rem 0;
 			`}
 		>
+			<AddStepButton
+				url={setSearchParams({ allez: '->' + allez }, true)}
+				title={'Ajouter un point comme départ'}
+			/>
 			<Reorder.Group
 				axis="y"
 				values={steps.map((step) => step?.key)}
@@ -57,9 +64,44 @@ export default function Steps({ state }) {
 					/>
 				))}
 			</Reorder.Group>
+			<AddStepButton
+				url={setSearchParams({ allez: allez + '->' }, true)}
+				title={'Ajouter un point comme destination'}
+			/>
 		</section>
 	)
 }
+const AddStepButton = ({ url, title }) => (
+	<div
+		css={`
+			display: flex;
+			align-items: center;
+			justify-content: end;
+			height: 1.8rem;
+		`}
+	>
+		<Link
+			href={url}
+			title={title}
+			css={`
+				text-decoration: none;
+				margin: 0rem 0.7rem;
+				display: inline-block;
+				opacity: 0.7;
+			`}
+		>
+			<Image
+				src={addIcon}
+				alt="Supprimer cette étape"
+				css={`
+					width: 1.2rem;
+					height: auto;
+					vertical-align: sub;
+				`}
+			/>
+		</Link>
+	</div>
+)
 
 const Item = ({ index, step, setSearchParams, beingSearched, state }) => {
 	const controls = useDragControls()

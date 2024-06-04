@@ -104,6 +104,9 @@ export default function useDrawItinerary(
 	useEffect(() => {
 		if (!map || !isItineraryMode) return
 
+		const awaitingNewStep =
+			state.length < 2 || state.some((step) => step == null)
+		console.log('awaiting', state)
 		const onClick = (e) => {
 			const features =
 				points &&
@@ -116,6 +119,7 @@ export default function useDrawItinerary(
 				const key = features[0].properties.key
 				setSearchParams({ allez: removeStatePart(key, state) })
 			} else {
+				if (!awaitingNewStep) return
 				const allezPart = buildAllezPart(
 					'Point sur la carte',
 					null,
@@ -135,12 +139,16 @@ export default function useDrawItinerary(
 
 		const onMouseMove = (e) => {
 			const features =
-				points &&
+				points?.length &&
 				map.queryRenderedFeatures(e.point, {
-					layers: ['distance' + 'PointsSymbols'],
+					layers: ['distance' + 'Points'], // the points are handled by the distance mode
 				})
 			// UI indicator for clicking/hovering a point on the map
-			map.getCanvas().style.cursor = features.length ? 'pointer' : 'crosshair'
+			map.getCanvas().style.cursor = features.length
+				? 'pointer'
+				: awaitingNewStep
+				? 'crosshair'
+				: ''
 		}
 
 		map.on('click', onClick)
@@ -149,7 +157,7 @@ export default function useDrawItinerary(
 			if (!map || !isItineraryMode) return
 			map.off('click', onClick)
 			map.off('mousemove', onMouseMove)
-			map.getCanvas().style.cursor = 'pointer'
+			map.getCanvas().style.cursor = ''
 		}
 	}, [map, serializedPoints, setSearchParams, isItineraryMode, oldAllez, mode])
 

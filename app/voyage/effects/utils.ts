@@ -1,5 +1,5 @@
 export const safeRemove = (map) => (layers, sources) => {
-	if (!map) return
+	if (!map || !map.getStyle()) return
 
 	layers.map((layer) => {
 		const test = map.getLayer(layer)

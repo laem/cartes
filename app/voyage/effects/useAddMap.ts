@@ -98,7 +98,11 @@ export default function useAddMap(
 		map.addControl(attribution)
 
 		return () => {
-			map.removeControl(attribution)
+			try {
+				map.removeControl(attribution)
+			} catch (e) {
+				console.log('Error remove attribution', e)
+			}
 		}
 	}, [map, styleUrl])
 
