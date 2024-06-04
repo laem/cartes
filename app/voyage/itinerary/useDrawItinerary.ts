@@ -102,7 +102,7 @@ export default function useDrawItinerary(
 
 	const oldAllez = searchParams.allez
 	useEffect(() => {
-		if (!map || !isItineraryMode || mode !== 'transit') return
+		if (!map || !isItineraryMode) return
 
 		const onClick = (e) => {
 			const features =
@@ -137,19 +137,11 @@ export default function useDrawItinerary(
 			const features =
 				points &&
 				map.queryRenderedFeatures(e.point, {
-					layers: ['routePoints'],
+					layers: ['distance' + 'PointsSymbols'],
 				})
 			// UI indicator for clicking/hovering a point on the map
 			map.getCanvas().style.cursor = features.length ? 'pointer' : 'crosshair'
 		}
-
-		/*
-		if (!isItineraryMode) {
-			map.off('click', onClick)
-			map.off('mousemove', onMouseMove)
-			return
-		}
-		*/
 
 		map.on('click', onClick)
 		map.on('mousemove', onMouseMove)

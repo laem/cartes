@@ -46,6 +46,7 @@ export default function useDrawRoute(isItineraryMode, map, geojson, id) {
 				'text-size': 16,
 			},
 		})
+		console.log('will add layer poinst', id + 'Points')
 		map.addLayer(
 			{
 				id: id + 'Points',
