@@ -12,9 +12,10 @@ import useSetSearchParams from '@/components/useSetSearchParams'
 import Timeline from './Timeline'
 
 export const modes = [
-	['cycling', { label: 'vélo', query: 'velo' }],
+	['cycling', { label: 'Vélo', query: 'velo' }],
 	['transit', { label: 'Transports', query: 'commun' }],
-	['walking', { label: 'marche', query: 'marche' }],
+	['walking', { label: 'Marche', query: 'marche' }],
+	['car', { label: 'Voiture', query: 'voiture' }],
 ]
 
 export const modeKeyFromQuery = (myQuery) =>
