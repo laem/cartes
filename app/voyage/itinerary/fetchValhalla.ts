@@ -21,6 +21,7 @@ export default async function (
 		directions_options: { units: 'kilometers' },
 		id: 'valhalla_directions',
 	}
+
 	const url = `https://valhalla1.openstreetmap.de/route?json=${JSON.stringify(
 		params
 	)}`

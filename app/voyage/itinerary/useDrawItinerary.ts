@@ -10,6 +10,7 @@ import useDrawRoute from './useDrawRoute'
 import useFetchDrawBikeParkings from './useFetchDrawBikeParkings'
 import brouterResultToSegments from '@/components/cycling/brouterResultToSegments'
 import useDrawCyclingSegments from '../effects/useDrawCyclingSegments'
+import valhallaGeojson from './valhallaGeojson'
 
 const joinFeatureCollections = (elements) => ({
 	type: 'FeatureCollection',
@@ -100,15 +101,16 @@ export default function useDrawItinerary(
 	useDrawCyclingSegments(isItineraryMode, map, cyclingSegmentsGeojson)
 	useDrawRoute(isItineraryMode, map, cyclingReady && routes.cycling, 'cycling')
 
-	useDrawRoute(
-		isItineraryMode,
-		map,
-		(!mode || mode === 'walking') &&
-			routes &&
-			routes.walking !== 'loading' &&
-			routes.walking,
-		'walking'
-	)
+	const carReady =
+		(!mode || mode === 'car') && routes && routes.car !== 'loading'
+
+	const carGeojson = useMemo(() => {
+		if (!carReady || !routes.car) return
+
+		return valhallaGeojson(routes.car)
+	}, [carReady, routes.car])
+
+	useDrawRoute(isItineraryMode, map, carReady && carGeojson, 'car')
 
 	const oldAllez = searchParams.allez
 	useEffect(() => {

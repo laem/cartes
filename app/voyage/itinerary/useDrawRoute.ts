@@ -91,6 +91,10 @@ export default function useDrawRoute(isItineraryMode, map, geojson, id) {
 					distance: {
 						'line-width': 0,
 					},
+					car: {
+						'line-width': 3,
+						'line-color': 'IndianRed',
+					},
 					cycling: {
 						'line-color': '#57bff5',
 						'line-width': 2,
@@ -110,25 +114,6 @@ export default function useDrawRoute(isItineraryMode, map, geojson, id) {
 			},
 			'distance' + 'Points'
 		)
-		if (id === 'cycling')
-			map.addLayer(
-				{
-					id: id + 'SecureCycling',
-					type: 'line',
-					source: id,
-					layout: {
-						'line-join': 'round',
-						'line-cap': 'round',
-					},
-					paint: {
-						'line-color': 'LightSeaGreen',
-						'line-width': 3,
-						'line-offset': 4,
-					},
-					filter: ['==', ['get', 'isSafePath'], 'oui'],
-				},
-				'distance' + 'Points'
-			)
 
 		map.addLayer(
 			{
@@ -152,6 +137,10 @@ export default function useDrawRoute(isItineraryMode, map, geojson, id) {
 					cycling: {
 						'line-color': '#5B099F',
 						'line-width': 4,
+					},
+					car: {
+						'line-color': 'DarkRed',
+						'line-width': 6,
 					},
 				}[id],
 				filter: linestringFilter,
@@ -183,7 +172,6 @@ export default function useDrawRoute(isItineraryMode, map, geojson, id) {
 						baseId + 'Contour',
 						baseId + 'Points',
 						baseId + 'PointsSymbols',
-						baseId + 'SecureCycling',
 					],
 					[baseId]
 				)
