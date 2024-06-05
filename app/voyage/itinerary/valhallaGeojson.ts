@@ -2,21 +2,18 @@ import { decode } from '@/components/valhalla-decode-shape'
 
 export default function (json) {
 	const trip = json.trip
-	const shape = trip && trip.legs[0].shape
-	const decoded = shape && decode(shape)
-	return buildGeoJSON(decoded)
+	const shapes = trip && trip.legs.map(({ shape }) => shape && decode(shape))
+	return buildGeoJSON(shapes)
 }
 
-const buildGeoJSON = (coordinates) => ({
+const buildGeoJSON = (shapes) => ({
 	type: 'FeatureCollection',
-	features: [
-		{
-			type: 'Feature',
-			properties: {},
-			geometry: {
-				coordinates,
-				type: 'LineString',
-			},
+	features: shapes.map((coordinates) => ({
+		type: 'Feature',
+		properties: {},
+		geometry: {
+			coordinates,
+			type: 'LineString',
 		},
-	],
+	})),
 })

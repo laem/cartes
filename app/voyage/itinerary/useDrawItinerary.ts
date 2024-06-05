@@ -107,7 +107,7 @@ export default function useDrawItinerary(
 		if (!carReady || !routes.car) return
 
 		return valhallaGeojson(routes.car)
-	}, [carReady, routes.car])
+	}, [carReady, routes?.car])
 
 	useDrawRoute(isItineraryMode, map, carReady && carGeojson, 'car')
 
