@@ -96,7 +96,7 @@ export default function useDrawItinerary(
 	}, [routes?.cycling, cyclingReady])
 
 	useDrawCyclingSegments(isItineraryMode, map, cyclingSegmentsGeojson)
-	useDrawRoute(isItineraryMode, map, routes.cycling, 'cycling')
+	useDrawRoute(isItineraryMode, map, cyclingReady && routes.cycling, 'cycling')
 
 	useDrawRoute(
 		isItineraryMode,
