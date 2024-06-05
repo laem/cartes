@@ -77,27 +77,30 @@ export default function useDrawItinerary(
 		.map((el) => el.properties['track-length'] / 1000)
 		.reduce((memo, next) => memo + next, 0)
 
-	const geojson = useMemo(
+	const distanceGeojson = useMemo(
 		() => ({
 			type: 'FeatureCollection',
 			features: [...points, ...linestrings],
 		}),
 		[points, linestrings]
 	)
-	useDrawRoute(isItineraryMode, map, geojson, 'distance')
 
-	useDrawRoute(
-		isItineraryMode,
-		map,
-		(!mode || mode === 'cycling') &&
-			routes &&
-			routes.cycling !== 'loading' &&
+	useDrawRoute(isItineraryMode, map, distanceGeojson, 'distance')
+
+	const cyclingReady =
+		(!mode || mode === 'cycling') && routes && routes.cycling !== 'loading'
+
+	const cyclingGeojson = useMemo(() => {
+		return (
+			cyclingReady &&
 			joinFeatureCollections([
 				routes.cycling,
 				brouterResultToSegments(routes.cycling),
-			]),
-		'cycling'
-	)
+			])
+		)
+	}, [routes.cycling, cyclingReady])
+
+	useDrawRoute(isItineraryMode, map, cyclingGeojson, 'cycling')
 	useDrawRoute(
 		isItineraryMode,
 		map,
