@@ -75,17 +75,19 @@ export default function SetDestination({
 	geocodedClickedPoint,
 	geolocation,
 	searchParams,
+	osmFeature,
 }) {
 	const setSearchParams = useSetSearchParams()
 
-	const destinationPart = geocodedClickedPoint
-		? buildAllezPart(
-				'Point sur la carte',
-				null,
-				geocodedClickedPoint.longitude,
-				geocodedClickedPoint.latitude
-		  )
-		: searchParams.allez || ''
+	const destinationPart =
+		geocodedClickedPoint && !osmFeature
+			? buildAllezPart(
+					'Point sur la carte',
+					null,
+					geocodedClickedPoint.longitude,
+					geocodedClickedPoint.latitude
+			  )
+			: searchParams.allez || ''
 
 	const search = {
 		allez: geolocation

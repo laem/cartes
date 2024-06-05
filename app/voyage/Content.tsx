@@ -300,6 +300,7 @@ export default function Content({
 										geocodedClickedPoint={geocodedClickedPoint}
 										geolocation={geolocation}
 										searchParams={searchParams}
+										osmFeature={osmFeature}
 									/>
 								)}
 								{bookmarkable && (
