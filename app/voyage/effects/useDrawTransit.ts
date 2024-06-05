@@ -1,6 +1,7 @@
 import { useEffect } from 'react'
 import { handleColor } from '@/app/voyage/itinerary/transit/motisRequest'
 import { findContrastedTextColor } from '@/components/utils/colors'
+import { safeRemove } from './utils'
 
 export default function useDrawTransit(map, transit, selectedConnection) {
 	const connection =
@@ -167,15 +168,16 @@ export default function useDrawTransit(map, transit, selectedConnection) {
 		})
 
 		return () => {
-			map.removeLayer(id + '-lines')
-			map.removeLayer(id + '-lines-symbols')
-			map.removeLayer(id + '-lines-walking')
-			map.removeLayer(id + '-lines-contour')
-			map.removeLayer(id + '-points')
-			const source = map.getSource(id)
-			if (source) {
-				map.removeSource(id)
-			}
+			safeRemove(map)(
+				[
+					id + '-lines',
+					id + '-lines-symbols',
+					id + '-lines-walking',
+					id + '-lines-contour',
+					id + '-points',
+				],
+				[id]
+			)
 		}
 	}, [map, connection])
 }

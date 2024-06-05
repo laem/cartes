@@ -1,6 +1,7 @@
 import css from '@/components/css/convertToJs'
 import LightsWarning from './LightsWarning'
 import ProfileChooser from './ProfileChooser'
+import { nowStamp } from './itinerary/transit/motisRequest'
 
 export default function BikeRouteRésumé({
 	mode,
@@ -64,7 +65,6 @@ const daysHoursMinutesFromSeconds = (seconds) => {
 }
 
 const ModeContent = ({ mode, data, setBikeRouteProfile, bikeRouteProfile }) => {
-	console.log('indigo sam', mode, data)
 	const features = data?.features
 	if (!features?.length) return null
 
@@ -78,6 +78,14 @@ const ModeContent = ({ mode, data, setBikeRouteProfile, bikeRouteProfile }) => {
 
 	const déniveléCumulé = feature.properties['filtered ascend']
 	const dénivelé = feature.properties['plain-ascend']
+	const arrivalTime = nowStamp() + +seconds,
+		humanArrivalTime =
+			!days &&
+			new Date(arrivalTime * 1000).toLocaleString('fr-FR', {
+				hour: 'numeric',
+				minute: 'numeric',
+			})
+
 	return (
 		<div>
 			<p>
@@ -91,7 +99,7 @@ const ModeContent = ({ mode, data, setBikeRouteProfile, bikeRouteProfile }) => {
 					{hours ? hours + ` h et ` : ''}
 					{+minutes}&nbsp;min
 				</strong>{' '}
-				pour{' '}
+				<small>(arrivée à {humanArrivalTime})</small> pour{' '}
 				<strong
 					title={`La pente sera de ${(
 						(déniveléCumulé / distance) *

@@ -5,7 +5,6 @@ import { useEffect } from 'react'
  * This hook draws transit lines on the map.
  */
 export default function useDrawTransport(map, features, drawKey) {
-	console.log('indigo features', features, drawKey)
 	const setSearchParams = useSetSearchParams()
 
 	useEffect(() => {

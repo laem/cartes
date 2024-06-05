@@ -37,7 +37,7 @@ export default function Itinerary({
 		setSnap(1, 'Itinerary')
 	}, [setSnap])
 
-	if (!itinerary.itineraryMode) return null
+	if (!itinerary.isItineraryMode) return null
 	return (
 		<ContentSection css="margin-bottom: 1rem">
 			<ModalCloseButton title="Fermer l'encart itinéraire" onClick={close} />
@@ -85,7 +85,7 @@ export default function Itinerary({
 							],
 							...modes,
 						].map(([key, { label, icon, description, query }]) => (
-							<li key={key}>
+							<li key={key || 'undefined'}>
 								<Link
 									href={setSearchParams(
 										{ mode: mode === key ? undefined : query },

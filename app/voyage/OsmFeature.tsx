@@ -14,6 +14,7 @@ import { getTagLabels } from './osmTagLabels'
 import Brand, { Wikidata } from './tags/Brand'
 import Stop, { isNotTransportStop, transportKeys } from './transport/stop/Stop'
 import { computeSncfUicControlDigit } from './utils'
+import Heritage, { heritageTagsSelector, isHeritageTag } from './osm/Heritage'
 
 export default function OsmFeature({ data, transportStopData }) {
 	if (!data.tags) return null
@@ -208,6 +209,7 @@ export default function OsmFeature({ data, transportStopData }) {
 			{!isNotTransportStop(tags) && (
 				<Stop tags={tags} data={transportStopData} />
 			)}
+			<Heritage tags={tags} />
 			{allocine && (
 				<a
 					href={`https://www.allocine.fr/seance/salle_gen_csalle=${allocine}.html`}
@@ -250,10 +252,13 @@ export default function OsmFeature({ data, transportStopData }) {
 }
 
 export const processTags = (filteredRest) => {
-	const translatedTags = Object.entries(filteredRest).map(([key, value]) => {
-			const tagLabels = getTagLabels(key, value)
-			return [{ [key]: value }, tagLabels]
-		}),
+	const translatedTags = Object.entries(filteredRest)
+			// Tags to exclude because handled by other components that provide a test function
+			.filter(([k, v]) => !isHeritageTag(k))
+			.map(([key, value]) => {
+				const tagLabels = getTagLabels(key, value)
+				return [{ [key]: value }, tagLabels]
+			}),
 		keyValueTags = translatedTags.filter(([, t]) => t.length === 2),
 		soloTags = translatedTags.filter(([, t]) => t.length === 1)
 
