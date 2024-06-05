@@ -9,6 +9,7 @@ import { removeStatePart, setStatePart } from '../SetDestination'
 
 export default function Steps({ state }) {
 	const steps = state
+	console.log('steps', steps)
 
 	const setSearchParams = useSetSearchParams()
 
