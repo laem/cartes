@@ -64,11 +64,7 @@ export default function useDrawRoute(isItineraryMode, map, geojson, id) {
 			id + 'PointsSymbols'
 		)
 
-		const fullLinestringFilter = [
-			'all',
-			['in', '$type', 'LineString'],
-			['!', ['has', 'isSafePath']],
-		]
+		const linestringFilter = ['all', ['in', '$type', 'LineString']]
 		map.addLayer(
 			{
 				id: id + 'Line',
@@ -110,7 +106,7 @@ export default function useDrawRoute(isItineraryMode, map, geojson, id) {
 							: {}),
 					},
 				}[id],
-				filter: fullLinestringFilter,
+				filter: linestringFilter,
 			},
 			'distance' + 'Points'
 		)
@@ -125,19 +121,11 @@ export default function useDrawRoute(isItineraryMode, map, geojson, id) {
 						'line-cap': 'round',
 					},
 					paint: {
-						'line-color': [
-							'match',
-							['get', 'isSafePath'],
-							'oui',
-							'SeaGreen',
-							'non',
-							'red',
-							'blue',
-						],
+						'line-color': 'LightSeaGreen',
 						'line-width': 3,
-						'line-offset': 3,
+						'line-offset': 4,
 					},
-					filter: ['has', 'isSafePath'],
+					filter: ['==', ['get', 'isSafePath'], 'oui'],
 				},
 				'distance' + 'Points'
 			)
@@ -166,7 +154,7 @@ export default function useDrawRoute(isItineraryMode, map, geojson, id) {
 						'line-width': 4,
 					},
 				}[id],
-				filter: fullLinestringFilter,
+				filter: linestringFilter,
 			},
 			'distance' + 'Line'
 		)

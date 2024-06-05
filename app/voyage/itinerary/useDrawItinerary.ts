@@ -9,6 +9,7 @@ import { geoSerializeSteps } from './areStepsEqual'
 import useDrawRoute from './useDrawRoute'
 import useFetchDrawBikeParkings from './useFetchDrawBikeParkings'
 import brouterResultToSegments from '@/components/cycling/brouterResultToSegments'
+import useDrawCyclingSegments from '../effects/useDrawCyclingSegments'
 
 const joinFeatureCollections = (elements) => ({
 	type: 'FeatureCollection',
@@ -90,17 +91,13 @@ export default function useDrawItinerary(
 	const cyclingReady =
 		(!mode || mode === 'cycling') && routes && routes.cycling !== 'loading'
 
-	const cyclingGeojson = useMemo(() => {
-		return (
-			cyclingReady &&
-			joinFeatureCollections([
-				routes.cycling,
-				brouterResultToSegments(routes.cycling),
-			])
-		)
-	}, [routes.cycling, cyclingReady])
+	const cyclingSegmentsGeojson = useMemo(() => {
+		return cyclingReady && brouterResultToSegments(routes.cycling)
+	}, [routes?.cycling, cyclingReady])
 
-	useDrawRoute(isItineraryMode, map, cyclingGeojson, 'cycling')
+	useDrawCyclingSegments(isItineraryMode, map, cyclingSegmentsGeojson)
+	useDrawRoute(isItineraryMode, map, routes.cycling, 'cycling')
+
 	useDrawRoute(
 		isItineraryMode,
 		map,
