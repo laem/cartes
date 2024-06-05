@@ -2,8 +2,9 @@ import css from '@/components/css/convertToJs'
 import LightsWarning from './LightsWarning'
 import ProfileChooser from './ProfileChooser'
 import { nowStamp } from './itinerary/transit/motisRequest'
+import ValhallaRésumé from './itinerary/ValhallaRésumé'
 
-export default function BikeRouteRésumé({
+export default function RouteRésumé({
 	mode,
 	data,
 	bikeRouteProfile,
@@ -30,14 +31,18 @@ export default function BikeRouteRésumé({
 				}
 			`}
 		>
-			<ModeContent
-				{...{
-					bikeRouteProfile,
-					setBikeRouteProfile,
-					mode,
-					data,
-				}}
-			/>
+			{mode === 'car' ? (
+				<ValhallaRésumé data={data} />
+			) : (
+				<BrouterModeContent
+					{...{
+						bikeRouteProfile,
+						setBikeRouteProfile,
+						mode,
+						data,
+					}}
+				/>
+			)}
 		</div>
 	)
 }
@@ -55,7 +60,7 @@ export const computeHumanDistance = (distance) => {
 	return [Math.round(distance / 10) * 10, 'm']
 }
 
-const daysHoursMinutesFromSeconds = (seconds) => {
+export const daysHoursMinutesFromSeconds = (seconds) => {
 	const secondsInDay = 24 * 60 * 60
 	const days = Math.floor(seconds / secondsInDay)
 	const rest = (seconds % secondsInDay) / (60 * 60)
@@ -64,7 +69,12 @@ const daysHoursMinutesFromSeconds = (seconds) => {
 	return [days, hours, minutes]
 }
 
-const ModeContent = ({ mode, data, setBikeRouteProfile, bikeRouteProfile }) => {
+const BrouterModeContent = ({
+	mode,
+	data,
+	setBikeRouteProfile,
+	bikeRouteProfile,
+}) => {
 	const features = data?.features
 	if (!features?.length) return null
 

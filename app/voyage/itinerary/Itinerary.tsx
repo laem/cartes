@@ -1,5 +1,5 @@
 import { useEffect } from 'react'
-import BikeRouteRésumé from '../BikeRouteRésumé'
+import Route from '../RouteRésumé'
 import { ContentSection } from '../ContentUI'
 import { ModalCloseButton } from '../UI'
 import Steps from './Steps'
@@ -10,6 +10,7 @@ import Link from 'next/link'
 import CircularIcon from '@/components/CircularIcon'
 import useSetSearchParams from '@/components/useSetSearchParams'
 import Timeline from './Timeline'
+import RouteRésumé from '../RouteRésumé'
 
 export const modes = [
 	['cycling', { label: 'Vélo', query: 'velo' }],
@@ -106,8 +107,8 @@ export default function Itinerary({
 						))}
 					</ol>
 					{mode === undefined && <Timeline itinerary={itinerary} />}
-					{['cycling', 'walking'].includes(mode) && (
-						<BikeRouteRésumé
+					{['cycling', 'walking', 'car'].includes(mode) && (
+						<RouteRésumé
 							{...{
 								mode,
 								data: itinerary.routes[mode],

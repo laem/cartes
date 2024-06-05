@@ -5,7 +5,7 @@ import { PlaceButton } from './PlaceButtonsUI'
 import { encodePlace } from './utils'
 import { buildAddress } from '@/components/voyage/Address'
 import turfDistance from '@turf/distance'
-import { computeHumanDistance } from './BikeRouteRésumé'
+import { computeHumanDistance } from './RouteRésumé'
 
 export const geoFeatureToDestination = (feature) => {
 	if (feature.properties.id) {
