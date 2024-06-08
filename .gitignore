@@ -22,3 +22,11 @@ source/data
 .env.local
 
 .contentlayer
+
+.pnp.*
+.yarn/*
+!.yarn/patches
+!.yarn/plugins
+!.yarn/releases
+!.yarn/sdks
+!.yarn/versions
