@@ -11801,12 +11801,12 @@ react-color@^2.14.0:
     reactcss "^1.2.0"
     tinycolor2 "^1.4.1"
 
-react-dom@^19.0.0-rc-935180c7e0-20240524:
-  version "19.0.0-rc-935180c7e0-20240524"
-  resolved "https://registry.yarnpkg.com/react-dom/-/react-dom-19.0.0-rc-935180c7e0-20240524.tgz#47e1a2f87fc9e27de50a72840e0b71f42effabf6"
-  integrity sha512-17SL+9qxiLUZnaBWr+mO3hpz5ncP5NbJp6jnbA6cFbsWNdV3p4s8iMVALIcfZF1zPIiWQeYrZQK/Z8GY3xjihg==
+react-dom@^19.0.0-rc-cc1ec60d0d-20240607:
+  version "19.0.0-rc-cc1ec60d0d-20240607"
+  resolved "https://registry.yarnpkg.com/react-dom/-/react-dom-19.0.0-rc-cc1ec60d0d-20240607.tgz#f4b88b9f507492e555acffed4a0ce2bf89f95921"
+  integrity sha512-paspD9kAfKKuURVwKWJ0/g3qYw1DGi9h1k9xQV2iQN9cSVZ4JAOD727yjVLyp1zdzsoygjFfLMtSBdZ+oERYvA==
   dependencies:
-    scheduler "0.25.0-rc-935180c7e0-20240524"
+    scheduler "0.25.0-rc-cc1ec60d0d-20240607"
 
 react-fast-compare@^3.1.1:
   version "3.2.2"
@@ -11950,10 +11950,10 @@ react-useportal@^1.0.16:
   dependencies:
     use-ssr "^1.0.25"
 
-react@^19.0.0-rc-935180c7e0-20240524:
-  version "19.0.0-rc-935180c7e0-20240524"
-  resolved "https://registry.yarnpkg.com/react/-/react-19.0.0-rc-935180c7e0-20240524.tgz#6403d07b38f0cb8cdb7eadbe0e8226a13a4e0730"
-  integrity sha512-UDaKY7FXO4A2tg4srdLTlkdj5WQCKS9JSrqs21qQvyD4s4qwm3sah5zhfnDHBumzZ3f+PVTcF9PrfDnmu/qKpA==
+react@^19.0.0-rc-cc1ec60d0d-20240607:
+  version "19.0.0-rc-cc1ec60d0d-20240607"
+  resolved "https://registry.yarnpkg.com/react/-/react-19.0.0-rc-cc1ec60d0d-20240607.tgz#887ef55baa5de87d62a1743b1a4ec2ba447bd3c1"
+  integrity sha512-q8A0/IdJ2wdHsjDNO1igFcSSFIMqSKmO7oJZtAjxIA9g0klK45Lxt15NQJ7z7cBvgD1r3xRTtQ/MAqnmwYHs1Q==
 
 reactcss@^1.2.0:
   version "1.2.3"
@@ -12580,10 +12580,10 @@ saxes@^6.0.0:
   dependencies:
     xmlchars "^2.2.0"
 
-scheduler@0.25.0-rc-935180c7e0-20240524:
-  version "0.25.0-rc-935180c7e0-20240524"
-  resolved "https://registry.yarnpkg.com/scheduler/-/scheduler-0.25.0-rc-935180c7e0-20240524.tgz#f07f6d7a18effbbde008da638380507f2037e964"
-  integrity sha512-YfkorLQDTfVArSlFsSmTFMWW2CoUtNhkveeEzfbyqi5bShsEyQxAPLBGOUoBxaXEcQSJ2bXhkz3ZSTJCO/Th8A==
+scheduler@0.25.0-rc-cc1ec60d0d-20240607:
+  version "0.25.0-rc-cc1ec60d0d-20240607"
+  resolved "https://registry.yarnpkg.com/scheduler/-/scheduler-0.25.0-rc-cc1ec60d0d-20240607.tgz#ed63a1217afa1d97f83d07e44010ce34ddf8cf64"
+  integrity sha512-yFVKy6SDJkN2bOJSeH6gNo4+1MTygTZXnLRY5IHvEB6P9+O6WYRWz9PkELLjnl64lQwRgiigwzWQRSMNEboOGQ==
 
 scheduler@^0.19.1:
   version "0.19.1"
