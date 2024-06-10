@@ -7,7 +7,7 @@ export default function useWikidata(osmFeature, state) {
 	useEffect(() => {
 		if (!osmFeature) return // We're waiting for osmFeature first, since it can contain the wikidata tag, way more precise than guessing the wikidata from the name
 		if (osmFeature.tags?.wikidata || osmFeature.tags?.wikimedia_commons) return
-		if (!vers.choice) return
+		if (!vers?.choice) return
 
 		getCityData(vers.choice.name, false).then((json) => {
 			const firstResult = json?.results?.bindings[0],

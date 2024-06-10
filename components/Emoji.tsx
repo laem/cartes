@@ -1,5 +1,5 @@
 import emojiRegex from 'emoji-regex'
-import openmojis from './openmojis.json' assert { type: 'json' }
+import openmojis from './openmojis.json' //assert { type: 'json' }
 import replace from 'string-replace-to-array'
 import { Text, Image as ImageStyle } from './EmojiUI'
 

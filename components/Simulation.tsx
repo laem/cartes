@@ -1,12 +1,11 @@
 'use client'
-import { ConversationProps } from 'Components/conversation/Conversation'
 import SearchButton from 'Components/SearchButton'
-import * as animate from 'Components/ui/animate'
-import React from 'react'
-import AnswerList from './conversation/AnswerList'
 import Conversation, {
 	ConversationProps,
 } from 'Components/conversation/Conversation'
+import * as animate from 'Components/ui/animate'
+import React from 'react'
+import AnswerList from './conversation/AnswerList'
 
 type SimulationProps = {
 	results?: React.ReactNode

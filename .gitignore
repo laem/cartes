@@ -8,7 +8,6 @@ yarn-error.log
 cypress/videos
 cypress/screenshots
 
-package-lock.json
 node_modules/
 .env
 .env.local
@@ -22,3 +21,11 @@ source/data
 .env.local
 
 .contentlayer
+
+.pnp.*
+.yarn/*
+!.yarn/patches
+!.yarn/plugins
+!.yarn/releases
+!.yarn/sdks
+!.yarn/versions
