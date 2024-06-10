@@ -4,7 +4,7 @@ import Content from './Content'
 import ModalSheetReminder from './ModalSheetReminder'
 import styled from 'styled-components'
 
-const snapPoints = [0, '100px', '150px', 0.5, 1]
+const snapPoints = [0, '100px', '150px', 0.5, 0.95]
 //const snapPoints = [-50, 0.5, 150, 100, 0],
 const initialSnap = 0.5
 
@@ -38,7 +38,7 @@ export default function ModalSheet(props) {
 			modal={false}
 			open={true}
 		>
-			{!isOpen && <ModalSheetReminder />}
+			{!isOpen && <ModalSheetReminder onClick={() => setSnap(initialSnap)} />}
 
 			<Drawer.Portal container={document.querySelector('main')}>
 				<Drawer.Content
@@ -61,7 +61,7 @@ export default function ModalSheet(props) {
 						sideSheet={false}
 						snap={snap}
 						setSnap={(index) => setSnapIndex(index)}
-						openSheet={() => setSnapIndex(initialSnap)}
+						openSheet={() => setSnap(initialSnap)}
 					/>
 				</Drawer.Content>
 			</Drawer.Portal>

@@ -2,10 +2,11 @@ import Emoji from '@/components/Emoji'
 import { Drawer } from 'vaul'
 
 const popSize = 6
-export default function ModalSheetReminder({}) {
+export default function ModalSheetReminder({ onClick }) {
 	return (
 		<Drawer.Trigger asChild>
 			<button
+				onClick={onClick}
 				css={`
 					background: red;
 					position: fixed;
