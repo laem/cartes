@@ -40,14 +40,12 @@ export default function ModalSheet(props) {
 		>
 			{!isOpen && <ModalSheetReminder onClick={() => setSnap(initialSnap)} />}
 
-			<Drawer.Portal container={document.querySelector('main')}>
+			<Drawer.Portal container={document.querySelector('main#voyage')}>
 				<Drawer.Content
 					css={`
 						background: var(--lightestColor2);
-						height: 100%;
-						display: flex;
-						flex-direction: column;
 						padding: 0rem 0.6rem;
+						border-top: none;
 					`}
 				>
 					<Drawer.Handle
@@ -56,13 +54,16 @@ export default function ModalSheet(props) {
 							margin: 0.5rem auto;
 						`}
 					/>
-					<Content
-						{...props}
-						sideSheet={false}
-						snap={snap}
-						setSnap={(index) => setSnapIndex(index)}
-						openSheet={() => setSnap(initialSnap)}
-					/>
+
+					<SheetContentWrapper>
+						<Content
+							{...props}
+							sideSheet={false}
+							snap={snap}
+							setSnap={(index) => setSnapIndex(index)}
+							openSheet={() => setSnap(initialSnap)}
+						/>
+					</SheetContentWrapper>
 				</Drawer.Content>
 			</Drawer.Portal>
 		</Drawer.Root>
