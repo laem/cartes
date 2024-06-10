@@ -1,5 +1,5 @@
 import { useCallback, useEffect, useRef, useState } from 'react'
-import Sheet, { SheetRef } from 'react-modal-sheet'
+import { Sheet, SheetRef } from 'react-modal-sheet'
 import styled from 'styled-components'
 import Content from './Content'
 import ModalSheetReminder from './ModalSheetReminder'
