@@ -5295,6 +5295,13 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@types/rbush@npm:^3":
+  version: 3.0.3
+  resolution: "@types/rbush@npm:3.0.3"
+  checksum: 10c0/a0c2425eb9cb43f442ef48d9d0221c006e0f7303c35f97d443c9832e7c824572b7206a68f9ffe486ba0789cc19600732c3412729211f0c1a5058e7b3f0fd937d
+  languageName: node
+  linkType: hard
+
 "@types/react-color@npm:^3.0.6":
   version: 3.0.12
   resolution: "@types/react-color@npm:3.0.12"
@@ -10314,6 +10321,7 @@ __metadata:
     "@types/mini-css-extract-plugin": "npm:^2.5.1"
     "@types/node": "npm:20.14.2"
     "@types/ramda": "npm:^0.29.3"
+    "@types/rbush": "npm:^3"
     "@types/react": "npm:^18.0.8"
     "@types/react-color": "npm:^3.0.6"
     "@types/react-dom": "npm:^18.0.3"
@@ -10392,6 +10400,7 @@ __metadata:
     qrcode.react: "npm:^3.0.1"
     ramda: "npm:^0.29.0"
     raw-loader: "npm:^4.0.2"
+    rbush: "npm:^3.0.1"
     react: "npm:^19.0.0-rc-cc1ec60d0d-20240607"
     react-color: "npm:^2.14.0"
     react-dom: "npm:^19.0.0-rc-cc1ec60d0d-20240607"
