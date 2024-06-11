@@ -18,8 +18,6 @@ const SheetContent = forwardRef<any, SheetDraggableProps>(
 				? undefined
 				: sheetContext.dragProps
 
-		console.log('yo', dragProps)
-
 		return (
 			<motion.div
 				{...rest}

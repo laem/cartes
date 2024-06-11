@@ -1,47 +1,52 @@
-import React, { type ReactNode, createContext, useContext, useState } from 'react';
-import { type SheetScrollerContextType, type SheetContextType } from './types';
+import React, {
+	type ReactNode,
+	createContext,
+	useContext,
+	useState,
+} from 'react'
+import { type SheetScrollerContextType, type SheetContextType } from './types'
 
 export const SheetContext = createContext<SheetContextType | undefined>(
-  undefined
-);
+	undefined
+)
 
 export const useSheetContext = () => {
-  const context = useContext(SheetContext);
-  if (!context) throw Error('Sheet context error');
-  return context;
-};
+	const context = useContext(SheetContext)
+	if (!context) throw Error('Sheet context error')
+	return context
+}
 
 export const SheetScrollerContext = createContext<
-  SheetScrollerContextType | undefined
->(undefined);
+	SheetScrollerContextType | undefined
+>(undefined)
 
 export function SheetScrollerContextProvider({
-  children,
+	children,
 }: {
-  children: ReactNode;
+	children: ReactNode
 }) {
-  const sheetContext = useSheetContext();
-  const [disableDrag, setDisableDrag] = useState(!!sheetContext.disableDrag);
+	const sheetContext = useSheetContext()
+	const [disableDrag, setDisableDrag] = useState(!!sheetContext.disableDrag)
 
-  function setDragEnabled() {
-    if (!sheetContext.disableDrag) setDisableDrag(false);
-  }
+	function setDragEnabled() {
+		if (!sheetContext.disableDrag) setDisableDrag(false)
+	}
 
-  function setDragDisabled() {
-    if (!disableDrag) setDisableDrag(true);
-  }
+	function setDragDisabled() {
+		if (!disableDrag) setDisableDrag(true)
+	}
 
-  return (
-    <SheetScrollerContext.Provider
-      value={{ disableDrag, setDragEnabled, setDragDisabled }}
-    >
-      {children}
-    </SheetScrollerContext.Provider>
-  );
+	return (
+		<SheetScrollerContext.Provider
+			value={{ disableDrag, setDragEnabled, setDragDisabled }}
+		>
+			{children}
+		</SheetScrollerContext.Provider>
+	)
 }
 
 export const useSheetScrollerContext = () => {
-  const context = useContext(SheetScrollerContext);
-  if (!context) throw Error('Sheet scroller context error');
-  return context;
-};
+	const context = useContext(SheetScrollerContext)
+	if (!context) throw Error('Sheet scroller context error')
+	return context
+}

@@ -1,4 +1,9 @@
-import React, { type TouchEvent, type UIEvent, forwardRef } from 'react'
+import React, {
+	type TouchEvent,
+	type UIEvent,
+	forwardRef,
+	useState,
+} from 'react'
 
 import { useSheetScrollerContext } from './context'
 import { type SheetScrollerProps } from './types'
@@ -9,16 +14,12 @@ const SheetScroller = forwardRef<any, SheetScrollerProps>(
 	({ draggableAt = 'top', children, style, className = '', ...rest }, ref) => {
 		const sheetScrollerContext = useSheetScrollerContext()
 
+		const [dragging, setDragging] = useState(false)
+
 		function determineDragState(element: HTMLDivElement) {
 			const { scrollTop, scrollHeight, clientHeight } = element
 			const isScrollable = scrollHeight > clientHeight
 
-			console.log('sheet ots', {
-				scrollTop,
-				scrollHeight,
-				clientHeight,
-				isScrollable,
-			})
 			if (!isScrollable) return
 
 			const isAtTop = scrollTop <= 0
@@ -42,17 +43,27 @@ const SheetScroller = forwardRef<any, SheetScrollerProps>(
 		}
 
 		function onTouchStart(e: TouchEvent<HTMLDivElement>) {
+			setDragging(true)
 			determineDragState(e.currentTarget)
 		}
+		function onTouchEnd(e: TouchEvent<HTMLDivElement>) {
+			setDragging(false)
+		}
 
-		const scrollProps = isTouchDevice() ? { onScroll, onTouchStart } : undefined
+		const scrollProps = isTouchDevice()
+			? { onScroll, onTouchStart, onTouchEnd }
+			: undefined
 
 		return (
 			<div
 				{...rest}
 				ref={ref}
 				className={`react-modal-sheet-scroller ${className}`}
-				style={{ ...styles.scroller, ...style }}
+				style={{
+					...styles.scroller,
+					...style,
+					...(dragging ? { overflow: 'hidden' } : { overflow: 'auto' }),
+				}}
 				{...scrollProps}
 			>
 				{children}
