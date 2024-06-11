@@ -1,11 +1,13 @@
 import Emoji from '../Emoji'
 import Image from 'next/image'
 import css from '../css/convertToJs'
+import { atOrUrl } from '@/app/voyage/utils'
 
 export default function ContactAndSocial({
 	email,
 	facebook,
 	instagram,
+	whatsapp,
 	siret,
 }) {
 	return (
@@ -32,6 +34,15 @@ export default function ContactAndSocial({
 					<Emoji extra="E042" />
 				</a>
 			)}
+			{whatsapp && (
+				<a
+					href={atOrUrl(whatsapp, 'https://wa.me')}
+					target="_blank"
+					title="Discuter sur Whatsapp"
+				>
+					<Emoji extra="E248" />
+				</a>
+			)}
 			{instagram && (
 				<a
 					href={atOrUrl(instagram, 'https://instagram.com')}
@@ -51,7 +62,7 @@ export default function ContactAndSocial({
 						align-items: center;
 					`}
 				>
-					<img
+					<Image
 						src={'/annuaire-entreprises.svg'}
 						alt="logo Marianne représentant l'annuaire des entreprises"
 						style={css`
@@ -59,6 +70,8 @@ export default function ContactAndSocial({
 							width: 1.4rem;
 							height: auto;
 						`}
+						width={14}
+						height={14}
 					/>
 					<span>fiche entreprise</span>
 				</a>
@@ -66,13 +79,3 @@ export default function ContactAndSocial({
 		</div>
 	)
 }
-
-const atOrUrl = (key, domain) =>
-	key
-		.replace('http://', 'https://')
-		.replace('://www.', '://')
-		.startsWith(domain)
-		? key
-		: key.startsWith(domain.split('://')[1])
-		? `https://${key}`
-		: `${domain}/${key}`

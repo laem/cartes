@@ -40,9 +40,11 @@ export default function OsmFeature({ data, transportStopData }) {
 		email,
 		'contact:email': email2,
 		website: website1,
+		'website:menu': menu,
 		'contact:website': website2,
 		'contact:instagram': instagram,
 		'contact:facebook': facebook,
+		'contact:whatsapp': whatsapp,
 		'ref:FR:SIRET': siret,
 		brand: brand,
 		'brand:wikidata': brandWikidata,
@@ -198,13 +200,20 @@ export default function OsmFeature({ data, transportStopData }) {
 			{website && (
 				<div>
 					<a href={website} target="_blank" title="Site Web">
-						<Emoji e="🌍️" /> <span>{cleanHttp(website)}</span>
+						<Emoji e="🌍️" /> <span>Site web</span>
+					</a>
+				</div>
+			)}
+			{menu && (
+				<div>
+					<a href={menu} target="_blank" title="Menu">
+						<Emoji e="📋" /> <span>Menu</span>
 					</a>
 				</div>
 			)}
 			{opening_hours && <OpeningHours opening_hours={opening_hours} />}
 			<ContactAndSocial
-				{...{ email: email || email2, instagram, facebook, siret }}
+				{...{ email: email || email2, instagram, facebook, whatsapp, siret }}
 			/>
 			{!isNotTransportStop(tags) && (
 				<Stop tags={tags} data={transportStopData} />
