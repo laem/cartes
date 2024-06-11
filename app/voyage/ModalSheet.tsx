@@ -1,5 +1,3 @@
-'use client'
-
 import { useCallback, useEffect, useRef, useState } from 'react'
 import { Sheet, SheetRef } from '@/components/react-modal-sheet'
 import styled from 'styled-components'
@@ -54,7 +52,7 @@ export default function ModalSheet(props) {
 				}}
 				snapPoints={snapPoints}
 				initialSnap={initialSnap}
-				mountPoint={document.querySelector('main')}
+				mountPoint={props.containerRef.current}
 				onSnap={(snapIndex) => {
 					console.log('> Current snap point index:', snapIndex)
 					setTrackedSnap(snapIndex)

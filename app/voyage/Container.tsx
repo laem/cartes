@@ -19,7 +19,7 @@
  * bbox
  **/
 
-import { useMemo, useState } from 'react'
+import { useMemo, useRef, useState } from 'react'
 
 import { getCategory } from '@/components/voyage/categories'
 import ModalSwitch from './ModalSwitch'
@@ -182,82 +182,86 @@ export default function Container({ searchParams }) {
 		(quickSearchFeatures.length === 0 ||
 			quickSearchFeatures[0]?.categoryName === category.name)
 
+	const containerRef = useRef()
 	return (
-		<MapContainer>
-			<ContentWrapper>
-				<ModalSwitch
+		<div ref={containerRef}>
+			<MapContainer>
+				<ContentWrapper>
+					<ModalSwitch
+						{...{
+							setState,
+							state,
+							clickedGare,
+							clickGare,
+							//bikeRoute,
+							latLngClicked,
+							setLatLngClicked,
+							setBikeRouteProfile,
+							bikeRouteProfile,
+							zoneImages,
+							panoramaxImages,
+							resetZoneImages,
+							zoom,
+							searchParams,
+							style,
+							styleChooser,
+							setStyleChooser,
+							itinerary,
+							transportStopData: clickedStopData[1],
+							geocodedClickedPoint,
+							resetClickedPoint,
+							transportsData,
+							geolocation,
+							bboxImages,
+							focusImage,
+							vers,
+							osmFeature,
+							quickSearchFeaturesLoaded,
+							containerRef,
+						}}
+					/>
+				</ContentWrapper>
+				<Meteo coordinates={center} />
+				{focusedImage && <FocusedImage {...{ focusedImage, focusImage }} />}
+				<Map
 					{...{
-						setState,
-						state,
-						clickedGare,
-						clickGare,
-						//bikeRoute,
-						latLngClicked,
-						setLatLngClicked,
-						setBikeRouteProfile,
-						bikeRouteProfile,
-						zoneImages,
-						panoramaxImages,
-						resetZoneImages,
-						zoom,
 						searchParams,
-						style,
+						state,
+						vers,
+						target,
+						osmFeature,
+						zoom,
+						isTransportsMode,
+						transportStopData,
+						transportsData,
+						clickedStopData,
+						bikeRouteProfile,
+						showOpenOnly,
+						category,
+						bbox,
+						setBbox,
+						setBboxImages,
+						gares,
+						clickGare,
+						clickedGare,
+						focusImage,
+						styleKey,
+						safeStyleKey,
 						styleChooser,
 						setStyleChooser,
 						itinerary,
-						transportStopData: clickedStopData[1],
 						geocodedClickedPoint,
-						resetClickedPoint,
-						transportsData,
-						geolocation,
-						bboxImages,
-						focusImage,
-						vers,
-						osmFeature,
-						quickSearchFeaturesLoaded,
+						setGeolocation,
+						setZoom,
+						setTempStyle,
+						center,
+						setState,
+						setLatLngClicked,
+						setSafeStyleKey,
+						quickSearchFeatures,
 					}}
 				/>
-			</ContentWrapper>
-			<Meteo coordinates={center} />
-			{focusedImage && <FocusedImage {...{ focusedImage, focusImage }} />}
-			<Map
-				{...{
-					searchParams,
-					state,
-					vers,
-					target,
-					osmFeature,
-					zoom,
-					isTransportsMode,
-					transportStopData,
-					transportsData,
-					clickedStopData,
-					bikeRouteProfile,
-					showOpenOnly,
-					category,
-					bbox,
-					setBbox,
-					setBboxImages,
-					gares,
-					clickGare,
-					clickedGare,
-					focusImage,
-					styleKey,
-					safeStyleKey,
-					styleChooser,
-					setStyleChooser,
-					itinerary,
-					geocodedClickedPoint,
-					setGeolocation,
-					setZoom,
-					setTempStyle,
-					center,
-					setState,
-					setLatLngClicked,
-					setSafeStyleKey,
-					quickSearchFeatures,
-				}}
-			/>
-		</MapContainer>
+			</MapContainer>
+		</div>
 	)
 }
