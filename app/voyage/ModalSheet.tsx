@@ -1,3 +1,5 @@
+'use client'
+
 import { useCallback, useEffect, useRef, useState } from 'react'
 import { Sheet, SheetRef } from '@/components/react-modal-sheet'
 import styled from 'styled-components'

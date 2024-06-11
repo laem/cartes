@@ -39,7 +39,15 @@ export async function generateMetadata(
 }
 const Page = ({ searchParams }) => {
 	return (
-		<main id="voyage" style={{ height: '100%' }}>
+		<main
+			id="voyage"
+			style={{
+				height: '100%',
+
+				background: '#dfecbe',
+				minHeight: '100vh',
+			}}
+		>
 			<Container searchParams={searchParams} />
 		</main>
 	)

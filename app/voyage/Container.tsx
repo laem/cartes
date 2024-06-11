@@ -183,83 +183,81 @@ export default function Container({ searchParams }) {
 			quickSearchFeatures[0]?.categoryName === category.name)
 
 	return (
-		<main id="voyage" style={{ height: '100%' }}>
-			<MapContainer>
-				<ContentWrapper>
-					<ModalSwitch
-						{...{
-							setState,
-							state,
-							clickedGare,
-							clickGare,
-							//bikeRoute,
-							latLngClicked,
-							setLatLngClicked,
-							setBikeRouteProfile,
-							bikeRouteProfile,
-							zoneImages,
-							panoramaxImages,
-							resetZoneImages,
-							zoom,
-							searchParams,
-							style,
-							styleChooser,
-							setStyleChooser,
-							itinerary,
-							transportStopData: clickedStopData[1],
-							geocodedClickedPoint,
-							resetClickedPoint,
-							transportsData,
-							geolocation,
-							bboxImages,
-							focusImage,
-							vers,
-							osmFeature,
-							quickSearchFeaturesLoaded,
-						}}
-					/>
-				</ContentWrapper>
-				<Meteo coordinates={center} />
-				{focusedImage && <FocusedImage {...{ focusedImage, focusImage }} />}
-				<Map
+		<MapContainer>
+			<ContentWrapper>
+				<ModalSwitch
 					{...{
-						searchParams,
+						setState,
 						state,
-						vers,
-						target,
-						osmFeature,
-						zoom,
-						isTransportsMode,
-						transportStopData,
-						transportsData,
-						clickedStopData,
-						bikeRouteProfile,
-						showOpenOnly,
-						category,
-						bbox,
-						setBbox,
-						setBboxImages,
-						gares,
-						clickGare,
 						clickedGare,
-						focusImage,
-						styleKey,
-						safeStyleKey,
+						clickGare,
+						//bikeRoute,
+						latLngClicked,
+						setLatLngClicked,
+						setBikeRouteProfile,
+						bikeRouteProfile,
+						zoneImages,
+						panoramaxImages,
+						resetZoneImages,
+						zoom,
+						searchParams,
+						style,
 						styleChooser,
 						setStyleChooser,
 						itinerary,
+						transportStopData: clickedStopData[1],
 						geocodedClickedPoint,
-						setGeolocation,
-						setZoom,
-						setTempStyle,
-						center,
-						setState,
-						setLatLngClicked,
-						setSafeStyleKey,
-						quickSearchFeatures,
+						resetClickedPoint,
+						transportsData,
+						geolocation,
+						bboxImages,
+						focusImage,
+						vers,
+						osmFeature,
+						quickSearchFeaturesLoaded,
 					}}
 				/>
-			</MapContainer>
-		</main>
+			</ContentWrapper>
+			<Meteo coordinates={center} />
+			{focusedImage && <FocusedImage {...{ focusedImage, focusImage }} />}
+			<Map
+				{...{
+					searchParams,
+					state,
+					vers,
+					target,
+					osmFeature,
+					zoom,
+					isTransportsMode,
+					transportStopData,
+					transportsData,
+					clickedStopData,
+					bikeRouteProfile,
+					showOpenOnly,
+					category,
+					bbox,
+					setBbox,
+					setBboxImages,
+					gares,
+					clickGare,
+					clickedGare,
+					focusImage,
+					styleKey,
+					safeStyleKey,
+					styleChooser,
+					setStyleChooser,
+					itinerary,
+					geocodedClickedPoint,
+					setGeolocation,
+					setZoom,
+					setTempStyle,
+					center,
+					setState,
+					setLatLngClicked,
+					setSafeStyleKey,
+					quickSearchFeatures,
+				}}
+			/>
+		</MapContainer>
 	)
 }
