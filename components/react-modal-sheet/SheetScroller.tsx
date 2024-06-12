@@ -51,6 +51,8 @@ const SheetScroller = forwardRef<any, SheetScrollerProps>(
 			determineDragState(e.currentTarget)
 		}
 
+		// Since pan-down is not supported by firefox or safari, we need to know the
+		// move direction
 		const y = useRef(0)
 		const lastY = y.current
 		const [yDirection, setYDirection] = useState(null)
@@ -68,28 +70,10 @@ const SheetScroller = forwardRef<any, SheetScrollerProps>(
 			}
 			y.current = currentY
 		}
-		function onTouchEnd(e: TouchEvent<HTMLDivElement>) {
-			//determineDragState(e.currentTarget)
-		}
 
 		const scrollProps = isTouchDevice()
-			? { onScroll, onTouchStart, onTouchEnd, onTouchMove }
+			? { onScroll, onTouchStart, onTouchMove }
 			: undefined
-
-		/* not working https://github.com/bevacqua/dragula/issues/487
-		useEffect(() => {
-			if (!ref) return
-
-			ref.current.addEventListener(
-				'touchmove',
-				function (e) {
-					console.log('ploptouchmove')
-					e.preventDefault()
-				},
-				{ passive: false }
-			)
-		}, [ref])
-		*/
 
 		const disableDrag = sheetScrollerContext.disableDrag,
 			touchAction = disableDrag
