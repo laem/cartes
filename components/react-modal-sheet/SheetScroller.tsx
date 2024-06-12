@@ -3,6 +3,7 @@ import React, {
 	type UIEvent,
 	forwardRef,
 	useState,
+	useEffect,
 } from 'react'
 
 import { useSheetScrollerContext } from './context'
@@ -43,16 +44,30 @@ const SheetScroller = forwardRef<any, SheetScrollerProps>(
 		}
 
 		function onTouchStart(e: TouchEvent<HTMLDivElement>) {
-			setDragging(true)
 			determineDragState(e.currentTarget)
 		}
 		function onTouchEnd(e: TouchEvent<HTMLDivElement>) {
-			setDragging(false)
+			//determineDragState(e.currentTarget)
 		}
 
 		const scrollProps = isTouchDevice()
 			? { onScroll, onTouchStart, onTouchEnd }
 			: undefined
+
+		/* not working https://github.com/bevacqua/dragula/issues/487
+		useEffect(() => {
+			if (!ref) return
+
+			ref.current.addEventListener(
+				'touchmove',
+				function (e) {
+					console.log('ploptouchmove')
+					e.preventDefault()
+				},
+				{ passive: false }
+			)
+		}, [ref])
+		*/
 
 		return (
 			<div
@@ -62,7 +77,6 @@ const SheetScroller = forwardRef<any, SheetScrollerProps>(
 				style={{
 					...styles.scroller,
 					...style,
-					...(dragging ? { overflow: 'hidden' } : { overflow: 'auto' }),
 				}}
 				{...scrollProps}
 			>
