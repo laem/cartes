@@ -273,7 +273,7 @@ const Sheet = forwardRef<any, SheetProps>(
 					<AnimatePresence>
 						{/* NOTE: AnimatePresence requires us to set keys to children */}
 						{isOpen ? (
-							<SheetScrollerContextProvider>
+							<SheetScrollerContextProvider velocity={y.getVelocity()}>
 								{Children.map(children, (child: any, i) =>
 									cloneElement(child, { key: `sheet-child-${i}` })
 								)}

@@ -4,6 +4,7 @@ import React, {
 	forwardRef,
 	useState,
 	useEffect,
+	useRef,
 } from 'react'
 
 import { useSheetScrollerContext } from './context'
@@ -49,12 +50,30 @@ const SheetScroller = forwardRef<any, SheetScrollerProps>(
 		function onTouchStart(e: TouchEvent<HTMLDivElement>) {
 			determineDragState(e.currentTarget)
 		}
+
+		const y = useRef(0)
+		const lastY = y.current
+		const [yDirection, setYDirection] = useState(null)
+
+		function onTouchMove(e: TouchEvent<HTMLDivElement>) {
+			var currentY = e.touches[0].clientY
+			if (currentY > lastY) {
+				// moved down
+				console.log(' moved down')
+				setYDirection('down')
+			} else if (currentY < lastY) {
+				// moved up
+				console.log('moved up')
+				setYDirection('up')
+			}
+			y.current = currentY
+		}
 		function onTouchEnd(e: TouchEvent<HTMLDivElement>) {
 			//determineDragState(e.currentTarget)
 		}
 
 		const scrollProps = isTouchDevice()
-			? { onScroll, onTouchStart, onTouchEnd }
+			? { onScroll, onTouchStart, onTouchEnd, onTouchMove }
 			: undefined
 
 		/* not working https://github.com/bevacqua/dragula/issues/487
@@ -72,8 +91,20 @@ const SheetScroller = forwardRef<any, SheetScrollerProps>(
 		}, [ref])
 		*/
 
-		console.log('zop', sheetScrollerContext.disableDrag, snap)
-		const disableDrag = sheetScrollerContext.disableDrag
+		const disableDrag = sheetScrollerContext.disableDrag,
+			touchAction = disableDrag
+				? 'pan-y'
+				: snap === 0 && yDirection === 'up'
+				? // should use pan-down here but neither safari nor firefox support it...
+				  'pan-y'
+				: 'none'
+		console.log(
+			'zop',
+			sheetScrollerContext.disableDrag ? 'disabledDrag' : 'enabledDrag',
+			snap,
+			touchAction,
+			yDirection
+		)
 		return (
 			<div
 				{...rest}
@@ -82,7 +113,7 @@ const SheetScroller = forwardRef<any, SheetScrollerProps>(
 				style={{
 					...styles.scroller,
 					...style,
-					touchAction: disableDrag ? 'pan-y' : snap === 0 ? 'pan-down' : 'none',
+					touchAction,
 				}}
 				{...scrollProps}
 			>

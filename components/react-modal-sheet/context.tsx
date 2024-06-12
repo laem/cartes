@@ -22,6 +22,7 @@ export const SheetScrollerContext = createContext<
 
 export function SheetScrollerContextProvider({
 	children,
+	velocity,
 }: {
 	children: ReactNode
 }) {
@@ -38,7 +39,7 @@ export function SheetScrollerContextProvider({
 
 	return (
 		<SheetScrollerContext.Provider
-			value={{ disableDrag, setDragEnabled, setDragDisabled }}
+			value={{ disableDrag, setDragEnabled, setDragDisabled, velocity }}
 		>
 			{children}
 		</SheetScrollerContext.Provider>
