@@ -12,7 +12,10 @@ import { isTouchDevice } from './utils'
 import styles from './styles'
 
 const SheetScroller = forwardRef<any, SheetScrollerProps>(
-	({ draggableAt = 'top', children, style, className = '', ...rest }, ref) => {
+	(
+		{ draggableAt = 'top', children, style, className = '', snap, ...rest },
+		ref
+	) => {
 		const sheetScrollerContext = useSheetScrollerContext()
 
 		const [dragging, setDragging] = useState(false)
@@ -69,6 +72,8 @@ const SheetScroller = forwardRef<any, SheetScrollerProps>(
 		}, [ref])
 		*/
 
+		console.log('zop', sheetScrollerContext.disableDrag, snap)
+		const disableDrag = sheetScrollerContext.disableDrag
 		return (
 			<div
 				{...rest}
@@ -77,6 +82,7 @@ const SheetScroller = forwardRef<any, SheetScrollerProps>(
 				style={{
 					...styles.scroller,
 					...style,
+					touchAction: disableDrag ? 'pan-y' : snap === 0 ? 'pan-down' : 'none',
 				}}
 				{...scrollProps}
 			>

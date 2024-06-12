@@ -71,7 +71,7 @@ export default function ModalSheet(props) {
 						`}
 					/>
 					<Sheet.Content>
-						<Sheet.Scroller draggableAt="both">
+						<Sheet.Scroller draggableAt="both" snap={trackedSnap}>
 							<SheetContentWrapper>
 								<Content
 									{...props}
