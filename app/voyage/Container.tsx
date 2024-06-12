@@ -19,7 +19,7 @@
  * bbox
  **/
 
-import { useMemo, useState } from 'react'
+import { useMemo, useRef, useState } from 'react'
 
 import { getCategory } from '@/components/voyage/categories'
 import ModalSwitch from './ModalSwitch'
@@ -182,8 +182,9 @@ export default function Container({ searchParams }) {
 		(quickSearchFeatures.length === 0 ||
 			quickSearchFeatures[0]?.categoryName === category.name)
 
+	const containerRef = useRef()
 	return (
-		<main id="voyage" style={{ height: '100%' }}>
+		<div ref={containerRef}>
 			<MapContainer>
 				<ContentWrapper>
 					<ModalSwitch
@@ -216,6 +217,7 @@ export default function Container({ searchParams }) {
 							vers,
 							osmFeature,
 							quickSearchFeaturesLoaded,
+							containerRef,
 						}}
 					/>
 				</ContentWrapper>
@@ -260,6 +262,6 @@ export default function Container({ searchParams }) {
 					}}
 				/>
 			</MapContainer>
-		</main>
+		</div>
 	)
 }

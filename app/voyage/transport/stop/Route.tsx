@@ -210,6 +210,7 @@ export const RouteName = ({ route, name = undefined }) => {
 					white-space: nowrap;
 					width: 100%;
 					overflow: scroll;
+					touch-action: pan-x;
 					height: fit-content;
 					&::-webkit-scrollbar {
 						display: none;
