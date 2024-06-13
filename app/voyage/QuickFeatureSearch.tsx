@@ -100,6 +100,7 @@ export default function QuickFeatureSearch({
 					css={`
 						overflow: hidden;
 						overflow-x: scroll;
+						touch-action: pan-x;
 						white-space: nowrap;
 						scrollbar-width: none;
 						&::-webkit-scrollbar {

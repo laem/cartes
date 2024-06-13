@@ -40,16 +40,7 @@ export default function ({ children }) {
 			</head>
 			<body>
 				<StyledComponentsRegistry>
-					<ThemeColorsProvider>
-						<div
-							style={css`
-								background: #dfecbe;
-								min-height: 100vh;
-							`}
-						>
-							{children}
-						</div>
-					</ThemeColorsProvider>
+					<ThemeColorsProvider>{children}</ThemeColorsProvider>
 				</StyledComponentsRegistry>
 			</body>
 		</html>
