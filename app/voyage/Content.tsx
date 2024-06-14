@@ -166,7 +166,7 @@ export default function Content({
 							zoom,
 							setSearchParams,
 							searchParams,
-							autoFocus: recherche != null,
+							autoFocus: recherche > 0,
 							stepIndex: recherche,
 							geolocation,
 						}}

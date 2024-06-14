@@ -2,7 +2,7 @@ import GeoInputOptions from '@/components/conversation/GeoInputOptions'
 import { InputStyle } from '@/components/conversation/UI'
 import css from '@/components/css/convertToJs'
 import fetchPhoton from '@/components/voyage/fetchPhoton'
-import { useCallback, useEffect, useRef, useState } from 'react'
+import { useCallback, useEffect, useMemo, useRef, useState } from 'react'
 import { encodePlace } from './utils'
 import Logo from '@/public/voyage.svg'
 import Image from 'next/image'
@@ -12,6 +12,7 @@ import { buildAddress } from '@/components/voyage/Address'
 import { isStepBeingSearched } from './itinerary/Steps'
 import Link from 'next/link'
 import { useLocalStorage } from 'usehooks-ts'
+import styled from 'styled-components'
 
 const positionTriggers = ['ma pos', 'position', 'ici', 'géoloc', 'geoloc']
 
@@ -42,6 +43,8 @@ export default function PlaceSearch({
 }) {
 	if (stepIndex == null) throw new Error('Step index necessary')
 	const [localSearch, setLocalSearch] = useState(true)
+	const [searchHistory, setSearchHistory] = useLocalStorage('searchHistory', [])
+
 	const urlSearchQuery = searchParams.q
 	const step = getArrayIndex(state, stepIndex) || {
 		results: [],
@@ -49,7 +52,19 @@ export default function PlaceSearch({
 	}
 	const value = step.inputValue
 
-	const autofocusInputRef = useAutoFocus()
+	const autofocusInputRef = useAutoFocus(),
+		ref = useRef()
+
+	const inputRef = autoFocus ? autofocusInputRef : ref
+	// doesn't work :
+	const inputHasFocus = document.activeElement === inputRef.current
+	// hence this, but does it work with autofocus from triggered indirectly by
+	// the Steps component ?
+	const [isMyInputFocused, instantaneousSetIsMyInputFocused] = useState(false)
+
+	const setIsMyInputFocused = (value) => {
+		setTimeout(() => instantaneousSetIsMyInputFocused(value), 300)
+	}
 
 	const onInputChange =
 		(stepIndex = -1, localSearch = false) =>
@@ -139,7 +154,9 @@ export default function PlaceSearch({
 					<input
 						type="text"
 						value={value || ''}
-						ref={autoFocus && autofocusInputRef}
+						onBlur={() => setIsMyInputFocused(false)}
+						onFocus={() => setIsMyInputFocused(true)}
+						ref={inputRef}
 						onClick={(e) => {
 							setSnap(0, 'PlaceSearch')
 							e.preventDefault()
@@ -216,25 +233,60 @@ export default function PlaceSearch({
 						</button>
 					))}
 			</div>
+			{step.inputValue === '' &&
+				isMyInputFocused &&
+				searchHistory.length > 0 && (
+					<SearchResultsContainer $sideSheet={sideSheet}>
+						<div
+							css={`
+								display: flex;
+								justify-content: center;
+								align-items: center;
+								img {
+									width: 0.9rem;
+									height: auto;
+									vertical-align: sub;
+								}
+							`}
+						>
+							<small>Historique</small>
+							<button
+								onClick={() => setSearchHistory([])}
+								title="Effacer l'historique"
+							>
+								<Image
+									src="/trash.svg"
+									width="10"
+									height="10"
+									alt="Icône poubelle"
+								/>
+							</button>
+						</div>
+						<ul
+							css={`
+								list-style-type: disc !important;
+								padding-left: 0.4rem !important;
+								li {
+									color: white;
+									margin-left: 1rem;
+								}
+							`}
+						>
+							{searchHistory.map((entry) => (
+								<li key={entry}>
+									<button onClick={() => onDestinationChange(entry)}>
+										{entry}
+									</button>
+								</li>
+							))}
+						</ul>
+					</SearchResultsContainer>
+				)}
 			{step.inputValue !== '' &&
 				(!step.choice || step.choice.inputValue !== step.inputValue) && (
 					<div>
 						{step.results ? (
-							<div
-								css={`
-									ul {
-										background: var(--darkerColor);
-										border-radius: 0.4rem;
-										padding: 0.6rem 0;
-										list-style-type: none;
-										margin-top: 0.2rem;
-										${!sideSheet &&
-										`
-									width: auto
-								`}
-									}
-								`}
-							>
+							<SearchResultsContainer $sideSheet={sideSheet}>
 								<GeoInputOptions
 									{...{
 										whichInput: 'vers', // legacy
@@ -243,6 +295,10 @@ export default function PlaceSearch({
 											setSnap(1, 'PlaceSearch')
 											// this is questionable; see first comment in this file
 											setState(replaceArrayIndex(state, stepIndex, newData))
+											setSearchHistory([
+												value,
+												...searchHistory.filter((entry) => entry !== value),
+											])
 
 											console.log('ici', newData)
 											const { osmId, featureType, longitude, latitude, name } =
@@ -295,7 +351,7 @@ export default function PlaceSearch({
 									/>
 									<span style={css``}>Rechercher ici</span>
 								</label>
-							</div>
+							</SearchResultsContainer>
 						) : (
 							'Chargement..'
 						)}
@@ -304,3 +360,18 @@ export default function PlaceSearch({
 		</div>
 	)
 }
+
+const SearchResultsContainer = styled.div`
+	ul {
+		background: var(--darkerColor);
+		border-radius: 0.4rem;
+		padding: 0.6rem 0;
+		list-style-type: none;
+		margin-top: 0.2rem;
+		${(p) =>
+			!p.$sideSheet &&
+			`
+									width: auto
+								`}
+	}
+`
