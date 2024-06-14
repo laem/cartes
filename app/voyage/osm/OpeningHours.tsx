@@ -1,0 +1,150 @@
+import parseOpeningHours from 'opening_hours'
+const getOh = (opening_hours) => {
+	try {
+		const oh = new parseOpeningHours(opening_hours, {
+				address: { country_code: 'fr' },
+			}),
+			isOpen = oh.getState(),
+			nextChange = oh.getNextChange()
+
+		const intervals = oh.getOpenIntervals(
+			new Date(),
+			new Date(new Date().setDate(new Date().getDate() + 7))
+		)
+		return { isOpen, nextChange, intervals }
+	} catch (e) {
+		console.log('Error parsing opening hours', e)
+		return { isOpen: 'error', nextChange: 'error' }
+	}
+}
+export const OpeningHours = ({ opening_hours }) => {
+	const now = new Date()
+
+	const { isOpen, nextChange, intervals } = getOh(opening_hours)
+
+	const formatDate = (date) => {
+		const sameDay = date.getDay() === now.getDay()
+		const weekday = sameDay ? undefined : 'long'
+
+		const result = new Intl.DateTimeFormat('fr-FR', {
+			hour: 'numeric',
+			minute: 'numeric',
+			weekday,
+		}).format(date)
+		return result
+	}
+
+	const hourFormatter = new Intl.DateTimeFormat('fr-FR', {
+		hour: 'numeric',
+		minute: 'numeric',
+	})
+
+	const dayFormatter = new Intl.DateTimeFormat('fr-FR', {
+		weekday: 'long',
+	})
+
+	const ohPerDay = intervals
+		? intervals.reduce(
+				(memo, next) => {
+					const [from, to] = next
+					const fromDay = dayFormatter.format(from)
+					const toDay = dayFormatter.format(to)
+
+					const simple = (h) => hourFormatter.format(h).replace(':00', 'h')
+					const error = toDay !== fromDay
+					const fromHour = simple(from),
+						toHour = simple(to)
+					const range = fromHour + ' - ' + toHour
+
+					return {
+						...memo,
+						[fromDay]: [...(memo[fromDay] || []), range],
+						error: memo.error || error,
+					}
+				},
+				{ error: false }
+		  )
+		: {}
+
+	console.log(ohPerDay)
+	return (
+		<div
+			css={`
+				margin: 0.2rem 0;
+				display: flex;
+				align-items: center;
+				summary {
+					list-style-type: none;
+					display: flex;
+					align-items: center;
+				}
+			`}
+		>
+			<details open={false}>
+				<summary>
+					<OpenIndicator isOpen={isOpen === 'error' ? false : isOpen} />{' '}
+					{isOpen === 'error' && <span>Problème dans les horaires</span>}
+					{nextChange === 'error' ? null : !nextChange ? (
+						<span>Ouvert 24/24 7j/7</span>
+					) : (
+						<span>
+							{isOpen ? 'Ouvert' : 'Fermé'} jusqu'à {formatDate(nextChange)}
+						</span>
+					)}
+				</summary>
+
+				{intervals != null && !ohPerDay.error ? (
+					<ul
+						css={`
+							padding-left: 2rem;
+							width: 100%;
+							> li {
+								display: flex;
+								justify-content: space-between;
+								> span {
+									margin-right: 2rem;
+								}
+							}
+							> li > ul {
+								display: flex;
+								list-style-type: none;
+								li {
+									margin: 0 0.4rem;
+								}
+							}
+						`}
+					>
+						{Object.entries(ohPerDay).map(
+							([day, ranges]) =>
+								day !== 'error' && (
+									<li key={day}>
+										<span>{day}</span>
+										<ul>
+											{ranges.map((hour) => (
+												<li key={hour}>{hour}</li>
+											))}
+										</ul>
+									</li>
+								)
+						)}
+					</ul>
+				) : (
+					opening_hours
+				)}
+			</details>
+		</div>
+	)
+}
+
+const OpenIndicator = ({ isOpen }) => (
+	<span
+		css={`
+			display: inline-block;
+			margin: 0 0.4rem;
+			width: 1rem;
+			height: 1rem;
+			border-radius: 2rem;
+			background: ${isOpen ? '#37c267' : '#b5325d'};
+		`}
+	></span>
+)
