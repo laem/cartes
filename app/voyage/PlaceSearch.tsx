@@ -13,6 +13,7 @@ import { isStepBeingSearched } from './itinerary/Steps'
 import Link from 'next/link'
 import { useLocalStorage } from 'usehooks-ts'
 import styled from 'styled-components'
+import { isIOS } from '@react-aria/utils'
 
 // The idead here was to enable triggering of geoloc with an input. Not
 // exectuted, there is a button now.
@@ -64,7 +65,18 @@ export default function PlaceSearch({
 	// the Steps component ?
 	const [isMyInputFocused, instantaneousSetIsMyInputFocused] = useState(false)
 
+	//
+	useEffect(() => {
+		// the onClick below doesn't work on iOS, and this technique produces worse
+		// results on Android Firefox and especially chrome
+		if (!isIOS()) return
+		if (!isMyInputFocused) return
+		setSnap(0, 'PlaceSearch')
+	}, [isMyInputFocused, setSnap])
+
 	const setIsMyInputFocused = (value) => {
+		// click on suggestion would close the suggestion before it works haha dunno
+		// why
 		setTimeout(() => instantaneousSetIsMyInputFocused(value), 300)
 	}
 
@@ -162,7 +174,6 @@ export default function PlaceSearch({
 						ref={inputRef}
 						onClick={(e) => {
 							setSnap(0, 'PlaceSearch')
-
 							/*
 							// Old comment :
 							// --------------
