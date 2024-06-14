@@ -120,6 +120,7 @@ export default function PlaceSearch({
 							vertical-align: middle;
 						}
 					}
+					margin-top: 0.2rem;
 					${sideSheet && `margin: .4rem 0`}
 				`}
 			>

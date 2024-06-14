@@ -104,7 +104,7 @@ const CustomSheet = styled(Sheet)`
 	}
 	.react-modal-sheet-header {
 		/* custom styles */
-		height: 2.6rem !important;
+		height: 2rem !important;
 	}
 	.react-modal-sheet-drag-indicator {
 		/* custom styles */
