@@ -59,6 +59,11 @@ export const tagNameCorrespondance = (key: string) => {
 		'short_name': 'Diminutif',
 		'tobacco': 'Vente de tabac',
 		'website:menu': 'Menu',
+		'ref:INSEE': 'Code INSEE',
+		'ref:FR:SIREN': 'Code SIREN',
+		'ref:FR:NAF': 'Code NAF',
+		'ref:FR:FANTOIR': 'Code FANTOIR',
+		'ref:FR:FINESS': 'Code FINESS',
 	}[key]
 	return found || key
 }
