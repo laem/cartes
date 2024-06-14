@@ -8,6 +8,7 @@ export const goldCladding = `
 border-color: gold !important;
 background: #f8f3e0 !important;
 `
+
 export const quickSearchButtonStyle = (clicked, background, filter) => `
 	& {
 	position: relative;

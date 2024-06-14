@@ -117,6 +117,12 @@ export default function QuickFeatureSearch({
 							list-style-type: none;
 							display: flex;
 							align-items: center;
+							${showMore &&
+							`
+							flex-wrap: wrap;
+							li {margin-bottom: .3rem}
+
+							`}
 						`}
 					>
 						{!doFilter && (
