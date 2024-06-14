@@ -141,12 +141,21 @@ export default function Content({
 			}
 	}, [showSearch, zoom, snap])
 
+	useEffect(() => {
+		if (introductionRead) return
+
+		setTimeout(() => setSnap(1), 1000)
+	}, [introductionRead, setSnap])
+
 	if (!introductionRead)
 		return (
 			<ExplanationWrapper>
 				<Explanations />
 				<DialogButton
-					onClick={() => setTutorials({ ...tutorials, introduction: true })}
+					onClick={() => {
+						setTutorials({ ...tutorials, introduction: true })
+						setSnap(2)
+					}}
 				>
 					OK
 				</DialogButton>

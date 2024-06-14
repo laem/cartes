@@ -8,6 +8,7 @@ const snapPoints = [-50, 0.5, 150, 100, 0],
 	initialSnap = 3
 
 export default function ModalSheet(props) {
+	console.log('salut modal sheet')
 	const [trackedSnap, setTrackedSnap] = useState(initialSnap)
 	const [isOpen, setOpen] = useState(false)
 
@@ -23,6 +24,7 @@ export default function ModalSheet(props) {
 		},
 		[ref]
 	)
+
 	useEffect(() => {
 		// https://github.com/Temzasse/react-modal-sheet/issues/146
 		setTimeout(() => setOpen(true), 1)

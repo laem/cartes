@@ -58,13 +58,11 @@ export default function Container({ searchParams }) {
 
 	const [geolocation, setGeolocation] = useState(null)
 
-	const approximateGeolocationHash = geolocation
-
 	const [safeStyleKey, setSafeStyleKey] = useState(null)
 	const [tempStyle, setTempStyle] = useState(null)
 	const styleKey = tempStyle || searchParams.style || 'base'
-	const style = getStyle(styleKey),
-		styleUrl = style.url
+	const style = getStyle(styleKey)
+
 	const styleChooser = searchParams['choix du style'] === 'oui',
 		setStyleChooser = (state) =>
 			setSearchParams({ 'choix du style': state ? 'oui' : undefined })
