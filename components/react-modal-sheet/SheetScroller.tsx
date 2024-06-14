@@ -82,13 +82,14 @@ const SheetScroller = forwardRef<any, SheetScrollerProps>(
 				? // should use pan-down here but neither safari nor firefox support it...
 				  'pan-y'
 				: 'none'
+		/*
 		console.log(
 			'zop',
 			sheetScrollerContext.disableDrag ? 'disabledDrag' : 'enabledDrag',
 			snap,
 			touchAction,
 			yDirection
-		)
+		)*/
 		return (
 			<div
 				{...rest}

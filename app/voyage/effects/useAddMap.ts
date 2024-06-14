@@ -56,11 +56,8 @@ export default function useAddMap(
 			setGeolocation(e.coords)
 		})
 
-		newMap.on('style.load', function () {
-			console.log('ONLOAD STYLE', newMap._mapId)
-		})
 		newMap.on('load', () => {
-			console.log('ONLOAD', newMap._mapId)
+			console.log('maplibre instance loaded with id ', newMap._mapId)
 			setMap(newMap)
 
 			setZoom(Math.round(newMap.getZoom()))

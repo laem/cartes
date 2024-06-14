@@ -10,7 +10,6 @@ import { safeRemove } from '../effects/utils'
  * */
 export default function useDrawRoute(isItineraryMode, map, geojson, id) {
 	const isMobile = useMediaQuery('(max-width: 800px)')
-	if (id === 'cycling') console.log('plop', geojson)
 
 	useEffect(() => {
 		if (

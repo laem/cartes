@@ -36,10 +36,12 @@ export default function Itinerary({
 	const mode = modeKeyFromQuery(searchParams.mode)
 
 	useEffect(() => {
+		if (!itinerary.isItineraryMode) return
 		setSnap(1, 'Itinerary')
-	}, [setSnap])
+	}, [setSnap, itinerary.isItineraryMode])
 
 	if (!itinerary.isItineraryMode) return null
+
 	return (
 		<ContentSection css="margin-bottom: 1rem">
 			<ModalCloseButton title="Fermer l'encart itinéraire" onClick={close} />
