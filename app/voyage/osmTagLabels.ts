@@ -1,6 +1,6 @@
 import rawData from '@openstreetmap/id-tagging-schema/dist/translations/fr.json'
 
-const { presets, categories, fields } = rawData.fr.presets
+const { presets, fields } = rawData.fr.presets
 
 export const getTagLabels = (key, value) => {
 	const fullPreset = presets[key + '/' + value]
@@ -18,6 +18,7 @@ export const getTagLabels = (key, value) => {
 					return optionValue
 				case 'object':
 					if (optionValue.title) return optionValue.title
+					break;
 				default:
 					return translateBasics(v)
 			}
@@ -25,44 +26,46 @@ export const getTagLabels = (key, value) => {
 	return [field.label, translatedValues.join(' - ')]
 }
 
-const translateBasics = (value) => {
+const translateBasics = (value: string) => {
 	const found = { yes: 'oui', no: 'non' }[value]
 	return found || value
 }
 
-export const tagNameCorrespondance = (key) => {
+export const tagNameCorrespondance = (key: string) => {
 	const found = {
+		'books': 'Livres',
+		'brand:website': 'Site de la marque',
+		'building:levels': "Nombre d'étages",
+		'bulk_purchase': 'Achat en vrac',
+		'capacity:disabled': 'Place de parking PMR',
+		'check_date:opening_hours': 'Horaires vérifiés le',
 		'diet:vegan': 'Végan',
 		'diet:vegetarian': 'Végétarien',
-		tobacco: 'Vente de tabac',
-		'check_date:opening_hours': 'Horaires vérifiés le',
-		pastry: 'Patisserie',
-		female: 'Pour les femmes',
-		male: 'Pour les hommes',
-		official_name: 'Nom officiel',
-		'payment:cash': 'Paiement en liquide',
-		'payment:card': 'Paiement par carte',
-		'payment:contactless': 'Paiement sans contact',
-		'opening_hours:signed': 'Horaires affichés',
+		'emergency:phone': "Numéro d'urgence",
+		'female': 'Pour les femmes',
+		'indoor_seating': "Sièges à l'intérieur",
 		'internet_access:fee': 'Accès Internet payant',
-		'brand:website': 'Site de la marque',
+		'male': 'Pour les hommes',
+		'official_name': 'Nom officiel',
+		'old_name': 'Ancien nom',
+		'opening_hours:emergency': "Horaires en cas d'urgence",
+		'opening_hours:signed': 'Horaires affichés',
+		'pastry': 'Patisserie',
+		'payment:card': 'Paiement par carte',
+		'payment:cash': 'Paiement en liquide',
+		'payment:contactless': 'Paiement sans contact',
 		'service:bicycle:repair': 'Réparation de vélos',
 		'service:bicycle:retail': 'Vente de vélos',
-		books: 'Livres',
-		short_name: 'Diminutif',
-		old_name: 'Ancien nom',
-		indoor_seating: "Sièges à l'intérieur",
-		'capacity:disabled': 'Place de parking PMR',
+		'short_name': 'Diminutif',
+		'tobacco': 'Vente de tabac',
 		'website:menu': 'Menu',
-		'building:levels': "Nombre d'étages",
-		'emergency:phone': "Numéro d'urgence",
-		'opening_hours:emergency': "Horaires en cas d'urgence",
 	}[key]
 	return found || key
 }
-export const tagValueCorrespondance = (key) => {
+export const tagValueCorrespondance = (key: string) => {
 	const found = {
-		children: 'Enfant',
+		'children': 'Enfant',
+		'only': 'Uniquement',
 	}[key]
 	return found || key
 }
