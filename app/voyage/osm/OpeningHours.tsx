@@ -70,7 +70,16 @@ export const OpeningHours = ({ opening_hours }) => {
 						error: memo.error || error,
 					}
 				},
-				{ error: false }
+				{
+					error: false,
+					lundi: [],
+					mardi: [],
+					mercredi: [],
+					jeudi: [],
+					vendredi: [],
+					samedi: [],
+					dimanche: [],
+				}
 		  )
 		: {}
 
@@ -125,12 +134,20 @@ export const OpeningHours = ({ opening_hours }) => {
 						{Object.entries(ohPerDay).map(
 							([day, ranges]) =>
 								day !== 'error' && (
-									<li key={day}>
+									<li key={day} css={!ranges.length && `color: gray`}>
 										<span>{day}</span>
 										<ul>
-											{ranges.map((hour) => (
-												<li key={hour}>{hour}</li>
-											))}
+											{ranges.length > 0 ? (
+												ranges.map((hour) => <li key={hour}>{hour}</li>)
+											) : (
+												<span
+													css={`
+														margin-right: 0.4rem;
+													`}
+												>
+													Fermé
+												</span>
+											)}
 										</ul>
 									</li>
 								)
