@@ -1,6 +1,7 @@
 export const clickableClasses = [
 	'city',
 	'town',
+	'village',
 	'suburb',
 	'neighbourhood',
 	'quarter',

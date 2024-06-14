@@ -70,16 +70,18 @@ export default function useMapClick(
 			console.log('clicked map features', rawFeatures)
 
 			if (!features.length || !features[0].id) {
-				console.log('no features', features)
+				console.log('clicked no features', features)
 				return setSearchParams({ allez: undefined })
 			}
 
 			const feature = features[0]
 			const openMapTilesId = '' + feature.id
 
-			// For "Vitré", a town, I'm getting id 18426612010. Looks like internal
-			// OMT id, that's wrong, we need OSM
-			const id = ['place', 'waterway'].includes(feature.sourceLayer)
+			// e.g. For "Vitré", a town, I'm getting id 18426612010. The final 0 means
+			// "node", it needs to be stripped. For a waterway like La Vilaine in
+			// Vitré https://www.openstreetmap.org/way/308377384, the OpenMapTiles id
+			// is the good one.
+			const id = ['waterway'].includes(feature.sourceLayer)
 					? openMapTilesId
 					: openMapTilesId.slice(null, -1),
 				featureType =
@@ -91,8 +93,8 @@ export default function useMapClick(
 								openMapTilesId.slice(-1)
 						  ]
 			if (!featureType) {
-				console.log('Unknown OSM feature type from OpenMapTiles ID')
-				return
+				console.log('clicked Unknown OSM feature type from OpenMapTiles ID')
+				return setSearchParams({ allez: undefined })
 			}
 
 			const [element, realFeatureType] = await disambiguateWayRelation(
@@ -100,6 +102,8 @@ export default function useMapClick(
 				id,
 				e.lngLat
 			)
+
+			console.log('clicked on element', element)
 
 			if (element) {
 				console.log('reset OSMfeature after click on POI')
