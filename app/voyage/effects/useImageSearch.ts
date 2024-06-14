@@ -25,26 +25,28 @@ const serializeBbox = (bbox) => {
 }
 
 export const handleWikimediaGeosearchImages = (json) =>
-	Object.values(json.query.pages).map((page) => {
-		const {
-			GPSLatitude: { value: lat },
-			GPSLongitude: { value: lon },
-			Assessments: { value: assessment } = {},
-			DateTime: { value: date } = {},
-			Artist: { value: artistHtmlTag },
-			ImageDescription: { value: description } = {},
-		} = page.imageinfo[0].extmetadata
+	json?.query
+		? Object.values(json.query.pages).map((page) => {
+				const {
+					GPSLatitude: { value: lat },
+					GPSLongitude: { value: lon },
+					Assessments: { value: assessment } = {},
+					DateTime: { value: date } = {},
+					Artist: { value: artistHtmlTag },
+					ImageDescription: { value: description } = {},
+				} = page.imageinfo[0].extmetadata
 
-		return {
-			...omit(['imageinfo'], page),
-			lat,
-			lon,
-			assessment,
-			date,
-			artistHtmlTag,
-			description,
-		}
-	})
+				return {
+					...omit(['imageinfo'], page),
+					lat,
+					lon,
+					assessment,
+					date,
+					artistHtmlTag,
+					description,
+				}
+		  })
+		: []
 
 // Thanks https://stackoverflow.com/questions/24529853/how-to-get-more-info-within-only-one-geosearch-call-via-wikipedia-api
 // We'd also like to sort query results by good `assessment` or by other

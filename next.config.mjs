@@ -11,9 +11,11 @@ const __dirname = path.dirname(__filename)
 /** @type {import('next').NextConfig} */
 
 const nextConfig = {
+	reactStrictMode: false,
 	experimental: {
-		serverComponentsExternalPackages: ['publicodes'],
+		reactCompiler: true,
 	},
+	serverComponentsExternalPackages: ['publicodes'],
 	compiler: {
 		styledComponents: true,
 	},

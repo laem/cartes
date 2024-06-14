@@ -1,5 +1,5 @@
 import { useEffect } from 'react'
-import BikeRouteRésumé from '../BikeRouteRésumé'
+import Route from '../RouteRésumé'
 import { ContentSection } from '../ContentUI'
 import { ModalCloseButton } from '../UI'
 import Steps from './Steps'
@@ -10,11 +10,13 @@ import Link from 'next/link'
 import CircularIcon from '@/components/CircularIcon'
 import useSetSearchParams from '@/components/useSetSearchParams'
 import Timeline from './Timeline'
+import RouteRésumé from '../RouteRésumé'
 
 export const modes = [
-	['cycling', { label: 'vélo', query: 'velo' }],
+	['cycling', { label: 'Vélo', query: 'velo' }],
 	['transit', { label: 'Transports', query: 'commun' }],
-	['walking', { label: 'marche', query: 'marche' }],
+	['walking', { label: 'Marche', query: 'marche' }],
+	['car', { label: 'Voiture', query: 'voiture' }],
 ]
 
 export const modeKeyFromQuery = (myQuery) =>
@@ -37,7 +39,7 @@ export default function Itinerary({
 		setSnap(1, 'Itinerary')
 	}, [setSnap])
 
-	if (!itinerary.itineraryMode) return null
+	if (!itinerary.isItineraryMode) return null
 	return (
 		<ContentSection css="margin-bottom: 1rem">
 			<ModalCloseButton title="Fermer l'encart itinéraire" onClick={close} />
@@ -85,7 +87,7 @@ export default function Itinerary({
 							],
 							...modes,
 						].map(([key, { label, icon, description, query }]) => (
-							<li key={key}>
+							<li key={key || 'undefined'}>
 								<Link
 									href={setSearchParams(
 										{ mode: mode === key ? undefined : query },
@@ -105,8 +107,8 @@ export default function Itinerary({
 						))}
 					</ol>
 					{mode === undefined && <Timeline itinerary={itinerary} />}
-					{['cycling', 'walking'].includes(mode) && (
-						<BikeRouteRésumé
+					{['cycling', 'walking', 'car'].includes(mode) && (
+						<RouteRésumé
 							{...{
 								mode,
 								data: itinerary.routes[mode],

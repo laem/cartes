@@ -5,6 +5,7 @@ import { decodeDate, initialDate } from './DateSelector'
 import { useMemoPointsFromState } from './useDrawItinerary'
 import { modeKeyFromQuery } from './Itinerary'
 import useSetSearchParams from '@/components/useSetSearchParams'
+import fetchValhalla from './fetchValhalla'
 
 export default function useFetchItinerary(
 	searchParams,
@@ -27,7 +28,6 @@ export default function useFetchItinerary(
 			setRoutes(null)
 			return
 		}
-
 		async function fetchBrouterRoute(
 			points,
 			itineraryDistance,
@@ -64,6 +64,18 @@ export default function useFetchItinerary(
 				35 // ~ 25 km/h (ebike) x 1:30 hours
 			)
 			updateRoute('cycling', cycling)
+
+			updateRoute('car', 'loading')
+			const car = await fetchValhalla(
+				points,
+				itineraryDistance,
+				null,
+
+				1 //to be tweaked. We don't want to recommand this heavily polluting means of transport on the default itinerary result
+			)
+			updateRoute('car', car)
+
+			console.log('purple car', car)
 
 			updateRoute('walking', 'loading')
 			const walking = await fetchBrouterRoute(

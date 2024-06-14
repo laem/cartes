@@ -24,6 +24,7 @@ export function useZoneImages({ latLngClicked, setLatLngClicked }) {
 			const request = await fetch(url)
 
 			const json = await request.json()
+
 			const images = handleWikimediaGeosearchImages(json)
 
 			if (images.length) setWikimedia(images)

@@ -3,15 +3,18 @@ import { useEffect } from 'react'
 import { useMediaQuery } from 'usehooks-ts'
 import { fitBoundsConsideringModal } from '../utils'
 import { computeSlopeGradient } from './computeSlopeGradient'
+import { safeRemove } from '../effects/utils'
 
 /*
  * Draws the walk or cycle route provided by BRouter directly as Geojson
  * */
-export default function useDrawRoute(itineraryMode, map, geojson, id) {
+export default function useDrawRoute(isItineraryMode, map, geojson, id) {
 	const isMobile = useMediaQuery('(max-width: 800px)')
+	if (id === 'cycling') console.log('plop', geojson)
+
 	useEffect(() => {
 		if (
-			!itineraryMode ||
+			!isItineraryMode ||
 			!map ||
 			!geojson ||
 			!geojson.features ||
@@ -20,13 +23,14 @@ export default function useDrawRoute(itineraryMode, map, geojson, id) {
 			return undefined
 		console.log('will draw useDrawRoute inside ' + id, id, geojson)
 
-		map.addSource(id, {
-			type: 'geojson',
-			data: geojson,
-			lineMetrics: true,
-		})
+		const source = map.getSource(id)
+		if (!source)
+			map.addSource(id, {
+				type: 'geojson',
+				data: geojson,
+				lineMetrics: true,
+			})
 
-		if (map) console.log('getsource2', id, map.getSource(id))
 		console.log('useDrawRoute did add source')
 
 		map.addLayer({
@@ -43,6 +47,7 @@ export default function useDrawRoute(itineraryMode, map, geojson, id) {
 				'text-size': 16,
 			},
 		})
+		console.log('will add layer poinst', id + 'Points')
 		map.addLayer(
 			{
 				id: id + 'Points',
@@ -59,6 +64,7 @@ export default function useDrawRoute(itineraryMode, map, geojson, id) {
 			id + 'PointsSymbols'
 		)
 
+		const linestringFilter = ['all', ['in', '$type', 'LineString']]
 		map.addLayer(
 			{
 				id: id + 'Line',
@@ -85,9 +91,13 @@ export default function useDrawRoute(itineraryMode, map, geojson, id) {
 					distance: {
 						'line-width': 0,
 					},
+					car: {
+						'line-width': 3,
+						'line-color': 'IndianRed',
+					},
 					cycling: {
 						'line-color': '#57bff5',
-						'line-width': 5,
+						'line-width': 2,
 						...(id === 'cycling'
 							? {
 									'line-gradient': [
@@ -100,10 +110,11 @@ export default function useDrawRoute(itineraryMode, map, geojson, id) {
 							: {}),
 					},
 				}[id],
-				filter: ['in', '$type', 'LineString'],
+				filter: linestringFilter,
 			},
 			'distance' + 'Points'
 		)
+
 		map.addLayer(
 			{
 				id: id + 'Contour',
@@ -125,10 +136,14 @@ export default function useDrawRoute(itineraryMode, map, geojson, id) {
 					},
 					cycling: {
 						'line-color': '#5B099F',
-						'line-width': 8,
+						'line-width': 4,
+					},
+					car: {
+						'line-color': 'DarkRed',
+						'line-width': 6,
 					},
 				}[id],
-				filter: ['in', '$type', 'LineString'],
+				filter: linestringFilter,
 			},
 			'distance' + 'Line'
 		)
@@ -147,21 +162,22 @@ export default function useDrawRoute(itineraryMode, map, geojson, id) {
 			// "this.style is undefined" when redimensioning the browser window, need
 			// to catch it
 			// We're operating on a stale style / map
+			if (!map) return
 			try {
-				console.log(
-					'will remove useDrawRoute' + id,
-					map._mapId,
-					map.getLayer(id + 'Points')
+				const baseId = id
+				console.log('will try to remove source and layers id ', id)
+				safeRemove(map)(
+					[
+						baseId + 'Line',
+						baseId + 'Contour',
+						baseId + 'Points',
+						baseId + 'PointsSymbols',
+					],
+					[baseId]
 				)
-
-				map.removeLayer(id + 'Line')
-				map.removeLayer(id + 'Contour')
-				map.removeLayer(id + 'Points')
-				map.removeLayer(id + 'PointsSymbols')
-				map.removeSource(id)
 			} catch (e) {
 				console.log('Could not remove useDrawRoute layers or source', e)
 			}
 		}
-	}, [itineraryMode, geojson, map, id])
+	}, [isItineraryMode, geojson, map, id])
 }

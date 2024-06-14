@@ -1,8 +1,10 @@
 import css from '@/components/css/convertToJs'
 import LightsWarning from './LightsWarning'
 import ProfileChooser from './ProfileChooser'
+import { nowStamp } from './itinerary/transit/motisRequest'
+import ValhallaRésumé from './itinerary/ValhallaRésumé'
 
-export default function BikeRouteRésumé({
+export default function RouteRésumé({
 	mode,
 	data,
 	bikeRouteProfile,
@@ -29,14 +31,18 @@ export default function BikeRouteRésumé({
 				}
 			`}
 		>
-			<ModeContent
-				{...{
-					bikeRouteProfile,
-					setBikeRouteProfile,
-					mode,
-					data,
-				}}
-			/>
+			{mode === 'car' ? (
+				<ValhallaRésumé data={data} />
+			) : (
+				<BrouterModeContent
+					{...{
+						bikeRouteProfile,
+						setBikeRouteProfile,
+						mode,
+						data,
+					}}
+				/>
+			)}
 		</div>
 	)
 }
@@ -54,7 +60,7 @@ export const computeHumanDistance = (distance) => {
 	return [Math.round(distance / 10) * 10, 'm']
 }
 
-const daysHoursMinutesFromSeconds = (seconds) => {
+export const daysHoursMinutesFromSeconds = (seconds) => {
 	const secondsInDay = 24 * 60 * 60
 	const days = Math.floor(seconds / secondsInDay)
 	const rest = (seconds % secondsInDay) / (60 * 60)
@@ -63,8 +69,12 @@ const daysHoursMinutesFromSeconds = (seconds) => {
 	return [days, hours, minutes]
 }
 
-const ModeContent = ({ mode, data, setBikeRouteProfile, bikeRouteProfile }) => {
-	console.log('indigo sam', mode, data)
+const BrouterModeContent = ({
+	mode,
+	data,
+	setBikeRouteProfile,
+	bikeRouteProfile,
+}) => {
 	const features = data?.features
 	if (!features?.length) return null
 
@@ -78,6 +88,14 @@ const ModeContent = ({ mode, data, setBikeRouteProfile, bikeRouteProfile }) => {
 
 	const déniveléCumulé = feature.properties['filtered ascend']
 	const dénivelé = feature.properties['plain-ascend']
+	const arrivalTime = nowStamp() + +seconds,
+		humanArrivalTime =
+			!days &&
+			new Date(arrivalTime * 1000).toLocaleString('fr-FR', {
+				hour: 'numeric',
+				minute: 'numeric',
+			})
+
 	return (
 		<div>
 			<p>
@@ -91,7 +109,7 @@ const ModeContent = ({ mode, data, setBikeRouteProfile, bikeRouteProfile }) => {
 					{hours ? hours + ` h et ` : ''}
 					{+minutes}&nbsp;min
 				</strong>{' '}
-				pour{' '}
+				<small>(arrivée à {humanArrivalTime})</small> pour{' '}
 				<strong
 					title={`La pente sera de ${(
 						(déniveléCumulé / distance) *

@@ -8,10 +8,17 @@ import { letterFromIndex } from './Steps'
 import { geoSerializeSteps } from './areStepsEqual'
 import useDrawRoute from './useDrawRoute'
 import useFetchDrawBikeParkings from './useFetchDrawBikeParkings'
+import brouterResultToSegments from '@/components/cycling/brouterResultToSegments'
+import useDrawCyclingSegments from '../effects/useDrawCyclingSegments'
+import valhallaGeojson from './valhallaGeojson'
 
-export default function useItinerary(
+const joinFeatureCollections = (elements) => ({
+	type: 'FeatureCollection',
+	features: elements.map((element) => element.features).flat(),
+})
+export default function useDrawItinerary(
 	map,
-	itineraryMode,
+	isItineraryMode,
 	searchParams,
 	state,
 	zoom,
@@ -72,38 +79,44 @@ export default function useItinerary(
 		.map((el) => el.properties['track-length'] / 1000)
 		.reduce((memo, next) => memo + next, 0)
 
-	const geojson = useMemo(
+	const distanceGeojson = useMemo(
 		() => ({
 			type: 'FeatureCollection',
 			features: [...points, ...linestrings],
 		}),
 		[points, linestrings]
 	)
-	useDrawRoute(itineraryMode, map, geojson, 'distance')
 
-	useDrawRoute(
-		itineraryMode,
-		map,
-		(!mode || mode === 'cycling') &&
-			routes &&
-			routes.cycling !== 'loading' &&
-			routes.cycling,
-		'cycling'
-	)
-	useDrawRoute(
-		itineraryMode,
-		map,
-		(!mode || mode === 'walking') &&
-			routes &&
-			routes.walking !== 'loading' &&
-			routes.walking,
-		'walking'
-	)
+	useDrawRoute(isItineraryMode, map, distanceGeojson, 'distance')
+
+	const cyclingReady =
+		(!mode || mode === 'cycling') && routes && routes.cycling !== 'loading'
+
+	const cyclingSegmentsGeojson = useMemo(() => {
+		return (
+			cyclingReady && routes.cycling && brouterResultToSegments(routes.cycling)
+		)
+	}, [routes?.cycling, cyclingReady])
+
+	useDrawCyclingSegments(isItineraryMode, map, cyclingSegmentsGeojson)
+	useDrawRoute(isItineraryMode, map, cyclingReady && routes.cycling, 'cycling')
+
+	const carReady = mode === 'car' && routes && routes.car !== 'loading' // If no mode, summary mode, we don't show this heavily polluting mode, the user has to force it
+
+	const carGeojson = useMemo(() => {
+		if (!carReady || !routes.car) return
+
+		return valhallaGeojson(routes.car)
+	}, [carReady, routes?.car])
+
+	useDrawRoute(isItineraryMode, map, carReady && carGeojson, 'car')
 
 	const oldAllez = searchParams.allez
 	useEffect(() => {
-		if (!map || !itineraryMode) return
+		if (!map || !isItineraryMode) return
 
+		const awaitingNewStep =
+			state.length < 2 || state.some((step) => step == null)
 		const onClick = (e) => {
 			const features =
 				points &&
@@ -116,6 +129,7 @@ export default function useItinerary(
 				const key = features[0].properties.key
 				setSearchParams({ allez: removeStatePart(key, state) })
 			} else {
+				if (!awaitingNewStep) return
 				const allezPart = buildAllezPart(
 					'Point sur la carte',
 					null,
@@ -135,43 +149,39 @@ export default function useItinerary(
 
 		const onMouseMove = (e) => {
 			const features =
-				points &&
+				points?.length &&
 				map.queryRenderedFeatures(e.point, {
-					layers: ['routePoints'],
+					layers: ['distance' + 'Points'], // the points are handled by the distance mode
 				})
 			// UI indicator for clicking/hovering a point on the map
-			map.getCanvas().style.cursor = features.length ? 'pointer' : 'crosshair'
+			map.getCanvas().style.cursor = features.length
+				? 'pointer'
+				: awaitingNewStep
+				? 'crosshair'
+				: ''
 		}
-
-		/*
-		if (!itineraryMode) {
-			map.off('click', onClick)
-			map.off('mousemove', onMouseMove)
-			return
-		}
-		*/
 
 		map.on('click', onClick)
 		map.on('mousemove', onMouseMove)
 		return () => {
-			if (!map || !itineraryMode) return
+			if (!map || !isItineraryMode) return
 			map.off('click', onClick)
 			map.off('mousemove', onMouseMove)
-			map.getCanvas().style.cursor = 'pointer'
+			map.getCanvas().style.cursor = ''
 		}
-	}, [map, serializedPoints, setSearchParams, itineraryMode, oldAllez])
+	}, [map, serializedPoints, setSearchParams, isItineraryMode, oldAllez, mode])
 
 	// GeoJSON object to hold our measurement features
 
 	useEffect(() => {
-		if (!map || itineraryMode || map.getSource) return
+		if (!map || isItineraryMode || map.getSource) return
 		const source = map.getSource('measure-points')
 		if (!source) return
 
 		map.removeLayer('measure-lines')
 		map.removeLayer('measure-points')
 		map.removeSource('measure-points')
-	}, [itineraryMode, map, serializedPoints])
+	}, [isItineraryMode, map, serializedPoints])
 
 	/* Not sure it's useful to display the distance in this multimodal new mode
 	const computedDistance = isNaN(rawDistance)

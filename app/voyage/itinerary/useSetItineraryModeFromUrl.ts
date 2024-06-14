@@ -1,9 +1,9 @@
 import { useEffect } from 'react'
 
-export default function useItineraryFromUrl(allez, setItineraryMode) {
+export default function useItineraryFromUrl(allez, setIsItineraryMode) {
 	useEffect(() => {
 		if (allez.length < 2) return
 
-		setItineraryMode(true)
-	}, [allez, setItineraryMode])
+		setIsItineraryMode(true)
+	}, [allez, setIsItineraryMode])
 }

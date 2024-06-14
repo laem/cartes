@@ -71,7 +71,7 @@ export default function Meteo({ coordinates }) {
 		})
 	}, [setData, coordinates])
 
-	console.log('meteo', data)
+	//console.log('meteo', data)
 	if (!data?.weather) return
 	const { weather } = data
 	const now = new Date()
@@ -82,7 +82,7 @@ export default function Meteo({ coordinates }) {
 	)
 
 	const thisHour = relevantSorted[0]
-	console.log('meteo forecast', relevantSorted)
+	//console.log('meteo forecast', relevantSorted)
 	const isRaining = thisHour.rain['1h'] > 0,
 		rainIcon = isRaining
 			? 'https://meteofrance.com/modules/custom/mf_tools_common_theme_public/svg/rain/pluie-moderee.svg'

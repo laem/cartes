@@ -19,7 +19,7 @@
  * bbox
  **/
 
-import { useMemo, useState } from 'react'
+import { useMemo, useRef, useState } from 'react'
 
 import { getCategory } from '@/components/voyage/categories'
 import ModalSwitch from './ModalSwitch'
@@ -87,7 +87,7 @@ export default function Container({ searchParams }) {
 	// TODO This could be a simple derived variable but we seem to be using it in a
 	// button down below, not sure if it's relevant, why not wait for the url to
 	// change ?
-	const [itineraryMode, setItineraryMode] = useState(false)
+	const [isItineraryMode, setIsItineraryMode] = useState(false)
 
 	// TODO this hook must be split between useFetchItineraryData and
 	// useDrawItinerary like useTransportMap was
@@ -99,14 +99,14 @@ export default function Container({ searchParams }) {
 
 	const itinerary = {
 		bikeRouteProfile,
-		itineraryMode,
-		setItineraryMode,
+		isItineraryMode,
+		setIsItineraryMode,
 		reset: resetItinerary,
 		routes,
 		date,
 	}
 
-	useSetItineraryModeFromUrl(allez, setItineraryMode)
+	useSetItineraryModeFromUrl(allez, setIsItineraryMode)
 
 	const category = getCategory(searchParams)
 
@@ -182,8 +182,9 @@ export default function Container({ searchParams }) {
 		(quickSearchFeatures.length === 0 ||
 			quickSearchFeatures[0]?.categoryName === category.name)
 
+	const containerRef = useRef()
 	return (
-		<main id="voyage" style={{ height: '100%' }}>
+		<div ref={containerRef}>
 			<MapContainer>
 				<ContentWrapper>
 					<ModalSwitch
@@ -216,6 +217,7 @@ export default function Container({ searchParams }) {
 							vers,
 							osmFeature,
 							quickSearchFeaturesLoaded,
+							containerRef,
 						}}
 					/>
 				</ContentWrapper>
@@ -260,6 +262,6 @@ export default function Container({ searchParams }) {
 					}}
 				/>
 			</MapContainer>
-		</main>
+		</div>
 	)
 }

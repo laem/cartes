@@ -14,6 +14,7 @@ import { getTagLabels } from './osmTagLabels'
 import Brand, { Wikidata } from './tags/Brand'
 import Stop, { isNotTransportStop, transportKeys } from './transport/stop/Stop'
 import { computeSncfUicControlDigit } from './utils'
+import Heritage, { heritageTagsSelector, isHeritageTag } from './osm/Heritage'
 
 export default function OsmFeature({ data, transportStopData }) {
 	if (!data.tags) return null
@@ -39,9 +40,11 @@ export default function OsmFeature({ data, transportStopData }) {
 		email,
 		'contact:email': email2,
 		website: website1,
+		'website:menu': menu,
 		'contact:website': website2,
 		'contact:instagram': instagram,
 		'contact:facebook': facebook,
+		'contact:whatsapp': whatsapp,
 		'ref:FR:SIRET': siret,
 		brand: brand,
 		'brand:wikidata': brandWikidata,
@@ -197,17 +200,25 @@ export default function OsmFeature({ data, transportStopData }) {
 			{website && (
 				<div>
 					<a href={website} target="_blank" title="Site Web">
-						<Emoji e="🌍️" /> <span>{cleanHttp(website)}</span>
+						<Emoji e="🌍️" /> <span>Site web</span>
+					</a>
+				</div>
+			)}
+			{menu && (
+				<div>
+					<a href={menu} target="_blank" title="Menu">
+						<Emoji e="📋" /> <span>Menu</span>
 					</a>
 				</div>
 			)}
 			{opening_hours && <OpeningHours opening_hours={opening_hours} />}
 			<ContactAndSocial
-				{...{ email: email || email2, instagram, facebook, siret }}
+				{...{ email: email || email2, instagram, facebook, whatsapp, siret }}
 			/>
 			{!isNotTransportStop(tags) && (
 				<Stop tags={tags} data={transportStopData} />
 			)}
+			<Heritage tags={tags} />
 			{allocine && (
 				<a
 					href={`https://www.allocine.fr/seance/salle_gen_csalle=${allocine}.html`}
@@ -250,10 +261,13 @@ export default function OsmFeature({ data, transportStopData }) {
 }
 
 export const processTags = (filteredRest) => {
-	const translatedTags = Object.entries(filteredRest).map(([key, value]) => {
-			const tagLabels = getTagLabels(key, value)
-			return [{ [key]: value }, tagLabels]
-		}),
+	const translatedTags = Object.entries(filteredRest)
+			// Tags to exclude because handled by other components that provide a test function
+			.filter(([k, v]) => !isHeritageTag(k))
+			.map(([key, value]) => {
+				const tagLabels = getTagLabels(key, value)
+				return [{ [key]: value }, tagLabels]
+			}),
 		keyValueTags = translatedTags.filter(([, t]) => t.length === 2),
 		soloTags = translatedTags.filter(([, t]) => t.length === 1)
 

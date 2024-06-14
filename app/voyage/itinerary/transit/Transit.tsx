@@ -226,6 +226,7 @@ export const Line = ({
 				>
 					{transports.map((transport) => (
 						<li
+							key={transport.shortName}
 							css={`
 								width: ${(transport.seconds / connection.seconds) * 100}%;
 								height: 1.8rem;

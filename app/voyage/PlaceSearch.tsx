@@ -54,13 +54,20 @@ export default function PlaceSearch({
 	const onInputChange =
 		(stepIndex = -1, localSearch = false) =>
 		(v) => {
+			const oldStateEntry = state[stepIndex]
+			const stateEntry = {
+				...(oldStateEntry?.results?.length && v == null
+					? { results: null }
+					: {}),
+				...(v === '' ? {} : { inputValue: v }),
+			}
+			const safeStateEntry =
+				Object.keys(stateEntry).length > 0 ? stateEntry : null
+
 			const newState = replaceArrayIndex(
 				state,
 				stepIndex,
-				{
-					...(v == null ? { results: null } : {}),
-					inputValue: v,
-				}
+				safeStateEntry
 				//validated: false, // TODO was important or not ? could be stored in each state array entries and calculated ?
 			)
 			setState(newState)
@@ -118,6 +125,9 @@ export default function PlaceSearch({
 						input {
 							max-width: 22rem;
 							width: 83vw;
+							background: var(--lightestColor);
+							color: var(--darkColor);
+							border: none;
 
 							margin-bottom: 0;
 							${state.some(isStepBeingSearched) &&

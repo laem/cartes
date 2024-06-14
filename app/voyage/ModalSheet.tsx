@@ -1,5 +1,5 @@
 import { useCallback, useEffect, useRef, useState } from 'react'
-import Sheet, { SheetRef } from 'react-modal-sheet'
+import { Sheet, SheetRef } from '@/components/react-modal-sheet'
 import styled from 'styled-components'
 import Content from './Content'
 import ModalSheetReminder from './ModalSheetReminder'
@@ -52,7 +52,7 @@ export default function ModalSheet(props) {
 				}}
 				snapPoints={snapPoints}
 				initialSnap={initialSnap}
-				mountPoint={document.querySelector('main')}
+				mountPoint={props.containerRef.current}
 				onSnap={(snapIndex) => {
 					console.log('> Current snap point index:', snapIndex)
 					setTrackedSnap(snapIndex)
@@ -71,7 +71,7 @@ export default function ModalSheet(props) {
 						`}
 					/>
 					<Sheet.Content>
-						<Sheet.Scroller draggableAt="both">
+						<Sheet.Scroller draggableAt="both" snap={trackedSnap}>
 							<SheetContentWrapper>
 								<Content
 									{...props}
