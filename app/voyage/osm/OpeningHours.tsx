@@ -1,4 +1,10 @@
 import parseOpeningHours from 'opening_hours'
+
+const getStartOfToday = (date) => {
+	const startOfToday = date || new Date()
+	startOfToday.setHours(0, 0, 0, 0)
+	return startOfToday
+}
 const getOh = (opening_hours) => {
 	try {
 		const oh = new parseOpeningHours(opening_hours, {
@@ -8,8 +14,8 @@ const getOh = (opening_hours) => {
 			nextChange = oh.getNextChange()
 
 		const intervals = oh.getOpenIntervals(
-			new Date(),
-			new Date(new Date().setDate(new Date().getDate() + 7))
+			getStartOfToday(),
+			getStartOfToday(new Date(new Date().setDate(new Date().getDate() + 7)))
 		)
 		return { isOpen, nextChange, intervals }
 	} catch (e) {
@@ -17,6 +23,7 @@ const getOh = (opening_hours) => {
 		return { isOpen: 'error', nextChange: 'error' }
 	}
 }
+
 export const OpeningHours = ({ opening_hours }) => {
 	const now = new Date()
 
@@ -43,6 +50,7 @@ export const OpeningHours = ({ opening_hours }) => {
 		weekday: 'long',
 	})
 
+	console.log('intervals', intervals)
 	const ohPerDay = intervals
 		? intervals.reduce(
 				(memo, next) => {
@@ -81,7 +89,7 @@ export const OpeningHours = ({ opening_hours }) => {
 			`}
 		>
 			<details open={false}>
-				<summary>
+				<summary title="Voir tous les horaires">
 					<OpenIndicator isOpen={isOpen === 'error' ? false : isOpen} />{' '}
 					{isOpen === 'error' && <span>Problème dans les horaires</span>}
 					{nextChange === 'error' ? null : !nextChange ? (
