@@ -124,7 +124,7 @@
 		"jsdom": "^22.1.0",
 		"leaflet": "^1.9.4",
 		"leaflet-defaulticon-compatibility": "^0.1.2",
-		"maplibre-gl": "4.3.2",
+		"maplibre-gl": "^4.4.0",
 		"markdown-to-jsx": "^7.3.2",
 		"meteofrance_api": "^1.2.4",
 		"mini-css-extract-plugin": "^2.6.0",
