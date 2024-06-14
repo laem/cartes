@@ -9,7 +9,6 @@ const SideSheet = dynamic(() => import('./SideSheet'), {
 })
 
 export default function ModalSwitch(props) {
-	console.log('salut de modal switch')
 	const matches = useMediaQuery('(min-width: 800px)')
 
 	if (matches) return <SideSheet {...props} />

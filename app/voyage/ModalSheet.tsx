@@ -1,8 +1,9 @@
-import { useCallback, useEffect, useRef, useState } from 'react'
 import { Sheet, SheetRef } from '@/components/react-modal-sheet'
+import { useCallback, useEffect, useRef, useState } from 'react'
 import styled from 'styled-components'
 import Content from './Content'
 import ModalSheetReminder from './ModalSheetReminder'
+import { useDimensions } from '@/components/react-modal-sheet/hooks'
 
 const snapPoints = [-50, 0.5, 150, 100, 0],
 	initialSnap = 3
@@ -10,6 +11,7 @@ const snapPoints = [-50, 0.5, 150, 100, 0],
 export default function ModalSheet(props) {
 	console.log('salut modal sheet')
 	const [trackedSnap, setTrackedSnap] = useState(initialSnap)
+
 	const [isOpen, setOpen] = useState(false)
 
 	const { osmFeature, styleChooser, searchParams } = props
@@ -24,6 +26,20 @@ export default function ModalSheet(props) {
 		},
 		[ref]
 	)
+
+	// Handle virtual keyboard pop on PlaceSearch input click
+	// ---------------------
+	// Not sure if it's a bug of react-moda-sheet or a desired behavior,
+	// but resizing the window height when snapPoints makes the sheet lose its
+	// current snap and go back to the initialSnap without overwriting the current
+	// snap. On mobile firefox this is problematic : the virtual keyboard changes
+	// height which makes the sheet lose its desired snap
+	const { height } = useDimensions()
+	useEffect(() => {
+		setSnap(Math.max(trackedSnap - 1, 0), 'inside')
+		setSnap(trackedSnap, 'inside')
+		//setTimeout(() => setSnap(trackedSnap, 'inside'), 2000)
+	}, [height])
 
 	useEffect(() => {
 		// https://github.com/Temzasse/react-modal-sheet/issues/146
