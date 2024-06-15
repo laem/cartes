@@ -24,6 +24,7 @@ import TransportMap from './transport/TransportMap'
 import useOgImageFetcher from './useOgImageFetcher'
 import useWikidata from './useWikidata'
 import getUrl from './osm/getUrl'
+import ElectionsContent from './Elections'
 
 const getMinimumQuickSearchZoom = (mobile) => (mobile ? 10.5 : 12) // On a small screen, 70 %  of the tiles are not visible, hence this rule
 
@@ -162,6 +163,7 @@ export default function Content({
 			</ExplanationWrapper>
 		)
 
+	const elections = searchParams.elections === 'oui'
 	return (
 		<ContentWrapper>
 			{showSearch && (
@@ -219,6 +221,7 @@ export default function Content({
 				</section>
 			)}
 
+			{elections && <ElectionsContent searchParams={searchParams} />}
 			{searchParams.favoris === 'oui' && <Bookmarks />}
 			{searchParams.transports === 'oui' && (
 				<TransportMap

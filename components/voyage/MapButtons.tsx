@@ -104,6 +104,7 @@ export default function MapButtons({
 				<button
 					onClick={() =>
 						setSearchParams({
+							style: 'base',
 							elections: searchParams.elections ? undefined : 'oui',
 						})
 					}

@@ -8,6 +8,7 @@ import { disambiguateWayRelation } from '@/app/voyage/osmRequest'
 import { encodePlace } from '@/app/voyage/utils'
 import { replaceArrayIndex } from '@/components/utils/utils'
 import { useEffect } from 'react'
+import handleCirconscriptionsLegislativesClick from './handleCirconscriptionsLegislativesClick'
 
 export default function useMapClick(
 	map,
@@ -66,6 +67,9 @@ export default function useMapClick(
 				features = rawFeatures.filter(
 					(f) => f.source === 'maptiler_planet' && allowedLayerProps(f)
 				)
+
+			const circo = handleCirconscriptionsLegislativesClick(rawFeatures)
+			if (circo) return setSearchParams({ ...circo })
 
 			console.log('clicked map features', rawFeatures)
 
