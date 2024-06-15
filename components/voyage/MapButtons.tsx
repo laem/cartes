@@ -7,6 +7,7 @@ import css from '../css/convertToJs'
 import useSetSearchParams from '../useSetSearchParams'
 import { omit } from '../utils/utils'
 import ItineraryButton, { ResetIcon } from './itinerary/ItineraryButton'
+import Emoji from '../Emoji'
 
 export const MapButtonsWrapper = styled.div`
 	position: fixed;
@@ -93,6 +94,14 @@ export default function MapButtons({
 						`}
 					/>
 				</Link>
+			</MapButton>
+			<MapButton $active={searchParams.elections}>
+				<button
+					onClick={() => setSearchParams({ elections: 'oui' })}
+					title={'Montrer les circonscriptions législatives 2024'}
+				>
+					<Emoji e="🗳️" />
+				</button>
 			</MapButton>
 			<MapButton $active={styleChooser}>
 				<button
