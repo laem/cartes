@@ -10,6 +10,12 @@ export default function voyageStyle(key) {
 		id: 'voyage',
 		name: 'Voyage',
 		sources: {
+			circonscriptions_legislatives_2024: {
+				type: 'vector',
+				url: 'pmtiles://https://motis.cartes.app/gtfs/circonscriptions-legislatives-2024.pmtiles',
+				attribution:
+					'https://umap.openstreetmap.fr/tr/map/circonscriptions-legislatives-2022_767781',
+			},
 			maptiler_planet: {
 				url: `https://api.maptiler.com/tiles/v3/tiles.json?key=${key}`,
 				type: 'vector',
@@ -3174,6 +3180,31 @@ export default function voyageStyle(key) {
 					['match', ['get', 'subclass'], ['cycleway'], true, false],
 					['==', ['geometry-type'], 'LineString'],
 				],
+			},
+
+			{
+				id: 'circonscriptions_legislatives_2024',
+				type: 'fill',
+				source: 'circonscriptions_legislatives_2024',
+				'source-layer': 'circolegislativesumap',
+				//maxzoom: 8,
+				layout: { visibility: 'visible' },
+				paint: {
+					'fill-color': 'purple',
+					'fill-opacity': 0.4,
+					'fill-antialias': true,
+				},
+				//filter: ['==', 'class', 'grass'],
+			},
+			{
+				id: 'circonscriptions_legislatives_2024_outline',
+				type: 'line',
+				source: 'circonscriptions_legislatives_2024',
+				'source-layer': 'circolegislativesumap',
+				paint: {
+					'line-color': 'white',
+					'line-width': 1,
+				},
 			},
 		],
 		glyphs: `https://api.maptiler.com/fonts/{fontstack}/{range}.pbf?key=${key}`,

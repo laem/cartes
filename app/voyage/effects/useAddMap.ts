@@ -2,7 +2,7 @@ import maplibregl from 'maplibre-gl'
 import { useEffect, useMemo, useState } from 'react'
 import { useMediaQuery } from 'usehooks-ts'
 import { styles } from '../styles/styles'
-import { replaceArrayIndex } from '@/components/utils/utils'
+import { Protocol } from 'pmtiles'
 
 const defaultCenter =
 	// Saint Malo [-1.9890417068124002, 48.66284934737089]
@@ -20,6 +20,14 @@ export default function useAddMap(
 	const [map, setMap] = useState(null)
 	const [geolocate, setGeolocate] = useState(null)
 	const isMobile = useMediaQuery('(max-width: 800px)')
+	useEffect(() => {
+		let protocol = new Protocol()
+		maplibregl.addProtocol('pmtiles', protocol.tile)
+		return () => {
+			maplibregl.removeProtocol('pmtiles')
+		}
+	}, [])
+
 	useEffect(() => {
 		if (!mapContainerRef.current) return undefined
 

@@ -136,6 +136,7 @@
 		"openmoji": "^15.0.0",
 		"osmtogeojson": "^3.0.0-beta.5",
 		"path-browserify": "^1.0.1",
+		"pmtiles": "^3.0.6",
 		"process": "^0.11.10",
 		"publicodes": "1.0.0-rc.7",
 		"puppeteer-core": "^21.0.1",
