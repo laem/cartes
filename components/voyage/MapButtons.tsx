@@ -96,7 +96,7 @@ export default function MapButtons({
 				</Link>
 			</MapButton>
 			<MapButton
-				$active={searchParams.elections}
+				$active={searchParams.style === 'elections'}
 				css={`
 					border: 2px solid purple;
 				`}
@@ -104,8 +104,8 @@ export default function MapButtons({
 				<button
 					onClick={() =>
 						setSearchParams({
-							style: 'base',
-							elections: searchParams.elections ? undefined : 'oui',
+							style:
+								searchParams.style === 'elections' ? undefined : 'elections',
 						})
 					}
 					title={'Montrer les circonscriptions législatives 2024'}

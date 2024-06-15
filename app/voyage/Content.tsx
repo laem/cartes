@@ -163,7 +163,7 @@ export default function Content({
 			</ExplanationWrapper>
 		)
 
-	const elections = searchParams.elections === 'oui'
+	const elections = searchParams.style === 'elections'
 	return (
 		<ContentWrapper>
 			{showSearch && (

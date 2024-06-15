@@ -3,6 +3,8 @@ import cyclOsm from './cyclOsmStyle'
 import voyageStyle from './voyage'
 import transit from './transit'
 import testStreetComplete from './test-street-complete'
+import { experiments } from 'webpack'
+import elections from './elections'
 
 const key = process.env.NEXT_PUBLIC_MAPTILER
 
@@ -64,6 +66,11 @@ export const styles = {
 		name: 'Hiver',
 		emoji: '⛄️',
 		hasTerrain: true,
+	},
+	elections: {
+		url: elections(key),
+		name: 'Élections',
+		emoji: '🗳️',
 	},
 	'street-complete': {
 		// Taken from MapTiler's dataviz style
