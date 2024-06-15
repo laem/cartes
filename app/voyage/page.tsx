@@ -11,6 +11,16 @@ export async function generateMetadata(
 	{ params, searchParams }: Props,
 	parent: ResolvingMetadata
 ): Promise<Metadata> {
+	if (searchParams.style === 'elections')
+		return {
+			title: 'Cartes des circonscriptions de vote aux législatives 2024',
+			description:
+				'Quelle est ma circonscription ? Trouvez en un clic votre circonscription de vote aux législatives 2024',
+			openGraph: {
+				images: ['/circonscriptions.png'],
+			},
+		}
+
 	console.log('will METADATA')
 	const allez = searchParams.allez?.split('->')
 
