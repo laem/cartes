@@ -69,6 +69,7 @@ export default function useMapClick(
 				)
 
 			const circo = handleCirconscriptionsLegislativesClick(rawFeatures)
+
 			if (circo) return setSearchParams({ ...circo })
 
 			console.log('clicked map features', rawFeatures)
