@@ -17,6 +17,12 @@ body {
 	height: 100%;
 	font-size: 100%;
 	line-height: 1.7rem;
+
+	/* contain overscroll behaviour only in vertical direction
+	 * https://stackoverflow.com/questions/36212722/how-to-prevent-pull-down-to-refresh-of-mobile-chrome
+	 * */
+
+	overscroll-behavior-y: contain;
 }
 @media (max-width: 500px) {
 	html {
