@@ -221,7 +221,9 @@ export default function Content({
 				</section>
 			)}
 
-			{elections && <ElectionsContent searchParams={searchParams} />}
+			{elections && (
+				<ElectionsContent searchParams={searchParams} setSnap={setSnap} />
+			)}
 			{searchParams.favoris === 'oui' && <Bookmarks />}
 			{searchParams.transports === 'oui' && (
 				<TransportMap

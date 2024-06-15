@@ -1,9 +1,14 @@
 import useSetSearchParams from '@/components/useSetSearchParams'
 import { ModalCloseButton } from './UI'
 import Emoji from '@/components/Emoji'
+import { useEffect } from 'react'
 
-export default function ({ searchParams }) {
+export default function ({ searchParams, setSnap }) {
 	const setSearchParams = useSetSearchParams()
+	useEffect(() => {
+		if (!searchParams.id_circo) return
+		setSnap(1)
+	}, [searchParams.id_circo])
 	if (!searchParams.id_circo)
 		return (
 			<section
