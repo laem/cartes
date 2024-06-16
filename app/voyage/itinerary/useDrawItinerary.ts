@@ -101,6 +101,15 @@ export default function useDrawItinerary(
 	useDrawCyclingSegments(isItineraryMode, map, cyclingSegmentsGeojson)
 	useDrawRoute(isItineraryMode, map, cyclingReady && routes.cycling, 'cycling')
 
+	useDrawRoute(
+		isItineraryMode,
+		map,
+		(!mode || mode === 'walking') &&
+			routes &&
+			routes.walking !== 'loading' &&
+			routes.walking,
+		'walking'
+	)
 	const carReady = mode === 'car' && routes && routes.car !== 'loading' // If no mode, summary mode, we don't show this heavily polluting mode, the user has to force it
 
 	const carGeojson = useMemo(() => {
