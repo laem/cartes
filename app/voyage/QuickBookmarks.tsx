@@ -19,7 +19,10 @@ export default function QuickBookmarks({ oldAllez }) {
 	const [tutorials, setTutorials] = useLocalStorage('tutorials', {})
 	const setSearchParams = useSetSearchParams()
 	const bookmarksUrl = setSearchParams({ favoris: 'oui' }, true)
-	if (!tutorials.bookmarks && !bookmarks?.length)
+	// Tutoriel mis en ligne pendant un moment, peut freiner le nouvel utilisateur
+	// , à réintroduire autrement, peut-être après quelques interactions sur l'app
+	// ?
+	if (false && !tutorials.bookmarks && !bookmarks?.length)
 		return (
 			<p
 				css={`
