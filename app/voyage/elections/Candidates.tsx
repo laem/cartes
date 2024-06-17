@@ -20,8 +20,20 @@ export default function Candidates({ data }) {
 	if (!data) return <p>Téléchargement des candidats.</p>
 	if (data === 'Error') return <p>Candidats non trouvés.</p>
 	return (
-		<section>
-			<h3>Candidats au 1er tour du 30 juin 2024</h3>
+		<section
+			css={`
+				h3 {
+					margin-bottom: 0;
+				}
+				header {
+					margin-bottom: 1rem;
+				}
+			`}
+		>
+			<header>
+				<h3>Vos candidats </h3>
+				<small>1er tour des législatives du 30 juin 2024</small>
+			</header>
 			<ul>
 				{data.map(({ NomPsn, PrenomPsn, LibNuaCand, Couleur }) => {
 					const safeColor = Couleur || '#333333'

@@ -18,32 +18,44 @@ export default function ({ searchParams, setSnap }) {
 	if (!idCirco) return <NoCircoYet />
 
 	return (
-		<section
-			css={`
-				position: relative;
-				padding-top: 0.2rem;
-				margin-top: 1rem;
-			`}
-		>
-			<ModalCloseButton
-				title="Fermer l'encart circo"
-				onClick={() => {
-					console.log('will yo')
-					setSearchParams({
-						id_circo: undefined,
-						dep: undefined,
-						name: undefined,
-					})
-				}}
-			/>
-			<h3>Votre circonscription :</h3>
-			<div>
-				<div>Nom : {name}</div>
-				<div>Code : {idCirco}</div>
-				<div>Département : {dep}</div>
-			</div>
+		<div>
+			<section
+				css={`
+					position: relative;
+					margin-top: 1rem;
+					h3 {
+						margin-top: 0;
+					}
+				`}
+			>
+				<ModalCloseButton
+					title="Fermer l'encart circo"
+					onClick={() => {
+						console.log('will yo')
+						setSearchParams({
+							id_circo: undefined,
+							dep: undefined,
+							name: undefined,
+						})
+					}}
+				/>
+				<h3>Votre circonscription</h3>
+				<div
+					css={`
+						background: white;
+						padding: 0.2rem 0.6rem;
+						border-radius: 0.4rem;
+						border: 1px solid var(--lighterColor);
+						width: fit-content;
+					`}
+				>
+					<div>Nom : {name}</div>
+					<div>Code : {idCirco}</div>
+					<div>Département : {dep}</div>
+				</div>
+			</section>
 			<Candidates data={candidates} />
-		</section>
+		</div>
 	)
 }
 
