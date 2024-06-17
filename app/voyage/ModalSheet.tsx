@@ -25,9 +25,15 @@ export default function ModalSheet(props) {
 		(i: number, fromComponent) => {
 			console.log('snapp to ' + i, ' from component ', fromComponent)
 
+			/*
+			if (i < snapPoints.length - 1) setOpen(true)
+			setTimeout(() => {
+			}, 1000)
+			*/
+
 			ref.current?.snapTo(i)
 		},
-		[ref]
+		[ref, setOpen]
 	)
 
 	// Handle virtual keyboard pop on PlaceSearch input click
@@ -49,8 +55,10 @@ export default function ModalSheet(props) {
 		setTimeout(() => setOpen(true), 1)
 	}, [setOpen])
 
+	const clickedCirco = searchParams.id_circo != null
+	// not sure this works. It's supposed to make the modal pop when clicks
 	useEffect(() => {
-		if (!osmFeature && !styleChooser && !bookmarksView) return
+		if (!osmFeature && !styleChooser && !bookmarksView && !clickedCirco) return
 
 		setOpen(true)
 		const timeout = () => {
@@ -60,7 +68,7 @@ export default function ModalSheet(props) {
 		return () => {
 			clearTimeout(timeout)
 		}
-	}, [setSnap, osmFeature, styleChooser, bookmarksView])
+	}, [setSnap, osmFeature, styleChooser, bookmarksView, clickedCirco])
 
 	return (
 		<>
