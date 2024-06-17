@@ -58,6 +58,11 @@ const nextConfig = {
 				destination: '/carburants/prix-a-la-pompe',
 				permanent: true,
 			},
+			{
+				source: '/elections-legislatives-2024',
+				destination: '/?style=elections',
+				permanent: false,
+			},
 		]
 	},
 	async rewrites() {
