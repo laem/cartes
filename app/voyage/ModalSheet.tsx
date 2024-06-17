@@ -4,17 +4,20 @@ import styled from 'styled-components'
 import Content from './Content'
 import ModalSheetReminder from './ModalSheetReminder'
 import { useDimensions } from '@/components/react-modal-sheet/hooks'
+import { useLocalStorage } from 'usehooks-ts'
 
 const snapPoints = [-50, 0.5, 150, 100, 0],
 	initialSnap = 3
 
 export default function ModalSheet(props) {
-	console.log('salut modal sheet')
+	const { osmFeature, styleChooser, searchParams } = props
+
+	const [tutorials, setTutorials] = useLocalStorage('tutorials', {})
+
 	const [trackedSnap, setTrackedSnap] = useState(initialSnap)
 
 	const [isOpen, setOpen] = useState(false)
 
-	const { osmFeature, styleChooser, searchParams } = props
 	const bookmarksView = searchParams.favoris === 'oui'
 
 	const ref = useRef<SheetRef>()
@@ -66,13 +69,16 @@ export default function ModalSheet(props) {
 				ref={ref}
 				isOpen={isOpen}
 				onClose={() => {
+					console.log('Modal closed')
+					if (!tutorials.introduction)
+						setTutorials((tutorials) => ({ ...tutorials, introduction: true }))
 					setOpen(false)
 				}}
 				snapPoints={snapPoints}
 				initialSnap={initialSnap}
 				mountPoint={props.containerRef.current}
 				onSnap={(snapIndex) => {
-					console.log('> Current snap point index:', snapIndex)
+					console.log('> Modal : Current snap point index:', snapIndex)
 					setTrackedSnap(snapIndex)
 				}}
 			>
