@@ -1,4 +1,5 @@
 import { findContrastedTextColor } from '@/components/utils/colors'
+import Image from 'next/image'
 
 export default function Candidates({ data }) {
 	/*
@@ -56,8 +57,27 @@ export default function Candidates({ data }) {
 					)
 				})}
 			</ul>
-			<small css="text-align: right; display: block; margin-top: 1rem">
-				Source : France 3 Régions
+			<small
+				css={`
+					text-align: right;
+					display: block;
+					margin-top: 1rem;
+					img {
+						width: 1.2rem;
+						height: auto;
+						vertical-align: text-top;
+						margin-left: 0.3rem;
+					}
+				`}
+			>
+				Source :{' '}
+				<Image
+					src="https://france3-regions.francetvinfo.fr/assets/img/logos/france-3-black.svg"
+					width="10"
+					height="10"
+					alt="Logo de France 3 Régions"
+				/>{' '}
+				France 3 Régions
 			</small>
 		</section>
 	)
