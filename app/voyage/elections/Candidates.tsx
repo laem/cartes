@@ -18,7 +18,8 @@ export default function Candidates({ data }) {
     }
 	*/
 	if (!data) return <p>Téléchargement des candidats.</p>
-	if (data === 'Error') return <p>Candidats non trouvés.</p>
+	if (data === 'Error')
+		return <p>Candidats non trouvés. Ils seront ajoutés prochainement.</p>
 	return (
 		<section
 			css={`
