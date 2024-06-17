@@ -109,6 +109,8 @@ export default function Content({
 		(el) => el && (!Array.isArray(el) || el.length > 0)
 	)
 
+	const elections = searchParams.style === 'elections'
+
 	const showContent =
 		hasContent &&
 		// treat the case click on a OSM feature -> feature card -> click on "go
@@ -116,7 +118,8 @@ export default function Content({
 		// 2 -> useless destination card
 		// Note : what we wanted to do would need a filter(Boolean), but in practice
 		// removing the card after the destination click is good too
-		!(itinerary.isItineraryMode && state.length >= 2)
+		!(itinerary.isItineraryMode && state.length >= 2) &&
+		!elections
 
 	const bookmarkable = geocodedClickedPoint || osmFeature // later : choice
 
@@ -163,7 +166,6 @@ export default function Content({
 			</ExplanationWrapper>
 		)
 
-	const elections = searchParams.style === 'elections'
 	return (
 		<ContentWrapper>
 			{showSearch && (
