@@ -57,28 +57,36 @@ export default function Candidates({ data }) {
 					)
 				})}
 			</ul>
-			<small
+			<a
+				href="https://github.com/f3reg/lg2024/"
+				about="_blank"
 				css={`
-					text-align: right;
-					display: block;
-					margin-top: 1rem;
-					img {
-						width: 1.2rem;
-						height: auto;
-						vertical-align: text-top;
-						margin-left: 0.3rem;
+					text-decoration: none;
+					color: gray;
+					small {
+						text-align: right;
+						display: block;
+						margin-top: 1rem;
+						img {
+							width: 1.2rem;
+							height: auto;
+							vertical-align: text-top;
+							margin-left: 0.3rem;
+						}
 					}
 				`}
 			>
-				Source :{' '}
-				<Image
-					src="https://france3-regions.francetvinfo.fr/assets/img/logos/france-3-black.svg"
-					width="10"
-					height="10"
-					alt="Logo de France 3 Régions"
-				/>{' '}
-				France 3 Régions
-			</small>
+				<small>
+					Source :{' '}
+					<Image
+						src="https://france3-regions.francetvinfo.fr/assets/img/logos/france-3-black.svg"
+						width="10"
+						height="10"
+						alt="Logo de France 3 Régions"
+					/>{' '}
+					France 3 Régions
+				</small>
+			</a>
 		</section>
 	)
 }
