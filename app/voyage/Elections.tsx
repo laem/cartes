@@ -38,9 +38,9 @@ export default function ({ searchParams, setSnap }) {
 			/>
 			<h3>Votre circonscription :</h3>
 			<div>
+				<div>Nom : {name}</div>
 				<div>Code : {idCirco}</div>
 				<div>Département : {dep}</div>
-				<div>Nom : {name}</div>
 			</div>
 			<Candidates data={candidates} />
 		</section>

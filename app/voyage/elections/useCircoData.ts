@@ -6,13 +6,17 @@ export default function (id) {
 	useEffect(() => {
 		if (!id) return
 		const fetchData = async () => {
-			const url = `https://raw.githubusercontent.com/f3reg/lg2024/main/legislatives/2024/candidats/saisie/t1_circo_${id}.json`
+			try {
+				setData(null)
+				const url = `https://raw.githubusercontent.com/f3reg/lg2024/main/legislatives/2024/candidats/saisie/t1_circo_${id}.json`
 
-			const request = await fetch(url)
-			const json = await request.json()
+				const request = await fetch(url)
+				const json = await request.json()
 
-			console.log('plop', json)
-			setData(shuffleArray(json))
+				setData(shuffleArray(json))
+			} catch (e) {
+				setData('Error')
+			}
 		}
 
 		fetchData()
