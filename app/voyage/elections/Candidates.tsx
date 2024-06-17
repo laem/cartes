@@ -17,7 +17,7 @@ export default function Candidates({ data }) {
         "Details":null
     }
 	*/
-	if (!data) return <p>Téléchargement des candidats.</p>
+	if (!data) return <p>Téléchargement de la liste des candidats.</p>
 	if (data === 'Error')
 		return <p>Candidats non trouvés. Ils seront ajoutés prochainement.</p>
 	return (
