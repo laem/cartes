@@ -13,11 +13,12 @@ export async function generateMetadata(
 ): Promise<Metadata> {
 	if (searchParams.style === 'elections')
 		return {
-			title: 'Cartes des circonscriptions de vote aux législatives 2024',
+			title:
+				'Cartes des circonscriptions et des candidats aux législatives 2024',
 			description:
-				'Quelle est ma circonscription ? Trouvez en un clic votre circonscription de vote aux législatives 2024',
+				'Quelle est ma circonscription ? Qui sont mes candidats ? Trouvez en un clic votre circonscription et la liste des candidats pour le vote des législatives 2024 le 30 juin 2024',
 			openGraph: {
-				images: ['/circonscriptions.png'],
+				images: ['/circonscriptions-candidats.png'],
 			},
 		}
 
