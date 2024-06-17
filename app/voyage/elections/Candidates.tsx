@@ -58,9 +58,15 @@ export default function Candidates({ data }) {
 									color: ${findContrastedTextColor(safeColor, true)};
 									font-size: 80%;
 									line-height: 1.2rem;
+									min-width: 6rem;
 								`}
+								title={
+									LibNuaCand
+										? 'Le parti sous lequel ce candidat ou cette candidate se présente'
+										: 'Parti non renseigné dans les données dont nous disposons'
+								}
 							>
-								{LibNuaCand}
+								{LibNuaCand || ' ? '}
 							</div>
 							<div css={``}>
 								{PrenomPsn} {NomPsn}
