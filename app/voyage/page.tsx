@@ -14,9 +14,9 @@ export async function generateMetadata(
 	if (searchParams.style === 'elections')
 		return {
 			title:
-				'Cartes des circonscriptions et des candidats aux législatives 2024',
+				'Cartes des circonscriptions et des candidat(e)s aux législatives 2024',
 			description:
-				'Quelle est ma circonscription ? Qui sont mes candidats ? Trouvez en un clic votre circonscription et la liste des candidats pour le vote des législatives 2024 le 30 juin 2024',
+				'Quelle est ma circonscription ? Qui sont mes candidats et candidates ? Trouvez en un clic votre circonscription et la liste des candidats pour le vote des législatives 2024 le 30 juin 2024',
 			openGraph: {
 				images: ['/circonscriptions-candidats.png'],
 			},

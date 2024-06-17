@@ -31,7 +31,7 @@ export default function Candidates({ data }) {
 			`}
 		>
 			<header>
-				<h3>Vos candidats </h3>
+				<h3>Vos candidates et candidats</h3>
 				<small>1er tour des législatives du 30 juin 2024</small>
 			</header>
 			<ul>
