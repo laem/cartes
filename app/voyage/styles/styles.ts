@@ -5,6 +5,7 @@ import transit from './transit'
 import testStreetComplete from './test-street-complete'
 import { experiments } from 'webpack'
 import elections from './elections'
+import protomaps from './protomaps'
 
 const key = process.env.NEXT_PUBLIC_MAPTILER
 
@@ -17,7 +18,8 @@ export const styles = {
 		emoji: '🗺️',
 	},
 	protomaps: {
-		url: `https://api.protomaps.com/styles/v2/light.json?key=8df307109ae3eabc`,
+		//url: `https://api.protomaps.com/styles/v2/light.json?key=8df307109ae3eabc`,
+		url: protomaps(key),
 		name: 'Protomaps',
 		emoji: '⚡️',
 	},
