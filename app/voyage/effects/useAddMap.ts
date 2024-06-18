@@ -12,7 +12,8 @@ import useGeolocation from './useGeolocation'
  * */
 
 const defaultCenter =
-	// Saint Malo [-1.9890417068124002, 48.66284934737089]
+	// Saint Malo
+	// [-1.9890417068124002, 48.66284934737089]
 	// Rennes [-1.678, 48.11]
 	[2.025, 46.857]
 export const defaultZoom = 5.52
@@ -37,7 +38,15 @@ export default function useAddMap(
 	console.log('geolocation', geolocation)
 	const { latitude, longitude } = geolocation
 
-	const center = [longitude, latitude]
+	const ipGeolocationCenter = [longitude, latitude]
+
+	useEffect(() => {
+		if (!map) return
+
+		map.flyTo({
+			center: ipGeolocationCenter,
+		})
+	}, [ipGeolocationCenter, map])
 
 	useEffect(() => {
 		let protocol = new Protocol()
@@ -53,7 +62,7 @@ export default function useAddMap(
 		const newMap = new maplibregl.Map({
 			container: mapContainerRef.current,
 			style: styleUrl,
-			center,
+			center: defaultCenter,
 			zoom: defaultZoom,
 			hash: true,
 			attributionControl: false,
@@ -99,7 +108,7 @@ export default function useAddMap(
 			setMap(null)
 			newMap?.remove()
 		}
-	}, [setMap, setZoom, setBbox, mapContainerRef, setGeolocate, center]) // styleUrl not listed on purpose
+	}, [setMap, setZoom, setBbox, mapContainerRef, setGeolocate]) // styleUrl not listed on purpose
 
 	const triggerGeolocation = useMemo(
 		() => (geolocate ? () => geolocate.trigger() : () => 'Not ready'),
