@@ -6,7 +6,7 @@ import '../globals.css'
 
 const title = `Cartes`
 const description1 =
-	'Des cartes libres et gratuites sur le Web pour trouver un commerce, un lieu, visiter une ville, calculer un trajet à pieds, en vélo, en transport en commun, en train.'
+	'Des cartes libres et gratuites sur le Web, alternative aux maps Google et Apple, pour trouver un commerce, un lieu, visiter une ville, calculer un trajet à pieds, en vélo, en transport en commun, en train.'
 
 //old description to be rewritter when we really cover train+vélo
 //"Comment voyager sans voiture ? Comment gérer les derniers kilomètres après l'arrivée à la gare ? Comment se déplacer pendant le weekend ? Où louer une voiture ou un vélo ? On vous guide, pour que le voyage sans voiture personnelle soit un plaisir."
