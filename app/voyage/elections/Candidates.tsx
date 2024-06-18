@@ -29,6 +29,9 @@ export default function Candidates({ data }) {
 				header {
 					margin-bottom: 1rem;
 				}
+				ul {
+					list-style-type: none;
+				}
 			`}
 		>
 			<header>
@@ -44,33 +47,40 @@ export default function Candidates({ data }) {
 						<li
 							key={PrenomPsn + NomPsn}
 							css={`
+								margin: 0.2rem 0 1.4rem 0;
 								display: flex;
 								align-items: center;
-								justify-content: start;
-								margin: 0.6rem 0;
 							`}
 						>
 							<div
 								css={`
 									background: ${safeColor};
-									padding: 0.2rem 0.4rem;
-									border-radius: 0.4rem;
-									margin-right: 0.6rem;
-									color: ${findContrastedTextColor(safeColor, true)};
-									font-size: 80%;
-									line-height: 1.2rem;
-									min-width: 6rem;
+									width: 2.2rem;
+									height: 2.2rem;
+									border-radius: 4rem;
+									margin-right: 1rem;
 								`}
-								title={
-									LibNuaCand
-										? 'Le parti sous lequel ce candidat ou cette candidate se présente'
-										: 'Parti non renseigné dans les données dont nous disposons'
-								}
-							>
-								{LibNuaCand || ' ? '}
-							</div>
-							<div css={``}>
-								{PrenomPsn} {NomPsn}
+							></div>
+							<div>
+								<div
+									css={`
+										margin-right: 0.6rem;
+										line-height: 1.2rem;
+										min-width: 6rem;
+										margin-bottom: 0.2rem;
+										width: 16rem;
+									`}
+									title={
+										LibNuaCand
+											? 'Le parti sous lequel ce candidat ou cette candidate se présente'
+											: 'Parti non renseigné dans les données dont nous disposons'
+									}
+								>
+									{LibNuaCand || ' ? '}
+								</div>
+								<div css={``}>
+									{PrenomPsn} {NomPsn}
+								</div>
 							</div>
 						</li>
 					)
