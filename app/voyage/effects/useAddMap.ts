@@ -3,6 +3,13 @@ import { useEffect, useMemo, useState } from 'react'
 import { useMediaQuery } from 'usehooks-ts'
 import { styles } from '../styles/styles'
 import { Protocol } from 'pmtiles'
+import useGeolocation from './useGeolocation'
+
+/*
+ *
+ * {"city":"Rennes","country":"FR","flag":"🇫🇷","countryRegion":"BRE","region":"cdg1","latitude":"48.11","longitude":"-1.6744"}
+ *
+ * */
 
 const defaultCenter =
 	// Saint Malo [-1.9890417068124002, 48.66284934737089]
@@ -20,6 +27,15 @@ export default function useAddMap(
 	const [map, setMap] = useState(null)
 	const [geolocate, setGeolocate] = useState(null)
 	const isMobile = useMediaQuery('(max-width: 800px)')
+	// This could probably be done with a Next Middleware, to avoid a second
+	// request, but I could not make it work in 5 minutes
+	const geolocation = useGeolocation()
+	console.log('geolocation', geolocation)
+	const { latitude, longitude } = geolocation
+	const hasGeolocatedCenter = latitude && longitude
+
+	const center = hasGeolocatedCenter ? [latitude, longitude] : defaultCenter
+
 	useEffect(() => {
 		let protocol = new Protocol()
 		maplibregl.addProtocol('pmtiles', protocol.tile)
@@ -34,7 +50,7 @@ export default function useAddMap(
 		const newMap = new maplibregl.Map({
 			container: mapContainerRef.current,
 			style: styleUrl,
-			center: defaultCenter,
+			center,
 			zoom: defaultZoom,
 			hash: true,
 			attributionControl: false,
