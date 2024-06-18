@@ -30,12 +30,14 @@ export default function useAddMap(
 	const isMobile = useMediaQuery('(max-width: 800px)')
 	// This could probably be done with a Next Middleware, to avoid a second
 	// request, but I could not make it work in 5 minutes
-	const geolocation = useGeolocation()
+	const geolocation = useGeolocation({
+		latitude: defaultCenter[1],
+		longitude: defaultCenter[0],
+	})
 	console.log('geolocation', geolocation)
 	const { latitude, longitude } = geolocation
-	const hasGeolocatedCenter = latitude && longitude
 
-	const center = hasGeolocatedCenter ? [latitude, longitude] : defaultCenter
+	const center = [longitude, latitude]
 
 	useEffect(() => {
 		let protocol = new Protocol()
@@ -97,7 +99,7 @@ export default function useAddMap(
 			setMap(null)
 			newMap?.remove()
 		}
-	}, [setMap, setZoom, setBbox, mapContainerRef, setGeolocate]) // styleUrl not listed on purpose
+	}, [setMap, setZoom, setBbox, mapContainerRef, setGeolocate, center]) // styleUrl not listed on purpose
 
 	const triggerGeolocation = useMemo(
 		() => (geolocate ? () => geolocate.trigger() : () => 'Not ready'),
