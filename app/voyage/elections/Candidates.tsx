@@ -96,7 +96,7 @@ export default function Candidates({ data }) {
 				`}
 			>
 				<small>
-					Source :{' '}
+					Source : Ministère de l'Intérieur via
 					<Image
 						src="https://france3-regions.francetvinfo.fr/assets/img/logos/france-3-black.svg"
 						width="10"

@@ -8,7 +8,7 @@ export default function (id) {
 		const fetchData = async () => {
 			try {
 				setData(null)
-				const url = `https://raw.githubusercontent.com/f3reg/lg2024/main/legislatives/2024/candidats/saisie/t1_circo_${id}.json`
+				const url = `https://raw.githubusercontent.com/f3reg/lg2024/main/legislatives/2024/candidats/interieur/t1_circo_${id}.json`
 
 				const request = await fetch(url)
 				const json = await request.json()
