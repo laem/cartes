@@ -47,7 +47,7 @@ export default function Candidates({ data }) {
 						<li
 							key={PrenomPsn + NomPsn}
 							css={`
-								margin: 0.2rem 0 1.4rem 0;
+								margin: 0.8rem 0 0.8rem 0;
 								display: flex;
 								align-items: center;
 							`}
@@ -64,6 +64,8 @@ export default function Candidates({ data }) {
 							<div>
 								<div
 									css={`
+										text-decoration: underline;
+										text-decoration-color: #bbb;
 										margin-right: 0.6rem;
 										line-height: 1.2rem;
 										min-width: 6rem;
