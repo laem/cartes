@@ -62,8 +62,8 @@ const Styles = ({ style, styleList, setSearchParams }) => (
 			margin-top: 1rem;
 		`}
 	>
-		{styleList.map(([k, { name, imageAlt, title }]) => {
-			const image = k + '.png'
+		{styleList.map(([k, { name, imageAlt, title, image: imageProp }]) => {
+			const image = (imageProp || k) + '.png'
 
 			return (
 				<li

@@ -1,10 +1,16 @@
-const nameExpression = [
+const maptilerNameExpression = [
 	['get', 'name:fr'], // cartes.app est une application française
 	['get', 'name:en'], // we estimate that e.g. arab place names that don't have a french translation will be way more readable as english fro French people. See e.g. /?lieu=n1091272140#18.99/33.5130054/36.3066407
-
 	['get', 'name'],
 ]
-export default function voyageStyle(key) {
+
+const defaultName = 'name'
+
+export default function voyageStyle(
+	key,
+	nameExpression = maptilerNameExpression,
+	name = defaultName
+) {
 	return {
 		version: 8,
 		id: 'voyage',
@@ -1963,7 +1969,7 @@ export default function voyageStyle(key) {
 				filter: [
 					'all',
 					['==', '$type', 'Point'],
-					['has', 'name'],
+					['has', name],
 					['!=', 'class', 'lake'],
 				],
 			},
@@ -2356,7 +2362,7 @@ export default function voyageStyle(key) {
 					'text-halo-width': 1,
 				},
 				metadata: {},
-				filter: ['all', ['in', 'class', 'golf', 'park'], ['has', 'name']],
+				filter: ['all', ['in', 'class', 'golf', 'park'], ['has', name]],
 			},
 			{
 				id: 'Healthcare',
@@ -2559,7 +2565,7 @@ export default function voyageStyle(key) {
 				metadata: {},
 				filter: [
 					'all',
-					['has', 'name'],
+					['has', name],
 					['!in', 'class', 'hospital', 'parking', 'railway'],
 				],
 			},
@@ -2768,7 +2774,7 @@ export default function voyageStyle(key) {
 					'text-halo-width': 1,
 				},
 				metadata: {},
-				filter: ['all', ['==', 'class', 'railway'], ['has', 'name']],
+				filter: ['all', ['==', 'class', 'railway'], ['has', name]],
 			},
 			{
 				id: 'Airport',

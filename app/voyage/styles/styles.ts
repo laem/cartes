@@ -1,10 +1,10 @@
-import railStyle from './railStyle'
 import cyclOsm from './cyclOsmStyle'
-import voyageStyle from './voyage'
-import transit from './transit'
-import testStreetComplete from './test-street-complete'
-import { experiments } from 'webpack'
 import elections from './elections'
+import protomaps from './protomaps'
+import railStyle from './railStyle'
+import testStreetComplete from './test-street-complete'
+import transit from './transit'
+import voyageStyle from './voyage'
 
 const key = process.env.NEXT_PUBLIC_MAPTILER
 
@@ -16,6 +16,23 @@ export const styles = {
 		name: 'Base',
 		emoji: '🗺️',
 	},
+	elections: {
+		url: elections(key),
+		name: 'Élections',
+		emoji: '🗳️',
+	},
+	/* This style will replace the base MapTiler style, for cost reduction
+	 * purposes (50 to 100 €/month in june !)
+	 * TODO See https://forum.geocommuns.fr/t/regles-dutilisation-du-pmtiles-panoramax-osm-fr/1624
+	 * Meanwhile, we use protomaps in the election style
+	protomaps: {
+		//url: `https://api.protomaps.com/styles/v2/light.json?key=8df307109ae3eabc`,
+		url: protomaps(key),
+		name: 'Protomaps',
+		emoji: '⚡️',
+		image: 'base',
+	},
+	*/
 	satellite: {
 		url: maptilerUrl('satellite'),
 		name: 'Satellite',
@@ -31,21 +48,18 @@ export const styles = {
 		url: maptilerUrl('outdoor-v2'),
 		name: 'Randonnée',
 		subtitle: '(marche & vélo)',
-		image: 'rando.png',
 		emoji: '🚶',
 		hasTerrain: true,
 	},
 	ign: {
 		url: 'https://data.geopf.fr/annexes/ressources/vectorTiles/styles/PLAN.IGN/standard.json',
 		name: 'IGN',
-		image: 'IGN.svg',
 		imageAlt: "Logo de l'IGN",
 		attribution: '© IGN',
 	},
 	nature: {
 		url: maptilerUrl('topo-v2'),
 		name: 'Nature',
-		image: 'nature.png',
 		emoji: '🏕️',
 		hasTerrain: false,
 	},
@@ -66,11 +80,6 @@ export const styles = {
 		name: 'Hiver',
 		emoji: '⛄️',
 		hasTerrain: true,
-	},
-	elections: {
-		url: elections(key),
-		name: 'Élections',
-		emoji: '🗳️',
 	},
 	'street-complete': {
 		// Taken from MapTiler's dataviz style
