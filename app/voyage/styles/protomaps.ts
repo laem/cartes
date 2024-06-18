@@ -1,6 +1,6 @@
 import voyageStyle from './voyage'
 
-export default function elections(key) {
+export default function protomaps(key) {
 	const baseStyle = voyageStyle(key, [['get', 'name:latin']], 'name:latin')
 
 	return {
@@ -8,6 +8,12 @@ export default function elections(key) {
 		id: 'cartes.app',
 		name: 'Cartes',
 		layers: baseStyle.layers.map((layer) => {
+			// TODO
+			// the Pedestrian layer won't work, since there is no subclass in the OSM
+			// PMtiles
+			// We could just use the path class instead
+			// But these objects are coded as LineStrings, so painting as fill won't
+			// work
 			return layer
 			//if (layer.id==='Other POI')  return {...layer, }
 		}),

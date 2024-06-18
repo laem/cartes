@@ -1,9 +1,12 @@
-import voyageStyle from './voyage'
+import protomaps from './protomaps'
 
 export default function elections(key) {
-	const baseStyle = voyageStyle(key)
+	const baseStyle = protomaps(key)
 	return {
 		...baseStyle,
+		version: 8,
+		id: 'elections.cartes.app',
+		name: 'Cartes élections',
 		sources: {
 			...baseStyle.sources,
 			circonscriptions_legislatives_2024: {
