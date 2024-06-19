@@ -1,5 +1,5 @@
 import css from '@/components/css/convertToJs'
-import { useState } from 'react'
+import { useEffect, useRef, useState } from 'react'
 import { nowAsYYMMDD } from './Route'
 
 const now = new Date()
@@ -23,6 +23,18 @@ export default function Calendar({ data }) {
 		const thisHour = next.arrival_time.split(':')[0]
 		return { ...memo, [thisHour]: [...memo[thisHour], next] }
 	}, hoursObject)
+
+	const thisHours = new Date().getHours()
+
+	const relevantHourRef = useRef(null)
+	useEffect(() => {
+		if (!relevantHourRef || !relevantHourRef.current) return
+		relevantHourRef.current.scrollIntoView({
+			behavior: 'smooth',
+			inline: 'start',
+			block: 'center',
+		})
+	}, [relevantHourRef, thisHours])
 
 	return (
 		<div>
@@ -82,7 +94,10 @@ export default function Calendar({ data }) {
 						.map(
 							([hour, entries]) =>
 								entries.length > 0 && (
-									<li key={hour}>
+									<li
+										key={hour}
+										ref={hour == thisHours ? relevantHourRef : null}
+									>
 										<strong>{hour % 24} h</strong>
 										<ul>
 											{entries.map((entry) => (
