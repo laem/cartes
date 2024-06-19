@@ -1,10 +1,11 @@
-import futurecoSitemap from '@/app/(futureco)/sitemap'
-import voyageSitemap from '@/app/voyage/sitemap'
+import generateFuturecoSitemap from '@/app/(futureco)/sitemap'
+import generateVoyageSitemap from '@/app/voyage/generateVoyageSitemap'
+
 export default async function sitemap() {
-	if (process.env.VOYAGE === 'non') {
-		const sitemap = await futurecoSitemap()
-		return sitemap
+	if (process.env.VOYAGE !== 'oui') {
+		const futurecoSitemap = await generateFuturecoSitemap()
+		return futurecoSitemap
 	}
-	const sitemap = await voyageSitemap()
-	return sitemap
+	const cartesSitemap = await generateVoyageSitemap()
+	return cartesSitemap
 }

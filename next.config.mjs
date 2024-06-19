@@ -59,6 +59,11 @@ const nextConfig = {
 				permanent: true,
 			},
 			{
+				source: '/sitemap.xml',
+				destination: '/sitemap',
+				permanent: false,
+			},
+			{
 				source: '/elections-legislatives-2024',
 				destination: '/?style=elections',
 				permanent: false,

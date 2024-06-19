@@ -1,8 +1,7 @@
 import type { MetadataRoute } from 'next'
-import rules from '@/app/règles/rules.tsx'
 import { getAllPostIds } from '../(futureco)/blog/getPosts'
 
-const basePaths = ['', '/blog']
+const basePaths = ['', '/blog', '/elections-legislatives-2024']
 
 export default function sitemap(): MetadataRoute.Sitemap {
 	const blogEntries = getAllPostIds().map(({ params: { id } }) => '/blog/' + id)
