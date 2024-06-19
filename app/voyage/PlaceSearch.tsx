@@ -1,19 +1,19 @@
 import GeoInputOptions from '@/components/conversation/GeoInputOptions'
 import { InputStyle } from '@/components/conversation/UI'
 import css from '@/components/css/convertToJs'
-import fetchPhoton from '@/components/voyage/fetchPhoton'
-import { useCallback, useEffect, useMemo, useRef, useState } from 'react'
-import { encodePlace } from './utils'
-import Logo from '@/public/voyage.svg'
-import Image from 'next/image'
 import { getArrayIndex, replaceArrayIndex } from '@/components/utils/utils'
-import { buildAllezPart, setStatePart } from './SetDestination'
 import { buildAddress } from '@/components/voyage/Address'
-import { isStepBeingSearched } from './itinerary/Steps'
-import Link from 'next/link'
-import { useLocalStorage } from 'usehooks-ts'
-import styled from 'styled-components'
+import fetchPhoton from '@/components/voyage/fetchPhoton'
+import Logo from '@/public/voyage.svg'
 import { isIOS } from '@react-aria/utils'
+import Image from 'next/image'
+import Link from 'next/link'
+import { useCallback, useEffect, useRef, useState } from 'react'
+import styled from 'styled-components'
+import { useLocalStorage } from 'usehooks-ts'
+import { buildAllezPart, setAllezPart } from './SetDestination'
+import { hasStepBeingSearched } from './itinerary/Steps'
+import { encodePlace } from './utils'
 
 // The idead here was to enable triggering of geoloc with an input. Not
 // exectuted, there is a button now.
@@ -43,7 +43,9 @@ export default function PlaceSearch({
 	autoFocus = false,
 	stepIndex,
 	geolocation,
+	placeholder,
 }) {
+	console.log('state', state)
 	if (stepIndex == null) throw new Error('Step index necessary')
 	const [localSearch, setLocalSearch] = useState(true)
 	const [searchHistory, setSearchHistory] = useLocalStorage('searchHistory', [])
@@ -93,6 +95,7 @@ export default function PlaceSearch({
 			const safeStateEntry =
 				Object.keys(stateEntry).length > 0 ? stateEntry : null
 
+			console.log('will call replaceArrayIndex', state, stepIndex)
 			const newState = replaceArrayIndex(
 				state,
 				stepIndex,
@@ -160,7 +163,7 @@ export default function PlaceSearch({
 							border: none;
 
 							margin-bottom: 0;
-							${state.some(isStepBeingSearched) &&
+							${hasStepBeingSearched(state) &&
 							`border: 3px solid yellow !important`}
 						}
 						position: relative;
@@ -197,7 +200,9 @@ export default function PlaceSearch({
 							}, 600)
 							*/
 						}}
-						placeholder={'Saint-Malo, Le Conquet, Café du Port...'}
+						placeholder={
+							placeholder || 'Saint-Malo, Le Conquet, Café du Port...'
+						}
 						onChange={({ target: { value } }) => onDestinationChange(value)}
 					/>
 					{value && (
@@ -325,7 +330,12 @@ export default function PlaceSearch({
 										updateState: (newData) => {
 											setSnap(1, 'PlaceSearch')
 											// this is questionable; see first comment in this file
-											setState(replaceArrayIndex(state, stepIndex, newData))
+											const newState = replaceArrayIndex(
+												state,
+												stepIndex,
+												newData
+											)
+											setState(newState)
 											setSearchHistory([
 												value,
 												...searchHistory.filter((entry) => entry !== value),
@@ -338,9 +348,9 @@ export default function PlaceSearch({
 											const address = buildAddress(newData.choice, true)
 											const isOsmFeature = osmId && featureType
 											setSearchParams({
-												allez: setStatePart(
+												allez: setAllezPart(
 													stepIndex,
-													state,
+													newState,
 													buildAllezPart(
 														name || address,
 														isOsmFeature ? encodePlace(featureType, osmId) : '',

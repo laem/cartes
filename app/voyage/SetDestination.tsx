@@ -58,18 +58,26 @@ export const removeStatePart = (key: string | number, state: Array<object>) =>
 		)
 		.filter(Boolean)
 		.join('->')
-export const setStatePart = (
+
+export const setAllezPart = (
 	key: string | number,
 	state: Array<object>,
 	value: string
-) =>
-	state
+) => {
+	//	const iterator = [...new Array(Math.max(+1, array.length))]
+
+	const allez = state
 		.map((part, index) =>
 			(typeof key === 'string' ? part.key === key : index === key)
 				? value
-				: part.key
+				: part
+				? part.key
+				: ''
 		)
 		.join('->')
+
+	return allez
+}
 
 export default function SetDestination({
 	geocodedClickedPoint,
@@ -89,7 +97,7 @@ export default function SetDestination({
 			  )
 			: searchParams.allez || ''
 
-	const search = {
+	const newSearchParams = {
 		allez: geolocation
 			? `${buildAllezPart(
 					'Votre position',
@@ -100,7 +108,7 @@ export default function SetDestination({
 			: `->${destinationPart}`,
 	}
 
-	const href = setSearchParams(search, true, false)
+	const href = setSearchParams(newSearchParams, true, false)
 
 	const destination = destinationPart.split('|').slice(2)
 	const origin = geolocation && [geolocation.longitude, geolocation.latitude]

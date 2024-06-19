@@ -126,10 +126,20 @@ export default function Content({
 	const hasDestination = osmFeature || geocodedClickedPoint
 
 	const hasNullEntryInState = nullEntryInState > -1
+
+	const isItineraryModeNoSteps =
+			itinerary.isItineraryMode &&
+			(state.length === 0 || !state.find((step) => step?.choice || step?.key)),
+		searchStepIndex = isItineraryModeNoSteps ? 1 : nullEntryInState
+
+	console.log('state', state, searchStepIndex)
+
 	const showSearch =
 		!styleChooser &&
 		// In itinerary mode, user is filling or editing one of the itinerary steps
-		(hasNullEntryInState || !(osmFeature || itinerary.isItineraryMode)) // at first, on desktop, we kept the search bar considering we have room. But this divergence brings dev complexity
+		(hasNullEntryInState ||
+			isItineraryModeNoSteps ||
+			!(osmFeature || itinerary.isItineraryMode)) // at first, on desktop, we kept the search bar considering we have room. But this divergence brings dev complexity
 
 	const minimumQuickSearchZoom = getMinimumQuickSearchZoom(!sideSheet)
 
@@ -182,8 +192,9 @@ export default function Content({
 							setSearchParams,
 							searchParams,
 							autoFocus: nullEntryInState > 0,
-							stepIndex: nullEntryInState,
+							stepIndex: searchStepIndex,
 							geolocation,
+							placeholder: isItineraryModeNoSteps ? 'Votre destination' : null,
 						}}
 					/>
 					{zoom > minimumQuickSearchZoom && (

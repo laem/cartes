@@ -18,7 +18,10 @@ export default function ClickItineraryInstruction() {
 				src={itineraryIcon}
 				alt="Icone flèche représentant le mode itinéraire"
 			/>
-			<p>Cliquez sur la carte pour construire un itinéraire.</p>
+			<p>
+				Saisissez votre destination, <br />
+				ou 📍 cliquez sur la carte pour construire un itinéraire.
+			</p>
 		</div>
 	)
 }

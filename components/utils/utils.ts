@@ -138,9 +138,20 @@ export const replaceArrayIndex = (
 
 	if (realIndex < 0) return [value]
 
-	return array.map((v, i) =>
-		i === realIndex ? (strategy === 'merge' ? { ...v, ...value } : value) : v
-	)
+	const iterator = [...new Array(Math.max(realIndex + 1, array.length))]
+
+	const newArray = iterator.map((_, i) => {
+		const v = array[i] || null
+		return i === realIndex
+			? strategy === 'merge'
+				? { ...v, ...value }
+				: value
+			: v
+	})
+
+	console.log('replaceArray', newArray)
+
+	return newArray
 }
 
 export const getArrayIndex = (array, index) => array[getRealIndex(array, index)]

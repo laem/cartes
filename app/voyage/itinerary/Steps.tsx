@@ -5,11 +5,10 @@ import { Reorder, useDragControls } from 'framer-motion'
 import Image from 'next/image'
 import Link from 'next/link'
 import { useState } from 'react'
-import { removeStatePart, setStatePart } from '../SetDestination'
+import { removeStatePart, setAllezPart } from '../SetDestination'
 
 export default function Steps({ state }) {
 	const steps = state
-	console.log('steps', steps)
 
 	const setSearchParams = useSetSearchParams()
 
@@ -59,7 +58,7 @@ export default function Steps({ state }) {
 							index,
 							step,
 							setSearchParams,
-							beingSearched: isStepBeingSearched(step),
+							beingSearched: isStepBeingSearched(steps, index),
 							state,
 						}}
 					/>
@@ -136,13 +135,14 @@ const Item = ({ index, step, setSearchParams, beingSearched, state }) => {
 					onClick={() => {
 						step && setUndoValue(step.key)
 						setSearchParams({
-							allez: setStatePart(step.key, state, ''),
+							allez: setAllezPart(step.key, state, ''),
 						})
 					}}
+					css="min-width: 6rem; cursor: text"
 				>
 					{beingSearched
 						? `Choisissez une ${index == 0 ? 'origine' : 'destination'}`
-						: step?.name || 'plop'}
+						: step?.name || '...'}
 				</span>
 				{undoValue != null && beingSearched && (
 					<span>
@@ -150,7 +150,7 @@ const Item = ({ index, step, setSearchParams, beingSearched, state }) => {
 						<button
 							onClick={() =>
 								setSearchParams({
-									allez: setStatePart(step.key, state, undoValue),
+									allez: setAllezPart(step.key, state, undoValue),
 								})
 							}
 						>
@@ -264,5 +264,15 @@ const Dots = () => (
 
 export const letterFromIndex = (index) => String.fromCharCode(65 + (index % 26))
 
-export const isStepBeingSearched = (step) =>
-	step === null || (!step.key && step.inputValue)
+const isStepBeingSearched = (steps, index) => {
+	const foundSearched = steps.findIndex(
+		(step) => step && !step.key && step.inputValue
+	)
+	if (foundSearched > -1) return foundSearched === index
+
+	return steps.findIndex((step) => step === null) === index
+}
+
+export const hasStepBeingSearched = (steps) => {
+	return steps.some((step) => step === null || (!step.key && step.inputValue))
+}
