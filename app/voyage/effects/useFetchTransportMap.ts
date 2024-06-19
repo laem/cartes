@@ -35,10 +35,11 @@ export default function useFetchTransportMap(
 						(id) => !cacheAgencyIds.includes(id)
 					)
 
-				if (!newAgencyIds.length)
+				if (!newAgencyIds.length) {
 					return setData(
 						data.filter(([agency]) => relevantAgencyIds.includes(agency))
 					)
+				}
 
 				const dataRequest = await fetch(
 					url('geojson') +
@@ -55,7 +56,7 @@ export default function useFetchTransportMap(
 				const newAgencies = dataJson.map(decodeTransportsData)
 				if (noCache) {
 					setData(newAgencies)
-				} else
+				} else {
 					setData([
 						...data.filter(
 							([id]) =>
@@ -63,6 +64,7 @@ export default function useFetchTransportMap(
 						),
 						...newAgencies,
 					])
+				}
 			} catch (e) {
 				if (abortController.signal.aborted) {
 					console.log(
@@ -79,5 +81,10 @@ export default function useFetchTransportMap(
 		}
 	}, [setData, bbox, active, day, agence, noCache])
 
-	return active ? data : null
+	const agencyIdsHash = data?.map(([a]) => a).join('<|>')
+	const transportsData = useMemo(() => {
+		return data
+	}, [agencyIdsHash])
+
+	return active ? transportsData : null
 }

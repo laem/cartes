@@ -9,7 +9,7 @@ import StopByName from './StopByName'
 import { ModalCloseButton } from '../UI'
 import { memo } from 'react'
 
-export default memo(function TransportMap({
+export default function TransportMap({
 	day,
 	data,
 	selectedAgency,
@@ -118,7 +118,7 @@ export default memo(function TransportMap({
 			)}
 		</section>
 	)
-})
+}
 
 const Agency = ({ data, backUrl }) => {
 	return (
