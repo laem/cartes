@@ -16,7 +16,6 @@ const Page = () => {
 	const articles = allArticles.sort((a, b) =>
 		compareDesc(new Date(a.date), new Date(b.date))
 	)
-	console.log('AA', allArticles)
 	return (
 		<main>
 			<h1>Le blog</h1>

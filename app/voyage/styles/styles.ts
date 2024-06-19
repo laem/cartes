@@ -21,18 +21,6 @@ export const styles = {
 		name: 'Élections',
 		emoji: '🗳️',
 	},
-	/* This style will replace the base MapTiler style, for cost reduction
-	 * purposes (50 to 100 €/month in june !)
-	 * TODO See https://forum.geocommuns.fr/t/regles-dutilisation-du-pmtiles-panoramax-osm-fr/1624
-	 * Meanwhile, we use protomaps in the election style
-	protomaps: {
-		//url: `https://api.protomaps.com/styles/v2/light.json?key=8df307109ae3eabc`,
-		url: protomaps(key),
-		name: 'Protomaps',
-		emoji: '⚡️',
-		image: 'base',
-	},
-	*/
 	satellite: {
 		url: maptilerUrl('satellite'),
 		name: 'Satellite',
@@ -86,6 +74,19 @@ export const styles = {
 		url: testStreetComplete,
 		name: 'StreetComplete',
 		emoji: '🧪',
+		experimental: true,
+	},
+	/* This style will replace the base MapTiler style, for cost reduction
+	 * purposes (50 to 100 €/month in june !)
+	 * TODO See https://forum.geocommuns.fr/t/regles-dutilisation-du-pmtiles-panoramax-osm-fr/1624
+	 * Meanwhile, we use protomaps in the election style
+	 */
+	protomaps: {
+		//url: `https://api.protomaps.com/styles/v2/light.json?key=8df307109ae3eabc`,
+		url: protomaps(key),
+		name: 'Protomaps',
+		emoji: '⚡️',
+		image: 'base',
 		experimental: true,
 	},
 }
