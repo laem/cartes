@@ -1,16 +1,14 @@
-import { useEffect } from 'react'
-import Route from '../RouteRésumé'
-import { ContentSection } from '../ContentUI'
-import { ModalCloseButton } from '../UI'
-import Steps from './Steps'
-import Transit from './transit/Transit'
-import Image from 'next/image'
-import itineraryIcon from '@/public/itinerary-circle-plain.svg'
-import Link from 'next/link'
 import CircularIcon from '@/components/CircularIcon'
 import useSetSearchParams from '@/components/useSetSearchParams'
-import Timeline from './Timeline'
+import Link from 'next/link'
+import { useEffect } from 'react'
+import { ContentSection } from '../ContentUI'
 import RouteRésumé from '../RouteRésumé'
+import { ModalCloseButton } from '../UI'
+import ClickItineraryInstruction from './ClickItineraryInstruction'
+import Steps from './Steps'
+import Timeline from './Timeline'
+import Transit from './transit/Transit'
 
 export const modes = [
 	['cycling', { label: 'Vélo', query: 'velo' }],
@@ -47,24 +45,7 @@ export default function Itinerary({
 			<ModalCloseButton title="Fermer l'encart itinéraire" onClick={close} />
 			<Steps state={state} />
 			{!itinerary.routes ? (
-				<div
-					css={`
-						margin: 1rem 0;
-
-						text-align: center;
-						img {
-							width: 1.2rem;
-							height: auto;
-							margin-right: 0.6rem;
-						}
-					`}
-				>
-					<Image
-						src={itineraryIcon}
-						alt="Icone flèche représentant le mode itinéraire"
-					/>
-					<p>Cliquez sur la carte pour construire un itinéraire.</p>
-				</div>
+				<ClickItineraryInstruction />
 			) : (
 				<div>
 					<ol
