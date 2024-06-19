@@ -9,7 +9,7 @@ function fetchPhoton(v, setState, stepIndex, local, zoom) {
 	return fetch(
 		`https://photon.komoot.io/api/?q=${encodeURIComponent(v)}&limit=30&lang=fr${
 			local ? `&lat=${local[0]}&lon=${local[1]}` : ''
-		}${zoom ? `&zoom=${zoom}` : ''}`
+		}${zoom ? `&zoom=${Math.round(zoom)}` : ''}`
 	)
 		.then((res) => res.json())
 		.then((json) =>
