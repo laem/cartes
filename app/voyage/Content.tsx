@@ -93,7 +93,7 @@ export default function Content({
 			? getThumb(osmFeature.tags.wikimedia_commons, 500)
 			: wikidataPictureUrl)
 
-	const recherche = state.findIndex((el) => el == null || el.key == null)
+	const nullEntryInState = state.findIndex((el) => el == null || el.key == null)
 
 	const content = [
 		osmFeature,
@@ -125,9 +125,11 @@ export default function Content({
 
 	const hasDestination = osmFeature || geocodedClickedPoint
 
+	const hasNullEntryInState = nullEntryInState > -1
 	const showSearch =
 		!styleChooser &&
-		(recherche > -1 || !(osmFeature || itinerary.isItineraryMode)) // at first, on desktop, we kept the search bar considering we have room. But this divergence brings dev complexity
+		// In itinerary mode, user is filling or editing one of the itinerary steps
+		(hasNullEntryInState || !(osmFeature || itinerary.isItineraryMode)) // at first, on desktop, we kept the search bar considering we have room. But this divergence brings dev complexity
 
 	const minimumQuickSearchZoom = getMinimumQuickSearchZoom(!sideSheet)
 
@@ -179,33 +181,11 @@ export default function Content({
 							zoom,
 							setSearchParams,
 							searchParams,
-							autoFocus: recherche > 0,
-							stepIndex: recherche,
+							autoFocus: nullEntryInState > 0,
+							stepIndex: nullEntryInState,
 							geolocation,
 						}}
 					/>
-					{/* TODO reuse the name overlay and only that ?
-					wikidataPictureUrl && (
-						<motion.div
-							initial={{ opacity: 0, scale: 0.8 }}
-							animate={{ opacity: 1, scale: 1 }}
-							transition={{}}
-							key={wikidataPictureUrl}
-							exit={{ opacity: 0, scale: 0.5, transition: { duration: 0.2 } }}
-						>
-							<ImageWithNameWrapper>
-								<CityImage
-									src={wikidataPictureUrl}
-									alt={`Une photo emblématique de la destination, ${state.vers.choice?.name}`}
-								/>
-								<Destination>
-									<NextImage src={destinationPoint} alt="Vers" />
-									<h2>{osmFeature.tags.name}</h2>
-								</Destination>
-							</ImageWithNameWrapper>
-						</motion.div>
-					)
-					*/}
 					{zoom > minimumQuickSearchZoom && (
 						<QuickFeatureSearch
 							{...{
