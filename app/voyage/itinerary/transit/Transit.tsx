@@ -192,8 +192,16 @@ export const Line = ({
 	const barWidth = ((to - from) / length) * 100,
 		left = ((from - absoluteFrom) / length) * 100
 
+	const animatedScrollRef = useRef()
 	return (
 		<div
+			onClick={() =>
+				animatedScrollRef.current.scrollIntoView({
+					behavior: 'smooth',
+					inline: 'start',
+					block: 'center',
+				})
+			}
 			css={`
 				height: 4rem;
 				width: calc(100% - 1rem);
@@ -207,6 +215,7 @@ export const Line = ({
 			`}
 		>
 			<div
+				ref={animatedScrollRef}
 				css={`
 					position: absolute;
 					left: calc(1rem + ${left}%);
