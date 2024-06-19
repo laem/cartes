@@ -232,6 +232,7 @@ export default function Map({
 	 * */
 	useEffect(() => {
 		if (!map || !vers || !osmFeature) return
+		if (state.filter((step) => step?.key).length > 1) return
 
 		const tailoredZoom = //TODO should be defined by the feature's polygon if any
 			/* ['city'].includes(vers.choice.type)
@@ -255,7 +256,7 @@ export default function Map({
 				pitch: 50, // pitch in degrees
 				bearing: 20, // bearing in degrees
 			})
-	}, [map, vers, osmFeature])
+	}, [map, vers, osmFeature, state])
 
 	/* TODO Transform this to handle the last itinery point if alone (just a POI url),
 	 * but also to add markers to all the steps of the itinerary */
