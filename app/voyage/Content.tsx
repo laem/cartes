@@ -132,8 +132,6 @@ export default function Content({
 			(state.length === 0 || !state.find((step) => step?.choice || step?.key)),
 		searchStepIndex = isItineraryModeNoSteps ? 1 : nullEntryInState
 
-	console.log('state', state, searchStepIndex)
-
 	const showSearch =
 		!styleChooser &&
 		// In itinerary mode, user is filling or editing one of the itinerary steps

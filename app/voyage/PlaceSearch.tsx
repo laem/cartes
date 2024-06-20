@@ -45,7 +45,6 @@ export default function PlaceSearch({
 	geolocation,
 	placeholder,
 }) {
-	console.log('state', state)
 	if (stepIndex == null) throw new Error('Step index necessary')
 	const [localSearch, setLocalSearch] = useState(true)
 	const [searchHistory, setSearchHistory] = useLocalStorage('searchHistory', [])

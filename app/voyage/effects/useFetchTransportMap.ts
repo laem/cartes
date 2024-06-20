@@ -83,6 +83,7 @@ export default function useFetchTransportMap(
 
 	const agencyIdsHash = data?.map(([a]) => a).join('<|>')
 	const transportsData = useMemo(() => {
+		console.log('new transport data array')
 		return data
 	}, [agencyIdsHash])
 

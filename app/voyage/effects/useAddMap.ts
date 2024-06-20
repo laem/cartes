@@ -35,7 +35,7 @@ export default function useAddMap(
 		latitude: defaultCenter[1],
 		longitude: defaultCenter[0],
 	})
-	console.log('geolocation', geolocation)
+	//	console.log('geolocation', geolocation)
 	const { latitude, longitude } = geolocation
 
 	const ipGeolocationCenter = [longitude, latitude]

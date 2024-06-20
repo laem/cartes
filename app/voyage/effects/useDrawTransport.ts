@@ -162,7 +162,6 @@ export default function useDrawTransport(map, features, drawKey) {
 
 		return () => {
 			if (!map) return
-			console.log('darkblue', map._mapId, map.getLayersOrder())
 			map.off('click', linesId, onClickRoutes)
 			map.off('click', pointsId, onClickStop)
 			map.removeLayer(linesId)
