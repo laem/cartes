@@ -1,7 +1,8 @@
 //TODO complete with spec possibilities https://gtfs.org/fr/schedule/reference/#routestxt
 export default function (frenchTrainType, prefix) {
 	if (frenchTrainType) return `/transit/${frenchTrainType.toLowerCase()}.svg`
-	return ['flixbus', 'blablacar'].includes(prefix)
+	// blablabus was an error, will be blablacar in next motis update
+	return ['flixbus', 'blablabus', 'blablacar'].includes(prefix)
 		? `/transit/${prefix}.svg`
 		: null
 }

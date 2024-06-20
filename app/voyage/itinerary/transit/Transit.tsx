@@ -321,11 +321,7 @@ export const TimelineTransportBlock = ({ transport }) => {
 					width: auto;
 					margin-right: 0.2rem;
 
-${
-	transport.frenchTrainType
-		? `filter: brightness(0) invert(1);`
-		: isWhiteColor(textColor) && `filter: invert(1)`
-}
+
 			`}
 			title={`${humanDuration(transport.seconds).single} de ${
 				transport.frenchTrainType || transport.move?.name || 'marche'
@@ -353,7 +349,6 @@ ${
 					height="100"
 					css={`
 						height: 1.4rem !important;
-
 						margin: 0 !important;
 					`}
 				/>

@@ -1,5 +1,6 @@
 import Image from 'next/image'
 import { transportTypeIcon } from './transportIcon'
+import { isWhiteColor } from '@/components/css/utils'
 
 export default function TransportMoveBlock({
 	transport,
@@ -20,6 +21,9 @@ export default function TransportMoveBlock({
 				alt="Icône du type de transport : train, tram, bus, etc"
 				width="100"
 				height="100"
+				css={`
+					${isWhiteColor(textColor) && `filter: invert(1)`}
+				`}
 			/>
 			{transport.icon ? (
 				<Image
@@ -27,6 +31,9 @@ export default function TransportMoveBlock({
 					alt={`Icône de l'entreprise de transport ${name}`}
 					width="100"
 					height="100"
+					css={`
+						filter: brightness(0) invert(1);
+					`}
 				/>
 			) : (
 				<strong
