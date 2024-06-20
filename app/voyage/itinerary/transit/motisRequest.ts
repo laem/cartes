@@ -17,8 +17,6 @@ export const buildRequestBody = (start, destination, date) => {
 	const begin = Math.round(new Date(date).getTime() / 1000),
 		end = datePlusHours(date, 2) // TODO This parameter should probably be modulated depending on the transit offer in the simulation setup. Or, query for the whole day at once, and filter them in the UI
 
-	console.log('lac', date, begin, end)
-	console.log('dato', nowStamp(), 'begin date then timestamp', date, begin, end)
 	const body = {
 		destination: { type: 'Module', target: '/intermodal' },
 		content_type: 'IntermodalRoutingRequest',
@@ -77,7 +75,6 @@ export const computeMotisTrip = async (start, destination, date) => {
 			return { state: 'error' }
 		}
 		const json = await request.json()
-		console.log('motis', json)
 
 		const augmentedConnections = await Promise.all(
 			json.content.connections.map(async (connection) => {
@@ -93,7 +90,9 @@ export const computeMotisTrip = async (start, destination, date) => {
 							try {
 								if (!tripId) return {}
 								const request = await fetch(
-									`https://motis.cartes.app/gtfs/routes/trip/${tripId}`
+									`https://motis.cartes.app/gtfs/routes/trip/${encodeURIComponent(
+										tripId
+									)}`
 								)
 								const json = await request.json()
 								const safeAttributes = json.routes[0] || {}
@@ -130,8 +129,6 @@ export const computeMotisTrip = async (start, destination, date) => {
 									? 'TGV'
 									: null
 								: null
-
-						console.log('sourceGtfs', sourceGtfs)
 
 						const customAttributes = {
 							route_color: isTGV
