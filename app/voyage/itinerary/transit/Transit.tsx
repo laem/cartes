@@ -13,6 +13,7 @@ import {
 	TransitScopeLimit,
 } from './NoTransitMessages'
 import TransitLoader from './TransitLoader'
+import TransportMoveBlock from './TransportMoveBlock'
 import findBestConnection from './findBestConnection'
 import {
 	connectionEnd,
@@ -21,7 +22,6 @@ import {
 	formatMotis,
 	humanDuration,
 } from './utils'
-import transportIcon from './transportIcon'
 
 /* This is a megacomponent. Don't worry, it'll stay like this until the UX
  * decisions are stabilized. We don't have many users yet */
@@ -332,30 +332,7 @@ ${
 			} ${transport.route_long_name || ''}`}
 		>
 			{transport.move?.name ? (
-				<span
-					css={`
-						display: flex;
-						align-items: center;
-					`}
-				>
-					<Image
-						src={transportIcon(transport.frenchTrainType, transport.route_type)}
-						alt="Icône d'un bus"
-						width="100"
-						height="100"
-					/>
-					<strong
-						css={`
-							background: ${background};
-							color: ${textColor};
-							line-height: 1.2rem;
-							border-radius: 0.4rem;
-							white-space: nowrap;
-						`}
-					>
-						{transport.frenchTrainType || name}
-					</strong>
-				</span>
+				<TransportMoveBlock {...{ transport, background, textColor, name }} />
 			) : transport.move_type === 'Walk' ? (
 				<Image
 					src={'/walking.svg'}

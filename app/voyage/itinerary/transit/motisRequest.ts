@@ -1,4 +1,5 @@
 import { lightenColor } from '@/components/utils/colors'
+import transportIcon from './transportIcon'
 
 const datePlusHours = (date, hours) => {
 	const today = new Date(date)
@@ -117,15 +118,20 @@ export const computeMotisTrip = async (start, destination, date) => {
 						//TODO this should be a configuration file that sets not only main
 						//colors, but gradients, icons (ouigo, inoui, tgv, ter, etc.)
 						const sourceGtfs = trip?.id.id.split('_')[0],
+							prefix = sourceGtfs && sourceGtfs.split('|')[0],
 							frenchTrainType = isOUIGO
 								? 'OUIGO'
 								: isTGV
 								? 'TGV'
-								: sourceGtfs
-								? sourceGtfs.includes('horaires-des-lignes-ter-sncf')
+								: prefix
+								? prefix === 'ter'
 									? 'TER'
-									: sourceGtfs.includes('horaires-des-tgv') && 'TGV'
+									: prefix === 'tgv'
+									? 'TGV'
+									: null
 								: null
+
+						console.log('sourceGtfs', sourceGtfs)
 
 						const customAttributes = {
 							route_color: isTGV
@@ -140,6 +146,7 @@ export const computeMotisTrip = async (start, destination, date) => {
 								: isOUIGO
 								? '#fff'
 								: handleColor(route_text_color, '#000000'),
+							icon: transportIcon(frenchTrainType, prefix),
 						}
 						const attributes = {
 							...gtfsAttributes,

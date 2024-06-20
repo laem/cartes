@@ -6,7 +6,9 @@ import { useState } from 'react'
 import DayView from '../DayView'
 import Calendar from './Calendar'
 import { handleColor } from '../../itinerary/transit/motisRequest'
-import transportIcon from '../../itinerary/transit/transportIcon'
+import transportIcon, {
+	transportTypeIcon,
+} from '../../itinerary/transit/transportIcon'
 
 export const nowAsYYMMDD = (delimiter = '') => {
 	var d = new Date(),
@@ -188,7 +190,7 @@ export const RouteName = ({ route, name = undefined }) => {
 			`}
 		>
 			<Image
-				src={transportIcon(route.frenchTrainType, route.route_type, route)}
+				src={transportTypeIcon(route.route_type, route)}
 				alt="Icône d'un bus"
 				width="100"
 				height="100"

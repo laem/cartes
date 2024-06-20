@@ -66,6 +66,7 @@ export default function DrawTransportMaps({
 }
 
 const DrawTransportMap = ({ map, agencyId, features }) => {
+	console.log('transportmap draw or redraw ', agencyId, features.length)
 	useDrawTransport(map, features, 'transitMap-agency-' + agencyId)
 	return null
 }
