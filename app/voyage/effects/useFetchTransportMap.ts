@@ -57,13 +57,21 @@ export default function useFetchTransportMap(
 				if (noCache) {
 					setData(newAgencies)
 				} else {
-					setData([
+					const newData = [
 						...data.filter(
 							([id]) =>
-								relevantAgencyIds.includes(id) && !newAgencyIds.includes(id)
+								relevantAgencyIds.includes(id) &&
+								!(agence ? [agence] : newAgencyIds).includes(id)
 						),
 						...newAgencies,
-					])
+					]
+					console.log(
+						'transportmap new data',
+						newData,
+						relevantAgencyIds,
+						newAgencyIds
+					)
+					setData(newData)
 				}
 			} catch (e) {
 				if (abortController.signal.aborted) {
@@ -83,7 +91,7 @@ export default function useFetchTransportMap(
 
 	const agencyIdsHash = data?.map(([a]) => a).join('<|>')
 	const transportsData = useMemo(() => {
-		console.log('new transport data array')
+		console.log('new transportmap data array', data)
 		return data
 	}, [agencyIdsHash])
 

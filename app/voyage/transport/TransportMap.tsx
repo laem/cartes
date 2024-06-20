@@ -3,7 +3,7 @@ import Link from 'next/link'
 import DateSelector from '../itinerary/DateSelector'
 import SncfSelect from './SncfSelect'
 import TransitFilter, { transitFilters } from './TransitFilter'
-import { sortBy } from '@/components/utils/utils'
+import { sortBy, unique } from '@/components/utils/utils'
 import StopByName from './StopByName'
 import { ModalCloseButton } from '../UI'
 import Routes from './TransportMapRoutes'
@@ -16,8 +16,8 @@ export default function TransportMap({
 	trainType,
 	transitFilter,
 	stop,
+	bbox,
 }) {
-	console.log('TransportMap')
 	const setSearchParams = useSetSearchParams()
 
 	const setTransitFilter = (filter) => setSearchParams({ filtre: filter })
@@ -46,24 +46,45 @@ export default function TransportMap({
 	)[1].filter
 
 	const routesDemanded = routesParam?.split('|')
+	const rand = Math.random()
+	console.time('routes' + rand)
+	console.log('transportmap bbox', bbox)
+
 	const routes = sortBy((route) => -route.properties.perDay)(
-		data.reduce((memo, [, { features }]) => {
+		data.reduce((memo, [agencyId, { features }]) => {
+			if (selectedAgency != null && agencyId !== selectedAgency) return memo
 			const filteredFeatures = features.filter(transitFilterFunction)
-			const found = filteredFeatures.filter((feature) =>
-				routesDemanded
-					? routesDemanded.includes(feature.properties.route_id)
-					: feature.geometry.type === 'LineString'
-			)
+			const found = filteredFeatures.filter((feature, i) => {
+				if (routesDemanded)
+					return routesDemanded.includes(feature.properties.route_id)
+				else {
+					if (feature.geometry.type !== 'LineString') return
+
+					if (i === 0) console.log('transportmap feature', feature)
+
+					const hasCoordinateInBbox = feature.geometry.coordinates.some(
+						([lon, lat]) =>
+							lon > bbox[0][0] &&
+							lon < bbox[1][0] &&
+							lat > bbox[0][1] &&
+							lat < bbox[1][1]
+					)
+					return hasCoordinateInBbox
+				}
+			})
 			return [...memo, ...found]
 		}, [])
 	)
+	console.timeLog('routes' + rand)
+	const routeIds = routes.map((route) => route.properties.route_id)
+	console.log('routes', routeIds, unique(routeIds))
 
 	return (
 		<section>
 			<section>
 				<h2>Plans disponibles</h2>
 				{false && <DateSelector type="day" date={day} />}
-				{!selectedAgency && data?.length > 0 && (
+				{selectedAgency == null && data?.length > 0 && (
 					<ol>
 						{data.map(([agencyId, { agency, bbox, features }]) => (
 							<li key={agencyId}>
@@ -92,7 +113,7 @@ export default function TransportMap({
 					{data?.length > 0 && <StopByName stopName={stop} data={data} />}
 				</section>
 			)}
-			{data?.length > 0 && !routes && selectedAgency && (
+			{data?.length > 0 && !routesDemanded && selectedAgency != null && (
 				<Agency
 					data={data.find(([id]) => id === selectedAgency)[1]}
 					backUrl={setSearchParams({ agence: undefined }, true)}

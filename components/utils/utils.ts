@@ -170,3 +170,7 @@ export function isIOS() {
 		(navigator.userAgent.includes('Mac') && 'ontouchend' in document)
 	)
 }
+
+export const unique = (myList) => {
+	return [...new Set(myList)]
+}

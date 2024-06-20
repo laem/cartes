@@ -211,6 +211,7 @@ export default function Container({ searchParams }) {
 							transportsData,
 							geolocation,
 							bboxImages,
+							bbox,
 							focusImage,
 							vers,
 							osmFeature,

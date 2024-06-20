@@ -8,8 +8,6 @@ export default function Routes({
 	setStopName,
 	routesParam,
 }) {
-	console.log('pink', routes)
-
 	return (
 		<section
 			css={`

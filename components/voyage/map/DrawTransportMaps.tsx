@@ -23,6 +23,7 @@ export default function DrawTransportMaps({
 		'type de train': trainType,
 		filtre: transitFilter = defaultTransitFilter,
 		arret: stop,
+		agence: selectedAgency,
 	} = searchParams
 
 	const agencyIdsHash = sortBy((id) => id)(
@@ -31,16 +32,26 @@ export default function DrawTransportMaps({
 
 	const dataToDraw = useMemo(() => {
 		console.log('memo transport dataToDraw', agencyIdsHash, transportsData)
-		return transportsData.map(([agencyId, { features }]) => {
-			const filteredFeatures = filterTransportFeatures(features, {
-				routesParam,
-				stop,
-				trainType,
-				transitFilter,
+		return transportsData
+			.map(([agencyId, { features }]) => {
+				if (selectedAgency != null && agencyId !== selectedAgency) return false
+				const filteredFeatures = filterTransportFeatures(features, {
+					routesParam,
+					stop,
+					trainType,
+					transitFilter,
+				})
+				return [agencyId, filteredFeatures]
 			})
-			return [agencyId, filteredFeatures]
-		})
-	}, [agencyIdsHash, routesParam, stop, trainType, transitFilter])
+			.filter(Boolean)
+	}, [
+		agencyIdsHash,
+		routesParam,
+		stop,
+		trainType,
+		transitFilter,
+		selectedAgency,
+	])
 
 	if (styleKey !== 'light') return null
 

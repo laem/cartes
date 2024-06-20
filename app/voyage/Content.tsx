@@ -38,6 +38,7 @@ export default function Content({
 	clickGare,
 	zoneImages,
 	bboxImages,
+	bbox,
 	panoramaxImages,
 	resetZoneImages,
 	state,
@@ -219,6 +220,7 @@ export default function Content({
 			{searchParams.transports === 'oui' && (
 				<TransportMap
 					{...{
+						bbox,
 						day: searchParams.day,
 						data: transportsData,
 						selectedAgency: searchParams.agence,
