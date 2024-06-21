@@ -86,10 +86,19 @@ export default function TransportMap({
 	return (
 		<section>
 			<section>
-				<h2>Plans disponibles</h2>
+				{!selectedAgencyData && <h2>Plans de transport en commun</h2>}
 				{false && <DateSelector type="day" date={day} />}
 				{selectedAgency == null && data?.length > 0 && (
-					<ol>
+					<ol
+						css={`
+							margin-left: 0.6rem;
+							list-style-type: none;
+							a {
+								color: var(--color);
+								text-decoration-color: var(--lighterColor);
+							}
+						`}
+					>
 						{data.map(([agencyId, { agency, bbox, features }]) => (
 							<li key={agencyId}>
 								<Link href={setSearchParams({ agence: agencyId }, true)}>
@@ -146,9 +155,8 @@ export default function TransportMap({
 const Agency = ({ data, backUrl }) => {
 	return (
 		<section>
-			<Link href={backUrl}>← Retour à la liste des réseaux</Link>
-			<h3>{data.agency.agency_name}</h3>
-			<p>Cliquez sur une ligne pour l'explorer.</p>
+			<Link href={backUrl}>← Retour à la liste des plans des réseaux</Link>
+			<h2>{data.agency.agency_name}</h2>
 		</section>
 	)
 }

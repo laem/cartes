@@ -22,7 +22,7 @@ export default function Routes({
 					onClick={() => setRoutes(undefined, false)}
 				/>
 			) : (
-				'👉️ Cliquez pour explorer les routes'
+				'👉️ Cliquez pour explorer les lignes'
 			)}
 
 			<ol
