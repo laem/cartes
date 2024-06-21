@@ -77,9 +77,6 @@ export default function Content({
 	const wikidata = useWikidata(osmFeature, state)
 
 	const setSearchParams = useSetSearchParams()
-	useEffect(() => {
-		if (!introductionRead) setSnap(1)
-	}, [introductionRead, setSnap])
 
 	const wikidataPictureUrl = wikidata?.pictureUrl
 	const wikiFeatureImage =
@@ -156,13 +153,19 @@ export default function Content({
 			}
 	}, [showSearch, zoom, snap])
 
+	const showIntroduction =
+		!introductionRead &&
+		// if a new user comes with a place URL, or the election map, or if a search
+		// engine indexes a transport map, we don't want to hide the relevant content
+		// and bother her with the introduction
+		Object.keys(searchParams).length === 0
 	useEffect(() => {
-		if (introductionRead) return
+		if (showIntroduction) return
 
 		setTimeout(() => setSnap(1), 1000)
-	}, [introductionRead, setSnap])
+	}, [showIntroduction, setSnap])
 
-	if (!introductionRead)
+	if (showIntroduction)
 		return (
 			<ExplanationWrapper>
 				<Explanations />

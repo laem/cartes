@@ -81,7 +81,13 @@ export default function MapButtons({
 					href={setSearchParams(
 						{
 							...omit(['transports'], searchParams),
-							...(searchParams.transports ? {} : { transports: 'oui' }),
+							...(searchParams.transports
+								? {
+										transports: undefined,
+										agence: undefined,
+										routes: undefined,
+								  }
+								: { transports: 'oui' }),
 						},
 						true,
 						true
