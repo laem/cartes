@@ -2,8 +2,10 @@ import useDrawTransport from '@/app/voyage/effects/useDrawTransport'
 import { gtfsServerUrl } from '@/app/voyage/serverUrls'
 import { defaultTransitFilter } from '@/app/voyage/transport/TransitFilter'
 import { filterTransportFeatures } from '@/app/voyage/transport/filterTransportFeatures'
+import { fitBoundsConsideringModal } from '@/app/voyage/utils'
 import { sortBy } from '@/components/utils/utils'
 import { useEffect, useMemo, useState } from 'react'
+import { useMediaQuery } from 'usehooks-ts'
 
 export default function DrawTransportMaps({
 	map,
@@ -28,24 +30,20 @@ export default function DrawTransportMaps({
 	} = searchParams
 
 	const [selectedAgencyBbox, setSelectedAgencyBbox] = useState(null)
+	const isMobile = useMediaQuery('(max-width: 800px)')
 
 	useEffect(() => {
 		if (!map) return
 		if (!selectedAgencyBbox) return
 		const bbox = selectedAgencyBbox
 
-		map.fitBounds(
-			[
-				[bbox[0], bbox[1]],
-				[bbox[2], bbox[3]],
-			],
+		const fitBoundsBbox = [
+			[bbox[0], bbox[1]],
+			[bbox[2], bbox[3]],
+		]
 
-			{
-				padding: { top: 50, bottom: 50, left: 100, right: 100 },
-				duration: 600,
-			}
-		)
-	}, [selectedAgencyBbox, map])
+		fitBoundsConsideringModal(isMobile, fitBoundsBbox, map)
+	}, [selectedAgencyBbox, map, isMobile])
 
 	useEffect(() => {
 		if (!selectedAgency) return
