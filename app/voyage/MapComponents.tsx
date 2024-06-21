@@ -10,7 +10,7 @@ function MapComponents({
 	transportsData,
 	isTransportsMode,
 	setTempStyle,
-	styleKey,
+	safeStyleKey,
 	searchParams,
 }) {
 	useDrawBookmarks(map)
@@ -19,7 +19,7 @@ function MapComponents({
 		<>
 			{isTransportsMode && (
 				<DrawTransportMaps
-					{...{ map, transportsData, setTempStyle, styleKey, searchParams }}
+					{...{ map, transportsData, setTempStyle, safeStyleKey, searchParams }}
 				/>
 			)}
 		</>

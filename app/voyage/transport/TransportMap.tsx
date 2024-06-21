@@ -18,6 +18,7 @@ export default function TransportMap({
 	stop,
 	bbox,
 }) {
+	if (!bbox) return
 	const setSearchParams = useSetSearchParams()
 
 	const setTransitFilter = (filter) => setSearchParams({ filtre: filter })
