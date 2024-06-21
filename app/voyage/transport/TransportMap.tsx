@@ -79,6 +79,10 @@ export default function TransportMap({
 	const routeIds = routes.map((route) => route.properties.route_id)
 	console.log('routes', routeIds, unique(routeIds))
 
+	const selectedAgencyData =
+		selectedAgency &&
+		data?.length > 0 &&
+		data.find(([id]) => id === selectedAgency)
 	return (
 		<section>
 			<section>
@@ -113,9 +117,9 @@ export default function TransportMap({
 					{data?.length > 0 && <StopByName stopName={stop} data={data} />}
 				</section>
 			)}
-			{data?.length > 0 && !routesDemanded && selectedAgency != null && (
+			{!routesDemanded && selectedAgencyData && (
 				<Agency
-					data={data.find(([id]) => id === selectedAgency)[1]}
+					data={selectedAgencyData[1]}
 					backUrl={setSearchParams({ agence: undefined }, true)}
 				/>
 			)}
