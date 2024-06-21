@@ -1,10 +1,12 @@
 import maplibregl from 'maplibre-gl'
+import { Protocol } from 'pmtiles'
 import { useEffect, useMemo, useState } from 'react'
 import { useMediaQuery } from 'usehooks-ts'
 import { styles } from '../styles/styles'
-import { Protocol } from 'pmtiles'
 import useGeolocation from './useGeolocation'
 
+import { useParams } from 'next/navigation'
+import useHash from './useHash'
 /*
  *
  * {"city":"Rennes","country":"FR","flag":"🇫🇷","countryRegion":"BRE","region":"cdg1","latitude":"48.11","longitude":"-1.6744"}
@@ -17,7 +19,8 @@ const defaultCenter =
 	// Rennes [-1.678, 48.11]
 	[2.025, 46.857]
 export const defaultZoom = 5.52
-const defaultHash = `#${defaultZoom}/${defaultCenter[1]}/${defaultCenter[0]}`
+const defaultHash = `#${defaultZoom}/${defaultCenter[1]}/${defaultCenter[0]}`,
+	defaultArrayHash = defaultHash.slice(1).split('/')
 
 export default function useAddMap(
 	styleUrl,
@@ -29,6 +32,7 @@ export default function useAddMap(
 	const [map, setMap] = useState(null)
 	const [geolocate, setGeolocate] = useState(null)
 	const isMobile = useMediaQuery('(max-width: 800px)')
+	const [hash, setHash] = useState(defaultArrayHash)
 	// This could probably be done with a Next Middleware, to avoid a second
 	// request, but I could not make it work in 5 minutes
 	const geolocation = useGeolocation({
@@ -102,25 +106,36 @@ export default function useAddMap(
 
 		newMap.on('moveend', (e) => {
 			setBbox(newMap.getBounds().toArray())
+			setHash([
+				newMap.getZoom(),
+				...newMap.getCenter().toArray().map(roundTo(4)).reverse(),
+			])
 		})
 
 		return () => {
 			setMap(null)
 			newMap?.remove()
 		}
-	}, [setMap, setZoom, setBbox, mapContainerRef, setGeolocate]) // styleUrl not listed on purpose
+	}, [setMap, setZoom, setBbox, mapContainerRef, setGeolocate, setHash]) // styleUrl not listed on purpose
 
 	const triggerGeolocation = useMemo(
 		() => (geolocate ? () => geolocate.trigger() : () => 'Not ready'),
 		[geolocate]
 	)
 
+	console.log('hash', hash)
 	useEffect(() => {
-		if (!map || !isMobile || window.location.hash !== defaultHash) return
-		setTimeout(() => {
+		if (!map || !isMobile) return
+
+		if (arrayEquals(hash.map(roundTo(2)), defaultArrayHash.map(roundTo(2))))
+			return
+
+		triggerGeolocation()
+		const timer = setTimeout(() => {
 			triggerGeolocation()
 		}, 2000)
-	}, [map, isMobile, triggerGeolocation])
+		return () => clearTimeout(timer)
+	}, [map, isMobile, triggerGeolocation, hash.join('/')])
 
 	useEffect(() => {
 		if (!map) return
@@ -140,4 +155,23 @@ export default function useAddMap(
 	}, [map, styleUrl])
 
 	return [map, triggerGeolocation]
+}
+
+const roundTo = (precision) => (num) => {
+	const multiplesOfTen = [...new Array(precision)].reduce(
+		(memo, next) => memo * 10,
+		1
+	)
+
+	return Math.round(num * multiplesOfTen) / multiplesOfTen
+}
+
+function arrayEquals(a, b) {
+	console.log('hash comp', a, b)
+	return (
+		Array.isArray(a) &&
+		Array.isArray(b) &&
+		a.length === b.length &&
+		a.every((val, index) => val === b[index])
+	)
 }
