@@ -1,4 +1,4 @@
-import { allArticles } from 'contentlayer/generated'
+import { allArticles } from '@/.contentlayer/generated'
 import { compareDesc } from 'date-fns'
 import Link from 'next/link'
 import { dateCool } from './utils'

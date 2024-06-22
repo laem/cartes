@@ -1,4 +1,4 @@
-import { withContentlayer } from 'next-contentlayer'
+import { withContentlayer } from 'next-contentlayer2'
 import createMDX from '@next/mdx'
 import path from 'path'
 import { fileURLToPath } from 'url'

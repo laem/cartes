@@ -1,5 +1,5 @@
 // contentlayer.config.ts
-import { defineDocumentType, makeSource } from 'contentlayer/source-files'
+import { defineDocumentType, makeSource } from 'contentlayer2/source-files'
 import mdxOptions from './mdxOptions.mjs'
 
 export const Article = defineDocumentType(() => ({
