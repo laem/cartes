@@ -150,7 +150,8 @@ export default function Map({
 		searchParams,
 		state,
 		zoom,
-		itinerary.routes
+		itinerary.routes,
+		itinerary.date
 	)
 
 	const onSearchResultClick = (feature) => {

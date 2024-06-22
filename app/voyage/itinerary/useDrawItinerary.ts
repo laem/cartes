@@ -22,7 +22,8 @@ export default function useDrawItinerary(
 	searchParams,
 	state,
 	zoom,
-	routes
+	routes,
+	date
 ) {
 	const mode = modeKeyFromQuery(searchParams.mode)
 	const desktop = useMediaQuery('(min-width: 800px)')
@@ -46,7 +47,8 @@ export default function useDrawItinerary(
 	useDrawTransit(
 		map,
 		(!mode || mode === 'transit') && routes?.transit,
-		selectedConnection
+		selectedConnection,
+		date
 	)
 
 	useFetchDrawBikeParkings(map, routes?.cycling)

@@ -2,17 +2,21 @@ import { useEffect } from 'react'
 import { handleColor } from '@/app/voyage/itinerary/transit/motisRequest'
 import { findContrastedTextColor } from '@/components/utils/colors'
 import { safeRemove } from './utils'
+import { filterNextConnections } from '../itinerary/transit/utils'
 
-export default function useDrawTransit(map, transit, selectedConnection) {
-	const connection =
-		transit?.connections && transit.connections[selectedConnection || 0]
+export default function useDrawTransit(map, transit, selectedConnection, date) {
+	const connections =
+		transit &&
+		transit.connections &&
+		filterNextConnections(transit.connections, date)
+
+	const connection = connections && connections[selectedConnection || 0]
 
 	useEffect(() => {
 		if (!map || !connection) return
 
 		const { transports, stops } = connection
 
-		console.log('yotr', transports)
 		const featureCollection = {
 			type: 'FeatureCollection',
 			features: transports.reduce((memo, next) => {
