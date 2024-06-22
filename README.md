@@ -1,7 +1,6 @@
 > Copyright 2023,2024 Maël THOMAS-QUILLÉVÉRÉ. L'ensemble de ce dépot est soumis à la licence AGPL3.
 
-## Futureco
-
+Ce dépôt contient deux sites Web : [cartes.app](https://cartes.app) et [futur.eco](https://futur.eco). 
 
 ## 🆕 🗺️ Cartes
 
@@ -15,7 +14,7 @@ Découvrez [nos motivations](https://futur.eco/blog/un-beau-voyage) et les derni
 
 Pour les devs : la peinture est fraîche. Mon objectif à ce stade n'est pas encore de faire une base de code propre et accessible à la contribution, mais d'explorer un certain nombre de chemins, d'avoir la première centaine de milliers d'utilisateurs. Ensuite, l'appli se transformera en plateforme pour accueillir les contributions :) 
 
-## Les calculateurs carbone
+## Les calculateurs carbone futureco
 
 > La partie historique du site continue d'être disponible, et servie au grand public via les articles du site bonpote.com. Dans un second temps, elles seront fusionnées dans l'application de cartes.
 

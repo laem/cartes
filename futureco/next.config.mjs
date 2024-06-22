@@ -40,11 +40,6 @@ const nextConfig = {
 				permanent: true,
 			},
 			{
-				source: '/voyage/:slug*',
-				destination: 'https://cartes.app/:slug*',
-				permanent: true,
-			},
-			{
 				source: '/ferry',
 				destination: '/simulateur/transport/ferry/empreinte-du-voyage',
 				permanent: true,
@@ -64,27 +59,7 @@ const nextConfig = {
 				destination: '/sitemap',
 				permanent: false,
 			},
-			{
-				source: '/elections-legislatives-2024',
-				destination: '/?style=elections',
-				permanent: false,
-			},
 		]
-	},
-	async rewrites() {
-		return process.env.VOYAGE === 'oui'
-			? {
-					beforeFiles: [
-						// These rewrites are checked after headers/redirects
-						// and before all files including _next/public files which
-						// allows overriding page files
-						{
-							source: '/',
-							destination: '/voyage',
-						},
-					],
-			  }
-			: {}
 	},
 	webpack: (config, options) => {
 		config.module.rules.push({
