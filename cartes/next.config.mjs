@@ -18,6 +18,9 @@ const nextConfig = {
 	compiler: {
 		styledComponents: true,
 	},
+	compilerOptions: {
+		baseUrl: '.',
+	},
 	eslint: {
 		// Warning: This allows production builds to successfully complete even if
 		// your project has ESLint errors.
@@ -62,8 +65,7 @@ const nextConfig = {
 
 		config.resolve.alias = {
 			...config.resolve.alias,
-			Components: path.resolve(__dirname, './components'),
-			Selectors: path.resolve(__dirname, './selectors'),
+			Components: path.resolve(__dirname, '../components'),
 			//https://github.com/Turfjs/turf/issues/2200
 			rbush: path.resolve(__dirname, '/node_modules/rbush/rbush.js'),
 		}

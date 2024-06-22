@@ -1,11 +1,11 @@
 import { useLocalStorage } from 'usehooks-ts'
 import { pointHash } from './BookmarkButton'
 import Image from 'next/image'
-import { buildAddress } from '@/components/voyage/Address'
-import { SoloTags } from '@/components/voyage/Tags'
+import { buildAddress } from 'Components/voyage/Address'
+import { SoloTags } from 'Components/voyage/Tags'
 import { processTags } from './OsmFeature'
 import { ModalCloseButton } from './UI'
-import useSetSearchParams from '@/components/useSetSearchParams'
+import useSetSearchParams from 'Components/useSetSearchParams'
 import { useState } from 'react'
 
 export default function Favoris() {
