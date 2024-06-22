@@ -1,9 +1,6 @@
 import { useEffect, useMemo, useState } from 'react'
 import { gtfsServerUrl } from '../serverUrls'
-import useDrawTransport from './useDrawTransport'
-import { filterTransportFeatures } from '../transport/filterTransportFeatures'
 import { decodeTransportsData } from '../transport/decodeTransportsData'
-import { omit } from '@/components/utils/utils'
 
 export default function useFetchTransportMap(
 	active,

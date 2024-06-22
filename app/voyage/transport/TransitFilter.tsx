@@ -7,6 +7,12 @@ export const defaultTransitFilter = 'plan général'
 // then, another function will adapt to keep only the points where filtered
 // routes pass
 
+export const getTransitFilter = (keyTest) =>
+	transitFilters.find(([key]) => keyTest(key))[1]
+
+export const getLinesSortedByFrequency = (lines) =>
+	sortBy(({ properties }) => -properties.perDay)(lines)
+
 export const transitFilters = [
 	[
 		'plan général',
