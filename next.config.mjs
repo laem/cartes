@@ -34,6 +34,7 @@ const nextConfig = {
 	async redirects() {
 		return [
 			{
+				//Temp redirect needed because of our initial choice to put futureco's cout-voiture in the voyage subdir, when we though cartes would be "futureco voyage"
 				source: '/voyage/cout-voiture',
 				destination: '/cout-voiture',
 				permanent: true,

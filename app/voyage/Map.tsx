@@ -334,7 +334,7 @@ export default function Map({
 						transportsData,
 						setTempStyle,
 						isTransportsMode,
-						styleKey,
+						safeStyleKey,
 						searchParams,
 					}}
 				/>

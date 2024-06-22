@@ -11,7 +11,7 @@ export default function DrawTransportMaps({
 	map,
 	transportsData,
 	setTempStyle,
-	styleKey,
+	safeStyleKey,
 	searchParams,
 }) {
 	useEffect(() => {
@@ -93,7 +93,7 @@ export default function DrawTransportMaps({
 		selectedAgency,
 	])
 
-	if (styleKey !== 'light') return null
+	if (safeStyleKey !== 'light') return null
 
 	return dataToDraw.map(([agencyId, features]) => (
 		<DrawTransportMap

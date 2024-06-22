@@ -14,7 +14,25 @@ export default function useFetchTransportMap(
 ) {
 	const [data, setData] = useState([])
 	useEffect(() => {
+		if (!active || agence == null) return
+		if (data.find(([agencyId]) => agencyId === agence)) return
+
+		const doFetch = async () => {
+			const url = `${gtfsServerUrl}/agencyArea/${agence}`
+
+			const request = await fetch(url)
+			const json = await request.json()
+
+			const newAgencies = [[agence, json]].map(decodeTransportsData)
+
+			console.log('newa', newAgencies)
+			setData((data) => [...data, ...newAgencies])
+		}
+		doFetch()
+	}, [agence, data, active, setData])
+	useEffect(() => {
 		if (!active || !bbox) return
+		if (agence != null) return
 
 		const abortController = new AbortController()
 		const doFetch = async () => {
@@ -41,9 +59,11 @@ export default function useFetchTransportMap(
 					)
 				}
 
+				// TODO if agence, don't bother with the matching bbox, we just want to
+				// show the line infos quickly and zoom the map on the relevant zone
 				const dataRequest = await fetch(
 					url('geojson') +
-						(agence || newAgencyIds.join('|')) +
+						newAgencyIds.join('|') +
 						(noCache ? `?noCache=${noCache}` : ''),
 					{
 						mode: 'cors',
@@ -60,8 +80,7 @@ export default function useFetchTransportMap(
 					const newData = [
 						...data.filter(
 							([id]) =>
-								relevantAgencyIds.includes(id) &&
-								!(agence ? [agence] : newAgencyIds).includes(id)
+								relevantAgencyIds.includes(id) && !newAgencyIds.includes(id)
 						),
 						...newAgencies,
 					]

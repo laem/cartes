@@ -1,5 +1,6 @@
 import useSetSearchParams from '@/components/useSetSearchParams'
 import { useEffect } from 'react'
+import { safeRemove } from './utils'
 
 /***
  * This hook draws transit lines on the map.
@@ -144,7 +145,7 @@ export default function useDrawTransport(map, features, drawKey) {
 					'circle-color': ['get', 'circle-color'],
 				},
 			})
-			console.log('darkBlue did add layer id ', pointsId, map._mapId)
+			console.log('transportmap did add layer id ', pointsId, map._mapId)
 
 			map.on('click', linesId, onClickRoutes)
 			map.on('click', pointsId, onClickStop)
@@ -164,12 +165,7 @@ export default function useDrawTransport(map, features, drawKey) {
 			if (!map) return
 			map.off('click', linesId, onClickRoutes)
 			map.off('click', pointsId, onClickStop)
-			map.removeLayer(linesId)
-			map.removeLayer(pointsId)
-			const source = map.getSource(id)
-			if (source) {
-				map.removeSource(id)
-			}
+			safeRemove(map)([linesId, pointsId], [id])
 		}
 	}, [map, features, drawKey])
 }
