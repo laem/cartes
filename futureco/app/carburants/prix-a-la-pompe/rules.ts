@@ -1,4 +1,4 @@
-import { objectMapKeys } from '@/components/utils/utils'
+import { objectMapKeys } from 'Components/utils/utils'
 import data from './rules.yaml'
 
 const prefix = 'carburants'

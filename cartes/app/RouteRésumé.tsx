@@ -1,4 +1,4 @@
-import css from '@/components/css/convertToJs'
+import css from 'Components/css/convertToJs'
 import LightsWarning from './LightsWarning'
 import ProfileChooser from './ProfileChooser'
 import { nowStamp } from './itinerary/transit/motisRequest'

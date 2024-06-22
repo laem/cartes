@@ -1,6 +1,6 @@
-import Article from '@/components/Article'
-import css from '@/components/css/convertToJs'
-import { Card, LightButton } from '@/components/UI'
+import Article from 'Components/Article'
+import css from 'Components/css/convertToJs'
+import { Card, LightButton } from 'Components/UI'
 import voitures from '@/public/voitures.svg'
 import { Metadata } from 'next'
 import Image from 'next/image'
@@ -9,7 +9,7 @@ import Explanation from './Explanation.mdx'
 import { Header } from './UI'
 import Voyage from './Voyage'
 import rules from './data/rules.ts'
-import BetaBanner from '@/components/BetaBanner'
+import BetaBanner from 'Components/BetaBanner'
 import { ogImageURL } from './ogImageUrl'
 
 const title = `Quel est le vrai coût d'un trajet en voiture ?`

@@ -1,5 +1,5 @@
 'use client'
-import { LightButton } from '@/components/UI'
+import { LightButton } from 'Components/UI'
 import Emoji, { emoji } from 'Components/Emoji'
 import { useDispatch, useSelector } from 'react-redux'
 import scenarios from './scenarios.yaml'

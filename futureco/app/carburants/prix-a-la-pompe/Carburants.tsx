@@ -1,6 +1,6 @@
 'use client'
-import CountriesGraph from '@/components/CountriesGraph'
-import { Card } from '@/components/UI'
+import CountriesGraph from 'Components/CountriesGraph'
+import { Card } from 'Components/UI'
 import RuleInput from 'Components/conversation/RuleInput'
 import Emoji from 'Components/Emoji'
 import StackedBarChart from 'Components/StackedBarChart'

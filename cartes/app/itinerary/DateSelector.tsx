@@ -1,6 +1,6 @@
 'use client'
 
-import useSetSearchParams from '@/components/useSetSearchParams'
+import useSetSearchParams from 'Components/useSetSearchParams'
 import { useState } from 'react'
 import { DialogButton } from '../UI'
 import { useInterval } from 'usehooks-ts'

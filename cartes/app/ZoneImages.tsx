@@ -1,4 +1,4 @@
-import { getThumb } from '@/components/wikidata'
+import { getThumb } from 'Components/wikidata'
 import { useEffect, useState } from 'react'
 import { createSearchBBox } from './createSearchPolygon'
 import { FeatureImage } from './FeatureImage'

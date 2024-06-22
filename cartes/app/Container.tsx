@@ -21,13 +21,13 @@
 
 import { useMemo, useRef, useState } from 'react'
 
-import { getCategory } from '@/components/voyage/categories'
+import { getCategory } from 'Components/voyage/categories'
 import ModalSwitch from './ModalSwitch'
 import { ContentWrapper, MapContainer } from './UI'
 import { useZoneImages } from './ZoneImages'
 import useSetItineraryModeFromUrl from './itinerary/useSetItineraryModeFromUrl'
 
-import useSetSearchParams from '@/components/useSetSearchParams'
+import useSetSearchParams from 'Components/useSetSearchParams'
 import dynamic from 'next/dynamic'
 import FocusedImage from './FocusedImage'
 import { defaultZoom } from './effects/useAddMap'

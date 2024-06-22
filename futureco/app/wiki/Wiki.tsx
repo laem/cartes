@@ -9,13 +9,13 @@ import { utils } from 'publicodes'
 const { encodeRuleName } = utils
 
 import topElements from '@/app/(futureco)/wiki/topElements.yaml'
-import css from '@/components/css/convertToJs'
+import css from 'Components/css/convertToJs'
 import {
 	CardUnits,
 	CategoryList,
 	RuleListStyle,
 	WikiCard,
-} from '@/components/WikiUI'
+} from 'Components/WikiUI'
 import { title as ruleTitle } from 'Components/utils/publicodesUtils'
 
 export default function Wiki({ rules }) {

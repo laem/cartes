@@ -1,4 +1,4 @@
-import css from '@/components/css/convertToJs'
+import css from 'Components/css/convertToJs'
 import { useEffect, useRef, useState } from 'react'
 import { nowAsYYMMDD } from './Route'
 

@@ -1,4 +1,4 @@
-import useSetSearchParams from '@/components/useSetSearchParams'
+import useSetSearchParams from 'Components/useSetSearchParams'
 import { useEffect } from 'react'
 import { safeRemove } from './utils'
 

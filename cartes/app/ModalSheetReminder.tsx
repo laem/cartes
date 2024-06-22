@@ -1,4 +1,4 @@
-import Emoji from '@/components/Emoji'
+import Emoji from 'Components/Emoji'
 
 const popSize = 6
 export default function ModalSheetReminder({ setOpen }) {

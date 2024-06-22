@@ -1,5 +1,5 @@
 //import train from './train.yaml'
-import { objectMapKeys } from '@/components/utils/utils'
+import { objectMapKeys } from 'Components/utils/utils'
 import trajet from './trajet.yaml'
 import possession from './voiture . coût de possession.yaml'
 import divers from './voiture . coûts divers.yaml'

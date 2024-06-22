@@ -1,5 +1,5 @@
 'use client'
-import Checkbox from '@/components/ui/Checkbox'
+import Checkbox from 'Components/ui/Checkbox'
 import useSound from 'use-sound'
 import Link from 'next/link'
 import { utils } from 'publicodes'

@@ -10,9 +10,9 @@ import {
 } from './ExempleTableUI'
 import { useState } from 'react'
 import Passengers, { PersonImage } from './Passengers'
-import Emoji from '@/components/Emoji'
+import Emoji from 'Components/Emoji'
 import Link from 'next/link'
-import { encodeSituation } from '@/components/utils/simulationUtils'
+import { encodeSituation } from 'Components/utils/simulationUtils'
 
 export default function ExempleTable() {
 	const engine = new Publicodes(rules),

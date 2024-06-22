@@ -1,16 +1,16 @@
 import type { Metadata, ResolvingMetadata } from 'next'
 
-import QuickDocumentationPage from '@/components/documentation/QuickDocumentationPage'
+import QuickDocumentationPage from 'Components/documentation/QuickDocumentationPage'
 import {
 	parentName,
 	title as ruleTitle,
-} from '@/components/utils/publicodesUtils'
+} from 'Components/utils/publicodesUtils'
 import { getRulesFromDottedName } from '@/providers/getRules'
 import Publicodes, { utils } from 'publicodes'
 import Link from 'next/link'
-import ExempleHeader from '@/components/documentation/ExempleHeader'
-import Emoji from '@/components/Emoji'
-import { getSituation } from '@/components/utils/simulationUtils'
+import ExempleHeader from 'Components/documentation/ExempleHeader'
+import Emoji from 'Components/Emoji'
+import { getSituation } from 'Components/utils/simulationUtils'
 
 type Props = {
 	params: { dottedName: string[] }

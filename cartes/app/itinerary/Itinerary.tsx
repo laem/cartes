@@ -1,5 +1,5 @@
-import CircularIcon from '@/components/CircularIcon'
-import useSetSearchParams from '@/components/useSetSearchParams'
+import CircularIcon from 'Components/CircularIcon'
+import useSetSearchParams from 'Components/useSetSearchParams'
 import Link from 'next/link'
 import { useEffect } from 'react'
 import { ContentSection } from '../ContentUI'

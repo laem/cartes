@@ -1,4 +1,4 @@
-import { sortBy } from '@/components/utils/utils'
+import { sortBy } from 'Components/utils/utils'
 import logoMeteoFrance from '@/public/meteo-france.svg'
 import Image from 'next/image'
 import Link from 'next/link'

@@ -3,7 +3,7 @@ import { gtfsServerUrl } from '@/app/voyage/serverUrls'
 import { defaultTransitFilter } from '@/app/voyage/transport/TransitFilter'
 import { filterTransportFeatures } from '@/app/voyage/transport/filterTransportFeatures'
 import { fitBoundsConsideringModal } from '@/app/voyage/utils'
-import { sortBy } from '@/components/utils/utils'
+import { sortBy } from 'Components/utils/utils'
 import { useEffect, useMemo, useState } from 'react'
 import { useMediaQuery } from 'usehooks-ts'
 

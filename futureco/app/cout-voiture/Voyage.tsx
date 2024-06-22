@@ -3,7 +3,7 @@ import rules from './data/rules.ts'
 
 import { useEngine2 } from '@/providers/EngineWrapper'
 import Questions from './Questions'
-import { getSituation } from '@/components/utils/simulationUtils'
+import { getSituation } from 'Components/utils/simulationUtils'
 
 export default function Voyage({ searchParams }) {
 	const objectives = ['voyage . trajet voiture . coût trajet par personne']

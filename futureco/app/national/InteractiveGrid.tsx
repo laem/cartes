@@ -1,5 +1,5 @@
 'use client'
-import { LightButton } from '@/components/UI'
+import { LightButton } from 'Components/UI'
 import Link from 'next/link'
 import Grid from './Grid'
 import Total from './Total'

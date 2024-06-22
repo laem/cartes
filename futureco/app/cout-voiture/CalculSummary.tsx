@@ -1,8 +1,8 @@
-import css from '@/components/css/convertToJs'
+import css from 'Components/css/convertToJs'
 import { CalculSummaryWrapper } from './CalculSummaryUI'
 import rules from './data/rules'
 import { capitalise0, formatValue, utils } from 'publicodes'
-import { title } from '@/components/utils/publicodesUtils'
+import { title } from 'Components/utils/publicodesUtils'
 import Publicodes from 'publicodes'
 
 const rulesEntries = Object.entries(rules)

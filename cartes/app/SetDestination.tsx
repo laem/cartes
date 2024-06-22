@@ -1,9 +1,9 @@
-import useSetSearchParams from '@/components/useSetSearchParams'
+import useSetSearchParams from 'Components/useSetSearchParams'
 import Link from 'next/link'
 import Image from 'next/image'
 import { PlaceButton } from './PlaceButtonsUI'
 import { encodePlace } from './utils'
-import { buildAddress } from '@/components/voyage/Address'
+import { buildAddress } from 'Components/voyage/Address'
 import turfDistance from '@turf/distance'
 import { computeHumanDistance } from './RouteRésumé'
 

@@ -1,4 +1,4 @@
-import useSetSearchParams from '@/components/useSetSearchParams'
+import useSetSearchParams from 'Components/useSetSearchParams'
 import { useEffect, useState } from 'react'
 
 export default function useRightClick(map) {

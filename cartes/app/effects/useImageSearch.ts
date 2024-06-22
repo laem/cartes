@@ -1,5 +1,5 @@
-import { omit } from '@/components/utils/utils'
-import { goodIconSize } from '@/components/voyage/mapUtils'
+import { omit } from 'Components/utils/utils'
+import { goodIconSize } from 'Components/voyage/mapUtils'
 import maplibregl from 'maplibre-gl'
 import { useEffect, useMemo, useState } from 'react'
 

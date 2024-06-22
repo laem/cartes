@@ -1,4 +1,4 @@
-import { decode } from '@/components/valhalla-decode-shape'
+import { decode } from 'Components/valhalla-decode-shape'
 
 export default function (json) {
 	const trip = json.trip

@@ -1,5 +1,5 @@
-import css from '@/components/css/convertToJs'
-import { goodIconSize } from '@/components/voyage/mapUtils'
+import css from 'Components/css/convertToJs'
+import { goodIconSize } from 'Components/voyage/mapUtils'
 import maplibregl from 'maplibre-gl'
 import { useEffect, useState } from 'react'
 import { gtfsServerUrl } from '../serverUrls'

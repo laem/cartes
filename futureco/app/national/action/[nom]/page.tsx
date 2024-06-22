@@ -2,9 +2,9 @@ import data from '../../data.yaml'
 import { utils } from 'publicodes'
 const { decodeRuleName } = utils
 import { MDXRemote } from 'next-mdx-remote/rsc'
-import Article from '@/components/Article'
+import Article from 'Components/Article'
 import Link from 'next/link'
-import Emoji from '@/components/Emoji'
+import Emoji from 'Components/Emoji'
 
 const getRule = (raw) => {
 	const nom = decodeRuleName(raw)

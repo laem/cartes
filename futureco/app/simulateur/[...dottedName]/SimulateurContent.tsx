@@ -1,5 +1,5 @@
 'use client'
-import { getSituation } from '@/components/utils/simulationUtils'
+import { getSituation } from 'Components/utils/simulationUtils'
 import { useEngine2 } from '@/providers/EngineWrapper'
 import Simulation from 'Components/Simulation'
 import SimulationResults from 'Components/SimulationResults'

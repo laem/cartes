@@ -1,4 +1,4 @@
-import { sortBy } from '@/components/utils/utils'
+import { sortBy } from 'Components/utils/utils'
 import Stop from './stop/Stop'
 import useTransportStopData from './useTransportStopData'
 import { useMemo } from 'react'

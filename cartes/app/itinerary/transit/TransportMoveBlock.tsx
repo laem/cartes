@@ -1,6 +1,6 @@
 import Image from 'next/image'
 import { transportTypeIcon } from './transportIcon'
-import { isWhiteColor } from '@/components/css/utils'
+import { isWhiteColor } from 'Components/css/utils'
 
 export default function TransportMoveBlock({
 	transport,

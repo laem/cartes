@@ -1,7 +1,7 @@
 import {
 	parentName,
 	title as getTitle,
-} from '@/components/utils/publicodesUtils'
+} from 'Components/utils/publicodesUtils'
 import { difference, intersection } from '../utils/utils'
 import RuleListItem from './RuleListItem'
 import { NamespaceList } from './RuleListItemUI'

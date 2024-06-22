@@ -1,4 +1,4 @@
-import { omit } from '@/components/utils/utils'
+import { omit } from 'Components/utils/utils'
 import mapboxPolyline from '@mapbox/polyline'
 import { addDefaultColor } from './enrichTransportsData'
 

@@ -1,4 +1,4 @@
-import prixAutoroutes from '@/components/prixAutoroutes'
+import prixAutoroutes from 'Components/prixAutoroutes'
 
 export default async function (
 	points,

@@ -3,7 +3,7 @@ import {
 	NGCRule,
 	NGCRules,
 	title as ruleTitle,
-} from '@/components/utils/publicodesUtils'
+} from 'Components/utils/publicodesUtils'
 import { Markdown } from 'Components/utils/ClientMarkdown'
 import { omit } from 'Components/utils/utils'
 import FriendlyObjectViewer from '../FriendlyObjectViewer'

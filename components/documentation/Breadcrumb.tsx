@@ -1,4 +1,4 @@
-import { title as getTitle } from '@/components/utils/publicodesUtils'
+import { title as getTitle } from 'Components/utils/publicodesUtils'
 import Link from 'next/link'
 import { utils } from 'publicodes'
 

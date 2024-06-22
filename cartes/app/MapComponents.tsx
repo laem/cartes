@@ -1,4 +1,4 @@
-import DrawTransportMaps from '@/components/voyage/map/DrawTransportMaps'
+import DrawTransportMaps from 'Components/voyage/map/DrawTransportMaps'
 import useDrawBookmarks from './effects/useDrawBookmarks'
 import useDrawOsmFeaturePolygon from './effects/useDrawOsmFeaturePolygon'
 import { memo } from 'react'

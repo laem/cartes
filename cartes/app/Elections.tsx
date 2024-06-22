@@ -1,5 +1,5 @@
-import Emoji from '@/components/Emoji'
-import useSetSearchParams from '@/components/useSetSearchParams'
+import Emoji from 'Components/Emoji'
+import useSetSearchParams from 'Components/useSetSearchParams'
 import { useEffect } from 'react'
 import { ModalCloseButton } from './UI'
 import Candidates from './elections/Candidates'

@@ -1,16 +1,16 @@
 import type { Metadata, ResolvingMetadata } from 'next'
 
-import { title as ruleTitle } from '@/components/utils/publicodesUtils'
+import { title as ruleTitle } from 'Components/utils/publicodesUtils'
 import { getRulesFromDottedName } from '@/providers/getRules'
 import { utils } from 'publicodes'
 import Simulateur from './Simulateur'
-import Article from '@/components/Article'
-import convert from '@/components/css/convertToJs'
-import { Markdown } from '@/components/utils/markdown'
-import BaseCarboneReference from '@/components/BaseCarboneReference'
-import css from '@/components/css/convertToJs'
+import Article from 'Components/Article'
+import convert from 'Components/css/convertToJs'
+import { Markdown } from 'Components/utils/markdown'
+import BaseCarboneReference from 'Components/BaseCarboneReference'
+import css from 'Components/css/convertToJs'
 import Link from 'next/link'
-import Emoji from '@/components/Emoji'
+import Emoji from 'Components/Emoji'
 
 type Props = {
 	params: { dottedName: string[] }

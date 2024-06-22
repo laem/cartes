@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react'
 import Route from './Route'
-import { sortBy } from '@/components/utils/utils'
+import { sortBy } from 'Components/utils/utils'
 
 export const isNotTransportStop = (tags) => {
 	console.log('indigo stop tags', tags)

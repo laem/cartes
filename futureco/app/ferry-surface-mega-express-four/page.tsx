@@ -1,3 +1,3 @@
-import Lab from '@/components/ferry/Lab'
+import Lab from 'Components/ferry/Lab'
 
 export default () => <Lab />

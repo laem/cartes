@@ -1,4 +1,4 @@
-import css from '@/components/css/convertToJs'
+import css from 'Components/css/convertToJs'
 import { MapButton } from '../MapButtons'
 
 export default function ItineraryButton({

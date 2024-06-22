@@ -1,6 +1,6 @@
 import { useEffect } from 'react'
 import { handleColor } from '@/app/voyage/itinerary/transit/motisRequest'
-import { findContrastedTextColor } from '@/components/utils/colors'
+import { findContrastedTextColor } from 'Components/utils/colors'
 import { safeRemove } from './utils'
 import { filterNextConnections } from '../itinerary/transit/utils'
 

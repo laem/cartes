@@ -1,5 +1,5 @@
-import css from '@/components/css/convertToJs'
-import { ThemeColorsProvider } from '@/components/utils/colors'
+import css from 'Components/css/convertToJs'
+import { ThemeColorsProvider } from 'Components/utils/colors'
 import { Metadata } from 'next'
 import StyledComponentsRegistry from '../../lib/registry'
 import '../globals.css'

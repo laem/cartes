@@ -1,4 +1,4 @@
-import { capitalise0 } from '@/components/utils/utils'
+import { capitalise0 } from 'Components/utils/utils'
 import { trainColors } from '@/app/voyage/itinerary/transit/motisRequest'
 
 export const trainTypeSncfMapping = {

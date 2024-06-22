@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react'
-import getCityData, { extractFileName, getThumb } from '@/components/wikidata'
+import getCityData, { extractFileName, getThumb } from 'Components/wikidata'
 
 export default function useWikidata(osmFeature, state) {
 	const [wikidata, setWikidata] = useState(null)

@@ -1,4 +1,4 @@
-import { findContrastedTextColor } from '@/components/utils/colors'
+import { findContrastedTextColor } from 'Components/utils/colors'
 import Image from 'next/image'
 
 export default function Candidates({ data }) {

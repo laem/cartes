@@ -1,4 +1,4 @@
-import useSetSearchParams from '@/components/useSetSearchParams'
+import useSetSearchParams from 'Components/useSetSearchParams'
 import { Line } from './transit/Transit'
 import { defaultRouteColor, nowStamp } from './transit/motisRequest'
 import Link from 'next/link'

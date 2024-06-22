@@ -1,4 +1,4 @@
-import convert from '@/components/css/convertToJs'
+import convert from 'Components/css/convertToJs'
 import pubs from './pubs.yaml'
 
 export default function PubImages() {

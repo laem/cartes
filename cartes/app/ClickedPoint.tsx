@@ -1,4 +1,4 @@
-import Address from '@/components/voyage/Address'
+import Address from 'Components/voyage/Address'
 import computeDistance from '@turf/distance'
 
 export default function ClickedPoint({

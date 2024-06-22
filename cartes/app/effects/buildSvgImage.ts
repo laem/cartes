@@ -1,5 +1,5 @@
-import { computeCssVariable } from '@/components/utils/colors'
-import { fromHTML } from '@/components/utils/htmlUtils'
+import { computeCssVariable } from 'Components/utils/colors'
+import { fromHTML } from 'Components/utils/htmlUtils'
 
 export default async function buildSvgImage(
 	imageUrl,

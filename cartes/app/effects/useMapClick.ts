@@ -6,7 +6,7 @@ import {
 } from '@/app/voyage/createSearchPolygon'
 import { disambiguateWayRelation } from '@/app/voyage/osmRequest'
 import { encodePlace } from '@/app/voyage/utils'
-import { replaceArrayIndex } from '@/components/utils/utils'
+import { replaceArrayIndex } from 'Components/utils/utils'
 import { useEffect } from 'react'
 import handleCirconscriptionsLegislativesClick from './handleCirconscriptionsLegislativesClick'
 

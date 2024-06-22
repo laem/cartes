@@ -1,10 +1,10 @@
-import useSetSearchParams from '@/components/useSetSearchParams'
+import useSetSearchParams from 'Components/useSetSearchParams'
 import {
 	AddressDisc,
 	AddressDiscContainer,
 	buildAddress,
-} from '@/components/voyage/Address'
-import { SoloTags } from '@/components/voyage/Tags'
+} from 'Components/voyage/Address'
+import { SoloTags } from 'Components/voyage/Tags'
 import Image from 'next/image'
 import Link from 'next/link'
 import { useLocalStorage } from 'usehooks-ts'

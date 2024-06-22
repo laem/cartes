@@ -1,4 +1,4 @@
-import css from '@/components/css/convertToJs'
+import css from 'Components/css/convertToJs'
 
 export default function Brand({ brand, brandWikidata, brandWikipedia }) {
 	if (!(brand || brandWikidata || brandWikipedia)) return null

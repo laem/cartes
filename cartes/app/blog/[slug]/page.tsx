@@ -1,5 +1,5 @@
 import { allArticles } from '@/.contentlayer/generated'
-import Article from '@/components/Article'
+import Article from 'Components/Article'
 import { dateCool } from '../utils'
 import { getMDXComponent } from 'next-contentlayer2/hooks'
 import Link from 'next/link'

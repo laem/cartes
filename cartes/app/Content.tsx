@@ -1,5 +1,5 @@
-import useSetSearchParams from '@/components/useSetSearchParams'
-import { getThumb } from '@/components/wikidata'
+import useSetSearchParams from 'Components/useSetSearchParams'
+import { getThumb } from 'Components/wikidata'
 import { useEffect } from 'react'
 import { useLocalStorage } from 'usehooks-ts'
 import BookmarkButton from './BookmarkButton'

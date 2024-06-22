@@ -4,7 +4,7 @@ import { useEffect, useState } from 'react'
 import { decodeDate, initialDate } from './DateSelector'
 import { useMemoPointsFromState } from './useDrawItinerary'
 import { modeKeyFromQuery } from './Itinerary'
-import useSetSearchParams from '@/components/useSetSearchParams'
+import useSetSearchParams from 'Components/useSetSearchParams'
 import fetchValhalla from './fetchValhalla'
 
 export default function useFetchItinerary(

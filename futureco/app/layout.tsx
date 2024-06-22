@@ -1,4 +1,4 @@
-import { ThemeColorsProvider } from '@/components/utils/colors'
+import { ThemeColorsProvider } from 'Components/utils/colors'
 import Providers from '@/providers/Providers'
 import { Analytics } from '@vercel/analytics/react'
 import Nav, { NavFooter } from 'Components/Nav'

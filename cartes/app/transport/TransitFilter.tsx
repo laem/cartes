@@ -1,4 +1,4 @@
-import { capitalise0, sortBy } from '@/components/utils/utils'
+import { capitalise0, sortBy } from 'Components/utils/utils'
 import { trainColors } from '../itinerary/motisRequest'
 import { isNil } from 'ramda'
 

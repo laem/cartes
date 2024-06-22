@@ -1,4 +1,4 @@
-import fetchOgImage from '@/components/fetchOgImage'
+import fetchOgImage from 'Components/fetchOgImage'
 import { useState, useEffect } from 'react'
 
 export default function useOgImageFetcher(url) {

@@ -1,4 +1,4 @@
-import { lightenColor } from '@/components/utils/colors'
+import { lightenColor } from 'Components/utils/colors'
 import transportIcon from './transportIcon'
 
 const datePlusHours = (date, hours) => {

@@ -1,4 +1,4 @@
-import useSetSearchParams from '@/components/useSetSearchParams'
+import useSetSearchParams from 'Components/useSetSearchParams'
 import closeIcon from '@/public/remove-circle-stroke.svg'
 import addIcon from '@/public/add-circle-stroke.svg'
 import { Reorder, useDragControls } from 'framer-motion'

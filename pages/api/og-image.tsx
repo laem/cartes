@@ -1,4 +1,4 @@
-import dimensions from '@/components/simulationImageDimensions'
+import dimensions from 'Components/simulationImageDimensions'
 import { ImageResponse } from '@vercel/og'
 
 export const config = {

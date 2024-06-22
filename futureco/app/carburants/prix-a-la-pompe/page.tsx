@@ -1,4 +1,4 @@
-import Emoji from '@/components/Emoji'
+import Emoji from 'Components/Emoji'
 import { Metadata } from 'next'
 import Link from 'next/link'
 import Carburants from './Carburants'
