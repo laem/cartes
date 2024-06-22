@@ -18,7 +18,7 @@ export const getTagLabels = (key, value) => {
 					return optionValue
 				case 'object':
 					if (optionValue.title) return optionValue.title
-					break;
+					break
 				default:
 					return translateBasics(v)
 			}
@@ -33,44 +33,45 @@ const translateBasics = (value: string) => {
 
 export const tagNameCorrespondance = (key: string) => {
 	const found = {
-		'books': 'Livres',
+		books: 'Livres',
 		'brand:website': 'Site de la marque',
 		'building:levels': "Nombre d'étages",
-		'bulk_purchase': 'Achat en vrac',
+		bulk_purchase: 'Achat en vrac',
 		'capacity:disabled': 'Place de parking PMR',
 		'check_date:opening_hours': 'Horaires vérifiés le',
 		'diet:vegan': 'Végan',
 		'diet:vegetarian': 'Végétarien',
 		'emergency:phone': "Numéro d'urgence",
-		'female': 'Pour les femmes',
-		'indoor_seating': "Sièges à l'intérieur",
+		female: 'Pour les femmes',
+		indoor_seating: "Sièges à l'intérieur",
 		'internet_access:fee': 'Accès Internet payant',
-		'male': 'Pour les hommes',
-		'official_name': 'Nom officiel',
-		'old_name': 'Ancien nom',
+		male: 'Pour les hommes',
+		official_name: 'Nom officiel',
+		old_name: 'Ancien nom',
 		'opening_hours:emergency': "Horaires en cas d'urgence",
 		'opening_hours:signed': 'Horaires affichés',
-		'pastry': 'Patisserie',
+		pastry: 'Patisserie',
 		'payment:card': 'Paiement par carte',
 		'payment:cash': 'Paiement en liquide',
 		'payment:contactless': 'Paiement sans contact',
 		'service:bicycle:repair': 'Réparation de vélos',
 		'service:bicycle:retail': 'Vente de vélos',
-		'short_name': 'Diminutif',
-		'tobacco': 'Vente de tabac',
+		short_name: 'Diminutif',
+		tobacco: 'Vente de tabac',
 		'website:menu': 'Menu',
 		'ref:INSEE': 'Code INSEE',
 		'ref:FR:SIREN': 'Code SIREN',
 		'ref:FR:NAF': 'Code NAF',
 		'ref:FR:FANTOIR': 'Code FANTOIR',
 		'ref:FR:FINESS': 'Code FINESS',
+		passenger_information_display: "écran d'information voyageur",
 	}[key]
 	return found || key
 }
 export const tagValueCorrespondance = (key: string) => {
 	const found = {
-		'children': 'Enfant',
-		'only': 'Uniquement',
+		children: 'Enfant',
+		only: 'Uniquement',
 	}[key]
 	return found || key
 }
