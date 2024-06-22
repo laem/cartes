@@ -78,8 +78,8 @@ const NoCircoYet = () => (
 		<Emoji e="🗳️" />
 
 		<p>
-			Cliquez sur la carte pour trouver votre circonscription de vote aux les
-			élections législatives.
+			Cliquez sur la carte pour trouver votre circonscription et vos candidats
+			aux élections législatives.
 		</p>
 	</section>
 )
