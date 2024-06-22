@@ -1,4 +1,4 @@
-import icons from '@/app/voyage/icons/icons.json'
+import icons from '@/app/icons/icons.json'
 
 const urlBase = `https://cdn.jsdelivr.net/gh/osmandapp/OsmAnd-resources/icons/svg/`
 

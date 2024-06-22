@@ -1,7 +1,7 @@
 import Image from 'next/image'
 import { TimelineTransportBlock } from './Transit'
 import { routeTypeName } from './transportIcon'
-import { capitalise0 } from 'publicodes'
+import { capitalise0 } from 'Components/utils/utils'
 
 export default function BestConnection({ bestConnection }) {
 	console.log('prune best', bestConnection)

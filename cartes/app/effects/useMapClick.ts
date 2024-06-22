@@ -1,11 +1,11 @@
-import { buildAllezPart } from '@/app/voyage/SetDestination'
-import { clickableClasses } from '@/app/voyage/clickableLayers'
+import { buildAllezPart } from '@/app/SetDestination'
+import { clickableClasses } from '@/app/clickableLayers'
 import {
 	createPolygon,
 	createSearchBBox,
-} from '@/app/voyage/createSearchPolygon'
-import { disambiguateWayRelation } from '@/app/voyage/osmRequest'
-import { encodePlace } from '@/app/voyage/utils'
+} from '@/app/createSearchPolygon'
+import { disambiguateWayRelation } from '@/app/osmRequest'
+import { encodePlace } from '@/app/utils'
 import { replaceArrayIndex } from 'Components/utils/utils'
 import { useEffect } from 'react'
 import handleCirconscriptionsLegislativesClick from './handleCirconscriptionsLegislativesClick'

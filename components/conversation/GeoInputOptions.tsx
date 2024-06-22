@@ -1,6 +1,6 @@
 'use client'
-import icons from '@/app/voyage/icons/icons.json'
-import { omit } from 'ramda'
+import icons from '@/app/icons/icons.json'
+import { omit } from '../utils/utils'
 import Highlighter from 'react-highlight-words'
 import css from '../css/convertToJs'
 import { buildAddress } from '../voyage/Address'
@@ -176,7 +176,7 @@ const Option = ({
 								textToHighlight={locationText}
 							/>
 						</span>
-						)}
+					)}
 				</span>
 			</button>
 		</li>

@@ -1,4 +1,4 @@
-import { computeMotisTrip } from '@/app/voyage/itinerary/transit/motisRequest'
+import { computeMotisTrip } from '@/app/itinerary/transit/motisRequest'
 import distance from '@turf/distance'
 import { useEffect, useState } from 'react'
 import { decodeDate, initialDate } from './DateSelector'
