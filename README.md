@@ -1,40 +1,46 @@
-> Copyright 2023,2024 Maël THOMAS-QUILLÉVÉRÉ. L'ensemble de ce dépot est soumis à la licence AGPL3.
+# Cartes
 
-## Futureco
+## Kesako ?
 
+C'est **une application Web de cartographie généraliste**, basée sur les données d'OpenStreetMap et d'autres projets de communs comme Wikimedia Commons (pour les images) ou Wikipedia.
 
-## 🆕 🗺️ Cartes
+Deux objectifs :
 
-Les développements de 2024 se concentrent sur une nouvelle application Web de cartes généralistes et libres, avec une attention particulière sur les itinéraires pour aider les gens à voyager tout en respectant la planète. 
+-   pouvoir explorer la France, ses lieux d'intérêt (commerces, attractions touristiques, etc) sans dépendre de Google, Apple et autre GAFAM
+-   proposer des calculateurs d'itinéraires écologiques
 
-Le développement se fait dans le dossier app/voyage (Voyage, c'était le nom du projet avant que ça ne devienne Cartes). 
+Découvrez [nos motivations](https://cartes.app/blog/un-beau-voyage) et les dernières nouveautés dans [le blog](https://cartes.app/blog).
 
-Lisez [la documentation de Voyage](https://github.com/laem/futureco/blob/master/app/voyage/README.md).
+## Et techniquement
 
-Découvrez [nos motivations](https://futur.eco/blog/un-beau-voyage) et les dernières nouveautés dans [le blog](https://futur.eco/blog).
+I started implementing this map in november 2023 as a kind of personal useful advent of code. I quickly figured out the open source tech and data in 2023 to make modern map interface have become incredibly mature, compared to 10 years ago. You get 3D buildings, vector tiles in 1 h of dev.
 
-Pour les devs : la peinture est fraîche. Mon objectif à ce stade n'est pas encore de faire une base de code propre et accessible à la contribution, mais d'explorer un certain nombre de chemins, d'avoir la première centaine de milliers d'utilisateurs. Ensuite, l'appli se transformera en plateforme pour accueillir les contributions :) 
+The app is based on :
 
-## Les calculateurs carbone
+-   data : OSM (of course), Wikimedia commons (for the images), Wikidata, Wikipedia
+-   code : nextjs, maplibre, styled-components
+-   hosting : maptiler for the vector map tiles, vercel for JS deployment, Photon API by Komoot.
 
-> La partie historique du site continue d'être disponible, et servie au grand public via les articles du site bonpote.com. Dans un second temps, elles seront fusionnées dans l'application de cartes.
+To set it up on your local computer, just run :
 
-La catastrophe climatique n'est plus une menace lointaine et incertaine, c'est une actualité. Comment éviter le pire ? Chaque aspect de notre vie moderne a un impact.
+```
+npm install --legacy-peer-deps
+```
 
-Or, aujourd'hui, c'est très difficile de le connaître : les données sont éparpillées, souvent dans des articles de presse sans source. Des simulateurs et modèles d'impact carbone existent, mais aucun ne répond à ces priorités :
+You'll have to create your free MapTiler key and put it in a `.env.local` file at the root of the futureco folder:
 
--   l'interface doit s'adresser au grand public. Balancer des kgCO2e sans explication n'est pas compréhensible
--   le code doit être ouvert
--   le code doit être lisible, critiquable, modifiable.
+```
+NEXT_PUBLIC_MAPTILER=YOUR_KEY
+```
 
-Sur ce dépôt, c'est le code du site en Javascript. Tout le contenu et les discussions autour des contribution s sur un autre dépot : [futureco-data](https://github.com/laem/futureco-data).
+## Similar projects
 
-[Plus d'infos sur le projet](https://futur.eco/à-propos).
+Checkout [OSMApp](https://github.com/zbycz/osmapp/issues/217). Qwant Maps would be the other similar projet, but it's not developped anymore.
 
-> 🇬🇧 Most of the documentation (including issues and the wiki) is written in french, please raise an [issue](https://github.com/betagouv/mon-entreprise/issues/new) if you are interested and do not speak French.
+## Credits
 
-### Et techniquement ?
+This app makes full use of a multiple of open source libraries.
 
-C'est un _fork_ d'un site de l'État, mon-entreprise.fr, qui permet de coder en français des règles de calculs, dans un langage simple et extensible, [publi.codes](https://publi.codes). De ces règles de calcul, des simulateurs (pour l'utilisateur lambda) et des pages de documentation qui expliquent le calcul (pour l'expert ou le curieux) sont générés automatiquement.
+Including code inspired or directly taken from [OSMApp](https://github.com/zbycz/osmapp).
 
-Au-delà de ça, nous sommes sur une appli traditionnelle NextJS / styled-components.
+Icons are [OSMAnd](https://github.com/osmandapp/OsmAnd-resources/)'s.

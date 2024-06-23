@@ -1,4 +1,3 @@
-import { formatValue } from 'publicodes'
 export function isIterable<T>(obj: unknown): obj is Iterable<T> {
 	return Symbol.iterator in Object(obj)
 }
@@ -61,14 +60,6 @@ export function getSessionStorage() {
 		return undefined
 	}
 }
-
-export const currencyFormat = (language: string) => ({
-	isCurrencyPrefixed: !!formatValue(12, { language, displayedUnit: '€' }).match(
-		/^€/
-	),
-	thousandSeparator: formatValue(1000, { language }).charAt(1),
-	decimalSeparator: formatValue(0.1, { language }).charAt(1),
-})
 
 export function hash(str: string): number {
 	let hash = 0
