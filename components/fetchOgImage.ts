@@ -1,4 +1,4 @@
-import { getFetchUrlBase } from '@/app/voyage/serverUrls'
+import { getFetchUrlBase } from '@/app/serverUrls'
 
 export default async (url) => {
 	if (!url) return null

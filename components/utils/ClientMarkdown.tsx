@@ -2,7 +2,7 @@
 
 // This client markdown component is necessary since we can't use next js 's dynamic MDX component in a client component
 // There must be a way to to handle this better TODO
-import Emoji from 'Components/Emoji'
+import Emoji from '@/components/Emoji'
 import MarkdownToJsx, { MarkdownToJSX } from 'markdown-to-jsx'
 import Link from 'next/link'
 import { usePathname } from 'next/navigation'

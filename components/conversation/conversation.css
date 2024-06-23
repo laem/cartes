@@ -1,9 +1,0 @@
-.step .input > :first-child {
-	text-align: right;
-}
-
-.step label.suffix {
-	vertical-align: baseline;
-	transition: color 0.1s;
-	margin-left: 0.6rem;
-}
