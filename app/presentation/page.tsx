@@ -1,10 +1,12 @@
 import Link from 'next/link'
 import Presentation from './presentation.mdx'
-import { WebStore } from './UI'
+import { Screens, WebStore } from './UI'
 import { PresentationWrapper } from './UI.tsx'
 import Logo from '@/public/logo.svg'
 import WebIcon from '@/public/web.svg'
 import Image from 'next/image'
+import './devices.css'
+import Phone from './Phone'
 
 export default function () {
 	return (
@@ -27,6 +29,13 @@ export default function () {
 					</div>
 				</Link>
 			</WebStore>
+			<Screens>
+				<Phone imgSrc={'/screenshots/trépassés.png'} />
+				<Phone imgSrc={'/screenshots/cordée.png'} />
+				<Phone imgSrc={'/screenshots/bus.png'} />
+			</Screens>
 		</PresentationWrapper>
 	)
 }
+
+// https://jhildenbiddle.github.io/css-device-frames/#/

@@ -11,6 +11,7 @@ export const PresentationWrapper = styled.div`
 			font-size: 300%;
 			line-height: 3.4rem;
 			margin-top: 0;
+			font-weight: 600;
 		}
 		h1 {
 			margin-bottom: 0;
@@ -58,5 +59,18 @@ export const WebStore = styled.div`
 				line-height: 1rem;
 			}
 		}
+	}
+	margin-bottom: 2vh;
+`
+
+export const Screens = styled.div`
+	display: flex;
+	align-items: center;
+	margin-left: -30%;
+	> div {
+		margin-top: -8rem;
+	}
+	> div:nth-child(2) {
+		margin-top: -6rem;
 	}
 `
