@@ -1,4 +1,4 @@
-# Voyage
+# Cartes
 
 ## Kesako ?
 
@@ -9,7 +9,7 @@ Deux objectifs :
 -   pouvoir explorer la France, ses lieux d'intérêt (commerces, attractions touristiques, etc) sans dépendre de Google, Apple et autre GAFAM
 -   proposer des calculateurs d'itinéraires écologiques
 
-Découvrez [nos motivations](https://futur.eco/blog/un-beau-voyage) et les dernières nouveautés dans [le blog](https://futur.eco/blog).
+Découvrez [nos motivations](https://cartes.app/blog/un-beau-voyage) et les dernières nouveautés dans [le blog](https://cartes.app/blog).
 
 ## Et techniquement
 
@@ -24,7 +24,7 @@ The app is based on :
 To set it up on your local computer, just run :
 
 ```
-yarn && yarn dev
+npm install --legacy-peer-deps
 ```
 
 You'll have to create your free MapTiler key and put it in a `.env.local` file at the root of the futureco folder:
