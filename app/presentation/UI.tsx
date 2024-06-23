@@ -4,7 +4,7 @@ import styled from 'styled-components'
 
 export const PresentationWrapper = styled.div`
 	max-width: 700px;
-	margin: 0 auto;
+	margin: 8vh auto;
 	header {
 		text-align: center;
 		h2 {
