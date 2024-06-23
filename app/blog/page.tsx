@@ -3,9 +3,9 @@ import { compareDesc } from 'date-fns'
 import Link from 'next/link'
 import { dateCool } from './utils'
 
-const title = `Le blog - Futureco`
+const title = `Le blog - Cartes`
 const description =
-	"Découvrez l'histoire, les nouveautés et le futur de futureco"
+	"Découvrez l'histoire, les nouveautés et le futur de Cartes.app"
 
 export const metadata: metadata = {
 	title,
