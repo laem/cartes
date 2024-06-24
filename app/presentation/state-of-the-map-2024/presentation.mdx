@@ -1,6 +1,8 @@
+import { ImageGrid } from '@/components/diapos/Wrapper'
+
 <section>
 
-## Le drame
+## 1) Le drame
 
 </section>
 
@@ -12,18 +14,30 @@
 </section>
 
 <section>
-### L'urgence climat : 1/4 de voiture
+#### L'urgence climat = 1/4 de voiture
 
 ![](/sotm/climat-voiture.png)
 
 </section>
 
----
+<section>
 
-### Une urgence politique
+### L'urgence politique
 
-- https://www.arte.tv/fr/videos/117898-000-A/pays-bas-l-extreme-droite-prospere-sur-l-abandon-des-campagnes/
-- gilets jaunes, un mouvement né du rejet de l'écologie
+<ImageGrid
+	images={[
+		{
+			img: '/sotm/arte-xd-prospere.png',
+			url: 'https://www.arte.tv/fr/videos/117898-000-A/pays-bas-l-extreme-droite-prospere-sur-l-abandon-des-campagnes',
+		},
+		{
+			img: '/sotm/gilets-jaunes.png',
+			url: 'https://fr.wikipedia.org/wiki/Mouvement_des_Gilets_jaunes',
+		},
+	]}
+></ImageGrid>
+
+</section>
 - 34 % pour ceux qui sont moins de 30 minutes par jour dans leur automobile, 43 % entre 30 et 59 minutes, 42 % entre 1 et 2 heures et 49 % pour plus de 2 heures.
 - ce n'est pas avec le numérique qu'on va résoudre le problème principal : 90 % de l'argent public des mobilités va dans la voiture ; les communes française sont trop étalées, trop peu denses.
 - mais quand même ! On peut corriger tellement de problèmes avec le numérique. Il est urgent de corriger des biais, des infox et de mettre en valeur des solutions peu connues
