@@ -10,8 +10,6 @@ import Phone from './Phone'
 export default function () {
 	return (
 		<PresentationWrapper>
-			<Presentation />
-
 			<header>
 				<h1>
 					<Image src={Logo} alt="Logo de cartes.app" /> Cartes

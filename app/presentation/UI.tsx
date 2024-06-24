@@ -5,6 +5,9 @@ import styled from 'styled-components'
 export const PresentationWrapper = styled.div`
 	max-width: 700px;
 	margin: 8vh auto;
+	img {
+		max-width: 100%;
+	}
 	header {
 		text-align: center;
 		h2 {
