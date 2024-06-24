@@ -28,14 +28,30 @@ export const DiapoWrapper = styled.div`
 	h4 {
 		font-size: 250%;
 	}
+	img {
+		max-width: 90%;
+		margin: 0 auto;
+		border-radius: 0.6rem;
+	}
 `
 
 export const ImageGrid = ({ images }) => {
 	return (
 		<ul
 			css={`
-				display: grid;
-				grid-template-columns: 1fr 1fr;
+				display: flex;
+				flex-wrap: wrap;
+				justify-content: center;
+				padding: 0 5%;
+				list-style-type: none;
+				gap: 5%;
+				li {
+					width: 40%;
+					img {
+						max-width: 100%;
+						object-fit: cover;
+					}
+				}
 			`}
 		>
 			{images.map((image) => (
