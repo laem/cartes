@@ -1,5 +1,4 @@
 import Link from 'next/link'
-import Presentation from './presentation.mdx'
 import { Screens, WebStore } from './UI'
 import { PresentationWrapper } from './UI.tsx'
 import Logo from '@/public/logo.svg'

@@ -1,0 +1,99 @@
+# Prez Cartes.app x SOTM2024
+
+- intro originale
+- climat graphique [climat-objectif.png].
+- Voiture part NGC [climat-voiture.png].
+  - https://www.arte.tv/fr/videos/117898-000-A/pays-bas-l-extreme-droite-prospere-sur-l-abandon-des-campagnes/
+  - gilets jaunes, un mouvement né du rejet de l'écologie
+  - 34 % pour ceux qui sont moins de 30 minutes par jour dans leur automobile, 43 % entre 30 et 59 minutes, 42 % entre 1 et 2 heures et 49 % pour plus de 2 heures.
+- ce n'est pas avec le numérique qu'on va résoudre le problème principal : 90 % de l'argent public des mobilités va dans la voiture ; les communes française sont trop étalées, trop peu denses.
+- mais quand même ! On peut corriger tellement de problèmes avec le numérique. Il est urgent de corriger des biais, des infox et de mettre en valeur des solutions peu connues
+  - sous-estimation du coût de la voiture
+  - infox sur le coût de la voiture électrique
+  - dépendance "stupide" (habituelle) à la voiture : mon exemple personnel collège illustré en cartes, l'exemple de mes parents pour aller dans la campagne
+  - inaccès aux données de transport en commun. Image, réputation, désir.
+  - méconnaissance des faits : [60 % de la population française est située à 20 minutes à vélo d'une gare principale](https://www.bl-evolution.com/publication/la-france-a-20-minutes-a-velo/), 88% des 12 millions d'élèves sont à 8 min à vélo de leur établissement, 67% des lycéens à moins de 20min.
+
+## constat
+
+- philosophie un site/app pour un besoin est vouée à l'échec
+- carte SNCF cf tweet
+- pas de carte sur sncf connect
+- breizhgo pas mal mais y only bzh ? Y no coffee ?
+- trouver des photos wikimedia, pas possible
+
+### Le service public de l'information transport n'est pas au niveau
+
+- carte transport en commun nom bizarre + carte pourrie
+- cartes IGN : découverte après avoir lancé le projet
+- L'État-plateforme n'est pas mort
+
+Un journaliste peu informé faisait récemment les obsèques sur @franceinter, est pourtant bien en place :
+
+intégration en 2-2 d'un encart météo sur http://cartes.app, avec API Géo pour le lien direct vers http://meteofrance.com.
+
+Sur fond @IGNFrance.
+
+Il est juste trop peu ambitieux, mal organisé (MOE-MOA) et compétent (CapGemini) !
+
+### Le monde du libre n'est pas non plus au niveau
+
+- OSM.org : évolution gmap vs osm.org slide par slide
+- montrer apple business. Montrer annuaire + osm sur un commerce. C'est pas au niveau : il faut des fronts !
+
+### Les cartes sont conçues pour la voiture
+
+- viamichelin routes en jaune, Google maps a changé ça mais restent prépondérantes
+- pas de plan de bus
+
+### Les cartes populaires sont des encarts publicitaires
+
+- recherche de lieux sur google maps : salon de massage + castorama
+- everything is fake
+
+## opportunités
+
+- une opportunité de miser sur le Web plutôt que les jardins murés image télécharger apple maps 1000€
+- démo. App disponible sur un app store. Navigateur cartes.app, voilà.
+- revers : trop coûteux de maintenir plusieurs plateformes
+- carte TeC : que le métro
+-
+
+## Histoire du projet
+
+- d'où vient le projet
+  - train vélo
+  - trop niche
+  - fin de NGC
+  - constat d'impuissance sur ngc
+  - dégooglisation progressive, kagi
+  - tensions géopolitiques
+- test maplibre
+- placesearch photon, brouter et overpass villesplus, valhalla, autoroutes
+- 50 % du temps : construire l'infrastructure transport en commun ça va pas.
+
+## Où on en est ?
+
+Statistiques : il n'y en a pas, volontairement. On explose les stats Maptiler -> Protomaps.
+
+Démo itinéraire vélo https://x.com/maeool/status/1792246279495385342
+
+v0.5 -> nouvelle page de présentation, avec jeu de fonctionnalités.
+
+## Perspectives
+
+- à propos de immersive view / lidar. Je suis le 1er à être fasciné par google earth. google immsersive, est-ce qu'on va pas trop loin ? avoir le numéro de tel et l'adresse c'est plus important que la vue 3d de tous les restaurants de Rennes. Mais très intéressant pour la détection automatique, cf panoramax.
+
+- le meilleur service public (comprendre au sens service de base) de carto
+
+- service public des infos commerciales france connect annuaire mes photos hop google apple
+
+Par la suite :
+
+- stockage des cartes dans le navigateur ? [Issue](https://github.com/laem/cartes/issues/379)
+- carte des lieux de fraicheur pour les canicules [tweet](https://x.com/PatrickRerat/status/1803003044453368024/photo/1)
+- carte des zones de restriction séchesse avec vigieau
+
+---
+
+- blague t-shirt war on cars
