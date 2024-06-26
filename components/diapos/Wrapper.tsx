@@ -33,6 +33,16 @@ export const DiapoWrapper = styled.div`
 		margin: 0 auto;
 		border-radius: 0.6rem;
 	}
+
+	aside {
+		color: #bbb;
+		text-align: center;
+		font-size: 80%;
+	}
+	em {
+		background: var(--lighterColor);
+		font-style: normal;
+	}
 `
 
 export const ImageGrid = ({ images }) => {
