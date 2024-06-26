@@ -45,20 +45,23 @@ export const DiapoWrapper = styled.div`
 	}
 `
 
-export const ImageGrid = ({ images }) => {
+export const ImageGrid = ({ images, wrap = 'wrap' }) => {
 	return (
 		<ul
 			css={`
+				max-height: 90%;
 				display: flex;
-				flex-wrap: wrap;
+				flex-wrap: ${wrap};
 				justify-content: center;
 				padding: 0 5%;
 				list-style-type: none;
 				gap: 5%;
 				li {
-					width: 40%;
+					max-width: 40%;
+					max-height: 80%;
 					img {
 						max-width: 100%;
+						max-height: 100%;
 						object-fit: cover;
 					}
 				}
