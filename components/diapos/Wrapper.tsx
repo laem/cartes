@@ -4,7 +4,7 @@ import styled from 'styled-components'
 
 export const DiapoWrapper = styled.div`
 	color: var(--darkerColor);
-	font-size: 130%;
+	font-size: 150%;
 	ul,
 	ol {
 		li {

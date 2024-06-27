@@ -7,7 +7,7 @@ import { ImageGrid } from '@/components/diapos/Wrapper'
 </section>
 <section>
 
-#### Bilan de 6 mois : perso
+#### Bilan de 6 mois : personnellement
 
 - j'ai une carte moderne dans ma poche
 - que j'utilise quotidiennement
@@ -45,6 +45,8 @@ import { ImageGrid } from '@/components/diapos/Wrapper'
 
 Intégrer les sujets sociétaux importants. N'oubliez pas de voter demain.
 
+![](/sotm/cartes-elections.gif)
+
 </section>
 
 <section>
@@ -53,7 +55,7 @@ Intégrer les sujets sociétaux importants. N'oubliez pas de voter demain.
 
 Pourquoi 0.5 ?
 
-- trop de bugs déjà pour moi
+- trop de bugs déjà pour moi avant des tests utilisateur
 - un an pour la v1
 - pas de v1 sans couvertude de toute la France en TeC
 - multimodalité minimum
@@ -64,12 +66,13 @@ Pourquoi 0.5 ?
 
 - je ne suis pas pressé (->v1)
 - prises de contact
-  - distribution Android
+  - une distribution Android
   - beta.gouv.fr
   - IGN (Web / TeC / vélo)
 - expertise vendue en parallèle ?
 - levée participative ?
 - open core ?
+- API de transport ?
 
 </section>
 
@@ -83,13 +86,29 @@ Clarté et documentation du code : séparation de futur.eco et cartes.app ✅
 
 </section>
 <section>
-#### [tech] Côté serveur
 
-- un serveur [Motis](motis-project.de) pour le calcul d'itinéraires
-- piloté par un 2ème serveur GTFS Node/Deno pour l'API horaires + les plans
-- un peu de protomaps
-- où sont chargés le grand Ouest + AURA ;)
-- sur une machine Scaleway à ~ 80 €/mois
+#### 🙏 Merci aux contributeurs déjà nombreux
+
+Jamais eu autant de retours sur un projet libre.
+
+Merci @toutelacommuOSM et son super forum
+
+@Jean-BaptisteC
+@ColinMaudry
+@waterced
+@mquandalle
+@XioNoX
+@raphaelbastide
+@fouss
+@quentinms
+
+@XioNoX
+@clementbrizard
+@lefuturiste
+@kubic6
+@u4y0u
+@cayenne17
+@Marc-marc-marc
 
 </section>
 <section>
@@ -100,6 +119,15 @@ img: '/sotm/cathédrale.png'
 }]}/>
 
 </section>
+<section>
+#### [tech] Côté serveur
+
+- un serveur [Motis](https://github.com/laem/motis) pour le calcul d'itinéraires
+- piloté par un 2ème serveur [GTFS Node/Deno/Protomaps](https://github.com/laem/gtfs) pour l'API horaires + les plans
+- où sont chargés le grand Ouest + AURA ;)
+- sur une machine Scaleway à ~ 80 €/mois
+
+</section>
 
 <section>
 
@@ -108,7 +136,7 @@ img: '/sotm/cathédrale.png'
 Pour chaque région de France, un développeur motivé pour faire marcher le calcul de transport en commun sur son territoire.
 
 - ajouter une ligne au fichier [`input.yaml`](https://github.com/laem/gtfs/blob/master/input.yaml)
-- (sauf pour Lyon car la métropole ne respecte pas la loi)
+- (pour Lyon il a fallu une authentification :/)
 - débugguer avec sa connaissance locale :)
 
 </section>
