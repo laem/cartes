@@ -9,6 +9,12 @@ import Presentation2 from './presentation2.mdx'
 import Presentation3 from './presentation3.mdx'
 import Presentation4 from './presentation4.mdx'
 
+export const metadata: Metadata = {
+	title: 'Cartes - Présentation SOTM 2024',
+	description:
+		'Présentation de cartes.app à la conférence de cartes (maps) OpenStreetMaps State of the Map (SOTM) 2024 à Lyon.',
+}
+
 export default function () {
 	return (
 		<CaptureSpacebar>
