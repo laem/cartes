@@ -41,10 +41,13 @@ export const DiapoWrapper = styled.div`
 		font-size: 140%;
 		margin: 2rem 0;
 	}
+	p {
+	}
 	img {
 		display: block;
-		max-width: 90%;
-		margin: 0 auto;
+		max-width: 90vw;
+		max-height: 60vh;
+		margin: 1rem auto;
 		border-radius: 0.6rem;
 	}
 
@@ -61,6 +64,9 @@ export const DiapoWrapper = styled.div`
 	em {
 		background: var(--lighterColor);
 		font-style: normal;
+	}
+	blockquote {
+		max-width: 80%;
 	}
 `
 

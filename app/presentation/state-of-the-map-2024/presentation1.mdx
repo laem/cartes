@@ -22,7 +22,7 @@ import { ImageGrid } from '@/components/diapos/Wrapper'
 
 <section>
 
-### L'urgence politique
+#### L'urgence politique
 
 <ImageGrid
 	images={[
@@ -86,6 +86,8 @@ import { ImageGrid } from '@/components/diapos/Wrapper'
 
 #### Mais quand même !
 
+De nombreux problèmes <em>relèvent de l'information</em>, donc notamment du numérique.
+
 - [sous-estimation / 2 ](https://futur.eco/cout-voiture#introduction) du coût de la voiture
 - [océan d'infox](https://bonpote.com/ocean-de-fake-news-sur-la-voiture-electrique) sur le coût de la voiture électrique
 
@@ -96,7 +98,7 @@ import { ImageGrid } from '@/components/diapos/Wrapper'
 </aside>
 </section>
 <section>
-##### <em>Dépendance "stupide" (habituelle) à la voiture</em>
+##### <em>Fausse dépendance à la voiture</em>
 
 Mon trajet pour aller au primaire : 13 minutes (3 km) à vélo.
 
@@ -105,7 +107,7 @@ Mon trajet pour aller au primaire : 13 minutes (3 km) à vélo.
 </section>
 <section>
 
-##### <em>Dépendance "stupide" (habituelle) à la voiture</em>
+##### <em>Fausse dépendance à la voiture</em>
 
 Mon trajet pour aller au primaire : la recommandation de google ⬇️.
 
@@ -118,7 +120,7 @@ Mon trajet pour aller au primaire : la recommandation de google ⬇️.
 
 </section>
 <section>
-##### <em>Dépendance "stupide" (habituelle) à la voiture</em>
+##### <em>Fausse dépendance aux bus</em>
 
 Mon trajet pour aller au lycée : 22 minutes à vélo <em>contre 45 minutes en bus scolaire !</em>
 
@@ -128,30 +130,53 @@ Mon trajet pour aller au lycée : 22 minutes à vélo <em>contre 45 minutes en b
 </section>
 <section>
 
-- méconnaissance des faits :
-  - [60 % de la population française est située à 20 minutes à vélo d'une gare principale](https://www.bl-evolution.com/publication/la-france-a-20-minutes-a-velo/)
-  - 88% des 12 millions d'élèves sont à 8 min à vélo de leur établissement
-  - 67% des lycéens à moins de 20min.
+De fausses impressions de dépendance qui imprègnent le débat public national.
+
+Un quizz :
+
+- \_ % de la population française est située à 20 minutes à vélo d'une gare principale ?
+- \_ % des 12 millions d'élèves sont à 8 min à vélo de leur établissement ?
+- \_ % des lycéens à moins de 20 min à vélo ?
+
+<br />À vous !
+
+</section>
+<section>
+
+De fausses impressions de dépendance qui imprègnent le débat public national.
+
+Résultats :
+
+- <em>60 %</em> de la population française est située à 20 minutes à vélo d'une gare
+  principale
+- <em>88%</em> des 12 millions d'élèves sont à 8 min à vélo de leur établissement
+- <em>67%</em> des lycéens à moins de 20 min à vélo.
+
+<br />
+https://www.bl-evolution.com/publication/la-france-a-20-minutes-a-velo
 
 </section>
 
 <section>
-- inaccès aux données de transport en commun
-- image & réputation des transports, désir.
+#### Les transports en commun n'ont pas (encore) leur place
+
+- inaccès aux plans, horaires, calculateur unique
+- complexité => mauvaises image & réputation
 
 <aside>Cher de tourner dans les gares</aside>
 </section>
 <section>
 
-- décentralisation
-  - => besoin de se vendre
-  - => marques à gogo
-  - => coût explosif
-  - => silos
+##### La décentralisation
+
+- => besoin de se vendre
+- => marques à gogo
+- => coût explosif
+- => silos
 
 </section>
 <section>
-#### Le bingo des noms de réseaux
+#### Le bingo des noms de réseaux de transport
 
 ![](/sotm/bingo/bingo.png)
 
@@ -168,36 +193,83 @@ Mon trajet pour aller au lycée : 22 minutes à vélo <em>contre 45 minutes en b
 
 #### Hors des trajets gare (TGV) -> gare, c'est compliqué
 
-![](/sotm/tweet-plan-SNCF.png)
+![Retweet si tu as déjà téléchargé le gros plan PDF de la SNCF pour préparer un voyage (puis attendu 10 secondes que le rendu se refasse après un zoom)](/sotm/tweet-plan-SNCF.png)
 
-<aside>
-	Retweet si tu as déjà téléchargé le gros plan PDF de la SNCF pour préparer un
-	voyage (puis attendu 10 secondes que le rendu se refasse après un zoom)
-</aside>
+<aside></aside>
 
 </section>
 <section>
-#### Faire reposer son service sur son concurrent
 
-Korrigo (Bretagne), STAR (Rennes), mais aussi Citymapper, Transit, Cyclers.
+#### Faire reposer son service sur son concurrent 🤔
+
+Korrigo (Bretagne), STAR (Rennes), administrations...
+
+Mais aussi Citymapper, Transit, Cyclers.
 
 ![](/sotm/korrigo-google.jpeg)
 
 </section>
 <section>
-### Le service public de l'information transport n'est pas au niveau
+### Maps, mais avant tout place publicitaire
 
-- carte transport en commun nom bizarre + carte pourrie
-- cartes IGN : découverte après avoir lancé le projet
-- L'État-plateforme n'est pas mort
+<video controls>
+	<source src="/sotm/gmaps-masseuse.mp4" type="video/mp4" />
+</video>
 
-Un journaliste peu informé faisait récemment les obsèques sur @franceinter, est pourtant bien en place :
+<aside>
+En zoomant sur Paris, on peut trouver des commerces surprenant... comme ici un salon de massage qui a simplement payé pour être affiché au-dessus, tout comme Castorama, Gify, etc.
+</aside>
+</section>
+<section>
+### => Service public de l'information transport pas au niveau
 
-intégration en 2-2 d'un encart météo sur http://cartes.app, avec API Géo pour le lien direct vers http://meteofrance.com.
+Le privé s'y colle et mutualise...
 
-Sur fond @IGNFrance.
+- peu d'open source
+- quel prix total ? Qui le surveille au niveau national ?
 
-Il est juste trop peu ambitieux, mal organisé (MOE-MOA) et compétent (CapGemini) !
+[![Les plans dynamiques de l'entreprise Latitude Cartagene](/sotm/latitude-cartagene.png)](https://latitude-cartagene.com/plan-dynamique-carte-interactive)
+
+<aside>
+	Lot n° 2 : Carte interactive - demandé à 100 000.00 € HT, attributé pour 400
+	000 €. Lot n°1 : cartes statiques, 1 000 000 €.
+
+    Seul marché public trouvé en 1h de recherches.
+
+</aside>
+
+</section>
+
+<section>
+### Heureusement, l'État-plateforme
+
+L'État-plateforme serait mort selon Xavier de la Porte (le code a changé) ?
+
+Non.
+
+- transport.data.gouv.fr 🤩
+- panoramax
+- IGN
+- dialog.beta.gouv.fr
+- etc.
+
+Il est juste <em>trop peu ambitieux.</em>
+
+<aside>
+	Ainsi que mal organisé (MOE-MOA) et compétent (recrutement interne, ESN) !
+</aside>
+
+</section>
+<section>
+
+![](/sotm/cartes-meteofrance-ign.gif)
+
+<aside>
+J'ai intégré en quelques heures un encart météo sur http://cartes.app, avec API Géo pour le lien direct vers http://meteofrance.com.
+
+Sur fond IGN.
+
+</aside>
 
 </section>
 
@@ -208,8 +280,11 @@ Il est juste trop peu ambitieux, mal organisé (MOE-MOA) et compétent (CapGemin
 ![](/sotm/cartes-ign-inter.png)
 
 <aside>
-	L'une des premières fois qu'on directeur d'administration parle de la
-	nécessaire remise en question du monopole des GAFAM ?
+    Appli découverte après le lancement de mon projet.
+
+    L'une des premières fois qu'on directeur d'administration parle de la
+    nécessaire remise en question du monopole des GAFAM ?
+
 </aside>
 </section>
 
@@ -217,8 +292,22 @@ Il est juste trop peu ambitieux, mal organisé (MOE-MOA) et compétent (CapGemin
 
 ### Le monde du libre n'est pas non plus au niveau (utilisateur)
 
-- OSM.org : évolution gmap vs osm.org slide par slide
-- montrer apple business. Montrer annuaire + osm sur un commerce. C'est pas au niveau : il faut des fronts !
+openstreetmap.org vs google.com/maps
+
+<ImageGrid
+	images={[
+		{
+			img: '/sotm/gmaps-2009.png',
+			url: 'https://www.versionmuseum.com/history-of/google-maps-website',
+		},
+		{
+			img: '/sotm/osm.png',
+			url: 'https://www.openstreetmap.org/relation/148838',
+		},
+	]}
+/>
+
+https://www.versionmuseum.com/history-of/google-maps-website
 
 </section>
 
@@ -239,13 +328,13 @@ La gare de Rennes : Gmaps Web vs Indoorequal.
 <section>
 #### Et pourtant, les données sont riches (2)
 
-Les Invalides : Gmaps Web vs Cartes.
+Où nous sommes : Gmaps Web vs Cartes (OSM).
 
 <ImageGrid
 	images={[
 		{
-			img: '/sotm/invalides-gmaps.png',
-			url: 'https://www.google.com/maps',
-			}, {img: '/sotm/invalides-cartes.png', url: 'https://cartes.app'}]}
+			img: '/sotm/manufacture-gmaps.png',
+			url: 'https://www.google.com/maps/place/Manufacture+des+Tabacs,+69008+Lyon/@45.7482648,4.8605128,17.96z/data=!4m6!3m5!1s0x47f4ea7222919047:0xe69d20db1043aea8!8m2!3d45.7481118!4d4.8602011!16s%2Fg%2F1226mpbj?entry=ttu',
+			}, {img: '/sotm/manufacture-osm.png', url: 'https://www.openstreetmap.org/way/694531440#map=18/45.74807/4.86206'}]}
 			/>
 </section>
