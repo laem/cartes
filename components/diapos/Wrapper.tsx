@@ -3,7 +3,15 @@
 import styled from 'styled-components'
 
 export const DiapoWrapper = styled.div`
+	font-size: 130%;
+	ul,
+	ol {
+		li {
+			margin: 1rem;
+		}
+	}
 	> section {
+		position: relative;
 		display: flex;
 		flex-direction: column;
 		align-items: center;
@@ -18,26 +26,37 @@ export const DiapoWrapper = styled.div`
 		font-size: 400%;
 		display: inline-block;
 		margin: 4rem 0;
+		line-height: 3rem;
 	}
 	h2 {
-		font-size: 400%;
-	}
-	h3 {
 		font-size: 300%;
 	}
+	h3 {
+		font-size: 220%;
+	}
 	h4 {
-		font-size: 250%;
+		font-size: 180%;
+	}
+	h5 {
+		font-size: 140%;
+		margin: 2rem 0;
 	}
 	img {
+		display: block;
 		max-width: 90%;
 		margin: 0 auto;
 		border-radius: 0.6rem;
 	}
 
 	aside {
+		width: 100%;
+		position: absolute;
+		bottom: 4vh;
+		left: 0;
 		color: #bbb;
 		text-align: center;
 		font-size: 80%;
+		display: block;
 	}
 	em {
 		background: var(--lighterColor);
@@ -59,7 +78,7 @@ export const ImageGrid = ({
 				justify-content: center;
 				padding: 0 5%;
 				list-style-type: none;
-				gap: 10%;
+				gap: 6%;
 				align-items: center;
 				flex-grow: 1;
 				flex-basis: 0;
@@ -67,7 +86,7 @@ export const ImageGrid = ({
 					img {
 						${orientation === 'landscape'
 							? `
-						max-height: 40vh;
+						max-height: 35vh;
 						`
 							: `max-width: 20vw;`}
 						display: block;
