@@ -29,8 +29,8 @@ export const dependencies = [
 	},
 	{ img: '/wikidata.svg', text: 'Wikidata' },
 	{ img: '/meteo-france.svg', text: 'Météo France' },
-	{ img: '/three-dots.svg', text: 'Le vôtre ?' },
 	{ img: '/photon.png', text: 'Komoot Photon' },
+	{ img: '/three-dots.svg', text: 'Le vôtre ?' },
 ]
 
 export default function TechDependenciesGallery() {
@@ -45,7 +45,7 @@ export default function TechDependenciesGallery() {
 				padding: 0 5%;
 				list-style-type: none;
 				gap: 1vw;
-				max-width: 70vw;
+				max-width: 72vw;
 
 				li {
 					img {
