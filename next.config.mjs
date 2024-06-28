@@ -36,6 +36,11 @@ const nextConfig = {
 	async redirects() {
 		return [
 			{
+				source: '/prez',
+				destination: '/presentation/state-of-the-map-2024',
+				permanent: false,
+			},
+			{
 				source: '/sitemap.xml',
 				destination: '/sitemap',
 				permanent: false,
