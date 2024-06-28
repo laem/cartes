@@ -1,11 +1,12 @@
 import { ImageGrid, Summary } from '@/components/diapos/Wrapper'
+import css from '@/components/css/convertToJs'
 
 <section>
 
 <Summary sections={
 
 [
-['Le drame', '#1-le-drame'],
+['Introduction', '#1-introduction'],
 ['Que faire ?', '#2-que-faire-'],
 ['Où en est-on ?', '#3-où-en-est-on-'],
 ['Perspectives', '#4-perspectives'],
@@ -15,12 +16,41 @@ import { ImageGrid, Summary } from '@/components/diapos/Wrapper'
 </section>
 <section>
 
-## 1. Le drame
+## 1. Introduction
+
+</section>
+<section>
+
+### Qui suis-je ?
+
+Maël Thomas-Quillévéré.
+
+<em>Développeur Web et expert métier</em>.
+
+![Mon Portfolio](/sotm/laem.png)
+
+> Merci beta.gouv.fr pour ce bon salaire à 3j/s qui me permet d'investir sur des projets personnels 👋
+
+</section>
+<section>
+
+J'habite à <em>Rennes</em> depuis 1 an et demi.
+
+<iframe
+	src="https://cartes.app/?style=protomaps#12.27/48.09885/-1.64697"
+	style={css`
+		width: 40vw;
+		height: 60vh;
+	`}
+/>
 
 </section>
 
 <section>
-### Chute libre
+### Le drame
+</section>
+<section>
+#### Chute libre
 
 ![](/sotm/objectifs-climat.png)
 
@@ -182,10 +212,12 @@ https://www.bl-evolution.com/publication/la-france-a-20-minutes-a-velo
 
 ##### La décentralisation
 
-- => besoin de se vendre
-- => marques à gogo
-- => coût explosif
-- => silos
+Elle implique :
+
+- un besoin de se vendre
+- des marques à gogo
+- un coût multiplié
+- des <em>silos</em>
 
 </section>
 <section>
@@ -234,7 +266,7 @@ En zoomant sur Paris, on peut trouver des commerces surprenant... comme ici un s
 </aside>
 </section>
 <section>
-### => Service public de l'information transport pas au niveau
+### Service public de l'info transport pas au niveau
 
 Le privé s'y colle et mutualise...
 

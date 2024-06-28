@@ -5,11 +5,20 @@ import styled from 'styled-components'
 
 export const DiapoWrapper = styled.div`
 	color: var(--darkerColor);
-	font-size: 150%;
+	font-size: 160%;
 	ul,
 	ol {
 		li {
 			margin: 1rem;
+		}
+	}
+	> section:not(:first-child) {
+		h2,
+		h3,
+		h4,
+		h5 {
+			position: absolute;
+			top: 4vh;
 		}
 	}
 	> section {
@@ -19,7 +28,14 @@ export const DiapoWrapper = styled.div`
 		align-items: center;
 		height: 100vh;
 		justify-content: center;
+
 		border-bottom: 1px solid var(--lightestColor);
+	}
+
+	h2,
+	h3,
+	h4,
+	h5 {
 	}
 
 	h2,
@@ -31,13 +47,13 @@ export const DiapoWrapper = styled.div`
 		line-height: 3rem;
 	}
 	h2 {
-		font-size: 300%;
-	}
-	h3 {
 		font-size: 220%;
 	}
-	h4 {
+	h3 {
 		font-size: 180%;
+	}
+	h4 {
+		font-size: 160%;
 	}
 	h5 {
 		font-size: 140%;
@@ -49,7 +65,7 @@ export const DiapoWrapper = styled.div`
 	img {
 		display: block;
 		max-width: 90vw;
-		max-height: 60vh;
+		max-height: 50vh;
 		margin: 1rem auto;
 		border-radius: 0.6rem;
 	}
