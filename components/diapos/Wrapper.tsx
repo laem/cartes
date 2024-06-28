@@ -62,7 +62,8 @@ export const DiapoWrapper = styled.div`
 	p {
 		margin: 0.8rem 0;
 	}
-	img {
+	img,
+	video {
 		display: block;
 		max-width: 90vw;
 		max-height: 50vh;
@@ -110,7 +111,7 @@ export const ImageGrid = ({
 	return (
 		<ul
 			css={`
-				max-height: 90%;
+				max-height: 60vh;
 				display: flex;
 				flex-wrap: ${wrap};
 				justify-content: center;
@@ -118,13 +119,11 @@ export const ImageGrid = ({
 				list-style-type: none;
 				gap: 6%;
 				align-items: center;
-				flex-grow: 1;
-				flex-basis: 0;
 				li {
 					img {
 						${orientation === 'landscape'
 							? `
-						max-height: 35vh;
+						max-height: 30vh;
 						`
 							: `max-width: 20vw;`}
 						display: block;

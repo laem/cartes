@@ -30,6 +30,7 @@ export const dependencies = [
 	{ img: '/wikidata.svg', text: 'Wikidata' },
 	{ img: '/meteo-france.svg', text: 'Météo France' },
 	{ img: '/three-dots.svg', text: 'Le vôtre ?' },
+	{ img: '/photon.png', text: 'Komoot Photon' },
 ]
 
 export default function TechDependenciesGallery() {
