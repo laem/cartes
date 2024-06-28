@@ -3,7 +3,13 @@ import { getAllPostIds } from '@/app/blog/getPosts'
 
 const domain = 'https://cartes.app'
 
-const basePaths = ['', '/blog', '/elections-legislatives-2024']
+const basePaths = [
+	'',
+	'/blog',
+	'/elections-legislatives-2024',
+	'/presentation',
+	'/presentation/state-of-the-map-2024',
+]
 
 const gtfsUrl = 'https://motis.cartes.app/gtfs'
 
