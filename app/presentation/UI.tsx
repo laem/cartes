@@ -12,9 +12,9 @@ export const PresentationWrapper = styled.div`
 		text-align: center;
 		h2 {
 			font-size: 300%;
-			line-height: 3.4rem;
+			line-height: 4rem;
 			margin-top: 0;
-			font-weight: 600;
+			font-weight: 400;
 		}
 		h1 {
 			margin-bottom: 0;

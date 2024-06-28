@@ -8,6 +8,7 @@ import Presentation1 from './presentation1.mdx'
 import Presentation2 from './presentation2.mdx'
 import Presentation3 from './presentation3.mdx'
 import Presentation4 from './presentation4.mdx'
+import css from '@/components/css/convertToJs'
 
 export const metadata: Metadata = {
 	title: 'Cartes - Présentation SOTM 2024',
@@ -25,7 +26,17 @@ export default function () {
 							<h1>
 								<Image src={Logo} alt="Logo de cartes.app" /> Cartes
 							</h1>
-							<h2>Présentation State of the Map 2024</h2>
+							<h2>
+								State of the Map{' '}
+								<span
+									style={css`
+										color: crimson;
+									`}
+								>
+									Lyon
+								</span>{' '}
+								2024
+							</h2>
 						</header>
 					</PresentationWrapper>
 				</section>
