@@ -43,6 +43,7 @@ export const DiapoWrapper = styled.div`
 		margin: 2rem 0;
 	}
 	p {
+		margin: 0.8rem 0;
 	}
 	img {
 		display: block;
@@ -63,8 +64,21 @@ export const DiapoWrapper = styled.div`
 		display: block;
 	}
 	em {
-		background: var(--lighterColor);
+		/* https://max.hn/thoughts/how-to-create-a-highlighter-marker-effect-in-css */
 		font-style: normal;
+		margin: 0 -0.1rem;
+		padding: 0.1em 0.4em;
+		border-radius: 0.8em 0.3em;
+		background: transparent;
+		background-image: linear-gradient(
+			to right,
+			rgba(87, 191, 245, 0.1),
+			rgba(87, 191, 245, 0.6) 4%,
+			rgba(87, 191, 245, 0.25)
+		);
+		-webkit-box-decoration-break: clone;
+		box-decoration-break: clone;
+		text-wrap: nowrap;
 	}
 	blockquote {
 		max-width: 80%;
