@@ -23,6 +23,16 @@ export const defaultZoom = 5.52
 const defaultHash = `#${defaultZoom}/${defaultCenter[1]}/${defaultCenter[0]}`,
 	defaultArrayHash = defaultHash.slice(1).split('/')
 
+const roundTo = (precision) => (num) => {
+	const multiplesOfTen = [...new Array(precision)].reduce(
+		(memo, next) => memo * 10,
+		1
+	)
+
+	return Math.round(num * multiplesOfTen) / multiplesOfTen
+}
+
+const defaultroundedHash = defaultArrayHash.map(roundTo(2))
 export default function useAddMap(
 	styleUrl,
 	setZoom,
@@ -34,6 +44,7 @@ export default function useAddMap(
 	const [geolocate, setGeolocate] = useState(null)
 	const isMobile = useIsMobile()
 	const [hash, setHash] = useState(defaultArrayHash)
+	const roundedHash = hash.map(roundTo(2))
 	// This could probably be done with a Next Middleware, to avoid a second
 	// request, but I could not make it work in 5 minutes
 	const geolocation = useGeolocation({
@@ -48,10 +59,16 @@ export default function useAddMap(
 	useEffect(() => {
 		if (!map) return
 
+		if (!arrayEquals(roundedHash, defaultroundedHash)) return
+
+		console.log(
+			'Will fly to hash from ip geolocated coords',
+			ipGeolocationCenter
+		)
 		map.flyTo({
 			center: ipGeolocationCenter,
 		})
-	}, [ipGeolocationCenter, map])
+	}, [ipGeolocationCenter, map, roundedHash])
 
 	useEffect(() => {
 		let protocol = new Protocol()
@@ -103,10 +120,17 @@ export default function useAddMap(
 
 			setZoom(Math.round(newMap.getZoom()))
 			setBbox(newMap.getBounds().toArray())
+			const newHash = [
+				newMap.getZoom(),
+				...newMap.getCenter().toArray().map(roundTo(4)).reverse(),
+			]
+			console.log('will set hash init', newHash)
+			setHash(newHash)
 		})
 
 		newMap.on('moveend', (e) => {
 			setBbox(newMap.getBounds().toArray())
+			console.log('will set hash moveend')
 			setHash([
 				newMap.getZoom(),
 				...newMap.getCenter().toArray().map(roundTo(4)).reverse(),
@@ -120,23 +144,27 @@ export default function useAddMap(
 	}, [setMap, setZoom, setBbox, mapContainerRef, setGeolocate, setHash]) // styleUrl not listed on purpose
 
 	const triggerGeolocation = useMemo(
-		() => (geolocate ? () => geolocate.trigger() : () => 'Not ready'),
+		() => (geolocate ? () => false && geolocate.trigger() : () => 'Not ready'),
 		[geolocate]
 	)
 
 	console.log('hash', hash)
+	// For mobile sessions, we automatically trigger geolocation and then zoom to
+	// the geolocated zone
+	// But don't do that if the starting URL is not the default one : if the user
+	// opened a link to a place, that's what he wants to see
 	useEffect(() => {
 		if (!map || !isMobile) return
 
-		if (arrayEquals(hash.map(roundTo(2)), defaultArrayHash.map(roundTo(2))))
-			return
+		if (!arrayEquals(roundedHash, defaultroundedHash)) return
+		return
 
 		triggerGeolocation()
 		const timer = setTimeout(() => {
 			triggerGeolocation()
 		}, 2000)
 		return () => clearTimeout(timer)
-	}, [map, isMobile, triggerGeolocation, hash.join('/')])
+	}, [map, isMobile, triggerGeolocation, roundedHash])
 
 	useEffect(() => {
 		if (!map) return
@@ -156,15 +184,6 @@ export default function useAddMap(
 	}, [map, styleUrl])
 
 	return [map, triggerGeolocation]
-}
-
-const roundTo = (precision) => (num) => {
-	const multiplesOfTen = [...new Array(precision)].reduce(
-		(memo, next) => memo * 10,
-		1
-	)
-
-	return Math.round(num * multiplesOfTen) / multiplesOfTen
 }
 
 function arrayEquals(a, b) {
