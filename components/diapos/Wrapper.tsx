@@ -80,6 +80,7 @@ export const DiapoWrapper = styled.div`
 		text-align: center;
 		font-size: 80%;
 		display: block;
+		display: none;
 	}
 	em {
 		/* https://max.hn/thoughts/how-to-create-a-highlighter-marker-effect-in-css */

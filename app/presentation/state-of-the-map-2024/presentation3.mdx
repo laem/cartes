@@ -52,13 +52,6 @@ Non ! Il est juste <em>trop peu ambitieux</em>.
 
 </section>
 <section>
-#### Mosaïque de dépendances
-
-Beaucoup de <em>plomberie</em> élémentaire.
-
-<TechDependenciesGallery />
-</section>
-<section>
 
 #### L'État-plateforme vit !
 
@@ -70,6 +63,22 @@ J'ai intégré en quelques heures un encart météo sur http://cartes.app, avec 
 Sur fond IGN.
 
 </aside>
+
+</section>
+<section>
+#### Mosaïque de dépendances
+
+Beaucoup de <em>plomberie</em> élémentaire.
+
+<TechDependenciesGallery />
+</section>
+<section>
+#### [tech] Côté serveur
+
+- un serveur [Motis](https://github.com/laem/motis) pour le calcul d'itinéraires
+- piloté par un 2ème serveur [GTFS Node/Deno/Protomaps](https://github.com/laem/gtfs) pour l'API horaires + les plans
+- où sont chargés le grand Ouest + AURA ;)
+- sur une machine Scaleway à ~ 80 €/mois
 
 </section>
 
@@ -138,54 +147,5 @@ Merci @toutelacommuOSM et son super forum
 @u4y0u
 @cayenne17
 @Marc-marc-marc
-
-</section>
-<section>
-
-<ImageGrid images={[{img: '/sotm/bazar-ispahan.png'}, {
-
-img: '/sotm/cathédrale.png'
-}]}/>
-
-</section>
-<section>
-
-### Faire des prises faciles
-
-![](/sotm/Low-hanging-fruit.webp)
-
-</section>
-<section>
-#### [tech] Côté serveur
-
-- un serveur [Motis](https://github.com/laem/motis) pour le calcul d'itinéraires
-- piloté par un 2ème serveur [GTFS Node/Deno/Protomaps](https://github.com/laem/gtfs) pour l'API horaires + les plans
-- où sont chargés le grand Ouest + AURA ;)
-- sur une machine Scaleway à ~ 80 €/mois
-
-</section>
-
-<section>
-
-## Appel à contribution
-
-Pour chaque région de France, un développeur motivé pour faire marcher le calcul de transport en commun sur son territoire.
-
-- ajouter une ligne au fichier [`input.yaml`](https://github.com/laem/gtfs/blob/master/input.yaml)
-- (pour Lyon il a fallu une authentification :/)
-- débugguer avec sa connaissance locale :)
-
-</section>
-<section>
-
-## Levée de fonds participative
-
-Premier palier de financement : <em>8 000 €</em>.
-
-![](/sotm/domaine-cartes-fr.png)
-
-Deuxième palier : <em>1 000 000 €</em>.
-
-![](/sotm/domaine-map-app.png)
 
 </section>
