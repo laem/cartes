@@ -7,6 +7,7 @@ import useGeolocation from './useGeolocation'
 
 import { useParams } from 'next/navigation'
 import useHash from './useHash'
+import useIsMobile from './useIsMobile'
 /*
  *
  * {"city":"Rennes","country":"FR","flag":"🇫🇷","countryRegion":"BRE","region":"cdg1","latitude":"48.11","longitude":"-1.6744"}
@@ -31,7 +32,7 @@ export default function useAddMap(
 ) {
 	const [map, setMap] = useState(null)
 	const [geolocate, setGeolocate] = useState(null)
-	const isMobile = useMediaQuery('(max-width: 800px)')
+	const isMobile = useIsMobile()
 	const [hash, setHash] = useState(defaultArrayHash)
 	// This could probably be done with a Next Middleware, to avoid a second
 	// request, but I could not make it work in 5 minutes
