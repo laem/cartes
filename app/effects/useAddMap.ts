@@ -43,6 +43,8 @@ export default function useAddMap(
 	useEffect(() => {
 		if (!map) return
 
+		//TODO see https://github.com/laem/cartes/pull/370
+		return
 		map.flyTo({
 			center: ipGeolocationCenter,
 		})
