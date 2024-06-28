@@ -1,0 +1,162 @@
+import { ImageGrid } from '@/components/diapos/Wrapper'
+import css from '@/components/css/convertToJs'
+
+<section>
+
+## 2. Que faire ?
+
+</section>
+
+<section>
+
+### Qui suis-je ?
+
+Maël Thomas-Quillévéré.
+
+<em>Développeur Web et expert métier</em>.
+
+![Mon Portfolio](/sotm/laem.png)
+
+> Merci beta.gouv.fr pour ce bon salaire à 3j/s qui me permet d'investir sur des projets personnels 👋
+
+</section>
+<section>
+
+J'habite à <em>Rennes</em> depuis 1 an et demi.
+
+<iframe
+	src="https://cartes.app/?style=protomaps#12.27/48.09885/-1.64697"
+	style={css`
+		width: 40vw;
+		height: 60vh;
+	`}
+/>
+
+</section>
+
+<section>
+
+#### Créer une startup de cartes ?
+
+Quelle startup privée française a réussi à bousculer un GAFAM établi ?
+
+Viamichelin ? Mappy (RATP) ? Qwant (OVH, Maps ⚰️) ?
+
+</section>
+<section>
+
+> Le marché français est désormais archidominé par Google Maps et Waze, ex-start-up israélienne racheté par Google 1,15 milliard de dollars en 2013. "Ces deux applications dominent toujours très largement le marché français, constate Bertrand Krug, directeur du département internet de Médiamétrie. Et leur écart continue de croître chaque année avec les concurrents."
+>
+> - En novembre 2019, <em>Google Maps comptait près de 36 millions</em> de visiteurs uniques mensuels
+> - suivi par <em>Waze à 14,5 millions</em> selon Médiamétrie. La suite est une survivance de la France des cartes imprimées avant chaque départ. Celui d'avant l'hégémonie de la Silicon Valley.
+> - L'antique Mappy, propriétaire de Solocal depuis 2000 [RATP en 2024], complète le tableau avec <em>10 millions de visiteurs uniques pour Mappy</em>.
+> - La quatrième place, avec un maigre <em>6 millions de visiteurs, est occupée par ViaMichelin</em>. TomTom n'arrive qu'en huitième position et perd 13% de visiteurs en un an.
+
+[Source Challenges / Médiamétrie](https://www.challenges.fr/high-tech/calculs-d-itineraires-en-15-ans-google-maps-et-waze-sont-devenus-incontournables_699369)
+
+</section>
+
+<section>
+
+#### Principes fixés
+
+- code ouvert
+- arrêter les silos, privilégier l'appli unifiée (les bus et les horaires du boulanger !)
+- connecter toutes les sources de données publiques et ouvertes
+
+</section>
+<section>
+
+#### Principes 2
+
+- s'ancrer dans un futur de mobilité écologique sans pétrole
+
+</section>
+<section>
+
+#### Principes 3
+
+- sur le web, pas les stores des concurrents (pour l'instant, ue...)
+- pas de corruption des résultats (aussi appelée "pub")
+
+</section>
+
+<section>
+
+#### Que penser des avis ?
+
+- [Tech Trash "Tout est faux" : l'histoire d'une canular qui devient le restaurant le plus prisé de Londres](https://techtrash.kessel.media/posts/pst_c0feccc4802b4c9ca64dd5e4e8d98ac5/tout-est-faux)
+- NYT 2024 : on ne fait plus la différence entre les commentaires de LLM et les humains
+
+[![](https://static01.nyt.com/images/2024/06/26/dining/26AI-Review-Hands/26AI-Review-Hands-superJumbo.jpg?quality=75&auto=webp)](https://www.nytimes.com/2024/06/24/dining/ai-restaurant-reviews.html?smid=nytcore-ios-share&referringSource=articleShare&sgrp=c-cb)
+
+</section>
+<section>
+## Démo !
+<aside>
+
+Carte ; Manufacture ; favori ; café pour la pause ; wikimedia ; panoramax ; rentrer chez moi ce soir ; rentrer à Rennes dimanche ; plans ; ligne SNCF ; horaires.
+
+</aside>
+</section>
+<section>
+### Installer cartes.app
+
+- ouvrir son store d'application universel et libre, disponible sur toutes les plateformes
+- installer l'application
+- l'ouvrir
+- voilà
+
+[📌](https://cartes.app)
+
+</section>
+<section>
+
+![](/sotm/cartes-sur-le-web.png)
+
+</section>
+<section>
+
+## Pas d'appli en _store_ ?
+
+Un risque d'audience évident, mais :
+
+- trop coûteux de maintenir plusieurs plateformes
+- trop risqué de dépendre des concurrents
+- le Web est puissant, juste sous-investi
+
+<aside>Anecdote react-modal-sheet : cette bibliothèque parmi les plus populaires pour faire l'encart sur mobile est complètement bugguée hors Safari iPhone, parce que plus personne ne fait de site Web mobile morderne.</aside>
+</section>
+
+<section>
+## Histoire du projet
+
+- 💡 trainvelo.fr
+- 😟 trop niche
+- 🥵 incubateur ADEME : constat de plafond de vert sur l'information climat spécialisée
+- 🚘️ futureco/cout-voiture : succès de l'information € vs CO2
+- 🔓️ dégooglisation progressive
+
+</section>
+<section>
+
+#### Le nom Cartes
+
+- D'abord futur.eco/voyage. Mais la mobilité du quotidien ?
+- Le mot "maps" devenu dominant, comment on disait avant en français, déjà ?
+- Anglicisation problèmatique ? Je ne sais pas.
+- Un signal très puissant sur la domination des GAFAMs ? Assurément.
+
+</section>
+<section>
+
+## Histoire du projet (tech)
+
+- tuto maplibre / maptiler : une carte moderne vectorielle en 1h avec plusieurs fonds (🤯)
+- futur.eco/ferry : recherche de lieux via Komoot photon
+- villes.plus : itinéraires brouter et recherche par catégorie de lieux via overpass
+- futur.eco/cout-voiture : valhalla, coût des autoroutes
+- ♻️ itérations
+- 50 % du temps : construire l'infrastructure transport en commun manquante au-dessus de transport.data.
+
+</section>
