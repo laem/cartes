@@ -17,12 +17,12 @@ export const PresentationWrapper = styled.div`
 			font-weight: 400;
 		}
 		h1 {
-			margin-bottom: 0;
+			margin-bottom: 1rem;
 			display: flex;
 			align-items: center;
 			justify-content: center;
 			img {
-				width: 1.4rem;
+				width: 2.4rem;
 				height: auto;
 				margin: 0 0.4rem -0.1rem 0 !important;
 				border-radius: 0 !important;
