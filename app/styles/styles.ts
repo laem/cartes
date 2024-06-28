@@ -45,6 +45,11 @@ export const styles = {
 		imageAlt: "Logo de l'IGN",
 		attribution: '© IGN',
 	},
+	osm: {
+		url: maptilerUrl('openstreetmap'),
+		name: 'OpenStreetMap',
+		experimental: true,
+	},
 	nature: {
 		url: maptilerUrl('topo-v2'),
 		name: 'Nature',
