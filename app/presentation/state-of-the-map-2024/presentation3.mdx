@@ -1,0 +1,151 @@
+import { ImageGrid } from '@/components/diapos/Wrapper'
+import TechDependenciesGallery from '@/components/TechDependenciesGallery'
+
+<section>
+
+## 3. Où en est-on ?
+
+</section>
+<section>
+
+#### Bilan de 6 mois : personnellement
+
+- j'ai une carte moderne dans ma poche
+- que j'utilise quotidiennement
+- j'ai énormément appris
+
+</section>
+<section>
+
+#### Bilan de 6 mois : statistiques
+
+- pas de statistiques
+- si ce n'est le forfait MapTiler explosé -> Protomaps
+- objectif : <em>~ 100 000 visites / mois</em> en décembre 2024
+
+</section>
+<section>
+
+#### Bilan de 6 mois : tech
+
+- l'écosystème libre carto est incroyable
+- rien de sorcier : react + maptiler + APIs + OSM
+- itérer, itérer, itérer
+
+</section>
+<section>
+### Heureusement, l'État-plateforme
+
+L'État-plateforme, mort d'après <a href="https://www.radiofrance.fr/franceinter/podcasts/le-code-a-change/le-code-a-change-9-3818194" about="_blank">Le code a changé</a> ?
+
+- transport.data.gouv.fr 🤩
+- panoramax
+- IGN
+- dialog.beta.gouv.fr
+- etc.
+
+Non ! Il est juste <em>trop peu ambitieux</em>.
+
+<aside>
+	Ainsi que mal organisé (MOE-MOA) et compétent (recrutement interne, ESN) !
+</aside>
+
+</section>
+<section>
+
+#### L'État-plateforme vit !
+
+![](/sotm/cartes-meteofrance-ign.gif)
+
+<aside>
+J'ai intégré en quelques heures un encart météo sur http://cartes.app, avec API Géo pour le lien direct vers http://meteofrance.com.
+
+Sur fond IGN.
+
+</aside>
+
+</section>
+<section>
+#### Mosaïque de dépendances
+
+Beaucoup de <em>plomberie</em> élémentaire.
+
+<TechDependenciesGallery />
+</section>
+<section>
+#### [tech] Côté serveur
+
+- un serveur [Motis](https://github.com/laem/motis) pour le calcul d'itinéraires
+- piloté par un 2ème serveur [GTFS Node/Deno/Protomaps](https://github.com/laem/gtfs) pour l'API horaires + les plans
+- où sont chargés le grand Ouest + AURA ;)
+- sur une machine Scaleway à ~ 80 €/mois
+
+</section>
+
+<section>
+
+#### Bilan de 6 mois : je m'éclate
+
+![](/sotm/demo-velo.gif)
+
+</section>
+<section>
+
+### Carte des élections législatives 2024
+
+Intégrer les sujets sociétaux importants. Carte complète moderne, pas statique.
+
+(N'oubliez pas de voter demain.)
+
+![](/sotm/cartes-elections.gif)
+
+</section>
+
+<section>
+
+#### Bientôt la v0.5
+
+Pourquoi 0.5 ?
+
+- trop de bugs déjà pour moi avant des tests utilisateur
+- un an pour la v1
+- pas de v1 sans couvertude de toute la France en TeC
+- multimodalité minimum
+
+</section>
+
+<section>
+
+### Construire une commmunauté
+
+Clarté et documentation du code : séparation de futur.eco et cartes.app ✅
+
+[github.com/laem/cartes](https://github.com/laem/cartes)
+
+</section>
+<section>
+
+#### 🙏 Merci aux contributeurs déjà nombreux
+
+Jamais eu autant de retours sur un projet libre.
+
+Merci @toutelacommuOSM et son super forum
+
+@Jean-BaptisteC
+@ColinMaudry
+@waterced
+@mquandalle
+@XioNoX
+@raphaelbastide
+@fouss
+@quentinms
+
+@XioNoX
+@clementbrizard
+@lefuturiste
+@kubic6
+@u4y0u
+@cayenne17
+@Marc-marc-marc
+
+</section>

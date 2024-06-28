@@ -1,0 +1,352 @@
+import { ImageGrid, Summary } from '@/components/diapos/Wrapper'
+import css from '@/components/css/convertToJs'
+
+<section>
+
+### Qui suis-je ?
+
+Maël Thomas-Quillévéré.
+
+<em>Développeur Web et expert métier</em>.
+
+![Mon Portfolio](/sotm/laem.png)
+
+> Merci beta.gouv.fr pour ce bon salaire à 3j/s qui me permet d'investir sur des projets personnels 👋
+
+</section>
+<section>
+
+J'habite à <em>Rennes</em> depuis 1 an et demi.
+
+<iframe
+	src="https://cartes.app/?style=protomaps#12.27/48.09885/-1.64697"
+	style={css`
+		width: 40vw;
+		height: 60vh;
+	`}
+/>
+
+</section>
+<section>
+
+<Summary sections={
+
+[
+['Le problème', '#1-le-probleme'],
+['Que faire ?', '#2-que-faire-'],
+['Où en est-on ?', '#3-où-en-est-on-'],
+['Perspectives', '#4-perspectives'],
+
+]} />
+
+</section>
+<section>
+
+## 1. Le problème
+
+</section>
+
+<section>
+#### Chute libre
+
+![](/sotm/objectifs-climat.png)
+
+</section>
+
+<section>
+#### L'urgence climat = 1/4 de voiture
+
+![](/sotm/climat-voiture.png)
+
+</section>
+
+<section>
+
+#### L'urgence politique
+
+<ImageGrid
+	images={[
+		{
+			img: '/sotm/arte-xd-prospere.png',
+			url: 'https://www.arte.tv/fr/videos/117898-000-A/pays-bas-l-extreme-droite-prospere-sur-l-abandon-des-campagnes',
+		},
+		{
+			img: '/sotm/gilets-jaunes.png',
+			url: 'https://fr.wikipedia.org/wiki/Mouvement_des_Gilets_jaunes',
+		},
+		{
+			img: '/sotm/rn-voiture.jpeg',
+			url: 'https://institut-terram.org/wp-content/uploads/2024/05/IT_ETUDE-00002_ENQUETE-OPINION_2024-05-22_w.pdf',
+			legend:
+				'34 % pour ceux qui sont moins de 30 minutes par jour dans leur automobile, 43 % entre 30 et 59 minutes, 42 % entre 1 et 2 heures et 49 % pour plus de 2 heures.',
+		},
+	]}
+	orientation="landscape"
+	wrap="wrap"
+></ImageGrid>
+
+</section>
+
+<section>
+#### L'appli de mobilité dominante
+
+➡️ 🚘️ ⬅️
+
+<ImageGrid
+	images={[
+		{
+			img: '/blog-images/google-maps-accueil.png',
+			url: 'https://cartes.app/blog/un-beau-voyage',
+		},
+		{
+			img: '/blog-images/google-maps-itinéraire.png',
+			url: 'https://cartes.app/blog/un-beau-voyage',
+		},
+		{
+			img: '/sotm/google-maps-404.png',
+			url: 'https://www.google.com/maps/dir/brest/plouguerneau/@48.4115124,-4.2774003,11z/data=!4m18!4m17!1m5!1m1!1s0x4816bbe1d9925b93:0xc6488358179c30ab!2m2!1d-4.4855959!2d48.3899275!1m5!1m1!1s0x4816a71134043953:0x40ca5cd36e56560!2m2!1d-4.504518!2d48.6059259!2m3!6e0!7e2!8j1719478800!3e3?entry=ttu',
+		},
+	]}
+	orientation="portrait"
+/>
+
+</section>
+<section>
+
+#### Un problème politique & physique
+
+- le problème principal : <em>90 % de l'argent public et privé des mobilités dans la voiture</em>;
+- les communes française sont trop étalées, <em>trop peu denses</em>;
+- la voiture est très souvent <em>un choix de confort</em> en toute connaissance de cause
+- mais...
+
+</section>
+
+<section>
+
+#### Mais quand même !
+
+De nombreux problèmes <em>relèvent de l'information</em>, donc notamment du numérique.
+
+- [sous-estimation / 2 ](https://futur.eco/cout-voiture#introduction) du coût de la voiture
+- [océan d'infox](https://bonpote.com/ocean-de-fake-news-sur-la-voiture-electrique) sur le coût de la voiture électrique
+
+<aside>
+	On peut corriger tellement de problèmes avec le numérique. Il est urgent de
+	corriger des biais, des infox et de mettre en valeur des solutions peu
+	connues.
+</aside>
+</section>
+<section>
+##### <em>Fausse dépendance à la voiture</em>
+
+Mon trajet pour aller au primaire : 13 minutes (3 km) à vélo.
+
+![](/sotm/trajet-primaire.png)
+
+</section>
+<section>
+
+##### <em>Fausse dépendance à la voiture</em>
+
+Mon trajet pour aller au primaire : la recommandation bagnole de google ⬇️.
+
+![](/sotm/trajet-primaire-gmaps.png)
+
+<aside>
+	Autre exemple : les 35 km pour aller voir Pépé et Mémé pendant 20 ans, en
+	voiture alors qu'il y avait un bus Breizhgo à 2 €.
+</aside>
+
+</section>
+<section>
+##### <em>Fausse dépendance aux bus</em>
+
+Mon trajet pour aller au lycée : 22 minutes à vélo contre <em>45 minutes en bus</em> scolaire !
+
+![](/sotm/trajet-lycee.png)
+
+<aside>Il n'y a aucun mode de transport parfait.</aside>
+</section>
+<section>
+
+##### Un débat national désinformé
+
+🎰 Quizz !
+
+- <em>\_ %</em> de la population française est située à 20 minutes à vélo d'une gare
+  principale ?
+- <em>\_ %</em> des 12 millions d'élèves sont à 8 min à vélo de leur établissement
+  ?
+- <em>\_ %</em> des lycéens à moins de 20 min à vélo ?
+
+<br />À vous !
+
+</section>
+<section>
+
+##### Un débat national désinformé
+
+Résultats :
+
+- <em>60 %</em> de la population française est située à 20 minutes à vélo d'une gare
+  principale
+- <em>88%</em> des 12 millions d'élèves sont à 8 min à vélo de leur établissement
+- <em>67%</em> des lycéens à moins de 20 min à vélo.
+
+<br />
+https://www.bl-evolution.com/publication/la-france-a-20-minutes-a-velo
+
+</section>
+
+<section>
+#### Les 🚍️🚊🚆 transports n'ont pas (encore) leur place
+
+- inaccès aux plans, horaires, calculateur unique
+- complexité => mauvaises image & réputation
+
+<aside>Cher de tourner dans les gares</aside>
+</section>
+<section>
+
+##### La décentralisation
+
+Elle implique :
+
+- un besoin de se vendre
+- des marques à gogo
+- un coût multiplié
+- des <em>silos</em>
+
+</section>
+<section>
+#### Le bingo des noms de réseaux de transport
+
+![](/sotm/bingo/bingo.png)
+
+</section>
+<section>
+
+#### Cas pratique de déplacement : Ernée -> Fougères
+
+![](/sotm/ernee-fougeres.gif)
+
+</section>
+<section>
+### Service public-privé
+
+- peu d'open source
+- quel prix total au niveau national ?
+
+[![Les plans dynamiques de l'entreprise Latitude Cartagene](/sotm/latitude-cartagene.png)](https://latitude-cartagene.com/plan-dynamique-carte-interactive)
+
+<aside>
+	Lot n° 2 : Carte interactive - demandé à 100 000.00 € HT, attributé pour 400
+	000 €. Lot n°1 : cartes statiques, 1 000 000 €.
+
+    Seul marché public trouvé en 1h de recherches.
+
+</aside>
+</section>
+
+<section>
+
+#### Hors des trajets gare -> gare, c'est compliqué (🚲️)
+
+![Retweet si tu as déjà téléchargé le gros plan PDF de la SNCF pour préparer un voyage (puis attendu 10 secondes que le rendu se refasse après un zoom)](/sotm/tweet-plan-SNCF.png)
+
+</section>
+<section>
+## Histoire du projet
+
+- 💡 trainvelo.fr
+- 😟 trop niche
+- 🥵 incubateur ADEME : constat de plafond de verre sur l'information climat spécialisée
+- 🚘️ futureco/cout-voiture : succès de l'information € vs CO2
+- (+🔓️ dégooglisation progressive)
+- 🗺️ futur.eco/voyage -> Cartes
+
+<aside>
+
+#### Le nom Cartes
+
+- D'abord futur.eco/voyage. Mais la mobilité du quotidien ?
+- Le mot "maps" devenu dominant, comment on disait avant en français, déjà ?
+- Anglicisation problèmatique ? Je ne sais pas.
+- Un signal très puissant sur la domination des GAFAMs ? Assurément.
+
+</aside>
+</section>
+<section>
+
+#### Faire reposer son service sur son concurrent 🤔
+
+Korrigo (Bretagne), STAR (Rennes), administrations... Mais aussi Citymapper, Transit, Cyclers.
+
+![](/sotm/korrigo-google.jpeg)
+
+</section>
+<section>
+### Maps, mais avant tout place publicitaire
+
+<video controls>
+	<source src="/sotm/gmaps-masseuse.mp4" type="video/mp4" />
+</video>
+
+<aside>
+En zoomant sur Paris, on peut trouver des commerces surprenant... comme ici un salon de massage qui a simplement payé pour être affiché au-dessus, tout comme Castorama, Gify, etc.
+</aside>
+</section>
+
+<section>
+
+### Le monde du libre n'est pas non plus au niveau...
+
+... de l'interface !
+
+google.com/maps <em>vs</em> openstreetmap.org
+
+<ImageGrid
+	images={[
+		{
+			img: '/sotm/gmaps-2009.png',
+			url: 'https://www.versionmuseum.com/history-of/google-maps-website',
+		},
+		{
+			img: '/sotm/osm.png',
+			url: 'https://www.openstreetmap.org/relation/148838',
+		},
+	]}
+/>
+
+https://www.versionmuseum.com/history-of/google-maps-website
+
+</section>
+
+<section>
+#### Et pourtant, les données sont riches
+
+La gare de Rennes : Gmaps Web <em>vs</em> Indoorequal (OSM).
+
+<ImageGrid
+	images={[
+		{
+			img: '/sotm/rennes-gmaps.png',
+			url: 'https://www.google.com/maps/search/gare+de+rennes/@48.1032805,-1.6724381,18.71z?entry=ttu'
+			},
+			{img: '/sotm/rennes-indoorequal.png', url: 'https://indoorequal.org/#map=18.19/48.102971/-1.672087'}
+		]} />
+</section>
+<section>
+#### Et pourtant, les données sont riches (2)
+
+Où nous sommes : Gmaps Web <em>vs</em> OSM.org
+
+<ImageGrid
+	images={[
+		{
+			img: '/sotm/manufacture-gmaps.png',
+			url: 'https://www.google.com/maps/place/Manufacture+des+Tabacs,+69008+Lyon/@45.7482648,4.8605128,17.96z/data=!4m6!3m5!1s0x47f4ea7222919047:0xe69d20db1043aea8!8m2!3d45.7481118!4d4.8602011!16s%2Fg%2F1226mpbj?entry=ttu',
+			}, {img: '/sotm/manufacture-osm.png', url: 'https://www.openstreetmap.org/way/694531440#map=18/45.74807/4.86206'}]}
+			/>
+</section>

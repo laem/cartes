@@ -1,0 +1,129 @@
+import { ImageGrid } from '@/components/diapos/Wrapper'
+import css from '@/components/css/convertToJs'
+
+<section>
+
+## 2. Que faire ?
+
+</section>
+<section>
+## Démo !
+
+<iframe
+	src="https://cartes.app/?style=protomaps#12.27/48.09885/-1.64697"
+	style={css`
+		width: 80vw;
+		height: 65vh;
+	`}
+/>
+<aside>
+
+Carte ; Manufacture ; favori ; café pour la pause ; wikimedia ; panoramax ; rentrer chez moi ce soir ; rentrer à Rennes dimanche ; plans ; ligne SNCF ; horaires.
+
+</aside>
+</section>
+
+<section>
+
+#### Créer une startup de cartes ?
+
+Quelle startup privée française a réussi à bousculer un GAFAM établi ?
+
+Viamichelin ? Mappy (RATP) ? Qwant (OVH, Maps ⚰️) ?
+
+</section>
+<section>
+
+> Le marché français est désormais archidominé par Google Maps et Waze, ex-start-up israélienne racheté par Google 1,15 milliard de dollars en 2013. "Ces deux applications dominent toujours très largement le marché français, constate Bertrand Krug, directeur du département internet de Médiamétrie. Et leur écart continue de croître chaque année avec les concurrents."
+>
+> - En novembre 2019, <em>Google Maps comptait près de 36 millions</em> de visiteurs uniques mensuels
+> - suivi par <em>Waze à 14,5 millions</em> selon Médiamétrie. La suite est une survivance de la France des cartes imprimées avant chaque départ. Celui d'avant l'hégémonie de la Silicon Valley.
+> - L'antique Mappy, propriétaire de Solocal depuis 2000 [RATP en 2024], complète le tableau avec <em>10 millions de visiteurs uniques pour Mappy</em>.
+> - La quatrième place, avec un maigre <em>6 millions de visiteurs, est occupée par ViaMichelin</em>. TomTom n'arrive qu'en huitième position et perd 13% de visiteurs en un an.
+
+[Source Challenges / Médiamétrie](https://www.challenges.fr/high-tech/calculs-d-itineraires-en-15-ans-google-maps-et-waze-sont-devenus-incontournables_699369)
+
+</section>
+
+<section>
+
+#### L'IGN sort les crocs
+
+![](/sotm/cartes-ign-inter.png)
+
+<aside>
+    Appli découverte après le lancement de mon projet.
+
+    L'une des premières fois qu'on directeur d'administration parle de la
+    nécessaire remise en question du monopole des GAFAM ?
+
+</aside>
+</section>
+
+<section>
+
+#### Principes fixés
+
+- code ouvert
+- arrêter les silos, privilégier l'appli unifiée (les bus et les horaires du boulanger !)
+- connecter toutes les sources de données publiques et ouvertes
+
+</section>
+<section>
+
+#### Principes (suite)
+
+- s'ancrer dans un futur de mobilité écologique sans pétrole
+
+</section>
+<section>
+
+#### Principes (suite)
+
+- sur le web, pas les stores des concurrents (pour l'instant, ue...)
+- pas de favoritisme payant dans les résultats (aussi appelée "pub")
+
+</section>
+
+<section>
+
+#### Que penser des avis ?
+
+- [Tech Trash "Tout est faux" : l'histoire d'une canular qui devient le restaurant le plus prisé de Londres](https://techtrash.kessel.media/posts/pst_c0feccc4802b4c9ca64dd5e4e8d98ac5/tout-est-faux)
+- NYT 2024 : on ne fait plus la différence entre les commentaires de LLM et les humains
+
+[![](https://static01.nyt.com/images/2024/06/26/dining/26AI-Review-Hands/26AI-Review-Hands-superJumbo.jpg?quality=75&auto=webp)](https://www.nytimes.com/2024/06/24/dining/ai-restaurant-reviews.html?smid=nytcore-ios-share&referringSource=articleShare&sgrp=c-cb)
+
+</section>
+<section>
+
+### Comment installer cartes.app ?
+
+[📌](https://cartes.app)
+
+<aside>
+
+- ouvrir son store d'application universel et libre, disponible sur toutes les plateformes
+- installer l'application
+- l'ouvrir
+- voilà
+
+</aside>
+</section>
+<section>
+
+![](/sotm/cartes-sur-le-web.png)
+
+</section>
+<section>
+
+## Pas d'appli en _store_ ?
+
+Un risque d'audience évident, mais :
+
+- trop coûteux de maintenir plusieurs plateformes
+- trop risqué de dépendre des concurrents
+- le Web est puissant, juste sous-investi
+
+<aside>Anecdote react-modal-sheet : cette bibliothèque parmi les plus populaires pour faire l'encart sur mobile est complètement bugguée hors Safari iPhone, parce que plus personne ne fait de site Web mobile morderne.</aside>
+</section>

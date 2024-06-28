@@ -41,8 +41,6 @@ body {
 }
 
 body {
-	color: white;
-	background: #000;
 }
 main {
 	padding: 0 0.6rem;
@@ -64,7 +62,7 @@ a {
 	padding: none;
 	text-decoration: underline;
 	text-underline-offset: 4px;
-	color: var(--lightColor);
+	color: var(--color);
 }
 
 h1 {

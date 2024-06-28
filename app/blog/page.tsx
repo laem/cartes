@@ -2,6 +2,7 @@ import { allArticles } from '@/.contentlayer/generated'
 import { compareDesc } from 'date-fns'
 import Link from 'next/link'
 import { dateCool } from './utils'
+import { List } from './UI'
 
 const title = `Le blog - Cartes`
 const description =
@@ -19,7 +20,7 @@ const Page = () => {
 	return (
 		<main>
 			<h1>Le blog</h1>
-			<ul>
+			<List>
 				{articles.map(({ url, date, titre }) => (
 					<li key={url}>
 						<div>
@@ -28,7 +29,7 @@ const Page = () => {
 						<small>{dateCool(date)}</small>
 					</li>
 				))}
-			</ul>
+			</List>
 		</main>
 	)
 }
