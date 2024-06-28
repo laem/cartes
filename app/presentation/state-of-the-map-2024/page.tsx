@@ -39,6 +39,14 @@ export default function () {
 							</h2>
 						</header>
 					</PresentationWrapper>
+					<small
+						style={css`
+							font-size: 80%;
+							color: gray;
+						`}
+					>
+						Suivre en ligne sur son ordi : cartes.app/prez
+					</small>
 				</section>
 				<Presentation1 />
 				<Presentation2 />
