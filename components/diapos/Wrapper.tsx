@@ -1,5 +1,6 @@
 'use client'
 
+import Link from 'next/link'
 import styled from 'styled-components'
 
 export const DiapoWrapper = styled.div`
@@ -126,3 +127,13 @@ export const ImageGrid = ({
 		</ul>
 	)
 }
+
+export const Summary = ({ sections }) => (
+	<ol>
+		{sections.map(([label, hash]) => (
+			<li key={hash}>
+				<Link href={hash}>{label}</Link>{' '}
+			</li>
+		))}
+	</ol>
+)
