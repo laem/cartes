@@ -1,3 +1,4 @@
+import { gtfsServerUrl } from '../serverUrls'
 import protomaps from './protomaps'
 
 export default function elections(key) {
@@ -16,6 +17,7 @@ export default function elections(key) {
 					'https://umap.openstreetmap.fr/tr/map/circonscriptions-legislatives-2022_767781',
 			},
 		},
+
 		layers: [
 			...baseStyle.layers,
 			{
@@ -27,7 +29,7 @@ export default function elections(key) {
 				layout: { visibility: 'visible' },
 				paint: {
 					'fill-color': 'purple',
-					'fill-opacity': 0.4,
+					'fill-opacity': 0,
 					'fill-antialias': true,
 				},
 				//filter: ['==', 'class', 'grass'],
@@ -38,7 +40,7 @@ export default function elections(key) {
 				source: 'circonscriptions_legislatives_2024',
 				'source-layer': 'circolegislativesumap',
 				paint: {
-					'line-color': 'white',
+					'line-color': '#185abd',
 					'line-width': 1,
 				},
 			},
