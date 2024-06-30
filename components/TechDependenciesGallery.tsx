@@ -33,7 +33,7 @@ export const dependencies = [
 	{ img: '/three-dots.svg', text: 'Le vôtre ?' },
 ]
 
-export default function TechDependenciesGallery() {
+export default function TechDependenciesGallery({ css }) {
 	return (
 		<ul
 			css={`
@@ -59,6 +59,7 @@ export default function TechDependenciesGallery() {
 					align-items: center;
 					justify-content: center;
 				}
+				${css}
 			`}
 		>
 			{dependencies.map(({ img: url, text }) => (
