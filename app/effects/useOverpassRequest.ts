@@ -14,7 +14,7 @@ out skel qt;
 `
 
 export default function useOverpassRequest(bbox, category) {
-	const [features, setFeatures] = useState([])
+	const [features, setFeatures] = useState()
 	useEffect(() => {
 		if (!bbox || !category) return
 
