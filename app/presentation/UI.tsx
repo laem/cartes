@@ -70,11 +70,18 @@ export const WebStore = styled.div`
 export const Screens = styled.div`
 	display: flex;
 	align-items: center;
-	margin-left: -30%;
+	margin-left: -50%;
 	> div {
 		margin-top: -8rem;
 	}
 	> div:nth-child(2) {
 		margin-top: -6rem;
+	}
+	@media (max-width: 800px) {
+		flex-wrap: wrap;
+		margin-left: 0;
+		> div {
+			margin-bottom: -10rem;
+		}
 	}
 `
