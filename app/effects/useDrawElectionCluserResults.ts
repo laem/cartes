@@ -4,11 +4,28 @@ import { gtfsServerUrl } from '../serverUrls'
 import { safeRemove } from './utils'
 
 // colors to use for the categories
-const partyColors = ['crimson', 'Gold', 'darkblue', '#fc4e2a', '#e31a1c']
+const partyColors = {
+	UG: '#de3c80',
+	ENS: '#9859fc',
+	RN: '#002E61',
+	DVC: '#FF8400',
+	REC: '#1019c1',
+	LR: '#005ce6',
+	EXG: '#AF0000',
+	UDI: '#9AC4F9',
+	DVD: '#0099FF',
+	DVG: '#de3c80',
+}
+//{"DIV","UG","DVC","REC","LR","EXG","ENS","UDI","RN","DVD"]
+
 // filters for classifying party results into five categories based on magnitude
-const cat1 = ['==', ['get', 'result'], 'NFP']
-const cat2 = ['==', ['get', 'result'], 'Ensemble']
-const cat3 = ['==', ['get', 'result'], 'RN']
+
+const cat = (index) => [
+	'==',
+	['get', 'result'],
+	Object.keys(partyColors)[index],
+]
+
 export default function useDrawElectionClusterResults(map, styleKey) {
 	console.log('lg plopi', styleKey, map)
 	useEffect(() => {
@@ -70,12 +87,12 @@ export default function useDrawElectionClusterResults(map, styleKey) {
 			data: dataUrl,
 			cluster: true,
 			clusterRadius: 80,
-			clusterProperties: {
-				// keep separate counts for each magnitude category in a cluster
-				cat1: ['+', ['case', cat1, 1, 0]],
-				cat2: ['+', ['case', cat2, 1, 0]],
-				cat3: ['+', ['case', cat3, 1, 0]],
-			},
+			clusterProperties: Object.fromEntries(
+				Object.entries(partyColors).map(([party, color], index) => [
+					'cat' + index,
+					['+', ['case', cat(index), 1, 0]],
+				])
+			),
 		})
 		map.addLayer({
 			id: 'resultats_legislatives_2024_circles',
@@ -85,12 +102,9 @@ export default function useDrawElectionClusterResults(map, styleKey) {
 			paint: {
 				'circle-color': [
 					'case',
-					['in', ['get', 'result'], 'RN'],
-					'darkblue',
-					['in', ['get', 'result'], 'NFP'],
-					'crimson',
-					['in', ['get', 'result'], 'Ensemble'],
-					'yellow',
+					...Object.entries(partyColors)
+						.map(([party, color]) => [['in', ['get', 'result'], party], color])
+						.flat(),
 					'white',
 				],
 				'circle-opacity': 0.6,
@@ -172,7 +186,9 @@ function donutSegment(start, end, r, r0, color) {
 // code for creating an SVG donut chart from feature properties
 function createDonutChart(props) {
 	const offsets = []
-	const counts = [props.cat1, props.cat2, props.cat3]
+	const counts = Object.entries(partyColors).map(
+		(a, index) => props['cat' + index]
+	)
 	let total = 0
 	for (let i = 0; i < counts.length; i++) {
 		offsets.push(total)
@@ -192,7 +208,7 @@ function createDonutChart(props) {
 			(offsets[i] + counts[i]) / total,
 			r,
 			r0,
-			partyColors[i]
+			Object.values(partyColors)[i]
 		)
 	}
 	html += `<circle cx="${r}" cy="${r}" r="${r0}" fill="white" /><text dominant-baseline="central" transform="translate(${r}, ${r})">${total.toLocaleString()}</text></svg></div>`
