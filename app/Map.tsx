@@ -26,6 +26,7 @@ import useRightClick from './effects/useRightClick'
 import useSearchLocalTransit from './effects/useSearchLocalTransit'
 import useDrawItinerary from './itinerary/useDrawItinerary'
 import useMapClick from './effects/useMapClick'
+import useDrawElectionClusterResults from './effects/useDrawElectionCluserResults'
 
 if (process.env.NEXT_PUBLIC_MAPTILER == null) {
 	throw new Error('You have to configure env NEXT_PUBLIC_MAPTILER, see README')
@@ -136,6 +137,8 @@ export default function Map({
 		]
 		map.fitBounds(mapLibreBBox)
 	}, [map, agency])
+
+	useDrawElectionClusterResults(map, styleKey)
 
 	useDrawTransport(
 		map,

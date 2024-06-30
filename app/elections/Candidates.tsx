@@ -1,5 +1,6 @@
 import { findContrastedTextColor } from '@/components/utils/colors'
 import Image from 'next/image'
+import { partyColors } from '../effects/useDrawElectionCluserResults'
 
 export default function Candidates({ data }) {
 	/*
@@ -39,54 +40,59 @@ export default function Candidates({ data }) {
 				<small>1er tour des législatives du 30 juin 2024</small>
 			</header>
 			<ul>
-				{data.map(({ NomPsn, PrenomPsn, LibNuaCand, Couleur }) => {
-					const safeColor = Couleur || '#333333'
-					console.log('couleur', Couleur)
+				{data.properties.results.map(
+					({ NomPsn, PrenomPsn, LibNuaCand, Couleur, score, nuance }) => {
+						const safeColor = Couleur || partyColors[nuance] || '#333333'
+						console.log('couleur', Couleur)
 
-					return (
-						<li
-							key={PrenomPsn + NomPsn}
-							css={`
-								margin: 0.8rem 0 0.8rem 0;
-								display: flex;
-								align-items: center;
-							`}
-						>
-							<div
+						return (
+							<li
+								key={PrenomPsn + NomPsn}
 								css={`
-									background: ${safeColor};
-									width: 2.2rem;
-									height: 2.2rem;
-									border-radius: 4rem;
-									margin-right: 1rem;
+									margin: 0.8rem 0 0.8rem 0;
+									display: flex;
+									align-items: center;
 								`}
-							></div>
-							<div>
+							>
 								<div
 									css={`
-										text-decoration: underline;
-										text-decoration-color: #bbb;
-										margin-right: 0.6rem;
-										line-height: 1.2rem;
-										min-width: 6rem;
-										margin-bottom: 0.2rem;
-										width: 16rem;
+										background: ${safeColor};
+										width: 2.2rem;
+										height: 2.2rem;
+										border-radius: 4rem;
+										margin-right: 1rem;
 									`}
-									title={
-										LibNuaCand
-											? 'Le parti sous lequel ce candidat ou cette candidate se présente'
-											: 'Parti non renseigné dans les données dont nous disposons'
-									}
-								>
-									{LibNuaCand || ' ? '}
+								></div>
+								<div>
+									<div
+										css={`
+											text-decoration: underline;
+											text-decoration-color: #bbb;
+											margin-right: 0.6rem;
+											line-height: 1.2rem;
+											min-width: 6rem;
+											margin-bottom: 0.2rem;
+											width: 16rem;
+										`}
+										title={
+											LibNuaCand
+												? 'Le parti sous lequel ce candidat ou cette candidate se présente'
+												: 'Parti non renseigné dans les données dont nous disposons'
+										}
+									>
+										{LibNuaCand || ' ? '}
+									</div>
+									<div css={``}>
+										{PrenomPsn} {NomPsn}
+									</div>
+									<div>
+										<strong>{score} %</strong>
+									</div>
 								</div>
-								<div css={``}>
-									{PrenomPsn} {NomPsn}
-								</div>
-							</div>
-						</li>
-					)
-				})}
+							</li>
+						)
+					}
+				)}
 			</ul>
 			<a
 				href="https://github.com/f3reg/lg2024/"
