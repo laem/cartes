@@ -21,7 +21,7 @@ export default function () {
 				<TechDependenciesGallery
 					css={`
 						max-width: 100%;
-						gap: 8vw;
+						gap: 6vh;
 					`}
 				/>
 			</section>
