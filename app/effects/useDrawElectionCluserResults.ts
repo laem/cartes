@@ -4,7 +4,7 @@ import { gtfsServerUrl } from '../serverUrls'
 import { safeRemove } from './utils'
 
 // colors to use for the categories
-const partyColors = {
+export const partyColors = {
 	UG: '#de3c80',
 	ENS: '#9859fc',
 	RN: '#002E61',

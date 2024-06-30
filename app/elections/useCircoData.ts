@@ -1,4 +1,5 @@
 import { useEffect, useState } from 'react'
+import { gtfsServerUrl } from '../serverUrls'
 
 export default function (id) {
 	const [data, setData] = useState(null)
@@ -8,12 +9,12 @@ export default function (id) {
 		const fetchData = async () => {
 			try {
 				setData(null)
-				const url = `https://raw.githubusercontent.com/f3reg/lg2024/main/legislatives/2024/candidats/interieur/t1_circo_${id}.json`
+				const url = `${gtfsServerUrl}/elections-legislatives-2024/${id}`
 
 				const request = await fetch(url)
 				const json = await request.json()
 
-				setData(shuffleArray(json))
+				setData(json)
 			} catch (e) {
 				setData('Error')
 			}
