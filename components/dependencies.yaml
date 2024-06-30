@@ -1,0 +1,48 @@
+- img: /openstreetmap.svg
+  text: OpenStreetMap
+  url: openstreetmap.fr
+- img: /transport.data.gouv.fr.svg
+  text: Transport.data
+  url: transport.data.gouv.fr
+- img: /panoramax.svg
+  text: Panoramax
+  url: panoramax.fr
+- img: 'https://futur.eco/logo.svg'
+  text: Futur.eco
+  url: futur.eco
+- img: /brouter.png
+  text: BRouter
+  url: brouter.de
+- img: 'https://motis-project.de/assets/motis2.svg'
+  text: Motis
+  url: motis-project.de
+- img: /node-gtfs.svg
+  text: Node-GTFS
+  url: github.com/BlinkTagInc/node-gtfs
+- img: /valhalla.png
+  text: Valhalla
+  url: valhalla.github.io/valhalla/
+- img: 'https://maptiler.fr/img/logos/maptiler-logo-icon.svg'
+  text: MapTiler
+  url: maptiler.fr
+- img: /ign.png
+  text: IGN
+  url: ign.fr
+- img: 'https://commons.wikimedia.org/static/images/project-logos/commonswiki.png'
+  text: Wiki Commons
+  url: commons.wikimedia.org
+- img: /wikipedia.svg
+  text: Wikipedia
+  url: wikipedia.org
+- img: /wikidata.svg
+  text: Wikidata
+  url: wikidata.org
+- img: /meteo-france.svg
+  text: Météo France
+  url: meteofrance.com
+- img: /photon.png
+  text: Komoot Photon
+  url: photon.komoot.io
+- img: /three-dots.svg
+  text: Le vôtre ?
+  url: github.com/laem/cartes/issues

@@ -90,7 +90,7 @@ export default function Candidates({ data }) {
 			</ul>
 			<a
 				href="https://github.com/f3reg/lg2024/"
-				about="_blank"
+				target="_blank"
 				css={`
 					text-decoration: none;
 					color: gray;

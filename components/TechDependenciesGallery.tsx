@@ -1,37 +1,5 @@
 'use client'
-export const dependencies = [
-	{ img: '/openstreetmap.svg', text: 'OpenStreetMap' },
-	{
-		img: '/transport.data.gouv.fr.svg',
-		text: 'Transport.data',
-	},
-	{
-		img: '/panoramax.svg',
-		text: 'Panoramax',
-	},
-	{ img: 'https://futur.eco/logo.svg', text: 'Futur.eco' },
-	{ img: '/brouter.png', text: 'BRouter' },
-	{ img: 'https://motis-project.de/assets/motis2.svg', text: 'Motis' },
-	{ img: '/node-gtfs.svg', text: 'Node-GTFS' },
-	{ img: '/valhalla.png', text: 'Valhalla' },
-	{
-		img: 'https://maptiler.fr/img/logos/maptiler-logo-icon.svg',
-		text: 'MapTiler',
-	},
-	{ img: '/ign.png', text: 'IGN' },
-	{
-		img: 'https://commons.wikimedia.org/static/images/project-logos/commonswiki.png',
-		text: 'Wiki Commons',
-	},
-	{
-		img: '/wikipedia.svg',
-		text: 'Wikipedia',
-	},
-	{ img: '/wikidata.svg', text: 'Wikidata' },
-	{ img: '/meteo-france.svg', text: 'Météo France' },
-	{ img: '/photon.png', text: 'Komoot Photon' },
-	{ img: '/three-dots.svg', text: 'Le vôtre ?' },
-]
+import dependencies from '@/components/dependencies.yaml'
 
 export default function TechDependenciesGallery({ css }) {
 	return (
@@ -47,7 +15,8 @@ export default function TechDependenciesGallery({ css }) {
 				gap: 1vw;
 				max-width: 72vw;
 
-				li {
+				li a {
+					text-decoration: none;
 					img {
 						height: 5vh;
 						width: auto;
@@ -62,10 +31,12 @@ export default function TechDependenciesGallery({ css }) {
 				${css}
 			`}
 		>
-			{dependencies.map(({ img: url, text }) => (
+			{dependencies.map(({ img, url, text }) => (
 				<li key={url}>
-					<img src={url} alt={text} />
-					<span>{text}</span>
+					<a href={'https://' + url} target="_blank">
+						<img src={img} alt={text} />
+						<span>{text}</span>
+					</a>
 				</li>
 			))}
 		</ul>
