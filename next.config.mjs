@@ -50,6 +50,11 @@ const nextConfig = {
 				destination: '/?style=elections',
 				permanent: false,
 			},
+			{
+				source: '/elections-legislatives-2024/premier-tour',
+				destination: '/?style=elections',
+				permanent: false,
+			},
 		]
 	},
 	webpack: (config, options) => {
