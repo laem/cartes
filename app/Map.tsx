@@ -138,7 +138,7 @@ export default function Map({
 		map.fitBounds(mapLibreBBox)
 	}, [map, agency])
 
-	useDrawElectionClusterResults(map, styleKey)
+	useDrawElectionClusterResults(map, styleKey, searchParams.filtre)
 
 	useDrawTransport(
 		map,

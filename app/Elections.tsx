@@ -4,6 +4,7 @@ import { useEffect } from 'react'
 import { ModalCloseButton } from './UI'
 import Candidates from './elections/Candidates'
 import useCircoData from './elections/useCircoData'
+import { ElectionFilterLabel, ElectionFilters } from './ElectionsUI'
 
 export default function ({ searchParams, setSnap }) {
 	const setSearchParams = useSetSearchParams()
@@ -15,7 +16,7 @@ export default function ({ searchParams, setSnap }) {
 
 	const candidates = useCircoData(idCirco)
 
-	if (!idCirco) return <NoCircoYet />
+	if (!idCirco) return <NoCircoYet filter={searchParams.filtre} />
 
 	return (
 		<div>
@@ -59,27 +60,55 @@ export default function ({ searchParams, setSnap }) {
 	)
 }
 
-const NoCircoYet = () => (
-	<section
-		css={`
-			position: relative;
-			padding-top: 0.2rem;
-			margin-top: 1rem;
-			display: flex;
-			align-items: center;
-			justify-content: space-evenly;
-			img {
-				margin-right: 1rem;
-				width: 3rem;
-				height: auto;
-			}
-		`}
-	>
-		<Emoji e="🗳️" />
+const NoCircoYet = ({ filter }) => {
+	const setSearchParams = useSetSearchParams()
 
-		<p>
-			Cliquez sur la carte pour trouver votre circonscription et vos candidats
-			aux élections législatives.
-		</p>
-	</section>
-)
+	return (
+		<section>
+			<section
+				css={`
+					position: relative;
+					padding-top: 0.2rem;
+					margin-top: 1rem;
+					display: flex;
+					align-items: center;
+					justify-content: space-evenly;
+					img {
+						margin-right: 1rem;
+						width: 3rem;
+						height: auto;
+					}
+				`}
+			>
+				<Emoji e="🗳️" />
+
+				<p>
+					Cliquez sur la carte pour voir les résultats de votre circonscription
+					au premier tour des élections législatives 2024.
+				</p>
+			</section>
+			<ElectionFilters>
+				<li key={'elus'}>
+					<ElectionFilterLabel>
+						<input
+							type="radio"
+							checked={!filter || 'elus' === filter}
+							onClick={() => setSearchParams({ filtre: 'elus' })}
+						/>
+						Candidats élus au 1er tour
+					</ElectionFilterLabel>
+				</li>
+				<li key={'tete'}>
+					<ElectionFilterLabel>
+						<input
+							type="radio"
+							checked={'tete' === filter}
+							onClick={() => setSearchParams({ filtre: 'tete' })}
+						/>
+						Le candidat en tête
+					</ElectionFilterLabel>
+				</li>
+			</ElectionFilters>
+		</section>
+	)
+}

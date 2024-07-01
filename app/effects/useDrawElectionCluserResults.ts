@@ -1,5 +1,5 @@
 import { Marker } from 'maplibre-gl'
-import { useEffect } from 'react'
+import { useEffect, useState } from 'react'
 import { gtfsServerUrl } from '../serverUrls'
 import { safeRemove } from './utils'
 
@@ -26,12 +26,37 @@ const cat = (index) => [
 	Object.keys(partyColors)[index],
 ]
 
-export default function useDrawElectionClusterResults(map, styleKey) {
+const filterFeatures = (rawFilter) => (featureCollection) => {
+	const filter = rawFilter || 'elus'
+
+	const features = featureCollection.features.filter((feature) => {
+		if (filter === 'elus') {
+			const results = feature.properties.results
+			const first = results[0]
+			return first.score > 50 && first.scoreInscrits > 25
+		} else return featureCollection
+	})
+
+	return { type: 'FeatureCollection', features }
+}
+export default function useDrawElectionClusterResults(map, styleKey, filter) {
 	console.log('lg plopi', styleKey, map)
+	const [rawData, setData] = useState(null)
+	useEffect(() => {
+		const download = async () => {
+			const dataUrl = gtfsServerUrl + '/resultats-legislatives-2024.geojson'
+			const request = await fetch(dataUrl)
+			const json = await request.json()
+			setData(json)
+		}
+		download()
+	}, [])
+
+	const data = rawData && filterFeatures(filter)(rawData)
+
 	useEffect(() => {
 		if (!map || styleKey !== 'elections') return
 
-		console.log('lg', 'salut')
 		// objects for caching and keeping track of HTML marker objects (for performance)
 		const markers = {}
 		let markersOnScreen = {}
@@ -39,6 +64,7 @@ export default function useDrawElectionClusterResults(map, styleKey) {
 		const updateMarkers = () => {
 			const newMarkers = {}
 			const features = map.querySourceFeatures('resultats_legislatives_2024')
+
 			console.log('lg f', features, map)
 
 			// for every cluster on the screen, create an HTML marker for it (if we didn't yet),
@@ -67,24 +93,22 @@ export default function useDrawElectionClusterResults(map, styleKey) {
 			markersOnScreen = newMarkers
 		}
 
-		// after the GeoJSON data is loaded, update markers on the screen and do so on every map move/moveend
-		map.on('data', (e) => {
+		const handleOnData = (e) => {
 			if (e.sourceId !== 'resultats_legislatives_2024' || !e.isSourceLoaded)
 				return
 
-			const features = map.querySourceFeatures('resultats_legislatives_2024')
-			console.log('lg f2', features)
-			console.log('lg loaded', e)
+			//const features = map.querySourceFeatures('resultats_legislatives_2024')
 
 			map.on('move', updateMarkers)
 			map.on('moveend', updateMarkers)
 			updateMarkers()
-		})
+		}
+		// after the GeoJSON data is loaded, update markers on the screen and do so on every map move/moveend
+		map.on('data', handleOnData)
 
-		const dataUrl = gtfsServerUrl + '/resultats-legislatives-2024.geojson'
 		map.addSource('resultats_legislatives_2024', {
 			type: 'geojson',
-			data: dataUrl,
+			data,
 			cluster: true,
 			clusterRadius: 80,
 			clusterProperties: Object.fromEntries(
@@ -130,6 +154,7 @@ export default function useDrawElectionClusterResults(map, styleKey) {
 			},
 		})
 		return () => {
+			map.off('data', handleOnData)
 			map.off('move', updateMarkers)
 			map.off('moveend', updateMarkers)
 			safeRemove(map)(
@@ -139,8 +164,9 @@ export default function useDrawElectionClusterResults(map, styleKey) {
 				],
 				['resultats_legislatives_2024']
 			)
+			updateMarkers()
 		}
-	}, [map, styleKey])
+	}, [map, styleKey, data, filter])
 }
 
 function donutSegment(start, end, r, r0, color) {
