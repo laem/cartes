@@ -25,7 +25,7 @@ export async function generateMetadata(
 			description:
 				'Qui est arrivé en tête dans ma circonscription ? Trouvez en un clic votre circonscription et la liste des candidats et leur score au vote des législatives 2024 le 30 juin 2024',
 			openGraph: {
-				images: ['/circonscriptions-candidats.png'],
+				images: ['/resultats-1er-tour-legislatives-2024.png'],
 			},
 		}
 	if (searchParams.transports === 'oui' && searchParams.agence != null) {
