@@ -12,11 +12,22 @@ export const partyColors = {
 	REC: '#1019c1',
 	LR: '#005ce6',
 	EXG: '#AF0000',
+	FI: '#AF0000',
+	COM: '#AF0000',
 	UDI: '#9AC4F9',
 	DVD: '#0099FF',
 	DVG: '#de3c80',
+	RDG: '#de3c80',
+	HOR: '#9859fc',
+	REG: 'gray',
+	UXD: '#002E61',
+	EXD: '#002E61',
+	SOC: '#de3c80',
+	ECO: 'green',
+	VEC: 'green',
+	DIV: '#9AC4F9',
+	DSV: '#002E61',
 }
-//{"DIV","UG","DVC","REC","LR","EXG","ENS","UDI","RN","DVD"]
 
 // filters for classifying party results into five categories based on magnitude
 
