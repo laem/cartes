@@ -105,8 +105,8 @@ export default function Meteo({ coordinates }) {
 				width: 2rem;
 				padding: 0.3rem 0;
 				height: 4.8rem;
-				right: 1rem;
-				bottom: 1.6rem;
+				right: 0.7rem;
+				bottom: 2.8rem;
 				> small {
 					display: none !important;
 				}
