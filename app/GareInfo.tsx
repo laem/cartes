@@ -14,13 +14,14 @@ export default function GareInfo({ nom, uic8 }) {
 
 				iframe {
 					width: 100%;
-					border: 6px solid var(--darkerColor);
+					border: 4px solid var(--darkerColor);
+					border-radius: 4px;
 					height: 100%;
 				}
 				h2 {
 					color: white;
 					margin-bottom: 0rem;
-					font-size: 120%;
+					font-size: 140%;
 					background: var(--darkerColor);
 					width: 100%;
 					text-align: center;
@@ -46,7 +47,13 @@ export default function GareInfo({ nom, uic8 }) {
 				min={initialDate()}
 				onChange={(e) => setDate(e.target.value)}
 			/>
-			<h2>Gare de {nom}</h2>
+			<h2>
+				{nom.toLowerCase().includes('gare de') ? (
+					nom
+				) : (
+					<span>Gare de {nom}</span>
+				)}
+			</h2>
 
 			<iframe
 				src={`https://tableau-sncf.vercel.app/station/stop_area:SNCF:${uic8}?date=${date}`}
