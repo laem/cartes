@@ -103,35 +103,46 @@ const Option = ({
 	return (
 		<li
 			css={`
-				padding: 0.2rem 0.6rem;
-				border-radius: 0.3rem;
+				padding: 0;
+				border-radius: 0;
 				${choice && choice.name === option.name
 					? 'background: var(--color); color: var(--textColor)'
 					: ''};
+				border-bottom: 1px solid var(--lightestColor);
 				button {
-					color: white;
-					font-size: 100%;
+					font-size: 90%;
+					line-height: 130%;
 					display: flex;
 					align-items: center;
 					text-align: left;
 					width: 100%;
-					padding: 0;
+					padding: 0.5rem;
+					border-radius: 0;
 				}
 				button > span {
 					display: flex;
 					justify-content: space-between;
+					flex-wrap: wrap;
+					gap: 0 0.9rem;
 					align-items: center;
 					width: 100%;
 				}
 
+				button > span > span:nth-of-type(2) {
+					flex-grow: 1;
+					text-align: right;
+					opacity: 0.6;
+					font-size: 80%;
+				}
+
 				button:hover {
-					background: var(--darkerColor2);
-					border-radius: 0.3rem;
+					background: var(--lightestColor);
 				}
 				button > img {
 					width: 1.2rem;
 					height: 1.2rem;
 					margin-right: 0.6rem;
+					filter: invert(1);
 				}
 			`}
 		>
@@ -168,14 +179,12 @@ const Option = ({
 						highlightStyle={highlightStyle}
 					/>
 					{option.name && (
-						<span style={{ opacity: 0.6, fontSize: '75%', marginLeft: '.6em' }}>
-							<Highlighter
-								autoEscape={true}
-								highlightStyle={highlightStyle}
-								searchWords={[inputValue]}
-								textToHighlight={locationText}
-							/>
-						</span>
+						<Highlighter
+							autoEscape={true}
+							highlightStyle={highlightStyle}
+							searchWords={[inputValue]}
+							textToHighlight={locationText}
+						/>
 					)}
 				</span>
 			</button>
@@ -184,5 +193,5 @@ const Option = ({
 }
 
 const highlightStyle = css`
-	background: gold;
+	background: var(--lighterColor);
 `

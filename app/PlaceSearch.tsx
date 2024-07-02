@@ -14,6 +14,7 @@ import { useLocalStorage } from 'usehooks-ts'
 import { buildAllezPart, setAllezPart } from './SetDestination'
 import { hasStepBeingSearched } from './itinerary/Steps'
 import { encodePlace } from './utils'
+import { close } from '@/components/icons/close'
 
 // The idead here was to enable triggering of geoloc with an input. Not
 // exectuted, there is a button now.
@@ -126,6 +127,9 @@ export default function PlaceSearch({
 				css={`
 					display: flex;
 					justify-content: center;
+					align-items: center;
+					margin-bottom: 0.4rem;
+
 					> button {
 						margin: 0;
 						padding: 0;
@@ -160,10 +164,9 @@ export default function PlaceSearch({
 							background: var(--lightestColor);
 							color: var(--darkColor);
 							border: none;
-
 							margin-bottom: 0;
-							${hasStepBeingSearched(state) &&
-							`border: 3px solid yellow !important`}
+							outline: 0.15rem solid
+								${hasStepBeingSearched(state) ? 'yellow' : 'var(--lightColor)'} !important;
 						}
 						position: relative;
 					`}
@@ -209,22 +212,16 @@ export default function PlaceSearch({
 							onClick={() => onDestinationChange(null)}
 							css={`
 								position: absolute;
-								right: 0.6rem;
+								right: 5px;
 								top: 50%;
 								transform: translateY(-50%);
-								img {
-									width: 0.8rem;
-									height: 0.8rem;
-								}
-								padding: 0;
+								height: 30px;
+								width: 30px;
+								padding: 7px;
+								color: var(--darkerColor);
 							`}
 						>
-							<Image
-								src="/close.svg"
-								alt="Effacer la recherche"
-								width="10"
-								height="10"
-							/>
+							{close}
 						</button>
 					)}
 				</InputStyle>
@@ -299,11 +296,17 @@ export default function PlaceSearch({
 						</div>
 						<ul
 							css={`
-								list-style-type: disc !important;
-								padding-left: 0.4rem !important;
+								li:not(:last-of-type) {
+									border-bottom: 1px solid var(--lightestColor);
+								}
 								li {
-									color: white;
-									margin-left: 1rem;
+									padding: 0.4rem 0;
+									list-style-type: none;
+									font-size: 90%;
+									line-height: 130%;
+								}
+								li:hover {
+									background: var(--lightestColor);
 								}
 							`}
 						>
@@ -393,7 +396,15 @@ export default function PlaceSearch({
 								</label>
 							</SearchResultsContainer>
 						) : (
-							'Chargement..'
+							<div
+								css={`
+									font-size: 90%;
+									text-align: center;
+									margin: 20px 0;
+								`}
+							>
+								<i>Recherche en cours..</i>
+							</div>
 						)}
 					</div>
 				)}
@@ -403,9 +414,8 @@ export default function PlaceSearch({
 
 const SearchResultsContainer = styled.div`
 	ul {
-		background: var(--darkerColor);
 		border-radius: 0.4rem;
-		padding: 0.6rem 0;
+		padding: 0;
 		list-style-type: none;
 		margin-top: 0.2rem;
 		${(p) =>
