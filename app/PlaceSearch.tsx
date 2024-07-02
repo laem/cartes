@@ -15,6 +15,7 @@ import { buildAllezPart, setAllezPart } from './SetDestination'
 import { hasStepBeingSearched } from './itinerary/Steps'
 import { encodePlace } from './utils'
 import { close } from '@/components/icons/close'
+import { Loader } from '@/components/loader'
 
 // The idead here was to enable triggering of geoloc with an input. Not
 // exectuted, there is a button now.
@@ -403,7 +404,9 @@ export default function PlaceSearch({
 									margin: 20px 0;
 								`}
 							>
-								<i>Recherche en cours..</i>
+								<Loader>
+									<i>Recherche en cours</i>
+								</Loader>
 							</div>
 						)}
 					</div>
