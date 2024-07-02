@@ -62,6 +62,7 @@ export default function Content({
 	vers,
 	osmFeature,
 	quickSearchFeaturesLoaded,
+	setDisableDrag,
 }) {
 	const tags = osmFeature?.tags
 	const url = tags && getUrl(tags)
@@ -247,6 +248,7 @@ export default function Content({
 						itinerary.setIsItineraryMode(false)
 					},
 					state,
+					setDisableDrag,
 				}}
 			/>
 

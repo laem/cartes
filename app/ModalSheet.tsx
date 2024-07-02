@@ -17,6 +17,7 @@ export default function ModalSheet(props) {
 	const [trackedSnap, setTrackedSnap] = useState(initialSnap)
 
 	const [isOpen, setOpen] = useState(false)
+	const [disableDrag, setDisableDrag] = useState(false)
 
 	const bookmarksView = searchParams.favoris === 'oui'
 
@@ -102,7 +103,7 @@ export default function ModalSheet(props) {
 							}
 						`}
 					/>
-					<Sheet.Content>
+					<Sheet.Content disableDrag={disableDrag}>
 						<Sheet.Scroller draggableAt="both" snap={trackedSnap}>
 							<SheetContentWrapper>
 								<Content
@@ -111,6 +112,7 @@ export default function ModalSheet(props) {
 									snap={trackedSnap}
 									setSnap={setSnap}
 									openSheet={setOpen}
+									setDisableDrag={setDisableDrag}
 								/>
 							</SheetContentWrapper>
 						</Sheet.Scroller>

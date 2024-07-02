@@ -7,7 +7,7 @@ import Link from 'next/link'
 import { useState } from 'react'
 import { removeStatePart, setAllezPart } from '../SetDestination'
 
-export default function Steps({ state }) {
+export default function Steps({ state, setDisableDrag }) {
 	const steps = state
 
 	const setSearchParams = useSetSearchParams()
@@ -60,6 +60,7 @@ export default function Steps({ state }) {
 							setSearchParams,
 							beingSearched: isStepBeingSearched(steps, index),
 							state,
+							setDisableDrag,
 						}}
 					/>
 				))}
@@ -103,7 +104,14 @@ const AddStepButton = ({ url, title }) => (
 	</div>
 )
 
-const Item = ({ index, step, setSearchParams, beingSearched, state }) => {
+const Item = ({
+	index,
+	step,
+	setSearchParams,
+	beingSearched,
+	state,
+	setDisableDrag,
+}) => {
 	const controls = useDragControls()
 	const [undoValue, setUndoValue] = useState(null)
 	const key = step?.key
@@ -182,7 +190,13 @@ const Item = ({ index, step, setSearchParams, beingSearched, state }) => {
 				`}
 			>
 				<div
-					onPointerDown={(e) => controls.start(e)}
+					onPointerDown={(e) => {
+						setDisableDrag(true)
+						controls.start(e)
+					}}
+					onPointerUp={(e) => {
+						setDisableDrag(false)
+					}}
 					className="reorder-handle"
 				>
 					<Dots />
