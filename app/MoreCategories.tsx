@@ -30,8 +30,13 @@ export default function MoreCategories({
 				ul {
 					display: flex;
 					align-items: center;
+
+					/* Touch devices can scroll horizontally, desktop devices (hover:hover) cannot */
+					@media (hover: hover) {
+						flex-wrap: wrap;
+					}
 					li {
-						margin: 0 0.2rem;
+						margin: 0.2rem 0.2rem;
 						padding: 0rem 0.4rem;
 						line-height: 1.5rem;
 						border-radius: 0.2rem;
@@ -48,7 +53,7 @@ export default function MoreCategories({
 				}
 				h2 {
 					font-size: 100%;
-					margin: 0.6rem 0 0.1rem 0;
+					margin: 0.4rem 0 0.1rem 0;
 					line-height: initial;
 					color: var(--lighterTextColor);
 				}
