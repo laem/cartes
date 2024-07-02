@@ -37,9 +37,7 @@ const cat = (index) => [
 	Object.keys(partyColors)[index],
 ]
 
-const filterFeatures = (rawFilter) => (featureCollection) => {
-	const filter = rawFilter || 'elus'
-
+const filterFeatures = (filter) => (featureCollection) => {
 	const features = featureCollection.features.filter((feature) => {
 		if (filter === 'elus') {
 			const results = feature.properties.results
@@ -50,7 +48,12 @@ const filterFeatures = (rawFilter) => (featureCollection) => {
 
 	return { type: 'FeatureCollection', features }
 }
-export default function useDrawElectionClusterResults(map, styleKey, filter) {
+export default function useDrawElectionClusterResults(
+	map,
+	styleKey,
+	rawFilter
+) {
+	const filter = rawFilter || 'elus'
 	console.log('lg plopi', styleKey, map)
 	const [rawData, setData] = useState(null)
 	useEffect(() => {
