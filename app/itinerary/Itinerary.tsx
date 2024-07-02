@@ -65,7 +65,7 @@ export default function Itinerary({
 								{
 									label: 'résumé',
 									icon: 'frise',
-									description: "Toutes les options en un clin d'oeuil",
+									description: "Toutes les options en un clin d'œil",
 								},
 							],
 							...modes,
