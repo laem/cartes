@@ -61,7 +61,7 @@ export default function useFetchItinerary(
 				points,
 				itineraryDistance,
 				bikeRouteProfile,
-				35 // ~ 25 km/h (ebike) x 1:30 hours
+				mode === 'cycling' ? Infinity : 35 // ~ 25 km/h (ebike) x 1:30 hours
 			)
 			updateRoute('cycling', cycling)
 
