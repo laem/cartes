@@ -1,17 +1,12 @@
 import GeoInputOptions from '@/components/GeoInputOptions'
-import { InputStyle } from '@/components/InputStyle'
 import { getArrayIndex, replaceArrayIndex } from '@/components/utils/utils'
 import { buildAddress } from '@/components/Address'
 import fetchPhoton from '@/components/fetchPhoton'
 import { isIOS } from '@react-aria/utils'
-import Image from 'next/image'
-import Link from 'next/link'
-import { useCallback, useEffect, useRef, useState } from 'react'
-import styled from 'styled-components'
+import { useEffect, useState } from 'react'
 import { useLocalStorage } from 'usehooks-ts'
 import { buildAllezPart, setAllezPart } from '../SetDestination'
 import { encodePlace } from '../utils'
-import { Loader } from '@/components/loader'
 import LogoCarteApp from './_components/LogoCarteApp'
 import SearchBar from './_components/SearchBar'
 import SearchHistory from './_components/SearchResults/SearchHistory'
@@ -71,13 +66,13 @@ export default function PlaceSearch({
 
 	const onInputChange =
 		(stepIndex = -1, localSearch = false) =>
-		(v) => {
+		(searchValue) => {
 			const oldStateEntry = state[stepIndex]
 			const stateEntry = {
-				...(oldStateEntry?.results?.length && v == null
+				...(oldStateEntry?.results?.length && searchValue == null
 					? { results: null }
 					: {}),
-				...(v === '' ? {} : { inputValue: v }),
+				...(searchValue === '' ? {} : { inputValue: searchValue }),
 			}
 			const safeStateEntry =
 				Object.keys(stateEntry).length > 0 ? stateEntry : null
@@ -90,11 +85,17 @@ export default function PlaceSearch({
 				//validated: false, // TODO was important or not ? could be stored in each state array entries and calculated ?
 			)
 			setState(newState)
-			if (v?.length > 2) {
+			if (searchValue?.length > 2) {
 				const hash = window.location.hash,
 					local = hash && hash.split('/').slice(1, 3)
 
-				fetchPhoton(v, setState, stepIndex, localSearch && local, zoom)
+				fetchPhoton(
+					searchValue,
+					setState,
+					stepIndex,
+					localSearch && local,
+					zoom
+				)
 			}
 		}
 
@@ -105,6 +106,16 @@ export default function PlaceSearch({
 
 		onDestinationChange(urlSearchQuery)
 	}, [urlSearchQuery, onDestinationChange, value])
+
+	const shouldShowHistory =
+		step.inputValue === '' && isMyInputFocused && searchHistory.length > 0
+
+	const shouldShowResults =
+		step.inputValue !== '' &&
+		(!step.choice || step.choice.inputValue !== step.inputValue)
+
+	const isLoading =
+		!step.results && step.inputValue != null && step.inputValue?.length >= 3
 
 	return (
 		<div>
@@ -152,85 +163,74 @@ export default function PlaceSearch({
 						<Geolocate />
 					))}
 			</div>
-			{step.inputValue === '' &&
-				isMyInputFocused &&
-				searchHistory.length > 0 && (
-					<SearchHistory
-						onDestinationChange={onDestinationChange}
-						searchHistory={searchHistory}
-						setSearchHistory={setSearchHistory}
-						sideSheet={sideSheet}
-					/>
-				)}
-			{step.inputValue !== '' &&
-				(!step.choice || step.choice.inputValue !== step.inputValue) && (
-					<div>
-						{step.results ? (
-							<SearchResultsContainer $sideSheet={sideSheet}>
-								{step.results.length > 0 ? (
-									<GeoInputOptions
-										{...{
-											whichInput: 'vers', // legacy
-											data: step,
-											updateState: (newData) => {
-												setSnap(1, 'PlaceSearch')
-												// this is questionable; see first comment in this file
-												const newState = replaceArrayIndex(
-													state,
+			{shouldShowHistory && (
+				<SearchHistory
+					onDestinationChange={onDestinationChange}
+					searchHistory={searchHistory}
+					setSearchHistory={setSearchHistory}
+					sideSheet={sideSheet}
+				/>
+			)}
+			{shouldShowResults && (
+				<div>
+					{step.results && (
+						<SearchResultsContainer $sideSheet={sideSheet}>
+							{step.results.length > 0 ? (
+								<GeoInputOptions
+									{...{
+										whichInput: 'vers', // legacy
+										data: step,
+										updateState: (newData) => {
+											setSnap(1, 'PlaceSearch')
+											// this is questionable; see first comment in this file
+											const newState = replaceArrayIndex(
+												state,
+												stepIndex,
+												newData
+											)
+											setState(newState)
+											setSearchHistory([
+												value,
+												...searchHistory.filter((entry) => entry !== value),
+											])
+
+											console.log('ici', newData)
+											const { osmId, featureType, longitude, latitude, name } =
+												newData.choice
+
+											const address = buildAddress(newData.choice, true)
+											const isOsmFeature = osmId && featureType
+											setSearchParams({
+												allez: setAllezPart(
 													stepIndex,
-													newData
-												)
-												setState(newState)
-												setSearchHistory([
-													value,
-													...searchHistory.filter((entry) => entry !== value),
-												])
-
-												console.log('ici', newData)
-												const {
-													osmId,
-													featureType,
-													longitude,
-													latitude,
-													name,
-												} = newData.choice
-
-												const address = buildAddress(newData.choice, true)
-												const isOsmFeature = osmId && featureType
-												setSearchParams({
-													allez: setAllezPart(
-														stepIndex,
-														newState,
-														buildAllezPart(
-															name || address,
-															isOsmFeature
-																? encodePlace(featureType, osmId)
-																: '',
-															longitude,
-															latitude
-														)
-													),
-													q: undefined,
-												})
-											},
-										}}
-									/>
-								) : (
-									<SearchNoResults value={value} />
-								)}
-								<SearchHereButton
-									setLocalSearch={setLocalSearch}
-									localSearch={localSearch}
-									onInputChange={onInputChange}
-									state={state}
-									stepIndex={stepIndex}
+													newState,
+													buildAllezPart(
+														name || address,
+														isOsmFeature ? encodePlace(featureType, osmId) : '',
+														longitude,
+														latitude
+													)
+												),
+												q: undefined,
+											})
+										},
+									}}
 								/>
-							</SearchResultsContainer>
-						) : (
-							<SearchLoader />
-						)}
-					</div>
-				)}
+							) : (
+								<SearchNoResults value={value} />
+							)}
+							<SearchHereButton
+								setLocalSearch={setLocalSearch}
+								localSearch={localSearch}
+								onInputChange={onInputChange}
+								state={state}
+								stepIndex={stepIndex}
+							/>
+						</SearchResultsContainer>
+					)}
+					{isLoading && <SearchLoader />}
+				</div>
+			)}
 		</div>
 	)
 }

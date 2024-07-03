@@ -74,9 +74,13 @@ export default function Meteo({ coordinates }) {
 	//console.log('meteo', data)
 	if (!data?.weather) return
 	const { weather } = data
+	if (!weather.forecast) {
+		return null
+	}
+
 	const now = new Date()
 	const relevantSorted = sortBy((forecast) => forecast.date)(
-		weather.forecast
+		(weather.forecast || [])
 			.map((forecast) => ({ ...forecast, date: new Date(forecast.dt * 1000) }))
 			.filter((forecast) => forecast.date > now)
 	)
