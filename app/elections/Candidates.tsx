@@ -100,6 +100,8 @@ export default function Candidates({ data }) {
 				css={`
 					text-decoration: none;
 					color: gray;
+					margin-bottom: 0.6rem;
+					display: block;
 					small {
 						text-align: right;
 						display: block;
