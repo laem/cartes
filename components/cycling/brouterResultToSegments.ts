@@ -59,13 +59,19 @@ export default function (brouterGeojson) {
 }
 
 const computeFeatureCoordinates = (mutableLineStringCoordinates, lon, lat) => {
-	const selected = mutableLineStringCoordinates.reduce(
-		([selected, shouldContinue, rest], next) => {
+	const selected = mutableLineStringCoordinates.slice(0).reduce(
+		([selected, shouldContinue, rest], next, i, array) => {
 			const [lon2, lat2] = next
 			const foundBoundary = lon2 == lon && lat2 == lat
-			if (!shouldContinue) return [selected, false, [...rest, next]]
 			if (!foundBoundary) return [[...selected, next], true, rest]
-			if (foundBoundary) return [[...selected, next], false, [next]]
+			if (foundBoundary) {
+				array.splice(1) // break the reduce loop
+				return [
+					[...selected, next],
+					false,
+					mutableLineStringCoordinates.slice(i),
+				]
+			}
 		},
 		[[], true, []]
 	)
