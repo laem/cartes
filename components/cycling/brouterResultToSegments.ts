@@ -17,7 +17,7 @@ export default function (brouterGeojson) {
 		getLineTags = (line) => line[9]
 
 	const { toPoint, fromPoint, backboneRide } = geojson
-	let lineStringCoordinates = geojson.features[0].geometry.coordinates
+	let mutableLineStringCoordinates = geojson.features[0].geometry.coordinates
 	// As I understand this, the "messages" table contains brouter's real measurement of distance
 	// in segments that are grouped, maybe according to tags ?
 	// The LineString ('geometry') contains the real detailed shape
@@ -26,6 +26,7 @@ export default function (brouterGeojson) {
 	// from the first lineString coords to the first message coords (that correspond to another linestring coord), apply the properties of the message
 	// ...
 	// until the last lineString coord, apply the properties of the message, that goes way further in termes of coords but whose distance is right
+
 	const featureCollection = {
 		type: 'FeatureCollection',
 		features: table
@@ -44,25 +45,31 @@ export default function (brouterGeojson) {
 					},
 					geometry: {
 						type: 'LineString',
-						coordinates: (() => {
-							const selected = lineStringCoordinates.reduce(
-								([selected, shouldContinue, rest], next) => {
-									const [lon2, lat2] = next
-									const foundBoundary = lon2 == lon && lat2 == lat
-									if (!shouldContinue) return [selected, false, [...rest, next]]
-									if (!foundBoundary) return [[...selected, next], true, rest]
-									if (foundBoundary) return [[...selected, next], false, [next]]
-								},
-								[[], true, []]
-							)
-							lineStringCoordinates = selected[2]
-
-							return selected[0]
-						})(),
+						coordinates: computeFeatureCoordinates(
+							mutableLineStringCoordinates,
+							lon,
+							lat
+						),
 					},
 				}
 			})
 			.filter(Boolean),
 	}
 	return featureCollection
+}
+
+const computeFeatureCoordinates = (mutableLineStringCoordinates, lon, lat) => {
+	const selected = mutableLineStringCoordinates.reduce(
+		([selected, shouldContinue, rest], next) => {
+			const [lon2, lat2] = next
+			const foundBoundary = lon2 == lon && lat2 == lat
+			if (!shouldContinue) return [selected, false, [...rest, next]]
+			if (!foundBoundary) return [[...selected, next], true, rest]
+			if (foundBoundary) return [[...selected, next], false, [next]]
+		},
+		[[], true, []]
+	)
+	mutableLineStringCoordinates = selected[2]
+
+	return selected[0]
 }
