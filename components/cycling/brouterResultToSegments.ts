@@ -29,53 +29,53 @@ export default function (brouterGeojson) {
 
 	const featureCollection = {
 		type: 'FeatureCollection',
-		features: table
-			.map((line, i) => {
-				const [lon, lat] = getLineCoordinates(line)
-				return {
-					type: 'Feature',
-					properties: {
-						tags: getLineTags(line),
-						distance: line[3],
-						elevation: line[2],
-						backboneRide,
-						isSafePath: isSafeCyclingSegment(getLineTags(line)) ? 'oui' : 'non',
-						toPoint,
-						fromPoint,
-					},
-					geometry: {
-						type: 'LineString',
-						coordinates: computeFeatureCoordinates(
-							mutableLineStringCoordinates,
-							lon,
-							lat
-						),
-					},
-				}
-			})
-			.filter(Boolean),
+		features: table.map((line, i) => {
+			const [lon, lat] = getLineCoordinates(line)
+
+			const [coordinates, nextCoordinates] = computeFeatureCoordinates(
+				mutableLineStringCoordinates,
+				lon,
+				lat
+			)
+			mutableLineStringCoordinates = nextCoordinates
+
+			return {
+				type: 'Feature',
+				properties: {
+					tags: getLineTags(line),
+					distance: line[3],
+					elevation: line[2],
+					backboneRide,
+					isSafePath: isSafeCyclingSegment(getLineTags(line)) ? 'oui' : 'non',
+					toPoint,
+					fromPoint,
+				},
+				geometry: {
+					type: 'LineString',
+					coordinates,
+				},
+			}
+		}),
 	}
+	console.log('line', featureCollection)
 	return featureCollection
 }
 
-const computeFeatureCoordinates = (mutableLineStringCoordinates, lon, lat) => {
-	const selected = mutableLineStringCoordinates.slice(0).reduce(
-		([selected, shouldContinue, rest], next, i, array) => {
-			const [lon2, lat2] = next
-			const foundBoundary = lon2 == lon && lat2 == lat
-			if (!foundBoundary) return [[...selected, next], true, rest]
-			if (foundBoundary) {
-				array.splice(1) // break the reduce loop
-				return [
-					[...selected, next],
-					false,
-					mutableLineStringCoordinates.slice(i),
-				]
-			}
-		},
-		[[], true, []]
-	)
-	mutableLineStringCoordinates = selected[2]
+const computeFeatureCoordinates = (lineStringCoordinates, lon, lat) => {
+	let selected = [],
+		future = []
 
-	return selected[0]
+	let i = 0
+	for (const next of lineStringCoordinates) {
+		i += 1
+		const [lon2, lat2] = next
+		selected.push(next)
+		const foundBoundary = lon2 == lon && lat2 == lat
+		if (foundBoundary) {
+			future = lineStringCoordinates.slice(i)
+			break
+		}
+	}
+
+	return [selected, future]
 }
