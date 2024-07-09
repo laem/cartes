@@ -3,6 +3,9 @@ import { compareDesc } from 'date-fns'
 import Link from 'next/link'
 import { List } from './UI'
 import { dateCool } from './utils'
+import Logo from '@/public/logo.svg'
+import Image from 'next/image'
+import css from '@/components/css/convertToJs'
 
 const title = `Le blog - Cartes`
 const description =
@@ -19,6 +22,27 @@ const Page = () => {
 	)
 	return (
 		<main>
+			<nav
+				style={css`
+					margin-top: 1rem;
+				`}
+			>
+				<Link href="/">
+					<Image
+						src={Logo}
+						alt="Logo de Cartes.app"
+						width="100"
+						height="100"
+						style={css`
+							width: 2rem;
+							height: auto;
+							margin-right: 0.6rem;
+							vertical-align: middle;
+						`}
+					/>
+					Revenir sur la carte
+				</Link>
+			</nav>
 			<h1>Le blog de Cartes.app</h1>
 			<p>{description}</p>
 			<p>
