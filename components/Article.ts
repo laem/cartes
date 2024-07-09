@@ -16,13 +16,15 @@ const Article = styled.article`
 	h2 {
 		font-size: 140%;
 	}
-	img {
+	img,
+	video {
 		max-width: 90%;
 		max-height: 30rem;
 		display: block;
 		margin: 1rem auto;
 	}
-	img + em {
+	img + em,
+	video + p em {
 		font-size: 90%;
 		line-height: 1rem;
 		text-align: center;
