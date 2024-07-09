@@ -8,7 +8,7 @@ export const Article = defineDocumentType(() => ({
 	contentType: 'mdx',
 
 	fields: {
-		titre: { type: 'string', required: true },
+		titre: { type: 'markdown', required: true },
 		date: { type: 'date', required: true },
 		description: { type: 'string', required: true },
 		image: { type: 'string', required: false },

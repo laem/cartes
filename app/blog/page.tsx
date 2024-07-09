@@ -55,7 +55,10 @@ const Page = () => {
 				{articles.map(({ url, date, titre }) => (
 					<li key={url}>
 						<div>
-							<Link href={url}>{titre}</Link>
+							<Link
+								href={url}
+								dangerouslySetInnerHTML={{ __html: titre.html }}
+							/>
 						</div>
 						<small>publié {dateCool(date)}</small>
 					</li>

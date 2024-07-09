@@ -9,9 +9,8 @@ export const generateMetadata = ({ params }) => {
 		(post) => post._raw.flattenedPath === params.slug
 	)
 	return {
-		title: post.titre,
+		title: post.titre.raw,
 		description: post.description,
-
 		openGraph: {
 			images: [post.image],
 			type: 'article',
@@ -31,7 +30,7 @@ export default async function Post({ params }: Props) {
 		<Article>
 			<Link href="/blog">← Retour au blog</Link>
 			<header>
-				<h1>{post.titre}</h1>
+				<h1 dangerouslySetInnerHTML={{ __html: post.titre.html }} />
 				<small>
 					<time dateTime={post.date}>{dateCool(post.date)}</time>
 				</small>
