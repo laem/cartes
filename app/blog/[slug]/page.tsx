@@ -34,8 +34,8 @@ export default async function Post({ params }: Props) {
 				{post.image && (
 					<Image
 						src={post.image}
-						width="300"
-						height="300"
+						width="600"
+						height="400"
 						alt="Illustration de l'article"
 					/>
 				)}
