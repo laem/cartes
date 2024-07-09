@@ -3,6 +3,7 @@ import Article from '@/components/Article'
 import { dateCool } from '../utils'
 import { getMDXComponent } from 'next-contentlayer2/hooks'
 import Link from 'next/link'
+import Image from 'next/image'
 
 export const generateMetadata = ({ params }) => {
 	const post = allArticles.find(
@@ -30,6 +31,14 @@ export default async function Post({ params }: Props) {
 		<Article>
 			<Link href="/blog">← Retour au blog</Link>
 			<header>
+				{post.image && (
+					<Image
+						src={post.image}
+						width="300"
+						height="300"
+						alt="Illustration de l'article"
+					/>
+				)}
 				<h1 dangerouslySetInnerHTML={{ __html: post.titre.html }} />
 				<small>
 					<time dateTime={post.date}>{dateCool(post.date)}</time>

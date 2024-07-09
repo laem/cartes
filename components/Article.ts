@@ -9,9 +9,20 @@ const Article = styled.article`
 		margin-bottom: 2rem;
 	}
 	h1 {
-		font-size: 160%;
-		margin-bottom: 0;
+		font-size: 240%;
+		margin-bottom: 1rem;
 		line-height: 1.3rem;
+		text-align: center;
+	}
+	header > small {
+		display: block;
+		text-align: center;
+		color: var(--color);
+	}
+	header > img {
+		width: 30rem;
+		max-width: 80%;
+		height: auto;
 	}
 	h2 {
 		font-size: 140%;
