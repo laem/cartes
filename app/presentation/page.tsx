@@ -234,6 +234,7 @@ export default function () {
 				Des dizaines de contributeurs ont déjà aidé à améliorer l'outil.{' '}
 				<a href="https://github.com/laem/cartes/issues">Pourquoi pas vous ?</a>.
 			</p>
+			<CTA href="/">Tester Cartes</CTA>
 		</PresentationWrapper>
 	)
 }
