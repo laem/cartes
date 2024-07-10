@@ -28,26 +28,28 @@ const iframeCode = `
 export default function () {
 	return (
 		<PresentationWrapper>
-			<header>
-				<h1>
-					<Image src={Logo} alt="Logo de cartes.app" /> Cartes
-				</h1>
-				<h2>Libres, modernes et souveraines.</h2>
-			</header>
-			<WebStore>
-				<Link href="/">
-					<Image src={WebIcon} alt="Icône représentation le World Wide Web" />
-					<div>
-						<small>Disponible sur</small>
-						<div>le Web</div>
-					</div>
-				</Link>
-			</WebStore>
-			<Screens>
-				<Phone imgSrc={'/screenshots/trépassés.png'} />
-				<Phone imgSrc={'/screenshots/cordée.png'} />
-				<Phone imgSrc={'/screenshots/bus.png'} />
-			</Screens>
+			<section>
+				<header>
+					<h1>
+						<Image src={Logo} alt="Logo de cartes.app" /> Cartes
+					</h1>
+					<h2>Libres, modernes et souveraines.</h2>
+				</header>
+				<WebStore>
+					<Link href="/">
+						<Image src={WebIcon} alt="Icône représentation le World Wide Web" />
+						<div>
+							<small>Disponible sur</small>
+							<div>le Web</div>
+						</div>
+					</Link>
+				</WebStore>
+				<Screens>
+					<Phone imgSrc={'/screenshots/trépassés.png'} />
+					<Phone imgSrc={'/screenshots/cordée.png'} />
+					<Phone imgSrc={'/screenshots/bus.png'} />
+				</Screens>
+			</section>
 			<h2>Des cartes dégooglisées</h2>
 			<p>
 				L'essentiel des applications de nos smartphones qui affichent une carte,
@@ -196,20 +198,18 @@ export default function () {
 				sans envoyer les données de vos utilisateurs à Google.
 			</p>
 			<p>Voici un exemple sur un commerce à Rennes :</p>
-			<p>
-				<blockquote
-					style={css`
-						line-height: 1rem;
-						margin-bottom: 1rem;
-						border: 1px dashed var(--color);
-						padding: 0.4rem;
-						font-size: 80%;
-						border-radius: 0.2rem;
-					`}
-				>
-					{iframeCode}
-				</blockquote>
-			</p>
+			<blockquote
+				style={css`
+					line-height: 1rem;
+					margin-bottom: 1rem;
+					border: 1px dashed var(--color);
+					padding: 0.4rem;
+					font-size: 80%;
+					border-radius: 0.2rem;
+				`}
+			>
+				{iframeCode}
+			</blockquote>
 
 			<iframe
 				src="https://cartes.app/?allez=Little+Beetles|n5352517991|-1.6826|48.1118"
