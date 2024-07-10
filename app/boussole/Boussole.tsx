@@ -75,7 +75,7 @@ export default function Boussole() {
 					css={
 						compass != null
 							? `
-transform: translate(-50%, -50%) rotate(${-compass}deg)`
+transform: translate(-50%, -50%) rotate(${-compass}deg) !important`
 							: ''
 					}
 				></div>
