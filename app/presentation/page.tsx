@@ -72,7 +72,12 @@ export default function () {
 			</p>
 			<h2>Compléter les applications mobiles OpenStreetMap</h2>
 			<p>
-				Cartes est un complément Web aux superbes applications{' '}
+				OpenStreetMap est le Wikipedia des cartes : chacun peut y ajouter un
+				nouveau lieu, modifier l'horaire d'un coiffeur, placer un arbre sur la
+				carte, mettre à jour la parcelle de son jardin.
+			</p>
+			<p>
+				Cartes peut être vu comme le pendant Web des superbes applications{' '}
 				<a href="https://organicmaps.app/">Organic Maps</a> et{' '}
 				<a href="https://osmand.net/">OsmAnd</a>.
 			</p>
@@ -86,13 +91,17 @@ export default function () {
 			</p>
 			<p>
 				Cartes ne s'installe pas, elle s'utilise : il suffit d'ouvrir n'importe
-				quel navigateur de taper
+				quel navigateur de taper{' '}
 				<a href="/">
 					<strong>cartes.app</strong>
-				</a>
+				</a>{' '}
 				dans la barre d'adresse. Vos amis n'auront pas besoin d'installer une
 				nième application pour ouvrir le lien du restaurant où vous comptez vous
 				retrouver ce soir !
+			</p>
+			<p>
+				OpenStreetMap, c'est la fondation sur laquelle Cartes est construite,
+				mais de nombreuses autres sources de données y sont intégrées.{' '}
 			</p>
 			<h2>Répondre à l'urgence écologique et politique</h2>
 			<p>
