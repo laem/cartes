@@ -41,6 +41,11 @@ const nextConfig = {
 				permanent: false,
 			},
 			{
+				source: '/nord',
+				destination: '/boussole',
+				permanent: false,
+			},
+			{
 				source: '/sitemap.xml',
 				destination: '/sitemap',
 				permanent: false,
