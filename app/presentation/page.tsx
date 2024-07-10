@@ -1,5 +1,5 @@
 import Link from 'next/link'
-import { Screens, WebStore } from './UI'
+import { CTA, Screens, WebStore } from './UI'
 import { PresentationWrapper } from './UI.tsx'
 import Logo from '@/public/logo.svg'
 import WebIcon from '@/public/web.svg'
@@ -72,6 +72,8 @@ export default function () {
 				</a>
 				.
 			</p>
+
+			<CTA href="/">Tester Cartes</CTA>
 			<h2>Compléter les applications mobiles OpenStreetMap</h2>
 			<p>
 				OpenStreetMap est le Wikipedia des cartes : chacun peut y ajouter un

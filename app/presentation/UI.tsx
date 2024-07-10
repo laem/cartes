@@ -1,5 +1,6 @@
 'use client'
 
+import Link from 'next/link'
 import styled from 'styled-components'
 
 export const PresentationWrapper = styled.div`
@@ -84,4 +85,16 @@ export const Screens = styled.div`
 			margin-bottom: -10rem;
 		}
 	}
+`
+
+export const CTA = styled(Link)`
+	text-decoration: none;
+	font-size: 160%;
+	background: linear-gradient(30deg, var(--color), var(--darkColor));
+	display: block;
+	margin: 4vh auto 6vh;
+	width: fit-content;
+	color: white;
+	padding: 1rem 2rem;
+	border-radius: 1rem;
 `
