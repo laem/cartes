@@ -81,7 +81,7 @@ transform: translate(-50%, -50%) rotate(${-compass}deg) !important`
 				></div>
 				<div
 					className="my-point"
-					css={myPointOpacity ? `opacity: ${myPointOpacity}` : ''}
+					css={myPointOpacity ? `opacity: ${myPointOpacity} !important` : ''}
 				></div>
 			</Compass>
 
