@@ -4,7 +4,7 @@ import styled from 'styled-components'
 
 export const PresentationWrapper = styled.div`
 	max-width: 700px;
-	margin: 8vh auto;
+	margin: 3vh auto;
 	padding: 0 4vw;
 	img {
 		max-width: 100%;
