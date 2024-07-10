@@ -14,7 +14,7 @@ function fetchPhoton(v, setState, stepIndex, local, zoom) {
 		.then((res) => res.json())
 		.then((json) =>
 			setState((state) => {
-				if (v !== getArrayIndex(state, stepIndex).inputValue) return state
+				if (v !== getArrayIndex(state, stepIndex)?.inputValue) return state
 				else
 					return replaceArrayIndex(
 						state,

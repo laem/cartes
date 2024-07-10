@@ -27,8 +27,8 @@ export const MapContainer = styled.div`
 
 export const ContentWrapper = styled.div`
 	position: absolute;
-	top: min(2vh, 0.5rem);
-	left: min(4vw, 2rem);
+	top: min(1.5vh, 0.5rem);
+	left: min(3vw, 1.5rem);
 	z-index: 10;
 `
 
