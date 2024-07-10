@@ -1,15 +1,19 @@
 'use client'
 
-import { useEffect, useRef, useState } from 'react'
+import { useEffect, useState } from 'react'
 import { Compass } from './UI'
 
 export default function Boussole() {
 	const [pointDegree, setPointDegree] = useState(0)
 	const [compass, setCompass] = useState()
+	const [isIOS, setIsIOS] = useState(false)
 
-	const isIOS =
-		navigator.userAgent.match(/(iPod|iPhone|iPad)/) &&
-		navigator.userAgent.match(/AppleWebKit/)
+	useEffect(() => {
+		setIsIOS(
+			navigator.userAgent.match(/(iPod|iPhone|iPad)/) &&
+				navigator.userAgent.match(/AppleWebKit/)
+		)
+	}, [])
 
 	useEffect(() => {
 		navigator.geolocation.getCurrentPosition(locationHandler)
@@ -17,7 +21,7 @@ export default function Boussole() {
 		if (!isIOS) {
 			window.addEventListener('deviceorientationabsolute', handler, true)
 		}
-	}, [])
+	}, [isIOS])
 
 	function startCompass() {
 		if (isIOS) {
