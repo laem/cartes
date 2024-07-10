@@ -5,6 +5,7 @@ const Article = styled.article`
 	max-width: 700px;
 	margin: 0 auto;
 	padding: 0 0.6rem;
+	padding-bottom: 10vh;
 	header {
 		margin-bottom: 2rem;
 	}
