@@ -15,15 +15,34 @@ export default function Boussole() {
 		)
 	}, [])
 
+	const locationHandler = (position) => {
+		const { latitude, longitude } = position.coords
+		setPointDegree(calcDegreeToPoint(latitude, longitude))
+
+		if (pointDegree < 0) {
+			setPointDegree(pointDegree + 360)
+		}
+	}
+
+	const handler = (e) => {
+		const compass = e.webkitCompassHeading || Math.abs(e.alpha - 360)
+		setCompass(compass)
+	}
+
 	useEffect(() => {
 		navigator.geolocation.getCurrentPosition(locationHandler)
 
 		if (!isIOS) {
 			window.addEventListener('deviceorientationabsolute', handler, true)
 		}
+		return () => {
+			if (!isIOS) {
+				window.removeEventListener('deviceorientationabsolute', handler, true)
+			}
+		}
 	}, [isIOS])
 
-	function startCompass() {
+	const startCompass = () => {
 		if (isIOS) {
 			DeviceOrientationEvent.requestPermission()
 				.then((response) => {
@@ -37,11 +56,6 @@ export default function Boussole() {
 		}
 	}
 
-	function handler(e) {
-		const compass = e.webkitCompassHeading || Math.abs(e.alpha - 360)
-		setCompass(compass)
-	}
-
 	const myPointOpacity =
 		// ±15 degree
 		(pointDegree < Math.abs(compass) && pointDegree + 15 > Math.abs(compass)) ||
@@ -51,15 +65,6 @@ export default function Boussole() {
 			: pointDegree
 			? 1
 			: false
-
-	function locationHandler(position) {
-		const { latitude, longitude } = position.coords
-		setPointDegree(calcDegreeToPoint(latitude, longitude))
-
-		if (pointDegree < 0) {
-			setPointDegree(pointDegree + 360)
-		}
-	}
 
 	return (
 		<div>
