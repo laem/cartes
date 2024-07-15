@@ -13,6 +13,10 @@ export const stamp = (date) => Math.round(new Date(date).getTime() / 1000)
 
 export const defaultRouteColor = '#d3b2ee'
 
+// 1h of bike ~= 20km
+// So with 2h and 40 km, we should cover most of the hexagone
+const bikeTrainSearchDistance = 2 * 60 * 60
+
 export const buildRequestBody = (start, destination, date) => {
 	const begin = Math.round(new Date(date).getTime() / 1000),
 		end = datePlusHours(date, 2) // TODO This parameter should probably be modulated depending on the transit offer in the simulation setup. Or, query for the whole day at once, and filter them in the UI
@@ -42,7 +46,7 @@ export const buildRequestBody = (start, destination, date) => {
 				{
 					mode_type: 'Bike',
 					mode: {
-						max_duration: 60 * 60, // 1h of bike ~= 20km
+						max_duration: bikeTrainSearchDistance,
 					},
 				},
 			],
@@ -58,7 +62,7 @@ export const buildRequestBody = (start, destination, date) => {
 				{
 					mode_type: 'Bike',
 					mode: {
-						max_duration: 60 * 60,
+						max_duration: bikeTrainSearchDistance,
 					},
 				},
 			],
