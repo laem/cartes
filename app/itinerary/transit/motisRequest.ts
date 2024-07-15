@@ -39,6 +39,12 @@ export const buildRequestBody = (start, destination, date) => {
 						search_options: { profile: 'distance_only', duration_limit: 1800 },
 					},
 				},
+				{
+					mode_type: 'Bike',
+					mode: {
+						max_duration: 60 * 60, // 1h of bike ~= 20km
+					},
+				},
 			],
 			destination_type: 'InputPosition',
 			destination,
@@ -49,8 +55,14 @@ export const buildRequestBody = (start, destination, date) => {
 						search_options: { profile: 'distance_only', duration_limit: 900 },
 					},
 				},
+				{
+					mode_type: 'Bike',
+					mode: {
+						max_duration: 60 * 60,
+					},
+				},
 			],
-			search_type: 'Accessibility',
+			search_type: 'Default',
 			search_dir: 'Forward',
 			router: '',
 		},
