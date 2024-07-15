@@ -179,7 +179,7 @@ export default function () {
 				déploiera prochainement sur l'ensemble de l'hexagone.
 			</p>
 			<p>
-				Que vous viviez ou visitiez Portsall, Menton, Sant-Étienne ou Verneuil
+				Que vous viviez ou visitiez Portsall, Menton, Saint-Étienne ou Verneuil
 				d'Avre et d'Iton, trouver votre ligne de bus et ses horaires consistera
 				juste à taper{' '}
 				<a href="/">
