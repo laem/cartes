@@ -1,5 +1,6 @@
 import { lightenColor } from '@/components/utils/colors'
 import transportIcon from './transportIcon'
+import { distance, point } from '@turf/turf'
 
 const datePlusHours = (date, hours) => {
 	const today = new Date(date)
@@ -13,13 +14,37 @@ export const stamp = (date) => Math.round(new Date(date).getTime() / 1000)
 
 export const defaultRouteColor = '#d3b2ee'
 
-// 1h of bike ~= 20km
-// So with 2h and 40 km, we should cover most of the hexagone
-const bikeTrainSearchDistance = 0 * 2 * 60 * 60
-
 export const buildRequestBody = (start, destination, date) => {
 	const begin = Math.round(new Date(date).getTime() / 1000),
 		end = datePlusHours(date, 2) // TODO This parameter should probably be modulated depending on the transit offer in the simulation setup. Or, query for the whole day at once, and filter them in the UI
+
+	const requestDistance = distance(
+		point([start.lng, start.lat]),
+		point([destination.lng, destination.lat])
+	)
+
+	console.log('itinerary distance', requestDistance)
+
+	// See https://github.com/laem/cartes/issues/416
+	// 1h of bike ~= 20km
+	// So with 2h and 40 km, we should cover most of the hexagone
+	const bikeTrainSearchDistance =
+		(requestDistance < 50 ? 0 : requestDistance < 200 ? 1 : 2) * 60 * 60
+
+	const symetricModes = [
+		{
+			mode_type: 'FootPPR',
+			mode: {
+				search_options: { profile: 'distance_only', duration_limit: 1800 },
+			},
+		},
+		bikeTrainSearchDistance > 0 && {
+			mode_type: 'Bike',
+			mode: {
+				max_duration: bikeTrainSearchDistance,
+			},
+		},
+	].filter(Boolean)
 
 	const body = {
 		destination: { type: 'Module', target: '/intermodal' },
@@ -36,36 +61,10 @@ export const buildRequestBody = (start, destination, date) => {
 				extend_interval_earlier: true,
 				extend_interval_later: true,
 			},
-			start_modes: [
-				{
-					mode_type: 'FootPPR',
-					mode: {
-						search_options: { profile: 'distance_only', duration_limit: 1800 },
-					},
-				},
-				{
-					mode_type: 'Bike',
-					mode: {
-						max_duration: bikeTrainSearchDistance,
-					},
-				},
-			],
+			start_modes: symetricModes,
 			destination_type: 'InputPosition',
 			destination,
-			destination_modes: [
-				{
-					mode_type: 'FootPPR',
-					mode: {
-						search_options: { profile: 'distance_only', duration_limit: 900 },
-					},
-				},
-				{
-					mode_type: 'Bike',
-					mode: {
-						max_duration: bikeTrainSearchDistance,
-					},
-				},
-			],
+			destination_modes: symetricModes,
 			search_type: 'Default',
 			search_dir: 'Forward',
 			router: '',
