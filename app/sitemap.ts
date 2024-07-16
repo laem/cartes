@@ -1,5 +1,6 @@
 import type { MetadataRoute } from 'next'
 import { getAllPostIds } from '@/app/blog/getPosts'
+import { getRecentInterestingNodes } from '@/components/watchOsmPlaces.ts'
 
 const domain = 'https://cartes.app'
 
@@ -28,13 +29,17 @@ const generateAgencies = async () => {
 }
 
 export default async function sitemap(): MetadataRoute.Sitemap {
+	const newNodes = await getRecentInterestingNodes()
+
 	const blogEntries = getAllPostIds().map(({ params: { id } }) => '/blog/' + id)
 	const agencies = await generateAgencies()
-	const entries = [...basePaths, ...blogEntries, ...agencies].map((path) => ({
-		url: escapeXml(domain + path),
-		lastModified: new Date(),
-		changeFrequency: 'weekly',
-	}))
+	const entries = [...basePaths, ...blogEntries, ...agencies, ...newNodes].map(
+		(path) => ({
+			url: escapeXml(domain + path),
+			lastModified: new Date(),
+			changeFrequency: 'weekly',
+		})
+	)
 	console.log('Sitemap', entries)
 	return entries
 }
