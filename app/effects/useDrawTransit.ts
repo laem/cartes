@@ -21,12 +21,13 @@ export default function useDrawTransit(map, transit, selectedConnection, date) {
 			type: 'FeatureCollection',
 			features: transports.reduce((memo, next) => {
 				const route_text_color = handleColor(next.route_text_color, '#000000')
+				console.log('next', next)
 				return [
 					...memo,
 					{
 						type: 'Feature',
 						properties: {
-							name: next.route_short_name,
+							name: next.route_short_name || '',
 							move_type: next.move_type,
 							route_color: next.route_color || '#d3b2ee',
 							route_color_darker: next.route_color_darker || '',

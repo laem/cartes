@@ -133,6 +133,7 @@ export default function useFetchItinerary(
 		)
 	}, [points, setRoutes, date])
 
-	const resetItinerary = () => setSearchParams({ allez: undefined })
+	const resetItinerary = () =>
+		setSearchParams({ allez: undefined, mode: undefined, choix: undefined })
 	return [resetItinerary, routes, date]
 }

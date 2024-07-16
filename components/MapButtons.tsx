@@ -101,24 +101,26 @@ export default function MapButtons({
 					/>
 				</Link>
 			</MapButton>
-			<MapButton
-				$active={searchParams.style === 'elections'}
-				css={`
-					border: 2px solid purple;
-				`}
-			>
-				<button
-					onClick={() =>
-						setSearchParams({
-							style:
-								searchParams.style === 'elections' ? undefined : 'elections',
-						})
-					}
-					title={'Montrer les circonscriptions législatives 2024'}
+			{false && (
+				<MapButton
+					$active={searchParams.style === 'elections'}
+					css={`
+						border: 2px solid purple;
+					`}
 				>
-					<Emoji e="🗳️" />
-				</button>
-			</MapButton>
+					<button
+						onClick={() =>
+							setSearchParams({
+								style:
+									searchParams.style === 'elections' ? undefined : 'elections',
+							})
+						}
+						title={'Montrer les circonscriptions législatives 2024'}
+					>
+						<Emoji e="🗳️" />
+					</button>
+				</MapButton>
+			)}
 			<MapButton $active={styleChooser}>
 				<button
 					onClick={() => setStyleChooser(!styleChooser)}
