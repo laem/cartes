@@ -35,7 +35,7 @@ export const buildRequestBody = (start, destination, date) => {
 		{
 			mode_type: 'FootPPR',
 			mode: {
-				search_options: { profile: 'distance_only', duration_limit: 1800 },
+				search_options: { profile: 'distance_only', duration_limit: 30 * 60 },
 			},
 		},
 		bikeTrainSearchDistance > 0 && {
