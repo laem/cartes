@@ -15,7 +15,7 @@ export const defaultRouteColor = '#d3b2ee'
 
 // 1h of bike ~= 20km
 // So with 2h and 40 km, we should cover most of the hexagone
-const bikeTrainSearchDistance = 2 * 60 * 60
+const bikeTrainSearchDistance = 0 * 2 * 60 * 60
 
 export const buildRequestBody = (start, destination, date) => {
 	const begin = Math.round(new Date(date).getTime() / 1000),
