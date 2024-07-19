@@ -11,6 +11,12 @@ import useGeolocation from './useGeolocation'
  *
  * */
 
+const defaultSky = {
+	'sky-color': '#76508B',
+	'horizon-color': '#FCB4AB',
+	'fog-color': '#FD8E35',
+}
+
 const defaultCenter =
 	// Saint Malo
 	// [-1.9890417068124002, 48.66284934737089]
@@ -64,6 +70,7 @@ export default function useAddMap(
 		const newMap = new maplibregl.Map({
 			container: mapContainerRef.current,
 			style: styleUrl,
+			maxPitch: 85,
 			center: defaultCenter,
 			zoom: defaultZoom,
 			hash: true,
@@ -97,6 +104,7 @@ export default function useAddMap(
 		newMap.on('load', () => {
 			console.log('maplibre instance loaded with id ', newMap._mapId)
 			setMap(newMap)
+			newMap.setSky(defaultSky)
 
 			setZoom(Math.round(newMap.getZoom()))
 			setBbox(newMap.getBounds().toArray())
@@ -112,6 +120,14 @@ export default function useAddMap(
 		}
 	}, [setMap, setZoom, setBbox, mapContainerRef, setGeolocate]) // styleUrl not listed on purpose
 
+	useEffect(() => {
+		if (!map) return
+		setTimeout(() => {
+			//TODO, I thought re-setting the sky would solve the problem of the sky
+			//going away when changing style but no
+			map.setSky(defaultSky)
+		}, 1000)
+	}, [map, styleUrl])
 	const triggerGeolocation = useMemo(
 		() => (geolocate ? () => geolocate.trigger() : () => 'Not ready'),
 		[geolocate]
