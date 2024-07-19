@@ -11,6 +11,8 @@ const basePaths = [
 	'/elections-legislatives-2024',
 	'/presentation',
 	'/presentation/state-of-the-map-2024',
+	'/itineraire',
+	'transport-en-commun',
 ]
 
 const generateAgencies = async () => {
