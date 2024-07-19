@@ -33,6 +33,10 @@ You'll have to create your free MapTiler key and put it in a `.env.local` file a
 NEXT_PUBLIC_MAPTILER=YOUR_KEY
 ```
 
+## Contact 
+
+If you have any problem contributing (PR, vercel deployments, etc) feel free to contact me @maelito:matrix.org if I dont answer your issues quickly. 
+
 ## Similar projects
 
 Checkout [OSMApp](https://github.com/zbycz/osmapp/issues/217). Qwant Maps would be the other similar projet, but it's not developped anymore.
