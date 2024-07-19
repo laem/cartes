@@ -1,6 +1,7 @@
 import { lightenColor } from '@/components/utils/colors'
 import transportIcon from './transportIcon'
 import { distance, point } from '@turf/turf'
+import { gtfsServerUrl, motisServerUrl } from '@/app/serverUrls'
 
 const datePlusHours = (date, hours) => {
 	const today = new Date(date)
@@ -35,7 +36,7 @@ export const buildRequestBody = (start, destination, date) => {
 		{
 			mode_type: 'FootPPR',
 			mode: {
-				search_options: { profile: 'distance_only', duration_limit: 30 * 60 },
+				search_options: { profile: 'distance_only', duration_limit: 15 * 60 },
 			},
 		},
 		bikeTrainSearchDistance > 0 && {
@@ -77,7 +78,7 @@ export const computeMotisTrip = async (start, destination, date) => {
 	const body = buildRequestBody(start, destination, date)
 
 	try {
-		const request = await fetch(`https://motis.cartes.app`, {
+		const request = await fetch(motisServerUrl, {
 			method: 'POST',
 			body: JSON.stringify(body),
 			headers: {
@@ -105,9 +106,7 @@ export const computeMotisTrip = async (start, destination, date) => {
 							try {
 								if (!tripId) return {}
 								const request = await fetch(
-									`https://motis.cartes.app/gtfs/routes/trip/${encodeURIComponent(
-										tripId
-									)}`
+									`${gtfsServerUrl}/routes/trip/${encodeURIComponent(tripId)}`
 								)
 								const json = await request.json()
 								const safeAttributes = json.routes[0] || {}

@@ -1,6 +1,7 @@
 import type { MetadataRoute } from 'next'
 import { getAllPostIds } from '@/app/blog/getPosts'
 import { getRecentInterestingNodes } from '@/components/watchOsmPlaces.ts'
+import { gtfsServerUrl } from './serverUrls'
 
 const domain = 'https://cartes.app'
 
@@ -12,11 +13,9 @@ const basePaths = [
 	'/presentation/state-of-the-map-2024',
 ]
 
-const gtfsUrl = 'https://motis.cartes.app/gtfs'
-
 const generateAgencies = async () => {
 	try {
-		const request = await fetch(gtfsUrl + '/agencies')
+		const request = await fetch(gtfsServerUrl + '/agencies')
 		const json = await request.json()
 
 		return json.agencies.map(
