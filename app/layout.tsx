@@ -15,7 +15,7 @@ export async function generateMetadata(
 	{ params, searchParams }: Props,
 	parent?: ResolvingMetadata
 ): Promise<Metadata> {
-	const image = `/voyagevoyage.png`
+	const image = `/vignette.png`
 	return {
 		title,
 		description: description1,

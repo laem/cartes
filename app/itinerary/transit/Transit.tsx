@@ -324,12 +324,32 @@ export const TimelineTransportBlock = ({ transport }) => {
 
 			`}
 			title={`${humanDuration(transport.seconds).single} de ${
-				transport.frenchTrainType || transport.move?.name || 'marche'
+				transport.frenchTrainType ||
+				transport.move?.name ||
+				(transport.move?.mumo_type === 'car'
+					? 'voiture'
+					: transport.move?.mumo_type === 'bike'
+					? 'vélo'
+					: 'marche')
 			} ${transport.route_long_name || ''}`}
 		>
 			{transport.move?.name ? (
 				<TransportMoveBlock {...{ transport, background, textColor, name }} />
-			) : transport.move_type === 'Walk' ? (
+			) : transport.move_type === 'Walk' &&
+			  transport.move?.mumo_type === 'car' ? (
+				<Image
+					src={'/car.svg'}
+					alt="Icône d'une voiture"
+					width="100"
+					height="100"
+					css={`
+						height: 1.4rem !important;
+
+						margin: 0 !important;
+					`}
+				/>
+			) : transport.move_type === 'Walk' &&
+			  transport.move?.mumo_type === 'foot' ? (
 				<Image
 					src={'/walking.svg'}
 					alt="Icône d'une personne qui marche"
@@ -341,7 +361,8 @@ export const TimelineTransportBlock = ({ transport }) => {
 						margin: 0 !important;
 					`}
 				/>
-			) : transport.move_type === 'Cycle' ? (
+			) : transport.move_type === 'Walk' &&
+			  transport.move?.mumo_type === 'bike' ? (
 				<Image
 					src={'/cycling.svg'}
 					alt="Icône d'un vélo"

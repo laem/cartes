@@ -8,9 +8,9 @@ export const TransitScopeLimit = () => (
 		`}
 	>
 		<small>
-			💡 Les transports en commun ne sont disponible qu'en Bretagne pour
-			l'instant. Car le développeur est breton et qu'il faut bien commencer
-			quelque part :)
+			💡 Les transports en commun ne sont complets qu'en Bretagne et Pays de la
+			Loire pour l'instant. Car le développeur est breton et qu'il faut bien
+			commencer quelque part :)
 		</small>
 	</p>
 )

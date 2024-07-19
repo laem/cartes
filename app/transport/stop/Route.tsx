@@ -242,7 +242,10 @@ export const humanDepartureTime = (date, doPrefix) => {
 	const prefix2 = doPrefix ? 'À ' : ''
 	const hours = date.getHours(),
 		humanHours = +hours >= 10 ? hours : '0' + hours
-	const human = `${prefix2}${humanHours}h${date.getMinutes()}`
+	const human = `${prefix2}${humanHours}h${prefixWithZero(date.getMinutes())}`
 
 	return human
 }
+
+const prefixWithZero = (minutes) =>
+	('' + minutes).length === 1 ? '0' + minutes : minutes
