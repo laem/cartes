@@ -30,10 +30,10 @@ export default function () {
 				<p>
 					Tous les transports en commun de France seront disponibles. Pour
 					l'instant, nous déployons les réseaux progressivement, un à un.
+				</p>
+				<p>
 					Découvrez{' '}
-					<Link href="/transports-en-commun">
-						les réseaux déjà disponibles.
-					</Link>
+					<Link href="/transport-en-commun">les réseaux déjà disponibles.</Link>
 				</p>
 				<h2>Trajet en vélo</h2>
 				<p>
