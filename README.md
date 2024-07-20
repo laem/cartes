@@ -1,5 +1,7 @@
 # Cartes
 
+> Venez discuter du projet sur le [canal matrix](https://matrix.to/#/#cartes:matrix.org) ! 
+
 ## Kesako ?
 
 C'est **une application Web de cartographie généraliste**, basée sur les données d'OpenStreetMap et d'autres projets de communs comme Wikimedia Commons (pour les images) ou Wikipedia.
