@@ -12,7 +12,7 @@ const basePaths = [
 	'/presentation',
 	'/presentation/state-of-the-map-2024',
 	'/itineraire',
-	'transport-en-commun',
+	'/transport-en-commun',
 ]
 
 const generateAgencies = async () => {
