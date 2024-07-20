@@ -18,18 +18,28 @@ export const metadata: Metadata = {
 	description,
 }
 export default async function () {
-	const implementedDatasetsRequest = await fetch(
-		'https://raw.githubusercontent.com/laem/gtfs/master/input.yaml'
+	const onlineAgenciesRequest = await fetch(
+		'https://motis.cartes.app/gtfs/agencies'
 	)
-	const implementedDatasets = await implementedDatasetsRequest.json().datasets
+	const { agencies } = await onlineAgenciesRequest.json()
 
 	const panRequest = await fetch('https://transport.data.gouv.fr/api/datasets/')
 	const datasets = await panRequest.json()
 	const enriched = datasets
-		.filter((dataset) =>
-			dataset.resources.find((resource) => resource.format === 'GTFS')
-		)
 		.map((dataset) => {
+			const firstGtfs = dataset.resources.find(
+				(resource) => resource.format === 'GTFS'
+			)
+			if (!firstGtfs) return
+
+			const { networks } = firstGtfs.metadata || { networks: [] }
+			const agencyIds = networks
+				.map(
+					(network) =>
+						agencies.find((agency) => agency.agency_name === network)?.agency_id
+				)
+				.filter(Boolean)
+
 			const france = dataset.covered_area?.country?.name
 			const isRegion = dataset.covered_area?.region?.name
 			const aomSiren = dataset.aom?.siren
@@ -46,8 +56,10 @@ export default async function () {
 				aomName,
 				france,
 				citiesName,
+				agencyIds,
 			}
 		})
+		.filter(Boolean)
 
 	const national = enriched.filter((dataset) => dataset.france)
 
@@ -83,24 +95,13 @@ export default async function () {
 				</p>
 				<h2>Réseaux nationaux</h2>
 				<ul>
-					{national.map((dataset) => {
-						/* //TODO get with a match between resource.metadata.networks and http://localhost:3001/agencies's title :/
-						const présent = implementedDatasets.find(
-							({ slug }) => slug === dataset.slug
-						)
-						if (présent) {
-							const agence = null
-							return (
-								<Link
-									href={`https://cartes.app/?transports=oui&agence=${agence}`}
-								>
-									{dataset.title}
-								</Link>
-							)
-						}
-						*/
-						return <li key={dataset.slug}>{dataset.title}</li>
-					})}
+					{national.map((dataset) => (
+						<DatasetItem
+							dataset={dataset}
+							key={dataset.slug}
+							agencies={agencies}
+						/>
+					))}{' '}
 				</ul>
 				<h2>Réseaux par région</h2>
 				<ul>
@@ -110,17 +111,26 @@ export default async function () {
 							<li key={code}>
 								<h3>{nom}</h3>
 								{main && (
-									<div>
+									<>
 										<h4>Réseau régional unifié</h4>
-										<div>{main.title}</div>
-									</div>
+
+										<DatasetItem
+											dataset={main}
+											key={main.slug}
+											agencies={agencies}
+										/>
+										<h4>Réseaux régionaux</h4>
+									</>
 								)}
-								{main && <h4>Réseaux régionaux</h4>}
 								<ul>
 									{enrichedAoms
 										.filter((aom) => aom.region === nom)
 										.map((dataset) => (
-											<li key={dataset.slug}>{dataset.title}</li>
+											<DatasetItem
+												dataset={dataset}
+												key={dataset.slug}
+												agencies={agencies}
+											/>
 										))}
 								</ul>
 							</li>
@@ -130,4 +140,24 @@ export default async function () {
 			</section>
 		</PresentationWrapper>
 	)
+}
+
+const DatasetItem = ({ dataset, agencies }) => {
+	if (dataset.agencyIds.length > 0) {
+		return (
+			<li>
+				<div>{dataset.title}</div>
+				<ul>
+					{dataset.agencyIds.map((id) => (
+						<li key={id}>
+							<Link href={`https://cartes.app/?transports=oui&agence=${id}`}>
+								{agencies.find((agency) => agency.agency_id === id).agency_name}
+							</Link>
+						</li>
+					))}
+				</ul>{' '}
+			</li>
+		)
+	}
+	return <li>{dataset.title}</li>
 }
