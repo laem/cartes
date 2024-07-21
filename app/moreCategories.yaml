@@ -47,6 +47,20 @@
     - macdo
   query: '[amenity=fast_food]'
   icon: https://cdn.jsdelivr.net/gh/osmandapp/OsmAnd-resources/icons/svg/food/fastfood.svg
+- name: Bubble tea
+  category: Manger et boire
+  dictionary:
+    - bubble tea
+    - bubble
+    - pearl milk tea
+    - bubble milk tea
+    - tapioca milk tea
+    - boba tea
+    - boba
+    - thé aux perles
+    - tapioca
+  query: '[cuisine~bubble_tea]'
+  icon: bubbletea
 
 ################################
 
