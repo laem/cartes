@@ -35,4 +35,4 @@ const result = data
 fs.writeFileSync('gares.json', JSON.stringify(result))
 
 console.log('first two results', result[1], result[2])
-//mv gares.json ~/futureco/public/gares.json
+//mv gares.json ~/cartes/public/gares.json

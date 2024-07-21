@@ -13,7 +13,7 @@ No amenity = pub here https://github.com/gmgeo/osmic but there is "pub" without 
 Here we chose Osmand
 
 
-Run this file with `deno run --allow-net app/voyage/icons/fetch.ts`
+Run this file with `deno run --allow-net app/icons/fetch.ts`
 */
 
 const req = await fetch(
@@ -57,7 +57,7 @@ const iconUrls = results.map((el) => {
 const useThisUrlStartForInstance = `https://cdn.jsdelivr.net/gh/osmandapp/OsmAnd-resources/icons/svg/`
 
 await Deno.writeTextFile(
-	'./app/voyage/icons/icons.json',
+	'./app/icons/icons.json',
 	JSON.stringify(iconUrls)
 )
 
