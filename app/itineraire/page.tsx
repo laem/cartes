@@ -65,7 +65,7 @@ export default function () {
 				</p>
 				<p>
 					Pour éviter de rouler dans les métropoles et les villes qui ont décidé
-					d'exclure les voitures des centres, les parkings relai seront mis en
+					d'exclure les voitures des centres, les parkings relais seront mis en
 					évidence, tout comme les ZFE (Zone à faible émission).
 				</p>
 			</section>
