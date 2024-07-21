@@ -30,6 +30,7 @@ export async function generateMetadata(
 		}
 	if (searchParams.transports === 'oui' && searchParams.agence != null) {
 		const url = `${gtfsServerUrl}/agencyArea/${searchParams.agence}`
+		console.log('Will fetch this URL for metadata', url)
 
 		const request = await fetch(url)
 		const json = await request.json()

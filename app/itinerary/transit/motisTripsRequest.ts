@@ -1,3 +1,5 @@
+import { motisServerUrl } from '@/app/serverUrls'
+
 export const buildRequestBody = (trips) => {
 	const tripIdObjects = trips.map((trip) => trip.id)
 	const body = {
@@ -14,7 +16,7 @@ export const computeMotisTrips = async (trips) => {
 	const body = buildRequestBody(trips)
 
 	try {
-		const request = await fetch(`https://motis.cartes.app`, {
+		const request = await fetch(motisServerUrl, {
 			method: 'POST',
 			body: JSON.stringify(body),
 			headers: {

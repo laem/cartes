@@ -7,6 +7,7 @@ import Image from 'next/image'
 import './devices.css'
 import Phone from './Phone'
 import css from '@/components/css/convertToJs'
+import { description } from '../layout'
 
 const iframeStyle = `
 					width: 20rem;
@@ -25,6 +26,12 @@ const iframeCode = `
 					style="${iframeStyle}"
 				></iframe>
 				`
+
+export const metadata: Metadata = {
+	title: 'Des cartes libres, modernes et souveraines',
+	description,
+}
+
 export default function () {
 	return (
 		<PresentationWrapper>

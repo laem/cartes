@@ -12,7 +12,7 @@ export default function elections(key) {
 			...baseStyle.sources,
 			circonscriptions_legislatives_2024: {
 				type: 'vector',
-				url: 'pmtiles://https://motis.cartes.app/gtfs/circonscriptions-legislatives-2024.pmtiles',
+				url: `pmtiles://${gtfsServerUrl}/circonscriptions-legislatives-2024.pmtiles`,
 				attribution:
 					'https://umap.openstreetmap.fr/tr/map/circonscriptions-legislatives-2022_767781',
 			},

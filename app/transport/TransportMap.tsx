@@ -87,27 +87,44 @@ export default function TransportMap({
 	return (
 		<section>
 			<section>
-				{!selectedAgencyData && <h2>Plans de transport en commun</h2>}
-				{false && <DateSelector type="day" date={day} />}
-				{selectedAgency == null && data?.length > 0 && (
-					<ol
+				{!selectedAgencyData && (
+					<header
 						css={`
-							margin-left: 0.6rem;
-							list-style-type: none;
-							a {
-								color: var(--color);
-								text-decoration-color: var(--lighterColor);
+							h2 {
+								margin-bottom: -0.5rem;
 							}
+							margin-bottom: 1rem;
 						`}
 					>
-						{data.map(([agencyId, { agency, bbox, features }]) => (
-							<li key={agencyId}>
-								<Link href={setSearchParams({ agence: agencyId }, true)}>
-									{agency.agency_name}
-								</Link>
-							</li>
-						))}
-					</ol>
+						<h2>Plans de transport en commun</h2>
+						<Link href="/transport-en-commun">
+							<small>Quels réseaux sont intégrés sur Cartes ? </small>
+						</Link>
+					</header>
+				)}
+				{false && <DateSelector type="day" date={day} />}
+				{selectedAgency == null && data?.length > 0 && (
+					<section>
+						<p>Dans cette zone : </p>
+						<ol
+							css={`
+								margin-left: 0.6rem;
+								list-style-type: none;
+								a {
+									color: var(--color);
+									text-decoration-color: var(--lighterColor);
+								}
+							`}
+						>
+							{data.map(([agencyId, { agency, bbox, features }]) => (
+								<li key={agencyId}>
+									<Link href={setSearchParams({ agence: agencyId }, true)}>
+										{agency.agency_name}
+									</Link>
+								</li>
+							))}
+						</ol>
+					</section>
 				)}
 			</section>
 			{stop && (

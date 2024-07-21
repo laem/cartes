@@ -5,7 +5,7 @@ import StyledComponentsRegistry from '../lib/registry'
 import '../globals.css'
 
 const title = `Cartes`
-const description1 =
+export const description =
 	"Des cartes libres et gratuites sur le Web, alternatives aux maps Google et Apple, pour trouver un commerce, un lieu, visiter une ville, calculer un trajet à pieds, en vélo, en transport en commun, en train. Dans un premier temps, l'accent est mis sur la France hexagonale."
 
 //old description to be rewritter when we really cover train+vélo
@@ -18,7 +18,7 @@ export async function generateMetadata(
 	const image = `/vignette.png`
 	return {
 		title,
-		description: description1,
+		description,
 		metadataBase: new URL('https://cartes.app'),
 		openGraph: {
 			images: [image],
