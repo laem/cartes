@@ -33,6 +33,7 @@ const translateBasics = (value: string) => {
 
 export const tagNameCorrespondance = (key: string) => {
 	const found = {
+		alt_name:'Autre nom',
 		books: 'Livres',
 		'brand:website': 'Site de la marque',
 		'building:levels': "Nombre d'étages",
@@ -54,8 +55,13 @@ export const tagNameCorrespondance = (key: string) => {
 		'payment:card': 'Paiement par carte',
 		'payment:cash': 'Paiement en liquide',
 		'payment:contactless': 'Paiement sans contact',
+		'service:bicycle:cleaning': 'Lavage de vélos ',
+		'service:bicycle:diy': 'Atelier autorépation de vélos ',
+		'service:bicycle:pump': 'Pompe à vélo en libre-service',
+		'service:bicycle:rental': 'Location de vélos',
 		'service:bicycle:repair': 'Réparation de vélos',
 		'service:bicycle:retail': 'Vente de vélos',
+		'service:bicycle:second_hand': 'Vente de vélos d'occasion',
 		short_name: 'Diminutif',
 		tobacco: 'Vente de tabac',
 		'website:menu': 'Menu',
@@ -65,6 +71,7 @@ export const tagNameCorrespondance = (key: string) => {
 		'ref:FR:FANTOIR': 'Code FANTOIR',
 		'ref:FR:FINESS': 'Code FINESS',
 		passenger_information_display: "écran d'information voyageur",
+		'survey:date': 'Dernière date de vérification'
 	}[key]
 	return found || key
 }
