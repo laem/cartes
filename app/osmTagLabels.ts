@@ -71,7 +71,7 @@ export const tagNameCorrespondance = (key: string) => {
 		'ref:FR:FANTOIR': 'Code FANTOIR',
 		'ref:FR:FINESS': 'Code FINESS',
 		passenger_information_display: "écran d'information voyageur",
-		'survey:date': 'Dernière date de vérification'
+		'survey:date': 'Dernière date de vérification',
 	}[key]
 	return found || key
 }
