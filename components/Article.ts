@@ -89,6 +89,11 @@ const Article = styled.article`
 		border: none;
 		border-radius: 0.4rem;
 	}
+	del  {
+		text-decoration-thickness: 3px;
+		text-decoration-color: var(--lightColor);
+		text-decoration-style: wavy;
+	}
 `
 
 export default Article
