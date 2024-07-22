@@ -335,6 +335,17 @@
     - colis
   query: '[amenity=parcel_locker]'
   icon: parcel_locker
+- name: Essence
+  category: Commerces
+  dictionary:
+    - diesel
+    - service
+    - voiture
+    - automobile
+    - pétrole
+    - pompe
+  query: '[amenity=fuel]'
+  icon: essence
 ################################
 
 - name: Police
