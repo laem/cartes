@@ -49,6 +49,7 @@ const Article = styled.article`
 			width: 100vw;
 			max-width: initial;
 			margin-left: -1rem;
+			margin-right: -1rem;
 		}
 	}
 	img + em,
