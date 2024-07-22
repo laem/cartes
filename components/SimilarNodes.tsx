@@ -44,11 +44,12 @@ export default function SimilarNodes({ node }) {
 
 	const category = allCategories.find(({ query: queryRaw }) => {
 		const query = Array.isArray(queryRaw) ? queryRaw : [queryRaw]
-		return Object.entries(tags).find(([k, v]) =>
-			query.find(
-				(expression) => expression.includes(k) && expression.includes(v)
+
+		return query.every((queryLine) => {
+			return Object.entries(tags).find(
+				([k, v]) => queryLine.includes(k) && queryLine.includes(v)
 			)
-		)
+		})
 	})
 
 	const { lat, lon } = node
