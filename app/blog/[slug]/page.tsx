@@ -6,6 +6,7 @@ import Link from 'next/link'
 import Image from 'next/image'
 import LastEdit from '@/components/blog/LastEdit'
 import Contribution from '../Contribution'
+import css from '@/components/css/convertToJs'
 
 export const generateMetadata = async ({ params }) => {
 	const post = allArticles.find(
@@ -36,7 +37,15 @@ export default async function Post({ params }: Props) {
 		!lastEdit || post.date.slice(0, 10) === lastEdit.slice(0, 10)
 	return (
 		<Article>
-			<Link href="/blog">← Retour au blog</Link>
+			<Link
+				href="/blog"
+				style={css`
+					margin-top: 0.6rem;
+					display: inline-block;
+				`}
+			>
+				← Retour au blog
+			</Link>
 			<header>
 				{post.image && (
 					<Image

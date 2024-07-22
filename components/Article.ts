@@ -46,9 +46,11 @@ const Article = styled.article`
 
 	@media (max-width: 800px) {
 		img {
-			width: 100vw;
-			max-width: initial;
+			width: 100vw !important;
+			max-width: initial !important;
 			margin-left: -1rem;
+			border-radius: 0 !important;
+			box-shadow: none !important;
 			margin-right: -1rem;
 		}
 	}
