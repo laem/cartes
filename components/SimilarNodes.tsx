@@ -1,7 +1,9 @@
 import categories from '@/app/categories.yaml'
 import turfDistance from '@turf/distance'
 import useOverpassRequest from '@/app/effects/useOverpassRequest'
-import { sortBy } from './utils/utils'
+import { roundToTens, roundToThousands, sortBy } from './utils/utils'
+import { humanDuration } from '@/app/itinerary/transit/utils'
+import { computeHumanDistance } from '@/app/RouteRésumé'
 
 export default function SimilarNodes({ node }) {
 	const { tags } = node
@@ -52,6 +54,7 @@ export default function SimilarNodes({ node }) {
 	 * ajouter une liste de résultats à la recherche par catégorie
 	 *
 	 * */
+
 	return (
 		<ul
 			css={`
@@ -61,11 +64,14 @@ export default function SimilarNodes({ node }) {
 		>
 			{' '}
 			{closestFeatures &&
-				closestFeatures.map((f) => (
-					<li key={f.id}>
-						{f.tags.name} à {roundToDe f.distance} km
-					</li>
-				))}
+				closestFeatures.map((f) => {
+					const humanDistance = computeHumanDistance(f.distance * 1000)
+					return (
+						<li key={f.id}>
+							{f.tags.name} à {humanDistance[0]} {humanDistance[1]}
+						</li>
+					)
+				})}
 		</ul>
 	)
 }
