@@ -36,7 +36,6 @@ export default async function Post({ params }: Props) {
 		!lastEdit || post.date.slice(0, 10) === lastEdit.slice(0, 10)
 	return (
 		<Article>
-			{lastEdit}
 			<Link href="/blog">← Retour au blog</Link>
 			<header>
 				{post.image && (
