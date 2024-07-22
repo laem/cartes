@@ -56,7 +56,7 @@ export const tagNameCorrespondance = (key: string) => {
 		'payment:cash': 'Paiement en liquide',
 		'payment:contactless': 'Paiement sans contact',
 		'service:bicycle:cleaning': 'Lavage de vélos',
-		'service:bicycle:diy': "Atelier d'autorépation de vélos",
+		'service:bicycle:diy': "Atelier d'autoréparation de vélos",
 		'service:bicycle:pump': 'Pompe à vélo en libre-service',
 		'service:bicycle:rental': 'Location de vélos',
 		'service:bicycle:repair': 'Réparation de vélos',
