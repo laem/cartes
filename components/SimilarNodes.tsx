@@ -60,7 +60,7 @@ export default function SimilarNodes({ node }) {
 	]
 
 	const [features] = useOverpassRequest(bbox, category)
-	if (!features?.length) return
+	if (!category || !features?.length) return
 
 	const reference = [lon, lat]
 	const featuresWithDistance =
