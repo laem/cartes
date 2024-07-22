@@ -1,9 +1,10 @@
 import { allArticles } from '@/.contentlayer/generated'
 import Article from '@/components/Article'
-import { dateCool } from '../utils'
+import { dateCool, getLastEdit } from '../utils'
 import { getMDXComponent } from 'next-contentlayer2/hooks'
 import Link from 'next/link'
 import Image from 'next/image'
+import LastEdit from '@/components/blog/LastEdit'
 
 export const generateMetadata = ({ params }) => {
 	const post = allArticles.find(
@@ -26,9 +27,13 @@ export default async function Post({ params }: Props) {
 	)
 
 	const Content = getMDXComponent(post.body.code)
+	const lastEdit = await getLastEdit(params.slug)
 
+	const sameEditDate =
+		!lastEdit || post.date.slice(0, 10) === lastEdit.slice(0, 10)
 	return (
 		<Article>
+			{lastEdit}
 			<Link href="/blog">← Retour au blog</Link>
 			<header>
 				{post.image && (
@@ -41,7 +46,12 @@ export default async function Post({ params }: Props) {
 				)}
 				<h1 dangerouslySetInnerHTML={{ __html: post.titre.html }} />
 				<small>
-					<time dateTime={post.date}>{dateCool(post.date)}</time>
+					publié le <time dateTime={post.date}>{dateCool(post.date)}</time>
+					{!sameEditDate && (
+						<span>
+							, mis à jour <time dateTime={lastEdit}>{dateCool(lastEdit)}</time>
+						</span>
+					)}
 				</small>
 			</header>
 
