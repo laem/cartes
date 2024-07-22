@@ -5,6 +5,7 @@ import { getMDXComponent } from 'next-contentlayer2/hooks'
 import Link from 'next/link'
 import Image from 'next/image'
 import LastEdit from '@/components/blog/LastEdit'
+import Contribution from '../Contribution'
 
 export const generateMetadata = ({ params }) => {
 	const post = allArticles.find(
@@ -54,8 +55,8 @@ export default async function Post({ params }: Props) {
 					)}
 				</small>
 			</header>
-
 			<Content />
+			<Contribution slug={params.slug} />
 		</Article>
 	)
 }
