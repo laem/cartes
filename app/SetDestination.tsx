@@ -111,13 +111,11 @@ export default function SetDestination({
 	const href = setSearchParams(newSearchParams, true, false)
 
 	const destination = destinationPart.split('|').slice(2)
+	if (!destination.length) return null
 	const origin = geolocation && [geolocation.longitude, geolocation.latitude]
 
 	const distance = origin && turfDistance(origin, destination)
-	console.log('distance', origin, distance)
 	const humanDistance = distance && computeHumanDistance(distance * 1000)
-
-	console.log('plop', destination, origin, distance)
 
 	return (
 		<PlaceButton>
