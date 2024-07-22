@@ -17,8 +17,26 @@ const latDifferenceOfRennes = 0.07,
 	latDiff = latDifferenceOfRennes / 2,
 	lonDiff = lonDifferenceOfRennes / 2
 // 48.07729814876498,-1.7461581764997334,48.148123804291316,-1.5894174840209132
+/* compute km2 to check
+	const earthRadius = 6371008.8
+	const [south, west, north, east] = bbox
+
+	const surface =
+		(earthRadius *
+			earthRadius *
+			Math.PI *
+			Math.abs(Math.sin(rad(south)) - Math.sin(rad(north))) *
+			(east - west)) /
+		180
+
+	// rad is:
+	function rad(num) {
+		return (num * Math.PI) / 180
+	}
+	*/
 
 const allCategories = [...categories, ...moreCategories]
+
 export default function SimilarNodes({ node }) {
 	const { tags } = node
 
@@ -40,6 +58,7 @@ export default function SimilarNodes({ node }) {
 		lat + latDiff / 2,
 		lon + lonDiff / 2,
 	]
+
 	const [features] = useOverpassRequest(bbox, category)
 	if (!features?.length) return
 
