@@ -1,5 +1,5 @@
 import Link from 'next/link'
-import { CTA, Screens, WebStore } from './UI'
+import { Screens, WebStore } from './UI'
 import { PresentationWrapper } from './UI.tsx'
 import Logo from '@/public/logo.svg'
 import WebIcon from '@/public/web.svg'
@@ -8,6 +8,7 @@ import './devices.css'
 import Phone from './Phone'
 import css from '@/components/css/convertToJs'
 import { description } from '../layout'
+import CTA from './CTA'
 
 const iframeStyle = `
 					width: 20rem;
@@ -80,7 +81,7 @@ export default function () {
 				.
 			</p>
 
-			<CTA href="/">Tester Cartes</CTA>
+			<CTA>Tester Cartes</CTA>
 			<h2>Compléter les applications mobiles OpenStreetMap</h2>
 			<p>
 				OpenStreetMap est le Wikipedia des cartes : chacun peut y ajouter un
@@ -241,7 +242,7 @@ export default function () {
 				Des dizaines de contributeurs ont déjà aidé à améliorer l'outil.{' '}
 				<a href="https://github.com/laem/cartes/issues">Pourquoi pas vous ?</a>.
 			</p>
-			<CTA href="/">Tester Cartes</CTA>
+			<CTA>Tester Cartes</CTA>
 		</PresentationWrapper>
 	)
 }
