@@ -335,8 +335,20 @@
     - colis
   query: '[amenity=parcel_locker]'
   icon: parcel_locker
+
+#######################
+- name: Magasin vélo
+  category: Déplacements
+  dictionary:
+    - réparation
+    - bicyclette
+    - équipements
+    - dépannage
+  query: '[shop=bicycle]'
+  icon: bicycle
+
 - name: Essence
-  category: Commerces
+  category: Déplacements
   dictionary:
     - diesel
     - service
