@@ -63,6 +63,9 @@ const Article = styled.article`
 		margin: 0 auto;
 		display: block;
 		margin-bottom: 0.8rem;
+		@media (max-width: 800px) {
+			line-height: 1.3rem;
+		}
 	}
 	blockquote {
 		margin-left: 0;
