@@ -1,10 +1,15 @@
 import rehypeSlug from 'rehype-slug'
 import rehypeAutolinkHeadings from 'rehype-autolink-headings'
 import remarkToc from 'remark-toc'
+import remarkGfm from 'remark-gfm'
 
 const mdxOptions = {
 	remarkPlugins: [
-		[remarkToc, { heading: '(table[ -]of[ -])?contents?|toc|Sommaire' }],
+		[
+			remarkGfm,
+			remarkToc,
+			{ heading: '(table[ -]of[ -])?contents?|toc|Sommaire' },
+		],
 	],
 	rehypePlugins: [
 		rehypeSlug,

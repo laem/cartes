@@ -90,6 +90,7 @@
 		"remark": "^15.0.1",
 		"remark-footnotes": "^4.0.1",
 		"remark-frontmatter": "^4.0.1",
+		"remark-gfm": "^4.0.0",
 		"remark-html": "^16.0.1",
 		"remark-mdx-frontmatter": "^3.0.0",
 		"remark-toc": "^9.0.0",
