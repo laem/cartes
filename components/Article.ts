@@ -4,7 +4,7 @@ import styled from 'styled-components'
 const Article = styled.article`
 	max-width: 700px;
 	margin: 0 auto;
-	padding: 0 0.6rem;
+	padding: 0 1rem;
 	padding-bottom: 10vh;
 	header {
 		margin-bottom: 2rem;
@@ -12,7 +12,7 @@ const Article = styled.article`
 	h1 {
 		font-size: 240%;
 		margin-bottom: 1rem;
-		line-height: 1.3rem;
+		line-height: 2.2rem;
 		text-align: center;
 	}
 	header > small {
@@ -31,7 +31,10 @@ const Article = styled.article`
 			5px 10px 12.6px -2.5px hsl(0deg 0% 63% / 0.36);
 	}
 	h2 {
-		font-size: 140%;
+		font-size: 120%;
+		font-weight: 600;
+		line-height: 1.6rem;
+		margin-top: 2rem;
 	}
 	img,
 	video {
@@ -39,6 +42,14 @@ const Article = styled.article`
 		max-height: 30rem;
 		display: block;
 		margin: 1rem auto;
+	}
+
+	@media (max-width: 800px) {
+		img {
+			width: 100vw;
+			max-width: initial;
+			margin-left: -1rem;
+		}
 	}
 	img + em,
 	video + p em {
@@ -64,9 +75,9 @@ const Article = styled.article`
 		border-radius: 1rem;
 	}
 	hr {
-		opacity: 0.3;
-		color: var(--lightColor);
+		opacity: 0.25;
 		margin: 1.6rem 0;
+		border: 1px solid var(--lightColor);
 	}
 	iframe {
 		width: 90%;

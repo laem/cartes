@@ -62,7 +62,7 @@ a {
 	padding: none;
 	text-decoration: underline;
 	text-underline-offset: 4px;
-	color: var(--color);
+	color: var(--darkColor);
 }
 
 h1 {

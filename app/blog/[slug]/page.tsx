@@ -47,6 +47,7 @@ export default async function Post({ params }: Props) {
 					/>
 				)}
 				<h1 dangerouslySetInnerHTML={{ __html: post.titre.html }} />
+				<p>{post?.description}</p>
 				<small>
 					publié le <time dateTime={post.date}>{dateCool(post.date)}</time>
 					{!sameEditDate && (
@@ -55,6 +56,7 @@ export default async function Post({ params }: Props) {
 						</span>
 					)}
 				</small>
+				<hr />
 			</header>
 			<Content />
 			<Contribution slug={params.slug} />

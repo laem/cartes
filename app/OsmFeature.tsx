@@ -15,6 +15,7 @@ import { getTagLabels } from './osmTagLabels'
 import Brand, { Wikidata } from './tags/Brand'
 import Stop, { isNotTransportStop, transportKeys } from './transport/stop/Stop'
 import { computeSncfUicControlDigit } from './utils'
+import SimilarNodes from '@/components/SimilarNodes'
 
 export default function OsmFeature({ data, transportStopData }) {
 	if (!data.tags) return null
@@ -109,7 +110,7 @@ export default function OsmFeature({ data, transportStopData }) {
 				css={`
 					position: relative;
 					margin-bottom: 0.8rem;
-					h2 {
+					h1 {
 						margin: 0;
 						margin-bottom: 0.3rem;
 						font-size: 140%;
@@ -132,17 +133,17 @@ export default function OsmFeature({ data, transportStopData }) {
 					small {
 						text-align: right;
 					}
-					h3 {
+					h2 {
 						font-size: 105%;
 					}
 				`}
 			>
-				<h2>{name}</h2>
+				<h1>{name}</h1>
 				<details css={``}>
 					<summary title="Nom du lieu dans d'autres langues">
 						<Image src={languageIcon} alt="Icône polyglotte" />
 					</summary>
-					<h3>Noms dans les autres langues : </h3>
+					<h2>Noms dans les autres langues : </h2>
 					<ul>
 						{getNames(tags).map(([key, [value, altNames]]) => (
 							<li key={key}>
@@ -255,6 +256,7 @@ export default function OsmFeature({ data, transportStopData }) {
 			<Brand {...{ brand, brandWikidata, brandWikipedia }} />
 			<Tags tags={keyValueTags} />
 			{wikidata && <Wikidata id={wikidata} />}
+			<SimilarNodes node={data} />
 			<OsmLinks data={data} />
 		</div>
 	)
