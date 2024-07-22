@@ -29,7 +29,7 @@ To set it up on your local computer, just run :
 npm install --legacy-peer-deps
 ```
 
-You'll have to create your free MapTiler key and put it in a `.env.local` file at the root of the futureco folder:
+You'll have to create your free MapTiler key and put it in a `.env.local` file at the root of the cartes folder:
 
 ```
 NEXT_PUBLIC_MAPTILER=YOUR_KEY

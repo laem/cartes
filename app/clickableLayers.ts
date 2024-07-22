@@ -18,5 +18,5 @@ export const layersWithOsmId = [
 	'Place labels',
 	'River labels',
 
-	//'State labels' NO, see note in voyage/Map.tsx
+	//'State labels' NO, see note in app/Map.tsx
 ]

@@ -5,7 +5,7 @@
 	"author": "Maël THOMAS-QUILLÉVÉRÉ <laem@kont.me>",
 	"repository": {
 		"type": "git",
-		"url": "https://github.com/laem/futureco.git"
+		"url": "https://github.com/laem/cartes.git"
 	},
 	"engines": {
 		"node": ">=18"
