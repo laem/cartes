@@ -8,6 +8,8 @@ import turfDistance from '@turf/distance'
 import Link from 'next/link'
 import useSetSearchParams from './useSetSearchParams'
 import { capitalise0, sortBy } from './utils/utils'
+import { OpenIndicator, getOh } from '@/app/osm/OpeningHours'
+import { categoryIconUrl } from '@/app/QuickFeatureSearch'
 
 // This is very scientific haha
 const latDifferenceOfRennes = 0.07,
@@ -65,6 +67,8 @@ export default function SimilarNodes({ node }) {
 	 * */
 
 	const title = category.title || capitalise0(category.name)
+	const isOpenByDefault = category['open by default']
+	const imageUrl = categoryIconUrl(category)
 	return (
 		<section
 			css={`
@@ -85,6 +89,7 @@ export default function SimilarNodes({ node }) {
 					<NodeList
 						nodes={closestFeatures.slice(0, 10)}
 						setSearchParams={setSearchParams}
+						isOpenByDefault={isOpenByDefault}
 					/>
 					<details
 						css={`
@@ -96,6 +101,7 @@ export default function SimilarNodes({ node }) {
 						<NodeList
 							nodes={closestFeatures.slice(10)}
 							setSearchParams={setSearchParams}
+							isOpenByDefault={isOpenByDefault}
 						/>
 					</details>
 				</>
@@ -104,16 +110,22 @@ export default function SimilarNodes({ node }) {
 	)
 }
 
-const NodeList = ({ nodes, setSearchParams }) => (
+const NodeList = ({ nodes, setSearchParams, isOpenByDefault }) => (
 	<ul
 		css={`
-			margin-left: 1.4rem;
+			margin-left: 0.2rem;
+			list-style-type: none;
 		`}
 	>
 		{nodes.map((f) => {
 			const humanDistance = computeHumanDistance(f.distance * 1000)
+			const oh = f.tags.opening_hours
+			const { isOpen } = oh ? getOh(oh) : {}
 			return (
 				<li key={f.id}>
+					{!isOpenByDefault && (
+						<OpenIndicator isOpen={isOpen === 'error' ? false : isOpen} />
+					)}
 					<Link
 						href={setSearchParams(
 							{

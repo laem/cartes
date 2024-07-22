@@ -5,7 +5,7 @@ const getStartOfToday = (date) => {
 	startOfToday.setHours(0, 0, 0, 0)
 	return startOfToday
 }
-const getOh = (opening_hours) => {
+export const getOh = (opening_hours) => {
 	try {
 		const oh = new parseOpeningHours(opening_hours, {
 				address: { country_code: 'fr' },
@@ -161,7 +161,7 @@ export const OpeningHours = ({ opening_hours }) => {
 	)
 }
 
-const OpenIndicator = ({ isOpen }) => (
+export const OpenIndicator = ({ isOpen }) => (
 	<span
 		css={`
 			display: inline-block;
@@ -171,5 +171,6 @@ const OpenIndicator = ({ isOpen }) => (
 			border-radius: 2rem;
 			background: ${isOpen ? '#37c267' : '#b5325d'};
 		`}
+		title={isOpen ? 'Ouvert actuellement' : 'Fermé actuellement'}
 	></span>
 )
