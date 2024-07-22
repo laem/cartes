@@ -7,10 +7,11 @@ import Image from 'next/image'
 import LastEdit from '@/components/blog/LastEdit'
 import Contribution from '../Contribution'
 
-export const generateMetadata = ({ params }) => {
+export const generateMetadata = async ({ params }) => {
 	const post = allArticles.find(
 		(post) => post._raw.flattenedPath === params.slug
 	)
+	const lastEdit = await getLastEdit(params.slug)
 	return {
 		title: post.titre.raw,
 		description: post.description,
@@ -18,6 +19,7 @@ export const generateMetadata = ({ params }) => {
 			images: [post.image],
 			type: 'article',
 			publishedTime: post.date + 'T00:00:00.000Z',
+			modifiedTime: lastEdit + 'T00:00:00.000Z',
 		},
 	}
 }
