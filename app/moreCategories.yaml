@@ -251,7 +251,7 @@
 
 ################################
 
-- name: Oeuvre d'art
+- name: Œuvre d'art
   category: Tourisme
   dictionary:
     - statue
@@ -285,7 +285,7 @@
     - nature
   query: '[tourism=information]'
   icon: https://cdn.jsdelivr.net/gh/osmandapp/OsmAnd-resources/icons/svg/special/information.svg
-- name: Pic-Nic
+- name: pique-nique
   category: Tourisme
   dictionary:
     - picnic
