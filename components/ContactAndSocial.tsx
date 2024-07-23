@@ -55,7 +55,7 @@ export default function ContactAndSocial({
 			)}
 			{youtube && (
 				<a
-					href={atOrUrl(youtube, 'https://www.youtube.com')}
+					href={atOrUrl(youtube, 'https://youtube.com')}
 					target="_blank"
 					title="Compte Youtube"
 				>
