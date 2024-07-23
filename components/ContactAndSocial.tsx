@@ -57,7 +57,7 @@ export default function ContactAndSocial({
 				<a
 					href={atOrUrl(youtube, 'https://youtube.com')}
 					target="_blank"
-					title="Compte Youtube"
+					title="Chaîne Youtube"
 				>
 					<Emoji extra="E044" />
 				</a>
