@@ -65,7 +65,7 @@ export default function ContactAndSocial({
 			)}
 			{linkedin && (
 				<a
-					href={atOrUrl(linkedin, 'https://linkedin.com/in')}
+					href={atOrUrl(linkedin, 'https://linkedin.com/company')}
 					target="_blank"
 					title="Compte LinkedIn"
 				>
