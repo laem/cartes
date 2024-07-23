@@ -13,6 +13,11 @@ Deux objectifs :
 
 Découvrez [nos motivations](https://cartes.app/blog/un-beau-voyage) et les dernières nouveautés dans [le blog](https://cartes.app/blog).
 
+## Comment contribuer ? 
+
+C'est par ici : [guide de contribution](https://github.com/laem/cartes/blob/master/CONTRIBUTING.md) ! 
+Vous pouvez aussi poser des questions sur la section issues ou sur le [canal matrix](https://matrix.to/#/#cartes:matrix.org) pour les questions plus informelles.
+
 ## Et techniquement
 
 I started implementing this map in november 2023 as a kind of personal useful advent of code. I quickly figured out the open source tech and data in 2023 to make modern map interface have become incredibly mature, compared to 10 years ago. You get 3D buildings, vector tiles in 1 h of dev.
