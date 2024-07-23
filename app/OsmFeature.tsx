@@ -46,6 +46,8 @@ export default function OsmFeature({ data, transportStopData }) {
 		'contact:instagram': instagram,
 		'contact:facebook': facebook,
 		'contact:whatsapp': whatsapp,
+		'contact:youtube': youtube,
+		'contact:linkedin': linkedin,
 		'ref:FR:SIRET': siret,
 		brand: brand,
 		'brand:wikidata': brandWikidata,
@@ -214,7 +216,7 @@ export default function OsmFeature({ data, transportStopData }) {
 			)}
 			{opening_hours && <OpeningHours opening_hours={opening_hours} />}
 			<ContactAndSocial
-				{...{ email: email || email2, instagram, facebook, whatsapp, siret }}
+				{...{ email: email || email2, instagram, facebook, whatsapp, youtube, linkedin, siret }}
 			/>
 			{!isNotTransportStop(tags) && (
 				<Stop tags={tags} data={transportStopData} />
