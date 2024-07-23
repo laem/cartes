@@ -8,6 +8,7 @@ export default function ContactAndSocial({
 	facebook,
 	instagram,
 	whatsapp,
+	youtube,
 	siret,
 }) {
 	return (
@@ -50,6 +51,15 @@ export default function ContactAndSocial({
 					title="Compte Instagram"
 				>
 					<Emoji extra="E043" />
+				</a>
+			)}
+			{youtube && (
+				<a
+					href={atOrUrl(youtube, 'https://www.youtube.com')}
+					target="_blank"
+					title="Compte Youtube"
+				>
+					<Emoji extra="E044" />
 				</a>
 			)}
 			{siret && (
