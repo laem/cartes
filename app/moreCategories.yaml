@@ -285,10 +285,11 @@
     - nature
   query: '[tourism=information]'
   icon: https://cdn.jsdelivr.net/gh/osmandapp/OsmAnd-resources/icons/svg/special/information.svg
-- name: pique-nique
+- name: Pique-nique
   category: Tourisme
   dictionary:
     - picnic
+    - pique-nique
     - table
     - banc
     - casse-croute
