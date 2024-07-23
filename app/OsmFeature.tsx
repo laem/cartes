@@ -46,6 +46,7 @@ export default function OsmFeature({ data, transportStopData }) {
 		'contact:instagram': instagram,
 		'contact:facebook': facebook,
 		'contact:whatsapp': whatsapp,
+		'contact:youtube': youtube,
 		'ref:FR:SIRET': siret,
 		brand: brand,
 		'brand:wikidata': brandWikidata,
