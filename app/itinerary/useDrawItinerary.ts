@@ -51,7 +51,7 @@ export default function useDrawItinerary(
 		date
 	)
 
-	useFetchDrawBikeParkings(map, routes?.cycling)
+	useFetchDrawBikeParkings(map, mode === 'cycling' && routes?.cycling)
 
 	const setSearchParams = useSetSearchParams()
 
