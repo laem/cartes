@@ -29,8 +29,13 @@ export const buildRequestBody = (start, destination, date) => {
 	// See https://github.com/laem/cartes/issues/416
 	// 1h of bike ~= 20km
 	// So with 2h and 40 km, we should cover most of the hexagone
-	const bikeTrainSearchDistance =
+	const bikeTrainSearchDistance = //0 * 60
 		(requestDistance < 50 ? 0 : requestDistance < 200 ? 1 : 2) * 60 * 60
+
+	console.log({
+		requestDistance,
+		bikeTrainSearchDistance: bikeTrainSearchDistance / 60 + ' min',
+	})
 
 	const symetricModes = [
 		{
@@ -91,6 +96,8 @@ export const computeMotisTrip = async (start, destination, date) => {
 			return { state: 'error' }
 		}
 		const json = await request.json()
+		console.log('motis', json)
+		console.log('motis statistics', JSON.stringify(json.content.statistics))
 
 		const augmentedConnections = await Promise.all(
 			json.content.connections.map(async (connection) => {
