@@ -1,9 +1,11 @@
 import css from '@/components/css/convertToJs'
-import TechDependenciesGallery from '@/components/TechDependenciesGallery'
-import { PresentationWrapper } from '../presentation/UI'
 import Link from 'next/link'
-import regions from './regions.yaml'
+import { PresentationWrapper } from '../presentation/UI'
+import regionsRaw from './regions.yaml'
+const regions = sortBy((r) => r.nom)(regionsRaw)
 import regionsAoms from './regionsAoms.yaml'
+import { Ul } from './UI'
+import { sortBy } from '@/components/utils/utils'
 
 const title = 'Transports en commun'
 const description = `
@@ -93,8 +95,37 @@ export default async function () {
 					Les réseaux de transport en commun sont ajoutés progressivement sur
 					Cartes.
 				</p>
-				<h2>Réseaux nationaux</h2>
-				<ul>
+				<p>
+					Dans la liste ci-dessous, un lien signifie que le réseau est intégré.
+					Le vôtre n'y est pas ?{' '}
+					<a href="https://github.com/laem/gtfs?tab=readme-ov-file#couverture">
+						Venez aider !
+					</a>
+				</p>
+				<section
+					style={css`
+						margin-top: 3vh;
+						background: var(--lightestColor);
+						padding: 0.1rem 1rem 2rem;
+						border-radius: 0.6rem;
+					`}
+				>
+					<h2>Sommaire</h2>
+					<h3>Réseaux nationaux</h3>
+					<Link href={'/transport-en-commun#national'}>
+						Les réseaux qui parcourent la France (train, car)
+					</Link>
+					<h3>Régions</h3>
+					<Ul>
+						{regions.map(({ code, nom }, i) => (
+							<li key={code}>
+								<Link href={`/transport-en-commun#${code}`}>{nom}</Link>{' '}
+							</li>
+						))}
+					</Ul>
+				</section>
+				<h2 id="national">Réseaux nationaux</h2>
+				<Ul>
 					{national.map((dataset) => (
 						<DatasetItem
 							dataset={dataset}
@@ -102,27 +133,29 @@ export default async function () {
 							agencies={agencies}
 						/>
 					))}{' '}
-				</ul>
+				</Ul>
 				<h2>Réseaux par région</h2>
-				<ul>
-					{regions.map(({ code, nom }) => {
+				<Ul $borderBottom={true}>
+					{regions.map(({ code, nom }, i) => {
 						const main = enriched.find((dataset) => dataset.isRegion === nom)
 						return (
 							<li key={code}>
-								<h3>{nom}</h3>
+								<h3 id={code}>{nom}</h3>
 								{main && (
 									<>
 										<h4>Réseau régional unifié</h4>
 
-										<DatasetItem
-											dataset={main}
-											key={main.slug}
-											agencies={agencies}
-										/>
-										<h4>Réseaux régionaux</h4>
+										<Ul>
+											<DatasetItem
+												dataset={main}
+												key={main.slug}
+												agencies={agencies}
+											/>
+										</Ul>
+										<h4>Réseaux locaux</h4>
 									</>
 								)}
-								<ul>
+								<Ul>
 									{enrichedAoms
 										.filter((aom) => aom.region === nom)
 										.map((dataset) => (
@@ -132,11 +165,11 @@ export default async function () {
 												agencies={agencies}
 											/>
 										))}
-								</ul>
+								</Ul>
 							</li>
 						)
 					})}
-				</ul>
+				</Ul>
 			</section>
 		</PresentationWrapper>
 	)
@@ -147,7 +180,7 @@ const DatasetItem = ({ dataset, agencies }) => {
 		return (
 			<li>
 				<div>{dataset.title}</div>
-				<ul>
+				<Ul>
 					{dataset.agencyIds.map((id) => (
 						<li key={id}>
 							<Link href={`https://cartes.app/?transports=oui&agence=${id}`}>
@@ -155,7 +188,7 @@ const DatasetItem = ({ dataset, agencies }) => {
 							</Link>
 						</li>
 					))}
-				</ul>{' '}
+				</Ul>{' '}
 			</li>
 		)
 	}

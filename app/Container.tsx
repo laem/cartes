@@ -131,12 +131,14 @@ export default function Container({ searchParams }) {
 
 	const isTransportsMode = searchParams.transports === 'oui'
 
+	const fetchAll = searchParams.tout
 	const transportsData = useFetchTransportMap(
 		isTransportsMode,
 		searchParams.day,
 		bbox,
 		searchParams.agence,
-		searchParams.noCache
+		searchParams.noCache,
+		fetchAll
 	)
 
 	// TODO reintroduce gare display through the transport style option + the bike

@@ -7,7 +7,8 @@ export default function useFetchTransportMap(
 	day,
 	bbox,
 	agence,
-	noCache
+	noCache,
+	tout
 ) {
 	const [data, setData] = useState([])
 	useEffect(() => {
@@ -28,7 +29,24 @@ export default function useFetchTransportMap(
 		doFetch()
 	}, [agence, data, active, setData])
 	useEffect(() => {
-		if (!active || !bbox) return
+		if (!active || !tout) return
+
+		const doFetch = async () => {
+			const url = `${gtfsServerUrl}/agencyAreas`
+
+			const request = await fetch(url)
+			const json = await request.json()
+
+			const newAgencies = Object.entries(json).map(decodeTransportsData)
+
+			// filter all national lines
+			const filtered = rejectNationalAgencies(newAgencies)
+			setData(filtered)
+		}
+		doFetch()
+	}, [active, tout, setData])
+	useEffect(() => {
+		if (!active || !bbox || tout) return
 		if (agence != null) return
 
 		const abortController = new AbortController()
@@ -103,12 +121,27 @@ export default function useFetchTransportMap(
 		return () => {
 			abortController.abort()
 		}
-	}, [setData, bbox, active, day, agence, noCache])
+	}, [setData, bbox, active, day, agence, noCache, tout])
 
 	const agencyIdsHash = data?.map(([a]) => a).join('<|>')
 	const transportsData = useMemo(() => {
 		return data
 	}, [agencyIdsHash])
 
+	console.log('orange', transportsData)
 	return active ? transportsData : null
 }
+
+const rejectNationalAgencies = (data) =>
+	data.filter(
+		([agencyId, agencyData]) =>
+			agencyId != 1187 &&
+			agencyId != 0 &&
+			!agencyId.includes('FLIXBUS') &&
+			agencyId != 'OCEdefault' &&
+			!agencyId.startsWith('ATOUMOD') &&
+			agencyId !== 'ER' &&
+			agencyId !== 'ES' &&
+			agencyId !== 'TAMM' && // this one has problems with coordinates
+			agencyId !== 'STAN' // this one has problems with coordinates
+	)
