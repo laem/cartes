@@ -6,7 +6,7 @@ Tout d'abord, la section _[issues](https://github.com/laem/cartes/issues)_ conti
 
 ## Comment ajouter une catégorie de recherche de lieux ? 
 
-Copiez-collez l'un des blocs dans [categories.yaml](/app/categories.yaml) ou [moreCategories.yaml](/app/moreCategories.yaml) (les "more" apparaissent seulement au clic sur le gros bouton plus) et changez les attributs. 
+Copiez-collez l'un des blocs dans [categories.yaml](https://github.com/laem/cartes/blob/master/app/categories.yaml) ou [moreCategories.yaml](https://github.com/laem/cartes/blob/master/app/moreCategories.yaml) (les "more" apparaissent seulement au clic sur le gros bouton plus) et changez les attributs. 
 La partie la plus difficile, c'est l'icône : Maplibre n'accepte pas les icônes SVG, donc nous créons des PNG à la volée et ça implique quelques contraintes. Si vous galérez ou n'êtes pas dev, n'hésitez pas à proposer vos modifications même sans icônes, quelqu'un s'en chargera. 
 
 - le format SVG Inkscape ne marchera pas, il est trop bardé d'attributs inutiles
