@@ -41,6 +41,8 @@ export default function QuickFeatureSearch({
 	searchParams,
 	searchInput,
 	setSnap,
+
+	snap,
 	loaded,
 }) {
 	const categorySet = getCategory(searchParams)
@@ -183,7 +185,7 @@ export default function QuickFeatureSearch({
 				>
 					<button
 						onClick={() => {
-							setSnap(1, 'QuickFeatureSearch')
+							if (snap > 1) setSnap(1, 'QuickFeatureSearch')
 							setShowMore(!showMore)
 						}}
 					>

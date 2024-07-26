@@ -206,6 +206,7 @@ export default function Content({
 								searchParams,
 								searchInput: vers?.inputValue,
 								setSnap,
+								snap,
 								loaded: quickSearchFeaturesLoaded,
 							}}
 						/>
