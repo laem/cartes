@@ -258,8 +258,8 @@ export default function Map({
 			map.flyTo({
 				center: [vers.longitude, vers.latitude],
 				zoom: tailoredZoom,
-				pitch: 50, // pitch in degrees
-				bearing: 20, // bearing in degrees
+				pitch: 40, // pitch in degrees
+				bearing: 15, // bearing in degrees
 			})
 	}, [map, vers, osmFeature, state])
 
