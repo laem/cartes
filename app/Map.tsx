@@ -117,6 +117,7 @@ export default function Map({
 
 	const { height } = useDimensions()
 
+	const sideSheetProbablySmall = !isMobile && !Object.keys(searchParams).length
 	useEffect(() => {
 		if (!map) return
 
@@ -128,23 +129,15 @@ export default function Map({
 						: snapValue < 1
 						? height * snapValue
 						: snapValue
-			console.log(
-				'orange snap',
-				trackedSnap,
-				snapValue,
-				bottom,
-
-				map.getPadding()
-			)
 			map.flyTo({ padding: { bottom } })
 		} else {
 			map.flyTo({
 				padding: {
-					left: 400, //  rough estimate of the footprint in pixel of the left sheet on desktop; should be made dynamic if it ever gets resizable (a good idea)
+					left: sideSheetProbablySmall ? 0 : 400, //  rough estimate of the footprint in pixel of the left sheet on desktop; should be made dynamic if it ever gets resizable (a good idea)
 				},
 			})
 		}
-	}, [map, isMobile, trackedSnap])
+	}, [map, isMobile, trackedSnap, sideSheetProbablySmall])
 
 	useImageSearch(
 		map,
