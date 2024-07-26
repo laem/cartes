@@ -44,7 +44,7 @@ export default function OsmLinks({
 			<a
 				href={`https://openstreetmap.org/edit?${featureType}=${id}`}
 				target="_blank"
-				title="Ajouter des informations à ce lieu sur l'éditeur OpenStreetMap"
+				title="Ajouter des informations à ce lieu sur OpenStreetMap"
 			>
 				Compléter ce lieu sur OpenStreetMap
 			</a>
