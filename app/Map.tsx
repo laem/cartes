@@ -136,10 +136,12 @@ export default function Map({
 
 				map.getPadding()
 			)
-			map.setPadding({ bottom: bottom })
+			map.flyTo({ padding: { bottom } })
 		} else {
-			map.setPadding({
-				left: 400, //  rough estimate of the footprint in pixel of the left sheet on desktop; should be made dynamic if it ever gets resizable (a good idea)
+			map.flyTo({
+				padding: {
+					left: 400, //  rough estimate of the footprint in pixel of the left sheet on desktop; should be made dynamic if it ever gets resizable (a good idea)
+				},
 			})
 		}
 	}, [map, isMobile, trackedSnap])
