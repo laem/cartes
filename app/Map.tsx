@@ -252,7 +252,6 @@ export default function Map({
 		)
 		if (osmFeature.polygon) {
 			const bbox = getBbox(osmFeature.polygon)
-			map.fitBounds(bbox)
 			fitBoundsConsideringModal(isMobile, bbox, map)
 		} else
 			map.flyTo({
@@ -260,6 +259,9 @@ export default function Map({
 				zoom: tailoredZoom,
 				pitch: 40, // pitch in degrees
 				bearing: 15, // bearing in degrees
+				// speed and maxDuration could let us zoom less quickly between shops,
+				// but then the animation from town to town wouldn't take place anymore.
+				// This animation lets the user understand the direction of the move.
 			})
 	}, [map, vers, osmFeature, state])
 
