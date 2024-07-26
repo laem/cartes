@@ -2,7 +2,7 @@ import dynamic from 'next/dynamic'
 import { useMediaQuery } from 'usehooks-ts'
 
 const ModalSheet = dynamic(() => import('./ModalSheet'), {
-	ssr: false,
+	ssr: true,
 })
 const SideSheet = dynamic(() => import('./SideSheet'), {
 	ssr: true,
