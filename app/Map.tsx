@@ -108,6 +108,15 @@ export default function Map({
 		}
 	}, [setTempStyle, transportStopData])
 
+	const isNotMobile = useMediaQuery('(min-width: 800px)')
+
+	useEffect(() => {
+		if (!map) return
+		map.setPadding({
+			left: 400, //  rough estimate of the footprint in pixel of the left sheet on desktop; should be made dynamic if it ever gets resizable (a good idea)
+		})
+	}, [map, isNotMobile])
+
 	useImageSearch(
 		map,
 		setBboxImages,
