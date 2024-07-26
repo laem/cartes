@@ -8,6 +8,7 @@ import useSetSearchParams from '@/components/useSetSearchParams'
 import { omit } from '@/components/utils/utils'
 import ItineraryButton, { ResetIcon } from './itinerary/ItineraryButton'
 import Emoji from '@/components/Emoji'
+import { useEffect, useState } from 'react'
 
 export const MapButtonsWrapper = styled.div`
 	position: fixed;
@@ -73,8 +74,45 @@ export default function MapButtons({
 }) {
 	const [distance, resetDistance] = useMeasureDistance(map, distanceMode)
 	const setSearchParams = useSetSearchParams()
+	const [pitch, setPitch] = useState(map && map.getPitch())
+	useEffect(() => {
+		if (!map) return
+
+		const handlePitchChange = (pitch) => {
+			setPitch(map.getPitch())
+		}
+		map.on('pitchend', handlePitchChange)
+		return () => {
+			map.off('pitchend', handlePitchChange)
+		}
+	}, [map, setPitch])
+	const pitched = pitch !== 0
 	return (
 		<MapButtonsWrapper>
+			{pitched && (
+				<MapButton
+					$active={false}
+					css={`
+						margin-bottom: 2rem !important;
+					`}
+				>
+					<button
+						title={'Désactiver la vue 3D'}
+						onClick={() => {
+							map.setPitch(0)
+						}}
+					>
+						<span
+							css={`
+								font-weight: bold;
+								color: var(--lightColor);
+							`}
+						>
+							3<span css="color: var(--color);">D</span>
+						</span>
+					</button>
+				</MapButton>
+			)}
 			<MapButton $active={searchParams.transports === 'oui'}>
 				<Link
 					title={'Voir la carte des transports en commun'}
