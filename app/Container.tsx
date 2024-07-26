@@ -39,6 +39,7 @@ import { getStyle } from './styles/styles'
 import useTransportStopData from './transport/useTransportStopData'
 import useGeocodeRightClick from './effects/useGeocodeRightClick'
 import useOverpassRequest from './effects/useOverpassRequest'
+import { initialSnap } from './ModalSheet'
 // Map is forced as dynamic since it can't be rendered by nextjs server-side.
 // There is almost no interest to do that anyway, except image screenshots
 const Map = dynamic(() => import('./Map'), {
@@ -53,6 +54,9 @@ export default function Container({ searchParams }) {
 	const [bboxImages, setBboxImages] = useState([])
 	const [latLngClicked, setLatLngClicked] = useState(null)
 	const resetClickedPoint = () => setSearchParams({ clic: undefined })
+
+	// For the mobile sheet, we need it in Map, hence the definition here
+	const [trackedSnap, setTrackedSnap] = useState(initialSnap)
 
 	const geocodedClickedPoint = useGeocodeRightClick(searchParams.clic)
 
@@ -219,6 +223,8 @@ export default function Container({ searchParams }) {
 							osmFeature,
 							quickSearchFeaturesLoaded,
 							containerRef,
+							trackedSnap,
+							setTrackedSnap,
 						}}
 					/>
 				</ContentWrapper>
@@ -226,6 +232,7 @@ export default function Container({ searchParams }) {
 				{focusedImage && <FocusedImage {...{ focusedImage, focusImage }} />}
 				<Map
 					{...{
+						trackedSnap,
 						searchParams,
 						state,
 						vers,

@@ -27,6 +27,8 @@ import useSearchLocalTransit from './effects/useSearchLocalTransit'
 import useDrawItinerary from './itinerary/useDrawItinerary'
 import useMapClick from './effects/useMapClick'
 import useDrawElectionClusterResults from './effects/useDrawElectionCluserResults'
+import { snapPoints } from './ModalSheet'
+import { useDimensions } from '@/components/react-modal-sheet/hooks'
 
 if (process.env.NEXT_PUBLIC_MAPTILER == null) {
 	throw new Error('You have to configure env NEXT_PUBLIC_MAPTILER, see README')
@@ -71,6 +73,7 @@ export default function Map({
 	setState,
 	setLatLngClicked,
 	quickSearchFeatures,
+	trackedSnap,
 }) {
 	const isMobile = useMediaQuery('(max-width: 800px)')
 	const mapContainerRef = useRef(null)
@@ -108,14 +111,27 @@ export default function Map({
 		}
 	}, [setTempStyle, transportStopData])
 
-	const isNotMobile = useMediaQuery('(min-width: 800px)')
+	const { height } = useDimensions()
 
 	useEffect(() => {
 		if (!map) return
+
+		if (isMobile) {
+			const snapValue = snapPoints[trackedSnap],
+				bottom =
+					snapValue < 0
+						? height + snapValue
+						: snapValue < 1
+						? height * snapValue
+						: snapValue
+			console.log('orange snap', trackedSnap, snapValue, bottom)
+			map.setPadding({ bottom: bottom })
+		}
+
 		map.setPadding({
 			left: 400, //  rough estimate of the footprint in pixel of the left sheet on desktop; should be made dynamic if it ever gets resizable (a good idea)
 		})
-	}, [map, isNotMobile])
+	}, [map, isMobile, trackedSnap])
 
 	useImageSearch(
 		map,
