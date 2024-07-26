@@ -26,6 +26,7 @@ export async function generateMetadata(
 				'Qui est arrivé en tête dans ma circonscription ? Trouvez en un clic votre circonscription et la liste des candidats et leur score au vote des législatives 2024 le 30 juin 2024',
 			openGraph: {
 				images: ['/resultats-1er-tour-legislatives-2024.png'],
+				url: '/elections-legislatives-2024',
 			},
 		}
 	if (searchParams.transports === 'oui' && searchParams.agence != null) {
@@ -79,14 +80,19 @@ export async function generateMetadata(
 
 	const image = tags.image || (await fetchOgImage(getUrl(tags)))
 
+	const searchParamsString = new URLSearchParams(searchParams).toString()
 	const metadata = {
 		title: title,
 		description,
 		openGraph: {
 			images: [image],
+			// TODO next doesn't understand this link with only searchParams. Could be
+			// symtomatic of a bad choice we made : the id / name should be in the
+			// path, not the searchParams ? Could it lead to RSC generation ?
+			//url: '/?' + searchParamsString,
 		},
 	}
-	console.log('METADATA', metadata)
+	console.log('METADATA', metadata, searchParamsString)
 	return metadata
 }
 const Page = ({ searchParams }) => {

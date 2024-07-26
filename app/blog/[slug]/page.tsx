@@ -21,6 +21,7 @@ export const generateMetadata = async ({ params }) => {
 			type: 'article',
 			publishedTime: post.date + 'T00:00:00.000Z',
 			modifiedTime: lastEdit + 'T00:00:00.000Z',
+			url: '/blog/' + params.slug,
 		},
 	}
 }
