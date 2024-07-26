@@ -2,22 +2,22 @@
 
 Merci de prendre le temps de contribuer ! 🎉
 
-Tout d'abord, la section _[issues](https://github.com/laem/cartes/issues)_ contient déjà des tas de problèmes à résoudre et d'informations utiles qui pourraient vous aider à contribuer : utilisez son moteur de recherche. 
+Tout d'abord, la section _[issues](https://github.com/laem/cartes/issues)_ contient déjà des tas de problèmes à résoudre et d'informations utiles qui pourraient vous aider à contribuer : utilisez son moteur de recherche.
 
-## Comment ajouter une catégorie de recherche de lieux ? 
+## Comment ajouter une catégorie de recherche de lieux ?
 
-Copiez-collez l'un des blocs dans [categories.yaml](https://github.com/laem/cartes/blob/master/app/categories.yaml) ou [moreCategories.yaml](https://github.com/laem/cartes/blob/master/app/moreCategories.yaml) (les "more" apparaissent seulement au clic sur le gros bouton plus) et changez les attributs. 
-La partie la plus difficile, c'est l'icône : Maplibre n'accepte pas les icônes SVG, donc nous créons des PNG à la volée et ça implique quelques contraintes. Si vous galérez ou n'êtes pas dev, n'hésitez pas à proposer vos modifications même sans icônes, quelqu'un s'en chargera. 
+Copiez-collez l'un des blocs dans [categories.yaml](https://github.com/laem/cartes/blob/master/app/categories.yaml) ou [moreCategories.yaml](https://github.com/laem/cartes/blob/master/app/moreCategories.yaml) (les "more" apparaissent seulement au clic sur le gros bouton plus) et changez les attributs.
+La partie la plus difficile, c'est l'icône : Maplibre n'accepte pas les icônes SVG, donc nous créons des PNG à la volée et ça implique quelques contraintes. Si vous galérez ou n'êtes pas dev, n'hésitez pas à proposer vos modifications même sans icônes, quelqu'un s'en chargera.
 
-- le format SVG Inkscape ne marchera pas, il est trop bardé d'attributs inutiles
-- le format Inkscape SVG _simple_ a plus de chances de marcher surtout en ayant converti les objets en chemins
-- encore plus de chances que ça marche en ayant converti les objets et les contours en chemins, et en ayant fusionné toutes les composantes connexes via l'outil de construction de forme booléen d'Inkscape
+-   le format SVG Inkscape ne marchera pas, il est trop bardé d'attributs inutiles
+-   le format Inkscape SVG _simple_ a plus de chances de marcher surtout en ayant converti les objets en chemins
+-   encore plus de chances que ça marche en ayant converti les objets et les contours en chemins, et en ayant fusionné toutes les composantes connexes via l'outil de construction de forme booléen d'Inkscape
 
-## Comment ajouter un réseau de transport en commun ? 
+## Comment ajouter un réseau de transport en commun ?
 
-Direction l'[autre dépot](https://github.com/laem/gtfs), côté serveur.  
+Direction l'[autre dépot](https://github.com/laem/gtfs), côté serveur.
 
----------------
+---
 
 Ci-dessous des informations plus générales sur la contribution.
 
@@ -30,7 +30,7 @@ Nous utilisons :
 -   [React](https://reactjs.org) pour la gestion de l'interface utilisateur
 -   [Next](https://nextjs.org) comme framework Web
 -   [Prettier](https://prettier.io/) pour formater le code source, il faudra que vous configuriez votre éditeur de texte pour que les fichiers soit formatés automatiquement quand vous sauvegardez un fichier. Si vous utilisez [VS Code](https://code.visualstudio.com/) cette configuration est automatique.
--   [Eslint](http://eslint.org) qui permet par exemple d'éviter de garder des variables inutilisées
+-   [Eslint](https://eslint.org) qui permet par exemple d'éviter de garder des variables inutilisées
 
 ### Démarrage
 
@@ -38,6 +38,7 @@ Nous utilisons :
 Cette option est nécessaire pour gérer Next 15 rc / React 19
 npm run dev --legacy-peer-deps
 ```
+
 L'application est alors dispo sur https://localhost:8080.
 
 ### Messages de commit

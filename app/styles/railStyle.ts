@@ -17,7 +17,7 @@ const style = (key) => ({
 			tiles: ['https://tiles.openrailwaymap.org/standard/{z}/{x}/{y}.png'],
 			tileSize: 256,
 			attribution:
-				'<a href="http://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA 2.0</a> <a href="http://www.openrailwaymap.org/">OpenRailwayMap</a>',
+				'<a href="https://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA 2.0</a> <a href="https://www.openrailwaymap.org/">OpenRailwayMap</a>',
 		},
 	},
 	layers: [

@@ -186,7 +186,7 @@ export default function Meteo({ coordinates }) {
 		>
 			{codePostal ? (
 				<Link
-					href={`http://meteofrance.com/previsions-meteo-france/${weather.position.name}/${codePostal}`}
+					href={`https://meteofrance.com/previsions-meteo-france/${weather.position.name}/${codePostal}`}
 					onClick={(e) => e.stopPropagation()}
 				>
 					<Image src={logoMeteoFrance} alt="Logo Météo-France" />
