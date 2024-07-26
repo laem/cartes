@@ -371,7 +371,16 @@ export default function Map({
 					}}
 				/>
 			)}
-			<div ref={mapContainerRef} />
+			<div
+				ref={mapContainerRef}
+				css={`
+					.maplibregl-ctrl
+						button.maplibregl-ctrl-compass
+						.maplibregl-ctrl-icon {
+						background-image: url("data:image/svg+xml;charset=utf-8,%3Csvg xmlns='http://www.w3.org/2000/svg' width='29' height='29' fill='crimson' viewBox='0 0 29 29'%3E%3Cpath d='m10.5 14 4-8 4 8z'/%3E%3Cpath fill='%23ccc' d='m10.5 16 4 8 4-8z'/%3E%3C/svg%3E");
+					}
+				`}
+			/>
 		</>
 	)
 }
