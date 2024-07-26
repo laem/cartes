@@ -128,13 +128,20 @@ export default function Map({
 						: snapValue < 1
 						? height * snapValue
 						: snapValue
-			console.log('orange snap', trackedSnap, snapValue, bottom)
-			map.setPadding({ bottom: bottom })
-		}
+			console.log(
+				'orange snap',
+				trackedSnap,
+				snapValue,
+				bottom,
 
-		map.setPadding({
-			left: 400, //  rough estimate of the footprint in pixel of the left sheet on desktop; should be made dynamic if it ever gets resizable (a good idea)
-		})
+				map.getPadding()
+			)
+			map.setPadding({ bottom: bottom })
+		} else {
+			map.setPadding({
+				left: 400, //  rough estimate of the footprint in pixel of the left sheet on desktop; should be made dynamic if it ever gets resizable (a good idea)
+			})
+		}
 	}, [map, isMobile, trackedSnap])
 
 	useImageSearch(

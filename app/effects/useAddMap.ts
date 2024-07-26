@@ -71,17 +71,22 @@ export default function useAddMap(
 
 	useEffect(() => {
 		if (!map) return
-		document
-			.querySelector('.maplibregl-ctrl-compass')
-			.addEventListener('click', () => {
-				const autoPitchPreferenceIsWaiting =
-					typeof autoPitchPreference === 'number'
-				if (
-					autoPitchPreferenceIsWaiting &&
-					new Date().getTime() / 1000 - autoPitchPreference < 15 // If the user resets the pitch in less than 15 seconds, we consider it a definitive choice
-				)
-					setAutoPitchPreference('no')
-			})
+		const compass = document.querySelector('.maplibregl-ctrl-compass')
+		if (!compass) return
+		const handler = () => {
+			const autoPitchPreferenceIsWaiting =
+				typeof autoPitchPreference === 'number'
+			if (
+				autoPitchPreferenceIsWaiting &&
+				new Date().getTime() / 1000 - autoPitchPreference < 15 // If the user resets the pitch in less than 15 seconds, we consider it a definitive choice
+			)
+				setAutoPitchPreference('no')
+		}
+		compass.addEventListener('click', handler)
+
+		return () => {
+			compass && compass.removeEventListener('click', handler)
+		}
 	}, [map, autoPitchPreference, setAutoPitchPreference])
 
 	useEffect(() => {
