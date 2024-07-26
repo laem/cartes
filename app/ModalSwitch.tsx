@@ -9,9 +9,9 @@ const SideSheet = dynamic(() => import('./SideSheet'), {
 })
 
 export default function ModalSwitch(props) {
-	const matches = useMediaQuery('(min-width: 800px)')
+	const isNotMobile = useMediaQuery('(min-width: 800px)')
 
-	if (matches) return <SideSheet {...props} />
+	if (isNotMobile) return <SideSheet {...props} />
 
 	return <ModalSheet {...props} />
 }

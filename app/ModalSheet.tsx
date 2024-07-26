@@ -6,15 +6,14 @@ import ModalSheetReminder from './ModalSheetReminder'
 import { useDimensions } from '@/components/react-modal-sheet/hooks'
 import { useLocalStorage } from 'usehooks-ts'
 
-const snapPoints = [-50, 0.5, 150, 100, 0],
+export const snapPoints = [-50, 0.5, 150, 100, 0],
 	initialSnap = 3
 
 export default function ModalSheet(props) {
 	const { osmFeature, styleChooser, searchParams } = props
+	const { trackedSnap, setTrackedSnap } = props
 
 	const [tutorials, setTutorials] = useLocalStorage('tutorials', {})
-
-	const [trackedSnap, setTrackedSnap] = useState(initialSnap)
 
 	const [isOpen, setOpen] = useState(false)
 	const [disableDrag, setDisableDrag] = useState(false)
