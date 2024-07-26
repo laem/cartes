@@ -4,31 +4,30 @@ import 'maplibre-gl/dist/maplibre-gl.css'
 import { useEffect, useMemo, useRef, useState } from 'react'
 import { sortGares } from './gares'
 
-import useSetSearchParams from '@/components/useSetSearchParams'
 import MapButtons from '@/components/MapButtons'
 import { goodIconSize } from '@/components/mapUtils'
+import useSetSearchParams from '@/components/useSetSearchParams'
 import useAddMap from './effects/useAddMap'
 import useDrawQuickSearchFeatures from './effects/useDrawQuickSearchFeatures'
 import { getStyle } from './styles/styles'
 import useHoverOnMapFeatures from './useHoverOnMapFeatures'
 import useTerrainControl from './useTerrainControl'
-import { fitBoundsConsideringModal } from './utils'
 
+import { useDimensions } from '@/components/react-modal-sheet/hooks'
 import getBbox from '@turf/bbox'
 import { useMediaQuery } from 'usehooks-ts'
 import CenteredCross from './CenteredCross'
 import MapComponents from './MapComponents'
+import { snapPoints } from './ModalSheet'
 import { defaultState } from './defaultState'
+import useDrawElectionClusterResults from './effects/useDrawElectionCluserResults'
 import useDrawSearchResults from './effects/useDrawSearchResults'
 import useDrawTransport from './effects/useDrawTransport'
 import useImageSearch from './effects/useImageSearch'
+import useMapClick from './effects/useMapClick'
 import useRightClick from './effects/useRightClick'
 import useSearchLocalTransit from './effects/useSearchLocalTransit'
 import useDrawItinerary from './itinerary/useDrawItinerary'
-import useMapClick from './effects/useMapClick'
-import useDrawElectionClusterResults from './effects/useDrawElectionCluserResults'
-import { snapPoints } from './ModalSheet'
-import { useDimensions } from '@/components/react-modal-sheet/hooks'
 
 if (process.env.NEXT_PUBLIC_MAPTILER == null) {
 	throw new Error('You have to configure env NEXT_PUBLIC_MAPTILER, see README')
@@ -277,7 +276,9 @@ export default function Map({
 		)
 		if (osmFeature.polygon) {
 			const bbox = getBbox(osmFeature.polygon)
-			fitBoundsConsideringModal(isMobile, bbox, map)
+			map.fitBounds(bbox, {
+				maxZoom: 17.5, // We don't want to zoom at door level for a place, just at street level
+			})
 		} else
 			map.flyTo({
 				center: [vers.longitude, vers.latitude],

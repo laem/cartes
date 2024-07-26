@@ -1,15 +1,15 @@
 import getBbox from '@turf/bbox'
 import { useEffect } from 'react'
 import { useMediaQuery } from 'usehooks-ts'
-import { fitBoundsConsideringModal } from '../utils'
 import { computeSlopeGradient } from './computeSlopeGradient'
 import { safeRemove } from '../effects/utils'
+import { useDimensions } from '@/components/react-modal-sheet/hooks'
 
 /*
  * Draws the walk or cycle route provided by BRouter directly as Geojson
  * */
 export default function useDrawRoute(isItineraryMode, map, geojson, id) {
-	const isMobile = useMediaQuery('(max-width: 800px)')
+	const { width, height } = useDimensions()
 
 	useEffect(() => {
 		if (
@@ -153,8 +153,14 @@ export default function useDrawRoute(isItineraryMode, map, geojson, id) {
 			geojson.features.filter(
 				(f) => f.geometry.type === 'Point' && f.properties.key != null
 			).length > 1
-		)
-			fitBoundsConsideringModal(isMobile, bbox, map)
+		) {
+			const large = height < width,
+				padding = large
+					? { left: width / 4, right: width / 4 }
+					: { left: 10, right: 10 }
+
+			map.fitBounds(bbox, { padding })
+		}
 
 		return () => {
 			// There's something I don't understand in MapLibre's lifecycle...

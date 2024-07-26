@@ -2,7 +2,6 @@ import useDrawTransport from '@/app/effects/useDrawTransport'
 import { gtfsServerUrl } from '@/app/serverUrls'
 import { defaultTransitFilter } from '@/app/transport/TransitFilter'
 import { filterTransportFeatures } from '@/app/transport/filterTransportFeatures'
-import { fitBoundsConsideringModal } from '@/app/utils'
 import { sortBy } from '@/components/utils/utils'
 import { useEffect, useMemo, useState } from 'react'
 import { useMediaQuery } from 'usehooks-ts'
@@ -42,7 +41,7 @@ export default function DrawTransportMaps({
 			[bbox[2], bbox[3]],
 		]
 
-		fitBoundsConsideringModal(isMobile, fitBoundsBbox, map)
+		map.fitBounds(fitBoundsBbox)
 	}, [selectedAgencyBbox, map, isMobile])
 
 	useEffect(() => {

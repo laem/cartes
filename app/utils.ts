@@ -12,24 +12,6 @@ export const decodePlace = (place) => {
 export const encodePlace = (featureType, id) =>
 	featureType.slice(0, 1).toLowerCase() + id
 
-export const fitBoundsConsideringModal = (isMobile, bbox, map) => {
-	map.fitBounds(bbox, {
-		maxZoom: 17.5, // We don't want to zoom at door level for a place, just at street level
-	})
-}
-
-/* The following was rudimentary, it should be solved by the setPadding method
- * in Map.tsx :)
- * Keeping just in case
- *
-		, {
-		//TODO make it right with mobile snap, this is very basic
-		padding: isMobile
-			? { top: 50, bottom: 400, left: 50, right: 50 }
-			: { top: 100, bottom: 100, left: 600, right: 100 },
-	})
-	*/
-
 export const computeSncfUicControlDigit = (uic) => {
 	const multiplied = ('' + uic)
 		.replace(/^(00)?87/, '')
