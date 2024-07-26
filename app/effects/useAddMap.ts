@@ -1,6 +1,6 @@
 import maplibregl from 'maplibre-gl'
 import { useEffect, useMemo, useState } from 'react'
-import { useMediaQuery } from 'usehooks-ts'
+import { useLocalStorage, useMediaQuery } from 'usehooks-ts'
 import { styles } from '../styles/styles'
 import { Protocol } from 'pmtiles'
 import useGeolocation from './useGeolocation'
@@ -63,6 +63,26 @@ export default function useAddMap(
 			maplibregl.removeProtocol('pmtiles')
 		}
 	}, [])
+
+	const [autoPitchPreference, setAutoPitchPreference] = useLocalStorage(
+		'autoPitchPreference',
+		null
+	)
+
+	useEffect(() => {
+		if (!map) return
+		document
+			.querySelector('.maplibregl-ctrl-compass')
+			.addEventListener('click', () => {
+				const autoPitchPreferenceIsWaiting =
+					typeof autoPitchPreference === 'number'
+				if (
+					autoPitchPreferenceIsWaiting &&
+					new Date().getTime() / 1000 - autoPitchPreference < 15 // If the user resets the pitch in less than 15 seconds, we consider it a definitive choice
+				)
+					setAutoPitchPreference('no')
+			})
+	}, [map, autoPitchPreference, setAutoPitchPreference])
 
 	useEffect(() => {
 		if (!mapContainerRef.current) return undefined

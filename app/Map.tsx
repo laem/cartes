@@ -15,7 +15,7 @@ import useTerrainControl from './useTerrainControl'
 
 import { useDimensions } from '@/components/react-modal-sheet/hooks'
 import getBbox from '@turf/bbox'
-import { useMediaQuery } from 'usehooks-ts'
+import { useLocalStorage, useMediaQuery } from 'usehooks-ts'
 import CenteredCross from './CenteredCross'
 import MapComponents from './MapComponents'
 import { snapPoints } from './ModalSheet'
@@ -76,6 +76,11 @@ export default function Map({
 }) {
 	const isMobile = useMediaQuery('(max-width: 800px)')
 	const mapContainerRef = useRef(null)
+	const [autoPitchPreference, setAutoPitchPreference] = useLocalStorage(
+		'autoPitchPreference',
+		null
+	)
+	const autoPitchPreferenceIsNo = autoPitchPreference === 'no'
 
 	const style = useMemo(() => getStyle(styleKey), [styleKey]),
 		styleUrl = style.url
@@ -279,17 +284,28 @@ export default function Map({
 			map.fitBounds(bbox, {
 				maxZoom: 17.5, // We don't want to zoom at door level for a place, just at street level
 			})
-		} else
+		} else {
+			if (!autoPitchPreferenceIsNo)
+				setAutoPitchPreference(Math.round(new Date().getTime() / 1000))
+			const auto3d = !autoPitchPreferenceIsNo
 			map.flyTo({
 				center: [vers.longitude, vers.latitude],
 				zoom: tailoredZoom,
-				pitch: 40, // pitch in degrees
-				bearing: 15, // bearing in degrees
+				pitch: autoPitchPreferenceIsNo ? 0 : 40, // pitch in degrees
+				bearing: autoPitchPreferenceIsNo ? 0 : 15, // bearing in degrees
 				// speed and maxDuration could let us zoom less quickly between shops,
 				// but then the animation from town to town wouldn't take place anymore.
 				// This animation lets the user understand the direction of the move.
 			})
-	}, [map, vers, osmFeature, state])
+		}
+	}, [
+		map,
+		vers,
+		osmFeature,
+		state,
+		autoPitchPreferenceIsNo,
+		setAutoPitchPreference,
+	])
 
 	/* TODO Transform this to handle the last itinery point if alone (just a POI url),
 	 * but also to add markers to all the steps of the itinerary */
