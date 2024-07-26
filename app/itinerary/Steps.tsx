@@ -7,7 +7,7 @@ import Link from 'next/link'
 import { useState } from 'react'
 import { removeStatePart, setAllezPart } from '../SetDestination'
 
-export default function Steps({ state, setDisableDrag }) {
+export default function Steps({ state, setDisableDrag = () => null }) {
 	const steps = state
 
 	const setSearchParams = useSetSearchParams()
