@@ -28,6 +28,7 @@ import useMapClick from './effects/useMapClick'
 import useRightClick from './effects/useRightClick'
 import useSearchLocalTransit from './effects/useSearchLocalTransit'
 import useDrawItinerary from './itinerary/useDrawItinerary'
+import MapCompassArrow from './boussole/MapCompassArrow'
 
 if (process.env.NEXT_PUBLIC_MAPTILER == null) {
 	throw new Error('You have to configure env NEXT_PUBLIC_MAPTILER, see README')
@@ -377,6 +378,7 @@ export default function Map({
 				}}
 			/>
 			{isTransportsMode && <CenteredCross />}
+			<MapCompassArrow />
 			{map && (
 				<MapComponents
 					{...{
