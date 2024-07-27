@@ -86,7 +86,7 @@ export default function Map({
 	const style = useMemo(() => getStyle(styleKey), [styleKey]),
 		styleUrl = style.url
 
-	const [map, triggerGeolocation] = useAddMap(
+	const [map, triggerGeolocation, geolocate] = useAddMap(
 		styleUrl,
 		setZoom,
 		setBbox,
@@ -378,7 +378,7 @@ export default function Map({
 				}}
 			/>
 			{isTransportsMode && <CenteredCross />}
-			<MapCompassArrow />
+			<MapCompassArrow geolocate={geolocate} map={map} />
 			{map && (
 				<MapComponents
 					{...{

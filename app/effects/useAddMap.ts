@@ -184,5 +184,5 @@ export default function useAddMap(
 		}
 	}, [map, styleUrl])
 
-	return [map, triggerGeolocation]
+	return [map, triggerGeolocation, geolocate]
 }
