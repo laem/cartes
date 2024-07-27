@@ -101,14 +101,16 @@ export default function useAddMap(
 			hash: true,
 			attributionControl: false,
 		})
-		newMap.addControl(
-			new maplibregl.NavigationControl({
-				visualizePitch: true,
-				showZoom: true,
-				showCompass: true,
-			}),
-			'top-right'
-		)
+
+		const navigationControl = new maplibregl.NavigationControl({
+			visualizePitch: true,
+			showZoom: true,
+			showCompass: true,
+		})
+		/*
+		const navigationControlElement = navigationControl.onAdd(newMap)
+		*/
+		newMap.addControl(navigationControl, 'top-right')
 
 		const geolocate = new maplibregl.GeolocateControl({
 			positionOptions: {
