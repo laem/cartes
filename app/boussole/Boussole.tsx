@@ -56,6 +56,7 @@ export default function Boussole() {
 		}
 	}
 
+	// What is this ?
 	const myPointOpacity =
 		// ±15 degree
 		(pointDegree < Math.abs(compass) && pointDegree + 15 > Math.abs(compass)) ||
@@ -91,10 +92,10 @@ transform: translate(-50%, -50%) rotate(${-compass}deg) !important`
 }
 
 function calcDegreeToPoint(latitude, longitude) {
-	// Qibla geolocation
+	// Vierzon's geolocation, close to the center of the french hexagon
 	const point = {
-		lat: 21.422487,
-		lng: 39.826206,
+		lat: 47.21917,
+		lng: 2.07564,
 	}
 
 	const phiK = (point.lat * Math.PI) / 180.0
