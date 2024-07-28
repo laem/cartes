@@ -41,6 +41,7 @@ export default function MapCompassArrow({ geolocate, map }) {
 		image.src = '/compass-arrow.svg'
 		image.style.width = size
 		image.style.height = size
+		image.style.filter = 'drop-shadow(0px 1px 3px rgba(0, 0, 0, 0.7));'
 		image.alt = 'Flèche indiquant votre orientation'
 		element.append(image)
 
@@ -59,25 +60,4 @@ export default function MapCompassArrow({ geolocate, map }) {
 		if (!marker) return
 		marker.setRotation(compass)
 	}, [marker, compass])
-
-	return (
-		<div
-			css={`
-				position: fixed;
-				left: 50%;
-				top: 50%;
-				transform: translateX(-50%) translateY(-50%);
-				z-index: 20;
-				img {
-					width: 1rem;
-					height: auto;
-					filter: drop-shadow(0px 1px 3px rgba(0, 0, 0, 0.7));
-				}
-				${compass != null
-					? `
-transform: translate(-50%, -50%) rotate(${compass}deg) !important;`
-					: ''}
-			`}
-		></div>
-	)
 }
