@@ -35,10 +35,10 @@ export default function MapCompassArrow({ geolocate, map }) {
 				flex-direction: column;
 				align-items: center;
 			`
-		const size = '30px'
+		const size = '45px'
 
 		const image = document.createElement('img')
-		image.src = '/position-arrow.svg'
+		image.src = '/compass-arrow.svg'
 		image.style.width = size
 		image.style.height = size
 		image.alt = 'Flèche indiquant votre orientation'
@@ -68,10 +68,10 @@ export default function MapCompassArrow({ geolocate, map }) {
 				top: 50%;
 				transform: translateX(-50%) translateY(-50%);
 				z-index: 20;
-				filter: drop-shadow(0 0 0.75rem white);
 				img {
 					width: 1rem;
 					height: auto;
+					filter: drop-shadow(0px 1px 3px rgba(0, 0, 0, 0.7));
 				}
 				${compass != null
 					? `
