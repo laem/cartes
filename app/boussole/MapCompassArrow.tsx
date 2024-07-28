@@ -42,12 +42,14 @@ export default function MapCompassArrow({ geolocate, map }) {
 		image.style.width = size
 		image.style.height = size
 		image.style.filter = 'drop-shadow(0px 1px 3px rgba(0, 0, 0, 0.7));'
-		image.alt = 'Flèche indiquant votre orientation'
+		//image.alt = 'Flèche indiquant votre orientation' peut créer un texte avant
+		//le chargement, c'est moche
 		element.append(image)
 
-		const marker = new Marker({ element })
-			.setLngLat([where.longitude, where.latitude])
-			.addTo(map)
+		const marker = new Marker({ element }).setLngLat([
+			where.longitude,
+			where.latitude,
+		])
 
 		setMarker(marker)
 
@@ -56,6 +58,14 @@ export default function MapCompassArrow({ geolocate, map }) {
 		}
 	}, [map, where, setMarker])
 
+	console.log('compass', compass)
+	const noCompass = compass === undefined
+	useEffect(() => {
+		if (!marker) return
+
+		if (noCompass) marker.remove()
+		if (!noCompass) marker.addTo(map)
+	}, [noCompass, marker, map])
 	useEffect(() => {
 		if (!marker) return
 		marker.setRotation(compass)
