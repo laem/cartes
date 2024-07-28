@@ -360,7 +360,7 @@
   icon: bicycle
 
 - title: Parking à vélo
-  name: parking-velo
+  name: parking-vélo
   category: Déplacements
   dictionary:
     - pince-roue
@@ -372,7 +372,7 @@
   query: '[amenity=bicycle_parking]'
   icon: bicycle-parking
 
-- name: reparation-velo
+- name: réparation-velo
   titre: Réparation de vélo
   category: Déplacements
   dictionary:
@@ -398,7 +398,7 @@
   query: '[amenity=fuel]'
   icon: essence
 
-- name: Station de recharge
+- name: Borne électrique
   category: Déplacements
   dictionary:
     - recharge
