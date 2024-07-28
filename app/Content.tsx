@@ -25,6 +25,7 @@ import useOgImageFetcher from './useOgImageFetcher'
 import useWikidata from './useWikidata'
 import getUrl from './osm/getUrl'
 import ElectionsContent from './Elections'
+import distance from '@turf/distance'
 
 const getMinimumQuickSearchZoom = (mobile) => (mobile ? 10.5 : 12) // On a small screen, 70 %  of the tiles are not visible, hence this rule
 
@@ -75,7 +76,9 @@ export default function Content({
 	const [tutorials, setTutorials] = useLocalStorage('tutorials', {})
 	const introductionRead = tutorials.introduction,
 		clickTipRead = true || tutorials.clickTip
-	const wikidata = useWikidata(osmFeature, state)
+	const lonLat = osmFeature && [osmFeature.lon, osmFeature.lat]
+	const wikidata = useWikidata(osmFeature, state, lonLat)
+	console.log('wikidata3', wikidata, osmFeature)
 
 	const setSearchParams = useSetSearchParams()
 
