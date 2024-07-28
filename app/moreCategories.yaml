@@ -339,6 +339,16 @@
 
 #######################
 
+- name: gare
+  category: Déplacements
+  title: Gare SNCF
+  dictionary:
+    - réparation
+    - bicyclette
+    - équipements
+    - dépannage
+  query: '[public_transport=station][train=yes]'
+  icon: train
 - name: Magasin vélo
   category: Déplacements
   dictionary:
