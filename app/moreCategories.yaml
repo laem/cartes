@@ -349,7 +349,8 @@
   query: '[shop=bicycle]'
   icon: bicycle
 
-- name: Parking vélo
+- title: Parking à vélo
+  name: parking-velo
   category: Déplacements
   dictionary:
     - pince-roue
@@ -361,7 +362,8 @@
   query: '[amenity=bicycle_parking]'
   icon: bicycle-parking
 
-- name: Réparation vélo
+- name: reparation-velo
+  titre: Réparation de vélo
   category: Déplacements
   dictionary:
     - réparation
@@ -371,8 +373,8 @@
     - équipements
   query:
     - '[amenity=bicycle_repair_station]'
-    - '[service:bicycle:repair=yes]'
-  icon: https://cdn.jsdelivr.net/gh/osmandapp/OsmAnd-resources/icons/svg/amenity/bicycle_repair_station.svg
+    - '["service:bicycle:repair"=yes]'
+  icon: bicycle_repair_station
 
 - name: Essence
   category: Déplacements
