@@ -172,7 +172,13 @@ export default function useAddMap(
 		map.addControl(scale)
 		return () => {
 			if (!map || !scale) return
-			map.removeControl(scale)
+			try {
+				map.removeControl(scale)
+				// I don't understand why I get the "this._map is undefined" error on
+				// hot reload
+			} catch (e) {
+				console.log('Error removing scale')
+			}
 		}
 	}, [map, isMobile])
 
