@@ -338,6 +338,7 @@
   icon: parcel_locker
 
 #######################
+
 - name: Magasin vélo
   category: Déplacements
   dictionary:
@@ -347,6 +348,33 @@
     - dépannage
   query: '[shop=bicycle]'
   icon: bicycle
+
+- title: Parking à vélo
+  name: parking-velo
+  category: Déplacements
+  dictionary:
+    - pince-roue
+    - rack
+    - vélo
+    - arceau
+    - parking
+    - stationnement
+  query: '[amenity=bicycle_parking]'
+  icon: bicycle-parking
+
+- name: reparation-velo
+  titre: Réparation de vélo
+  category: Déplacements
+  dictionary:
+    - réparation
+    - outils
+    - vélo
+    - dépannage
+    - équipements
+  query:
+    - '[amenity=bicycle_repair_station]'
+    - '["service:bicycle:repair"=yes]'
+  icon: bicycle_repair_station
 
 - name: Essence
   category: Déplacements
@@ -359,6 +387,59 @@
     - pompe
   query: '[amenity=fuel]'
   icon: essence
+
+- name: Station de recharge
+  category: Déplacements
+  dictionary:
+    - recharge
+    - électrique
+    - borne
+  query: '[amenity=charging_station]'
+  icon: https://cdn.jsdelivr.net/gh/mapbox/maki@8.0.1/icons/charging-station.svg
+
+- name: Station de gonflage
+  category: Déplacements
+  dictionary:
+    - pompe
+    - gonflage
+    - gonfler
+    - pneu
+  query:
+    - '[amenity=compressed_air]'
+    - '[compressed_air=yes]'
+  icon: https://cdn.jsdelivr.net/gh/osmandapp/OsmAnd-resources/icons/svg/amenity/compressed_air.svg
+
+- name: Aire de covoiturage
+  category: Déplacements
+  dictionary:
+    - covoiturage
+    - parking
+    - relais
+  query:
+    - '[carpool=designated]'
+    - '[amenity=car_pooling]'
+  icon: https://cdn.jsdelivr.net/gh/osmandapp/OsmAnd-resources/icons/svg/transport/car_pooling.svg
+
+- name: Location de voiture
+  category: Déplacements
+  dictionary:
+    - location
+    - voiture
+    - véhicule
+  query: '[amenity=car_rental]'
+  icon: mx_amenity_car_rental
+
+- name: Place PMR
+  category: Déplacements
+  dictionary:
+    - PMR
+    - handicapé
+    - place
+    - stationnement
+    - fauteuil
+  query: '[parking_space=disabled]'
+  icon: https://cdn.jsdelivr.net/gh/mapbox/maki@8.0.1/icons/wheelchair.svg
+
 ################################
 
 - name: Police
