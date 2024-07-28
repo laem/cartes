@@ -143,9 +143,17 @@ const NodeList = ({ nodes, setSearchParams, isOpenByDefault }) => (
 			const { isOpen } = oh ? getOh(oh) : {}
 			return (
 				<li key={f.id}>
-					{!isOpenByDefault && (
-						<OpenIndicator isOpen={isOpen === 'error' ? false : isOpen} />
-					)}
+					{!isOpenByDefault &&
+						(oh == null ? (
+							<span
+								css={`
+									display: inline-block;
+									width: 1.8rem;
+								`}
+							></span>
+						) : (
+							<OpenIndicator isOpen={isOpen === 'error' ? false : isOpen} />
+						))}
 					<Link
 						href={setSearchParams(
 							{
