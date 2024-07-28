@@ -35,8 +35,12 @@ export const buildAddress = (t: object, noPrefix = false) => {
 		return value || ''
 	}
 
-	const address = `${g('housenumber')} ${g('street')} ${
-		g('postcode') || g('city') || g('state') ? ', ' : ''
+	// This bit of code is ugly, sorry, but had to make it work fast, there's
+	// plenty of things more important than a beautiful address for now
+	const firstPart =
+		g('housenumber') || g('street') ? `${g('housenumber')} ${g('street')}` : ''
+	const address = `${firstPart} ${
+		firstPart && (g('postcode') || g('city') || g('state')) ? ', ' : ''
 	} ${g('postcode')} ${g('city')} ${g('state')}
 `
 	if (address.trim() === '') return null
