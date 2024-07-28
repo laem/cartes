@@ -171,7 +171,7 @@ export default function useAddMap(
 		})
 		map.addControl(scale)
 		return () => {
-			if (!mapa || !scale) return
+			if (!map || !scale) return
 			map.removeControl(scale)
 		}
 	}, [map, isMobile])
