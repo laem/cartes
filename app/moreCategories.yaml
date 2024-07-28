@@ -425,7 +425,7 @@
     - voiture
     - véhicule
   query: '[amenity=car_rental]'
-  icon: https://cdn.jsdelivr.net/gh/osmandapp/OsmAnd-resources/rendering_styles/style-icons/map-icons-svg/mx_amenity_car_rental.svg
+  icon: mx_amenity_car_rental
 
 - name: Place PMR
   category: Déplacements
