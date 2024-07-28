@@ -1,10 +1,11 @@
 const endpointUrl = 'https://query.wikidata.org/sparql'
 const getQuery = (name, onlyCities) => `#defaultView:ImageGrid
-SELECT distinct ?item ?itemLabel ?itemDescription ?pic ${
+SELECT distinct ?item ?itemLabel ?itemDescription ?pic ?coordinates ${
 	onlyCities ? `?population ?area ` : ''
 }WHERE{
   ?item ?label "${name}"@fr;
    wdt:P18 ?pic;
+	 wdt:P625 ?coordinates;
    ${
 			onlyCities
 				? `
@@ -23,6 +24,8 @@ export default (name, onlyCities = true) => {
 	const queryCity = name
 
 	const query = getQuery(queryCity, onlyCities)
+
+	console.log('query data3', query)
 
 	const fullUrl = endpointUrl + '?query=' + encodeURIComponent(query)
 	const headers = { Accept: 'application/sparql-results+json' }

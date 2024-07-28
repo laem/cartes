@@ -1,9 +1,10 @@
-import maplibregl from 'maplibre-gl'
+import maplibregl, { ScaleControl } from 'maplibre-gl'
 import { useEffect, useMemo, useState } from 'react'
 import { useLocalStorage, useMediaQuery } from 'usehooks-ts'
 import { styles } from '../styles/styles'
 import { Protocol } from 'pmtiles'
 import useGeolocation from './useGeolocation'
+import frenchMaplibreLocale from '@/components/map/frenchMaplibreLocale.ts'
 
 /*
  *
@@ -100,15 +101,18 @@ export default function useAddMap(
 			zoom: defaultZoom,
 			hash: true,
 			attributionControl: false,
+			locale: frenchMaplibreLocale,
 		})
-		newMap.addControl(
-			new maplibregl.NavigationControl({
-				visualizePitch: true,
-				showZoom: true,
-				showCompass: true,
-			}),
-			'top-right'
-		)
+
+		const navigationControl = new maplibregl.NavigationControl({
+			visualizePitch: true,
+			showZoom: true,
+			showCompass: true,
+		})
+		/*
+		const navigationControlElement = navigationControl.onAdd(newMap)
+		*/
+		newMap.addControl(navigationControl, 'top-right')
 
 		const geolocate = new maplibregl.GeolocateControl({
 			positionOptions: {
@@ -159,6 +163,19 @@ export default function useAddMap(
 	)
 
 	useEffect(() => {
+		if (!map) return
+
+		const scale = new ScaleControl({
+			maxWidth: isMobile ? 80 : 200,
+			unit: 'metric',
+		})
+		map.addControl(scale)
+		return () => {
+			map?.removeControl(scale)
+		}
+	}, [map, isMobile])
+
+	useEffect(() => {
 		if (!map || !isMobile || window.location.hash !== defaultHash) return
 		setTimeout(() => {
 			triggerGeolocation()
@@ -182,5 +199,5 @@ export default function useAddMap(
 		}
 	}, [map, styleUrl])
 
-	return [map, triggerGeolocation]
+	return [map, triggerGeolocation, geolocate]
 }

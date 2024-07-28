@@ -1,27 +1,59 @@
 import { useEffect, useState } from 'react'
 import getCityData, { extractFileName, getThumb } from '@/components/wikidata'
+import distance from '@turf/distance'
 
-export default function useWikidata(osmFeature, state) {
+// This code is mainly used to retrieve wikidata pictures for osm entities that
+// don't have a wikidata entry
+// It's also used to guess a picture for a destination by it's name since Photon
+// probably does not retrieve the wikidata tag
+// TODO retrieve more data ! Wikidata is reach
+export default function useWikidata(osmFeature, state, lonLat) {
 	const [wikidata, setWikidata] = useState(null)
 	const vers = state.slice(-1)[0]
-	useEffect(() => {
-		if (!osmFeature) return // We're waiting for osmFeature first, since it can contain the wikidata tag, way more precise than guessing the wikidata from the name
-		if (osmFeature.tags?.wikidata || osmFeature.tags?.wikimedia_commons) return
-		if (!vers?.choice) return
 
-		getCityData(vers.choice.name, false).then((json) => {
-			const firstResult = json?.results?.bindings[0],
-				wikimediaUrl = firstResult?.pic?.value
+	useEffect(() => {
+		if (!osmFeature) return // We're waiting for osmFeature first, since it can contain the wikidata tag, way more precise than guessing the wikidata from the name, treated in the other hook
+		if (osmFeature.tags?.wikidata || osmFeature.tags?.wikimedia_commons) return
+		const osmName = osmFeature.tags?.name
+		const name = vers?.choice?.name || osmName
+		if (!name) return
+
+		setWikidata(null)
+		getCityData(name, false).then((json) => {
+			const firstResult = json?.results?.bindings[0]
+
+			if (!firstResult) return
+			const wikimediaUrl = firstResult?.pic?.value
 
 			if (!wikimediaUrl) return
 			const pictureName = extractFileName(decodeURI(wikimediaUrl))
 			const pictureUrl = getThumb(pictureName, 500)
-			setWikidata({ pictureName, pictureUrl })
+
+			if (lonLat) {
+				const coordinatesValue = firstResult.coordinates?.value,
+					foundLonLat =
+						coordinatesValue &&
+						coordinatesValue.startsWith('Point(') &&
+						coordinatesValue
+							.slice(6, -1)
+							.split(' ')
+							.map((el) => +el)
+
+				const distanceFromSource = foundLonLat && distance(foundLonLat, lonLat)
+
+				console.log('data3 lon', lonLat, foundLonLat, distanceFromSource)
+
+				if (distanceFromSource > 10) return
+			}
+
+			setWikidata({ pictureName, lonLat, pictureUrl })
 		})
-	}, [vers, osmFeature])
+	}, [vers, osmFeature, setWikidata, lonLat])
 
 	useEffect(() => {
 		if (!osmFeature?.tags?.wikidata) return
+
+		setWikidata(null)
 
 		const id = osmFeature.tags.wikidata
 
@@ -42,7 +74,7 @@ export default function useWikidata(osmFeature, state) {
 		}
 
 		doFetch()
-	}, [osmFeature])
+	}, [osmFeature, setWikidata])
 
 	return wikidata
 }

@@ -28,6 +28,7 @@ import useMapClick from './effects/useMapClick'
 import useRightClick from './effects/useRightClick'
 import useSearchLocalTransit from './effects/useSearchLocalTransit'
 import useDrawItinerary from './itinerary/useDrawItinerary'
+import MapCompassArrow from './boussole/MapCompassArrow'
 
 if (process.env.NEXT_PUBLIC_MAPTILER == null) {
 	throw new Error('You have to configure env NEXT_PUBLIC_MAPTILER, see README')
@@ -85,7 +86,7 @@ export default function Map({
 	const style = useMemo(() => getStyle(styleKey), [styleKey]),
 		styleUrl = style.url
 
-	const [map, triggerGeolocation] = useAddMap(
+	const [map, triggerGeolocation, geolocate] = useAddMap(
 		styleUrl,
 		setZoom,
 		setBbox,
@@ -377,6 +378,7 @@ export default function Map({
 				}}
 			/>
 			{isTransportsMode && <CenteredCross />}
+			<MapCompassArrow geolocate={geolocate} map={map} />
 			{map && (
 				<MapComponents
 					{...{
