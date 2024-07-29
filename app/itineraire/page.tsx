@@ -1,9 +1,8 @@
 import css from '@/components/css/convertToJs'
-import TechDependenciesGallery from '@/components/TechDependenciesGallery'
-import { PresentationWrapper } from '../presentation/UI'
 import Link from 'next/link'
+import { PresentationWrapper } from '../presentation/UI'
 
-const title = 'Calculez un itinéraire en France'
+const title = 'Calculer un itinéraire en France'
 const description = `
 Qu'il s'agisse d'un voyage ou d'un déplacement dans votre ville ou
 département, Cartes vous propose le trajet idéal et vous laisse

@@ -1,5 +1,6 @@
 import useSetSearchParams from '@/components/useSetSearchParams'
 import Link from 'next/link'
+import Image from 'next/image'
 import DateSelector from '../itinerary/DateSelector'
 import SncfSelect from './SncfSelect'
 import TransitFilter, { transitFilters } from './TransitFilter'
@@ -7,6 +8,7 @@ import { sortBy, unique } from '@/components/utils/utils'
 import StopByName from './StopByName'
 import { ModalCloseButton } from '../UI'
 import Routes from './TransportMapRoutes'
+import { PlaceButton } from '../PlaceButtonsUI'
 
 export default function TransportMap({
 	day,
@@ -17,6 +19,7 @@ export default function TransportMap({
 	transitFilter,
 	stop,
 	bbox,
+	setIsItineraryMode,
 }) {
 	if (!bbox) return
 	const setSearchParams = useSetSearchParams()
@@ -102,6 +105,24 @@ export default function TransportMap({
 						</Link>
 					</header>
 				)}
+
+				<PlaceButton
+					css={`
+						margin-bottom: 0.6rem;
+					`}
+				>
+					<button onClick={() => setIsItineraryMode(true)}>
+						<div>
+							<Image
+								src="/itinerary.svg"
+								width="50"
+								height="50"
+								alt="Lancer le mode itinéraire"
+							/>
+						</div>
+						<div>Itinéraire</div>
+					</button>
+				</PlaceButton>
 				{false && <DateSelector type="day" date={day} />}
 				{selectedAgency == null && data?.length > 0 && (
 					<section>

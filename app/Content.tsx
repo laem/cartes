@@ -225,7 +225,7 @@ export default function Content({
 				<ElectionsContent searchParams={searchParams} setSnap={setSnap} />
 			)}
 			{searchParams.favoris === 'oui' && <Bookmarks />}
-			{searchParams.transports === 'oui' && (
+			{searchParams.transports === 'oui' && !itinerary.isItineraryMode && (
 				<TransportMap
 					{...{
 						bbox,
@@ -236,6 +236,7 @@ export default function Content({
 						stop: searchParams.arret,
 						trainType: searchParams['type de train'],
 						transitFilter: searchParams['filtre'] || defaultTransitFilter,
+						setIsItineraryMode: itinerary.setIsItineraryMode,
 					}}
 				/>
 			)}
