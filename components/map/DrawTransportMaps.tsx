@@ -12,6 +12,7 @@ export default function DrawTransportMaps({
 	setTempStyle,
 	safeStyleKey,
 	searchParams,
+	hasItinerary,
 }) {
 	useEffect(() => {
 		setTempStyle('light')
@@ -100,12 +101,13 @@ export default function DrawTransportMaps({
 			agencyId={agencyId}
 			features={features}
 			map={map}
+			hasItinerary={hasItinerary}
 		/>
 	))
 }
 
-const DrawTransportMap = ({ map, agencyId, features }) => {
+const DrawTransportMap = ({ map, agencyId, features, hasItinerary }) => {
 	console.log('transportmap draw or redraw ', agencyId, features.length)
-	useDrawTransport(map, features, 'transitMap-agency-' + agencyId)
+	useDrawTransport(map, features, 'transitMap-agency-' + agencyId, hasItinerary)
 	return null
 }

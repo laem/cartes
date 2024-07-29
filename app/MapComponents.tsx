@@ -12,6 +12,7 @@ function MapComponents({
 	setTempStyle,
 	safeStyleKey,
 	searchParams,
+	hasItinerary,
 }) {
 	useDrawBookmarks(map)
 	useDrawOsmFeaturePolygon(map, vers?.osmFeature)
@@ -19,7 +20,14 @@ function MapComponents({
 		<>
 			{isTransportsMode && (
 				<DrawTransportMaps
-					{...{ map, transportsData, setTempStyle, safeStyleKey, searchParams }}
+					{...{
+						map,
+						transportsData,
+						setTempStyle,
+						safeStyleKey,
+						searchParams,
+						hasItinerary,
+					}}
 				/>
 			)}
 		</>

@@ -47,8 +47,13 @@ export default function useDrawTransit(map, transit, selectedConnection, date) {
 		console.log(featureCollection)
 		const id = 'transit-' + Math.random()
 
-		const source = map.getSource(id)
-		if (source) return
+		try {
+			const source = map.getSource(id)
+
+			if (source) return
+		} catch (e) {
+			console.log('Could not test source presence in useDrawTransit', e)
+		}
 		console.log('will (re)draw transport route geojson')
 		map.addSource(id, { type: 'geojson', data: featureCollection })
 

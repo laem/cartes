@@ -5,8 +5,39 @@ import { safeRemove } from './utils'
 /***
  * This hook draws transit lines on the map.
  */
-export default function useDrawTransport(map, features, drawKey) {
+export default function useDrawTransport(map, features, drawKey, hasItinerary) {
 	const setSearchParams = useSetSearchParams()
+
+	const id = 'transport-routes-' + drawKey
+	const linesId = id + '-lines'
+	const pointsId = id + '-points'
+
+	useEffect(() => {
+		if (!map) return
+		if (hasItinerary) console.log('plopouille', hasItinerary, linesId)
+		try {
+			const hasItineraryOpacity = 0.4
+			// setTimeout because it seems that useDrawTransport is drawn before
+			// useDrawTransit
+			setTimeout(() => {
+				map.setPaintProperty(
+					linesId,
+					'line-opacity',
+					hasItinerary ? hasItineraryOpacity : 1
+				)
+				map.setPaintProperty(
+					pointsId,
+					'circle-opacity',
+					hasItinerary ? hasItineraryOpacity : 1
+				)
+			}, 1000)
+		} catch (e) {
+			console.log(
+				'Error setting transport lines opacity when itinerary is on',
+				e
+			)
+		}
+	}, [hasItinerary, map, linesId])
 
 	useEffect(() => {
 		if (!map || !features?.length) return
@@ -39,10 +70,6 @@ export default function useDrawTransport(map, features, drawKey) {
 			type: 'FeatureCollection',
 			features,
 		}
-
-		const id = 'transport-routes-' + drawKey
-		const linesId = id + '-lines'
-		const pointsId = id + '-points'
 
 		const onClickRoutes = (e) => {
 			console.log(
@@ -93,7 +120,7 @@ export default function useDrawTransport(map, features, drawKey) {
 					// This is easy to check through the data, see that it runs only on selected
 					// days / hours and display it to the user TODO
 					'line-color': ['get', 'route_color'],
-					'line-opacity': ['get', 'opacity'],
+					//'line-opacity': ['get', 'opacity'],
 					'line-width': [
 						'interpolate',
 						['linear', 1],

@@ -77,6 +77,7 @@ export default function Map({
 }) {
 	const isMobile = useMediaQuery('(max-width: 800px)')
 	const mapContainerRef = useRef(null)
+	const stepsLength = state.filter((step) => step?.key).length
 	const [autoPitchPreference, setAutoPitchPreference] = useLocalStorage(
 		'autoPitchPreference',
 		null
@@ -173,11 +174,13 @@ export default function Map({
 	console.log('ploup', styleKey, safeStyleKey)
 	useDrawElectionClusterResults(map, styleKey, searchParams.filtre)
 
+	const hasItinerary = stepsLength > 1
+
 	useDrawTransport(
 		map,
 		clickedStopData[1]?.features,
 		safeStyleKey,
-		clickedStopData[0]
+		hasItinerary
 	)
 
 	useDrawItinerary(
@@ -269,7 +272,7 @@ export default function Map({
 	 * */
 	useEffect(() => {
 		if (!map || !vers || !osmFeature) return
-		if (state.filter((step) => step?.key).length > 1) return
+		if (stepsLength > 1) return
 
 		const tailoredZoom = //TODO should be defined by the feature's polygon if any
 			/* ['city'].includes(vers.choice.type)
@@ -305,7 +308,7 @@ export default function Map({
 		map,
 		vers,
 		osmFeature,
-		state,
+		stepsLength,
 		autoPitchPreferenceIsNo,
 		setAutoPitchPreference,
 	])
@@ -389,6 +392,7 @@ export default function Map({
 						isTransportsMode,
 						safeStyleKey,
 						searchParams,
+						hasItinerary,
 					}}
 				/>
 			)}
