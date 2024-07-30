@@ -1,5 +1,4 @@
-'use client'
-import styled from 'styled-components'
+import css from '../css/convertToJs'
 
 const createVariableString = (variables) => {
 	const result = Object.entries(variables)
@@ -12,9 +11,19 @@ const createVariableString = (variables) => {
 	return result
 }
 
-export const ColorProviderComponent = styled.div`
-	min-height: 100%;
-	display: flex;
-	flex-direction: column;
-	${(props) => createVariableString(props.$variables)}
-`
+export function ColorProviderComponent({ children, variables }) {
+	const variablesCss = createVariableString(variables)
+	console.log(variablesCss)
+	return (
+		<div
+			style={css`
+				min-height: 100%;
+				display: flex;
+				flex-direction: column;
+				${variablesCss}
+			`}
+		>
+			{children}
+		</div>
+	)
+}

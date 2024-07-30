@@ -107,7 +107,7 @@ type ProviderProps = {
 export function ThemeColorsProvider({ color, children }: ProviderProps) {
 	const colors = generateTheme(color)
 	return (
-		<ColorProviderComponent $variables={colors} id="colorProvider">
+		<ColorProviderComponent variables={colors} id="colorProvider">
 			{children}
 		</ColorProviderComponent>
 	)
