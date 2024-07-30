@@ -1,12 +1,7 @@
-import dynamic from 'next/dynamic'
 import { useMediaQuery } from 'usehooks-ts'
 
-const ModalSheet = dynamic(() => import('./ModalSheet'), {
-	ssr: true,
-})
-const SideSheet = dynamic(() => import('./SideSheet'), {
-	ssr: true,
-})
+import ModalSheet from './ModalSheet'
+import SideSheet from './SideSheet'
 
 export default function ModalSwitch(props) {
 	const isNotMobile = useMediaQuery('(min-width: 800px)')
