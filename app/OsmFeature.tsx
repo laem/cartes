@@ -1,29 +1,44 @@
-import Emoji from '@/components/Emoji'
-import { omit } from '@/components/utils/utils'
 import Address, { addressKeys } from '@/components/Address'
 import ContactAndSocial from '@/components/ContactAndSocial'
+import Emoji from '@/components/Emoji'
 import OsmLinks from '@/components/OsmLinks'
-import Tags, { SoloTags } from '@/components/Tags'
+import SimilarNodes from '@/components/SimilarNodes'
+import Tags, {
+	SoloTags,
+	getFrenchAdminLevel,
+	processTags,
+} from '@/components/Tags'
 import Wikipedia from '@/components/Wikipedia'
+import { omit } from '@/components/utils/utils'
 import languageIcon from '@/public/language.svg'
 import Image from 'next/image'
 import GareInfo from './GareInfo'
-import Heritage, { isHeritageTag } from './osm/Heritage'
+import Heritage from './osm/Heritage'
 import { OpeningHours } from './osm/OpeningHours'
 import getName, { getNameKeys, getNames } from './osm/getName'
-import { getTagLabels } from './osmTagLabels'
 import Brand, { Wikidata } from './tags/Brand'
 import Stop, { isNotTransportStop, transportKeys } from './transport/stop/Stop'
 import { computeSncfUicControlDigit } from './utils'
-import SimilarNodes from '@/components/SimilarNodes'
 
 export default function OsmFeature({ data, transportStopData }) {
 	if (!data.tags) return null
 	const { tags } = data
-	console.log('tags', tags)
 
 	const id = data.id
 	const featureType = data.type || data.featureType
+
+	/**
+	 * TODO this is a suboptimal design :
+	 * - processing functions that handle objects and text should be extracted from
+	 * react components in order to be usable in app/page.tsx metadata creation
+	 * - this tag extraction design should be replaced by specifying tagHandlers
+	 * that produce :
+	 *   - a react component
+	 *   - a pure text rendering
+	 *   - the tags they are excluding from basic rendering
+	 * In an ideal world, all tags will be tailored
+	 * Rendez-vous in 2029 to see if autonomous cars are to be seen in the french streets before all osm tags are classified :)
+	 */
 
 	// Copy tags here that could be important to qualify the object with icons :
 	// they should not be extracted, just copied
@@ -61,19 +76,7 @@ export default function OsmFeature({ data, transportStopData }) {
 		...rest
 	} = tags
 
-	const isFrenchAdministration = tags['ref:FR:SIREN'] || tags['ref:INSEE'] // this is an attempt, edge cases can exist
-	const frenchAdminLevel =
-		isFrenchAdministration &&
-		{
-			3: 'Outre-mer français',
-			4: 'Région française',
-			5: 'Circonscription départementale',
-			6: 'Département',
-			7: 'Arrondissement départemental',
-			8: 'Commune',
-			9: 'Arrondissement municipal',
-			10: 'Quartier',
-		}[adminLevel]
+	const frenchAdminLevel = getFrenchAdminLevel(tags, adminLevel)
 
 	const phone = phone1 || phone2 || phone3,
 		website = website1 || website2
@@ -216,7 +219,15 @@ export default function OsmFeature({ data, transportStopData }) {
 			)}
 			{opening_hours && <OpeningHours opening_hours={opening_hours} />}
 			<ContactAndSocial
-				{...{ email: email || email2, instagram, facebook, whatsapp, youtube, linkedin, siret }}
+				{...{
+					email: email || email2,
+					instagram,
+					facebook,
+					whatsapp,
+					youtube,
+					linkedin,
+					siret,
+				}}
 			/>
 			{!isNotTransportStop(tags) && (
 				<Stop tags={tags} data={transportStopData} />
@@ -263,18 +274,3 @@ export default function OsmFeature({ data, transportStopData }) {
 		</div>
 	)
 }
-
-export const processTags = (filteredRest) => {
-	const translatedTags = Object.entries(filteredRest)
-			// Tags to exclude because handled by other components that provide a test function
-			.filter(([k, v]) => !isHeritageTag(k))
-			.map(([key, value]) => {
-				const tagLabels = getTagLabels(key, value)
-				return [{ [key]: value }, tagLabels]
-			}),
-		keyValueTags = translatedTags.filter(([, t]) => t.length === 2),
-		soloTags = translatedTags.filter(([, t]) => t.length === 1)
-
-	return [keyValueTags, soloTags]
-}
-const cleanHttp = (v) => v.replace(/https?:\/\//g, '').replace(/www\./g, '')

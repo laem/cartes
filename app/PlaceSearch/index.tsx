@@ -1,6 +1,5 @@
 import GeoInputOptions from '@/components/GeoInputOptions'
 import { getArrayIndex, replaceArrayIndex } from '@/components/utils/utils'
-import { buildAddress } from '@/components/Address'
 import fetchPhoton from '@/components/fetchPhoton'
 import { isIOS } from '@react-aria/utils'
 import { useEffect, useState } from 'react'
@@ -16,6 +15,7 @@ import SearchHereButton from './_components/SearchResults/SearchHereButton'
 import SearchResultsContainer from './_components/SearchResults/SearchResultsContainer'
 import { Geolocate } from './_components/Geolocate'
 import { FromHereLink } from './_components/FromHereLink'
+import { buildAddress } from '@/components/osm/buildAddress'
 
 /* I'm  not sure of the interest to attache `results` to each state step.
  * It could be cached across the app. No need to re-query photon for identical

@@ -107,6 +107,7 @@ export default function TransportMap({
 				)}
 
 				<PlaceButton
+					as="div"
 					css={`
 						margin-bottom: 0.6rem;
 					`}

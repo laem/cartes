@@ -13,6 +13,7 @@ import {
 	getTransitFilter,
 	transitFilters,
 } from './transport/TransitFilter'
+import buildDescription from '@/components/osm/buildDescription'
 
 export async function generateMetadata(
 	{ params, searchParams }: Props,
@@ -73,10 +74,11 @@ export async function generateMetadata(
 
 	if (!step) return null
 
-	const tags = step.osmFeature?.tags || {}
-	console.log('TAGS', tags)
+	const osmFeature = step.osmFeature
+	const tags = osmFeature?.tags || {}
+	const modifiedTime = osmFeature?.timestamp
 	const title = step.name || getName(tags),
-		description = tags.description
+		description = buildDescription(step.osmFeature)
 
 	const image = tags.image || (await fetchOgImage(getUrl(tags)))
 
@@ -85,14 +87,15 @@ export async function generateMetadata(
 		title: title,
 		description,
 		openGraph: {
-			images: [image],
+			images: image ? [image] : undefined,
+			modifiedTime,
+			type: 'article',
 			// TODO next doesn't understand this link with only searchParams. Could be
 			// symtomatic of a bad choice we made : the id / name should be in the
 			// path, not the searchParams ? Could it lead to RSC generation ?
 			//url: '/?' + searchParamsString,
 		},
 	}
-	console.log('METADATA', metadata, searchParamsString)
 	return metadata
 }
 const Page = ({ searchParams }) => {

@@ -3,9 +3,9 @@ import Link from 'next/link'
 import Image from 'next/image'
 import { PlaceButton } from './PlaceButtonsUI'
 import { encodePlace } from './utils'
-import { buildAddress } from '@/components/Address'
 import turfDistance from '@turf/distance'
 import { computeHumanDistance } from './RouteRésumé'
+import { buildAddress } from '@/components/osm/buildAddress'
 
 export const geoFeatureToDestination = (feature) => {
 	if (feature.properties.id) {

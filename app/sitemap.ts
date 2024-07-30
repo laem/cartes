@@ -1,9 +1,10 @@
 import type { MetadataRoute } from 'next'
-import { getAllPostIds } from '@/app/blog/getPosts'
+import { allArticles } from '@/.contentlayer/generated'
 import { getRecentInterestingNodes } from '@/components/watchOsmPlaces.ts'
 import { gtfsServerUrl } from './serverUrls'
+import { getLastEdit } from './blog/utils'
 
-const domain = 'https://cartes.app'
+export const domain = 'https://cartes.app'
 
 const basePaths = [
 	'',
@@ -32,20 +33,28 @@ const generateAgencies = async () => {
 export default async function sitemap(): MetadataRoute.Sitemap {
 	const newNodes = await getRecentInterestingNodes()
 
-	const blogEntries = getAllPostIds().map(({ params: { id } }) => '/blog/' + id)
-	const agencies = await generateAgencies()
-	const entries = [...basePaths, ...blogEntries, ...agencies, ...newNodes].map(
-		(path) => ({
-			url: escapeXml(domain + path),
-			lastModified: new Date(),
-			changeFrequency: 'weekly',
+	const blogEntries = await Promise.all(
+		allArticles.map(async ({ url, date, _raw: { flattenedPath } }) => {
+			const lastEdit = await getLastEdit(flattenedPath)
+
+			return {
+				url: escapeXml(domain + url),
+				lastModified: new Date(lastEdit),
+			}
 		})
 	)
-	console.log('Sitemap', entries)
+	const agencies = await generateAgencies()
+	const entries = [
+		...[...basePaths, ...agencies].map((path) => ({
+			url: escapeXml(domain + path),
+		})),
+		...blogEntries,
+		...newNodes,
+	]
 	return entries
 }
 
-function escapeXml(unsafe) {
+export function escapeXml(unsafe) {
 	return unsafe.replace(/[<>&'"]/g, function (c) {
 		switch (c) {
 			case '<':

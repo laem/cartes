@@ -3,7 +3,7 @@ import icons from '@/app/icons/icons.json'
 import { omit } from './utils/utils'
 import Highlighter from 'react-highlight-words'
 import css from './css/convertToJs'
-import { buildAddress } from './Address'
+import { buildAddress } from './osm/buildAddress'
 
 // Beware, this file is shared by the Map app, and the carbon footprint / € calculators
 

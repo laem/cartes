@@ -1,10 +1,12 @@
 import Icons from '@/app/icons/Icons'
+import { isHeritageTag } from '@/app/osm/Heritage'
 import {
+	getTagLabels,
 	tagNameCorrespondance,
 	tagValueCorrespondance,
 } from '@/app/osmTagLabels'
 
-const beginningsOfSecondaryTags = ['source:', 'fixme:', 'note', 'ref:']
+const beginningsOfSecondaryTags = ['source', 'fixme:', 'note', 'ref:']
 
 const isSecondary = ([k, v]) =>
 	beginningsOfSecondaryTags.some((begining) => k.startsWith(begining))
@@ -42,6 +44,35 @@ export default function Tags({ tags }) {
 			))}
 		</ul>
 	)
+}
+const isFrenchAdministration = (tags) =>
+	tags['ref:FR:SIREN'] || tags['ref:INSEE'] // this is an attempt, edge cases can exist
+
+export const getFrenchAdminLevel = (tags, adminLevel) =>
+	isFrenchAdministration(tags) &&
+	{
+		3: 'Outre-mer français',
+		4: 'Région française',
+		5: 'Circonscription départementale',
+		6: 'Département',
+		7: 'Arrondissement départemental',
+		8: 'Commune',
+		9: 'Arrondissement municipal',
+		10: 'Quartier',
+	}[adminLevel]
+
+export const processTags = (filteredRest) => {
+	const translatedTags = Object.entries(filteredRest)
+			// Tags to exclude because handled by other components that provide a test function
+			.filter(([k, v]) => !isHeritageTag(k))
+			.map(([key, value]) => {
+				const tagLabels = getTagLabels(key, value)
+				return [{ [key]: value }, tagLabels]
+			}),
+		keyValueTags = translatedTags.filter(([, t]) => t.length === 2),
+		soloTags = translatedTags.filter(([, t]) => t.length === 1)
+
+	return [keyValueTags, soloTags]
 }
 
 export function SoloTags({ tags, iconsOnly, compact }) {
