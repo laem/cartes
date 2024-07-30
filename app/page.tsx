@@ -98,7 +98,17 @@ export async function generateMetadata(
 	}
 	return metadata
 }
-const Page = ({ searchParams }) => {
+
+const Page = async ({ searchParams }) => {
+	const allez = searchParams.allez ? searchParams.allez.split('->') : []
+
+	const newPoints = allez.map((point) => stepOsmRequest(point))
+	const state = await Promise.all(newPoints).catch((error) => {
+		console.log('Error fetching osm nodes from "allez" searchParam ', allez)
+		console.log(error)
+		return [] // fallback to client side
+	})
+
 	return (
 		<main
 			style={{
@@ -107,7 +117,7 @@ const Page = ({ searchParams }) => {
 				minHeight: '100vh',
 			}}
 		>
-			<Container searchParams={searchParams} />
+			<Container searchParams={searchParams} state={state} />
 		</main>
 	)
 }

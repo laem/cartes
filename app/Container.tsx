@@ -46,7 +46,7 @@ const Map = dynamic(() => import('./Map'), {
 	ssr: false,
 })
 
-export default function Container({ searchParams }) {
+export default function Container({ searchParams, state: givenState }) {
 	const setSearchParams = useSetSearchParams()
 	const [focusedImage, focusImage] = useState(null)
 	const [bbox, setBbox] = useState(null)
@@ -78,7 +78,7 @@ export default function Container({ searchParams }) {
 	)
 	// In this query param is stored an array of points. If only one, it's just a
 	// place focused on.
-	const [state, setState] = useState([])
+	const [state, setState] = useState(givenState)
 
 	const allez = useMemo(() => {
 		return searchParams.allez ? searchParams.allez.split('->') : []
