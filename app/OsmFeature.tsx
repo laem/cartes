@@ -216,7 +216,15 @@ export default function OsmFeature({ data, transportStopData }) {
 			)}
 			{opening_hours && <OpeningHours opening_hours={opening_hours} />}
 			<ContactAndSocial
-				{...{ email: email || email2, instagram, facebook, whatsapp, youtube, linkedin, siret }}
+				{...{
+					email: email || email2,
+					instagram,
+					facebook,
+					whatsapp,
+					youtube,
+					linkedin,
+					siret,
+				}}
 			/>
 			{!isNotTransportStop(tags) && (
 				<Stop tags={tags} data={transportStopData} />
@@ -275,6 +283,7 @@ export const processTags = (filteredRest) => {
 		keyValueTags = translatedTags.filter(([, t]) => t.length === 2),
 		soloTags = translatedTags.filter(([, t]) => t.length === 1)
 
+	console.log('tags', { translatedTags, keyValueTags, soloTags })
 	return [keyValueTags, soloTags]
 }
 const cleanHttp = (v) => v.replace(/https?:\/\//g, '').replace(/www\./g, '')

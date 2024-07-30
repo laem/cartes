@@ -4,12 +4,14 @@ import {
 	tagValueCorrespondance,
 } from '@/app/osmTagLabels'
 
-const beginningsOfSecondaryTags = ['source:', 'fixme:', 'note', 'ref:']
+const beginningsOfSecondaryTags = ['source', 'fixme:', 'note', 'ref:']
 
 const isSecondary = ([k, v]) =>
+	console.log('tags issecondary', k) ||
 	beginningsOfSecondaryTags.some((begining) => k.startsWith(begining))
 
 export default function Tags({ tags }) {
+	console.log('tags in Tags', tags)
 	return (
 		<ul
 			css={`
