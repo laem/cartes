@@ -31,7 +31,11 @@ const generateAgencies = async () => {
 }
 
 export default async function sitemap(): MetadataRoute.Sitemap {
-	const newNodes = await getRecentInterestingNodes()
+	const isVercel = process.env.NEXT_PUBLIC_VERCEL_BRANCH_URL
+	let newNodes = []
+	if (isVercel) {
+		newNodes = await getRecentInterestingNodes()
+	}
 
 	const blogEntries = await Promise.all(
 		allArticles.map(async ({ url, date, _raw: { flattenedPath } }) => {
