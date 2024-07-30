@@ -99,21 +99,17 @@ const generateTheme = (themeColor?: string) => {
 	}
 }
 
+export const colors = generateTheme()
+
 type ProviderProps = {
 	color?: string
 	children: React.ReactNode
 }
 
-export function ThemeColorsProvider({ color, children }: ProviderProps) {
-	const colors = generateTheme(color)
+export function ThemeColorsProvider({ children }: ProviderProps) {
 	return (
 		<ColorProviderComponent variables={colors} id="colorProvider">
 			{children}
 		</ColorProviderComponent>
 	)
 }
-
-export const computeCssVariable = (name) =>
-	getComputedStyle(document.querySelector('#colorProvider')).getPropertyValue(
-		name
-	)

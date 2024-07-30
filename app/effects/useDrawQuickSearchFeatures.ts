@@ -1,4 +1,3 @@
-import { computeCssVariable } from '@/components/utils/colors'
 import parseOpeningHours from 'opening_hours'
 import { categoryIconUrl } from '../QuickFeatureSearch'
 import { useEffect } from 'react'
@@ -7,6 +6,7 @@ import useSetSearchParams from '@/components/useSetSearchParams'
 import { encodePlace } from '../utils'
 import { buildAllezPart } from '../SetDestination'
 import { safeRemove } from './utils'
+import { colors } from '@/components/utils/colors'
 
 export default function useDrawQuickSearchFeatures(
 	map,
@@ -114,7 +114,7 @@ export default function useDrawQuickSearchFeatures(
 					source: baseId + 'ways',
 					layout: {},
 					paint: {
-						'fill-color': computeCssVariable('--lightestColor'),
+						'fill-color': colors['lightestColor'],
 						'fill-opacity': 0.6,
 					},
 				})
@@ -124,7 +124,7 @@ export default function useDrawQuickSearchFeatures(
 					source: baseId + 'ways',
 					layout: {},
 					paint: {
-						'line-color': computeCssVariable('--color'),
+						'line-color': colors['color'],
 						'line-width': 2,
 					},
 				})
@@ -153,7 +153,7 @@ export default function useDrawQuickSearchFeatures(
 					paint: {
 						'circle-radius': 4,
 						'circle-color': ['get', 'isOpenColor'],
-						'circle-stroke-color': computeCssVariable('--color'),
+						'circle-stroke-color': colors['color'],
 						'circle-stroke-width': 1.5,
 						'circle-translate': [12, -12],
 					},
