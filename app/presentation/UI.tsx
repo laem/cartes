@@ -1,6 +1,5 @@
 'use client'
 
-import Link from 'next/link'
 import styled from 'styled-components'
 
 export const PresentationWrapper = styled.div`
