@@ -1,9 +1,5 @@
 import useSetSearchParams from '@/components/useSetSearchParams'
-import {
-	AddressDisc,
-	AddressDiscContainer,
-	buildAddress,
-} from '@/components/Address'
+import { AddressDisc, AddressDiscContainer } from '@/components/Address'
 import { SoloTags } from '@/components/Tags'
 import Image from 'next/image'
 import Link from 'next/link'
@@ -13,6 +9,7 @@ import { processTags } from './OsmFeature'
 import { geoFeatureToDestination } from './SetDestination'
 import { DialogButton } from './UI'
 import getName from './osm/getName'
+import { buildAddress } from '@/components/osm/buildAddress'
 
 export default function QuickBookmarks({ oldAllez }) {
 	const [bookmarks] = useLocalStorage('bookmarks', [])

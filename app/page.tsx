@@ -13,6 +13,7 @@ import {
 	getTransitFilter,
 	transitFilters,
 } from './transport/TransitFilter'
+import buildDescription from '@/components/osm/buildDescription'
 
 export async function generateMetadata(
 	{ params, searchParams }: Props,
@@ -76,7 +77,7 @@ export async function generateMetadata(
 	const tags = step.osmFeature?.tags || {}
 	console.log('TAGS', tags)
 	const title = step.name || getName(tags),
-		description = tags.description
+		description = buildDescription(step.osmFeature)
 
 	const image = tags.image || (await fetchOgImage(getUrl(tags)))
 
