@@ -1,4 +1,5 @@
 import Content from './Content'
+import { modalSheetBoxShadow } from './ModalSheetReminder'
 
 export default function SideSheet(props) {
 	return (
@@ -21,6 +22,13 @@ export default function SideSheet(props) {
 				overflow: auto;
 				&::-webkit-scrollbar {
 					display: none;
+				}
+				@media (max-width: 800px) {
+					position: fixed;
+					bottom: 0;
+					left: 0;
+					width: 100vw;
+					${modalSheetBoxShadow}
 				}
 			`}
 		>

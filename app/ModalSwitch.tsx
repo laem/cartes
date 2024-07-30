@@ -1,17 +1,20 @@
-import dynamic from 'next/dynamic'
 import { useMediaQuery } from 'usehooks-ts'
 
-const ModalSheet = dynamic(() => import('./ModalSheet'), {
-	ssr: true,
-})
-const SideSheet = dynamic(() => import('./SideSheet'), {
-	ssr: true,
-})
+import ModalSheet from './ModalSheet'
+import SideSheet from './SideSheet'
+import { useEffect, useState } from 'react'
+import Content from './Content'
 
 export default function ModalSwitch(props) {
-	const isNotMobile = useMediaQuery('(min-width: 800px)')
+	const [mode, setMode] = useState('no-js')
+	const test = useMediaQuery('(min-width: 800px)')
 
-	if (isNotMobile) return <SideSheet {...props} />
+	useEffect(() => {
+		setMode(test ? 'desktop' : 'mobile')
+	}, [setMode, test])
+
+	if (mode === 'no-js') return <SideSheet {...props} />
+	if (mode === 'desktop') return <SideSheet {...props} />
 
 	return <ModalSheet {...props} />
 }

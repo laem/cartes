@@ -40,13 +40,15 @@ import useTransportStopData from './transport/useTransportStopData'
 import useGeocodeRightClick from './effects/useGeocodeRightClick'
 import useOverpassRequest from './effects/useOverpassRequest'
 import { initialSnap } from './ModalSheet'
+import { mapLibreBboxToOverpass } from '@/components/mapUtils'
+import { useDebounce } from '@/components/utils'
 // Map is forced as dynamic since it can't be rendered by nextjs server-side.
 // There is almost no interest to do that anyway, except image screenshots
 const Map = dynamic(() => import('./Map'), {
 	ssr: false,
 })
 
-export default function Container({ searchParams }) {
+export default function Container({ searchParams, state: givenState }) {
 	const setSearchParams = useSetSearchParams()
 	const [focusedImage, focusImage] = useState(null)
 	const [bbox, setBbox] = useState(null)
@@ -78,7 +80,7 @@ export default function Container({ searchParams }) {
 	)
 	// In this query param is stored an array of points. If only one, it's just a
 	// place focused on.
-	const [state, setState] = useState([])
+	const [state, setState] = useState(givenState)
 
 	const allez = useMemo(() => {
 		return searchParams.allez ? searchParams.allez.split('->') : []
@@ -174,10 +176,10 @@ export default function Container({ searchParams }) {
 	/* The bbox could be computed from the URL hash, for this to run on the
 	 * server but I'm not sure we want it, and I'm not sure Next can get the hash
 	 * server-side, it's a client-side html element */
-	const simpleArrayBbox = useMemo(() => {
-		if (!bbox) return
-		return [bbox[0][1], bbox[0][0], bbox[1][1], bbox[1][0]]
-	}, [bbox])
+	const simpleArrayBbox = useDebounce(
+		bbox && mapLibreBboxToOverpass(bbox),
+		200 // TODO Ideally, just above https://maplibre.org/maplibre-gl-js/docs/API/type-aliases/FlyToOptions/
+	)
 
 	const [quickSearchFeatures] = useOverpassRequest(simpleArrayBbox, category)
 	const quickSearchFeaturesLoaded =

@@ -1,5 +1,6 @@
 import Emoji from '@/components/Emoji'
 
+export const modalSheetBoxShadow = `box-shadow: rgba(0, 0, 0, 0.3) 0px -2px 16px;`
 const popSize = 6
 export default function ModalSheetReminder({ setOpen }) {
 	return (
@@ -14,7 +15,7 @@ export default function ModalSheetReminder({ setOpen }) {
 				height: ${popSize}rem;
 				border-radius: ${popSize}rem;
 				border: 2px solid var(--color);
-				box-shadow: rgba(0, 0, 0, 0.3) 0px -2px 16px;
+				${modalSheetBoxShadow}
 				cursor: pointer;
 				> span {
 					position: absolute;

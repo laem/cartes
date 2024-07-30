@@ -1,5 +1,5 @@
 'use client'
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import { PlaceButton } from './PlaceButtonsUI'
 import { buildAllezPart } from './SetDestination'
 import { encodePlace } from './utils'
@@ -12,6 +12,11 @@ export default function ShareButton({ osmFeature, geocodedClickedPoint }) {
 	console.log('purple share', osmFeature, geocodedClickedPoint)
 
 	const urlBase = getFetchUrlBase()
+	const [navigatorShare, setNavigatorShare] = useState(false)
+
+	useEffect(() => {
+		if (navigator.share) setNavigatorShare(true)
+	}, [setNavigatorShare])
 
 	const url = encodeURI(
 		`${urlBase}/?allez=${
@@ -34,9 +39,10 @@ export default function ShareButton({ osmFeature, geocodedClickedPoint }) {
 		geocodedClickedPoint &&
 		(getName(osmFeature?.tags || {}) ||
 			`Lon ${geocodedClickedPoint.longitude} | lat ${geocodedClickedPoint.lat}`)
+
 	return (
 		<PlaceButton>
-			{navigator.share ? (
+			{navigatorShare ? (
 				<button
 					css={`
 						margin: 0 auto !important;
