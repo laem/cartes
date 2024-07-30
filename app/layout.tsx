@@ -1,8 +1,7 @@
-import css from '@/components/css/convertToJs'
 import { ThemeColorsProvider } from '@/components/utils/colors'
 import { Metadata } from 'next'
-import StyledComponentsRegistry from '../lib/registry'
 import '../globals.css'
+import StyledComponentsRegistry from '../lib/registry'
 
 const title = `Cartes`
 export const description =
