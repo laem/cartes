@@ -87,7 +87,7 @@ export async function generateMetadata(
 		title: title,
 		description,
 		openGraph: {
-			images: [image],
+			images: image ? [image] : undefined,
 			modifiedTime,
 			type: 'article',
 			// TODO next doesn't understand this link with only searchParams. Could be
