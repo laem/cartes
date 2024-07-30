@@ -95,7 +95,7 @@ const generateTheme = (themeColor?: string) => {
 		darkestColor,
 		darkerColor,
 		darkerColor2,
-		palettes,
+		//palettes,
 	}
 }
 
