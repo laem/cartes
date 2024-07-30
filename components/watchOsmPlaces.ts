@@ -1,3 +1,5 @@
+import { domain, escapeXml } from '@/app/sitemap'
+
 const overpassRequest = `
 
 [out:json]
@@ -38,8 +40,12 @@ export const getRecentInterestingNodes = async () => {
 	const json = await request.json()
 
 	const nodes = json.elements
-	const paths = nodes.map(
-		(node) => `/?allez=${node.tags.name}|n${node.id}|${node.lon}|${node.lat}`
-	)
-	return paths
+	console.log('OVERPASS', nodes)
+	const entries = nodes.map((node) => ({
+		url: escapeXml(
+			domain + `/?allez=${node.tags.name}|n${node.id}|${node.lon}|${node.lat}`
+		),
+		lastModified: node.timestamp && new Date(node.timestamp),
+	}))
+	return entries
 }
