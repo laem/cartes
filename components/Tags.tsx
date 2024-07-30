@@ -12,7 +12,6 @@ const isSecondary = ([k, v]) =>
 	beginningsOfSecondaryTags.some((begining) => k.startsWith(begining))
 
 export default function Tags({ tags }) {
-	console.log('tags in Tags', tags)
 	return (
 		<ul
 			css={`
@@ -73,7 +72,6 @@ export const processTags = (filteredRest) => {
 		keyValueTags = translatedTags.filter(([, t]) => t.length === 2),
 		soloTags = translatedTags.filter(([, t]) => t.length === 1)
 
-	console.log('tags', { translatedTags, keyValueTags, soloTags })
 	return [keyValueTags, soloTags]
 }
 

@@ -23,7 +23,6 @@ import { computeSncfUicControlDigit } from './utils'
 export default function OsmFeature({ data, transportStopData }) {
 	if (!data.tags) return null
 	const { tags } = data
-	console.log('tags', tags)
 
 	const id = data.id
 	const featureType = data.type || data.featureType

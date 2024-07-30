@@ -37,8 +37,6 @@ export default async function sitemap(): MetadataRoute.Sitemap {
 	const entries = [...basePaths, ...blogEntries, ...agencies, ...newNodes].map(
 		(path) => ({
 			url: escapeXml(domain + path),
-			lastModified: new Date(),
-			changeFrequency: 'weekly',
 		})
 	)
 	console.log('Sitemap', entries)
