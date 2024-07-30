@@ -1,4 +1,16 @@
 import { domain, escapeXml } from '@/app/sitemap'
+import { encodePlace } from '@/app/utils'
+
+const firstDayOfCurrentMonth = () => {
+	const d = new Date()
+	d.setDate(1)
+
+	const addTrailingZero = (num) => (('' + num).length === 2 ? '' : '0') + num
+	const month = addTrailingZero(d.getMonth() + 1)
+	const day = addTrailingZero(d.getDay())
+
+	return [d.getFullYear(), month, day].join('-')
+}
 
 const overpassRequest = `
 
@@ -7,7 +19,7 @@ const overpassRequest = `
 ;
 node
   (47.54594463736,-3.8615661010451,48.380881862859,-2.7931456908889)
-  (newer:"2024-07-12T00:00:00Z")
+  (newer:"${firstDayOfCurrentMonth()}T00:00:00Z")
   (if:version("")==1)
   ->.all;
 (
@@ -41,14 +53,17 @@ export const getRecentInterestingNodes = async () => {
 
 	const nodes = json.elements
 	console.log('OVERPASS', nodes)
-	const entries = nodes.map((node) => ({
-		url: escapeXml(
-			domain +
-				`/?allez=${encodeURIComponent(node.tags.name)}|n${node.id}|${
-					node.lon
-				}|${node.lat}`
-		),
-		lastModified: node.timestamp && new Date(node.timestamp),
-	}))
+	const entries = nodes.map((node) => {
+		const typePart = encodePlace(node.type, node.id)
+		return {
+			url: escapeXml(
+				domain +
+					`/?allez=${encodeURIComponent(node.tags.name)}|${typePart}|${
+						node.lon
+					}|${node.lat}`
+			),
+			lastModified: node.timestamp && new Date(node.timestamp),
+		}
+	})
 	return entries
 }
