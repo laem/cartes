@@ -12,6 +12,7 @@ const firstDayOfCurrentMonth = () => {
 	return [d.getFullYear(), month, day].join('-')
 }
 
+//TODO getting ways would be interesting but is more complicated
 const overpassRequest = `
 
 [out:json]
