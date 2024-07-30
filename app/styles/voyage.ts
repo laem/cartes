@@ -2091,7 +2091,7 @@ export default function voyageStyle(
 					'icon-size': {
 						stops: [
 							[16, 0.7],
-							[18, 1],
+							[19, 1],
 						],
 					},
 					'text-font': ['Roboto Regular', 'Noto Sans Regular'],
@@ -2100,10 +2100,15 @@ export default function voyageStyle(
 					'icon-rotate': ['match', ['get', 'oneway'], 1, 90, -90],
 					'icon-padding': 2,
 					'symbol-spacing': 75,
+					// This seems to break after a diff from other maptiler styles. Dunno
+					// why . Hence we disable the diff
 					'symbol-placement': 'line',
 					'icon-rotation-alignment': 'map',
 				},
-				paint: { 'icon-opacity': 0.5 },
+				paint: {
+					'icon-color': 'hsl(0, 0%, 65%)',
+					'icon-opacity': 0.5,
+				},
 				filter: [
 					'all',
 					['has', 'oneway'],

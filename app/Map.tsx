@@ -241,7 +241,9 @@ export default function Map({
 		// hence this diff: false. We're not loosing much
 		// UPDATE 26 april 2024, maplibre 4.1.3, seems to be working now, hence
 		// diff: true :)
-		map.setStyle(styleUrl, { diff: true }) //setting styleKey!== 'base' doesn't work, probably because the error comes from switching from base to another ?
+		map.setStyle(styleUrl, { diff: false }) //setting styleKey!== 'base' doesn't work, probably because the error comes from switching from base to another ?
+		//TODO the Oneway style in voyage style gets corrupted after switching to
+		//transit or another style, hence this temporary disable diff
 		setTimeout(() => {
 			// Hack : I haven't found a way to know when this style change is done, hence this setTimeout, absolutely not a UI problem but could be too quick ?
 			setSafeStyleKey(styleKey)
