@@ -43,7 +43,10 @@ export const getRecentInterestingNodes = async () => {
 	console.log('OVERPASS', nodes)
 	const entries = nodes.map((node) => ({
 		url: escapeXml(
-			domain + `/?allez=${node.tags.name}|n${node.id}|${node.lon}|${node.lat}`
+			domain +
+				`/?allez=${encodeURIComponent(node.tags.name)}|n${node.id}|${
+					node.lon
+				}|${node.lat}`
 		),
 		lastModified: node.timestamp && new Date(node.timestamp),
 	}))
