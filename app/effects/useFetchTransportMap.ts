@@ -128,7 +128,6 @@ export default function useFetchTransportMap(
 		return data
 	}, [agencyIdsHash])
 
-	console.log('orange', transportsData)
 	return active ? transportsData : null
 }
 

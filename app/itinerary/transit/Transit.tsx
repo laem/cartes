@@ -27,7 +27,6 @@ import {
  * decisions are stabilized. We don't have many users yet */
 
 export default function Transit({ itinerary, searchParams }) {
-	console.log('orange', itinerary)
 	const data = itinerary.routes.transit,
 		date = itinerary.date
 	if (data.state === 'loading') return <TransitLoader />
