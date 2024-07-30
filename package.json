@@ -69,7 +69,7 @@
 		"eslint-config-next": "^15.0.0-rc.0",
 		"eslint-plugin-next": "^0.0.0",
 		"framer-motion": "^11.2.10",
-		"fuse.js": "6.6.2",
+		"fuse.js": "^7.0.0",
 		"gray-matter": "^4.0.3",
 		"jsdom": "^22.1.0",
 		"maplibre-gl": "^4.5.0",

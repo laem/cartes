@@ -7,6 +7,10 @@ export default function useSetSearchParams() {
 	const router = useRouter()
 	const pathname = usePathname()
 	const searchParams = useSearchParams()
+	const [hash, setHash] = useState('')
+	useEffect(() => {
+		setHash(window.location.hash)
+	}, [searchParams])
 
 	const createQueryString = useCallback(
 		(newSearchParams: object, clear: boolean) => {
@@ -26,10 +30,7 @@ export default function useSetSearchParams() {
 		clear: boolean = false
 	) => {
 		const newUrl =
-			pathname +
-			'?' +
-			createQueryString(newSearchParams, clear) +
-			window.location.hash
+			pathname + '?' + createQueryString(newSearchParams, clear) + hash
 		if (!noPush) router.push(newUrl)
 		else return newUrl
 	}

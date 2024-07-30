@@ -1,7 +1,7 @@
 import useSetSearchParams from '@/components/useSetSearchParams'
 import { omit } from '@/components/utils/utils'
 import { getCategory } from '@/components/categories'
-import Fuse from 'fuse.js'
+import Fuse from 'fuse.js/basic'
 import Image from 'next/image'
 import Link from 'next/link'
 import { useMemo, useState } from 'react'
@@ -41,7 +41,6 @@ export default function QuickFeatureSearch({
 	searchParams,
 	searchInput,
 	setSnap,
-
 	snap,
 	loaded,
 }) {
