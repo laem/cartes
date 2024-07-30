@@ -8,7 +8,7 @@ export const buildAddress = (t: object, noPrefix = false) => {
 	// plenty of things more important than a beautiful address for now
 	const firstPart =
 		g('housenumber') || g('street') ? `${g('housenumber')} ${g('street')}` : ''
-	const address = `${firstPart} ${
+	const address = `${firstPart}${
 		firstPart && (g('postcode') || g('city') || g('state')) ? ', ' : ''
 	} ${g('postcode')} ${g('city')} ${g('state')}
 `
