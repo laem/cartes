@@ -19,6 +19,7 @@ export default function useDrawQuickSearchFeatures(
 	const setSearchParams = useSetSearchParams()
 	useEffect(() => {
 		if (!map || !features || features.length < 1 || !category) return
+		console.log('orange', features)
 
 		const featuresWithOpen = features.map((f) => {
 			if (!f.tags || !f.tags.opening_hours) {
