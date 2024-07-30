@@ -359,8 +359,8 @@
   query: '[shop=bicycle]'
   icon: bicycle
 
-- title: Parking à vélo
-  name: parking-vélo
+- name: parking-vélo
+  title: Parking à vélo
   category: Déplacements
   dictionary:
     - pince-roue
@@ -372,8 +372,8 @@
   query: '[amenity=bicycle_parking]'
   icon: bicycle-parking
 
-- name: réparation-velo
-  titre: Réparation de vélo
+- name: reparation-velo
+  title: Réparation de vélo
   category: Déplacements
   dictionary:
     - réparation
@@ -398,7 +398,8 @@
   query: '[amenity=fuel]'
   icon: essence
 
-- name: Borne électrique
+- name: Borne electrique
+  title: Borne électrique
   category: Déplacements
   dictionary:
     - recharge
