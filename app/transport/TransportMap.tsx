@@ -93,13 +93,13 @@ export default function TransportMap({
 				{!selectedAgencyData && (
 					<header
 						css={`
-							h2 {
+							h1 {
 								margin-bottom: -0.5rem;
 							}
 							margin-bottom: 1rem;
 						`}
 					>
-						<h2>Plans de transport en commun</h2>
+						<h1>Plans de transport en commun</h1>
 						<Link href="/transport-en-commun">
 							<small>Quels réseaux sont intégrés sur Cartes ? </small>
 						</Link>
@@ -196,7 +196,7 @@ const Agency = ({ data, backUrl }) => {
 	return (
 		<section>
 			<Link href={backUrl}>← Retour à la liste des plans des réseaux</Link>
-			<h2>{data.agency.agency_name}</h2>
+			<h1>{data.agency.agency_name}</h1>
 		</section>
 	)
 }
