@@ -2958,7 +2958,7 @@ export default function voyageStyle(
 				layout: {
 					'text-font': ['Roboto Italic', 'Noto Sans Italic'],
 					'text-size': ['interpolate', ['linear'], ['zoom'], 9, 11, 14, 14],
-					'text-field': ['coalesce', ['get', 'name:en'], ['get', 'name']],
+					'text-field': ['coalesce', ...nameExpression],
 					visibility: 'visible',
 					'text-padding': {
 						stops: [
