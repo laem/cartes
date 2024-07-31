@@ -153,7 +153,7 @@ export default function voyageStyle(
 				'source-layer': 'landcover',
 				layout: { visibility: 'visible' },
 				paint: {
-					'fill-color': 'hsl(52,93%,89%)',
+					'fill-color': '#fbf4ab',
 					'fill-opacity': 0.85,
 					'fill-antialias': false,
 				},
