@@ -17,7 +17,7 @@ export default function voyageStyle(
 		name: 'Voyage',
 		sources: {
 			maptiler_planet: {
-				url: `https://api.maptiler.com/tiles/v3/tiles.json?key=${key}`,
+				url: `https://api.maptiler.com/tiles/v3-openmaptiles/tiles.json?key=${key}`,
 				type: 'vector',
 			},
 			maptiler_attribution: {
@@ -159,6 +159,27 @@ export default function voyageStyle(
 				},
 				metadata: {},
 				filter: ['==', 'class', 'sand'],
+			},
+			{
+				id: 'Wetland (medium scale)',
+				type: 'fill',
+				source: 'maptiler_planet',
+				'source-layer': 'landcover',
+				layout: {
+					visibility: 'visible',
+				},
+				paint: {
+					'fill-color': '#61b6cb40',
+					'fill-opacity': {
+						stops: [
+							[7, 0.5],
+							[10, 1],
+						],
+					},
+					'fill-antialias': false,
+				},
+				metadata: {},
+				filter: ['all', ['in', 'subclass', 'swamp', 'wetland']],
 			},
 			{
 				id: 'Wood',
