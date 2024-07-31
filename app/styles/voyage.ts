@@ -17,7 +17,7 @@ export default function voyageStyle(
 		name: 'Voyage',
 		sources: {
 			maptiler_planet: {
-				url: `https://api.maptiler.com/tiles/v3-openmaptiles/tiles.json?key=${key}`,
+				url: `https://api.maptiler.com/tiles/v3/tiles.json?key=${key}`,
 				type: 'vector',
 			},
 			maptiler_attribution: {
@@ -249,7 +249,7 @@ export default function voyageStyle(
 					'fill-color': {
 						base: 1,
 						stops: [
-							[4, 'hsl(44,34%,87%)'],
+							[1, '#efede6'],
 							[16, 'hsl(54, 45%, 91%)'],
 						],
 					},
