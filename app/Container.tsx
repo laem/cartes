@@ -10,6 +10,10 @@
  * - let requests be done by the user browser and start loading the map more
  * quickly
  *
+ * Due to Googlebot's problem indexing our pages (the live test captures showed
+ * just the map and an empty sheet), we've started to generate some pages on the
+ * server, see page.ts. It's the current tradeof.
+ *
  * Note : some requests will be made on the server to generate metadata, doing
  * them again client side is a bit of a waste (not totally, because data has to
  * be transmitted to the user anyway ; it's data vs code)
@@ -48,7 +52,11 @@ const Map = dynamic(() => import('./Map'), {
 	ssr: false,
 })
 
-export default function Container({ searchParams, state: givenState }) {
+export default function Container({
+	searchParams,
+	state: givenState,
+	agencyEntry,
+}) {
 	const setSearchParams = useSetSearchParams()
 	const [focusedImage, focusImage] = useState(null)
 	const [bbox, setBbox] = useState(null)
@@ -144,7 +152,8 @@ export default function Container({ searchParams, state: givenState }) {
 		bbox,
 		searchParams.agence,
 		searchParams.noCache,
-		fetchAll
+		fetchAll,
+		agencyEntry
 	)
 
 	// TODO reintroduce gare display through the transport style option + the bike

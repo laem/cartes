@@ -21,7 +21,6 @@ export default function TransportMap({
 	bbox,
 	setIsItineraryMode,
 }) {
-	if (!bbox) return
 	const setSearchParams = useSetSearchParams()
 
 	const setTransitFilter = (filter) => setSearchParams({ filtre: filter })
@@ -52,7 +51,6 @@ export default function TransportMap({
 	const routesDemanded = routesParam?.split('|')
 	const rand = Math.random()
 	console.time('routes' + rand)
-	console.log('transportmap bbox', bbox)
 
 	const routes = sortBy((route) => -route.properties.perDay)(
 		data.reduce((memo, [agencyId, { features }]) => {
@@ -66,13 +64,15 @@ export default function TransportMap({
 
 					if (i === 0) console.log('transportmap feature', feature)
 
-					const hasCoordinateInBbox = feature.geometry.coordinates.some(
-						([lon, lat]) =>
-							lon > bbox[0][0] &&
-							lon < bbox[1][0] &&
-							lat > bbox[0][1] &&
-							lat < bbox[1][1]
-					)
+					const hasCoordinateInBbox = !bbox
+						? true
+						: feature.geometry.coordinates.some(
+								([lon, lat]) =>
+									lon > bbox[0][0] &&
+									lon < bbox[1][0] &&
+									lat > bbox[0][1] &&
+									lat < bbox[1][1]
+						  )
 					return hasCoordinateInBbox
 				}
 			})
@@ -138,7 +138,7 @@ export default function TransportMap({
 								}
 							`}
 						>
-							{data.map(([agencyId, { agency, bbox, features }]) => (
+							{data.map(([agencyId, { agency }]) => (
 								<li key={agencyId}>
 									<Link href={setSearchParams({ agence: agencyId }, true)}>
 										{agency.agency_name}

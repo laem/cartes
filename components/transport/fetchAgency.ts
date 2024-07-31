@@ -12,22 +12,23 @@ export default async function fetchAgency(searchParams) {
 
 		const request = await fetch(url)
 		const json = await request.json()
-		const [
-			,
-			{
-				agency: { agency_name },
-				features,
-			},
-		] = decodeTransportsData([searchParams.agence, json])
+		const data = decodeTransportsData([searchParams.agence, json])
 
-		return [agency_name, features]
+		return data // [agency_name, features]
 	}
 }
 
 export const buildAgencyMeta = async (searchParams) => {
-	const result = await fetchAgency(searchParams)
-	if (!result) return
-	const [agency_name, features] = result
+	const data = await fetchAgency(searchParams)
+	if (!data) return
+
+	const [
+		,
+		{
+			agency: { agency_name },
+			features,
+		},
+	] = data
 
 	const lines = features.filter(
 		(feature) =>

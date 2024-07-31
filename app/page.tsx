@@ -7,7 +7,9 @@ import getName from './osm/getName'
 import fetchOgImage from '@/components/fetchOgImage'
 import getUrl from './osm/getUrl'
 import buildDescription from '@/components/osm/buildDescription'
-import { buildAgencyMeta } from '@/components/transport/fetchAgency'
+import fetchAgency, {
+	buildAgencyMeta,
+} from '@/components/transport/fetchAgency'
 
 export async function generateMetadata(
 	{ params, searchParams }: Props,
@@ -73,6 +75,8 @@ const Page = async ({ searchParams }) => {
 		return [] // fallback to client side
 	})
 
+	const agencyEntry = await fetchAgency(searchParams)
+
 	return (
 		<main
 			style={{
@@ -81,7 +85,11 @@ const Page = async ({ searchParams }) => {
 				minHeight: '100vh',
 			}}
 		>
-			<Container searchParams={searchParams} state={state} />
+			<Container
+				searchParams={searchParams}
+				state={state}
+				agencyEntry={agencyEntry}
+			/>
 		</main>
 	)
 }
