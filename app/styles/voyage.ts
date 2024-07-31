@@ -1912,9 +1912,9 @@ export default function voyageStyle(
 					'text-rotation-alignment': 'map',
 				},
 				paint: {
-					'text-color': '#DFEDF6',
+					'text-halo-color': '#DFEDF6',
 					'text-halo-blur': 1,
-					'text-halo-color': '#182772',
+					'text-color': '#182772',
 					'text-halo-width': {
 						stops: [
 							[10, 1],
