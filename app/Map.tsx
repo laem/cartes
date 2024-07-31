@@ -171,7 +171,6 @@ export default function Map({
 		map.fitBounds(mapLibreBBox)
 	}, [map, agency])
 
-	console.log('ploup', styleKey, safeStyleKey)
 	useDrawElectionClusterResults(map, styleKey, searchParams.filtre)
 
 	const hasItinerary = stepsLength > 1

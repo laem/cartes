@@ -57,6 +57,7 @@ export default function useDrawElectionClusterResults(
 	console.log('lg plopi', styleKey, map)
 	const [rawData, setData] = useState(null)
 	useEffect(() => {
+		if (styleKey !== 'elections') return
 		const download = async () => {
 			const dataUrl = gtfsServerUrl + '/resultats-legislatives-2024.geojson'
 			const request = await fetch(dataUrl)
