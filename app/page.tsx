@@ -6,14 +6,8 @@ import { stepOsmRequest } from './stepOsmRequest'
 import getName from './osm/getName'
 import fetchOgImage from '@/components/fetchOgImage'
 import getUrl from './osm/getUrl'
-import { gtfsServerUrl } from './serverUrls'
-import { decodeTransportsData } from './transport/decodeTransportsData'
-import {
-	getLinesSortedByFrequency,
-	getTransitFilter,
-	transitFilters,
-} from './transport/TransitFilter'
 import buildDescription from '@/components/osm/buildDescription'
+import { buildAgencyMeta } from '@/components/transport/fetchAgency'
 
 export async function generateMetadata(
 	{ params, searchParams }: Props,
@@ -30,42 +24,12 @@ export async function generateMetadata(
 				url: '/elections-legislatives-2024',
 			},
 		}
-	if (searchParams.transports === 'oui' && searchParams.agence != null) {
-		const url = `${gtfsServerUrl}/agencyArea/${searchParams.agence}`
-		console.log('Will fetch this URL for metadata', url)
 
-		const request = await fetch(url)
-		const json = await request.json()
-		const [
-			,
-			{
-				agency: { agency_name },
-				features,
-			},
-		] = decodeTransportsData([searchParams.agence, json])
+	/* A main goal of indexatoin : transit maps */
+	const agencyMeta = await buildAgencyMeta(searchParams)
+	if (agencyMeta) return agencyMeta
 
-		const lines = features.filter(
-			(feature) =>
-				feature && feature.geometry?.type === 'LineString' && feature.properties
-		)
-		const heavyFilter = getTransitFilter((key) =>
-				['tram', 'métro'].includes(key)
-			).filter,
-			hasHeavy = lines.filter((feature) => heavyFilter(feature)).length > 0
-
-		const transportType = hasHeavy ? `transport (bus, tram, métro)` : 'bus'
-		const mainLines = getLinesSortedByFrequency(lines).slice(0, 10),
-			mainLinesNames = mainLines.map(
-				({ properties }) => properties.route_short_name
-			)
-		return {
-			title: `Plan du réseau de ${transportType} ${agency_name}`,
-			description: `Plan complet des lignes de transport en commun du réseau de ${transportType} ${agency_name} : lignes ${mainLinesNames.join(
-				', '
-			)}`,
-		}
-	}
-
+	/* Now the indexation of places, the second main goal */
 	const allez = searchParams.allez?.split('->')
 
 	if (!allez?.length) return null
