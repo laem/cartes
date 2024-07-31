@@ -32,7 +32,7 @@ const generateAgencies = async () => {
 
 export default async function sitemap(): MetadataRoute.Sitemap {
 	const isVercel = process.env.NEXT_PUBLIC_VERCEL_BRANCH_URL
-	const fetchNewNodes = isVercel
+	const fetchNewNodes = true || isVercel
 	let newNodes = []
 	if (fetchNewNodes) {
 		newNodes = await getRecentInterestingNodes()
@@ -64,8 +64,13 @@ export default async function sitemap(): MetadataRoute.Sitemap {
 	return entries
 }
 
+const lastForcedUpdate = new Date('2024-07-31T10:07:01.358Z')
 const forceUpdate = (list) =>
-	list.map((el) => ({ ...el, lastModified: new Date() }))
+	list.map((el) => ({
+		...el,
+		lastModified:
+			el.lastModified > lastForcedUpdate ? el.lastModified : lastForcedUpdate,
+	}))
 
 export function escapeXml(unsafe) {
 	return unsafe.replace(/[<>&'"]/g, function (c) {
