@@ -1,5 +1,6 @@
 import cyclOsm from './cyclOsmStyle'
 import elections from './elections'
+import natureStyle from './nature'
 import protomaps from './protomaps'
 import railStyle from './railStyle'
 import testStreetComplete from './test-street-complete'
@@ -51,7 +52,7 @@ export const styles = {
 		experimental: true,
 	},
 	nature: {
-		url: maptilerUrl('topo-v2'),
+		url: natureStyle(key),
 		name: 'Nature',
 		emoji: '🏕️',
 		hasTerrain: false,

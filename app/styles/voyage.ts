@@ -4,7 +4,7 @@ export const maptilerNameExpression = [
 	['get', 'name'],
 ]
 
-const defaultName = 'name'
+export const defaultName = 'name'
 
 export default function voyageStyle(
 	key,
