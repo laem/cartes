@@ -2,6 +2,7 @@ import { processTags } from '../Tags'
 import { buildAddress } from './buildAddress'
 
 export default function buildOsmFeatureDescription(osmFeature) {
+	if (!osmFeature) return
 	const tags = osmFeature.tags
 	const descriptionTag = tags?.description
 
