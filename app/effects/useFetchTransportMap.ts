@@ -11,7 +11,7 @@ export default function useFetchTransportMap(
 	fetchAll,
 	givenAgencyEntry
 ) {
-	const [data, setData] = useState(givenAgencyEntry && [givenAgencyEntry])
+	const [data, setData] = useState(givenAgencyEntry ? [givenAgencyEntry] : [])
 
 	useEffect(() => {
 		if (!active || agence == null) return
