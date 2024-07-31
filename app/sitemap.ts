@@ -32,8 +32,9 @@ const generateAgencies = async () => {
 
 export default async function sitemap(): MetadataRoute.Sitemap {
 	const isVercel = process.env.NEXT_PUBLIC_VERCEL_BRANCH_URL
+	const fetchNewNodes = isVercel
 	let newNodes = []
-	if (isVercel) {
+	if (fetchNewNodes) {
 		newNodes = await getRecentInterestingNodes()
 	}
 
@@ -49,14 +50,22 @@ export default async function sitemap(): MetadataRoute.Sitemap {
 	)
 	const agencies = await generateAgencies()
 	const entries = [
-		...[...basePaths, ...agencies].map((path) => ({
+		...basePaths.map((path) => ({
 			url: escapeXml(domain + path),
 		})),
+		...forceUpdate(
+			agencies.map((path) => ({
+				url: escapeXml(domain + path),
+			}))
+		),
 		...blogEntries,
-		...newNodes,
+		...forceUpdate(newNodes),
 	]
 	return entries
 }
+
+const forceUpdate = (list) =>
+	list.map((el) => ({ ...el, lastModified: new Date() }))
 
 export function escapeXml(unsafe) {
 	return unsafe.replace(/[<>&'"]/g, function (c) {
