@@ -69,7 +69,7 @@ export default ({
 				}, 600)
 				*/
 				}}
-				placeholder={placeholder || 'Saint-Malo, Le Conquet, Café du Port...'}
+				placeholder={placeholder || 'Saint-Malo, Nancy, Café du Port...'}
 				onChange={({ target: { value } }) => onDestinationChange(value)}
 			/>
 			{value && (
