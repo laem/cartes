@@ -88,17 +88,19 @@ export default function TransportMap({
 		data?.length > 0 &&
 		data.find(([id]) => id === selectedAgency)
 	return (
-		<section>
+		<section
+			css={`
+				h1 {
+					margin-top: 1rem;
+					margin-bottom: -0.1rem;
+					line-height: 1.6rem;
+					font-size: 170%;
+				}
+			`}
+		>
 			<section>
 				{!selectedAgencyData && (
-					<header
-						css={`
-							h1 {
-								margin-bottom: -0.5rem;
-							}
-							margin-bottom: 1rem;
-						`}
-					>
+					<header>
 						<h1>Plans de transport en commun</h1>
 						<Link href="/transport-en-commun">
 							<small>Quels réseaux sont intégrés sur Cartes ? </small>
@@ -109,6 +111,7 @@ export default function TransportMap({
 				<PlaceButton
 					as="div"
 					css={`
+						margin-top: 0.8rem;
 						margin-bottom: 0.6rem;
 					`}
 				>
