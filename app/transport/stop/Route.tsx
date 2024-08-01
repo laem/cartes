@@ -43,7 +43,6 @@ export default function Route({ route, stops = [] }) {
 			// in Bretagne unified GTFS, all the GTFS were normalized with a technique where each trip has one calendar date entry only
 			const dates = stop.trip.calendarDates
 				.map((calendarDateObject) => {
-					if (!i) console.log('cdo', calendarDateObject)
 					if (calendarDateObject.exception_type === 2) return false
 					const { date: calendarDate } = calendarDateObject
 
@@ -68,8 +67,6 @@ export default function Route({ route, stops = [] }) {
 		.flat()
 		.sort((a, b) => a.arrivalDate - b.arrivalDate)
 
-	console.log('indigo', { augmentedStops })
-
 	/*
 	const byArrivalDate = new Map(
 		augmentedStops.map((el) => {
@@ -80,7 +77,6 @@ export default function Route({ route, stops = [] }) {
 
 	const today = nowAsYYMMDD('-')
 	const stopsToday = augmentedStops.filter((el) => el.day === today)
-	console.log('stopsToday', stopsToday)
 
 	const stopSelection = stopsToday.filter((el) => el.isFuture).slice(0, 4)
 
@@ -88,9 +84,9 @@ export default function Route({ route, stops = [] }) {
 	const otherDirection = directions[0] === 0 ? 1 : 0
 	const index = directions.findIndex((i) => i === otherDirection)
 	const hasMultipleTripDirections = index > -1
-	console.log('olive multiple', index, directions)
 	const direction = directions[0],
-		rawName = route.route_long_name,
+		rawName =
+			route.route_long_name || route.route_short_name || 'ligne sans nom',
 		// Here we're deriving the directed name from the raw name. They don't help
 		// us here :D haven't found a better way to display the correct trip name...
 		//
@@ -106,7 +102,6 @@ export default function Route({ route, stops = [] }) {
 			? (direction === 1 ? nameParts.reverse() : nameParts).join(' → ')
 			: rawName
 
-	console.log('olive route stop selection', route, stopSelection, stops)
 	return (
 		<li
 			css={`
