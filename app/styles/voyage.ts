@@ -2465,15 +2465,10 @@ export default function voyageStyle(
 					'text-color': [
 						'match',
 						['get', 'class'],
-						[
-							'aerialway',
-							'bus',
-							'bicycle_rental',
-							'entrance',
-							'ferry_terminal',
-							'harbor',
-						],
+						['aerialway', 'bus', 'bicycle_rental', 'entrance'],
 						'hsl(215,83%,53%)',
+						['ferry_terminal', 'harbor'],
+						'#06066f',
 						['hospital'],
 						'hsl(6,94%,35%)',
 						'hsl(17,17%,38%)',
