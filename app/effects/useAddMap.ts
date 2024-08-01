@@ -102,6 +102,7 @@ export default function useAddMap(
 			hash: true,
 			attributionControl: false,
 			locale: frenchMaplibreLocale,
+			antialias: true,
 		})
 
 		const navigationControl = new maplibregl.NavigationControl({
