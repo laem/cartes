@@ -417,6 +417,7 @@
   query:
     - '[amenity=compressed_air]'
     - '[compressed_air=yes]'
+    - '["service:bicycle:pump"="yes"]'
   icon: https://cdn.jsdelivr.net/gh/osmandapp/OsmAnd-resources/icons/svg/amenity/compressed_air.svg
 
 - name: Aire de covoiturage
