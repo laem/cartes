@@ -6,6 +6,7 @@ import railStyle from './railStyle'
 import testStreetComplete from './test-street-complete'
 import transit from './transit'
 import voyageStyle from './voyage'
+import franceStyle from './france'
 
 const key = process.env.NEXT_PUBLIC_MAPTILER
 
@@ -17,6 +18,7 @@ export const styles = {
 		name: 'Base',
 		emoji: '🗺️',
 	},
+	france: { url: franceStyle(key), name: 'France' },
 	elections: {
 		url: elections(key),
 		name: 'Élections',
