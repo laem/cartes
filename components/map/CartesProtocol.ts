@@ -5,9 +5,8 @@ import { PMTiles } from 'pmtiles'
 import hexagoneGeojson from '@/components/map/hexagone.json'
 import { booleanPointInPolygon } from '@turf/boolean-point-in-polygon'
 
-const pmtilesUrl1 = 'https://panoramax.openstreetmap.fr/pmtiles/planet.pmtiles'
-const pmtilesUrl2 =
-	'https://data.source.coop/protomaps/openstreetmap/tiles/v3.pmtiles'
+const pmtilesUrl2 = 'https://panoramax.openstreetmap.fr/pmtiles/planet.pmtiles'
+const pmtilesUrl1 = 'https://motis.cartes.app/gtfs/france.pmtiles'
 
 export class Protocol {
 	tiles: Map<string, PMTiles>
