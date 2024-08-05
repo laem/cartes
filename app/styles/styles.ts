@@ -19,6 +19,8 @@ export const styles = {
 		url: franceStyle(key),
 		name: 'France',
 		image: 'base',
+		attribution:
+			'<a href="https://www.openstreetmap.org/copyright" target="_blank">&copy; OpenStreetMap contributors</a>',
 	},
 	/* The historical maptiler streets that we tuned for cartes.app */
 	base: {
