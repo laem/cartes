@@ -8,7 +8,6 @@ import { ModalCloseButton } from '../UI'
 const styleList = Object.entries(styles)
 export default function StyleChooser({ style, setStyleChooser, setSnap }) {
 	const setSearchParams = useSetSearchParams()
-	console.log(style)
 	return (
 		<section
 			css={`
@@ -27,7 +26,7 @@ export default function StyleChooser({ style, setStyleChooser, setSnap }) {
 			/>
 			<h2>Choisir le fond de carte</h2>
 			<Styles
-				styleList={styleList.filter(([, el]) => !el.experimental)}
+				styleList={styleList.filter(([, el]) => !el.secondary)}
 				setSearchParams={setSearchParams}
 				style={style}
 			/>
@@ -39,10 +38,10 @@ export default function StyleChooser({ style, setStyleChooser, setSnap }) {
 						margin: 1.4rem 3rem 0.8rem 0;
 					`}
 				>
-					Styles expérimentaux
+					Autres styles
 				</summary>
 				<Styles
-					styleList={styleList.filter(([, el]) => el.experimental)}
+					styleList={styleList.filter(([, el]) => el.secondary)}
 					setSearchParams={setSearchParams}
 					style={style}
 				/>

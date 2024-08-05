@@ -1,28 +1,30 @@
 import cyclOsm from './cyclOsmStyle'
 import elections from './elections'
+import franceStyle from './france'
 import natureStyle from './nature'
-import protomaps from './protomaps'
 import railStyle from './railStyle'
 import testStreetComplete from './test-street-complete'
 import transit from './transit'
 import voyageStyle from './voyage'
-import franceStyle from './france'
 
 const key = process.env.NEXT_PUBLIC_MAPTILER
 
 const maptilerUrl = (styleId) =>
 	`https://api.maptiler.com/maps/${styleId}/style.json?key=${key}`
 export const styles = {
+	/* This style will replace the base MapTiler style, for cost reduction
+	 * purposes (50 to 100 €/month in june !)
+	 */
+	france: {
+		url: franceStyle(key),
+		name: 'France',
+		image: 'base',
+	},
+	/* The historical maptiler streets that we tuned for cartes.app */
 	base: {
 		url: voyageStyle(key),
 		name: 'Base',
 		emoji: '🗺️',
-	},
-	france: { url: franceStyle(key), name: 'France' },
-	elections: {
-		url: elections(key),
-		name: 'Élections',
-		emoji: '🗳️',
 	},
 	satellite: {
 		url: maptilerUrl('satellite'),
@@ -51,7 +53,7 @@ export const styles = {
 	osm: {
 		url: maptilerUrl('openstreetmap'),
 		name: 'OpenStreetMap',
-		experimental: true,
+		secondary: true,
 	},
 	nature: {
 		url: natureStyle(key),
@@ -82,20 +84,13 @@ export const styles = {
 		url: testStreetComplete,
 		name: 'StreetComplete',
 		emoji: '🧪',
-		experimental: true,
+		secondary: true,
 	},
-	/* This style will replace the base MapTiler style, for cost reduction
-	 * purposes (50 to 100 €/month in june !)
-	 * TODO See https://forum.geocommuns.fr/t/regles-dutilisation-du-pmtiles-panoramax-osm-fr/1624
-	 * Meanwhile, we use protomaps in the election style
-	 */
-	protomaps: {
-		//url: `https://api.protomaps.com/styles/v2/light.json?key=8df307109ae3eabc`,
-		url: protomaps(key),
-		name: 'Protomaps',
-		emoji: '⚡️',
-		image: 'base',
-		experimental: true,
+	elections: {
+		url: elections(key),
+		name: 'Élections',
+		emoji: '🗳️',
+		secondary: true,
 	},
 }
 
