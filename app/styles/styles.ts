@@ -23,8 +23,9 @@ export const styles = {
 	/* The historical maptiler streets that we tuned for cartes.app */
 	base: {
 		url: voyageStyle(key),
-		name: 'Base',
+		name: 'Ancienne base',
 		emoji: '🗺️',
+		secondary: true,
 	},
 	satellite: {
 		url: maptilerUrl('satellite'),
