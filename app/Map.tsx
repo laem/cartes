@@ -409,6 +409,14 @@ export default function Map({
 					@media (max-width: 800px) {
 						.maplibregl-ctrl-bottom-left .maplibregl-ctrl-scale {
 							margin-left: 3.6rem;
+							border-right: none;
+							border-left: none;
+							line-height: 1rem;
+							background: none;
+							border-bottom-color: var(--darkColor);
+							color: var(--darkColor);
+							font-weight: 600;
+							filter: drop-shadow(0px 0px 2px #ffffffa6);
 						}
 					}
 				`}
