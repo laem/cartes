@@ -1,9 +1,9 @@
 import css from '@/components/css/convertToJs'
-import Emoji from '@/components/Emoji'
 import useSetSearchParams from '@/components/useSetSearchParams'
 import Link from 'next/link'
-import { styles } from './styles'
 import { ModalCloseButton } from '../UI'
+import { styles } from './styles'
+import { useLocalStorage } from 'usehooks-ts'
 
 const styleList = Object.entries(styles)
 export default function StyleChooser({ style, setStyleChooser, setSnap }) {
@@ -50,58 +50,65 @@ export default function StyleChooser({ style, setStyleChooser, setSnap }) {
 	)
 }
 
-const Styles = ({ style, styleList, setSearchParams }) => (
-	<ul
-		style={css`
-			display: flex;
-			justify-content: center;
-			flex-wrap: wrap;
-			align-items: center;
-			list-style-type: none;
-			margin-top: 1rem;
-		`}
-	>
-		{styleList.map(([k, { name, imageAlt, title, image: imageProp }]) => {
-			const image = (imageProp || k) + '.png'
+const Styles = ({ style, styleList, setSearchParams }) => {
+	const [localStorageStyleKey, setLocalStorageStyleKey] = useLocalStorage(
+		'style',
+		null
+	)
+	return (
+		<ul
+			style={css`
+				display: flex;
+				justify-content: center;
+				flex-wrap: wrap;
+				align-items: center;
+				list-style-type: none;
+				margin-top: 1rem;
+			`}
+		>
+			{styleList.map(([k, { name, imageAlt, title, image: imageProp }]) => {
+				const image = (imageProp || k) + '.png'
 
-			return (
-				<li
-					key={k}
-					css={`
-						margin: 0.6rem;
-					`}
-				>
-					<Link
-						href={setSearchParams({ style: k }, true, false)}
-						title={'Passer au style ' + (title || name)}
+				return (
+					<li
+						key={k}
 						css={`
-							display: flex;
-							flex-direction: column;
-							justify-content: center;
-							align-items: center;
-							text-decoration: none;
-							color: inherit;
-							${style.key === k && `color: var(--color); font-weight: bold`}
+							margin: 0.6rem;
 						`}
 					>
-						<img
-							src={'/styles/' + image}
-							width="50"
-							height="50"
-							alt={imageAlt}
+						<Link
+							href={setSearchParams({ style: k }, true, false)}
+							onClick={() => setLocalStorageStyleKey(k)}
+							title={'Passer au style ' + (title || name)}
 							css={`
-								width: 5.5rem;
-								height: 5.5rem;
-								border-radius: 0.4rem;
-								${style.key === k &&
-								`border: 3px solid var(--color);
-								`}
+								display: flex;
+								flex-direction: column;
+								justify-content: center;
+								align-items: center;
+								text-decoration: none;
+								color: inherit;
+								${style.key === k && `color: var(--color); font-weight: bold`}
 							`}
-						/>
-						<div>{name}</div>
-					</Link>
-				</li>
-			)
-		})}
-	</ul>
-)
+						>
+							<img
+								src={'/styles/' + image}
+								width="50"
+								height="50"
+								alt={imageAlt}
+								css={`
+									width: 5.5rem;
+									height: 5.5rem;
+									border-radius: 0.4rem;
+									${style.key === k &&
+									`border: 3px solid var(--color);
+								`}
+								`}
+							/>
+							<div>{name}</div>
+						</Link>
+					</li>
+				)
+			})}
+		</ul>
+	)
+}
