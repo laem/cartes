@@ -1,3 +1,4 @@
+import { uncapitalise0 } from '@/components/utils/utils'
 import Link from 'next/link'
 import { exactThreshold } from './QuickFeatureSearch'
 import { goldCladding } from './QuickFeatureSearchUI'
@@ -47,7 +48,6 @@ export default function MoreCategories({
 						a {
 							text-decoration: none;
 							color: inherit;
-							text-transform: lowercase;
 						}
 					}
 				}
@@ -80,7 +80,7 @@ border-color: var(--darkColor) !important;
 										`}
 									>
 										<Link href={getNewSearchParamsLink(category)}>
-											{category.name}
+											{uncapitalise0(category.title || category.name)}
 										</Link>
 									</li>
 								))}

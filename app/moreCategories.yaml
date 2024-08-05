@@ -1,6 +1,6 @@
 - name: végé
   category: Manger et boire
-  title: Repas et cafés végétarien ou végan
+  description: Repas et cafés végétarien ou végan
   dictionary:
     - resto
     - emporter
@@ -349,7 +349,8 @@
     - dépannage
   query: '[public_transport=station][train=yes]'
   icon: train
-- name: Magasin vélo
+- name: magasin-velo
+  title: Magasin vélo
   category: Déplacements
   dictionary:
     - réparation
@@ -359,8 +360,8 @@
   query: '[shop=bicycle]'
   icon: bicycle
 
-- title: Parking à vélo
-  name: parking-velo
+- name: parking-velo
+  title: Parking vélo
   category: Déplacements
   dictionary:
     - pince-roue
@@ -373,7 +374,7 @@
   icon: bicycle-parking
 
 - name: reparation-velo
-  titre: Réparation de vélo
+  title: Réparation de vélo
   category: Déplacements
   dictionary:
     - réparation
@@ -398,7 +399,8 @@
   query: '[amenity=fuel]'
   icon: essence
 
-- name: Station de recharge
+- name: borne-elec
+  title: Borne électrique
   category: Déplacements
   dictionary:
     - recharge
