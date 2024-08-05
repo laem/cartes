@@ -36,6 +36,7 @@ export const tagNameCorrespondance = (key: string) => {
 		alt_name:'Autre nom',
 		books: 'Livres',
 		'brand:website': 'Site de la marque',
+		'building:architecture': 'Style architectural',
 		'building:levels': "Nombre d'étages",
 		bulk_purchase: 'Achat en vrac',
 		'capacity:disabled': 'Place de parking PMR',
