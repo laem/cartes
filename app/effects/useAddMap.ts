@@ -2,9 +2,10 @@ import maplibregl, { ScaleControl } from 'maplibre-gl'
 import { useEffect, useMemo, useState } from 'react'
 import { useLocalStorage, useMediaQuery } from 'usehooks-ts'
 import { styles } from '../styles/styles'
-import { Protocol } from 'pmtiles'
+import { Protocol as ProtomapsProtocol } from 'pmtiles'
 import useGeolocation from './useGeolocation'
 import frenchMaplibreLocale from '@/components/map/frenchMaplibreLocale.ts'
+import { Protocol as CartesProtocol } from '@/components/map/CartesProtocol.ts'
 
 /*
  *
@@ -58,8 +59,10 @@ export default function useAddMap(
 	}, [ipGeolocationCenter, map])
 
 	useEffect(() => {
-		let protocol = new Protocol()
-		maplibregl.addProtocol('pmtiles', protocol.tile)
+		let protomapsProtocol = new ProtomapsProtocol()
+		let cartesProtocol = new CartesProtocol()
+		maplibregl.addProtocol('pmtiles', protomapsProtocol.tile)
+		maplibregl.addProtocol('cartes', cartesProtocol.tile)
 		return () => {
 			maplibregl.removeProtocol('pmtiles')
 		}

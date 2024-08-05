@@ -1,3 +1,5 @@
+// WARNING : this style is not supposed to be actively maintained. See
+// france.ts.
 export const maptilerNameExpression = [
 	['get', 'name:fr'], // cartes.app est une application française
 	['get', 'name:en'], // we estimate that e.g. arab place names that don't have a french translation will be way more readable as english fro French people. See e.g. /?lieu=n1091272140#18.99/33.5130054/36.3066407
@@ -154,11 +156,25 @@ export default function voyageStyle(
 				layout: { visibility: 'visible' },
 				paint: {
 					'fill-color': '#fbf4ab',
-					'fill-opacity': 0.85,
+					'fill-opacity': 0.25,
 					'fill-antialias': false,
 				},
 				metadata: {},
 				filter: ['==', 'class', 'sand'],
+			},
+			{
+				id: 'Beach',
+				type: 'fill',
+				source: 'maptiler_planet',
+				'source-layer': 'landcover',
+				layout: { visibility: 'visible' },
+				paint: {
+					'fill-color': '#fbf4ab',
+					'fill-opacity': 0.85,
+					'fill-antialias': false,
+				},
+				metadata: {},
+				filter: ['all', ['==', 'class', 'sand'], ['==', 'subclass', 'beach']],
 			},
 			{
 				id: 'Wetland (medium scale)',
