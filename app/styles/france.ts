@@ -20,6 +20,10 @@ export default function franceStyle(key) {
 				type: 'vector',
 				url: 'pmtiles://' + gtfsServerUrl + '/h3-landcover.pmtiles',
 			},
+			trees: {
+				type: 'vector',
+				url: 'pmtiles://' + gtfsServerUrl + '/trees.pmtiles',
+			},
 		},
 		layers,
 		glyphs: `https://api.maptiler.com/fonts/{fontstack}/{range}.pbf?key=${key}`,
@@ -383,6 +387,29 @@ const layers = [
 		},
 		metadata: {},
 		filter: ['all', ['in', 'class', 'cemetery']],
+	},
+	{
+		id: 'Trees',
+		type: 'circle',
+		source: 'trees',
+		'source-layer': 'trees',
+		minzoom: 14,
+		paint: {
+			'circle-radius': {
+				stops: [
+					[14, 2],
+					[16, 4],
+					[22, 20],
+				],
+			},
+			'circle-color': '#94d2a5',
+			'circle-opacity': {
+				stops: [
+					[14, 0.2],
+					[22, 0.4],
+				],
+			},
+		},
 	},
 	{
 		id: 'Hospital',
