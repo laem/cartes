@@ -46,6 +46,7 @@ import useOverpassRequest from './effects/useOverpassRequest'
 import { initialSnap } from './ModalSheet'
 import { mapLibreBboxToOverpass } from '@/components/mapUtils'
 import { useDebounce } from '@/components/utils'
+import { useLocalStorage } from 'usehooks-ts'
 // Map is forced as dynamic since it can't be rendered by nextjs server-side.
 // There is almost no interest to do that anyway, except image screenshots
 const Map = dynamic(() => import('./Map'), {
@@ -74,7 +75,9 @@ export default function Container({
 
 	const [safeStyleKey, setSafeStyleKey] = useState(null)
 	const [tempStyle, setTempStyle] = useState(null)
-	const styleKey = tempStyle || searchParams.style || 'base'
+	const [localStorageStyleKey] = useLocalStorage('style', null)
+	const styleKey =
+		tempStyle || searchParams.style || localStorageStyleKey || 'france'
 	const style = getStyle(styleKey)
 
 	const styleChooser = searchParams['choix du style'] === 'oui',
