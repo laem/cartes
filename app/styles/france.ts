@@ -38,7 +38,7 @@ export const nameExpression = [
 	['get', 'name'],
 ]
 
-export const defaultName = 'name'
+export const name = 'name:latin'
 
 const layers = [
 	{
