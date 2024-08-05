@@ -80,7 +80,7 @@ border-color: var(--darkColor) !important;
 										`}
 									>
 										<Link href={getNewSearchParamsLink(category)}>
-											{category.name}
+											{category.title || category.name}
 										</Link>
 									</li>
 								))}

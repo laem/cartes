@@ -1,6 +1,6 @@
 - name: végé
   category: Manger et boire
-  title: Repas et cafés végétarien ou végan
+  description: Repas et cafés végétarien ou végan
   dictionary:
     - resto
     - emporter
