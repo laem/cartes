@@ -18,8 +18,8 @@ export default function useDrawQuickSearchFeatures(
 ) {
 	const setSearchParams = useSetSearchParams()
 	useEffect(() => {
-		if (!map || !features || features.length < 1 || !category) return
-		console.log('orange', features)
+		if (!map || !category) return
+		if (!features) return
 
 		const featuresWithOpen = features.map((f) => {
 			if (!f.tags || !f.tags.opening_hours) {
@@ -41,6 +41,7 @@ export default function useDrawQuickSearchFeatures(
 
 		const isOpenByDefault = category['open by default']
 		const imageUrl = categoryIconUrl(category)
+		const baseId = `features-${category.name}-`
 		buildSvgImage(
 			imageUrl,
 			(img) => {
@@ -49,62 +50,69 @@ export default function useDrawQuickSearchFeatures(
 				const mapImage = map.getImage(imageName)
 				if (!mapImage) map.addImage(imageName, img)
 
-				const baseId = `features-${category.name}-`
 				console.log('useDrawQuickSearchFeatures add source ', baseId + 'points')
 				// Looks like buildSvgImage triggers multiple img.onload calls thus
 				// multiple map.addSource, hence an error
-				const source = map.getSource(baseId + 'points')
-				if (source) return
-				map.addSource(baseId + 'points', {
-					type: 'geojson',
-					data: {
-						type: 'FeatureCollection',
-						features: shownFeatures.map((f) => {
-							const geometry = {
-								type: 'Point',
-								coordinates: [f.lon, f.lat],
-							}
+				const pointsSource = map.getSource(baseId + 'points')
+				const waysSource = map.getSource(baseId + 'ways')
+				const pointsData = {
+					type: 'FeatureCollection',
+					features: shownFeatures.map((f) => {
+						const geometry = {
+							type: 'Point',
+							coordinates: [f.lon, f.lat],
+						}
 
+						const tags = f.tags || {}
+						const isOpenColor = {
+							true: '#4ce0a5ff',
+							false: '#e95748ff',
+							null: isOpenByDefault ? false : 'beige',
+						}[f.isOpen]
+
+						return {
+							type: 'Feature',
+							geometry,
+							properties: {
+								id: f.id,
+								tags,
+								name: tags.name,
+								featureType: f.type,
+								isOpenColor: isOpenColor,
+							},
+						}
+					}),
+				}
+				const waysData = {
+					type: 'FeatureCollection',
+					features: shownFeatures
+						.filter((f) => f.polygon)
+						.map((f) => {
 							const tags = f.tags || {}
-							const isOpenColor = {
-								true: '#4ce0a5ff',
-								false: '#e95748ff',
-								null: isOpenByDefault ? false : 'beige',
-							}[f.isOpen]
-
 							return {
 								type: 'Feature',
-								geometry,
+								geometry: f.polygon.geometry,
 								properties: {
 									id: f.id,
 									tags,
 									name: tags.name,
-									featureType: f.type,
-									isOpenColor: isOpenColor,
 								},
 							}
 						}),
-					},
+				}
+				if (waysSource) {
+					waysSource.setData(waysData)
+					pointsSource.setData(pointsData)
+					return
+				}
+				map.addSource(baseId + 'points', {
+					type: 'geojson',
+					data: pointsData,
 				})
+
 				map.addSource(baseId + 'ways', {
 					type: 'geojson',
-					data: {
-						type: 'FeatureCollection',
-						features: shownFeatures
-							.filter((f) => f.polygon)
-							.map((f) => {
-								const tags = f.tags || {}
-								return {
-									type: 'Feature',
-									geometry: f.polygon.geometry,
-									properties: {
-										id: f.id,
-										tags,
-										name: tags.name,
-									},
-								}
-							}),
-					},
+					data: waysData,
 				})
 
 				// Add a symbol layer
@@ -197,18 +205,16 @@ export default function useDrawQuickSearchFeatures(
 		)
 
 		return () => {
-			// TODO for whatever reason to be found, features are not removed until
-			// the request is finished
-			const baseId = `features-${category.name}-`
-			safeRemove(map)(
-				[
-					baseId + 'points',
-					baseId + 'points-is-open',
-					baseId + 'ways-outlines',
-					baseId + 'ways',
-				],
-				[baseId + 'points', baseId + 'ways']
-			)
+			if (!features)
+				safeRemove(map)(
+					[
+						baseId + 'points',
+						baseId + 'points-is-open',
+						baseId + 'ways-outlines',
+						baseId + 'ways',
+					],
+					[baseId + 'points', baseId + 'ways']
+				)
 		}
 	}, [features, map, showOpenOnly, category])
 }
