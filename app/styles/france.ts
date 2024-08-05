@@ -153,8 +153,8 @@ const layers = [
 		'source-layer': 'landcover',
 		filter: ['==', ['get', 'kind'], 'BuiltUp'],
 		paint: {
-			'fill-color': '#e8eaed',
-			'fill-opacity': ['interpolate', ['linear'], ['zoom'], 10, 1, 11, 0],
+			'fill-color': '#f4f0eb', // too white ?
+			'fill-opacity': ['interpolate', ['linear'], ['zoom'], 10, 1, 11, 0.8], // not sure why opacity 0.8
 		},
 	},
 	{
