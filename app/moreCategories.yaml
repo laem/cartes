@@ -349,7 +349,8 @@
     - dépannage
   query: '[public_transport=station][train=yes]'
   icon: train
-- name: Magasin vélo
+- name: magasin-velo
+  title: Magasin vélo
   category: Déplacements
   dictionary:
     - réparation
@@ -359,8 +360,8 @@
   query: '[shop=bicycle]'
   icon: bicycle
 
-- name: parking-vélo
-  title: Parking à vélo
+- name: parking-velo
+  title: Parking vélo
   category: Déplacements
   dictionary:
     - pince-roue
@@ -398,7 +399,7 @@
   query: '[amenity=fuel]'
   icon: essence
 
-- name: Borne electrique
+- name: borne-elec
   title: Borne électrique
   category: Déplacements
   dictionary:

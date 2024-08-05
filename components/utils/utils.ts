@@ -4,6 +4,9 @@ export function isIterable<T>(obj: unknown): obj is Iterable<T> {
 export function capitalise0(name?: string) {
 	return name && name[0].toUpperCase() + name.slice(1)
 }
+export function uncapitalise0(name?: string) {
+	return name && name[0].toLowerCase() + name.slice(1)
+}
 
 export const debounce = <F extends (...args: any[]) => void>(
 	waitFor: number,
