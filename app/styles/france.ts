@@ -24,6 +24,85 @@ export default function franceStyle(key) {
 					'fill-color': '#dfecbe',
 				},
 			},
+			//https://github.com/wipfli/h3-landcover/blob/main/style.json
+			{
+				id: 'Grass-Bare-Snow',
+				type: 'fill',
+				source: 'landcover',
+				'source-layer': 'landcover',
+				filter: ['==', ['get', 'kind'], 'Grass-Bare-Snow'],
+				layout: {
+					visibility: 'visible',
+				},
+				paint: {
+					'fill-color': '#b6dcc1',
+					'fill-opacity': ['interpolate', ['linear'], ['zoom'], 10, 1, 11, 0],
+				},
+			},
+			{
+				id: 'Bare-Snow',
+				type: 'fill',
+				source: 'landcover',
+				'source-layer': 'landcover',
+				filter: ['==', ['get', 'kind'], 'Bare-Snow'],
+				layout: {
+					visibility: 'visible',
+				},
+				paint: {
+					'fill-color': '#f3ede0',
+					'fill-opacity': ['interpolate', ['linear'], ['zoom'], 10, 1, 11, 0],
+				},
+			},
+			{
+				id: 'Snow',
+				type: 'fill',
+				source: 'landcover',
+				'source-layer': 'landcover',
+				filter: ['==', ['get', 'kind'], 'Snow'],
+				layout: {
+					visibility: 'visible',
+				},
+				paint: {
+					'fill-color': 'white',
+					'fill-opacity': ['interpolate', ['linear'], ['zoom'], 10, 1, 11, 0],
+				},
+			},
+			{
+				id: 'Crops',
+				type: 'fill',
+				source: 'landcover',
+				'source-layer': 'landcover',
+				filter: ['==', ['get', 'kind'], 'Crops'],
+				layout: {
+					visibility: 'visible',
+				},
+				paint: {
+					'fill-color': '#bbe2c6',
+					'fill-opacity': ['interpolate', ['linear'], ['zoom'], 10, 1, 11, 0],
+				},
+			},
+			{
+				id: 'Tree',
+				type: 'fill',
+				source: 'landcover',
+				'source-layer': 'landcover',
+				filter: ['==', ['get', 'kind'], 'Tree'],
+				paint: {
+					'fill-color': '#94d2a5',
+					'fill-opacity': ['interpolate', ['linear'], ['zoom'], 10, 1, 11, 0],
+				},
+			},
+			{
+				id: 'BuiltUp',
+				type: 'fill',
+				source: 'landcover',
+				'source-layer': 'landcover',
+				filter: ['==', ['get', 'kind'], 'BuiltUp'],
+				paint: {
+					'fill-color': '#e8eaed',
+					'fill-opacity': ['interpolate', ['linear'], ['zoom'], 10, 1, 11, 0],
+				},
+			},
 			...base.layers.slice(1),
 		],
 		id: 'france',
@@ -41,6 +120,10 @@ export default function franceStyle(key) {
 			land: {
 				type: 'vector',
 				url: 'pmtiles://' + gtfsServerUrl + '/land.pmtiles',
+			},
+			landcover: {
+				type: 'vector',
+				url: 'pmtiles://' + gtfsServerUrl + '/h3-landcover.pmtiles',
 			},
 		},
 	}
