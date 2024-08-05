@@ -505,7 +505,7 @@
     - 🤽
     - 🤽‍♂️
     - 🤽‍♀️
-       # basin only  query: '[leisure=swimming_pool][access=yes]'
+      # basin only  query: '[leisure=swimming_pool][access=yes]'
   query: '[leisure=sports_centre][sport=swimming]'
   icon: https://cdn.jsdelivr.net/gh/osmandapp/OsmAnd-resources/icons/svg/sport/swimming_indoor.svg
 
@@ -623,7 +623,7 @@
     - 🛴
     - 🛹
   query:
-    - '["cycling"="pump_track"]
+    - '["cycling"="pump_track"]'
   icon: https://cdn.jsdelivr.net/gh/osmandapp/OsmAnd-resources/icons/svg/sport/skateboard.svg
 
 # PAR SPORTS
@@ -763,7 +763,6 @@
     - 🏄‍♀️
   query: '[sport=surfing]'
   icon: surf
-
 
 ################################
 
