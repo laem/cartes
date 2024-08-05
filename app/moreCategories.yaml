@@ -430,7 +430,7 @@
     - 🎾
     - 🏉
     - 🏀
-  query: '[leisure=sports_centre]'
+  query: '[leisure=sports_centre]["sport"!="swimming"]'
   icon: https://cdn.jsdelivr.net/gh/osmandapp/OsmAnd-resources/icons/svg/sport/pitch.svg
 
 - name: Gymnase
@@ -507,7 +507,7 @@
     - 🤽‍♀️
       # basin only  query: '[leisure=swimming_pool][access=yes]'
   query: '[leisure=sports_centre][sport=swimming]'
-  icon: https://cdn.jsdelivr.net/gh/osmandapp/OsmAnd-resources/icons/svg/sport/swimming_indoor.svg
+  icon: https://cdn.jsdelivr.net/gh/osmandapp/OsmAnd-resources/icons/svg/sport/swimming_outdoor.svg
 
 - name: Salle de musculation
   category: Sports
@@ -665,7 +665,9 @@
     - 🤼
     - 🤼‍♂️
     - 🤼‍♀️
-  query: '["sport"="judo"]'
+  query:
+    - '["sport"="judo"]'
+    - '["amenity"="dojo"]'
   icon: https://cdn.jsdelivr.net/gh/osmandapp/OsmAnd-resources/icons/svg/sport/judo.svg
 
 - title: Pétanque
