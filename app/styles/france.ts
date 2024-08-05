@@ -1,8 +1,31 @@
-import voyageStyle from './voyage'
+import { gtfsServerUrl } from '../serverUrls'
+import protomaps from './protomaps'
 
 export default function franceStyle(key) {
+	const base = protomaps(key)
 	return {
-		...voyageStyle(key),
+		...base,
+		layers: [
+			{
+				id: 'Background',
+				type: 'background',
+				layout: { visibility: 'visible' },
+				paint: {
+					'background-color': '#6688dd',
+				},
+			},
+			{
+				id: 'Land',
+				type: 'fill',
+				source: 'land',
+				'source-layer': 'land',
+				layout: { visibility: 'visible' },
+				paint: {
+					'fill-color': '#dfecbe',
+				},
+			},
+			...base.layers.slice(1),
+		],
 		id: 'france',
 		name: 'France',
 		sources: {
@@ -14,6 +37,10 @@ export default function franceStyle(key) {
 				attribution:
 					'<a href="https://www.maptiler.com/copyright/" target="_blank">&copy; MapTiler</a> <a href="https://www.openstreetmap.org/copyright" target="_blank">&copy; OpenStreetMap contributors</a>',
 				type: 'vector',
+			},
+			land: {
+				type: 'vector',
+				url: 'pmtiles://' + gtfsServerUrl + '/land.pmtiles',
 			},
 		},
 	}

@@ -154,11 +154,25 @@ export default function voyageStyle(
 				layout: { visibility: 'visible' },
 				paint: {
 					'fill-color': '#fbf4ab',
-					'fill-opacity': 0.85,
+					'fill-opacity': 0.25,
 					'fill-antialias': false,
 				},
 				metadata: {},
 				filter: ['==', 'class', 'sand'],
+			},
+			{
+				id: 'Beach',
+				type: 'fill',
+				source: 'maptiler_planet',
+				'source-layer': 'landcover',
+				layout: { visibility: 'visible' },
+				paint: {
+					'fill-color': '#fbf4ab',
+					'fill-opacity': 0.85,
+					'fill-antialias': false,
+				},
+				metadata: {},
+				filter: ['all', ['==', 'class', 'sand'], ['==', 'subclass', 'beach']],
 			},
 			{
 				id: 'Wetland (medium scale)',

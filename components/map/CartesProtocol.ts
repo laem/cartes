@@ -1,12 +1,14 @@
-import { default as tilebelt } from '@mapbox/tilebelt'
+import sphericalMercator from '@mapbox/sphericalmercator'
 import { RequestParameters } from 'maplibre-gl'
 import { PMTiles } from 'pmtiles'
 
+import { gtfsServerUrl } from '@/app/serverUrls'
 import hexagoneGeojson from '@/components/map/hexagone.json'
-import { booleanPointInPolygon } from '@turf/boolean-point-in-polygon'
+import { bboxPolygon } from '@turf/bbox-polygon'
+import { booleanContains } from '@turf/boolean-contains'
 
 const pmtilesUrl2 = 'https://panoramax.openstreetmap.fr/pmtiles/planet.pmtiles'
-const pmtilesUrl1 = 'https://motis.cartes.app/gtfs/france.pmtiles'
+const pmtilesUrl1 = gtfsServerUrl + '/france.pmtiles'
 
 export class Protocol {
 	tiles: Map<string, PMTiles>
@@ -57,17 +59,19 @@ export class Protocol {
 		const x = result[3]
 		const y = result[4]
 
-		const tile = [x, y, z]
-		const bbox = tilebelt.tileToBBOX(tile)
+		const tile = [x, y, 13]
+
+		const bbox = new sphericalMercator().bbox(x, y, z)
+
 		const tilePoint = {
 			type: 'Feature',
 			properties: {},
 			geometry: { type: 'Point', coordinates: [bbox[0], bbox[3]] },
 		} //TODO don't understand why this kind of bbox [ -6.943359375, -89.99999972676652, 1550.654296875, 43.38908193911751 ]
-		console.log('boup tile', tile, params.url)
-		console.log('boup lat lon', bbox)
+		console.log('boup tile', x, y, z, params)
 
-		const isInHexagon = booleanPointInPolygon(tilePoint, hexagoneGeojson)
+		const isInHexagon = booleanContains(hexagoneGeojson, bboxPolygon(bbox))
+		console.log('boup is in', isInHexagon)
 
 		const pmtilesUrl = isInHexagon ? pmtilesUrl1 : pmtilesUrl2
 
