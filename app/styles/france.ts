@@ -230,7 +230,7 @@ const layers = [
 			'fill-antialias': false,
 		},
 		metadata: {},
-		filter: ['all', ['in', 'subclass', 'swamp', 'wetland']],
+		filter: ['in', 'class', 'wetland'],
 	},
 	{
 		id: 'Industrial',
