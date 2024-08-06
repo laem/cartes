@@ -261,7 +261,8 @@ export default function Map({
 		setState,
 		gares,
 		clickGare,
-		setSearchParams
+		setSearchParams,
+		styleKey
 	)
 
 	useHoverOnMapFeatures(map)
