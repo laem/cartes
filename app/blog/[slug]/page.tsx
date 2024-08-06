@@ -17,7 +17,7 @@ export const generateMetadata = async ({ params }) => {
 		title: post.titre.raw,
 		description: post.description,
 		openGraph: {
-			images: [post.image],
+			images: post.image && [post.image],
 			type: 'article',
 			publishedTime: post.date + 'T00:00:00.000Z',
 			modifiedTime: lastEdit + 'T00:00:00.000Z',
@@ -38,15 +38,17 @@ export default async function Post({ params }: Props) {
 		!lastEdit || post.date.slice(0, 10) === lastEdit.slice(0, 10)
 	return (
 		<Article>
-			<Link
-				href="/blog"
-				style={css`
-					margin-top: 0.6rem;
-					display: inline-block;
-				`}
-			>
-				← Retour au blog
-			</Link>
+			{!post.tags?.includes('page') && (
+				<Link
+					href="/blog"
+					style={css`
+						margin-top: 0.6rem;
+						display: inline-block;
+					`}
+				>
+					← Retour au blog
+				</Link>
+			)}
 			<header>
 				{post.image && (
 					<Image
