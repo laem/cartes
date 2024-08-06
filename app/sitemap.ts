@@ -1,8 +1,8 @@
 import type { MetadataRoute } from 'next'
-import { allArticles } from '@/.contentlayer/generated'
 import { getRecentInterestingNodes } from '@/components/watchOsmPlaces.ts'
 import { gtfsServerUrl } from './serverUrls'
 import { getLastEdit } from './blog/utils'
+import { blogArticles } from './blog/page'
 
 export const domain = 'https://cartes.app'
 
@@ -14,6 +14,7 @@ const basePaths = [
 	'/presentation/state-of-the-map-2024',
 	'/itineraire',
 	'/transport-en-commun',
+	'/a-propos',
 ]
 
 const generateAgencies = async () => {
@@ -39,7 +40,7 @@ export default async function sitemap(): MetadataRoute.Sitemap {
 	}
 
 	const blogEntries = await Promise.all(
-		allArticles.map(async ({ url, date, _raw: { flattenedPath } }) => {
+		blogArticles.map(async ({ url, date, _raw: { flattenedPath } }) => {
 			const lastEdit = await getLastEdit(flattenedPath)
 
 			return {
