@@ -70,12 +70,13 @@ export class Protocol {
 		} //TODO don't understand why this kind of bbox [ -6.943359375, -89.99999972676652, 1550.654296875, 43.38908193911751 ]
 		console.log('boup tile', x, y, z, params)
 
-		const bboxHexagonePlus = [-10.78, 39.78, 10.75, 60.33]
+		const bboxHexagonePlus = [-11.26, 39.78, 10.75, 60.33]
 
 		const hexagonePlusPolygon = bboxPolygon(bboxHexagonePlus)
 		console.log({ hexagonePlusPolygon })
-		const isInHexagon = booleanContains(hexagonePlusPolygon, bboxPolygon(bbox))
-		console.log('boup is in', isInHexagon)
+		const tilePolygon = bboxPolygon(bbox)
+		const isInHexagon = booleanContains(hexagonePlusPolygon, tilePolygon)
+		console.log('boup is in', isInHexagon, hexagonePlusPolygon, tilePolygon)
 
 		const pmtilesUrl = isInHexagon ? pmtilesUrl1 : pmtilesUrl2
 
