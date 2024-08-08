@@ -7,7 +7,7 @@ import hexagoneGeojson from '@/components/map/hexagone.json'
 import { bboxPolygon } from '@turf/bbox-polygon'
 import { booleanContains } from '@turf/boolean-contains'
 
-const pmtilesUrl2 = 'https://panoramax.openstreetmap.fr/pmtiles/planet.pmtiles'
+const pmtilesUrl2 = gtfsServerUrl + '/planet.pmtiles'
 const pmtilesUrl1 = gtfsServerUrl + '/hexagone-plus.pmtiles'
 
 export class Protocol {
