@@ -204,11 +204,25 @@ const layers = [
 		layout: { visibility: 'visible' },
 		paint: {
 			'fill-color': '#fbf4ab',
-			'fill-opacity': 0.25,
+			'fill-opacity': 0.4,
 			'fill-antialias': false,
 		},
 		metadata: {},
-		filter: ['==', 'class', 'sand'],
+		filter: ['all', ['==', 'class', 'sand'], ['!=', 'subclass', 'beach']],
+	},
+	{
+		id: 'Rock',
+		type: 'fill',
+		source: 'openmaptiles',
+		'source-layer': 'landcover',
+		layout: { visibility: 'visible' },
+		paint: {
+			'fill-color': '#d0cbbc',
+			'fill-opacity': 1,
+			'fill-antialias': false,
+		},
+		metadata: {},
+		filter: ['==', 'class', 'rock'],
 	},
 	{
 		id: 'Beach',
@@ -218,7 +232,7 @@ const layers = [
 		layout: { visibility: 'visible' },
 		paint: {
 			'fill-color': '#fbf4ab',
-			'fill-opacity': 0.85,
+			'fill-opacity': 1,
 			'fill-antialias': false,
 		},
 		metadata: {},
