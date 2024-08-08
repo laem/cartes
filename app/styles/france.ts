@@ -14,6 +14,8 @@ export default function franceStyle(key) {
 		sources: {
 			openmaptiles: {
 				url: 'cartes://hybrid', // see the protocol CartesProtocol
+				//url: 'pmtiles://' + gtfsServerUrl + '/hexagone-plus.pmtiles',
+				//url: 'pmtiles://https://panoramax.openstreetmap.fr/pmtiles/planet.pmtiles',
 				type: 'vector',
 			},
 			// https://osmdata.openstreetmap.de/data/land-polygons.html
@@ -34,6 +36,8 @@ export default function franceStyle(key) {
 		layers,
 		glyphs: getFetchUrlBase() + '/fonts/glyphs/{fontstack}/{range}.pbf',
 		sprite: getFetchUrlBase() + '/sprite/sprite',
+		//glyphs: `https://api.maptiler.com/fonts/{fontstack}/{range}.pbf?key=${key}`,
+		//sprite: 'https://api.maptiler.com/maps/2f80a9c4-e0dd-437d-ae35-2b6c212f830b/sprite',
 		bearing: 0,
 		pitch: 0,
 		center: [0, 0],

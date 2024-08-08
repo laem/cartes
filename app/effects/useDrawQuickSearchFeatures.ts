@@ -45,12 +45,13 @@ export default function useDrawQuickSearchFeatures(
 			imageUrl,
 			(img) => {
 				console.log('useDrawQuickSearchFeatures build svg image', shownFeatures)
-				const imageName = category.name + '-futureco'
+				const imageName = category.name + '-cartes' // avoid collisions
 				const mapImage = map.getImage(imageName)
 				if (!mapImage) map.addImage(imageName, img)
 
 				const baseId = `features-${category.name}-`
-				console.log('useDrawQuickSearchFeatures add source ', baseId + 'points')
+				console.log('useDrawQuickSearchFeatures add source ')
+				console.log(baseId + 'points')
 				// Looks like buildSvgImage triggers multiple img.onload calls thus
 				// multiple map.addSource, hence an error
 				const source = map.getSource(baseId + 'points')
@@ -133,11 +134,12 @@ export default function useDrawQuickSearchFeatures(
 					type: 'symbol',
 					source: baseId + 'points',
 					layout: {
-						'icon-image': category.name + '-futureco',
+						'icon-image': category.name + '-cartes',
 						'icon-size': 0.6,
 						'text-field': ['get', 'name'],
 						'text-offset': [0, 1.25],
 						'text-anchor': 'top',
+						'text-font': ['Roboto Regular', 'Noto Sans Regular'],
 					},
 					paint: {
 						'text-color': '#503f38',

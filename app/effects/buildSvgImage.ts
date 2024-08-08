@@ -14,7 +14,7 @@ export default async function buildSvgImage(
 	const img = new Image(40, 40)
 
 	const svg = fromHTML(imageText)
-	console.log({ imageText, imageUrl })
+	//console.log({ imageText, imageUrl })
 	const svgSize = svg.getAttribute('width'), // Icons must be square !
 		xyr = svgSize / 2
 	const backgroundDisk = `<circle
@@ -24,8 +24,8 @@ export default async function buildSvgImage(
      r="${xyr}" />`
 	const newInner = `${backgroundDisk}<g style="fill:white;" transform="scale(.7)" transform-origin="center" transform-box="fill-box">${svg.innerHTML}</g>`
 	svg.innerHTML = newInner
-	console.log('svg', newInner)
-	console.log('svg', svg.outerHTML)
+	//console.log('svg', newInner)
+	//console.log('svg', svg.outerHTML)
 
 	img.src = 'data:image/svg+xml;charset=utf-8,' + svg.outerHTML
 
