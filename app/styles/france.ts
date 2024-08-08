@@ -1124,7 +1124,7 @@ const layers = [
 			visibility: 'visible',
 		},
 		paint: {
-			'line-color': 'Silver',
+			'line-color': '#8c97ae',
 			'line-width': [
 				'interpolate',
 				['linear', 2],
@@ -1144,7 +1144,17 @@ const layers = [
 				20,
 				['match', ['get', 'class'], ['trunk', 'primary'], 26, 18],
 			],
-			'line-opacity': 1,
+			'line-opacity': [
+				'interpolate',
+				['linear'],
+				['zoom'],
+				0,
+				0,
+				8,
+				0.3,
+				22,
+				1,
+			],
 		},
 		metadata: {},
 		filter: [
@@ -1461,7 +1471,7 @@ const layers = [
 			visibility: 'visible',
 		},
 		paint: {
-			'line-color': 'LightGray',
+			'line-color': '#99a6c3',
 			'line-width': [
 				'interpolate',
 				['linear', 2],
@@ -1477,7 +1487,17 @@ const layers = [
 				20,
 				['match', ['get', 'class'], ['trunk', 'primary'], 24, 16],
 			],
-			'line-opacity': 1,
+			'line-opacity': [
+				'interpolate',
+				['linear'],
+				['zoom'],
+				0,
+				0,
+				8,
+				0.3,
+				22,
+				1,
+			],
 		},
 		metadata: {},
 		filter: [
