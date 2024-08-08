@@ -65,6 +65,7 @@ export default function useAddMap(
 		maplibregl.addProtocol('cartes', cartesProtocol.tile)
 		return () => {
 			maplibregl.removeProtocol('pmtiles')
+			maplibregl.removeProtocol('cartes')
 		}
 	}, [])
 
