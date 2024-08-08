@@ -1,12 +1,12 @@
 export const gtfsServerUrl =
 	process.env.NEXT_PUBLIC_LOCAL_GTFS_SERVER === 'true'
 		? 'http://localhost:3001'
-		: 'https://motis.cartes.app/gtfs'
+		: 'https://serveur.cartes.app/gtfs'
 
 export const motisServerUrl =
 	process.env.NEXT_PUBLIC_LOCAL_GTFS_SERVER === 'true'
 		? 'http://localhost:3000'
-		: 'https://motis.cartes.app'
+		: 'https://serveur.cartes.app'
 
 export const getFetchUrlBase = () => {
 	const branchUrl = process.env.NEXT_PUBLIC_VERCEL_BRANCH_URL,

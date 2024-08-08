@@ -6,6 +6,7 @@ const regions = sortBy((r) => r.nom)(regionsRaw)
 import regionsAoms from './regionsAoms.yaml'
 import { Ul } from './UI'
 import { sortBy } from '@/components/utils/utils'
+import { gtfsServerUrl } from '../serverUrls'
 
 const title = 'Transports en commun'
 const description = `
@@ -20,9 +21,7 @@ export const metadata: Metadata = {
 	description,
 }
 export default async function () {
-	const onlineAgenciesRequest = await fetch(
-		'https://motis.cartes.app/gtfs/agencies'
-	)
+	const onlineAgenciesRequest = await fetch(gtfsServerUrl + '/agencies')
 	const { agencies } = await onlineAgenciesRequest.json()
 
 	const panRequest = await fetch('https://transport.data.gouv.fr/api/datasets/')

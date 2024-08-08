@@ -8,7 +8,7 @@ import { bboxPolygon } from '@turf/bbox-polygon'
 import { booleanContains } from '@turf/boolean-contains'
 
 const pmtilesUrl2 = 'https://panoramax.openstreetmap.fr/pmtiles/planet.pmtiles'
-const pmtilesUrl1 = gtfsServerUrl + '/france.pmtiles'
+const pmtilesUrl1 = gtfsServerUrl + '/hexagone-plus.pmtiles'
 
 export class Protocol {
 	tiles: Map<string, PMTiles>
@@ -70,8 +70,13 @@ export class Protocol {
 		} //TODO don't understand why this kind of bbox [ -6.943359375, -89.99999972676652, 1550.654296875, 43.38908193911751 ]
 		console.log('boup tile', x, y, z, params)
 
-		const isInHexagon = booleanContains(hexagoneGeojson, bboxPolygon(bbox))
-		console.log('boup is in', isInHexagon)
+		const bboxHexagonePlus = [-11.26, 40.5, 11.26, 60.33]
+
+		const hexagonePlusPolygon = bboxPolygon(bboxHexagonePlus)
+		console.log({ hexagonePlusPolygon })
+		const tilePolygon = bboxPolygon(bbox)
+		const isInHexagon = booleanContains(hexagonePlusPolygon, tilePolygon)
+		console.log('boupmoi is in', isInHexagon, hexagonePlusPolygon, tilePolygon)
 
 		const pmtilesUrl = isInHexagon ? pmtilesUrl1 : pmtilesUrl2
 
