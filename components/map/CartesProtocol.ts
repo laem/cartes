@@ -7,8 +7,12 @@ import hexagoneGeojson from '@/components/map/hexagone.json'
 import { bboxPolygon } from '@turf/bbox-polygon'
 import { booleanContains } from '@turf/boolean-contains'
 
-const pmtilesUrl2 = gtfsServerUrl + '/planet.pmtiles'
 const pmtilesUrl1 = gtfsServerUrl + '/hexagone-plus.pmtiles'
+const pmtilesUrl2 = gtfsServerUrl + '/planet.pmtiles'
+
+const bboxHexagonePlus = [-11.26, 40.5, 11.26, 60.33]
+
+const hexagonePlusPolygon = bboxPolygon(bboxHexagonePlus)
 
 export class Protocol {
 	tiles: Map<string, PMTiles>
@@ -29,8 +33,11 @@ export class Protocol {
 		params: RequestParameters,
 		abortController: AbortController
 	) => {
+		// I don't know why there's an itinal type==='json' call
+		// we server the global map for this call
+		console.log('params', params)
 		if (params.type === 'json') {
-			const pmtilesUrl = Math.random() > 0.5 ? pmtilesUrl1 : pmtilesUrl2
+			const pmtilesUrl = pmtilesUrl2
 			let instance = this.tiles.get(pmtilesUrl)
 			if (!instance) {
 				instance = new PMTiles(pmtilesUrl)
@@ -39,7 +46,6 @@ export class Protocol {
 
 			const h = await instance.getHeader()
 
-			console.log('boup2')
 			return {
 				data: {
 					tiles: [`${params.url}/{z}/{x}/{y}`],
@@ -49,9 +55,9 @@ export class Protocol {
 				},
 			}
 		}
+		console.log('boup3')
 		const re = new RegExp(/cartes:\/\/(.+)\/(\d+)\/(\d+)\/(\d+)/)
 		const result = params.url.match(re)
-		console.log('boup3', result)
 		if (!result) {
 			throw new Error('Invalid PMTiles protocol URL')
 		}
@@ -59,21 +65,10 @@ export class Protocol {
 		const x = result[3]
 		const y = result[4]
 
-		const tile = [x, y, 13]
-
 		const bbox = new sphericalMercator().bbox(x, y, z)
 
-		const tilePoint = {
-			type: 'Feature',
-			properties: {},
-			geometry: { type: 'Point', coordinates: [bbox[0], bbox[3]] },
-		} //TODO don't understand why this kind of bbox [ -6.943359375, -89.99999972676652, 1550.654296875, 43.38908193911751 ]
 		console.log('boup tile', x, y, z, params)
 
-		const bboxHexagonePlus = [-11.26, 40.5, 11.26, 60.33]
-
-		const hexagonePlusPolygon = bboxPolygon(bboxHexagonePlus)
-		console.log({ hexagonePlusPolygon })
 		const tilePolygon = bboxPolygon(bbox)
 		const isInHexagon = booleanContains(hexagonePlusPolygon, tilePolygon)
 		console.log('boupmoi is in', isInHexagon, hexagonePlusPolygon, tilePolygon)
