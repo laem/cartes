@@ -13,27 +13,15 @@ export default function franceStyle(key) {
 		name: 'France',
 		sources: {
 			openmaptiles: {
-				url: 'cartes://hybrid', // see the protocol CartesProtocol
+				//url: 'cartes://hybrid', // see the protocol CartesProtocol
 				//url: 'pmtiles://' + gtfsServerUrl + '/hexagone-plus.pmtiles',
-				//url: 'pmtiles://https://panoramax.openstreetmap.fr/pmtiles/planet.pmtiles',
+				url: 'pmtiles://https://panoramax.openstreetmap.fr/pmtiles/planet.pmtiles',
 				type: 'vector',
-			},
-			// https://osmdata.openstreetmap.de/data/land-polygons.html
-			land: {
-				type: 'vector',
-				url: 'pmtiles://' + gtfsServerUrl + '/land.pmtiles',
-			},
-			// https://github.com/wipfli/h3-landcover/
-			landcover: {
-				type: 'vector',
-				url: 'pmtiles://' + gtfsServerUrl + '/h3-landcover.pmtiles',
-			},
-			trees: {
-				type: 'vector',
-				url: 'pmtiles://' + gtfsServerUrl + '/trees.pmtiles',
 			},
 		},
-		layers,
+		layers: layers.filter(
+			(layer) => layer.id.includes(' labels') || layer.id.includes(' road')
+		),
 		glyphs: getFetchUrlBase() + '/fonts/glyphs/{fontstack}/{range}.pbf',
 		sprite: getFetchUrlBase() + '/sprite/sprite',
 		//glyphs: `https://api.maptiler.com/fonts/{fontstack}/{range}.pbf?key=${key}`,

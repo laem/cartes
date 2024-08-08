@@ -60,11 +60,12 @@ export default function useAddMap(
 
 	useEffect(() => {
 		let protomapsProtocol = new ProtomapsProtocol()
-		let cartesProtocol = new CartesProtocol()
+		//let cartesProtocol = new CartesProtocol()
 		maplibregl.addProtocol('pmtiles', protomapsProtocol.tile)
-		maplibregl.addProtocol('cartes', cartesProtocol.tile)
+		//maplibregl.addProtocol('cartes', cartesProtocol.tile)
 		return () => {
 			maplibregl.removeProtocol('pmtiles')
+			//	maplibregl.removeProtocol('cartes')
 		}
 	}, [])
 
