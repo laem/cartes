@@ -1,4 +1,4 @@
-import { gtfsServerUrl } from '../serverUrls'
+import { getFetchUrlBase, gtfsServerUrl } from '../serverUrls'
 
 export default function franceStyle(key) {
 	return {
@@ -27,8 +27,7 @@ export default function franceStyle(key) {
 		},
 		layers,
 		glyphs: `https://api.maptiler.com/fonts/{fontstack}/{range}.pbf?key=${key}`,
-		sprite:
-			'https://api.maptiler.com/maps/2f80a9c4-e0dd-437d-ae35-2b6c212f830b/sprite',
+		sprite: getFetchUrlBase() + '/sprite/sprite',
 		bearing: 0,
 		pitch: 0,
 		center: [0, 0],
