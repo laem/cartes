@@ -1,5 +1,11 @@
 import { getFetchUrlBase, gtfsServerUrl } from '../serverUrls'
 
+//Fonts used :
+//https://maplibre.org/font-maker
+//['Roboto Regular', 'Noto Sans Regular'],
+//['Roboto Italic', 'Noto Sans Italic'],
+//['Roboto Medium Regular', 'Noto Sans Regular'],
+
 export default function franceStyle(key) {
 	return {
 		version: 8,
@@ -26,7 +32,7 @@ export default function franceStyle(key) {
 			},
 		},
 		layers,
-		glyphs: `https://api.maptiler.com/fonts/{fontstack}/{range}.pbf?key=${key}`,
+		glyphs: getFetchUrlBase() + '/fonts/glyphs/{fontstack}/{range}.pbf',
 		sprite: getFetchUrlBase() + '/sprite/sprite',
 		bearing: 0,
 		pitch: 0,
@@ -2011,7 +2017,7 @@ const layers = [
 		'source-layer': 'water_name',
 		minzoom: 0,
 		layout: {
-			'text-font': ['Roboto Italic', 'Noto Sans Italic'],
+			'text-font': ['Roboto Italic'],
 			'text-size': [
 				'interpolate',
 				['linear', 1],
@@ -2765,7 +2771,7 @@ const layers = [
 					[18, 1],
 				],
 			},
-			'text-font': ['Roboto Medium', 'Noto Sans Regular'],
+			'text-font': ['Roboto Medium Regular', 'Noto Sans Regular'],
 			'text-size': {
 				stops: [
 					[13, 11],
@@ -2862,7 +2868,7 @@ const layers = [
 				16,
 				['match', ['get', 'class'], 'international', 1, 0.8],
 			],
-			'text-font': ['Roboto Medium', 'Noto Sans Regular'],
+			'text-font': ['Roboto Medium Regular', 'Noto Sans Regular'],
 			'text-size': [
 				'interpolate',
 				['linear'],
@@ -2928,7 +2934,7 @@ const layers = [
 		'source-layer': 'aeroway',
 		minzoom: 15,
 		layout: {
-			'text-font': ['Roboto Medium', 'Noto Sans Regular'],
+			'text-font': ['Roboto Medium Regular', 'Noto Sans Regular'],
 			'text-size': {
 				stops: [
 					[15, 10],
@@ -2954,7 +2960,7 @@ const layers = [
 		minzoom: 3,
 		maxzoom: 9,
 		layout: {
-			'text-font': ['Roboto Medium', 'Noto Sans Regular'],
+			'text-font': ['Roboto Medium Regular', 'Noto Sans Regular'],
 			'text-size': {
 				stops: [
 					[3, 8],
@@ -3123,7 +3129,7 @@ const layers = [
 				13,
 				0,
 			],
-			'text-font': ['Roboto Medium', 'Noto Sans Regular'],
+			'text-font': ['Roboto Medium Regular', 'Noto Sans Regular'],
 			'text-size': [
 				'interpolate',
 				['linear', 1],
@@ -3174,7 +3180,7 @@ const layers = [
 				13,
 				0,
 			],
-			'text-font': ['Roboto Medium', 'Noto Sans Regular'],
+			'text-font': ['Roboto Medium Regular', 'Noto Sans Regular'],
 			'text-size': [
 				'interpolate',
 				['linear', 1],
@@ -3212,7 +3218,7 @@ const layers = [
 		minzoom: 1,
 		maxzoom: 12,
 		layout: {
-			'text-font': ['Roboto Medium', 'Noto Sans Regular'],
+			'text-font': ['Roboto Medium Regular', 'Noto Sans Regular'],
 			'text-size': [
 				'interpolate',
 				['linear', 1],
@@ -3266,7 +3272,7 @@ const layers = [
 		'source-layer': 'place',
 		maxzoom: 1,
 		layout: {
-			'text-font': ['Roboto Medium', 'Noto Sans Regular'],
+			'text-font': ['Roboto Medium Regular', 'Noto Sans Regular'],
 			'text-size': {
 				stops: [
 					[0, 12],
