@@ -82,7 +82,7 @@
 		"opening_hours": "^3.8.0",
 		"openmoji": "^15.0.0",
 		"osmtogeojson": "^3.0.0-beta.5",
-		"pmtiles": "^3.0.6",
+		"pmtiles": "^3.0.7",
 		"process": "^0.11.10",
 		"rbush": "^3.0.1",
 		"react": "^19.0.0-rc-cc1ec60d0d-20240607",
