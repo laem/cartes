@@ -75,7 +75,7 @@
 		"fuse.js": "^7.0.0",
 		"gray-matter": "^4.0.3",
 		"jsdom": "^22.1.0",
-		"maplibre-gl": "^4.5.1",
+		"maplibre-gl": "^4.5.2",
 		"next": "^15.0.0-rc.0",
 		"next-contentlayer2": "^0.4.6",
 		"next-mdx-remote": "^5.0.0",

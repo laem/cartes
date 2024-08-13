@@ -2,12 +2,12 @@ import sphericalMercator from '@mapbox/sphericalmercator'
 import { RequestParameters } from 'maplibre-gl'
 import { PMTiles } from 'pmtiles'
 
-import { gtfsServerUrl } from '@/app/serverUrls'
+import { pmtilesServerUrl } from '@/app/serverUrls'
 import { bboxPolygon } from '@turf/bbox-polygon'
 import { booleanContains } from '@turf/boolean-contains'
 
-const pmtilesUrl1 = gtfsServerUrl + '/hexagone-plus.pmtiles'
-const pmtilesUrl2 = gtfsServerUrl + '/planet.pmtiles'
+const pmtilesUrl1 = pmtilesServerUrl + '/hexagone-plus.pmtiles'
+const pmtilesUrl2 = pmtilesServerUrl + '/planet.pmtiles'
 // https://panoramax.openstreetmap.fr/pmtiles/planet.pmtiles
 
 const bboxHexagonePlus = [-11.26, 40.5, 11.26, 60.33]

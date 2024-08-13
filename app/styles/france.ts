@@ -1,4 +1,4 @@
-import { getFetchUrlBase, gtfsServerUrl } from '../serverUrls'
+import { getFetchUrlBase, pmtilesServerUrl } from '../serverUrls'
 
 //Fonts used :
 //https://maplibre.org/font-maker
@@ -21,16 +21,16 @@ export default function franceStyle(key) {
 			// https://osmdata.openstreetmap.de/data/land-polygons.html
 			land: {
 				type: 'vector',
-				url: 'pmtiles://' + gtfsServerUrl + '/land.pmtiles',
+				url: 'pmtiles://' + pmtilesServerUrl + '/land.pmtiles',
 			},
 			// https://github.com/wipfli/h3-landcover/
 			landcover: {
 				type: 'vector',
-				url: 'pmtiles://' + gtfsServerUrl + '/h3-landcover.pmtiles',
+				url: 'pmtiles://' + pmtilesServerUrl + '/h3-landcover.pmtiles',
 			},
 			trees: {
 				type: 'vector',
-				url: 'pmtiles://' + gtfsServerUrl + '/trees.pmtiles',
+				url: 'pmtiles://' + pmtilesServerUrl + '/trees.pmtiles',
 			},
 		},
 		layers,
