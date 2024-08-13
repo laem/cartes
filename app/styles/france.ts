@@ -1140,7 +1140,7 @@ const layers = [
 		type: 'line',
 		source: 'openmaptiles',
 		'source-layer': 'transportation',
-		minzoom: 4,
+		minzoom: 7,
 		layout: {
 			'line-cap': 'butt',
 			'line-join': 'round',
@@ -1198,7 +1198,8 @@ const layers = [
 			visibility: 'visible',
 		},
 		paint: {
-			'line-color': 'Silver',
+			//'line-color': 'Silver',
+			'line-color': '#8c97ae',
 			'line-width': [
 				'interpolate',
 				['linear', 2],
@@ -1487,7 +1488,7 @@ const layers = [
 		type: 'line',
 		source: 'openmaptiles',
 		'source-layer': 'transportation',
-		minzoom: 4,
+		minzoom: 7,
 		layout: {
 			'line-cap': 'butt',
 			'line-join': 'round',
@@ -1534,7 +1535,7 @@ const layers = [
 		type: 'line',
 		source: 'openmaptiles',
 		'source-layer': 'transportation',
-		minzoom: 4,
+		minzoom: 6,
 		maxzoom: 22,
 		layout: {
 			'line-cap': 'butt',
@@ -1542,7 +1543,8 @@ const layers = [
 			visibility: 'visible',
 		},
 		paint: {
-			'line-color': 'LightGray',
+			//'line-color': 'LightGray',
+			'line-color': '#99a6c3',
 			'line-width': [
 				'interpolate',
 				['linear', 2],
