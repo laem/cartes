@@ -310,7 +310,7 @@ const layers = [
 		type: 'fill',
 		source: 'openmaptiles',
 		'source-layer': 'landuse',
-		minzoom: 4,
+		minzoom: 10,
 		maxzoom: 22,
 		layout: { visibility: 'visible' },
 		paint: {
