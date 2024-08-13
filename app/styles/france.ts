@@ -1044,7 +1044,7 @@ const layers = [
 		type: 'line',
 		source: 'openmaptiles',
 		'source-layer': 'transportation',
-		minzoom: 4,
+		minzoom: 11,
 		layout: {
 			'line-cap': 'butt',
 			'line-join': 'round',
@@ -1388,7 +1388,7 @@ const layers = [
 		type: 'line',
 		source: 'openmaptiles',
 		'source-layer': 'transportation',
-		minzoom: 4,
+		minzoom: 11,
 		layout: {
 			'line-cap': 'butt',
 			'line-join': 'round',
