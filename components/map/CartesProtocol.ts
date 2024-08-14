@@ -6,7 +6,8 @@ import { pmtilesServerUrl } from '@/app/serverUrls'
 import { bboxPolygon } from '@turf/bbox-polygon'
 import { booleanContains } from '@turf/boolean-contains'
 
-const pmtilesUrl1 = pmtilesServerUrl + '/hexagone-plus.pmtiles'
+// 2 is a lighter set of tiles with combined linestrings
+const pmtilesUrl1 = pmtilesServerUrl + '/hexagone-plus-2.pmtiles'
 const pmtilesUrl2 = pmtilesServerUrl + '/planet.pmtiles'
 // https://panoramax.openstreetmap.fr/pmtiles/planet.pmtiles
 
