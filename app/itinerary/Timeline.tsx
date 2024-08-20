@@ -5,6 +5,7 @@ import Link from 'next/link'
 import TransitSummary from './transit/TransitSummary'
 
 export default function Timeline({ itinerary }) {
+	console.log('cyan', itinerary)
 	const setSearchParams = useSetSearchParams()
 	const cyclingSeconds =
 		itinerary.routes.cycling?.features &&

@@ -65,17 +65,20 @@ export default function useFetchItinerary(
 			)
 			updateRoute('cycling', cycling)
 
-			updateRoute('car', 'loading')
-			const car = await fetchValhalla(
-				points,
-				itineraryDistance,
-				null,
+			if (mode === 'car') {
+				updateRoute('car', 'loading')
+				const car = await fetchValhalla(
+					points,
+					itineraryDistance,
+					null,
 
-				1 //to be tweaked. We don't want to recommand this heavily polluting means of transport on the default itinerary result
-			)
-			updateRoute('car', car)
-
-			console.log('purple car', car)
+					1 //to be tweaked. We don't want to recommand this heavily polluting means of transport on the default itinerary result
+				)
+				updateRoute('car', car)
+				console.log('purple car', car)
+			} else {
+				updateRoute('car', null)
+			}
 
 			updateRoute('walking', 'loading')
 			const walking = await fetchBrouterRoute(
