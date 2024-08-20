@@ -79,6 +79,10 @@ export const buildRequestBody = (start, destination, date) => {
 	return body
 }
 
+const errorCorrespondance = {
+	'access: timestamp not in schedule':
+		'Le serveur de cartes a eu un problème lors de la mise à jour des données de transport en commun :/',
+}
 export const computeMotisTrip = async (start, destination, date) => {
 	const body = buildRequestBody(start, destination, date)
 
@@ -93,7 +97,13 @@ export const computeMotisTrip = async (start, destination, date) => {
 		})
 		if (!request.ok) {
 			console.error('Error fetching motis server')
-			return { state: 'error' }
+			const json = await request.json()
+			console.log('cyan', json)
+
+			const motisReason = json.content?.reason
+			const reason = errorCorrespondance[motisReason]
+
+			return { state: 'error', reason }
 		}
 		const json = await request.json()
 		console.log('motis', json)

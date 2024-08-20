@@ -30,7 +30,8 @@ export default function Transit({ itinerary, searchParams }) {
 	const data = itinerary.routes.transit,
 		date = itinerary.date
 	if (data.state === 'loading') return <TransitLoader />
-	if (data.state === 'error') return <NoTransit />
+	if (data.state === 'error') return <NoTransit reason={data.reason} />
+
 	if (!data?.connections || !data.connections.length)
 		return <TransitScopeLimit />
 

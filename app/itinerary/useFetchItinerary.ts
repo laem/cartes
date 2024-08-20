@@ -95,7 +95,7 @@ export default function useFetchItinerary(
 			return
 		}
 
-		async function fetchTrainRoute(multiplePoints, itineraryDistance, date) {
+		async function fetchTransitRoute(multiplePoints, itineraryDistance, date) {
 			const minTransitDistance = 0.5 // please walk or bike
 			if (itineraryDistance < minTransitDistance) return null
 			const points =
@@ -128,7 +128,7 @@ export default function useFetchItinerary(
 		const itineraryDistance = distance(points[0], points.slice(-1)[0])
 
 		updateRoute('transit', { state: 'loading' })
-		fetchTrainRoute(points, itineraryDistance, date).then((transit) =>
+		fetchTransitRoute(points, itineraryDistance, date).then((transit) =>
 			setRoutes((routes) => ({ ...routes, transit }))
 		)
 	}, [points, setRoutes, date])

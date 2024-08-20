@@ -14,7 +14,7 @@ export default function TransitSummary({ itinerary }) {
 	const data = itinerary.routes.transit
 	if (!data) return null // Too short of a distance to use transit
 	if (data.state === 'loading') return <TransitLoader />
-	if (data.state === 'error') return <NoTransit />
+	if (data.state === 'error') return <NoTransit reason={data.reason} />
 	if (!data?.connections || !data.connections.length)
 		return <TransitScopeLimit />
 

@@ -1,6 +1,9 @@
 import DateSelector from '../DateSelector'
 
-export const NoTransit = () => <p>Pas de transport en commun trouvé :( </p>
+export const NoTransit = ({ reason }) => {
+	if (reason) return <p>{reason}</p>
+	if (!reason) return <p>Pas de transport en commun trouvé :( </p>
+}
 export const TransitScopeLimit = () => (
 	<p
 		css={`
