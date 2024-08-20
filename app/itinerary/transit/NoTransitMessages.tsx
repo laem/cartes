@@ -1,21 +1,43 @@
+import styled from 'styled-components'
 import DateSelector from '../DateSelector'
+import noTransports from '@/public/no-transports.svg'
+import Image from 'next/image'
 
-export const NoTransit = ({ reason }) => {
-	if (reason) return <p>{reason}</p>
-	if (!reason) return <p>Pas de transport en commun trouvé :( </p>
-}
-export const TransitScopeLimit = () => (
-	<p
+const MessageBlock = ({ message }) => (
+	<section
 		css={`
-			margin-top: 1rem;
+			margin-top: 2rem;
+			line-height: 1.3rem;
+			display: flex;
+			align-items: center;
+			img {
+				width: 2rem;
+				height: auto;
+				margin-right: 0.8rem;
+				margin-left: 0.4rem;
+			}
 		`}
 	>
-		<small>
+		<Image
+			src={noTransports}
+			alt="Icône d'erreur du calcul de transport en commun"
+		/>
+		<p>{message}</p>
+	</section>
+)
+
+export const NoTransit = ({ reason }) => {
+	if (reason) return <MessageBlock message={reason} />
+	if (!reason)
+		return <MessageBlock message={'Pas de transport en commun trouvé :('} />
+}
+export const TransitScopeLimit = () => (
+	<MessageBlock
+		message={`
 			💡 Les transports en commun ne sont complets qu'en Bretagne et Pays de la
 			Loire pour l'instant. Car le développeur est breton et qu'il faut bien
-			commencer quelque part :)
-		</small>
-	</p>
+			commencer quelque part :)`}
+	/>
 )
 export const NoMoreTransitToday = ({ date }) => (
 	<section>
