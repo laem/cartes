@@ -37,7 +37,7 @@ export default function StyleChooser({ style, setStyleChooser, setSnap }) {
 					css={`
 						color: #aaa;
 						text-align: right;
-						margin: 1.4rem 3rem 0.8rem 0;
+						margin: 1.4rem 1.4rem 0.8rem 0;
 					`}
 				>
 					Autres styles
