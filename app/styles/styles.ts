@@ -1,3 +1,4 @@
+import { description } from '../layout'
 import cyclOsm from './cyclOsmStyle'
 import elections from './elections'
 import franceStyle from './france'
@@ -19,15 +20,16 @@ export const styles = {
 		url: franceStyle(key),
 		name: 'France',
 		image: 'base',
+		description: `Notre style maison, avec des bonus inédits : rail visible à haut niveau, arbres, et plein de futures nouveautés. Hébergé sur nos serveurs, contrairement aux autres il ne nous coûte rien. C'est le futur.`,
 		attribution:
 			'<a href="https://www.openstreetmap.org/copyright" target="_blank">&copy; OpenStreetMap contributors</a>',
 	},
 	/* The historical maptiler streets that we tuned for cartes.app */
 	base: {
 		url: voyageStyle(key),
-		name: 'Ancienne base',
+		name: 'Monde',
+		description: `C'est l'ancienne version du style principal, qui reste meilleur pour un certain nombre d'aspects : noms des lieux étrangers en français, moins de bugs sur les côtes.`,
 		emoji: '🗺️',
-		secondary: true,
 	},
 	satellite: {
 		url: maptilerUrl('satellite'),
