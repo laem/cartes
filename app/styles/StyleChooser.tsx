@@ -4,6 +4,8 @@ import Link from 'next/link'
 import { ModalCloseButton } from '../UI'
 import { styles } from './styles'
 import { useLocalStorage } from 'usehooks-ts'
+import Image from 'next/image'
+import informationIcon from '@/public/information.svg'
 
 const styleList = Object.entries(styles)
 export default function StyleChooser({ style, setStyleChooser, setSnap }) {
@@ -35,7 +37,7 @@ export default function StyleChooser({ style, setStyleChooser, setSnap }) {
 					css={`
 						color: #aaa;
 						text-align: right;
-						margin: 1.4rem 3rem 0.8rem 0;
+						margin: 1.4rem 1.4rem 0.8rem 0;
 					`}
 				>
 					Autres styles
@@ -66,49 +68,85 @@ const Styles = ({ style, styleList, setSearchParams }) => {
 				margin-top: 1rem;
 			`}
 		>
-			{styleList.map(([k, { name, imageAlt, title, image: imageProp }]) => {
-				const image = (imageProp || k) + '.png'
+			{styleList.map(
+				([k, { name, imageAlt, title, image: imageProp, description }]) => {
+					const image = (imageProp || k) + '.png'
 
-				return (
-					<li
-						key={k}
-						css={`
-							margin: 0.6rem;
-						`}
-					>
-						<Link
-							href={setSearchParams({ style: k }, true, false)}
-							onClick={() => setLocalStorageStyleKey(k)}
-							title={'Passer au style ' + (title || name)}
+					return (
+						<li
+							key={k}
 							css={`
-								display: flex;
-								flex-direction: column;
-								justify-content: center;
-								align-items: center;
-								text-decoration: none;
-								color: inherit;
-								${style.key === k && `color: var(--color); font-weight: bold`}
+								margin: 0.6rem 0.5rem;
 							`}
 						>
-							<img
-								src={'/styles/' + image}
-								width="50"
-								height="50"
-								alt={imageAlt}
+							<Link
+								href={setSearchParams({ style: k }, true, false)}
+								onClick={() => setLocalStorageStyleKey(k)}
+								title={'Passer au style ' + (title || name)}
 								css={`
-									width: 5.5rem;
-									height: 5.5rem;
+									display: flex;
+									flex-direction: column;
+									justify-content: center;
+									align-items: center;
+									text-decoration: none;
+									color: inherit;
+									${style.key === k && `color: var(--color); font-weight: bold`}
+									background: white;
 									border-radius: 0.4rem;
-									${style.key === k &&
-									`border: 3px solid var(--color);
+									border: 1px solid var(--lightestColor);
 								`}
+							>
+								<img
+									src={'/styles/' + image}
+									width="50"
+									height="50"
+									alt={imageAlt}
+									css={`
+										width: 6rem;
+										height: 5rem;
+										object-fit: cover;
+										border-top-left-radius: 0.4rem;
+										border-top-right-radius: 0.4rem;
+										${style.key === k &&
+										`border: 3px solid var(--color);
 								`}
-							/>
-							<div>{name}</div>
-						</Link>
-					</li>
-				)
-			})}
+									`}
+								/>
+								<div
+									css={`
+										position: relative;
+										width: 100%;
+										text-align: center;
+										line-height: 1.9rem;
+										img {
+											position: absolute;
+											right: -0.5rem;
+											top: -0.6rem;
+											width: 1.2rem;
+											height: auto;
+										}
+									`}
+								>
+									{name}
+									{description && (
+										<aside
+											onClick={(e) => {
+												alert(description)
+												e.preventDefault()
+											}}
+										>
+											<Image
+												src={informationIcon}
+												alt="Informations sur le style"
+											/>
+										</aside>
+									)}
+								</div>
+							</Link>
+						</li>
+					)
+				}
+			)}
 		</ul>
 	)
 }
