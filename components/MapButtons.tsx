@@ -32,7 +32,7 @@ export const MapButton = styled.div`
 		height: auto;
 		vertical-align: bottom;
 	}
-	background: #ffffff85;
+	background: #ffffff;
 	border: 0px solid lightgrey;
 	cursor: pointer;
 	${(p) =>
