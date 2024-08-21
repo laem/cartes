@@ -76,7 +76,7 @@ const Styles = ({ style, styleList, setSearchParams }) => {
 						<li
 							key={k}
 							css={`
-								margin: 0.6rem;
+								margin: 0.6rem 0.5rem;
 							`}
 						>
 							<Link
@@ -91,6 +91,9 @@ const Styles = ({ style, styleList, setSearchParams }) => {
 									text-decoration: none;
 									color: inherit;
 									${style.key === k && `color: var(--color); font-weight: bold`}
+									background: white;
+									border-radius: 0.4rem;
+									border: 1px solid var(--lightestColor);
 								`}
 							>
 								<img
@@ -99,9 +102,11 @@ const Styles = ({ style, styleList, setSearchParams }) => {
 									height="50"
 									alt={imageAlt}
 									css={`
-										width: 5.5rem;
-										height: 5.5rem;
-										border-radius: 0.4rem;
+										width: 6rem;
+										height: 5rem;
+										object-fit: cover;
+										border-top-left-radius: 0.4rem;
+										border-top-right-radius: 0.4rem;
 										${style.key === k &&
 										`border: 3px solid var(--color);
 								`}
@@ -112,6 +117,7 @@ const Styles = ({ style, styleList, setSearchParams }) => {
 										position: relative;
 										width: 100%;
 										text-align: center;
+										line-height: 1.9rem;
 										img {
 											position: absolute;
 											right: -0.5rem;

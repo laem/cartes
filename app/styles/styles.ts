@@ -57,8 +57,7 @@ export const styles = {
 	},
 	osm: {
 		url: maptilerUrl('openstreetmap'),
-		name: 'OpenStreetMap',
-		secondary: true,
+		name: 'OSM',
 	},
 	nature: {
 		url: natureStyle(key),
