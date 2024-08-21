@@ -16,6 +16,7 @@ import SearchResultsContainer from './_components/SearchResults/SearchResultsCon
 import { Geolocate } from './_components/Geolocate'
 import { FromHereLink } from './_components/FromHereLink'
 import { buildAddress } from '@/components/osm/buildAddress'
+import detectSmartItinerary from '@/components/placeSearch/detectSmartItinerary'
 
 /* I'm  not sure of the interest to attache `results` to each state step.
  * It could be cached across the app. No need to re-query photon for identical
@@ -34,7 +35,7 @@ export default function PlaceSearch({
 	placeholder,
 }) {
 	if (stepIndex == null) throw new Error('Step index necessary')
-	const [localSearch, setLocalSearch] = useState(true)
+	const [isLocalSearch, setIsLocalSearch] = useState(true)
 	const [searchHistory, setSearchHistory] = useLocalStorage('searchHistory', [])
 
 	const urlSearchQuery = searchParams.q
@@ -64,9 +65,30 @@ export default function PlaceSearch({
 		setTimeout(() => instantaneousSetIsMyInputFocused(value), 300)
 	}
 
+	const hash = window.location.hash,
+		local = hash && hash.split('/').slice(1, 3),
+		localSearch = isLocalSearch && local
+
 	const onInputChange =
-		(stepIndex = -1, localSearch = false) =>
+		(stepIndex = -1, isLocalSearch = false) =>
 		(searchValue) => {
+			detectSmartItinerary(searchValue, localSearch, zoom, (result) => {
+				if (result == null) return
+				const [from, to] = result
+				console.log('cyan salut', searchValue, [from, to])
+				setSearchParams({
+					allez:
+						buildAllezPart(
+							from.name,
+							from.osmId,
+							from.longitude,
+							from.latitude
+						) +
+						'->' +
+						buildAllezPart(to.name, to.osmId, to.longitude, to.latitude),
+				})
+			})
+
 			const oldStateEntry = state[stepIndex]
 			const stateEntry = {
 				...(oldStateEntry?.results?.length && searchValue == null
@@ -86,20 +108,11 @@ export default function PlaceSearch({
 			)
 			setState(newState)
 			if (searchValue?.length > 2) {
-				const hash = window.location.hash,
-					local = hash && hash.split('/').slice(1, 3)
-
-				fetchPhoton(
-					searchValue,
-					setState,
-					stepIndex,
-					localSearch && local,
-					zoom
-				)
+				fetchPhoton(searchValue, setState, stepIndex, localSearch, zoom)
 			}
 		}
 
-	const onDestinationChange = onInputChange(stepIndex, localSearch)
+	const onDestinationChange = onInputChange(stepIndex, isLocalSearch)
 
 	useEffect(() => {
 		if (!urlSearchQuery || value) return
@@ -220,8 +233,8 @@ export default function PlaceSearch({
 								<SearchNoResults value={value} />
 							)}
 							<SearchHereButton
-								setLocalSearch={setLocalSearch}
-								localSearch={localSearch}
+								setIsLocalSearch={setIsLocalSearch}
+								isLocalSearch={isLocalSearch}
 								onInputChange={onInputChange}
 								state={state}
 								stepIndex={stepIndex}

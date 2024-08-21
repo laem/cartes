@@ -1,6 +1,6 @@
 export default ({
-	setLocalSearch,
-	localSearch,
+	setIsLocalSearch,
+	isLocalSearch,
 	onInputChange,
 	state,
 	stepIndex,
@@ -23,10 +23,10 @@ export default ({
 	>
 		<input
 			type="checkbox"
-			defaultChecked={localSearch}
+			defaultChecked={isLocalSearch}
 			onClick={() => {
-				setLocalSearch(!localSearch)
-				onInputChange(stepIndex, !localSearch)(state.slice(-1)[0].inputValue)
+				setIsLocalSearch(!isLocalSearch)
+				onInputChange(stepIndex, !isLocalSearch)(state.slice(-1)[0].inputValue)
 			}}
 		/>
 		<span>Rechercher ici</span>
