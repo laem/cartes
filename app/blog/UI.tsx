@@ -20,6 +20,8 @@ export const BlogBackButton = ({ children }) => <CTA>{children}</CTA>
 export const OtherArticlesSection = styled.section`
 	margin-top: 2vh;
 	padding: 0 0.8rem;
+	max-width: 90vw;
+	overflow: hidden;
 	h2 {
 		width: 700px;
 		margin: 0 auto;
