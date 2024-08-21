@@ -168,5 +168,6 @@ export default function useMapClick(
 		isTransportsMode,
 		setSearchParams,
 		setLatLngClicked,
+		styleKey,
 	])
 }
