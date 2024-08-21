@@ -81,7 +81,7 @@ export const buildRequestBody = (start, destination, date) => {
 
 const errorCorrespondance = {
 	'access: timestamp not in schedule':
-		'Notre serveur a eu un problème de mise à jour des données de transport en commun :/',
+		'Notre serveur a eu un problème de mise à jour des données de transport en commun :-/',
 }
 export const computeMotisTrip = async (start, destination, date) => {
 	const body = buildRequestBody(start, destination, date)

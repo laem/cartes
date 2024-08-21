@@ -64,7 +64,7 @@ const Page = () => {
 								dangerouslySetInnerHTML={{ __html: titre.html }}
 							/>
 						</div>
-						<small>publié {dateCool(date)}</small>
+						<small>publié le {dateCool(date)}</small>
 					</li>
 				))}
 			</List>

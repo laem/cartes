@@ -1,12 +1,12 @@
 import { allArticles } from '@/.contentlayer/generated'
 import Article from '@/components/Article'
-import { dateCool, getLastEdit } from '../utils'
-import { getMDXComponent } from 'next-contentlayer2/hooks'
-import Link from 'next/link'
-import Image from 'next/image'
-import LastEdit from '@/components/blog/LastEdit'
-import Contribution from '../Contribution'
 import css from '@/components/css/convertToJs'
+import { getMDXComponent } from 'next-contentlayer2/hooks'
+import Image from 'next/image'
+import Link from 'next/link'
+import Contribution from '../Contribution'
+import { dateCool, getLastEdit } from '../utils'
+import OtherArticles from '../OtherArticles'
 
 export const generateMetadata = async ({ params }) => {
 	const post = allArticles.find(
@@ -72,6 +72,7 @@ export default async function Post({ params }: Props) {
 			</header>
 			<Content />
 			<Contribution slug={params.slug} />
+			<OtherArticles excludeUrl={post.url} />
 		</Article>
 	)
 }
