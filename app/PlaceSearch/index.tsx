@@ -17,6 +17,8 @@ import { Geolocate } from './_components/Geolocate'
 import { FromHereLink } from './_components/FromHereLink'
 import { buildAddress } from '@/components/osm/buildAddress'
 import detectSmartItinerary from '@/components/placeSearch/detectSmartItinerary'
+import Link from 'next/link'
+import ItineraryProposition from '@/components/placeSearch/ItineraryProposition'
 
 /* I'm  not sure of the interest to attache `results` to each state step.
  * It could be cached across the app. No need to re-query photon for identical
@@ -37,6 +39,7 @@ export default function PlaceSearch({
 	if (stepIndex == null) throw new Error('Step index necessary')
 	const [isLocalSearch, setIsLocalSearch] = useState(true)
 	const [searchHistory, setSearchHistory] = useLocalStorage('searchHistory', [])
+	const [itineraryProposition, setItineraryProposition] = useState()
 
 	const urlSearchQuery = searchParams.q
 
@@ -72,21 +75,12 @@ export default function PlaceSearch({
 	const onInputChange =
 		(stepIndex = -1, isLocalSearch = false) =>
 		(searchValue) => {
+			setItineraryProposition(null)
 			detectSmartItinerary(searchValue, localSearch, zoom, (result) => {
 				if (result == null) return
 				const [from, to] = result
 				console.log('cyan salut', searchValue, [from, to])
-				setSearchParams({
-					allez:
-						buildAllezPart(
-							from.name,
-							from.osmId,
-							from.longitude,
-							from.latitude
-						) +
-						'->' +
-						buildAllezPart(to.name, to.osmId, to.longitude, to.latitude),
-				})
+				setItineraryProposition([from, to])
 			})
 
 			const oldStateEntry = state[stepIndex]
@@ -184,6 +178,14 @@ export default function PlaceSearch({
 					sideSheet={sideSheet}
 				/>
 			)}
+
+			{itineraryProposition && (
+				<ItineraryProposition
+					data={itineraryProposition}
+					setSearchParams={setSearchParams}
+				/>
+			)}
+
 			{shouldShowResults && (
 				<div>
 					{step.results && (
