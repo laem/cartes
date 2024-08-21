@@ -19,7 +19,6 @@ export const styles = {
 	france: {
 		url: franceStyle(key),
 		name: 'France',
-		image: 'base',
 		description: `Notre style maison, avec des bonus inédits : rail visible à haut niveau, arbres, et plein de futures nouveautés. Hébergé sur nos serveurs, contrairement aux autres il ne nous coûte rien. C'est le futur.`,
 		attribution:
 			'<a href="https://www.openstreetmap.org/copyright" target="_blank">&copy; OpenStreetMap contributors</a>',
