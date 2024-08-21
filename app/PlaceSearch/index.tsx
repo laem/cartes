@@ -73,7 +73,7 @@ export default function PlaceSearch({
 		localSearch = isLocalSearch && local
 
 	const onInputChange =
-		(stepIndex = -1, isLocalSearch = false) =>
+		(stepIndex = -1) =>
 		(searchValue) => {
 			setItineraryProposition(null)
 			detectSmartItinerary(searchValue, localSearch, zoom, (result) => {
@@ -106,7 +106,11 @@ export default function PlaceSearch({
 			}
 		}
 
-	const onDestinationChange = onInputChange(stepIndex, isLocalSearch)
+	useEffect(() => {
+		onInputChange(stepIndex)(value)
+	}, [isLocalSearch, stepIndex, value])
+
+	const onDestinationChange = onInputChange(stepIndex)
 
 	useEffect(() => {
 		if (!urlSearchQuery || value) return
@@ -237,7 +241,6 @@ export default function PlaceSearch({
 							<SearchHereButton
 								setIsLocalSearch={setIsLocalSearch}
 								isLocalSearch={isLocalSearch}
-								onInputChange={onInputChange}
 								state={state}
 								stepIndex={stepIndex}
 							/>

@@ -1,10 +1,4 @@
-export default ({
-	setIsLocalSearch,
-	isLocalSearch,
-	onInputChange,
-	state,
-	stepIndex,
-}) => (
+export default ({ setIsLocalSearch, isLocalSearch, state, stepIndex }) => (
 	<label
 		css={`
 			text-align: right;
@@ -25,8 +19,7 @@ export default ({
 			type="checkbox"
 			defaultChecked={isLocalSearch}
 			onClick={() => {
-				setIsLocalSearch(!isLocalSearch)
-				onInputChange(stepIndex, !isLocalSearch)(state.slice(-1)[0].inputValue)
+				setIsLocalSearch((value) => !value)
 			}}
 		/>
 		<span>Rechercher ici</span>
