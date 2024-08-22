@@ -80,7 +80,6 @@ export default function PlaceSearch({
 			detectSmartItinerary(searchValue, localSearch, zoom, (result) => {
 				if (result == null) return
 				const [from, to] = result
-				console.log('cyan salut', searchValue, [from, to])
 				setItineraryProposition([from, to])
 			})
 
@@ -103,7 +102,14 @@ export default function PlaceSearch({
 			)
 			setState(newState)
 			if (searchValue?.length > 2) {
-				fetchPhoton(searchValue, setState, stepIndex, localSearch, zoom)
+				fetchPhoton(
+					searchValue,
+					setState,
+					stepIndex,
+					localSearch,
+					zoom,
+					setSearchParams
+				)
 			}
 		}
 

@@ -3,7 +3,7 @@ import { debounce } from '../utils/utils'
 
 const regexp = /^de\s(.+)\sà(.+)$/
 
-function fetchPhoton(v, localSearch, zoom) {
+function fetchPhotonRaw(v, localSearch, zoom) {
 	return fetch(
 		`https://photon.komoot.io/api/?q=${encodeURIComponent(v)}&limit=30&lang=fr${
 			localSearch ? `&lat=${localSearch[0]}&lon=${localSearch[1]}` : ''
@@ -20,7 +20,9 @@ function detectSmartItinerary(input, localSearch, zoom, then) {
 	const [, from, to] = detected
 
 	const promises = Promise.all(
-		[from, to].map((pointInput) => fetchPhoton(pointInput, localSearch, zoom))
+		[from, to].map((pointInput) =>
+			fetchPhotonRaw(pointInput, localSearch, zoom)
+		)
 	)
 
 	promises.then((res) =>
