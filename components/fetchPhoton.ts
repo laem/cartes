@@ -7,7 +7,7 @@ import {
 
 function fetchPhoton(v, setState, stepIndex, local, zoom) {
 	return fetch(
-		`https://photon.komoot.io/api/?q=${encodeURIComponent(v)}&limit=30&lang=fr${
+		`https://photon.komoot.io/api/?q=${encodeURIComponent(v)}&limit=10&lang=fr${
 			local ? `&lat=${local[0]}&lon=${local[1]}` : ''
 		}${zoom ? `&zoom=${Math.round(zoom)}` : ''}`
 	)
