@@ -72,6 +72,7 @@ export default function PlaceSearch({
 		local = hash && hash.split('/').slice(1, 3),
 		localSearch = isLocalSearch && local
 
+	// Should this function be coded as a useCallback ? I get an infinite loop
 	const onInputChange =
 		(stepIndex = -1) =>
 		(searchValue) => {
@@ -106,9 +107,10 @@ export default function PlaceSearch({
 			}
 		}
 
+	const safeLocal = local ? local.join('') : false
 	useEffect(() => {
 		onInputChange(stepIndex)(value)
-	}, [isLocalSearch, stepIndex, value])
+	}, [isLocalSearch, stepIndex, value, zoom, safeLocal])
 
 	const onDestinationChange = onInputChange(stepIndex)
 
