@@ -3,6 +3,7 @@ import Link from 'next/link'
 import ItineraryIcon from '@/public/itinerary-circle-plain.svg'
 import Image from 'next/image'
 import { motion } from 'framer-motion'
+import { encodePlace } from '@/app/utils'
 
 export default function ({ setSearchParams, data: [from, to] }) {
 	return (
@@ -33,12 +34,17 @@ export default function ({ setSearchParams, data: [from, to] }) {
 						allez:
 							buildAllezPart(
 								from.name,
-								from.osmId,
+								encodePlace(from.featureType, from.osmId),
 								from.longitude,
 								from.latitude
 							) +
 							'->' +
-							buildAllezPart(to.name, to.osmId, to.longitude, to.latitude),
+							buildAllezPart(
+								to.name,
+								encodePlace(to.featureType, to.osmId),
+								to.longitude,
+								to.latitude
+							),
 					},
 					true
 				)}
