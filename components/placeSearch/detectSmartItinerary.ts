@@ -1,7 +1,7 @@
 import { buildPhotonItem } from '../fetchPhoton'
 import { debounce } from '../utils/utils'
 
-const regexp = /^de\s(.+)\sà(.+)$/
+const regexp = /^de\s(.+)\s(?:à|a)(.+)$/
 
 function fetchPhotonRaw(v, localSearch, zoom) {
 	return fetch(
