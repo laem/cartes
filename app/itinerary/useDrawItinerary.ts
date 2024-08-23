@@ -31,10 +31,9 @@ export default function useDrawItinerary(
 	useEffect(() => {
 		if (!map) return
 		if (state.length === 2 && state[0] == null && state[1] !== null) {
-			console.log('zoom', zoom)
 			map.flyTo({ zoom: zoom - 2, padding: { bottom: desktop ? 0 : 400 } })
 		}
-	}, [state, map, desktop])
+	}, [searchParams.allez, map, desktop])
 	//TODO
 	const selectedConnection = searchParams.choix
 

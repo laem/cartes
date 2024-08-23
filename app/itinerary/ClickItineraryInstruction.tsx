@@ -1,6 +1,7 @@
 import Image from 'next/image'
 import itineraryIcon from '@/public/itinerary-circle-plain.svg'
-export default function ClickItineraryInstruction() {
+
+export default function ClickItineraryInstruction({ stepsCount }) {
 	return (
 		<div
 			css={`
@@ -18,10 +19,12 @@ export default function ClickItineraryInstruction() {
 				src={itineraryIcon}
 				alt="Icone flèche représentant le mode itinéraire"
 			/>
-			<p>
-				Saisissez votre destination, <br />
-				ou 📍 cliquez sur la carte pour construire un itinéraire.
-			</p>
+			{stepsCount === 0 ? (
+				<p>
+					Saisissez votre destination, <br />
+					ou 📍 cliquez sur la carte pour définir le départ.
+				</p>
+			) : null}
 		</div>
 	)
 }
