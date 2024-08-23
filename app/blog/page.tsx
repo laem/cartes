@@ -8,7 +8,8 @@ import Image from 'next/image'
 import css from '@/components/css/convertToJs'
 
 export const blogArticles = allArticles.filter(
-	(article) => !article.tags?.includes('page')
+	(article) =>
+		!article.tags?.includes('page') && !article.tags?.includes('brouillon')
 )
 
 const title = `Le blog - Cartes`
