@@ -189,18 +189,26 @@ const Item = ({
 					}
 				`}
 			>
-				<div
-					onPointerDown={(e) => {
-						setDisableDrag(true)
-						controls.start(e)
-					}}
-					onPointerUp={(e) => {
-						setDisableDrag(false)
-					}}
-					className="reorder-handle"
-				>
-					<Dots />
-				</div>
+				{key ? (
+					<div
+						onPointerDown={(e) => {
+							setDisableDrag(true)
+							controls.start(e)
+						}}
+						onPointerUp={(e) => {
+							setDisableDrag(false)
+						}}
+						className="reorder-handle"
+					>
+						<Dots />
+					</div>
+				) : (
+					<div
+						css={`
+							width: 1.6rem;
+						`}
+					></div>
+				)}
 				<RemoveStepLink {...{ setSearchParams, stepKey: key, state }} />
 			</div>
 		</Reorder.Item>
