@@ -287,6 +287,8 @@ const Dots = () => (
 export const letterFromIndex = (index) => String.fromCharCode(65 + (index % 26))
 
 const isStepBeingSearched = (steps, index) => {
+	if (steps.length === 2 && steps.every((step) => !step || !step.key))
+		return index === 1
 	const foundSearched = steps.findIndex(
 		(step) => step && !step.key && step.inputValue
 	)

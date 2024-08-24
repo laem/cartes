@@ -1,7 +1,12 @@
 import Image from 'next/image'
 import itineraryIcon from '@/public/itinerary-circle-plain.svg'
 
-export default function ClickItineraryInstruction({ stepsCount }) {
+export default function ClickItineraryInstruction({ state }) {
+	const stepKeys = state?.map((step) => step != null),
+		validSteps = stepKeys.filter(Boolean),
+		stepsCount = validSteps.length
+
+	console.log('cyan steps', state)
 	return (
 		<div
 			css={`
@@ -23,6 +28,16 @@ export default function ClickItineraryInstruction({ stepsCount }) {
 				<p>
 					Saisissez votre destination, <br />
 					ou 📍 cliquez sur la carte pour définir le départ.
+				</p>
+			) : state.length === 2 && !stepKeys[0] ? (
+				<p>
+					Saisissez votre départ, <br />
+					ou 📍 cliquez sur la carte pour le définir.
+				</p>
+			) : stepsCount === 1 ? (
+				<p>
+					Saisissez votre destination, <br />
+					ou 📍 cliquez sur la carte pour la définir.
 				</p>
 			) : null}
 		</div>

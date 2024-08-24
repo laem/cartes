@@ -46,7 +46,7 @@ export default function Itinerary({
 			<ModalCloseButton title="Fermer l'encart itinéraire" onClick={close} />
 			<Steps state={state} setDisableDrag={setDisableDrag} />
 			{!itinerary.routes ? (
-				<ClickItineraryInstruction stepsCount={state?.length} />
+				<ClickItineraryInstruction state={state} />
 			) : (
 				<div>
 					<ol
