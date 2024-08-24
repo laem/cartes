@@ -5,6 +5,10 @@ import { getFetchUrlBase, pmtilesServerUrl } from '../serverUrls'
 //['Roboto Regular', 'Noto Sans Regular'],
 //['Roboto Italic', 'Noto Sans Italic'],
 //['Roboto Medium Regular', 'Noto Sans Regular'],
+//
+//
+
+const highwayColor = '#99a6c3'
 
 export default function franceStyle(key) {
 	return {
@@ -1252,7 +1256,7 @@ const layers = [
 		type: 'line',
 		source: 'openmaptiles',
 		'source-layer': 'transportation',
-		minzoom: 4,
+		minzoom: 8,
 		layout: {
 			'line-cap': 'square',
 			'line-join': 'round',
@@ -1263,9 +1267,9 @@ const layers = [
 				'match',
 				['get', 'class'],
 				'motorway_construction',
-				'hsl(35,100%,76%)',
+				highwayColor,
 				['trunk_construction', 'primary_construction'],
-				'hsl(48,100%,83%)',
+				highwayColor,
 				'hsl(0,0%,100%)',
 			],
 			'line-width': [
@@ -1545,7 +1549,7 @@ const layers = [
 		},
 		paint: {
 			//'line-color': 'LightGray',
-			'line-color': '#99a6c3',
+			'line-color': highwayColor,
 			'line-width': [
 				'interpolate',
 				['linear', 2],
