@@ -160,6 +160,16 @@ const layers = [
 		metadata: {},
 		filter: ['==', 'class', 'wood'],
 	},
+	/*
+	 *
+	 * Because of our choice to use our tiles for France, we have to ocean shapes
+	 * in our tiles. Hence we set the base fill as blue, and the land as green
+	 * (because that's how it is in France, it's not white like many maps' bases !).
+	 * But then in some places built up land has no OSM shape so it's green. Hence
+	 * this builtup layer. But it's largely imprecise : check out Brest for
+	 * instance, making very disturbing artefacts.
+	 * So we prefer having fase green positives than artifacts. Green area that
+	 * should be build should be tagged in OSM, e.g. residential.
 	{
 		id: 'BuiltUp',
 		type: 'fill',
@@ -171,6 +181,7 @@ const layers = [
 			'fill-opacity': ['interpolate', ['linear'], ['zoom'], 10, 1, 11, 0.8], // not sure why opacity 0.8
 		},
 	},
+	*/
 	{
 		id: 'Glacier',
 		type: 'fill',
@@ -315,7 +326,7 @@ const layers = [
 		type: 'fill',
 		source: 'openmaptiles',
 		'source-layer': 'landuse',
-		minzoom: 10,
+		minzoom: 5,
 		maxzoom: 22,
 		layout: { visibility: 'visible' },
 		paint: {
