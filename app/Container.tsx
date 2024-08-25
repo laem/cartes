@@ -31,22 +31,23 @@ import { ContentWrapper, MapContainer } from './UI'
 import { useZoneImages } from './ZoneImages'
 import useSetItineraryModeFromUrl from './itinerary/useSetItineraryModeFromUrl'
 
+import { mapLibreBboxToOverpass } from '@/components/mapUtils'
 import useSetSearchParams from '@/components/useSetSearchParams'
+import { useDebounce } from '@/components/utils'
 import dynamic from 'next/dynamic'
+import { useLocalStorage } from 'usehooks-ts'
 import FocusedImage from './FocusedImage'
+import { initialSnap } from './ModalSheet'
+import SafeMap from './SafeMap'
 import { defaultZoom } from './effects/useAddMap'
 import useFetchTransportMap from './effects/useFetchTransportMap'
+import useGeocodeRightClick from './effects/useGeocodeRightClick'
 import useOsmRequest from './effects/useOsmRequest'
+import useOverpassRequest from './effects/useOverpassRequest'
 import useFetchItinerary from './itinerary/useFetchItinerary'
 import Meteo from './meteo/Meteo'
 import { getStyle } from './styles/styles'
 import useTransportStopData from './transport/useTransportStopData'
-import useGeocodeRightClick from './effects/useGeocodeRightClick'
-import useOverpassRequest from './effects/useOverpassRequest'
-import { initialSnap } from './ModalSheet'
-import { mapLibreBboxToOverpass } from '@/components/mapUtils'
-import { useDebounce } from '@/components/utils'
-import { useLocalStorage } from 'usehooks-ts'
 // Map is forced as dynamic since it can't be rendered by nextjs server-side.
 // There is almost no interest to do that anyway, except image screenshots
 const Map = dynamic(() => import('./Map'), {
@@ -244,7 +245,7 @@ export default function Container({
 				</ContentWrapper>
 				<Meteo coordinates={center} />
 				{focusedImage && <FocusedImage {...{ focusedImage, focusImage }} />}
-				<Map
+				<SafeMap
 					{...{
 						trackedSnap,
 						searchParams,
