@@ -27,6 +27,9 @@ export default function useCompass() {
 	}
 
 	useEffect(() => {
+		const geolocationIsUndefined = navigator.geolocation == null
+		if (geolocationIsUndefined) return
+
 		navigator.geolocation.getCurrentPosition(locationHandler)
 
 		if (!isIOS) {
