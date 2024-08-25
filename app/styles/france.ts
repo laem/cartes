@@ -1696,7 +1696,7 @@ const layers = [
 				['exponential', 1],
 				['zoom'],
 				8,
-				'#9E77BD',
+				'#916BD4',
 				20,
 				'hsl(0, 0%, 90%)',
 			],
