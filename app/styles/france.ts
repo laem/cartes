@@ -8,7 +8,8 @@ import { getFetchUrlBase, pmtilesServerUrl } from '../serverUrls'
 //
 //
 
-const highwayColor = '#99a6c3'
+const highwayColor = '#cebcbc'
+const highwayOutlineColor = '#cebcbc'
 
 export default function franceStyle(key) {
 	return {
@@ -57,13 +58,16 @@ export const nameExpression = [
 
 export const name = 'name:latin'
 
+const oceanColor = '#71a0e9'
+//'#6688dd' past color, darker. Could be cool to vary in the day, dawn color ?
+
 const layers = [
 	{
 		id: 'Background',
 		type: 'background',
 		layout: { visibility: 'visible' },
 		paint: {
-			'background-color': '#6688dd',
+			'background-color': oceanColor,
 		},
 	},
 	{
@@ -572,7 +576,7 @@ const layers = [
 		'source-layer': 'water',
 		layout: { visibility: 'visible' },
 		paint: {
-			'fill-color': '#6688dd',
+			'fill-color': oceanColor,
 			'fill-opacity': ['match', ['get', 'intermittent'], 1, 0.85, 1],
 			'fill-antialias': true,
 		},
@@ -619,10 +623,7 @@ const layers = [
 		layout: { 'line-join': 'round', visibility: 'visible' },
 		paint: {
 			'line-color': {
-				stops: [
-					[10, '#9cb0e3'],
-					[16, '#c2cff0'],
-				],
+				stops: [[16, '#c2cff0']],
 			},
 			'line-width': 1.1,
 			'line-dasharray': [2, 2],
@@ -1214,7 +1215,7 @@ const layers = [
 		},
 		paint: {
 			//'line-color': 'Silver',
-			'line-color': '#8c97ae',
+			'line-color': highwayOutlineColor,
 			'line-width': [
 				'interpolate',
 				['linear', 2],
