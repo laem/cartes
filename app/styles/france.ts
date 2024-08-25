@@ -38,7 +38,6 @@ export default function franceStyle(key) {
 			},
 		},
 		layers,
-		//layers: layers.filter((layer) => !layer.type.includes('line')),
 		glyphs: getFetchUrlBase() + '/fonts/glyphs/{fontstack}/{range}.pbf',
 		sprite: getFetchUrlBase() + '/sprite/sprite',
 		//glyphs: `https://api.maptiler.com/fonts/{fontstack}/{range}.pbf?key=${key}`,
@@ -2052,6 +2051,7 @@ const layers = [
 		source: 'openmaptiles',
 		'source-layer': 'water_name',
 		minzoom: 0,
+		maxzoom: 14,
 		layout: {
 			'text-font': ['Roboto Italic'],
 			'text-size': [
