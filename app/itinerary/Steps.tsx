@@ -38,6 +38,9 @@ export default function Steps({ state, setDisableDrag = () => null }) {
 					border-radius: 0.4rem;
 					padding: 0.2rem 0.3rem;
 					list-style-type: none;
+					position: relative;
+					z-index: 8;
+					border: 1px solid var(--lighterColor);
 					li {
 						padding: 0.3rem 0.4rem;
 						border-bottom: 1px solid var(--lighterColor);
@@ -75,10 +78,12 @@ export default function Steps({ state, setDisableDrag = () => null }) {
 const AddStepButton = ({ url, title }) => (
 	<div
 		css={`
+			z-index: 7;
 			display: flex;
 			align-items: center;
 			justify-content: end;
-			height: 1.8rem;
+			height: 0.7rem;
+			margin-right: 1.8rem;
 		`}
 	>
 		<Link
@@ -185,10 +190,11 @@ const Item = ({
 						align-items: center;
 					}
 					> a {
-						margin-left: 0.4rem;
+						margin-right: 0.4rem;
 					}
 				`}
 			>
+				<RemoveStepLink {...{ setSearchParams, stepKey: key, state }} />
 				{key ? (
 					<div
 						onPointerDown={(e) => {
@@ -209,7 +215,6 @@ const Item = ({
 						`}
 					></div>
 				)}
-				<RemoveStepLink {...{ setSearchParams, stepKey: key, state }} />
 			</div>
 		</Reorder.Item>
 	)
@@ -220,7 +225,7 @@ const RemoveStepLink = ({ setSearchParams, stepKey, state }) => {
 		return (
 			<div
 				css={`
-					width: 1.6rem;
+					width: 1.5rem;
 				`}
 			></div>
 		)
@@ -264,7 +269,7 @@ const Dots = () => (
 			cursor: pointer;
 			display: inline-flex;
 			width: 1.4rem;
-			height: 1.4rem;
+			height: 1.2rem;
 			display: flex;
 			align-items: center;
 			flex-wrap: wrap;
@@ -276,6 +281,7 @@ const Dots = () => (
 				height: 5px;
 				margin: 1px;
 			}
+			opacity: 0.8;
 		`}
 	>
 		{[...new Array(9)].map((_, index) => (

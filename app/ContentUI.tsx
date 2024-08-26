@@ -22,6 +22,7 @@ export const ContentSection = styled.section`
 	position: relative;
 	h1 {
 		margin: 0;
+		margin-left: 0.1rem;
 	}
 `
 
