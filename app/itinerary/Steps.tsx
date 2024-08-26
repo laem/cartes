@@ -83,7 +83,7 @@ const AddStepButton = ({ url, title, style }) => (
 			display: flex;
 			align-items: center;
 			justify-content: end;
-			height: 0.7rem;
+			height: 0.55rem;
 			margin-right: 1.8rem;
 		`}
 	>
