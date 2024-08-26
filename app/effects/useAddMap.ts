@@ -37,22 +37,17 @@ export default function useAddMap(
 	const [map, setMap] = useState(null)
 	const [geolocate, setGeolocate] = useState(null)
 	const isMobile = useMediaQuery('(max-width: 800px)')
-	// This could probably be done with a Next Middleware, to avoid a second
-	// request, but I could not make it work in 5 minutes
 	const geolocation = useGeolocation({
 		latitude: defaultCenter[1],
 		longitude: defaultCenter[0],
 	})
-	//	console.log('geolocation', geolocation)
 	const { latitude, longitude } = geolocation
 
-	const ipGeolocationCenter = [longitude, latitude]
+	const ipGeolocationCenter = useMemo(() => [longitude, latitude], [longitude, latitude])
 
 	useEffect(() => {
 		if (!map) return
 
-		//TODO see https://github.com/laem/cartes/pull/370
-		return
 		map.flyTo({
 			center: ipGeolocationCenter,
 		})
@@ -114,9 +109,6 @@ export default function useAddMap(
 			showZoom: true,
 			showCompass: true,
 		})
-		/*
-		const navigationControlElement = navigationControl.onAdd(newMap)
-		*/
 		newMap.addControl(navigationControl, 'top-right')
 
 		const geolocate = new maplibregl.GeolocateControl({
@@ -131,12 +123,10 @@ export default function useAddMap(
 		newMap.addControl(geolocate)
 
 		geolocate.on('geolocate', function (e) {
-			console.log('bleu ', e.coords)
 			setGeolocation(e.coords)
 		})
 
 		newMap.on('load', () => {
-			console.log('maplibre instance loaded with id ', newMap._mapId)
 			setMap(newMap)
 			newMap.setSky(defaultSky)
 
@@ -157,11 +147,10 @@ export default function useAddMap(
 	useEffect(() => {
 		if (!map) return
 		setTimeout(() => {
-			//TODO, I thought re-setting the sky would solve the problem of the sky
-			//going away when changing style but no
 			map.setSky(defaultSky)
 		}, 1000)
 	}, [map, styleUrl])
+
 	const triggerGeolocation = useMemo(
 		() => (geolocate ? () => geolocate.trigger() : () => 'Not ready'),
 		[geolocate]
@@ -179,8 +168,6 @@ export default function useAddMap(
 			if (!map || !scale) return
 			try {
 				map.removeControl(scale)
-				// I don't understand why I get the "this._map is undefined" error on
-				// hot reload
 			} catch (e) {
 				console.log('Error removing scale')
 			}
