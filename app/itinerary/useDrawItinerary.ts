@@ -146,11 +146,10 @@ export default function useDrawItinerary(
 					e.lngLat.lng,
 					e.lngLat.lat
 				)
-				const allez = oldAllez?.startsWith('->')
-					? allezPart + oldAllez
-					: points.map((point) => point.properties.key + '->').join('') +
-					  allezPart
-
+				const allez = oldAllez
+					.split('->')
+					.map((part) => (part === '' ? allezPart : part))
+					.join('->')
 				setSearchParams({
 					allez,
 				})

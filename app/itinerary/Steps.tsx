@@ -187,6 +187,7 @@ const Item = ({
 			</div>
 			<div
 				css={`
+					position: relative;
 					&,
 					a {
 						display: flex;
@@ -197,17 +198,14 @@ const Item = ({
 					}
 				`}
 			>
-				{index !== 0 && index !== state.length - 1 && (
-					<RemoveStepLink {...{ setSearchParams, stepKey: key, state }} />
-				)}
 				{index < state.length - 1 && (
 					<AddStepButton
 						url={setSearchParams({ allez: allez.replace('->', '->->') }, true)}
 						title={'Ajouter un point intermédiaire'}
 						style={`
-					top: 1.6rem;
+					top: 1rem;
   position: absolute;
-  right: 1.8rem;
+  right: 1.1rem;
   background: var(--lightestColor);
   border-radius: 1.8rem;
 						`}
@@ -233,23 +231,27 @@ const Item = ({
 						`}
 					></div>
 				)}
+				{index !== 0 && index !== state.length - 1 && (
+					<RemoveStepLink {...{ setSearchParams, stepKey: key, state }} />
+				)}
 			</div>
 		</Reorder.Item>
 	)
 }
 
 const RemoveStepLink = ({ setSearchParams, stepKey, state }) => {
-	if (!stepKey)
-		return (
-			<div
-				css={`
-					width: 1.5rem;
-				`}
-			></div>
-		)
+	if (!stepKey) return null
+
 	return (
 		<Link
 			href={setSearchParams({ allez: removeStatePart(stepKey, state) }, true)}
+			css={`
+				position: absolute;
+				right: -1.6rem;
+				top: 0.15rem;
+				background: var(--lightestColor);
+				border-radius: 1rem;
+			`}
 		>
 			<Image
 				src={closeIcon}
@@ -257,7 +259,7 @@ const RemoveStepLink = ({ setSearchParams, stepKey, state }) => {
 				css={`
 					width: 1rem;
 					height: auto;
-					opacity: 0.7;
+					opacity: 0.6;
 				`}
 			/>
 		</Link>
