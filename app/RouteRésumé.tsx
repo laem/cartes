@@ -1,9 +1,10 @@
+import DownloadGPXWrapper from '@/components/DownloadGPXWrapper'
 import css from '@/components/css/convertToJs'
 import LightsWarning from './LightsWarning'
 import ProfileChooser from './ProfileChooser'
-import { nowStamp } from './itinerary/transit/motisRequest'
 import ValhallaRésumé from './itinerary/ValhallaRésumé'
 import TransitLoader from './itinerary/transit/TransitLoader'
+import { nowStamp } from './itinerary/transit/motisRequest'
 
 export default function RouteRésumé({
 	mode,
@@ -22,37 +23,42 @@ export default function RouteRésumé({
 			/>
 		)
 	return (
-		<div
-			css={`
-				position: relative;
-				display: flex;
-				align-items: center;
-				background: var(--lightestColor);
-				padding: 0.6rem;
-				color: var(--darkestColor);
-				line-height: 1.4rem;
-				border: ${mode === 'cycling'
-					? '4px solid var(--lightColor)'
-					: '4px dotted #8f53c1'};
-				margin-top: 1.4rem;
-				border-radius: 0.5rem;
-				@media (min-width: 1200px) {
-				}
-			`}
-		>
-			{mode === 'car' ? (
-				<ValhallaRésumé data={data} />
-			) : (
-				<BrouterModeContent
-					{...{
-						bikeRouteProfile,
-						setBikeRouteProfile,
-						mode,
-						data,
-					}}
-				/>
+		<section>
+			<div
+				css={`
+					position: relative;
+					display: flex;
+					align-items: center;
+					background: var(--lightestColor);
+					padding: 0.6rem;
+					color: var(--darkestColor);
+					line-height: 1.4rem;
+					border: ${mode === 'cycling'
+						? '4px solid var(--lightColor)'
+						: '4px dotted #8f53c1'};
+					margin-top: 1.4rem;
+					border-radius: 0.5rem;
+					@media (min-width: 1200px) {
+					}
+				`}
+			>
+				{mode === 'car' ? (
+					<ValhallaRésumé data={data} />
+				) : (
+					<BrouterModeContent
+						{...{
+							bikeRouteProfile,
+							setBikeRouteProfile,
+							mode,
+							data,
+						}}
+					/>
+				)}
+			</div>
+			{['cycling', 'walking'].includes(mode) && data?.features && (
+				<DownloadGPXWrapper feature={data.features[0]} />
 			)}
-		</div>
+		</section>
 	)
 }
 
