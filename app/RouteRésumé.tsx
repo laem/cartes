@@ -3,6 +3,7 @@ import LightsWarning from './LightsWarning'
 import ProfileChooser from './ProfileChooser'
 import { nowStamp } from './itinerary/transit/motisRequest'
 import ValhallaRésumé from './itinerary/ValhallaRésumé'
+import TransitLoader from './itinerary/transit/TransitLoader'
 
 export default function RouteRésumé({
 	mode,
@@ -11,7 +12,15 @@ export default function RouteRésumé({
 	setBikeRouteProfile,
 }) {
 	if (data === 'loading')
-		return <div>La roue tourne est en train de tourner</div>
+		return (
+			<TransitLoader
+				text={
+					mode === 'cycling'
+						? "Calcul de l'itinéraire vélo"
+						: "Calcul de l'itinéraire à pied"
+				}
+			/>
+		)
 	return (
 		<div
 			css={`
