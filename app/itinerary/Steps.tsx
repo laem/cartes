@@ -64,6 +64,7 @@ export default function Steps({ state, setDisableDrag = () => null }) {
 							beingSearched: isStepBeingSearched(steps, index),
 							state,
 							setDisableDrag,
+							allez,
 						}}
 					/>
 				))}
@@ -75,7 +76,7 @@ export default function Steps({ state, setDisableDrag = () => null }) {
 		</section>
 	)
 }
-const AddStepButton = ({ url, title }) => (
+const AddStepButton = ({ url, title, style }) => (
 	<div
 		css={`
 			z-index: 7;
@@ -93,7 +94,7 @@ const AddStepButton = ({ url, title }) => (
 				text-decoration: none;
 				margin: 0rem 0.7rem;
 				display: inline-block;
-				opacity: 0.7;
+				${style}
 			`}
 		>
 			<Image
@@ -103,6 +104,7 @@ const AddStepButton = ({ url, title }) => (
 					width: 1.2rem;
 					height: auto;
 					vertical-align: sub;
+					opacity: 0.4;
 				`}
 			/>
 		</Link>
@@ -116,6 +118,7 @@ const Item = ({
 	beingSearched,
 	state,
 	setDisableDrag,
+	allez,
 }) => {
 	const controls = useDragControls()
 	const [undoValue, setUndoValue] = useState(null)
@@ -196,6 +199,19 @@ const Item = ({
 			>
 				{index !== 0 && index !== state.length - 1 && (
 					<RemoveStepLink {...{ setSearchParams, stepKey: key, state }} />
+				)}
+				{index < state.length - 1 && (
+					<AddStepButton
+						url={setSearchParams({ allez: allez.replace('->', '->->') }, true)}
+						title={'Ajouter un point intermédiaire'}
+						style={`
+					top: 1.6rem;
+  position: absolute;
+  right: 1.8rem;
+  background: var(--lightestColor);
+  border-radius: 1.8rem;
+						`}
+					/>
 				)}
 				{key ? (
 					<div
