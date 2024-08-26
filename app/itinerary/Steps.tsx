@@ -194,7 +194,9 @@ const Item = ({
 					}
 				`}
 			>
-				<RemoveStepLink {...{ setSearchParams, stepKey: key, state }} />
+				{index !== 0 && index !== state.length - 1 && (
+					<RemoveStepLink {...{ setSearchParams, stepKey: key, state }} />
+				)}
 				{key ? (
 					<div
 						onPointerDown={(e) => {
@@ -237,8 +239,9 @@ const RemoveStepLink = ({ setSearchParams, stepKey, state }) => {
 				src={closeIcon}
 				alt="Supprimer cette étape"
 				css={`
-					width: 1.2rem;
+					width: 1rem;
 					height: auto;
+					opacity: 0.7;
 				`}
 			/>
 		</Link>
