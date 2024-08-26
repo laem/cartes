@@ -19,7 +19,7 @@ export default function Steps({ state, setDisableDrag = () => null }) {
 	return (
 		<section
 			css={`
-				margin: 0.6rem 0 2.6rem 0;
+				margin: 0 0 1rem 0;
 			`}
 		>
 			<AddStepButton
