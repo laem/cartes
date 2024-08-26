@@ -22,13 +22,11 @@ export default function useDrawRoute(isItineraryMode, map, geojson, id) {
 			return undefined
 		console.log('will draw useDrawRoute inside ' + id, id, geojson)
 
-		const source = map.getSource(id)
-		if (!source)
-			map.addSource(id, {
-				type: 'geojson',
-				data: geojson,
-				lineMetrics: true,
-			})
+		map.addSource(id, {
+			type: 'geojson',
+			data: geojson,
+			lineMetrics: true,
+		})
 
 		console.log('useDrawRoute did add source')
 

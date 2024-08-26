@@ -1,9 +1,11 @@
 'use client'
 import styled from 'styled-components'
-export default function TransitLoader() {
+export default function TransitLoader({
+	text = 'Calcul des transports en commun',
+}) {
 	return (
 		<Loader>
-			<small>Calcul des transports en commun</small>
+			<small>{text}</small>
 			<div />
 		</Loader>
 	)

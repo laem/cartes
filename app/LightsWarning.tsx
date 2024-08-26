@@ -62,7 +62,7 @@ export default function LightsWarning({ longitude, latitude }) {
 				<span>
 					N'oublie pas de briller{' '}
 					<strong>avant {roundFormat(goldenHourEnd)}</strong> et{' '}
-					<strong>après {roundFormat(goldenHour)}</strong>.
+					<strong>après {roundFormat(goldenHour)}</strong>
 				</span>
 			</small>
 		</div>
