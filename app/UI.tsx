@@ -39,7 +39,7 @@ export const ModalCloseButton = (props) => (
 )
 export const ModalCloseButtonButton = styled.button`
 	position: absolute;
-	top: 0rem;
+	top: 0.4rem;
 	right: 0rem;
 	margin: 0;
 

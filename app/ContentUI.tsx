@@ -19,8 +19,10 @@ export const ExplanationWrapper = styled.div`
 	}
 `
 export const ContentSection = styled.section`
-	padding-top: 1.6rem;
 	position: relative;
+	h1 {
+		margin: 0;
+	}
 `
 
 export const ContentWrapper = styled.section`

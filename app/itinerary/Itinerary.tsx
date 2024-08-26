@@ -43,6 +43,7 @@ export default function Itinerary({
 
 	return (
 		<ContentSection css="margin-bottom: 1rem">
+			<h1>Itinéraire</h1>
 			<ModalCloseButton title="Fermer l'encart itinéraire" onClick={close} />
 			<Steps state={state} setDisableDrag={setDisableDrag} />
 			{!itinerary.routes ? (
