@@ -33,14 +33,14 @@ export default function DownloadGPX({ reset, feature }) {
 	useEffect(() => {
 		// trying another method
 		const filename = 'itineraire-cartes.gpx'
-		download(filename, gpxString)
+		download(filename, gpxString, 'application/gpx+xml')
 		return
 		// this first method doesn't seem to work well on android with organicmaps ?
 		// It generates a .xml file, maybe that's why
 		// @see https://stackoverflow.com/questions/10654971/create-text-file-from-string-using-js-and-html5
 		const link = document.createElement('a')
 		link.download = filename
-		const blob = new Blob([gpxString], { type: 'text/xml' })
+		const blob = new Blob([gpxString], { type: 'application/gpx+xml' })
 		link.href = window.URL.createObjectURL(blob)
 		link.click()
 	}, [])
@@ -56,11 +56,11 @@ export default function DownloadGPX({ reset, feature }) {
 	)
 }
 
-function download(filename, text) {
+function download(filename, text, mimetype) {
 	var element = document.createElement('a')
 	element.setAttribute(
 		'href',
-		'data:text/xml;charset=utf-8,' + encodeURIComponent(text)
+		`data:${mimetype};charset=utf-8,` + encodeURIComponent(text)
 	)
 	element.setAttribute('download', filename)
 
