@@ -1,6 +1,6 @@
 'use client'
 
-import closeIcon from '@/public/close.svg'
+import closeIcon from '@/public/close-circle-stroke.svg'
 import Image from 'next/image'
 import styled from 'styled-components'
 
@@ -32,7 +32,6 @@ export const ContentWrapper = styled.div`
 	z-index: 10;
 `
 
-const size = 1.3
 export const ModalCloseButton = (props) => (
 	<ModalCloseButtonButton {...props}>
 		<Image src={closeIcon} alt="Fermer" />
@@ -43,13 +42,6 @@ export const ModalCloseButtonButton = styled.button`
 	top: 0rem;
 	right: 0rem;
 	margin: 0;
-	background: var(--darkerColor);
-	color: var(--lightestColor);
-	border-radius: 2rem;
-	font-size: 150%;
-	width: ${size}rem;
-	height: ${size}rem;
-	line-height: ${size}rem;
 
 	text-align: center;
 	cursor: pointer;
@@ -58,9 +50,10 @@ export const ModalCloseButtonButton = styled.button`
 	align-items: center;
 	justify-content: center;
 	> img {
-		width: 0.6rem;
+		width: 1.4rem;
 		height: auto;
 		margin: 0;
+		opacity: 0.6;
 	}
 `
 
