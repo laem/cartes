@@ -58,7 +58,8 @@ export const ModalCloseButtonButton = styled.button`
 	align-items: center;
 	justify-content: center;
 	> img {
-		width: 1;
+		width: 0.6rem;
+		height: auto;
 		margin: 0;
 	}
 `
