@@ -7,6 +7,7 @@ import railStyle from './railStyle'
 import testStreetComplete from './test-street-complete'
 import transit from './transit'
 import voyageStyle from './voyage'
+import satellite from './satellite'
 
 const key = process.env.NEXT_PUBLIC_MAPTILER
 
@@ -31,9 +32,10 @@ export const styles = {
 		emoji: '🗺️',
 	},
 	satellite: {
-		url: maptilerUrl('satellite'),
+		url: satellite(key),
 		name: 'Satellite',
 		emoji: '🛰️',
+		hasTerrain: true,
 	},
 	satelliteHybrid: {
 		url: maptilerUrl('hybrid'),
