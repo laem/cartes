@@ -62,7 +62,7 @@ export const styles = {
 		url: natureStyle(key),
 		name: 'Nature',
 		emoji: '🏕️',
-		hasTerrain: false,
+		hasTerrain: true,
 	},
 	cycling: { url: cyclOsm(key), name: 'Cyclable', emoji: '🚲️' },
 	rail: {

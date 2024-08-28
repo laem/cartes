@@ -14,7 +14,7 @@ export default function natureStyle(
 				url: `https://api.maptiler.com/tiles/contours/tiles.json?key=${key}`,
 				type: 'vector',
 			},
-			terrain_rgb: {
+			'terrain-rgb': {
 				url: `https://api.maptiler.com/tiles/terrain-rgb-v2/tiles.json?key=${key}`,
 				type: 'raster-dem',
 			},
@@ -340,7 +340,7 @@ export default function natureStyle(
 			{
 				id: 'Hillshade',
 				type: 'hillshade',
-				source: 'terrain_rgb',
+				source: 'terrain-rgb',
 				layout: {
 					visibility: 'visible',
 				},
