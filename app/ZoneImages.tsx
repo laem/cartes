@@ -67,9 +67,7 @@ export function useZoneImages({
 				setPanoramax([
 					{
 						thumb: images[0].assets.thumb.href,
-						link: `https://api.panoramax.xyz/#focus=pic&map=${window.location.hash.slice(
-							1
-						)}&pic=${images[0].id}`,
+						link: `https://api.panoramax.xyz/#focus=pic&pic=${images[0].id}`,
 					},
 				])
 			} else {
