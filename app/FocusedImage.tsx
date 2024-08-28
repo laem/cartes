@@ -1,9 +1,8 @@
+import Image from 'next/image'
 import { useMediaQuery } from 'usehooks-ts'
 import { ModalCloseButton } from './UI'
-import Image from 'next/image'
 
 export default function FocusedImage({ focusedImage, focusImage }) {
-	const mobile = useMediaQuery('(max-width: 800px)')
 	const src = `https://commons.wikimedia.org/w/index.php?title=Special:Redirect/file/${encodeURIComponent(
 		focusedImage.title
 	)}`
@@ -12,6 +11,57 @@ export default function FocusedImage({ focusedImage, focusImage }) {
 		' ',
 		'_'
 	)}`
+	return (
+		<FocusedWrapper>
+			<ModalCloseButton onClick={() => focusImage(null)} />
+			<figure>
+				<img src={src} />
+				<figcaption
+					css={`
+						background: var(--lightestColor);
+						color: var(--darkestColor);
+						padding: 0 0.6rem;
+						border-radius: 0.4rem;
+						a {
+							text-decoration: none;
+							color: var(--darkerColor);
+						}
+						align-items: center;
+						display: block;
+						margin: 0 0 0 auto;
+						width: fit-content;
+						img {
+							width: 1rem;
+							height: auto;
+							margin-right: 0.1rem;
+							vertical-align: sub;
+						}
+					`}
+				>
+					<a href={fullUrl} target="_blank" title="Image Wikimedia Commons">
+						<Image
+							src="/wikimedia-commones-logo.svg"
+							width="10"
+							height="10"
+							alt="Logo de Wikimedia Commons"
+						/>
+					</a>{' '}
+					<small>par</small>{' '}
+					<small
+						dangerouslySetInnerHTML={{ __html: focusedImage.artistHtmlTag }}
+					></small>
+					{' - '}
+					<small title={focusedImage.date}>
+						{focusedImage.date.slice(0, 4)}
+					</small>
+				</figcaption>
+			</figure>
+		</FocusedWrapper>
+	)
+}
+
+export const FocusedWrapper = ({ children }) => {
+	const mobile = useMediaQuery('(max-width: 800px)')
 	return (
 		<section
 			css={`
@@ -64,49 +114,7 @@ export default function FocusedImage({ focusedImage, focusImage }) {
 				}
 			`}
 		>
-			<ModalCloseButton onClick={() => focusImage(null)} />
-			<figure>
-				<img src={src} />
-				<figcaption
-					css={`
-						background: var(--lightestColor);
-						color: var(--darkestColor);
-						padding: 0 0.6rem;
-						border-radius: 0.4rem;
-						a {
-							text-decoration: none;
-							color: var(--darkerColor);
-						}
-						align-items: center;
-						display: block;
-						margin: 0 0 0 auto;
-						width: fit-content;
-						img {
-							width: 1rem;
-							height: auto;
-							margin-right: 0.1rem;
-							vertical-align: sub;
-						}
-					`}
-				>
-					<a href={fullUrl} target="_blank" title="Image Wikimedia Commons">
-						<Image
-							src="/wikimedia-commones-logo.svg"
-							width="10"
-							height="10"
-							alt="Logo de Wikimedia Commons"
-						/>
-					</a>{' '}
-					<small>par</small>{' '}
-					<small
-						dangerouslySetInnerHTML={{ __html: focusedImage.artistHtmlTag }}
-					></small>
-					{' - '}
-					<small title={focusedImage.date}>
-						{focusedImage.date.slice(0, 4)}
-					</small>
-				</figcaption>
-			</figure>
+			{children}
 		</section>
 	)
 }

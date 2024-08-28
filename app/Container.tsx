@@ -48,6 +48,7 @@ import useFetchItinerary from './itinerary/useFetchItinerary'
 import Meteo from './meteo/Meteo'
 import { getStyle } from './styles/styles'
 import useTransportStopData from './transport/useTransportStopData'
+import Panoramax from './Panoramax'
 // Map is forced as dynamic since it can't be rendered by nextjs server-side.
 // There is almost no interest to do that anyway, except image screenshots
 const Map = dynamic(() => import('./Map'), {
@@ -248,6 +249,7 @@ export default function Container({
 				</ContentWrapper>
 				<Meteo coordinates={center} />
 				{focusedImage && <FocusedImage {...{ focusedImage, focusImage }} />}
+				<Panoramax />
 				<SafeMap
 					{...{
 						trackedSnap,
