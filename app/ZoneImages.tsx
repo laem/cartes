@@ -104,7 +104,7 @@ export function ZoneImages({ zoneImages, panoramaxImages, focusImage }) {
 	return (
 		<div
 			css={`
-				margin-top: 0.2rem;
+				margin-top: 1rem;
 				overflow: scroll;
 				white-space: nowrap;
 				&::-webkit-scrollbar {
