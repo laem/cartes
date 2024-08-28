@@ -30,3 +30,4 @@ source/data
 !.yarn/sdks
 !.yarn/versions
 .vercel
+.aider*

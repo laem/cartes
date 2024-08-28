@@ -73,6 +73,7 @@ export default function OsmFeature({ data, transportStopData }) {
 		wikipedia,
 		wikidata,
 		image,
+		panoramax, //handled by ZoneImages
 		...rest
 	} = tags
 

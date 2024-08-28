@@ -8,7 +8,11 @@ import {
 	handleWikimediaGeosearchImages,
 } from './effects/useImageSearch'
 
-export function useZoneImages({ latLngClicked, setLatLngClicked }) {
+export function useZoneImages({
+	latLngClicked,
+	setLatLngClicked,
+	panoramaxOsmTag,
+}) {
 	const [wikimedia, setWikimedia] = useState(null)
 	const [panoramax, setPanoramax] = useState(null)
 
@@ -37,24 +41,45 @@ export function useZoneImages({ latLngClicked, setLatLngClicked }) {
 	}, [latLngClicked, setLatLngClicked])
 
 	useEffect(() => {
-		if (!latLngClicked) return
+		console.log('panoramax url', panoramaxOsmTag)
+		if (!latLngClicked && !panoramaxOsmTag) return
 		const makeRequest = async () => {
-			const { lat1, lng1, lat2, lng2 } = createSearchBBox(latLngClicked)
+			if (panoramaxOsmTag) {
+				const pictureUrl = `https://panoramax.openstreetmap.fr/api/pictures/${panoramaxOsmTag}/thumb.webp`
+				console.log('panoramax picture', pictureUrl)
+				setPanoramax([
+					{
+						thumb: pictureUrl,
+						link: `https://api.panoramax.xyz/#focus=pic&pic=${panoramaxOsmTag}`,
+					},
+				])
+				return
+			}
 
+			const { lat1, lng1, lat2, lng2 } = createSearchBBox(latLngClicked)
 			const url = `https://api.panoramax.xyz/api/search?limit=1&bbox=${lng2},${lat1},${lng1},${lat2}`
 			setPanoramax([])
 			const request = await fetch(url)
 
 			const json = await request.json()
 			const images = json.features
-			if (images.length) setPanoramax(images)
-			if (!images.length) {
+			if (images.length && images[0]?.assets?.thumb) {
+				setPanoramax([
+					{
+						thumb: images[0].assets.thumb.href,
+						link: `https://api.panoramax.xyz/#focus=pic&map=${window.location.hash.slice(
+							1
+						)}&pic=${images[0].id}`,
+					},
+				])
+			} else {
 				setPanoramax(null)
 				setLatLngClicked(null)
 			}
 		}
 		makeRequest()
-	}, [latLngClicked, setLatLngClicked])
+	}, [latLngClicked, setLatLngClicked, panoramaxOsmTag])
+
 	return [
 		wikimedia,
 		panoramax,
@@ -66,11 +91,6 @@ export function useZoneImages({ latLngClicked, setLatLngClicked }) {
 }
 
 export function ZoneImages({ zoneImages, panoramaxImages, focusImage }) {
-	console.log('panoramax', panoramaxImages)
-
-	const panoramaxImage = panoramaxImages && panoramaxImages[0],
-		panoramaxThumb = panoramaxImage?.assets?.thumb
-
 	const images =
 		zoneImages &&
 		zoneImages.map((json) => {
@@ -81,9 +101,12 @@ export function ZoneImages({ zoneImages, panoramaxImages, focusImage }) {
 				url,
 			}
 		})
+	//TODO handle multiple images ?
+	const panoramaxImage = panoramaxImages && panoramaxImages[0]
 	return (
 		<div
 			css={`
+				margin-top: 0.2rem;
 				overflow: scroll;
 				white-space: nowrap;
 				&::-webkit-scrollbar {
@@ -91,7 +114,7 @@ export function ZoneImages({ zoneImages, panoramaxImages, focusImage }) {
 				}
 			`}
 		>
-			{(panoramaxThumb || images?.length > 0) && (
+			{(panoramaxImages || images?.length > 0) && (
 				<ul
 					css={`
 						margin: 0 0 0.4rem 0;
@@ -106,13 +129,8 @@ export function ZoneImages({ zoneImages, panoramaxImages, focusImage }) {
 						}
 					`}
 				>
-					{panoramaxThumb && (
-						<a
-							href={`https://api.panoramax.xyz/#focus=pic&map=${window.location.hash.slice(
-								1
-							)}&pic=${panoramaxImage.id}`}
-							target="_blank"
-						>
+					{panoramaxImage && (
+						<a href={panoramaxImage.link} target="_blank">
 							<div
 								css={`
 									position: relative;
@@ -136,7 +154,7 @@ export function ZoneImages({ zoneImages, panoramaxImages, focusImage }) {
 									alt="Logo du projet Panoramax"
 								/>
 								<FeatureImage
-									src={panoramaxThumb.href}
+									src={panoramaxImage.thumb}
 									alt="Image de terrain issue de Panoramax"
 									width="150"
 									height="150"

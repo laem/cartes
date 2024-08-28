@@ -128,11 +128,6 @@ export default function Container({
 
 	const showOpenOnly = searchParams.o
 
-	const [zoneImages, panoramaxImages, resetZoneImages] = useZoneImages({
-		latLngClicked,
-		setLatLngClicked,
-	})
-
 	const vers = useMemo(() => state?.slice(-1)[0], [state])
 	const choice = vers && vers.choice
 	const target = useMemo(
@@ -143,6 +138,14 @@ export default function Container({
 	useOsmRequest(allez, state, setState)
 
 	const osmFeature = vers?.osmFeature
+
+	const panoramaxOsmTag = osmFeature?.tags?.panoramax
+
+	const [zoneImages, panoramaxImages, resetZoneImages] = useZoneImages({
+		latLngClicked,
+		setLatLngClicked,
+		panoramaxOsmTag,
+	})
 
 	const transportStopData = useTransportStopData(osmFeature)
 	const clickedStopData = transportStopData[0] || []
