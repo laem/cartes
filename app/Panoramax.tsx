@@ -32,6 +32,7 @@ export default function Panoramax() {
 					z-index: -1;
 					height: 40vh;
 					width: 90vw;
+
 					@media (min-width: 800px) {
 						width: 40vw;
 						height: 90vh;
@@ -51,6 +52,10 @@ export default function Panoramax() {
 						height: unset;
 						width: unset;
 						margin: 0;
+					}
+					.gvs-main {
+						border-radius: 0.6rem;
+						overflow: hidden;
 					}
 				`}
 			>
