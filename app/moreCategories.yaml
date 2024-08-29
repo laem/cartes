@@ -47,6 +47,13 @@
     - macdo
   query: '[amenity=fast_food]'
   icon: https://cdn.jsdelivr.net/gh/osmandapp/OsmAnd-resources/icons/svg/food/fastfood.svg
+- name: Fromagerie
+  category: Manger et boire
+  dictionary:
+    - fromage
+    - traiteur
+  query: '[shop=cheese]'
+  icon: cheese
 - name: Bubble tea
   category: Manger et boire
   dictionary:
