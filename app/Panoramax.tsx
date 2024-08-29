@@ -1,7 +1,7 @@
 import { Viewer } from 'geovisio'
 import { FocusedWrapper } from './FocusedImage'
 import { useEffect, useRef, useState } from 'react'
-import '@/components/geovisio.css'
+import 'geovisio/build/index.css'
 
 const servers = {
 	meta: 'https://api.panoramax.xyz/api',
