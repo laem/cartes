@@ -2,6 +2,7 @@ import { Viewer } from 'geovisio'
 import { FocusedWrapper } from './FocusedImage'
 import { useEffect, useRef, useState } from 'react'
 import 'geovisio/build/index.css'
+import { ModalCloseButton } from './UI'
 
 const servers = {
 	meta: 'https://api.panoramax.xyz/api',
@@ -28,13 +29,18 @@ export default function Panoramax() {
 		<FocusedWrapper>
 			<div
 				css={`
-					height: 40rem;
-					width: 40rem;
+					z-index: -1;
+					height: 40vh;
+					width: 90vw;
+					@media (min-width: 800px) {
+						width: 40vw;
+						height: 90vh;
+					}
 					> div {
 						position: relative;
 						width: 95%;
 						margin: 2.5%;
-						height: 400px;
+						height: 100%;
 					}
 					> div.fullpage {
 						position: fixed;
@@ -50,6 +56,7 @@ export default function Panoramax() {
 			>
 				<div ref={ref} />
 			</div>
+			<ModalCloseButton onClick={() => alert('Close not implemented')} />
 		</FocusedWrapper>
 	)
 }
