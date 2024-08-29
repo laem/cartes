@@ -26,42 +26,51 @@ export default function Panoramax() {
 		setViewer(panoramax)
 	}, [ref, viewer, setViewer])
 	return (
-		<FocusedWrapper>
-			<div
-				css={`
-					z-index: -1;
-					height: 40vh;
-					width: 90vw;
+		<div
+			css={`
+				height: 50vh;
+				width: 96vw;
+				top: 2vw;
+				left: 2vw;
+				position: fixed;
+				z-index: 100;
 
-					@media (min-width: 800px) {
-						width: 40vw;
-						height: 90vh;
-					}
-					> div {
-						position: relative;
-						width: 95%;
-						margin: 2.5%;
-						height: 100%;
-					}
-					> div.fullpage {
-						position: fixed;
-						top: 0;
-						bottom: 0;
-						left: 0;
-						right: 0;
-						height: unset;
-						width: unset;
-						margin: 0;
-					}
-					.gvs-main {
-						border-radius: 0.6rem;
-						overflow: hidden;
-					}
-				`}
-			>
-				<div ref={ref} />
-			</div>
+				@media (min-width: 1000px) {
+					width: 50vw;
+					height: 90vh;
+					top: 4vh;
+					right: 6vw;
+					left: auto;
+				}
+				> div {
+					position: relative;
+					height: 100%;
+				}
+				> div.fullpage {
+					position: fixed;
+					top: 0;
+					bottom: 0;
+					left: 0;
+					right: 0;
+					height: unset;
+					width: unset;
+					margin: 0;
+				}
+				.gvs-main {
+					border-radius: 0.6rem;
+					overflow: hidden;
+					--shadow-color: 45deg 2% 36%;
+					--shadow-elevation-medium: 0.3px 0.5px 0.7px
+							hsl(var(--shadow-color) / 0.36),
+						0.8px 1.6px 2px -0.8px hsl(var(--shadow-color) / 0.36),
+						2.1px 4.1px 5.2px -1.7px hsl(var(--shadow-color) / 0.36),
+						5px 10px 12.6px -2.5px hsl(var(--shadow-color) / 0.36);
+					box-shadow: var(--shadow-elevation-medium);
+				}
+			`}
+		>
+			<div ref={ref} />
 			<ModalCloseButton onClick={() => alert('Close not implemented')} />
-		</FocusedWrapper>
+		</div>
 	)
 }
