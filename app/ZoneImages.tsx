@@ -45,7 +45,7 @@ export function useZoneImages({
 		if (!latLngClicked && !panoramaxOsmTag) return
 		const makeRequest = async () => {
 			if (panoramaxOsmTag) {
-				const pictureUrl = `https://panoramax.openstreetmap.fr/api/pictures/${panoramaxOsmTag}/thumb.webp`
+				const pictureUrl = `https://api.panoramax.xyz/api/pictures/${panoramaxOsmTag}/thumb.jpg`
 				console.log('panoramax picture', pictureUrl)
 				setPanoramax([
 					{
