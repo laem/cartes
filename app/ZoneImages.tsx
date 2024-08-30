@@ -7,12 +7,16 @@ import {
 	getWikimediaGeosearchUrl,
 	handleWikimediaGeosearchImages,
 } from './effects/useImageSearch'
+import useSetSearchParams from '@/components/useSetSearchParams'
+import Link from 'next/link'
 
 export function useZoneImages({
 	latLngClicked,
 	setLatLngClicked,
 	panoramaxOsmTag,
+	panoramaxId,
 }) {
+	const setSearchParams = useSetSearchParams()
 	const [wikimedia, setWikimedia] = useState(null)
 	const [panoramax, setPanoramax] = useState(null)
 
@@ -47,9 +51,11 @@ export function useZoneImages({
 			if (panoramaxOsmTag) {
 				const pictureUrl = `https://panoramax.openstreetmap.fr/api/pictures/${panoramaxOsmTag}/thumb.webp`
 				console.log('panoramax picture', pictureUrl)
+				if (panoramaxId) setSearchParams({ panoramax: panoramaxOsmTag })
 				setPanoramax([
 					{
 						thumb: pictureUrl,
+						id: panoramaxOsmTag,
 						link: `https://api.panoramax.xyz/#focus=pic&pic=${panoramaxOsmTag}`,
 					},
 				])
@@ -64,9 +70,12 @@ export function useZoneImages({
 			const json = await request.json()
 			const images = json.features
 			if (images.length && images[0]?.assets?.thumb) {
+				const id = images[0].id
+				if (panoramaxId) setSearchParams({ panoramax: id })
 				setPanoramax([
 					{
 						thumb: images[0].assets.thumb.href,
+						id,
 						link: `https://api.panoramax.xyz/#focus=pic&pic=${images[0].id}`,
 					},
 				])
@@ -76,7 +85,13 @@ export function useZoneImages({
 			}
 		}
 		makeRequest()
-	}, [latLngClicked, setLatLngClicked, panoramaxOsmTag])
+	}, [
+		latLngClicked,
+		setLatLngClicked,
+		panoramaxOsmTag,
+		panoramaxId,
+		setSearchParams,
+	])
 
 	return [
 		wikimedia,
@@ -89,6 +104,7 @@ export function useZoneImages({
 }
 
 export function ZoneImages({ zoneImages, panoramaxImages, focusImage }) {
+	const setSearchParams = useSetSearchParams()
 	const images =
 		zoneImages &&
 		zoneImages.map((json) => {
@@ -128,7 +144,9 @@ export function ZoneImages({ zoneImages, panoramaxImages, focusImage }) {
 					`}
 				>
 					{panoramaxImage && (
-						<a href={panoramaxImage.link} target="_blank">
+						<Link
+							href={setSearchParams({ panoramax: panoramaxImage.id }, true)}
+						>
 							<div
 								css={`
 									position: relative;
@@ -158,7 +176,7 @@ export function ZoneImages({ zoneImages, panoramaxImages, focusImage }) {
 									height="150"
 								/>
 							</div>
-						</a>
+						</Link>
 					)}
 					{images &&
 						images.length > 0 &&

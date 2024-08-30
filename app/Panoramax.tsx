@@ -10,21 +10,30 @@ const servers = {
 	osm: 'https://panoramax.openstreetmap.fr/api',
 }
 
-export default function Panoramax() {
+export default function Panoramax({ id }) {
 	const ref = useRef()
 	const [viewer, setViewer] = useState(null)
+
 	useEffect(() => {
 		if (!ref || !ref.current || viewer) return
 		const panoramax = new Viewer(
 			ref.current, // Div ID
 			servers.meta,
 			{
-				selectedPicture: '4ff88765-2500-4328-b888-41d5ae9ed443',
+				selectedPicture: id,
 				map: false,
 			} // Viewer options
 		)
 		setViewer(panoramax)
 	}, [ref, viewer, setViewer])
+
+	console.log('panoramax id', id)
+	useEffect(() => {
+		console.log('should set new panoramax picture id', id)
+		if (!viewer || !id) return
+
+		viewer.select(null, id)
+	}, [id, viewer])
 	return (
 		<div
 			css={`

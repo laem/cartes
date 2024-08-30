@@ -142,10 +142,12 @@ export default function Container({
 
 	const panoramaxOsmTag = osmFeature?.tags?.panoramax
 
+	const panoramaxId = searchParams.panoramax
 	const [zoneImages, panoramaxImages, resetZoneImages] = useZoneImages({
 		latLngClicked,
 		setLatLngClicked,
 		panoramaxOsmTag,
+		panoramaxId,
 	})
 
 	const transportStopData = useTransportStopData(osmFeature)
@@ -249,7 +251,7 @@ export default function Container({
 				</ContentWrapper>
 				<Meteo coordinates={center} />
 				{focusedImage && <FocusedImage {...{ focusedImage, focusImage }} />}
-				<Panoramax />
+				<Panoramax id={searchParams.panoramax} />
 				<SafeMap
 					{...{
 						trackedSnap,
