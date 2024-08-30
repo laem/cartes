@@ -15,7 +15,7 @@ export default function Panoramax({ id }) {
 	const [viewer, setViewer] = useState(null)
 
 	useEffect(() => {
-		if (!ref || !ref.current || viewer) return
+		if (!ref || !ref.current || viewer || !id) return
 		const panoramax = new Viewer(
 			ref.current, // Div ID
 			servers.meta,
@@ -25,7 +25,7 @@ export default function Panoramax({ id }) {
 			} // Viewer options
 		)
 		setViewer(panoramax)
-	}, [ref, viewer, setViewer])
+	}, [ref, viewer, setViewer, id])
 
 	console.log('panoramax id', id)
 	useEffect(() => {
@@ -48,7 +48,7 @@ export default function Panoramax({ id }) {
 					width: 50vw;
 					height: 90vh;
 					top: 4vh;
-					right: 6vw;
+					right: 4vw;
 					left: auto;
 				}
 				> div {
