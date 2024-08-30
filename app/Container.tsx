@@ -67,6 +67,7 @@ export default function Container({
 	const [bboxImages, setBboxImages] = useState([])
 	const [latLngClicked, setLatLngClicked] = useState(null)
 	const resetClickedPoint = () => setSearchParams({ clic: undefined })
+	const [panoramaxPosition, setPanoramaxPosition] = useState(null)
 
 	// For the mobile sheet, we need it in Map, hence the definition here
 	const [trackedSnap, setTrackedSnap] = useState(initialSnap)
@@ -251,7 +252,10 @@ export default function Container({
 				</ContentWrapper>
 				<Meteo coordinates={center} />
 				{focusedImage && <FocusedImage {...{ focusedImage, focusImage }} />}
-				<Panoramax id={searchParams.panoramax} />
+				<Panoramax
+					id={searchParams.panoramax}
+					onMove={(position) => setPanoramaxPosition(position)}
+				/>
 				<SafeMap
 					{...{
 						trackedSnap,
@@ -289,6 +293,7 @@ export default function Container({
 						setLatLngClicked,
 						setSafeStyleKey,
 						quickSearchFeatures,
+						panoramaxPosition,
 					}}
 				/>
 			</MapContainer>

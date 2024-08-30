@@ -10,7 +10,7 @@ const servers = {
 	osm: 'https://panoramax.openstreetmap.fr/api',
 }
 
-export default function Panoramax({ id }) {
+export default function Panoramax({ id, onMove }) {
 	const ref = useRef()
 	const [viewer, setViewer] = useState(null)
 
@@ -25,6 +25,19 @@ export default function Panoramax({ id }) {
 			} // Viewer options
 		)
 		setViewer(panoramax)
+		console.log('panoramax event', panoramax)
+		panoramax['sequence-stopped'] = (e) => console.log('panoramax event', e)
+		panoramax.addEventListener('psv:view-rotated', (e) =>
+			console.log('panoramax event', e.detail)
+		)
+		panoramax.addEventListener('psv:picture-loading', (e) => {
+			const { lat, lon } = e.detail
+			onMove({ longitude: lon, latitude: lat })
+		})
+
+		return () => {
+			//			panoramax.destroy()
+		}
 	}, [ref, viewer, setViewer, id])
 
 	console.log('panoramax id', id)
@@ -34,6 +47,8 @@ export default function Panoramax({ id }) {
 
 		viewer.select(null, id)
 	}, [id, viewer])
+
+	if (!id) return null
 	return (
 		<div
 			css={`
