@@ -32,7 +32,7 @@ export default function useDrawPanoramaxPosition(map, position) {
 				source: 'panoramax-marker',
 				layout: {
 					'icon-image': 'panoramax-marker',
-					'icon-size': 0.05,
+					'icon-size': 0.15,
 				},
 			})
 		}
