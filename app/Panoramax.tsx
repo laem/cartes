@@ -3,6 +3,7 @@ import { FocusedWrapper } from './FocusedImage'
 import { useEffect, useRef, useState } from 'react'
 import 'geovisio/build/index.css'
 import { ModalCloseButton } from './UI'
+import useSetSearchParams from '@/components/useSetSearchParams'
 
 const servers = {
 	meta: 'https://api.panoramax.xyz/api',
@@ -13,6 +14,8 @@ const servers = {
 export default function Panoramax({ id, onMove }) {
 	const ref = useRef()
 	const [viewer, setViewer] = useState(null)
+
+	const setSearchParams = useSetSearchParams()
 
 	useEffect(() => {
 		if (!ref || !ref.current || viewer || !id) return
@@ -27,12 +30,22 @@ export default function Panoramax({ id, onMove }) {
 		setViewer(panoramax)
 		console.log('panoramax event', panoramax)
 		panoramax['sequence-stopped'] = (e) => console.log('panoramax event', e)
-		panoramax.addEventListener('psv:view-rotated', (e) =>
-			console.log('panoramax event', e.detail)
-		)
+		panoramax.addEventListener('psv:view-rotated', (e) => {
+			console.log('panoramax event', e)
+			onMove((position) => ({
+				...position,
+				angle: e.detail.x - panoramax.psv.getPictureOriginalHeading(),
+			}))
+		})
 		panoramax.addEventListener('psv:picture-loading', (e) => {
+			console.log('panoramax event loading', e)
 			const { lat, lon } = e.detail
-			onMove({ longitude: lon, latitude: lat })
+			onMove((position) => ({
+				...position,
+				longitude: lon,
+				latitude: lat,
+				angle: e.detail.x - panoramax.psv.getPictureOriginalHeading(),
+			}))
 		})
 
 		return () => {
@@ -94,7 +107,9 @@ export default function Panoramax({ id, onMove }) {
 			`}
 		>
 			<div ref={ref} />
-			<ModalCloseButton onClick={() => alert('Close not implemented')} />
+			<ModalCloseButton
+				onClick={() => setSearchParams({ panoramax: undefined })}
+			/>
 		</div>
 	)
 }

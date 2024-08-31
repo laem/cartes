@@ -254,7 +254,7 @@ export default function Container({
 				{focusedImage && <FocusedImage {...{ focusedImage, focusImage }} />}
 				<Panoramax
 					id={searchParams.panoramax}
-					onMove={(position) => setPanoramaxPosition(position)}
+					onMove={(func) => setPanoramaxPosition(func)}
 				/>
 				<SafeMap
 					{...{
