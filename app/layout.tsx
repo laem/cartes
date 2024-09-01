@@ -2,6 +2,7 @@ import { ThemeColorsProvider } from '@/components/utils/colors'
 import { Metadata } from 'next'
 import '../globals.css'
 import StyledComponentsRegistry from '../lib/registry'
+import 'geovisio/build/index.css'
 
 const title = `Cartes`
 export const description =
@@ -36,7 +37,6 @@ export default function ({ children }) {
 					title="Cartes"
 					href="https://cartes.app/cartes-search.xml"
 				/>
-				<link href="/geovisio.css" rel="stylesheet" />
 			</head>
 			<body>
 				<StyledComponentsRegistry>
