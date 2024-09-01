@@ -1,9 +1,10 @@
-import { Viewer } from 'geovisio'
-import { FocusedWrapper } from './FocusedImage'
-import { useEffect, useRef, useState } from 'react'
-import 'geovisio/build/index.css'
-import { ModalCloseButton } from './UI'
 import useSetSearchParams from '@/components/useSetSearchParams'
+import { Viewer } from 'geovisio'
+import panoramaxIcon from '@/public/panoramax.svg'
+import 'geovisio/build/index.css'
+import Image from 'next/image'
+import { useEffect, useRef, useState } from 'react'
+import { ModalCloseButton } from './UI'
 
 const servers = {
 	meta: 'https://api.panoramax.xyz/api',
@@ -97,7 +98,7 @@ export default function Panoramax({ id, onMove }) {
 				.gvs-main {
 					border-radius: 0.6rem;
 					overflow: hidden;
-					--shadow-color: 45deg 2% 36%;
+					--shadow-color: 54deg 16% 57%;
 					--shadow-elevation-medium: 0.3px 0.5px 0.7px
 							hsl(var(--shadow-color) / 0.36),
 						0.8px 1.6px 2px -0.8px hsl(var(--shadow-color) / 0.36),
@@ -114,6 +115,28 @@ export default function Panoramax({ id, onMove }) {
 			`}
 		>
 			<div ref={ref} />
+			<a
+				href="https://panoramax.fr"
+				target="_blank"
+				title="Images de rue grâce au projet public Panoramax"
+				css={`
+					z-index: 1000;
+					position: absolute;
+					bottom: 0.6rem;
+
+					right: 4.3rem;
+					img {
+						vertical-align: bottom;
+						width: 3rem;
+						height: auto;
+					}
+					@media (max-width: 600px) {
+						right: 0.6rem;
+					}
+				`}
+			>
+				<Image src={panoramaxIcon} alt="Logo du projet Panoramax" />
+			</a>
 			<ModalCloseButton
 				onClick={() => {
 					setSearchParams({ panoramax: undefined })

@@ -9,6 +9,7 @@ import {
 } from './effects/useImageSearch'
 import useSetSearchParams from '@/components/useSetSearchParams'
 import Link from 'next/link'
+import panoramaxIcon from '@/public/panoramax.svg'
 
 export function useZoneImages({
 	latLngClicked,
@@ -163,12 +164,7 @@ export function ZoneImages({ zoneImages, panoramaxImages, focusImage }) {
 								`}
 								title="Cette zone est visualisable depuis la rue grâce au projet Panoramax"
 							>
-								<Image
-									src={`/panoramax.svg`}
-									width="10"
-									height="10"
-									alt="Logo du projet Panoramax"
-								/>
+								<Image src={panoramaxIcon} alt="Logo du projet Panoramax" />
 								<FeatureImage
 									src={panoramaxImage.thumb}
 									alt="Image de terrain issue de Panoramax"

@@ -23,14 +23,14 @@
      inkscape:pagecheckerboard="0"
      inkscape:deskcolor="#d1d1d1"
      inkscape:document-units="mm"
-     inkscape:zoom="39.320729"
-     inkscape:cx="4.9210684"
-     inkscape:cy="8.8248617"
+     inkscape:zoom="78.641458"
+     inkscape:cx="4.4187889"
+     inkscape:cy="5.3279785"
      inkscape:window-width="1920"
      inkscape:window-height="1080"
      inkscape:window-x="0"
      inkscape:window-y="0"
-     inkscape:window-maximized="0"
+     inkscape:window-maximized="1"
      inkscape:current-layer="layer1"
      showgrid="false" />
   <defs
@@ -40,7 +40,7 @@
      inkscape:groupmode="layer"
      id="layer1">
     <circle
-       style="fill:none;fill-opacity:1;stroke:#2988e6;stroke-width:0.245298;stroke-linecap:round;stroke-linejoin:bevel;stroke-dasharray:none;stroke-opacity:1"
+       style="fill:#dfedfb;fill-opacity:1;stroke:#2988e6;stroke-width:0.245298;stroke-linecap:round;stroke-linejoin:bevel;stroke-dasharray:none;stroke-opacity:1"
        id="path2"
        cx="1.3239452"
        cy="1.3272407"
