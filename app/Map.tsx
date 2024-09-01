@@ -19,6 +19,7 @@ import { useLocalStorage, useMediaQuery } from 'usehooks-ts'
 import CenteredCross from './CenteredCross'
 import MapComponents from './MapComponents'
 import { snapPoints } from './ModalSheet'
+import MapCompassArrow from './boussole/MapCompassArrow'
 import { defaultState } from './defaultState'
 import useDrawElectionClusterResults from './effects/useDrawElectionCluserResults'
 import useDrawSearchResults from './effects/useDrawSearchResults'
@@ -28,7 +29,9 @@ import useMapClick from './effects/useMapClick'
 import useRightClick from './effects/useRightClick'
 import useSearchLocalTransit from './effects/useSearchLocalTransit'
 import useDrawItinerary from './itinerary/useDrawItinerary'
-import MapCompassArrow from './boussole/MapCompassArrow'
+import useDrawPanoramaxPosition, {
+	useAddPanoramaxLayer,
+} from './effects/useDrawPanoramaxPosition'
 
 if (process.env.NEXT_PUBLIC_MAPTILER == null) {
 	throw new Error('You have to configure env NEXT_PUBLIC_MAPTILER, see README')
@@ -74,6 +77,7 @@ export default function Map({
 	setLatLngClicked,
 	quickSearchFeatures,
 	trackedSnap,
+	panoramaxPosition,
 }) {
 	const isMobile = useMediaQuery('(max-width: 800px)')
 	const mapContainerRef = useRef(null)
@@ -367,6 +371,9 @@ export default function Map({
 			markers.map((marker) => marker.remove())
 		}
 	}, [lesGaresProches, map, zoom, clickGare, clickedGare?.uic])
+
+	useDrawPanoramaxPosition(map, panoramaxPosition)
+	useAddPanoramaxLayer(map, searchParams.panoramax != null)
 
 	return (
 		<>

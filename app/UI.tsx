@@ -54,6 +54,7 @@ export const ModalCloseButtonButton = styled.button`
 		height: auto;
 		margin: 0;
 		opacity: 0.6;
+		border-radius: 1.4rem;
 	}
 `
 

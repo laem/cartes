@@ -23,14 +23,14 @@
      inkscape:pagecheckerboard="0"
      inkscape:deskcolor="#d1d1d1"
      inkscape:document-units="mm"
-     inkscape:zoom="30.091527"
-     inkscape:cx="-0.016615973"
-     inkscape:cy="6.8623968"
+     inkscape:zoom="78.641458"
+     inkscape:cx="4.4187889"
+     inkscape:cy="5.3279785"
      inkscape:window-width="1920"
-     inkscape:window-height="1055"
+     inkscape:window-height="1080"
      inkscape:window-x="0"
      inkscape:window-y="0"
-     inkscape:window-maximized="0"
+     inkscape:window-maximized="1"
      inkscape:current-layer="layer1"
      showgrid="false" />
   <defs
@@ -40,14 +40,14 @@
      inkscape:groupmode="layer"
      id="layer1">
     <circle
-       style="fill:none;fill-opacity:1;stroke:#2988e6;stroke-width:0.239453;stroke-linecap:round;stroke-linejoin:bevel;stroke-dasharray:none;stroke-opacity:1"
+       style="fill:#dfedfb;fill-opacity:1;stroke:#2988e6;stroke-width:0.245298;stroke-linecap:round;stroke-linejoin:bevel;stroke-dasharray:none;stroke-opacity:1"
        id="path2"
-       cx="1.3279071"
-       cy="1.3256451"
-       r="1.1712132" />
+       cx="1.3239452"
+       cy="1.3272407"
+       r="1.1998019" />
     <g
        id="g1"
-       transform="matrix(0.41387814,0.36716849,-0.42615713,0.48037108,1.3550855,0.20089401)"
+       transform="matrix(0.42398068,0.37613087,-0.43655939,0.49209668,1.351787,0.175035)"
        style="stroke:#2988e6;stroke-width:0.449371;stroke-dasharray:none;stroke-opacity:1">
       <path
          style="fill:none;fill-opacity:1;stroke:#2988e6;stroke-width:0.449371;stroke-linecap:butt;stroke-linejoin:miter;stroke-dasharray:none;stroke-opacity:1"
@@ -57,7 +57,7 @@
     </g>
     <g
        id="g1-3"
-       transform="matrix(0.39783656,-0.38449173,0.4462635,0.46175228,0.20901269,1.2126378)"
+       transform="matrix(0.40754753,-0.39387697,0.45715656,0.47302341,0.17773924,1.2114749)"
        style="stroke:#2988e6;stroke-width:0.449371;stroke-dasharray:none;stroke-opacity:1">
       <path
          style="fill:none;fill-opacity:1;stroke:#2988e6;stroke-width:0.449371;stroke-linecap:butt;stroke-linejoin:miter;stroke-dasharray:none;stroke-opacity:1"
