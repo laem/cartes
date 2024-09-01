@@ -218,6 +218,11 @@ export default function Map({
 
 	useEffect(() => {
 		if (!map) return
+		if (Math.round(map.getZoom()) === zoom) return
+		map.flyTo({ zoom })
+	}, [zoom, map])
+	useEffect(() => {
+		if (!map) return
 		map.on('zoom', () => {
 			const approximativeZoom = Math.round(map.getZoom())
 			if (approximativeZoom !== zoom) setZoom(approximativeZoom)
@@ -373,7 +378,10 @@ export default function Map({
 	}, [lesGaresProches, map, zoom, clickGare, clickedGare?.uic])
 
 	useDrawPanoramaxPosition(map, panoramaxPosition)
-	useAddPanoramaxLayer(map, searchParams.panoramax != null)
+	useAddPanoramaxLayer(
+		map,
+		searchParams.panoramax != null || searchParams.rue === 'oui'
+	)
 
 	return (
 		<>

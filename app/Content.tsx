@@ -44,6 +44,7 @@ export default function Content({
 	state,
 	setState,
 	zoom,
+	setZoom,
 	sideSheet, // This gives us the indication that we're on the desktop version, where the Content is on the left, always visible, as opposed to the mobile version where a pull-up modal is used
 	searchParams,
 	snap,
@@ -257,7 +258,9 @@ export default function Content({
 			/>
 
 			{styleChooser ? (
-				<StyleChooser {...{ setStyleChooser, style, setSnap }} />
+				<StyleChooser
+					{...{ setStyleChooser, style, setSnap, searchParams, zoom, setZoom }}
+				/>
 			) : (
 				showContent && (
 					<ContentSection>

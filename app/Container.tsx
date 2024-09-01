@@ -229,6 +229,7 @@ export default function Container({
 							panoramaxImages,
 							resetZoneImages,
 							zoom,
+							setZoom,
 							searchParams,
 							style,
 							styleChooser,
