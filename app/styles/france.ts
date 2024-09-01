@@ -17,6 +17,12 @@ export default function franceStyle(key) {
 		id: 'france',
 		name: 'France',
 		sources: {
+			geovisio: {
+				maxzoom: 15,
+				minzoom: 0,
+				tiles: ['https://api.panoramax.xyz/api/map/{z}/{x}/{y}.mvt'],
+				type: 'vector',
+			},
 			openmaptiles: {
 				url: 'cartes://hybrid', // see the protocol CartesProtocol
 				//url: 'pmtiles://' + gtfsServerUrl + '/hexagone-plus.pmtiles',
@@ -38,7 +44,7 @@ export default function franceStyle(key) {
 				url: 'pmtiles://' + pmtilesServerUrl + '/trees.pmtiles',
 			},
 		},
-		layers,
+		layers: [...layers, panoramaxLayer],
 		glyphs: getFetchUrlBase() + '/fonts/glyphs/{fontstack}/{range}.pbf',
 		sprite: getFetchUrlBase() + '/sprite/sprite',
 		//glyphs: `https://api.maptiler.com/fonts/{fontstack}/{range}.pbf?key=${key}`,
@@ -3407,3 +3413,31 @@ const layers = [
 		],
 	},
 ]
+
+const panoramaxLayer = {
+	id: 'geovisio_sequences',
+	layout: { 'line-cap': 'square' },
+	paint: {
+		'line-color': '#FF6F00',
+		'line-width': [
+			'interpolate',
+			['linear'],
+			['zoom'],
+			0,
+			0.5,
+			10,
+			2,
+			14,
+			4,
+			16,
+			5,
+			22,
+			3,
+		],
+		'line-opacity': ['interpolate', ['linear'], ['zoom'], 6, 0, 7, 1],
+	},
+	source: 'geovisio',
+	'source-layer': 'sequences',
+	type: 'line',
+	filter: ['==', ['get', 'type'], 'equirectangular'],
+}
