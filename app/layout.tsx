@@ -36,6 +36,7 @@ export default function ({ children }) {
 					title="Cartes"
 					href="https://cartes.app/cartes-search.xml"
 				/>
+				<link href="/geovisio.css" rel="stylesheet" />
 			</head>
 			<body>
 				<StyledComponentsRegistry>

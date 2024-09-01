@@ -1,6 +1,7 @@
 import useSetSearchParams from '@/components/useSetSearchParams'
 import { Viewer } from 'geovisio'
-import 'geovisio/build/index.css'
+//import 'geovisio/build/index.css' fails in next production mode... imported in
+//layout
 import panoramaxIcon from '@/public/panoramax.svg'
 import Image from 'next/image'
 import { useEffect, useRef, useState } from 'react'
