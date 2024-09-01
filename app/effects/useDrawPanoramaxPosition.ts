@@ -17,7 +17,6 @@ const point = {
 export default function useDrawPanoramaxPosition(map, position) {
 	console.log('yellow', position)
 	const hasPosition = position != null
-	console.log('purple', hasPosition)
 	const [source, setSource] = useState()
 	useEffect(() => {
 		if (!map || !hasPosition) return
@@ -53,12 +52,41 @@ export default function useDrawPanoramaxPosition(map, position) {
 	useEffect(() => {
 		if (!map || !source || !position) return
 
+		/*
 		point.features[0].geometry.coordinates[0] = position.longitude
 		point.features[0].geometry.coordinates[1] = position.latitude
+		*/
 
-		source.setData(point) //TODO can't make it update, not recreate point. Mmmh maybe it's by design, maplibre makes it jump at high zoom, animate at lower zoom
+		//		source.setData(point) //TODO can't make it update, not recreate point. Mmmh maybe it's by design, maplibre makes it jump at high zoom, animate at lower zoom
 
 		map.style && // dunno why it must be checked here
 			map.setLayoutProperty('panoramax-marker', 'icon-rotate', position.angle)
+
+		let frames = 0,
+			maxFrames = 10 // setting 1000 makes the application lag a lot. Maybe because it triggers redraws of the content section ?
+
+		function animateMarker(timestamp) {
+			// Update the data to a new position based on the animation timestamp. The
+			// divisor in the expression `timestamp / 1000` controls the animation speed.
+			//source.setData(pointOnCircle(timestamp / 1000))
+
+			const coordinates = point.features[0].geometry.coordinates
+			const [oldLongitude, oldLatitude] = coordinates
+			point.features[0].geometry.coordinates = [
+				oldLongitude +
+					((position.longitude - oldLongitude) * frames) / maxFrames,
+				oldLatitude + ((position.latitude - oldLatitude) * frames) / maxFrames,
+			]
+			source.setData(point) //TODO can't make it update, not recreate point. Mmmh maybe it's by design, maplibre makes it jump at high zoom, animate at lower zoom
+
+			if (frames < maxFrames) {
+				frames += 1
+				// Request the next frame of the animation.
+				requestAnimationFrame(animateMarker)
+			}
+		}
+
+		// Start the animation.
+		animateMarker(0)
 	}, [map, source, position])
 }
