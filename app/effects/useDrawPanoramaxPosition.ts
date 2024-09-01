@@ -14,6 +14,90 @@ const point = {
 		},
 	],
 }
+export function useAddPanoramaxLayer(map, active) {
+	useEffect(() => {
+		if (!active || !map) return
+
+		map.addSource('geovisio', {
+			maxzoom: 15,
+			minzoom: 0,
+			tiles: ['https://api.panoramax.xyz/api/map/{z}/{x}/{y}.mvt'],
+			type: 'vector',
+		})
+
+		map.addLayer({
+			id: 'geovisio_sequences',
+			layout: { 'line-cap': 'square' },
+			paint: {
+				'line-color': '#FF6F00',
+				'line-width': [
+					'interpolate',
+					['linear'],
+					['zoom'],
+					0,
+					0.5,
+					10,
+					2,
+					14,
+					4,
+					16,
+					5,
+					22,
+					3,
+				],
+				'line-opacity': ['interpolate', ['linear'], ['zoom'], 6, 0, 7, 1],
+			},
+			source: 'geovisio',
+			'source-layer': 'sequences',
+			type: 'line',
+			filter: ['==', ['get', 'type'], 'equirectangular'],
+		})
+		/* we don't use this yet, since it can't be filtered for 360 images
+		map.addLayer({
+			id: 'geovisio_grid',
+			paint: {
+				'fill-color': [
+					'interpolate-hcl',
+					['linear'],
+					['get', 'coef'],
+					0,
+					'#FFCC80',
+					0.5,
+					'#E65100',
+					1,
+					'#BF360C',
+				],
+				'fill-opacity': [
+					'interpolate',
+					['linear'],
+					['zoom'],
+					0,
+					1,
+					4,
+					1,
+					6,
+					0.8,
+					6.5,
+					0,
+				],
+			},
+			source: 'geovisio',
+			'source-layer': 'grid',
+			type: 'fill',
+		})
+		*/
+		return () => {
+			safeRemove(map)(
+				[
+					'geovisio_sequences',
+
+					//	'geovisio_grid' See above
+				],
+				['geovisio']
+			)
+		}
+	}, [map, active])
+}
 export default function useDrawPanoramaxPosition(map, position) {
 	console.log('yellow', position)
 	const hasPosition = position != null
