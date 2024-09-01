@@ -19,6 +19,7 @@ export default function Panoramax({ id, onMove }) {
 
 	useEffect(() => {
 		if (!ref || !ref.current || viewer || !id) return
+		console.log('purple will create panoramax instance', { viewer, id })
 		const panoramax = new Viewer(
 			ref.current, // Div ID
 			servers.meta,
@@ -104,13 +105,23 @@ export default function Panoramax({ id, onMove }) {
 						5px 10px 12.6px -2.5px hsl(var(--shadow-color) / 0.36);
 					box-shadow: var(--shadow-elevation-medium);
 				}
+				> button {
+					right: 0.3rem !important;
+					img {
+						opacity: 1;
+					}
+				}
 			`}
 		>
 			<div ref={ref} />
 			<ModalCloseButton
 				onClick={() => {
 					setSearchParams({ panoramax: undefined })
-					onMove(null)
+
+					setTimeout(() => {
+						onMove(null)
+						setViewer(null)
+					}, 300)
 				}}
 			/>
 		</div>

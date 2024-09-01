@@ -68,6 +68,7 @@ export default function Container({
 	const [latLngClicked, setLatLngClicked] = useState(null)
 	const resetClickedPoint = () => setSearchParams({ clic: undefined })
 	const [panoramaxPosition, setPanoramaxPosition] = useState(null)
+	console.log('purple panoramaxPosition', panoramaxPosition)
 
 	// For the mobile sheet, we need it in Map, hence the definition here
 	const [trackedSnap, setTrackedSnap] = useState(initialSnap)
