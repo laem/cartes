@@ -76,7 +76,7 @@ const Styles = ({ style, styleList, setSearchParams }) => {
 						<li
 							key={k}
 							css={`
-								margin: 0.6rem 0.5rem;
+								margin: 0.6rem 0.25rem;
 							`}
 						>
 							<Link
