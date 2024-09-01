@@ -1,4 +1,4 @@
-import { useEffect } from 'react'
+import { useEffect, useState } from 'react'
 import { getFetchUrlBase } from '../serverUrls'
 import { safeRemove } from './utils'
 
@@ -18,6 +18,7 @@ export default function useDrawPanoramaxPosition(map, position) {
 	console.log('yellow', position)
 	const hasPosition = position != null
 	console.log('purple', hasPosition)
+	const [source, setSource] = useState()
 	useEffect(() => {
 		if (!map || !hasPosition) return
 		const addIcon = async () => {
@@ -38,27 +39,26 @@ export default function useDrawPanoramaxPosition(map, position) {
 					'icon-size': 0.15,
 				},
 			})
+			setSource(map.getSource('panoramax-marker'))
 		}
 		addIcon()
 
 		return () => {
+			console.log('purple return')
+			setSource(null)
 			safeRemove(map)(['panoramax-marker'], ['panoramax-marker'])
 		}
-	}, [map, hasPosition])
+	}, [map, hasPosition, setSource])
 
 	useEffect(() => {
-		if (!map || !position) return
+		if (!map || !source || !position) return
 
-		const source = map.getSource('panoramax-marker')
-		console.log('yellow source', source)
-		if (!source) return
+		point.features[0].geometry.coordinates[0] = position.longitude
+		point.features[0].geometry.coordinates[1] = position.latitude
 
-		point.features[0].geometry.coordinates = [
-			position.longitude,
-			position.latitude,
-		]
-		source.setData(point) //TODO can't make it update, not recreate point
+		source.setData(point) //TODO can't make it update, not recreate point. Mmmh maybe it's by design, maplibre makes it jump at high zoom, animate at lower zoom
 
-		map.setLayoutProperty('panoramax-marker', 'icon-rotate', position.angle)
-	}, [map, position])
+		map.style && // dunno why it must be checked here
+			map.setLayoutProperty('panoramax-marker', 'icon-rotate', position.angle)
+	}, [map, source, position])
 }
