@@ -108,7 +108,10 @@ export default function Panoramax({ id, onMove }) {
 		>
 			<div ref={ref} />
 			<ModalCloseButton
-				onClick={() => setSearchParams({ panoramax: undefined })}
+				onClick={() => {
+					setSearchParams({ panoramax: undefined })
+					onMove(null)
+				}}
 			/>
 		</div>
 	)
