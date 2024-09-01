@@ -1,5 +1,6 @@
 import useSetSearchParams from '@/components/useSetSearchParams'
 import { Viewer } from 'geovisio'
+import 'geovisio/build/index.css'
 import panoramaxIcon from '@/public/panoramax.svg'
 import Image from 'next/image'
 import { useEffect, useRef, useState } from 'react'
@@ -104,6 +105,22 @@ export default function Panoramax({ id, onMove }) {
 						2.1px 4.1px 5.2px -1.7px hsl(var(--shadow-color) / 0.36),
 						5px 10px 12.6px -2.5px hsl(var(--shadow-color) / 0.36);
 					box-shadow: var(--shadow-elevation-medium);
+				}
+				/* https://gitlab.com/panoramax/clients/web-viewer/-/issues/152 */
+				.gvs-main {
+					height: 100%;
+					.gvs-psv {
+						height: 100%;
+					}
+
+					#gvs-corner-main-top {
+						position: absolute;
+						top: 0;
+					}
+					#gvs-corner-main-bottom {
+						position: absolute;
+						bottom: 0;
+					}
 				}
 				> button {
 					right: 0.3rem !important;
