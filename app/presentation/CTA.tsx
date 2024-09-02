@@ -1,9 +1,9 @@
 import css from '@/components/css/convertToJs'
 
-export default function CTA({ children }) {
+export default function CTA({ children, href = '/' }) {
 	return (
 		<a
-			href="/"
+			href={href}
 			style={css`
 				text-decoration: none;
 				font-size: 160%;
