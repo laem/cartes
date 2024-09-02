@@ -51,7 +51,7 @@ export default function Panoramax({ id, onMove }) {
 		})
 
 		return () => {
-			//			panoramax.destroy()
+			if (viewer) viewer.destroy()
 		}
 	}, [ref, viewer, setViewer, id])
 
