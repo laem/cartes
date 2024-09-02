@@ -95,6 +95,9 @@ export default function Panoramax({ id, onMove }) {
 					width: unset;
 					margin: 0;
 				}
+				.gvs-loader {
+					border-radius: 0.6rem;
+				}
 				.gvs-main {
 					border-radius: 0.6rem;
 					overflow: hidden;
