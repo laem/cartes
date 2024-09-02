@@ -8,6 +8,10 @@ export const List = styled.ol`
 	padding-left: 1rem;
 	list-style-type: circle;
 	li {
+		margin-bottom: 0.8rem;
+		p {
+			margin: 0;
+		}
 		a {
 		}
 	}
