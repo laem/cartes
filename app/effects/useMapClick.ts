@@ -18,7 +18,8 @@ export default function useMapClick(
 	gares,
 	clickGare,
 	setSearchParams,
-	styleKey
+	styleKey,
+	styleChooserOpen
 ) {
 	// This hook lets the user click on the map to find OSM entities
 	// It also draws a polygon to show the search area for pictures
@@ -28,6 +29,12 @@ export default function useMapClick(
 
 		const onClick = async (e) => {
 			console.log('click event', e)
+			// interesting and tricky : without this timeout, it looks like another
+			// setSearchParams overrides this call
+
+			if (styleChooserOpen)
+				setTimeout(() => setSearchParams({ 'choix du style': undefined }), 100)
+
 			setLatLngClicked(e.lngLat)
 
 			const source = map.getSource('searchPolygon')
@@ -169,5 +176,6 @@ export default function useMapClick(
 		setSearchParams,
 		setLatLngClicked,
 		styleKey,
+		styleChooserOpen,
 	])
 }

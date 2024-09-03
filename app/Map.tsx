@@ -271,7 +271,8 @@ export default function Map({
 		gares,
 		clickGare,
 		setSearchParams,
-		styleKey
+		styleKey,
+		searchParams['choix du style'] === 'oui'
 	)
 
 	useHoverOnMapFeatures(map)
