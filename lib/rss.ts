@@ -19,7 +19,7 @@ export async function generateFeed() {
 	await Promise.all(
 		blogArticles.map(async (post) => {
 			feed.item({
-				title: post.titre,
+				title: post.titre.raw,
 				url: domain + post.url,
 				guid: post.url.replace('/blog/', ''),
 				date: post.date,
