@@ -3,6 +3,7 @@ import { getRecentInterestingNodes } from '@/components/watchOsmPlaces.ts'
 import { gtfsServerUrl } from './serverUrls'
 import { getLastEdit } from './blog/utils'
 import { blogArticles } from './blog/page'
+import { generateFeed } from '@/lib/rss'
 
 export const domain = 'https://cartes.app'
 
@@ -62,8 +63,11 @@ export default async function sitemap(): MetadataRoute.Sitemap {
 		...blogEntries,
 		...forceUpdate(newNodes),
 	]
+
 	return entries
 }
+
+generateFeed()
 
 const lastForcedUpdate = new Date('2024-07-31T10:07:01.358Z')
 const forceUpdate = (list) =>
