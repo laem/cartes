@@ -95,7 +95,10 @@ export default function useDrawItinerary(
 
 	const cyclingSegmentsGeojson = useMemo(() => {
 		return (
-			cyclingReady && routes.cycling && brouterResultToSegments(routes.cycling)
+			cyclingReady &&
+			routes.cycling &&
+			!routes.cycling.state === 'error' &&
+			brouterResultToSegments(routes.cycling)
 		)
 	}, [routes?.cycling, cyclingReady])
 

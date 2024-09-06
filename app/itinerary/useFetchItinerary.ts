@@ -48,9 +48,16 @@ export default function useFetchItinerary(
 				.join('|')
 			const url = `https://brouter.osc-fr1.scalingo.io/brouter?lonlats=${lonLats}&profile=${profile}&alternativeidx=0&format=geojson`
 			const res = await fetch(url)
-			const json = await res.json()
-			if (!json.features) return
-			return json
+			const clone = res.clone()
+			try {
+				const json = await res.json()
+				if (!json.features) return
+				return json
+			} catch (e) {
+				const text = await clone.text()
+
+				return { state: 'error', reason: text }
+			}
 		}
 
 		//TODO fails is 3rd point is closer to 1st than 2nd, use reduce that sums

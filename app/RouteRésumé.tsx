@@ -22,6 +22,27 @@ export default function RouteRésumé({
 				}
 			/>
 		)
+
+	if (data.state === 'error') {
+		console.log('lightgreen', data.reason)
+		if (data.reason.includes('to-position not mapped in existing datafile'))
+			return (
+				<p>
+					Notre calculateur vélo et marche ne couvre pas votre point d'arrivée
+					:/
+				</p>
+			)
+		if (data.reason.includes('from-position not mapped in existing datafile'))
+			return (
+				<p>
+					Notre calculateur vélo et marche ne couvre pas votre point de départ
+					:/
+				</p>
+			)
+		if (data.reason) return <p>{data.reason}</p>
+		else return <p>Erreur inconnue</p>
+	}
+
 	return (
 		<section>
 			<div
