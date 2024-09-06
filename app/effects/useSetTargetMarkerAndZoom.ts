@@ -37,6 +37,7 @@ export default function useSetTargetMarkerAndZoom(
 				.setLngLat(target)
 				.addTo(map)
 
+			console.log('lightgreen setState from useSetTargetMarkerAndZoom')
 			setState((state) => ({ ...state, vers: { ...state.vers, marker } }))
 			setLatLngClicked({ lng: target[0], lat: target[1] })
 

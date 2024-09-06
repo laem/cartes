@@ -14,7 +14,6 @@ export default function useMapClick(
 	itinerary,
 	isTransportsMode,
 	setLatLngClicked,
-	setState,
 	gares,
 	clickGare,
 	setSearchParams,
@@ -167,7 +166,6 @@ export default function useMapClick(
 		}
 	}, [
 		map,
-		setState,
 		distanceMode,
 		itinerary.isItineraryMode,
 		gares,

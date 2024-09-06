@@ -24,6 +24,7 @@ export default function useFetchItinerary(
 
 	/* Routing requests are made here */
 	useEffect(() => {
+		console.log('lightgreen useeffect', serializedPoints, points)
 		if (points.length < 2) {
 			setRoutes(null)
 			return
@@ -113,6 +114,12 @@ export default function useFetchItinerary(
 				}) => ({ lat, lng })
 			)
 
+			console.log(
+				'Will request motis intermodal',
+				lonLats,
+				date,
+				multiplePoints
+			)
 			const json = await computeMotisTrip(lonLats[0], lonLats[1], date)
 
 			if (json.state === 'error') return json

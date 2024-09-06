@@ -267,7 +267,6 @@ export default function Map({
 		itinerary,
 		isTransportsMode,
 		setLatLngClicked,
-		setState,
 		gares,
 		clickGare,
 		setSearchParams,

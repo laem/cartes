@@ -224,7 +224,7 @@ export const useMemoPointsFromState = (state) => {
 }
 	 */
 	const serializedPoints = geoSerializeSteps(state)
-	const points = useMemo(() => {
+	const result = useMemo(() => {
 		const points = state
 			.map((step, index) => {
 				if (step == null) return
@@ -239,7 +239,7 @@ export const useMemoPointsFromState = (state) => {
 				}
 			})
 			.filter(Boolean)
-		return points
+		return [serializedPoints, points]
 	}, [serializedPoints])
-	return [serializedPoints, points]
+	return result
 }

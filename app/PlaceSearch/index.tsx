@@ -100,6 +100,7 @@ export default function PlaceSearch({
 				safeStateEntry
 				//validated: false, // TODO was important or not ? could be stored in each state array entries and calculated ?
 			)
+
 			setState(newState)
 			if (searchValue?.length > 2) {
 				fetchPhoton(
@@ -115,6 +116,7 @@ export default function PlaceSearch({
 
 	const safeLocal = local ? local.join('') : false
 	useEffect(() => {
+		if (value == undefined) return
 		onInputChange(stepIndex)(value)
 	}, [isLocalSearch, stepIndex, value, zoom, safeLocal])
 
