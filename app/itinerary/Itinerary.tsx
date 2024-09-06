@@ -27,6 +27,7 @@ export default function Itinerary({
 	searchParams,
 	close,
 	state,
+	setState,
 	setSnap,
 	setDisableDrag,
 }) {
@@ -45,7 +46,13 @@ export default function Itinerary({
 		<ContentSection css="margin-bottom: 1rem">
 			<h1>Itinéraire</h1>
 			<ModalCloseButton title="Fermer l'encart itinéraire" onClick={close} />
-			<Steps state={state} setDisableDrag={setDisableDrag} />
+			<Steps
+				{...{
+					state,
+					setDisableDrag,
+					setState,
+				}}
+			/>
 			{!itinerary.routes ? (
 				<ClickItineraryInstruction state={state} />
 			) : (

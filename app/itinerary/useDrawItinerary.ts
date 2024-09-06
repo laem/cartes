@@ -230,7 +230,7 @@ export const useMemoPointsFromState = (state) => {
 	const result = useMemo(() => {
 		const points = state
 			.map((step, index) => {
-				if (step == null) return
+				if (step == null || !(step.latitude && step.longitude)) return
 				const { longitude, latitude, key } = step
 				return {
 					type: 'Feature',

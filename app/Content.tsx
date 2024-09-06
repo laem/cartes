@@ -19,6 +19,7 @@ import { DialogButton, ModalCloseButton } from './UI'
 import { ZoneImages } from './ZoneImages'
 import Explanations from './explanations.mdx'
 import Itinerary from './itinerary/Itinerary'
+import { getHasStepBeingSearched } from './itinerary/Steps'
 import getUrl from './osm/getUrl'
 import StyleChooser from './styles/StyleChooser'
 import { defaultTransitFilter } from './transport/TransitFilter'
@@ -134,12 +135,11 @@ export default function Content({
 			(state.length === 0 || !state.find((step) => step?.choice || step?.key)),
 		searchStepIndex = isItineraryModeNoSteps ? 1 : nullEntryInState
 
+	const hasStepBeingSearched = getHasStepBeingSearched(state)
 	const showSearch =
 		!styleChooser &&
 		// In itinerary mode, user is filling or editing one of the itinerary steps
-		(hasNullEntryInState ||
-			isItineraryModeNoSteps ||
-			!(osmFeature || itinerary.isItineraryMode)) // at first, on desktop, we kept the search bar considering we have room. But this divergence brings dev complexity
+		(hasStepBeingSearched || !(osmFeature || itinerary.isItineraryMode)) // at first, on desktop, we kept the search bar considering we have room. But this divergence brings dev complexity
 
 	const minimumQuickSearchZoom = getMinimumQuickSearchZoom(!sideSheet)
 
@@ -253,6 +253,7 @@ export default function Content({
 						itinerary.setIsItineraryMode(false)
 					},
 					state,
+					setState,
 					setDisableDrag,
 				}}
 			/>

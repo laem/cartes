@@ -9,7 +9,7 @@ export default function useOsmRequest(allez, state, setState) {
 			const newPoints = allez.map((point) => stepOsmRequest(point, state))
 			const newState = await Promise.all(newPoints)
 			console.log('lightgreen setState from osmRequest', newState)
-			if (newState.includes(null)) return null
+			//if (newState.includes(null)) return null
 			setState(newState)
 		}
 

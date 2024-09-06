@@ -26,8 +26,8 @@ export default function ClickItineraryInstruction({ state }) {
 			/>
 			{stepsCount === 0 ? (
 				<p>
-					Saisissez votre destination, <br />
-					ou 📍 cliquez sur la carte pour définir le départ.
+					Saisissez vos étapes ci-dessus, <br />
+					ou 📍 cliquez sur la carte pour définir le départ puis l'arrivée.
 				</p>
 			) : state.length === 2 && !stepKeys[0] ? (
 				<p>
