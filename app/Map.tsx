@@ -381,7 +381,8 @@ export default function Map({
 	useDrawPanoramaxPosition(map, panoramaxPosition)
 	useAddPanoramaxLayer(
 		map,
-		searchParams.panoramax != null || searchParams.rue === 'oui'
+		searchParams.panoramax != null || searchParams.rue === 'oui',
+		safeStyleKey
 	)
 
 	return (

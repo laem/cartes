@@ -14,7 +14,7 @@ const point = {
 		},
 	],
 }
-export function useAddPanoramaxLayer(map, active) {
+export function useAddPanoramaxLayer(map, active, styleKey) {
 	useEffect(() => {
 		if (!active || !map) return
 
@@ -94,7 +94,7 @@ export function useAddPanoramaxLayer(map, active) {
 				['geovisio']
 			)
 		}
-	}, [map, active])
+	}, [map, active, styleKey])
 }
 export default function useDrawPanoramaxPosition(map, position) {
 	console.log('yellow', position)
