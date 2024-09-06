@@ -12,6 +12,7 @@ export default function RouteRésumé({
 	bikeRouteProfile,
 	setBikeRouteProfile,
 }) {
+	if (!data) return
 	if (data === 'loading')
 		return (
 			<TransitLoader
