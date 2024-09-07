@@ -7,6 +7,9 @@ import {
 	replaceArrayIndex,
 } from '@/components/utils/utils'
 
+//const photonBaseUrl = 'https://photon.komoot.io'
+const photonBaseUrl = 'https://serveur.cartes.app/photon'
+
 function fetchPhoton(v, setState, stepIndex, local, zoom, setSearchParams) {
 	/*
 	 * Google had introduced a search mode where the first result was automatically validated. Duckduckgo took it over with the “!” syntax at the end of the search phrase. Kagi followed with https://github.com/kagisearch/bangs.
@@ -27,7 +30,7 @@ So perhaps this “bang” would force the search to the scale of France, rather
 
 	const zoomPart = hasBang ? `&zoom=5` : zoom ? `&zoom=${Math.round(zoom)}` : ''
 	return fetch(
-		`https://photon.komoot.io/api/?q=${encodeURIComponent(
+		`${photonBaseUrl}/api/?q=${encodeURIComponent(
 			v
 		)}&limit=${limit}&lang=fr${localPart}${zoomPart}`
 	)
