@@ -35,6 +35,7 @@ export default function PlaceSearch({
 	geolocation,
 	placeholder,
 }) {
+	console.log('lightgreen autofocus', autoFocus)
 	// This component stores its state in the... state array, hence needs an
 	// index to store its current state in the right array index
 	if (stepIndex == null) throw new Error('Step index necessary')

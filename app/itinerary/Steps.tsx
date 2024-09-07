@@ -15,6 +15,7 @@ export default function Steps({
 }) {
 	console.log('lightgreen state', state)
 
+	// We're displaying the steps selector with minimum 2 steps
 	const steps =
 		!state || state.length === 0
 			? [null, null]

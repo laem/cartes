@@ -197,7 +197,7 @@ export default function Content({
 							zoom,
 							setSearchParams,
 							searchParams,
-							autoFocus: nullEntryInState > 0,
+							autoFocus: hasStepBeingSearched,
 							stepIndex: searchStepIndex,
 							geolocation,
 							placeholder: isItineraryModeNoSteps ? 'Votre destination' : null,
