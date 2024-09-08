@@ -56,7 +56,7 @@ export default function RouteRésumé({
 					color: var(--darkestColor);
 					line-height: 1.4rem;
 					border: ${mode === 'cycling'
-						? '4px solid var(--lightColor)'
+						? '4px solid #8f53c1'
 						: '4px dotted #8f53c1'};
 					margin-top: 1.4rem;
 					border-radius: 0.5rem;
