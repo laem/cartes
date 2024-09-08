@@ -35,6 +35,7 @@ export default function PlaceSearch({
 	geolocation,
 	placeholder,
 }) {
+	console.log('lightgreen stepIndex', stepIndex, state)
 	console.log('lightgreen autofocus', autoFocus)
 	// This component stores its state in the... state array, hence needs an
 	// index to store its current state in the right array index
@@ -93,6 +94,7 @@ export default function PlaceSearch({
 					: {}),
 				...(searchValue === '' ? {} : { inputValue: searchValue }),
 				stepBeingSearched: oldStateEntry?.stepBeingSearched,
+				key: oldStateEntry?.key,
 			}
 			const safeStateEntry =
 				Object.keys(stateEntry).length > 0 ? stateEntry : null

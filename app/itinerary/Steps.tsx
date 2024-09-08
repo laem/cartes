@@ -165,7 +165,7 @@ const Item = ({
 				<span
 					onClick={() => {
 						console.log('lightgreen allezpart', 'coucou')
-						step && setUndoValue(step.key)
+						step && setUndoValue(step)
 						setState(
 							state.map((step, mapIndex) => ({
 								...(step || {}),
@@ -184,9 +184,7 @@ const Item = ({
 						{' '}
 						<button
 							onClick={() =>
-								setSearchParams({
-									allez: setAllezPart(step.key, state, undoValue),
-								})
+								setState(replaceArrayIndex(state, index, undoValue))
 							}
 						>
 							<Image

@@ -96,8 +96,6 @@ export default function Content({
 			? getThumb(osmFeature.tags.wikimedia_commons, 500)
 			: wikidataPictureUrl)
 
-	const nullEntryInState = state.findIndex((el) => el == null || el.key == null)
-
 	const content = [
 		osmFeature,
 		zoneImages,
@@ -128,12 +126,16 @@ export default function Content({
 
 	const hasDestination = osmFeature || geocodedClickedPoint
 
+	const nullEntryInState = state.findIndex((el) => el == null || el.key == null)
 	const hasNullEntryInState = nullEntryInState > -1
 
 	const isItineraryModeNoSteps =
-			itinerary.isItineraryMode &&
-			(state.length === 0 || !state.find((step) => step?.choice || step?.key)),
-		searchStepIndex = isItineraryModeNoSteps ? 1 : nullEntryInState
+		itinerary.isItineraryMode &&
+		(state.length === 0 || !state.find((step) => step?.choice || step?.key))
+
+	const beingSearchedIndex = state?.findIndex((step) => step.stepBeingSearched),
+		searchStepIndex =
+			beingSearchedIndex > -1 ? beingSearchedIndex : nullEntryInState
 
 	const hasStepBeingSearched = getHasStepBeingSearched(state)
 	const showSearch =
