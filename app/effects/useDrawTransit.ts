@@ -129,6 +129,23 @@ export default function useDrawTransit(map, transit, selectedConnection, date) {
 			{
 				source: id,
 				type: 'line',
+				id: id + '-lines-walking-background',
+				filter: ['==', ['get', 'move_type'], 'Walk'],
+				layout: {
+					'line-join': 'round',
+					'line-cap': 'round',
+				},
+				paint: {
+					'line-color': '#d3b2ee',
+					'line-width': 4,
+				},
+			},
+			'distancePoints'
+		)
+		map.addLayer(
+			{
+				source: id,
+				type: 'line',
 				id: id + '-lines-walking',
 				filter: ['==', ['get', 'move_type'], 'Walk'],
 				layout: {
@@ -183,6 +200,7 @@ export default function useDrawTransit(map, transit, selectedConnection, date) {
 					id + '-lines',
 					id + '-lines-symbols',
 					id + '-lines-walking',
+					id + '-lines-walking-background',
 					id + '-lines-contour',
 					id + '-points',
 				],

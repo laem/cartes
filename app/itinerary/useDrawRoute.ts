@@ -74,14 +74,16 @@ export default function useDrawRoute(isItineraryMode, map, geojson, id) {
 				paint: {
 					walking: {
 						'line-color': '#8f53c1',
-						'line-width': 5,
+						'line-width': 4,
 						// I'm bricoling something here but I don't understand yet how it
 						// works precisely
+						// TODO I don't get why setting the walking's style from
+						// useDrawTransit does not produce the same result here...
 						'line-dasharray': {
 							stops: [
-								[0, [10, 2]],
-								[10, [3, 2]],
-								[16, [0.6, 2]],
+								[0, [1, 2]],
+								[10, [1, 3]],
+								[16, [0.6, 4]],
 							],
 						},
 					},
@@ -123,8 +125,8 @@ export default function useDrawRoute(isItineraryMode, map, geojson, id) {
 				},
 				paint: {
 					walking: {
-						'line-color': '#5B099F',
-						'line-width': 0, // I wasn't able to make a dasharray contour
+						'line-color': '#d3b2ee',
+						'line-width': 4, // I wasn't able to make a dasharray contour
 					},
 					distance: {
 						'line-width': 2,
