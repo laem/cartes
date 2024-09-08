@@ -352,19 +352,6 @@ export const TimelineTransportBlock = ({ transport }) => {
 						margin: 0 !important;
 					`}
 				/>
-			) : transport.move_type === 'Walk' &&
-			  transport.move?.mumo_type === 'foot' ? (
-				<Image
-					src={'/walking.svg'}
-					alt="Icône d'une personne qui marche"
-					width="100"
-					height="100"
-					css={`
-						height: 1.4rem !important;
-
-						margin: 0 !important;
-					`}
-				/>
 			) : transport.move_type === 'Cycle' ||
 			  (transport.move_type === 'Walk' &&
 					transport.move?.mumo_type === 'bike') ? (
@@ -377,6 +364,19 @@ export const TimelineTransportBlock = ({ transport }) => {
 						height: 1.6rem !important;
 						margin: -0.1rem 0 0 0 !important;
 						filter: invert(1);
+					`}
+				/>
+			) : transport.move_type === 'Walk' ||
+			  transport.move?.mumo_type === 'foot' ? (
+				<Image
+					src={'/walking.svg'}
+					alt="Icône d'une personne qui marche"
+					width="100"
+					height="100"
+					css={`
+						height: 1.4rem !important;
+
+						margin: 0 !important;
 					`}
 				/>
 			) : (
