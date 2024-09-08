@@ -133,7 +133,9 @@ export default function Content({
 		itinerary.isItineraryMode &&
 		(state.length === 0 || !state.find((step) => step?.choice || step?.key))
 
-	const beingSearchedIndex = state?.findIndex((step) => step.stepBeingSearched),
+	const beingSearchedIndex = state?.findIndex(
+			(step) => step?.stepBeingSearched
+		),
 		searchStepIndex =
 			beingSearchedIndex > -1 ? beingSearchedIndex : nullEntryInState
 
