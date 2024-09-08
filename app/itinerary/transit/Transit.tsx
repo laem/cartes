@@ -219,8 +219,8 @@ export const Line = ({
 				ref={animatedScrollRef}
 				css={`
 					position: absolute;
-					left: calc(1rem + ${left}%);
-					width: ${barWidth}%;
+					left: calc(0.6rem + ${left}%);
+					width: calc(${barWidth}% - 1rem);
 					top: 50%;
 					transform: translateY(-50%);
 				`}
