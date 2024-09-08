@@ -5,7 +5,7 @@ import Link from 'next/link'
 import TransitSummary from './transit/TransitSummary'
 
 export default function Timeline({ itinerary }) {
-	console.log('cyan', itinerary)
+	console.log('lightgreen timeline', itinerary)
 	const setSearchParams = useSetSearchParams()
 	const cyclingSeconds =
 		itinerary.routes.cycling?.features &&
@@ -61,7 +61,7 @@ export default function Timeline({ itinerary }) {
 							transports: [
 								{
 									seconds: walkingSeconds,
-									route_color: '#8f53c1',
+									route_color: '#ddb4ff',
 									route_text_color: 'white',
 									shortName: 'Marche',
 									move_type: 'Walk',
