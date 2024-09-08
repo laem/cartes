@@ -97,7 +97,7 @@ export default function useDrawItinerary(
 		return (
 			cyclingReady &&
 			routes.cycling &&
-			!routes.cycling.state === 'error' &&
+			routes.cycling.state !== 'error' &&
 			brouterResultToSegments(routes.cycling)
 		)
 	}, [routes?.cycling, cyclingReady])
