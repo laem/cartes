@@ -138,6 +138,12 @@ const Item = ({
 	const controls = useDragControls()
 	const [undoValue, setUndoValue] = useState(null)
 	const key = step?.key
+	const stepDefaultName =
+		index == 0
+			? 'une origine'
+			: index === state.length - 1
+			? 'une destination'
+			: 'cette étape'
 	return (
 		<Reorder.Item
 			key={key}
@@ -145,10 +151,13 @@ const Item = ({
 			dragListener={false}
 			dragControls={controls}
 			css={`
-				${beingSearched &&
-				`
+				${beingSearched
+					? `
 				background: yellow !important;
-				`}
+				`
+					: !step || !step.name
+					? `font-weight: 300; color: var(--darkColor); font-style: italic`
+					: ''}
 			`}
 		>
 			<div
@@ -176,8 +185,8 @@ const Item = ({
 					css="min-width: 6rem; cursor: text"
 				>
 					{beingSearched
-						? `Choisissez une ${index == 0 ? 'origine' : 'destination'}`
-						: step?.name || '...'}
+						? `Choisissez ${stepDefaultName}`
+						: step?.name || `Cliquez pour choisir ${stepDefaultName}`}
 				</span>
 				{undoValue != null && beingSearched && (
 					<span>
