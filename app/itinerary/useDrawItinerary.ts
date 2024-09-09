@@ -123,8 +123,16 @@ export default function useDrawItinerary(
 	useEffect(() => {
 		if (!map || !isItineraryMode) return
 
-		const awaitingNewStep =
-			state.length < 2 || state.some((step) => step == null)
+		const beingSearchedIndex = state.findIndex(
+			(step) => step?.stepBeingSearched
+		)
+		const stepIndexToEdit =
+				beingSearchedIndex > -1
+					? beingSearchedIndex
+					: state.length === 0
+					? 0
+					: state.findIndex((step) => step == null || !step.key),
+			awaitingNewStep = stepIndexToEdit != null
 		const onClick = (e) => {
 			const features =
 				points &&
@@ -147,9 +155,17 @@ export default function useDrawItinerary(
 				const allez = oldAllez
 					? oldAllez
 							.split('->')
-							.map((part) => (part === '' ? allezPart : part))
+							.map((part, index) =>
+								index === stepIndexToEdit ? allezPart : part
+							)
 							.join('->')
 					: allezPart + '->'
+				console.log('lightgreen new allez', allez, {
+					state,
+					beingSearchedIndex,
+					stepIndexToEdit,
+					awaitingNewStep,
+				})
 
 				setSearchParams({
 					allez,
@@ -179,7 +195,15 @@ export default function useDrawItinerary(
 			map.off('mousemove', onMouseMove)
 			map.getCanvas().style.cursor = ''
 		}
-	}, [map, serializedPoints, setSearchParams, isItineraryMode, oldAllez, mode])
+	}, [
+		map,
+		serializedPoints,
+		setSearchParams,
+		isItineraryMode,
+		oldAllez,
+		mode,
+		state,
+	])
 
 	// GeoJSON object to hold our measurement features
 
