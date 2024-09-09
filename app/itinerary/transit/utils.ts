@@ -25,6 +25,11 @@ export const humanDuration = (seconds) => {
 			interval: `tous les trois quarts d'heure`,
 			single: `trois quarts d'heure`,
 		}
+	if (minutes > 60 - 4 && minutes < 60 + 4)
+		return {
+			interval: `toutes les heures`,
+			single: `une heure`,
+		}
 
 	if (minutes < 60) {
 		const text = `${Math.round(minutes)} min`
