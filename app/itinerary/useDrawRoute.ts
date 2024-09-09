@@ -56,7 +56,7 @@ export default function useDrawRoute(isItineraryMode, map, geojson, id) {
 					'circle-stroke-color': [
 						'case',
 						['==', ['get', 'stepBeingSearched'], true],
-						'gold',
+						'yellow',
 						'#ffffff',
 					],
 					'circle-stroke-width': 3,
