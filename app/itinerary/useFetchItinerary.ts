@@ -139,9 +139,21 @@ export default function useFetchItinerary(
 			)
 			const json = await computeMotisTrip(lonLats[0], lonLats[1], date)
 
+			console.log('lightgreen motis', json)
+
 			if (json.state === 'error') return json
 
 			if (!json?.content) return null
+			const notTransitType = ['Walk', 'Cycle']
+			const { connections } = json.content
+			if (
+				connections.every((connection) =>
+					connection.transports.every((transport) =>
+						notTransitType.includes(transport.move_type)
+					)
+				)
+			)
+				return null
 			/*
 			return sections.map((el) => ({
 				type: 'Feature',
