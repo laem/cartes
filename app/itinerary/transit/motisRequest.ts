@@ -15,7 +15,8 @@ export const stamp = (date) => Math.round(new Date(date).getTime() / 1000)
 
 export const defaultRouteColor = '#d3b2ee'
 
-export const buildRequestBody = (start, destination, date) => {
+// For onTrip, see https://github.com/motis-project/motis/issues/471#issuecomment-2247099832
+export const buildRequestBody = (start, destination, date, onTrip = true) => {
 	const begin = Math.round(new Date(date).getTime() / 1000),
 		end = datePlusHours(date, 2) // TODO This parameter should probably be modulated depending on the transit offer in the simulation setup. Or, query for the whole day at once, and filter them in the UI
 
@@ -56,17 +57,22 @@ export const buildRequestBody = (start, destination, date) => {
 		destination: { type: 'Module', target: '/intermodal' },
 		content_type: 'IntermodalRoutingRequest',
 		content: {
-			start_type: 'IntermodalPretripStart',
-			start: {
-				position: start,
-				interval: {
-					begin,
-					end,
-				},
-				min_connection_count: 5,
-				extend_interval_earlier: true,
-				extend_interval_later: true,
-			},
+			start_type: onTrip ? 'IntermodalOntripStart' : 'IntermodalPretripStart',
+			start: onTrip
+				? {
+						position: start,
+						departure_time: begin,
+				  }
+				: {
+						position: start,
+						interval: {
+							begin,
+							end,
+						},
+						min_connection_count: 5,
+						extend_interval_earlier: true,
+						extend_interval_later: true,
+				  },
 			start_modes: symetricModes,
 			destination_type: 'InputPosition',
 			destination,

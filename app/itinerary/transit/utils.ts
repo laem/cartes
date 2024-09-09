@@ -1,7 +1,9 @@
 import { stamp } from './motisRequest'
 
 export const filterNextConnections = (connections, date) =>
-	connections.filter((connection) => connectionStart(connection) > stamp(date))
+	connections.filter(
+		(connection) => connectionStart(connection) > stamp(date) - 60 // motis ontrip requests should not be filtered out
+	)
 
 export const connectionStart = (connection) =>
 	connection.stops[0].departure.time
