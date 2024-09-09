@@ -1,6 +1,6 @@
 ---
 name: Un problème ? Une suggestion ? 
-about: ''
+about: 'Merci de contribuer à cartes.app :)'
 title: 'Décrivez brièvement votre problème, votre suggestion'
 labels: ''
 assignees: ''
