@@ -1,7 +1,7 @@
 ---
 name: Un problème ? Une suggestion ? 
-about: Décrivez brièvement votre problème, votre suggestion
-title: ''
+about: ''
+title: 'Décrivez brièvement votre problème, votre suggestion'
 labels: ''
 assignees: ''
 
