@@ -172,6 +172,23 @@ const BrouterModeContent = ({
 					}}
 				/>
 			)}
+			{mode === 'cycling' && data.safe && (
+				<p css="text-align: right">
+					<small>
+						{data.safe.safeRatio < 0.3
+							? '❗️'
+							: data.safe.safeRatio < 0.5
+							? '⚠️ '
+							: ''}{' '}
+						Trajet{' '}
+						<span css="text-decoration: underline; text-decoration-color: LightSeaGreen; text-decoration-thickness: 2px">
+							sécurisé
+						</span>{' '}
+						à {Math.round(data.safe.safeRatio * 100)}%{' '}
+						{data.safe.safeRatio < 0.5 ? 'seulement' : ''}
+					</small>
+				</p>
+			)}
 			{mode === 'cycling' && feature.geometry.coordinates[0] && (
 				<LightsWarning
 					longitude={feature.geometry.coordinates[0][0]}

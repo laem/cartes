@@ -93,16 +93,11 @@ export default function useDrawItinerary(
 	const cyclingReady =
 		(!mode || mode === 'cycling') && routes && routes.cycling !== 'loading'
 
-	const cyclingSegmentsGeojson = useMemo(() => {
-		return (
-			cyclingReady &&
-			routes.cycling &&
-			routes.cycling.state !== 'error' &&
-			brouterResultToSegments(routes.cycling)
-		)
-	}, [routes?.cycling, cyclingReady])
-
-	useDrawCyclingSegments(isItineraryMode, map, cyclingSegmentsGeojson)
+	useDrawCyclingSegments(
+		isItineraryMode,
+		map,
+		cyclingReady && routes.cycling.safe?.cyclingSegmentsGeojson
+	)
 	useDrawRoute(isItineraryMode, map, cyclingReady && routes.cycling, 'cycling')
 
 	useDrawRoute(
