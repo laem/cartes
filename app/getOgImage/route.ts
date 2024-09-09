@@ -11,9 +11,14 @@ export async function GET(request) {
 
 	// Find the og:image meta tag's content using querySelector
 	const ogImageTag = doc.querySelector('meta[property="og:image"]')
-	const ogImageContent = ogImageTag ? ogImageTag.getAttribute('content') : null
+	const ogImageContent = ogImageTag && ogImageTag.getAttribute('content')
 
 	console.log(ogImageContent)
 
-	return Response.json({ ogImageContent })
+	if (ogImageContent) return Response.json({ ogImageContent })
+
+	const firstImage = doc.querySelector('img')
+	if (firstImage)
+		return Response.json({ ogImageContent: firstImage.getAttribute('src') })
+	return Response.json({ ogImageContent: null })
 }
