@@ -1,5 +1,5 @@
 ---
-name: Custom issue template
+name: Un problème ? Une suggestion ? 
 about: Décrivez brièvement votre problème, votre suggestion
 title: ''
 labels: ''
