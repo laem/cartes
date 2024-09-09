@@ -256,15 +256,13 @@ export const Line = ({
 					`}
 				>
 					<small>{formatMotis(from)}</small>
-					{barWidth > 30 && (
-						<small
-							css={`
-								color: #555;
-							`}
-						>
-							{humanDuration(connection.seconds).single}
-						</small>
-					)}
+					<small
+						css={`
+							color: #555;
+						`}
+					>
+						{barWidth > 30 ? humanDuration(connection.seconds).single : ' - '}
+					</small>
 					<small>{formatMotis(to)}</small>
 				</div>
 			</div>
