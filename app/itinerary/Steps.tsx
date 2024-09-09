@@ -167,7 +167,6 @@ const Item = ({
 					}
 				`}
 			>
-				<Icon text={letterFromIndex(index)} />{' '}
 				<span
 					onClick={() => {
 						console.log('lightgreen allezpart', 'coucou')
@@ -179,17 +178,21 @@ const Item = ({
 							}))
 						)
 					}}
-					css={`
-						min-width: 6rem;
-						cursor: text;
-						${!step || !step.name
-							? `font-weight: 300; color: var(--darkColor); font-style: italic`
-							: ''}
-					`}
 				>
-					{beingSearched
-						? `Choisissez ${stepDefaultName}`
-						: step?.name || `Cliquez pour choisir ${stepDefaultName}`}
+					<Icon text={letterFromIndex(index)} />{' '}
+					<span
+						css={`
+							min-width: 6rem;
+							cursor: text;
+							${!step || !step.name
+								? `font-weight: 300; color: var(--darkColor); font-style: italic`
+								: ''}
+						`}
+					>
+						{beingSearched
+							? `Choisissez ${stepDefaultName}`
+							: step?.name || `Cliquez pour choisir ${stepDefaultName}`}
+					</span>
 				</span>
 				{undoValue != null && beingSearched && (
 					<span>
