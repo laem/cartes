@@ -19,6 +19,8 @@ export default function RouteRésumé({
 				text={
 					mode === 'cycling'
 						? "Calcul de l'itinéraire vélo"
+						: mode === 'car'
+						? "Calcul de l'itinéraire en voiture"
 						: "Calcul de l'itinéraire à pied"
 				}
 			/>
