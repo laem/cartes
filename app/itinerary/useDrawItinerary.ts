@@ -246,22 +246,29 @@ export const useMemoPointsFromState = (state) => {
 }
 	 */
 	const serializedPoints = geoSerializeSteps(state)
+	const stepBeingSearchedIndex = state.findIndex(
+		(step) => step && step.stepBeingSearched
+	)
 	const result = useMemo(() => {
 		const points = state
 			.map((step, index) => {
 				if (step == null || !(step.latitude && step.longitude)) return
-				const { longitude, latitude, key } = step
+				const { longitude, latitude, key, stepBeingSearched } = step
 				return {
 					type: 'Feature',
 					geometry: {
 						type: 'Point',
 						coordinates: [+longitude, +latitude],
 					},
-					properties: { key, letter: letterFromIndex(index) },
+					properties: {
+						key,
+						letter: letterFromIndex(index),
+						stepBeingSearched,
+					},
 				}
 			})
 			.filter(Boolean)
 		return [serializedPoints, points]
-	}, [serializedPoints])
+	}, [serializedPoints, stepBeingSearchedIndex])
 	return result
 }

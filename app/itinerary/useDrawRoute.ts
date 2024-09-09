@@ -53,7 +53,12 @@ export default function useDrawRoute(isItineraryMode, map, geojson, id) {
 				paint: {
 					'circle-radius': 12,
 					'circle-color': '#2988e6',
-					'circle-stroke-color': '#ffffff',
+					'circle-stroke-color': [
+						'case',
+						['==', ['get', 'stepBeingSearched'], true],
+						'gold',
+						'#ffffff',
+					],
 					'circle-stroke-width': 3,
 				},
 				filter: ['in', '$type', 'Point'],
