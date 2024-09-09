@@ -6,6 +6,8 @@ import { useMemoPointsFromState } from './useDrawItinerary'
 import { modeKeyFromQuery } from './Itinerary'
 import useSetSearchParams from '@/components/useSetSearchParams'
 import fetchValhalla from './fetchValhalla'
+import computeSafeRatio from '@/components/cycling/computeSafeRatio'
+import brouterResultToSegments from '@/components/cycling/brouterResultToSegments'
 
 export default function useFetchItinerary(
 	searchParams,
@@ -52,6 +54,14 @@ export default function useFetchItinerary(
 			try {
 				const json = await res.json()
 				if (!json.features) return
+				if (mode === 'cycling') {
+					const cyclingSegmentsGeojson = brouterResultToSegments(json)
+
+					const safeRatio = computeSafeRatio(cyclingSegmentsGeojson)
+					console.log('lightgreen safe', cyclingSegmentsGeojson, safeRatio)
+					return { ...json, safe: { cyclingSegmentsGeojson, safeRatio } }
+				}
+
 				return json
 			} catch (e) {
 				const text = await clone.text()
@@ -129,9 +139,21 @@ export default function useFetchItinerary(
 			)
 			const json = await computeMotisTrip(lonLats[0], lonLats[1], date)
 
+			console.log('lightgreen motis', json)
+
 			if (json.state === 'error') return json
 
 			if (!json?.content) return null
+			const notTransitType = ['Walk', 'Cycle']
+			const { connections } = json.content
+			if (
+				connections.every((connection) =>
+					connection.transports.every((transport) =>
+						notTransitType.includes(transport.move_type)
+					)
+				)
+			)
+				return null
 			/*
 			return sections.map((el) => ({
 				type: 'Feature',

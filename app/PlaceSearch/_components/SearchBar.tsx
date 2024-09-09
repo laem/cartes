@@ -1,4 +1,4 @@
-import { hasStepBeingSearched } from '@/app/itinerary/Steps'
+import { getHasStepBeingSearched } from '@/app/itinerary/Steps'
 import { InputStyle } from '@/components/InputStyle'
 import { close } from '@/components/icons/close'
 
@@ -33,7 +33,7 @@ export default ({
 					border: none;
 					margin-bottom: 0;
 					outline: 0.15rem solid
-						${hasStepBeingSearched(state) ? 'yellow' : 'var(--lightColor)'} !important;
+						${getHasStepBeingSearched(state) ? 'yellow' : 'var(--lightColor)'} !important;
 				}
 				position: relative;
 			`}

@@ -1,24 +1,23 @@
 import GeoInputOptions from '@/components/GeoInputOptions'
-import { getArrayIndex, replaceArrayIndex } from '@/components/utils/utils'
 import fetchPhoton from '@/components/fetchPhoton'
+import { buildAddress } from '@/components/osm/buildAddress'
+import ItineraryProposition from '@/components/placeSearch/ItineraryProposition'
+import detectSmartItinerary from '@/components/placeSearch/detectSmartItinerary'
+import { getArrayIndex, replaceArrayIndex } from '@/components/utils/utils'
 import { isIOS } from '@react-aria/utils'
 import { useEffect, useState } from 'react'
 import { useLocalStorage } from 'usehooks-ts'
 import { buildAllezPart, setAllezPart } from '../SetDestination'
 import { encodePlace } from '../utils'
+import { FromHereLink } from './_components/FromHereLink'
+import { Geolocate } from './_components/Geolocate'
 import LogoCarteApp from './_components/LogoCarteApp'
 import SearchBar from './_components/SearchBar'
+import SearchHereButton from './_components/SearchResults/SearchHereButton'
 import SearchHistory from './_components/SearchResults/SearchHistory'
 import SearchLoader from './_components/SearchResults/SearchLoader'
 import SearchNoResults from './_components/SearchResults/SearchNoResults'
-import SearchHereButton from './_components/SearchResults/SearchHereButton'
 import SearchResultsContainer from './_components/SearchResults/SearchResultsContainer'
-import { Geolocate } from './_components/Geolocate'
-import { FromHereLink } from './_components/FromHereLink'
-import { buildAddress } from '@/components/osm/buildAddress'
-import detectSmartItinerary from '@/components/placeSearch/detectSmartItinerary'
-import Link from 'next/link'
-import ItineraryProposition from '@/components/placeSearch/ItineraryProposition'
 
 /* I'm  not sure of the interest to attache `results` to each state step.
  * It could be cached across the app. No need to re-query photon for identical
@@ -36,7 +35,12 @@ export default function PlaceSearch({
 	geolocation,
 	placeholder,
 }) {
+	console.log('lightgreen stepIndex', stepIndex, state)
+	console.log('lightgreen autofocus', autoFocus)
+	// This component stores its state in the... state array, hence needs an
+	// index to store its current state in the right array index
 	if (stepIndex == null) throw new Error('Step index necessary')
+
 	const [isLocalSearch, setIsLocalSearch] = useState(true)
 	const [searchHistory, setSearchHistory] = useLocalStorage('searchHistory', [])
 	const [itineraryProposition, setItineraryProposition] = useState()
@@ -89,6 +93,8 @@ export default function PlaceSearch({
 					? { results: null }
 					: {}),
 				...(searchValue === '' ? {} : { inputValue: searchValue }),
+				stepBeingSearched: oldStateEntry?.stepBeingSearched,
+				key: oldStateEntry?.key,
 			}
 			const safeStateEntry =
 				Object.keys(stateEntry).length > 0 ? stateEntry : null

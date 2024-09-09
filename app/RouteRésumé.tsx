@@ -56,7 +56,7 @@ export default function RouteRésumé({
 					color: var(--darkestColor);
 					line-height: 1.4rem;
 					border: ${mode === 'cycling'
-						? '4px solid var(--lightColor)'
+						? '4px solid #8f53c1'
 						: '4px dotted #8f53c1'};
 					margin-top: 1.4rem;
 					border-radius: 0.5rem;
@@ -171,6 +171,23 @@ const BrouterModeContent = ({
 						setBikeRouteProfile,
 					}}
 				/>
+			)}
+			{mode === 'cycling' && data.safe && (
+				<p css="text-align: right">
+					<small>
+						{data.safe.safeRatio < 0.3
+							? '❗️'
+							: data.safe.safeRatio < 0.5
+							? '⚠️ '
+							: ''}{' '}
+						Trajet{' '}
+						<span css="text-decoration: underline; text-decoration-color: LightSeaGreen; text-decoration-thickness: 2px">
+							sécurisé
+						</span>{' '}
+						à {Math.round(data.safe.safeRatio * 100)}%{' '}
+						{data.safe.safeRatio < 0.5 ? 'seulement' : ''}
+					</small>
+				</p>
 			)}
 			{mode === 'cycling' && feature.geometry.coordinates[0] && (
 				<LightsWarning

@@ -6,9 +6,22 @@ import Image from 'next/image'
 import Link from 'next/link'
 import { useState } from 'react'
 import { removeStatePart, setAllezPart } from '../SetDestination'
+import { replaceArrayIndex } from '@/components/utils/utils'
 
-export default function Steps({ state, setDisableDrag = () => null }) {
-	const steps = state
+export default function Steps({
+	setState,
+	state,
+	setDisableDrag = () => null,
+}) {
+	console.log('lightgreen state', state)
+
+	// We're displaying the steps selector with minimum 2 steps
+	const steps =
+		!state || state.length === 0
+			? [null, null]
+			: state.length === 1
+			? [...state, null]
+			: state
 
 	const setSearchParams = useSetSearchParams()
 
@@ -61,8 +74,9 @@ export default function Steps({ state, setDisableDrag = () => null }) {
 							index,
 							step,
 							setSearchParams,
-							beingSearched: isStepBeingSearched(steps, index),
+							beingSearched: step?.stepBeingSearched,
 							state,
+							setState,
 							setDisableDrag,
 							allez,
 						}}
@@ -117,12 +131,19 @@ const Item = ({
 	setSearchParams,
 	beingSearched,
 	state,
+	setState,
 	setDisableDrag,
 	allez,
 }) => {
 	const controls = useDragControls()
 	const [undoValue, setUndoValue] = useState(null)
 	const key = step?.key
+	const stepDefaultName =
+		index == 0
+			? 'une origine'
+			: state.length === 0 || index === state.length - 1
+			? 'une destination'
+			: 'cette étape'
 	return (
 		<Reorder.Item
 			key={key}
@@ -149,25 +170,33 @@ const Item = ({
 				<Icon text={letterFromIndex(index)} />{' '}
 				<span
 					onClick={() => {
-						step && setUndoValue(step.key)
-						setSearchParams({
-							allez: setAllezPart(step.key, state, ''),
-						})
+						console.log('lightgreen allezpart', 'coucou')
+						step && setUndoValue(step)
+						setState(
+							state.map((step, mapIndex) => ({
+								...(step || {}),
+								stepBeingSearched: mapIndex === index ? true : false,
+							}))
+						)
 					}}
-					css="min-width: 6rem; cursor: text"
+					css={`
+						min-width: 6rem;
+						cursor: text;
+						${!step || !step.name
+							? `font-weight: 300; color: var(--darkColor); font-style: italic`
+							: ''}
+					`}
 				>
 					{beingSearched
-						? `Choisissez une ${index == 0 ? 'origine' : 'destination'}`
-						: step?.name || '...'}
+						? `Choisissez ${stepDefaultName}`
+						: step?.name || `Cliquez pour choisir ${stepDefaultName}`}
 				</span>
 				{undoValue != null && beingSearched && (
 					<span>
 						{' '}
 						<button
 							onClick={() =>
-								setSearchParams({
-									allez: setAllezPart(step.key, state, undoValue),
-								})
+								setState(replaceArrayIndex(state, index, undoValue))
 							}
 						>
 							<Image
@@ -313,17 +342,6 @@ const Dots = () => (
 
 export const letterFromIndex = (index) => String.fromCharCode(65 + (index % 26))
 
-const isStepBeingSearched = (steps, index) => {
-	if (steps.length === 2 && steps.every((step) => !step || !step.key))
-		return index === 1
-	const foundSearched = steps.findIndex(
-		(step) => step && !step.key && step.inputValue
-	)
-	if (foundSearched > -1) return foundSearched === index
-
-	return steps.findIndex((step) => step === null) === index
-}
-
-export const hasStepBeingSearched = (steps) => {
-	return steps.some((step) => step === null || (!step.key && step.inputValue))
+export const getHasStepBeingSearched = (state) => {
+	return state.some((step) => step && step.stepBeingSearched)
 }
