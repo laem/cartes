@@ -91,7 +91,10 @@ export default function useDrawItinerary(
 	useDrawRoute(isItineraryMode, map, distanceGeojson, 'distance')
 
 	const cyclingReady =
-		(!mode || mode === 'cycling') && routes && routes.cycling !== 'loading'
+		(!mode || mode === 'cycling') &&
+		routes &&
+		routes.cycling &&
+		routes.cycling !== 'loading'
 
 	useDrawCyclingSegments(
 		isItineraryMode,

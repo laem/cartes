@@ -141,7 +141,7 @@ const Item = ({
 	const stepDefaultName =
 		index == 0
 			? 'une origine'
-			: index === state.length - 1
+			: state.length === 0 || index === state.length - 1
 			? 'une destination'
 			: 'cette étape'
 	return (
@@ -151,13 +151,10 @@ const Item = ({
 			dragListener={false}
 			dragControls={controls}
 			css={`
-				${beingSearched
-					? `
-				background: yellow !important;
+				${beingSearched &&
 				`
-					: !step || !step.name
-					? `font-weight: 300; color: var(--darkColor); font-style: italic`
-					: ''}
+				background: yellow !important;
+				`}
 			`}
 		>
 			<div
@@ -182,7 +179,13 @@ const Item = ({
 							}))
 						)
 					}}
-					css="min-width: 6rem; cursor: text"
+					css={`
+						min-width: 6rem;
+						cursor: text;
+						${!step || !step.name
+							? `font-weight: 300; color: var(--darkColor); font-style: italic`
+							: ''}
+					`}
 				>
 					{beingSearched
 						? `Choisissez ${stepDefaultName}`
