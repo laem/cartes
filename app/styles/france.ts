@@ -38,7 +38,13 @@ export default function franceStyle(key) {
 				url: 'pmtiles://' + pmtilesServerUrl + '/trees.pmtiles',
 			},
 		},
-		layers,
+		layers:
+			//	layers ||
+			layers.filter((layer) =>
+				['border', 'label', 'river'].find((term) =>
+					layer.id.toLowerCase().includes(term)
+				)
+			),
 		glyphs: getFetchUrlBase() + '/fonts/glyphs/{fontstack}/{range}.pbf',
 		sprite: getFetchUrlBase() + '/sprite/sprite',
 		//glyphs: `https://api.maptiler.com/fonts/{fontstack}/{range}.pbf?key=${key}`,
@@ -1954,11 +1960,7 @@ const layers = [
 			],
 			'line-dasharray': [1, 1],
 		},
-		filter: [
-			'all',
-			['in', 'admin_level', 3, 4, 5, 6, 7, 8, 9, 10],
-			['==', 'maritime', 0],
-		],
+		filter: ['all', ['in', 'admin_level', 3, 4, 5, 6, 7, 8, 9, 10]],
 	},
 	{
 		id: 'Disputed border',
@@ -1983,12 +1985,7 @@ const layers = [
 			},
 			'line-dasharray': [2, 2],
 		},
-		filter: [
-			'all',
-			['==', 'admin_level', 2],
-			['==', 'disputed', 1],
-			['==', 'maritime', 0],
-		],
+		filter: ['all', ['==', 'admin_level', 2], ['==', 'disputed', 1]],
 	},
 	{
 		id: 'Country border',
@@ -2013,12 +2010,7 @@ const layers = [
 				],
 			},
 		},
-		filter: [
-			'all',
-			['==', 'admin_level', 2],
-			['==', 'disputed', 0],
-			['==', 'maritime', 0],
-		],
+		filter: ['all', ['==', 'admin_level', 2], ['==', 'disputed', 0]],
 	},
 	{
 		id: 'River labels',
