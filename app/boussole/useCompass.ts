@@ -49,10 +49,10 @@ export default function useCompass() {
 					if (response === 'granted') {
 						window.addEventListener('deviceorientation', handler, true)
 					} else {
-						alert('has to be allowed!')
+						console.error('Device orientation was not allowed!')
 					}
 				})
-				.catch(() => alert('not supported'))
+				.catch(() => console.error('Device orientation not supported'))
 		}
 	}
 
