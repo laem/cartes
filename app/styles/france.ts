@@ -37,6 +37,15 @@ export default function franceStyle(key) {
 				type: 'vector',
 				url: 'pmtiles://' + pmtilesServerUrl + '/trees.pmtiles',
 			},
+			'gel-raster-dem': {
+				tiles: [
+					'pmtiles://https://data.source.coop/smartmaps/gel/gel.pmtiles/{z}/{x}/{y}.webp',
+				],
+				type: 'raster-dem',
+				tileSize: 512,
+				minzoom: 2,
+				maxzoom: 12,
+			},
 		},
 		layers,
 		glyphs: getFetchUrlBase() + '/fonts/glyphs/{fontstack}/{range}.pbf',
@@ -277,6 +286,19 @@ const layers = [
 		},
 		metadata: {},
 		filter: ['in', 'class', 'wetland'],
+	},
+	{
+		id: 'Hillshade',
+		type: 'hillshade',
+		source: 'gel-raster-dem',
+		layout: {
+			visibility: 'visible',
+		},
+		paint: {
+			'hillshade-accent-color': 'hsl(51, 30%, 79%)',
+			'hillshade-shadow-color': 'hsl(0, 0%, 50%)',
+			'hillshade-highlight-color': 'hsl(0, 0%, 83%)',
+		},
 	},
 	{
 		id: 'Industrial',

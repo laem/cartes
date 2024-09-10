@@ -14,9 +14,14 @@ export default function natureStyle(
 				url: `https://api.maptiler.com/tiles/contours/tiles.json?key=${key}`,
 				type: 'vector',
 			},
-			'terrain-rgb': {
-				url: `https://api.maptiler.com/tiles/terrain-rgb-v2/tiles.json?key=${key}`,
+			'gel-raster-dem': {
+				tiles: [
+					'pmtiles://https://data.source.coop/smartmaps/gel/gel.pmtiles/{z}/{x}/{y}.webp',
+				],
 				type: 'raster-dem',
+				tileSize: 512,
+				minzoom: 2,
+				maxzoom: 12,
 			},
 			maptiler_planet: {
 				url: `https://api.maptiler.com/tiles/v3/tiles.json?key=${key}`,
@@ -340,7 +345,7 @@ export default function natureStyle(
 			{
 				id: 'Hillshade',
 				type: 'hillshade',
-				source: 'terrain-rgb',
+				source: 'gel-raster-dem',
 				layout: {
 					visibility: 'visible',
 				},
