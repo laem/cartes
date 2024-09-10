@@ -13,7 +13,7 @@ export default function useDrawTransport(map, features, drawKey, hasItinerary) {
 	const pointsId = id + '-points'
 
 	useEffect(() => {
-		if (!map) return
+		if (!map || !features?.length) return
 		if (hasItinerary) console.log('plopouille', hasItinerary, linesId)
 		try {
 			const hasItineraryOpacity = 0.4
@@ -189,7 +189,7 @@ export default function useDrawTransport(map, features, drawKey, hasItinerary) {
 		}
 
 		return () => {
-			if (!map) return
+			if (!map || !features?.length) return
 			map.off('click', linesId, onClickRoutes)
 			map.off('click', pointsId, onClickStop)
 			safeRemove(map)([linesId, pointsId], [id])
