@@ -43,7 +43,10 @@ export default function useAddMap(
 	})
 	const { latitude, longitude } = geolocation
 
-	const ipGeolocationCenter = useMemo(() => [longitude, latitude], [longitude, latitude])
+	const ipGeolocationCenter = useMemo(
+		() => [longitude, latitude],
+		[longitude, latitude]
+	)
 
 	useEffect(() => {
 		if (!map) return

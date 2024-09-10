@@ -5,7 +5,11 @@ import { useEffect, useMemo, useRef, useState } from 'react'
 import { sortGares } from './gares'
 
 import MapButtons from '@/components/MapButtons'
-import { goodIconSize } from '@/components/mapUtils'
+import {
+	computeMapPadding,
+	goodIconSize,
+	useComputeMapPadding,
+} from '@/components/mapUtils'
 import useSetSearchParams from '@/components/useSetSearchParams'
 import useAddMap from './effects/useAddMap'
 import useDrawQuickSearchFeatures from './effects/useDrawQuickSearchFeatures'
@@ -79,7 +83,6 @@ export default function Map({
 	trackedSnap,
 	panoramaxPosition,
 }) {
-	const isMobile = useMediaQuery('(max-width: 800px)')
 	const mapContainerRef = useRef(null)
 	const stepsLength = state.filter((step) => step?.key).length
 	const [autoPitchPreference, setAutoPitchPreference] = useLocalStorage(
@@ -121,29 +124,13 @@ export default function Map({
 		}
 	}, [setTempStyle, transportStopData])
 
-	const { height } = useDimensions()
+	const padding = useComputeMapPadding(trackedSnap, searchParams)
 
-	const sideSheetProbablySmall = !isMobile && !Object.keys(searchParams).length
 	useEffect(() => {
 		if (!map) return
 
-		if (isMobile) {
-			const snapValue = snapPoints[trackedSnap],
-				bottom =
-					snapValue < 0
-						? height + snapValue
-						: snapValue < 1
-						? height * snapValue
-						: snapValue
-			map.flyTo({ padding: { bottom } })
-		} else {
-			map.flyTo({
-				padding: {
-					left: sideSheetProbablySmall ? 0 : 400, //  rough estimate of the footprint in pixel of the left sheet on desktop; should be made dynamic if it ever gets resizable (a good idea)
-				},
-			})
-		}
-	}, [map, isMobile, trackedSnap, sideSheetProbablySmall])
+		map.flyTo({ padding })
+	}, [map, padding])
 
 	useImageSearch(
 		map,
@@ -169,10 +156,10 @@ export default function Map({
 		const bbox = agency.bbox
 
 		const mapLibreBBox = [
-			[bbox[2], bbox[1]],
-			[bbox[0], bbox[3]],
+			[bbox[0], bbox[1]],
+			[bbox[2], bbox[3]],
 		]
-		map.fitBounds(mapLibreBBox)
+		map.fitBounds(mapLibreBBox, { padding })
 	}, [map, agency])
 
 	useDrawElectionClusterResults(map, styleKey, searchParams.filtre)

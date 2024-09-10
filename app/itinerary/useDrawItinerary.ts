@@ -28,13 +28,14 @@ export default function useDrawItinerary(
 	const mode = modeKeyFromQuery(searchParams.mode)
 	const desktop = useMediaQuery('(min-width: 800px)')
 
+	//TODO check if this fails with the new step.stepBeingSearched
 	useEffect(() => {
 		if (!map) return
 		if (state.length === 2 && state[0] == null && state[1] !== null) {
 			map.flyTo({ zoom: zoom - 2, padding: { bottom: desktop ? 0 : 400 } })
 		}
 	}, [searchParams.allez, map, desktop])
-	//TODO
+
 	const selectedConnection = searchParams.choix
 
 	//const [motisTrips, setMotisTrips] = useState(null)
