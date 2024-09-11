@@ -5,8 +5,8 @@ import Image from 'next/image'
 import { useEffect, useState } from 'react'
 
 export default function MapCompassArrow({ geolocate, map }) {
-	const [compass] = useCompass()
 	const [where, setWhere] = useState()
+	const [compass] = useCompass(where)
 	const [marker, setMarker] = useState()
 
 	useEffect(() => {
