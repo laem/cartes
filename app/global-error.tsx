@@ -11,8 +11,15 @@ export default function GlobalError({
 		// global-error must include html and body tags
 		<html>
 			<body>
-				<h1>Oups, une erreur est survenue :(</h1>
+				<h1
+					css={`
+						background: blue;
+					`}
+				>
+					Oups, une erreur est survenue :(
+				</h1>
 				<button onClick={() => reset()}>Réessayer (au cas où)</button>
+				<p>Voici l'erreur {error && error.digest}</p>
 			</body>
 		</html>
 	)
