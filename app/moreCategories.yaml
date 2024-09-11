@@ -335,7 +335,7 @@
     - shopping
   query: '[shop=mall]'
   icon: shop
-- name: Casier à Colis
+- name: Casier à colis
   category: Commerces
   dictionary:
     - locker
