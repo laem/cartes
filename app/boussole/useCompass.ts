@@ -30,7 +30,9 @@ export default function useCompass() {
 		const geolocationIsUndefined = navigator.geolocation == null
 		if (geolocationIsUndefined) return
 
-		navigator.geolocation.getCurrentPosition(locationHandler)
+		navigator.geolocation.getCurrentPosition(locationHandler, (err) =>
+			alert(`ERROR(${err.code}): ${err.message}`)
+		)
 
 		if (!isIOS) {
 			window.addEventListener('deviceorientationabsolute', handler, true)
