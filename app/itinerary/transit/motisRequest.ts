@@ -1,7 +1,7 @@
-import { lightenColor } from '@/components/utils/colors'
-import transportIcon from './transportIcon'
-import { distance, point } from '@turf/turf'
 import { gtfsServerUrl, motisServerUrl } from '@/app/serverUrls'
+import { lightenColor } from '@/components/utils/colors'
+import { distance, point } from '@turf/turf'
+import transportIcon from './transportIcon'
 
 const datePlusHours = (date, hours) => {
 	const today = new Date(date)
@@ -16,7 +16,14 @@ export const stamp = (date) => Math.round(new Date(date).getTime() / 1000)
 export const defaultRouteColor = '#d3b2ee'
 
 // For onTrip, see https://github.com/motis-project/motis/issues/471#issuecomment-2247099832
-export const buildRequestBody = (start, destination, date, onTrip = true) => {
+export const buildRequestBody = (start, destination, date) => {
+	const now = nowStamp(),
+		dateStamp = stamp(date),
+		difference = dateStamp - now,
+		threshold = 60 * 60 //... seconds = 1h
+
+	const onTrip = difference < threshold
+
 	const begin = Math.round(new Date(date).getTime() / 1000),
 		end = datePlusHours(date, 2) // TODO This parameter should probably be modulated depending on the transit offer in the simulation setup. Or, query for the whole day at once, and filter them in the UI
 
