@@ -135,6 +135,7 @@ const TransitTimeline = ({
 				overflow-x: scroll;
 				> ul {
 					width: ${((range * 0.6) / quickest) * 100}%;
+					min-width: 100%;
 				}
 			`}
 		>
