@@ -6,6 +6,8 @@ import { DialogButton } from '../UI'
 import { useInterval } from 'usehooks-ts'
 import Link from 'next/link'
 import Image from 'next/image'
+import { nowStamp, stamp } from './transit/motisRequest'
+import calendarIcon from '@/public/calendar.svg'
 
 export const initialDate = (type = 'date') => {
 	const stringDate = new Date().toLocaleString('fr')
@@ -17,54 +19,96 @@ export const initialDate = (type = 'date') => {
 	return day + 'T' + hour.slice(0, -3)
 }
 
+export const isDateNow = (date) => {
+	const now = nowStamp()
+	const dateStamp = stamp(date)
+
+	const difference = now - dateStamp
+
+	return difference < 60 * 10 // 10 minutes
+}
+
 // Can be type date (day + hour) or type day
 export default function DateSelector({ date, type = 'date' }) {
+	const [notNow, setNotNow] = useState(false)
 	const defaultDate = initialDate(type)
 	const [localDate, setLocalDate] = useState(date || defaultDate)
 	const setSearchParams = useSetSearchParams()
+
+	const hideDate = !notNow && isDateNow(date)
+
 	return (
 		<div
 			css={`
 				display: flex;
 				align-items: center;
-				> input {
-					margin-right: 0.4rem !important;
-					font-size: 110%;
-					height: 1.4rem;
-					padding: 0 0.2rem;
-					color: var(--darkerColor);
-					border: 2px solid var(--darkColor);
-					border-radius: 0.15rem;
-				}
+				justify-content: end;
 			`}
 		>
-			<input
-				type={type === 'date' ? 'datetime-local' : 'date'}
-				id="date"
-				name="date"
-				value={localDate}
-				min={defaultDate}
-				onChange={(e) => {
-					const value = e.target.value
-					// changing e.g. the weekday starting with the 0 diigt with the keyboard will make value '' on firefox, LOL
-					if (value !== '') setLocalDate(e.target.value)
-				}}
-			/>
-			{date !== localDate && (
-				<DialogButton
-					onClick={() =>
-						setSearchParams(
-							type === 'date'
-								? { date: encodeDate(localDate) }
-								: { day: encodeDate(localDate) }
-						)
-					}
+			{' '}
+			{hideDate ? (
+				<span
 					css={`
-						font-size: 100%;
+						display: flex;
+						align-items: center;
+						button {
+							margin: 0;
+							padding: 0;
+						}
 					`}
 				>
-					OK
-				</DialogButton>
+					Maintenant{' '}
+					<button
+						onClick={() => setNotNow(true)}
+						title="Changer le moment du départ "
+					>
+						<Image
+							src={calendarIcon}
+							alt="Icône d'un agenda"
+							css="width: 1.6rem; height: auto; vertical-align: sub; margin-left: .2rem"
+						/>
+					</button>
+				</span>
+			) : (
+				<>
+					<input
+						css={`
+							margin-right: 0.4rem !important;
+							font-size: 110%;
+							height: 1.4rem;
+							padding: 0 0.2rem;
+							color: var(--darkerColor);
+							border: 2px solid var(--darkColor);
+							border-radius: 0.15rem;
+						`}
+						type={type === 'date' ? 'datetime-local' : 'date'}
+						id="date"
+						name="date"
+						value={localDate}
+						min={defaultDate}
+						onChange={(e) => {
+							const value = e.target.value
+							// changing e.g. the weekday starting with the 0 diigt with the keyboard will make value '' on firefox, LOL
+							if (value !== '') setLocalDate(e.target.value)
+						}}
+					/>
+					{date !== localDate && (
+						<DialogButton
+							onClick={() =>
+								setSearchParams(
+									type === 'date'
+										? { date: encodeDate(localDate) }
+										: { day: encodeDate(localDate) }
+								)
+							}
+							css={`
+								font-size: 100%;
+							`}
+						>
+							OK
+						</DialogButton>
+					)}
+				</>
 			)}
 			{type === 'date' && (
 				<UpdateDate
@@ -79,12 +123,16 @@ export default function DateSelector({ date, type = 'date' }) {
 }
 
 const newTimestamp = () => new Date().getTime() / 1000
+
 const UpdateDate = ({ date, updateDate }) => {
 	const [now, setNow] = useState(newTimestamp())
 
-	useInterval(() => {
-		setNow(newTimestamp())
-	}, 5 * 1000)
+	useInterval(
+		() => {
+			setNow(newTimestamp())
+		},
+		5 * 1000 // every 5 seconds
+	)
 	const isOutdated = now - new Date(date).getTime() / 1000 > 10
 
 	if (!isOutdated) return null

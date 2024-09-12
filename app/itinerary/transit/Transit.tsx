@@ -67,7 +67,7 @@ export default function Transit({ itinerary, searchParams }) {
 				}
 			`}
 		>
-			<DateSelector date={data.date} />
+			<DateSelector date={date} />
 			<div
 				css={`
 					p {
