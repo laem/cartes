@@ -18,6 +18,12 @@ export default function useDrawRightClickMarker(map, geocodedClickedPoint) {
 			.setLngLat([lon, lat])
 			.addTo(map)
 
+		// Apple Maps has a nice haptic vibration feedback.
+		// https://il.ly/tech/vibrate-mobile-phone-web-vibration-api#vibration-api-browser-support
+		// I don't think this is much supported. Test Android Firefox, Bromite,
+		// Lineageos navigator, iOS firefox, iOS safari : no one works.
+		// navigator.vibrate(200)
+
 		return () => {
 			marker.remove()
 		}
