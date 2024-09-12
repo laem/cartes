@@ -262,7 +262,9 @@ export const Line = ({
 							color: #555;
 						`}
 					>
-						{barWidth > 30 ? humanDuration(connection.seconds).single : ' - '}
+						{to - from > 10 * 60 // 10 minutes TODO this should be calculated : does it fit ?? show '-' and title=
+							? humanDuration(connection.seconds).single
+							: ' - '}
 					</small>
 					<small>{formatMotis(to)}</small>
 				</div>
