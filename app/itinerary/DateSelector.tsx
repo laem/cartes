@@ -41,6 +41,7 @@ export default function DateSelector({ date, type = 'date' }) {
 	return (
 		<div
 			css={`
+				margin-top: 0.2rem;
 				display: flex;
 				align-items: center;
 				justify-content: end;

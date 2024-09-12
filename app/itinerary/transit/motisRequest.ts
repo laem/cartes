@@ -25,10 +25,10 @@ export const buildRequestBody = (start, destination, date) => {
 		difference = dateStamp - now,
 		threshold = 60 * 60 //... seconds = 1h
 
-	const onTrip = difference < threshold
+	const onTrip = true || difference < threshold // I'm afraid the onTrip mode, though way quicker, could result in only one result in some cases. We should switch to preTrip in thoses cases, to search again more thoroughly
 
 	const begin = Math.round(new Date(date).getTime() / 1000),
-		end = datePlusHours(date, 2) // TODO This parameter should probably be modulated depending on the transit offer in the simulation setup. Or, query for the whole day at once, and filter them in the UI
+		end = datePlusHours(date, 1) // TODO This parameter should probably be modulated depending on the transit offer in the simulation setup. Or, query for the whole day at once, and filter them in the UI
 
 	console.log(
 		'lightgreen motis time range',

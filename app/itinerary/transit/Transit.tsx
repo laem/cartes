@@ -27,8 +27,30 @@ import {
  * decisions are stabilized. We don't have many users yet */
 
 export default function Transit({ itinerary, searchParams }) {
-	const data = itinerary.routes.transit,
-		date = itinerary.date
+	const date = itinerary.date
+
+	return (
+		<div
+			css={`
+				margin-top: 0.4rem;
+				ul {
+					list-style-type: none;
+				}
+				input {
+					margin: 0 0 0 auto;
+					display: block;
+				}
+			`}
+		>
+			<DateSelector date={date} />
+			<TransitContent {...{ itinerary, searchParams, date }} />
+		</div>
+	)
+}
+
+const TransitContent = ({ itinerary, searchParams, date }) => {
+	const data = itinerary.routes.transit
+	if (!data) return
 	if (data.state === 'loading') return <TransitLoader />
 	if (data.state === 'error') return <NoTransit reason={data.reason} />
 
@@ -53,21 +75,8 @@ export default function Transit({ itinerary, searchParams }) {
 				(connection) => connection.stops.slice(-1)[0].arrival.schedule_time
 			)
 		)
-
 	return (
-		<div
-			css={`
-				margin-top: 0.4rem;
-				ul {
-					list-style-type: none;
-				}
-				input {
-					margin: 0 0 0 auto;
-					display: block;
-				}
-			`}
-		>
-			<DateSelector date={date} />
+		<section>
 			<div
 				css={`
 					p {
@@ -88,7 +97,7 @@ export default function Transit({ itinerary, searchParams }) {
 					to: lastStop,
 				}}
 			/>
-		</div>
+		</section>
 	)
 }
 
