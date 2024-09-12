@@ -22,6 +22,7 @@ import {
 	formatMotis,
 	humanDuration,
 } from './utils'
+import TransitOptions from './TransitOptions'
 
 /* This is a megacomponent. Don't worry, it'll stay like this until the UX
  * decisions are stabilized. We don't have many users yet */
@@ -43,6 +44,7 @@ export default function Transit({ itinerary, searchParams }) {
 			`}
 		>
 			<DateSelector date={date} />
+			<TransitOptions />
 			<TransitContent {...{ itinerary, searchParams, date }} />
 		</div>
 	)
