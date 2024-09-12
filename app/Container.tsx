@@ -250,6 +250,7 @@ export default function Container({
 							containerRef,
 							trackedSnap,
 							setTrackedSnap,
+							geocodedClickedPoint,
 						}}
 					/>
 				</ContentWrapper>
