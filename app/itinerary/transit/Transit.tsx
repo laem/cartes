@@ -57,7 +57,7 @@ export default function Transit({ itinerary, searchParams }) {
 	return (
 		<div
 			css={`
-				margin-top: 1rem;
+				margin-top: 0.4rem;
 				ul {
 					list-style-type: none;
 				}
