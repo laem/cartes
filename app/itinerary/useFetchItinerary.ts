@@ -144,16 +144,19 @@ export default function useFetchItinerary(
 			if (json.state === 'error') return json
 
 			if (!json?.content) return null
-			const notTransitType = ['Walk', 'Cycle']
+			const notTransitType = ['Walk', 'Cycle', 'Car']
 			const { connections } = json.content
-			if (
-				connections.every((connection) =>
-					connection.transports.every((transport) =>
+			const transitConnections = connections.filter(
+				(connection) =>
+					!connection.transports.every((transport) =>
 						notTransitType.includes(transport.move_type)
 					)
-				)
 			)
-				return null
+			if (transitConnections.length === 0)
+				return {
+					state: 'error',
+					reason: 'Pas de transport en commun trouvé :/',
+				}
 			/*
 			return sections.map((el) => ({
 				type: 'Feature',
@@ -161,7 +164,7 @@ export default function useFetchItinerary(
 				geometry: { coordinates: el.geojson.coordinates, type: 'LineString' },
 			}))
 			*/
-			return json.content
+			return { ...json.content, connections: transitConnections }
 		}
 		//TODO fails is 3rd point is closer to 1st than 2nd, use reduce that sums
 		const itineraryDistance = distance(points[0], points.slice(-1)[0])
