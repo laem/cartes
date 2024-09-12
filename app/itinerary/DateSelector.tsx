@@ -23,8 +23,9 @@ export const isDateNow = (date) => {
 	const now = nowStamp()
 	const dateStamp = stamp(date)
 
-	const difference = now - dateStamp
+	const difference = dateStamp - now
 
+	console.log('lightgreen diff in minutes', difference / 60)
 	return difference < 60 * 10 // 10 minutes
 }
 
