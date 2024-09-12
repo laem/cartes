@@ -30,6 +30,12 @@ export const buildRequestBody = (start, destination, date) => {
 	const begin = Math.round(new Date(date).getTime() / 1000),
 		end = datePlusHours(date, 2) // TODO This parameter should probably be modulated depending on the transit offer in the simulation setup. Or, query for the whole day at once, and filter them in the UI
 
+	console.log(
+		'lightgreen motis time range',
+		new Date(begin * 1000),
+		new Date(end * 1000)
+	)
+
 	const requestDistance = distance(
 		point([start.lng, start.lat]),
 		point([destination.lng, destination.lat])
@@ -92,7 +98,15 @@ export const buildRequestBody = (start, destination, date) => {
 							begin,
 							end,
 						},
-						min_connection_count: 5,
+						min_connection_count: 1,
+						/* I do not understand these options. E.g. in Rennes, from 16h30 to
+						 * 18h30, setting this and min_connection_count to 5 leads to results
+						 * at 23h30 ! Way too much.
+						 * https://motis-project.de/docs/features/routing.html#intermodal-and-timetable-routing-from-door-to-door
+						 * Also this issue : https://github.com/motis-project/motis/issues/443#issuecomment-1951297984
+						 * Is 5 "pareto optimal" connections asking much ? I don't understand
+						 * what it is. Hence we set it to 1.
+						 */
 						extend_interval_earlier: true,
 						extend_interval_later: true,
 				  },
