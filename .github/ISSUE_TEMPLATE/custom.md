@@ -14,5 +14,7 @@ Les cartes sont complexes, la France et le monde sont vastes : votre problème a
 Collez le lien vers l'état de cartes.app qui vous pose problème ou qui pourrait bénéficier de votre idée. 
 
 Faites aussi l'effort, au mieux, d'intégrer une capture d'écran de votre problème. 
+Quel navigateur utilisez-vous ?
+Bureau ou mobile ?
 
 Merci : )
