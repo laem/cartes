@@ -31,6 +31,8 @@ const translateBasics = (value: string) => {
 	return found || value
 }
 
+// This is only a complement to the above imported set of translations. 
+// This list could someday be backported by whoever is motivated to make the contribution :) 
 export const tagNameCorrespondance = (key: string) => {
 	const found = {
 		alt_name:'Autre nom',
