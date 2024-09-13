@@ -274,7 +274,7 @@ export const Line = ({
 							color: #555;
 						`}
 					>
-						{to - from > 10 * 60 // 10 minutes TODO this should be calculated : does it fit ?? show '-' and title=
+						{to - from > 25 * 60 // 10 minutes TODO this should be calculated : does it fit ?? show '-' and title=
 							? humanDuration(connection.seconds).single
 							: ' - '}
 					</small>
