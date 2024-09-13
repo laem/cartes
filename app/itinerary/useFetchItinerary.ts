@@ -110,7 +110,7 @@ export default function useFetchItinerary(
 		fetchRoutes()
 	}, [points, setRoutes, bikeRouteProfile, mode])
 
-	const { correspondances } = searchParams
+	const { correspondances, debut } = searchParams
 	useEffect(() => {
 		if (points.length < 2) {
 			setRoutes(null)
@@ -141,6 +141,7 @@ export default function useFetchItinerary(
 
 			const json = await computeMotisTrip(lonLats[0], lonLats[1], date, {
 				correspondances,
+				debut,
 			})
 
 			console.log('lightgreen motis', json)
@@ -177,7 +178,7 @@ export default function useFetchItinerary(
 		fetchTransitRoute(points, itineraryDistance, date).then((transit) =>
 			setRoutes((routes) => ({ ...routes, transit }))
 		)
-	}, [points, setRoutes, date, correspondances])
+	}, [points, setRoutes, date, correspondances, debut])
 
 	const resetItinerary = () =>
 		setSearchParams({ allez: undefined, mode: undefined, choix: undefined })

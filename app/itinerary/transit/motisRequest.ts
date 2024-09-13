@@ -20,13 +20,13 @@ const hours = (num) => num * 60 * 60,
 
 // For onTrip, see https://github.com/motis-project/motis/issues/471#issuecomment-2247099832
 export const buildRequestBody = (start, destination, date, options) => {
-	const { correspondances } = options
+	const { correspondances, debut } = options
 	const now = nowStamp(),
 		dateStamp = stamp(date),
 		difference = dateStamp - now,
 		threshold = 60 * 60 //... seconds = 1h
 
-	const onTrip = true || difference < threshold // I'm afraid the onTrip mode, though way quicker, could result in only one result in some cases. We should switch to preTrip in thoses cases, to search again more thoroughly
+	const onTrip = !debut && difference < threshold // I'm afraid the onTrip mode, though way quicker, could result in only one result in some cases. We should switch to preTrip in thoses cases, to search again more thoroughly
 
 	const begin = Math.round(new Date(date).getTime() / 1000),
 		end = datePlusHours(date, 1) // TODO This parameter should probably be modulated depending on the transit offer in the simulation setup. Or, query for the whole day at once, and filter them in the UI
@@ -65,23 +65,44 @@ export const buildRequestBody = (start, destination, date, options) => {
 	})
 
 	// symmetric because used for start and destination for now
-	const symmetricModes = [
-		{
-			mode_type: 'FootPPR',
-			mode: {
-				search_options: {
-					profile: 'distance_only',
-					duration_limit: minutes(15),
+	const symmetricModes = !debut
+		? [
+				{
+					mode_type: 'FootPPR',
+					mode: {
+						search_options: {
+							profile: 'distance_only',
+							duration_limit: minutes(15),
+						},
+					},
 				},
-			},
-		},
-		bikeTrainSearchDistance > 0 && {
-			mode_type: 'Bike',
-			mode: {
-				max_duration: bikeTrainSearchDistance,
-			},
-		},
-	].filter(Boolean)
+				bikeTrainSearchDistance > 0 && {
+					mode_type: 'Bike',
+					mode: {
+						max_duration: bikeTrainSearchDistance,
+					},
+				},
+		  ].filter(Boolean)
+		: debut === 'marche'
+		? [
+				{
+					mode_type: 'FootPPR',
+					mode: {
+						search_options: {
+							profile: 'distance_only',
+							duration_limit: minutes(15),
+						},
+					},
+				},
+		  ]
+		: [
+				{
+					mode_type: 'Car',
+					mode: {
+						max_duration: minutes(15),
+					},
+				},
+		  ]
 
 	const body = {
 		destination: { type: 'Module', target: '/intermodal' },
