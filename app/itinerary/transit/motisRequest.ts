@@ -19,7 +19,8 @@ const hours = (num) => num * 60 * 60,
 	minutes = (num) => num * 60
 
 // For onTrip, see https://github.com/motis-project/motis/issues/471#issuecomment-2247099832
-export const buildRequestBody = (start, destination, date) => {
+export const buildRequestBody = (start, destination, date, options) => {
+	const { correspondances } = options
 	const now = nowStamp(),
 		dateStamp = stamp(date),
 		difference = dateStamp - now,
@@ -117,6 +118,7 @@ export const buildRequestBody = (start, destination, date) => {
 			search_type: 'Default',
 			search_dir: 'Forward',
 			router: '',
+			max_transfers: correspondances == null ? -1 : +correspondances,
 		},
 	}
 	return body
@@ -126,8 +128,8 @@ const errorCorrespondance = {
 	'access: timestamp not in schedule':
 		'Notre serveur a eu un problème de mise à jour des données de transport en commun :-/',
 }
-export const computeMotisTrip = async (start, destination, date) => {
-	const body = buildRequestBody(start, destination, date)
+export const computeMotisTrip = async (start, destination, date, options) => {
+	const body = buildRequestBody(start, destination, date, options)
 
 	try {
 		const request = await fetch(motisServerUrl, {
