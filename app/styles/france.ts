@@ -365,6 +365,48 @@ const layers = [
 		filter: ['all', ['in', 'class', 'retail']],
 	},
 	{
+		id: 'School',
+		type: 'fill',
+		source: 'openmaptiles',
+		'source-layer': 'landuse',
+		minzoom: 9,
+		maxzoom: 22,
+		layout: { visibility: 'visible' },
+		paint: {
+			'fill-color': 'hsl(194,52%,94%)',
+			'fill-opacity': {
+				stops: [
+					[9, 0.25],
+					[16, 1],
+				],
+			},
+			'fill-antialias': true,
+		},
+		metadata: {},
+		filter: ['all', ['in', 'class', 'college', 'school', 'university']],
+	},
+	{
+		id: 'Hospital',
+		type: 'fill',
+		source: 'openmaptiles',
+		'source-layer': 'landuse',
+		minzoom: 9,
+		maxzoom: 22,
+		layout: { visibility: 'visible' },
+		paint: {
+			'fill-color': 'hsl(12,63%,94%)',
+			'fill-opacity': {
+				stops: [
+					[9, 0.25],
+					[16, 1],
+				],
+			},
+			'fill-antialias': true,
+		},
+		metadata: {},
+		filter: ['all', ['==', 'class', 'hospital']],
+	},
+	{
 		id: 'Grass',
 		type: 'fill',
 		source: 'openmaptiles',
@@ -474,27 +516,6 @@ const layers = [
 		},
 	},
 	{
-		id: 'Hospital',
-		type: 'fill',
-		source: 'openmaptiles',
-		'source-layer': 'landuse',
-		minzoom: 9,
-		maxzoom: 22,
-		layout: { visibility: 'visible' },
-		paint: {
-			'fill-color': 'hsl(12,63%,94%)',
-			'fill-opacity': {
-				stops: [
-					[9, 0.25],
-					[16, 1],
-				],
-			},
-			'fill-antialias': true,
-		},
-		metadata: {},
-		filter: ['all', ['==', 'class', 'hospital']],
-	},
-	{
 		id: 'Stadium',
 		type: 'fill',
 		source: 'openmaptiles',
@@ -514,27 +535,6 @@ const layers = [
 		},
 		metadata: {},
 		filter: ['all', ['in', 'class', 'pitch', 'stadium', 'playground']],
-	},
-	{
-		id: 'School',
-		type: 'fill',
-		source: 'openmaptiles',
-		'source-layer': 'landuse',
-		minzoom: 9,
-		maxzoom: 22,
-		layout: { visibility: 'visible' },
-		paint: {
-			'fill-color': 'hsl(194,52%,94%)',
-			'fill-opacity': {
-				stops: [
-					[9, 0.25],
-					[16, 1],
-				],
-			},
-			'fill-antialias': true,
-		},
-		metadata: {},
-		filter: ['all', ['in', 'class', 'college', 'school', 'university']],
 	},
 	{
 		id: 'River tunnel',
