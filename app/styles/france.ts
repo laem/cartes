@@ -2694,7 +2694,7 @@ const layers = [
 		source: 'openmaptiles',
 		'source-layer': 'park',
 		minzoom: 9,
-		maxzoom: 16,
+		maxzoom: 22,
 		layout: {
 			'text-font': ['Roboto Italic', 'Noto Sans Italic'],
 			'text-size': ['interpolate', ['linear'], ['zoom'], 9, 11, 14, 14],
