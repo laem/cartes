@@ -41,7 +41,8 @@ const Article = styled.article`
 		max-width: 90%;
 		max-height: 30rem;
 		display: block;
-		margin: 1rem auto;
+		margin: 4vh auto;
+		position: relative !important;
 	}
 
 	@media (max-width: 800px) {
@@ -55,6 +56,7 @@ const Article = styled.article`
 		}
 	}
 	img + em,
+	.image-container + em,
 	video + p em {
 		font-size: 90%;
 		line-height: 1rem;
@@ -62,7 +64,7 @@ const Article = styled.article`
 		max-width: 70%;
 		margin: 0 auto;
 		display: block;
-		margin-bottom: 0.8rem;
+		margin-bottom: 1.8rem;
 		@media (max-width: 800px) {
 			line-height: 1.3rem;
 		}

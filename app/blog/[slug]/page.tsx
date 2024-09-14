@@ -7,6 +7,8 @@ import Link from 'next/link'
 import Contribution from '../Contribution'
 import { dateCool, getLastEdit } from '../utils'
 import OtherArticles from '../OtherArticles'
+import { mdxComponents } from '../mdxComponents'
+import { useMDXComponent } from 'next-contentlayer2/hooks'
 
 export const generateMetadata = async ({ params }) => {
 	const post = allArticles.find(
@@ -31,7 +33,7 @@ export default async function Post({ params }: Props) {
 		(post) => post._raw.flattenedPath === params.slug
 	)
 
-	const Content = getMDXComponent(post.body.code)
+	const MDXContent = useMDXComponent(post.body.code)
 	const lastEdit = await getLastEdit(params.slug)
 
 	const sameEditDate =
@@ -70,7 +72,7 @@ export default async function Post({ params }: Props) {
 				</small>
 				<hr />
 			</header>
-			<Content />
+			<MDXContent components={mdxComponents} />
 			<Contribution slug={params.slug} />
 			<OtherArticles excludeUrl={post.url} />
 		</Article>
