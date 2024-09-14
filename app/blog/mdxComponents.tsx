@@ -3,6 +3,7 @@ import Image from 'next/image'
 
 export const mdxComponents: MDXComponents = {
 	img: ({ src, alt }) => {
+		if (src.startsWith('http')) return <img src={src} alt={alt} />
 		const computedSrc = src.startsWith('/') ? src : '/blog-images/' + src
 		return (
 			<div
