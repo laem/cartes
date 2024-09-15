@@ -47,7 +47,7 @@ export const OtherArticlesList = styled.div`
 		padding-left: 0;
 		li {
 			background: white;
-			height: 8rem;
+			height: 10rem;
 			width: 14rem;
 			min-width: 14rem;
 			margin: 0 0.6rem;
@@ -58,7 +58,7 @@ export const OtherArticlesList = styled.div`
 			h3 {
 				margin-top: 0.6rem;
 				margin-bottom: 1rem;
-				height: 3rem;
+				height: 5rem;
 			}
 			small {
 				max-height: 6rem;

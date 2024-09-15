@@ -47,6 +47,7 @@
 	},
 	"dependencies": {
 		"@adobe/css-tools": "^4.3.1",
+		"@atproto/api": "^0.13.7",
 		"@babel/runtime": "^7.22.6",
 		"@dwayneparton/geojson-to-gpx": "^0.2.0",
 		"@mapbox/polyline": "^1.2.1",

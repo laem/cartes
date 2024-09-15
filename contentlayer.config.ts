@@ -13,6 +13,7 @@ export const Article = defineDocumentType(() => ({
 		description: { type: 'string', required: true },
 		image: { type: 'string', required: false },
 		tags: { type: 'list', of: { type: 'string' }, required: false },
+		bluesky: { type: 'string', required: false },
 	},
 	computedFields: {
 		url: {
