@@ -3,7 +3,8 @@ import Map from './Map'
 import css from '@/components/css/convertToJs'
 export default function SafeMap(props) {
 	const supported = isWebglSupported()
-	if (!supported)
+	if (supported === null) return
+	if (supported === false)
 		return (
 			<section
 				style={css`
