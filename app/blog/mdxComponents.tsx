@@ -6,7 +6,7 @@ export const mdxComponents: MDXComponents = {
 		if (src.startsWith('http')) return <img src={src} alt={alt} />
 		const computedSrc = src.startsWith('/') ? src : '/blog-images/' + src
 		return (
-			<div
+			<span
 				className="image-container"
 				style={css`
 					position: relative;
@@ -15,7 +15,7 @@ export const mdxComponents: MDXComponents = {
 				`}
 			>
 				<Image src={computedSrc} alt={alt} layout="fill" objectFit="contain" />
-			</div>
+			</span>
 		)
 	},
 }
