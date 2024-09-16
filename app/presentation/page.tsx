@@ -68,17 +68,18 @@ export default function () {
 			</p>
 			<p>
 				Cette main-mise de Google sur l'éco-système Android qui représente 75 %
-				des téléphones en France est inquiétante et anti-concurrentielle. Côté
-				iPhone, Apple Maps joue le même rôle, iOS étant cadenassé par Apple pour
-				inciter voir obliger les développeurs d'applications à passer par leur
-				offre logicielle privée.
+				des téléphones en France est inquiétante et pourrait être jugée
+				anti-concurrentielle. Côté iPhone, Apple Maps joue le même rôle, iOS
+				étant cadenassé par Apple pour inciter voir obliger les développeurs
+				d'applications à passer par leur offre logicielle privée.
 			</p>
 			<p>
-				Cartes est une nouvelle <em>maps</em>,{' '}
+				Cartes est{' '}
 				<a href="https://cartes.app/blog/maps-cartes">
-					faite autrement, française et souveraine
+					une nouvelle <em>maps</em>
 				</a>
-				.
+				, faite autrement. Française et{' '}
+				<a href="/blog/souverainete-cartographique">souveraine</a>.
 			</p>
 
 			<CTA>Tester Cartes</CTA>
@@ -89,17 +90,17 @@ export default function () {
 				carte, mettre à jour la parcelle de son jardin.
 			</p>
 			<p>
-				Cartes peut être vu comme le pendant Web des superbes applications{' '}
+				Cartes peut être vu comme le pendant Web des belles applications{' '}
 				<a href="https://organicmaps.app/">Organic Maps</a> et{' '}
 				<a href="https://osmand.net/">OsmAnd</a>.
 			</p>
 			<p>
-				Ces applications nous proposent des cartes hors lignes fiables à
-				utiliser par exemple en rando loin d'une 4G puissante, ou en ville avec
-				l'esprit apaisé, non connecté. C'est essentiel, mais souvent, on désire
-				en parallèle aussi voir les photos d'un lieu touristique, la devanture
-				d'un commerce, les derniers horaires du bus qui nous amène au boulot ou
-				des liens avec d'autres sources de données diverses.
+				Ces applications nous proposent des cartes hors ligne fiables pour une
+				rando loin d'une 4G puissante, ou pour se déconnecter en pleine ville.
+				C'est essentiel mais souvent, on désire en parallèle aussi voir les
+				photos d'un lieu touristique, la devanture d'un commerce, les derniers
+				horaires du bus qui nous amène au boulot ou des liens avec d'autres
+				sources de données diverses.
 			</p>
 			<p>
 				Cartes ne s'installe pas, elle s'utilise : il suffit d'ouvrir n'importe
@@ -107,13 +108,15 @@ export default function () {
 				<a href="/">
 					<strong>cartes.app</strong>
 				</a>{' '}
-				dans la barre d'adresse. Vos amis n'auront pas besoin d'installer une
-				nième application pour ouvrir le lien du restaurant où vous comptez vous
-				retrouver ce soir !
+				dans la barre d'adresse. Plus besoin du Play Store, de l'App Store, du
+				Galaxy Store ou encore du Huawei store : vos amis n'auront pas besoin
+				d'installer une nième application pour ouvrir le lien du restaurant où
+				vous comptez vous retrouver ce soir !
 			</p>
 			<p>
-				OpenStreetMap, c'est la fondation sur laquelle Cartes est construite,
-				mais de nombreuses autres sources de données y sont intégrées.{' '}
+				<a href="https://www.openstreetmap.org/">OpenStreetMap</a>, c'est la
+				fondation sur laquelle Cartes est construite, mais de nombreuses autres
+				sources de données y sont intégrées.
 			</p>
 			<h2>Répondre à l'urgence écologique et politique</h2>
 			<p>
@@ -122,7 +125,7 @@ export default function () {
 			</p>
 			<p>
 				L'équation est donc simple : bannir au plus vite la voiture individuelle
-				thermique qui n'est pas remplie avec plus de 3 passagers.
+				thermique quand elle n'est pas remplie avec plus de 3 passagers.
 			</p>
 			<p>
 				La voiture, c'est une destruction du climat, mais aussi un poste de
@@ -140,7 +143,7 @@ export default function () {
 			</p>
 			<p>
 				L'interface de calcul d'itinéraires de Cartes acte ce principe, et
-				proposera en premier lieu des moyens de transport écologiques :
+				propose en premier lieu des moyens de transport écologiques :
 			</p>
 			<ul
 				style={css`
@@ -179,12 +182,12 @@ export default function () {
 				alt="Un échantillon de logos de réseaux de transports français"
 			/>
 			<p>
-				Cartes proposera une interface nationale unifiée d'information voyageur
+				Cartes propose une interface nationale unifiée d'information voyageur
 				pour les transports en commun français, du bus scolaire au TGV. Elle est
 				lancée en pilote sur la région Bretagne / Pays de la Loire, et grâce au
-				service public{' '}
-				<a href="https://transport.data.gouv.fr">transport.data.gouv.fr</a>, se
-				déploiera prochainement sur l'ensemble de l'hexagone.
+				service public transport.data.gouv.fr, elle se déploie progressivement
+				sur l'ensemble de l'hexagone.{' '}
+				<a href="/transport-en-commun">Suivez le déploiement ici</a>.
 			</p>
 			<p>
 				Que vous viviez ou visitiez Portsall, Menton, Saint-Étienne ou Verneuil
@@ -193,7 +196,7 @@ export default function () {
 				<a href="/">
 					<strong>cartes.app</strong>
 				</a>
-				, se géolocaliser et activer le mode transport.
+				, vous géolocaliser et activer le mode transport.
 			</p>
 			<h2>Intégrez une carte à votre site en 30 secondes</h2>
 
@@ -230,6 +233,11 @@ export default function () {
 				contenu de l'attribut source ci-dessus par l'URL de votre lieu sur
 				cartes.app.
 			</p>
+			<p>
+				Votre lieu manque d'informations ? Téléphone, description, type de
+				cuisine, photo : en deux clics, ajoutez ces informations sur{' '}
+				<a href="https://www.openstreetmap.fr/contribuer/">OpenStreetMap</a>.
+			</p>
 			<h2>Un projet entièrement gratuit, libre et open-source</h2>
 			<p>
 				Tout le code de Cartes est ouvert sur la plateforme{' '}
@@ -241,6 +249,10 @@ export default function () {
 			<p>
 				Des dizaines de contributeurs ont déjà aidé à améliorer l'outil.{' '}
 				<a href="https://github.com/laem/cartes/issues">Pourquoi pas vous ?</a>.
+			</p>
+			<p>
+				✉️ Pour nous contacter directement, c'est{' '}
+				<a href="https://kont.me/contact">par ici</a>.
 			</p>
 			<CTA>Tester Cartes</CTA>
 		</PresentationWrapper>
