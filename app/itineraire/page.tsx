@@ -1,6 +1,8 @@
 import css from '@/components/css/convertToJs'
 import Link from 'next/link'
 import { PresentationWrapper } from '../presentation/UI'
+import CTA from '@/app/presentation/CTA'
+import StaticPageHeader from '@/components/StaticPageHeader'
 
 const title = 'Calculer un itinéraire en France'
 const description = `
@@ -16,10 +18,12 @@ export const metadata: Metadata = {
 export default function () {
 	return (
 		<PresentationWrapper>
+			<StaticPageHeader small={true} />
 			<header>
 				<h1>{title}</h1>
 				<p>{description}</p>
 			</header>
+			<CTA>Calculer un itinéraire</CTA>
 			<section
 				style={css`
 					margin: 2rem 0;

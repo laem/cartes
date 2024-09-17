@@ -7,6 +7,7 @@ import regionsAoms from './regionsAoms.yaml'
 import { Ul } from './UI'
 import { sortBy } from '@/components/utils/utils'
 import { gtfsServerUrl } from '../serverUrls'
+import StaticPageHeader from '@/components/StaticPageHeader'
 
 const title = 'Transports en commun'
 const description = `
@@ -79,6 +80,7 @@ export default async function () {
 
 	return (
 		<PresentationWrapper>
+			<StaticPageHeader small={true} />
 			<header>
 				<h1>{title}</h1>
 				<p>{description}</p>
