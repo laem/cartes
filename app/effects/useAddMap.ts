@@ -14,6 +14,12 @@ import { Protocol as CartesProtocol } from '@/components/map/CartesProtocol.ts'
  * */
 
 const defaultSky = {
+	'sky-color': '#199EF3',
+	'sky-horizon-blend': 0.5,
+	'horizon-color': '#ffffff',
+	'horizon-fog-blend': 0.5,
+	'fog-color': '#0000ff',
+	'fog-ground-blend': 0.5,
 	'atmosphere-blend': ['interpolate', ['linear'], ['zoom'], 0, 0.5, 7, 0],
 }
 
