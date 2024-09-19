@@ -77,8 +77,8 @@ export default function TransitOptions({ searchParams }) {
 					<button>
 						{correspondances == null ? (
 							'∞ corresp.'
-						) : correspondances === 0 ? (
-							'direct uniquement'
+						) : correspondances == 0 ? (
+							'direct'
 						) : (
 							<span>{correspondances} corresp.</span>
 						)}
