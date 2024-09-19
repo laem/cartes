@@ -78,6 +78,7 @@ export default function Container({
 	const [geolocation, setGeolocation] = useState(null)
 
 	const [safeStyleKey, setSafeStyleKey] = useState(null)
+	console.log('lightpink ssk', safeStyleKey)
 	const [tempStyle, setTempStyle] = useState(null)
 	const [localStorageStyleKey] = useLocalStorage('style', null)
 	const styleKey =
