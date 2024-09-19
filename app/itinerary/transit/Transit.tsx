@@ -1,4 +1,6 @@
-import { isOverflowX, isWhiteColor } from '@/components/css/utils'
+import { isOverflowX } from '@/components/css/utils'
+import DetailsButton from '@/components/transit/DetailsButton'
+import TransitInstructions from '@/components/transit/TransitInstructions'
 import useSetSearchParams from '@/components/useSetSearchParams'
 import { findContrastedTextColor } from '@/components/utils/colors'
 import Image from 'next/image'
@@ -13,6 +15,7 @@ import {
 	TransitScopeLimit,
 } from './NoTransitMessages'
 import TransitLoader from './TransitLoader'
+import TransitOptions from './TransitOptions'
 import TransportMoveBlock from './TransportMoveBlock'
 import findBestConnection from './findBestConnection'
 import {
@@ -22,7 +25,6 @@ import {
 	formatMotis,
 	humanDuration,
 } from './utils'
-import TransitOptions from './TransitOptions'
 
 /* This is a megacomponent. Don't worry, it'll stay like this until the UX
  * decisions are stabilized. We don't have many users yet */
@@ -60,6 +62,7 @@ const TransitContent = ({ itinerary, searchParams, date }) => {
 		return <TransitScopeLimit />
 
 	const nextConnections = filterNextConnections(data.connections, date)
+
 	console.log('lightgreen ontrip', data.connections, nextConnections)
 	if (nextConnections.length < 1) return <NoMoreTransitToday date={date} />
 
@@ -77,6 +80,8 @@ const TransitContent = ({ itinerary, searchParams, date }) => {
 				(connection) => connection.stops.slice(-1)[0].arrival.schedule_time
 			)
 		)
+
+	const chosen = searchParams.details === 'oui' && searchParams.choix
 	return (
 		<section>
 			<div
@@ -88,17 +93,24 @@ const TransitContent = ({ itinerary, searchParams, date }) => {
 			>
 				<LateWarning firstDate={firstDate} date={data.date} />
 			</div>
-			{bestConnection && <BestConnection bestConnection={bestConnection} />}
+			{!chosen ? (
+				<section>
+					{bestConnection && <BestConnection bestConnection={bestConnection} />}
 
-			<TransitTimeline
-				connections={nextConnections}
-				date={data.date}
-				selectedConnection={searchParams.choix || 0}
-				connectionsTimeRange={{
-					from: firstStop,
-					to: lastStop,
-				}}
-			/>
+					<TransitTimeline
+						connections={nextConnections}
+						date={data.date}
+						choix={searchParams.choix}
+						selectedConnection={searchParams.choix || 0}
+						connectionsTimeRange={{
+							from: firstStop,
+							to: lastStop,
+						}}
+					/>
+				</section>
+			) : (
+				<TransitInstructions connection={nextConnections[chosen]} />
+			)}
 		</section>
 	)
 }
@@ -108,6 +120,7 @@ const TransitTimeline = ({
 	date,
 	connectionsTimeRange,
 	selectedConnection,
+	choix,
 }) => {
 	const setSearchParams = useSetSearchParams()
 
@@ -150,6 +163,7 @@ const TransitTimeline = ({
 						selected={+selectedConnection === index}
 						setSelectedConnection={(choix) => setSearchParams({ choix })}
 						index={index}
+						choix={choix}
 						connectionsTimeRange={connectionsTimeRange}
 					/>
 				))}
@@ -166,6 +180,7 @@ const Connection = ({
 	date,
 	setSelectedConnection,
 	index,
+	choix,
 	connectionsTimeRange,
 	selected,
 }) => {
@@ -180,6 +195,7 @@ const Connection = ({
 			`}
 			onClick={() => setSelectedConnection(index)}
 		>
+			{' '}
 			<Line
 				connectionsTimeRange={connectionsTimeRange}
 				transports={connection.transports}
@@ -188,6 +204,9 @@ const Connection = ({
 					connectionStart(connection),
 					connectionEnd(connection),
 				]}
+				choix={choix}
+				index={index}
+				componentMode="transit"
 			/>
 		</li>
 	)
@@ -198,8 +217,12 @@ export const Line = ({
 	connection,
 	connectionRange: [from, to],
 	transports,
+	choix,
+	index,
+	componentMode,
 }) => {
-	console.log('lightgreen line', transports)
+	const setSearchParams = useSetSearchParams()
+	console.log('lightgreen line', transports, setSearchParams)
 	const { from: absoluteFrom, to: absoluteTo } = connectionsTimeRange
 	const length = absoluteTo - absoluteFrom
 
@@ -260,6 +283,26 @@ export const Line = ({
 						</li>
 					))}
 				</ul>
+
+				{componentMode === 'transit' &&
+					((!choix && index === 0) || choix == index) && (
+						<div
+							css={`
+								position: absolute;
+								right: -3rem;
+								top: 50%;
+								transform: translateY(-50%);
+								font-size: 200%;
+								a {
+									text-decoration: none;
+								}
+							`}
+						>
+							<DetailsButton
+								link={setSearchParams({ choix, details: 'oui' }, true)}
+							/>
+						</div>
+					)}
 				<div
 					css={`
 						margin-top: 0.1rem;
@@ -291,12 +334,7 @@ export const Line = ({
 export const TimelineTransportBlock = ({ transport }) => {
 	console.log('lightgreen TimelineTransportBlock', transport)
 	const [constraint, setConstraint] = useState('none')
-	const background = transport.route_color,
-		color = transport.route_text_color
-
-	const textColor =
-		(color && (color !== background ? color : null)) ||
-		findContrastedTextColor(background, true)
+	const background = transport.route_color
 
 	const ref = useRef<HTMLDivElement>(null)
 	const { width = 0, height = 0 } = useResizeObserver({
@@ -306,7 +344,6 @@ export const TimelineTransportBlock = ({ transport }) => {
 	const isOverflow = isOverflowX(ref.current)
 
 	const displayImage = constraint === 'none'
-	const name = transport.shortName?.toUpperCase().replace(/TRAM\s?/g, 'T')
 
 	useEffect(() => {
 		if (isOverflow)
@@ -352,7 +389,7 @@ export const TimelineTransportBlock = ({ transport }) => {
 			} ${transport.route_long_name || ''}`}
 		>
 			{transport.move?.name ? (
-				<TransportMoveBlock {...{ transport, background, textColor, name }} />
+				<TransportMoveBlock transport={transport} />
 			) : transport.move_type === 'Walk' &&
 			  transport.move?.mumo_type === 'car' ? (
 				<Image
