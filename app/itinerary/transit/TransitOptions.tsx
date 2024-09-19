@@ -7,6 +7,8 @@ import startIcon from '@/public/start.svg'
 
 export default function TransitOptions({ searchParams }) {
 	const { correspondances, debut } = searchParams
+	// marche-10min
+	// vélo-45min
 	const setSearchParams = useSetSearchParams()
 
 	return (
@@ -43,20 +45,23 @@ export default function TransitOptions({ searchParams }) {
 						src={startIcon}
 						alt="Icône d'une flèche représentant le départ"
 					/>
-					<button>
-						{debut == null || debut === 'marche' ? (
-							<Image
-								src={'/walking.svg'}
-								alt="Icône de quelqu'un qui marche"
-								width="10"
-								height="10"
-							/>
-						) : debut === 'voiture' ? (
-							<Image src={carIcon} alt="Icône d'une voiture" />
-						) : (
-							<span>quoi ?</span>
-						)}
-					</button>
+					<div>
+						<button>
+							{debut == null || debut === 'marche' ? (
+								<Image
+									src={'/walking.svg'}
+									alt="Icône de quelqu'un qui marche"
+									width="10"
+									height="10"
+								/>
+							) : debut === 'voiture' ? (
+								<Image src={carIcon} alt="Icône d'une voiture" />
+							) : (
+								<span>quoi ?</span>
+							)}
+						</button>
+						<button></button>
+					</div>
 				</Button>
 				<Button
 					onClick={() =>
