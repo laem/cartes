@@ -46,6 +46,7 @@ export default function TransitInstructions({ connection }) {
 			</section>
 			<section
 				css={`
+					margin: 0.6rem 0.4rem;
 					ol {
 						list-style-type: none;
 					}
@@ -64,6 +65,7 @@ export default function TransitInstructions({ connection }) {
 
 							console.log('lightpurple', stops)
 
+							const halts = stops.length > 2 && stops.slice(1, -1)
 							return (
 								<li
 									key={transport.route_id}
@@ -72,90 +74,133 @@ export default function TransitInstructions({ connection }) {
 										> span {
 											border-top-right-radius: 0.3rem;
 											border-bottom-right-radius: 0.3rem;
+											padding: 0.1rem 0.4rem;
+											margin-bottom: 0.4rem;
+											img {
+												height: 1rem;
+											}
 										}
-										margin-bottom: 0.6rem;
+										margin-bottom: 1.6rem;
+										padding-bottom: 0.4rem;
+										position: relative;
 									`}
 								>
 									<TransportMoveBlock transport={transport} />
-									<details
-										css={`
-											summary {
-												padding-left: 0.5rem;
-												color: var(--darkColor);
-												list-style-type: none;
-											}
-											padding-bottom: 0.1rem;
-										`}
-									>
-										<summary>
-											{stops.length} arrêts,{' '}
-											<span>
-												{
-													humanDuration(
-														stops.slice(-1)[0].arrival.time -
-															stops[0].departure.time
-													).single
-												}
-											</span>
-										</summary>
-										<ol
+									<Station
+										{...{
+											transport,
+											stop: stops[0],
+										}}
+									/>
+									{halts && (
+										<details
 											css={`
-												margin-left: 1rem;
-												li {
-													line-height: 1.2rem;
-													display: flex;
-													justify-content: space-between;
-													align-items: center;
-													> span {
-														display: flex;
-														align-items: center;
-														gap: 0.4rem;
-													}
-													> small {
-														color: gray;
-														margin-right: 3rem;
-													}
+												summary {
+													padding-left: 0.5rem;
+													color: var(--darkColor);
+													list-style-type: none;
 												}
 											`}
 										>
-											{stops.map((stop, index) => (
-												<li key={stop.station.id}>
-													<span>
-														<StationDisc color={transport.route_color} />{' '}
-														<small>{stop.station.name}</small>
-													</span>
-													{index > 0 && (
-														<small>
-															{
-																humanDuration(
-																	-stops[0].departure.time + stop.arrival.time
-																).single
-															}
-														</small>
-													)}
-												</li>
-											))}
-										</ol>
-									</details>
+											<summary>
+												{halts.length} arrêts,{' '}
+												<span>
+													{
+														humanDuration(
+															stops.slice(-1)[0].arrival.time -
+																stops[0].departure.time
+														).single
+													}
+												</span>
+											</summary>
+											<ol
+												css={`
+													margin-bottom: 0.6rem;
+												`}
+											>
+												{halts.map((stop, index) => (
+													<li key={stop.station.id}>
+														<Station
+															{...{
+																transport,
+																stop,
+																firstStop: stops[0].departure.time,
+															}}
+														/>
+													</li>
+												))}
+											</ol>
+										</details>
+									)}
+									<Station
+										{...{
+											transport,
+											stop: stops[stops.length - 1],
+											last: true,
+										}}
+									/>
 								</li>
 							)
 						})}
 				</ol>
 			</section>
-			plop
 		</div>
 	)
 }
+const Station = ({ transport, stop, baseTime = null, last = false }) => {
+	return (
+		<section
+			css={`
+				margin-left: -0.5rem;
+				display: flex;
+				align-items: center;
+				svg {
+					margin-bottom: -0.05rem;
+				}
+				> span {
+					display: flex;
+					align-items: center;
+					gap: 0.4rem;
+				}
+				> small {
+					color: gray;
+				}
+				width: 12rem;
+				justify-content: space-between;
+				${last && `position: absolute; bottom: -.8rem; left: 0`}
+			`}
+		>
+			<span>
+				<StationDisc color={transport.route_color} last={last} />{' '}
+				<small>{stop.station.name}</small>
+			</span>
+			<small>
+				{baseTime ? (
+					humanDuration(stop.arrival.time - baseTime).single
+				) : (
+					<span
+						css={`
+							color: gray;
+							margin-left: 0.4rem;
+						`}
+					>
+						{formatMotis(stop.departure?.time || stop.arrival?.time)}
+					</span>
+				)}
+			</small>
+		</section>
+	)
+}
 
-const StationDisc = ({ color }) => (
-	<svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg" width=".6rem">
+const StationDisc = ({ color, last }) => (
+	<svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg" width=".8rem">
 		<circle
 			cx="50"
 			cy="50"
-			r="35"
-			fill="white"
-			stroke={color}
-			stroke-width="18"
+			r={last ? '40' : '30'}
+			fill={last ? color : 'white'}
+			stroke={last ? 'white' : color}
+			stroke-width={last ? '12' : '18'}
 		/>
 	</svg>
 )
