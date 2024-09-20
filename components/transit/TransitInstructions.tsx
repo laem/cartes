@@ -68,9 +68,9 @@ export default function TransitInstructions({ connection }) {
 									range: { from, to },
 								},
 							} = transport
-							const transportStops = stops.slice(from, to)
+							const transportStops = stops.slice(from, to + 1)
 
-							console.log('lightpurple', transportStops)
+							console.log('lightpurple halts', from, to, transportStops, stops)
 
 							const halts =
 								transportStops.length > 2 && transportStops.slice(1, -1)
