@@ -2,31 +2,30 @@ import { gtfsServerUrl, motisServerUrl } from '@/app/serverUrls'
 import { lightenColor } from '@/components/utils/colors'
 import { distance, point } from '@turf/turf'
 import transportIcon from './transportIcon'
-
-const datePlusHours = (date, hours) => {
-	const today = new Date(date)
-	const newToday = today.setHours(today.getHours() + hours)
-	return Math.round(newToday / 1000)
-}
-
-export const nowStamp = () => Math.round(Date.now() / 1000)
-
-export const stamp = (date) => Math.round(new Date(date).getTime() / 1000)
-
-export const defaultRouteColor = '#d3b2ee'
-
-const hours = (num) => num * 60 * 60,
-	minutes = (num) => num * 60
+import {
+	datePlusHours,
+	defaultRouteColor,
+	hours,
+	nowStamp,
+	stamp,
+} from './utils'
+import {
+	decodeStepModeParams,
+	stepModeParamsToMotis,
+} from '@/components/transit/modes'
 
 // For onTrip, see https://github.com/motis-project/motis/issues/471#issuecomment-2247099832
-export const buildRequestBody = (start, destination, date, options) => {
-	const { correspondances, debut } = options
+const buildRequestBody = (start, destination, date, searchParams) => {
+	const { correspondances } = searchParams
+
 	const now = nowStamp(),
 		dateStamp = stamp(date),
 		difference = dateStamp - now,
 		threshold = 60 * 60 //... seconds = 1h
 
-	const onTrip = !debut && difference < threshold // I'm afraid the onTrip mode, though way quicker, could result in only one result in some cases. We should switch to preTrip in thoses cases, to search again more thoroughly
+	const onTrip =
+		//!debut && // not sure why debut
+		difference < threshold // I'm afraid the onTrip mode, though way quicker, could result in only one result in some cases. We should switch to preTrip in thoses cases, to search again more thoroughly
 
 	const begin = Math.round(new Date(date).getTime() / 1000),
 		end = datePlusHours(date, 1) // TODO This parameter should probably be modulated depending on the transit offer in the simulation setup. Or, query for the whole day at once, and filter them in the UI
@@ -42,67 +41,10 @@ export const buildRequestBody = (start, destination, date, options) => {
 		point([destination.lng, destination.lat])
 	)
 
+	const { start: startModeParam } = decodeStepModeParams(searchParams)
+	const symmetricModes = stepModeParamsToMotis(startModeParam, requestDistance)
+
 	console.log('itinerary distance', requestDistance)
-
-	// This is the state of the art of our comprehension of how to use Motis to
-	// produce useful intermodal results in France, letting the user find the
-	// closest train station for more long range requests
-	// See https://github.com/laem/cartes/issues/416
-	//
-	// Here we set a threshold in km (50) for either not asking a trip starting with a bike
-	// segment because we expect the user will use local transit, or ask it with a
-	// max bike duration request depending on the distance :
-	// 1h of bike ~= 20km for trips lower than 200 km
-	// 2h and 40 km for trips more than 200 km
-	//
-	// With thiese settings, we should cover most of the hexagone.
-	const bikeTrainSearchDistance = //0 * 60
-		hours(requestDistance < 10 ? 0 : requestDistance < 200 ? 1 : 2)
-
-	console.log('lightgreen motis intermodal', {
-		requestDistance,
-		bikeTrainSearchDistance: bikeTrainSearchDistance / 60 + ' min',
-	})
-
-	// symmetric because used for start and destination for now
-	const symmetricModes = !debut
-		? [
-				{
-					mode_type: 'FootPPR',
-					mode: {
-						search_options: {
-							profile: 'distance_only',
-							duration_limit: minutes(15),
-						},
-					},
-				},
-				bikeTrainSearchDistance > 0 && {
-					mode_type: 'Bike',
-					mode: {
-						max_duration: bikeTrainSearchDistance,
-					},
-				},
-		  ].filter(Boolean)
-		: debut === 'marche'
-		? [
-				{
-					mode_type: 'FootPPR',
-					mode: {
-						search_options: {
-							profile: 'distance_only',
-							duration_limit: minutes(15),
-						},
-					},
-				},
-		  ]
-		: [
-				{
-					mode_type: 'Car',
-					mode: {
-						max_duration: minutes(15),
-					},
-				},
-		  ]
 
 	const body = {
 		destination: { type: 'Module', target: '/intermodal' },
@@ -149,8 +91,13 @@ const errorCorrespondance = {
 	'access: timestamp not in schedule':
 		'Notre serveur a eu un problème de mise à jour des données de transport en commun :-/',
 }
-export const computeMotisTrip = async (start, destination, date, options) => {
-	const body = buildRequestBody(start, destination, date, options)
+export const computeMotisTrip = async (
+	start,
+	destination,
+	date,
+	searchParams
+) => {
+	const body = buildRequestBody(start, destination, date, searchParams)
 
 	try {
 		const request = await fetch(motisServerUrl, {
@@ -234,13 +181,6 @@ export const computeMotisTrip = async (start, destination, date, options) => {
 									: null
 								: null
 
-						console.log(
-							'lightpurple train',
-							sourceGtfs,
-							prefix,
-							frenchTrainType,
-							route_type
-						)
 						const customAttributes = {
 							route_color: isTGV
 								? trainColors.TGV['color']
@@ -334,3 +274,4 @@ export function handleColor(rawColor, defaultColor) {
 	console.log('Unrecognized route color', rawColor)
 	return defaultColor
 }
+export { stamp }

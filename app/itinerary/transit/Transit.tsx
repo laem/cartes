@@ -63,7 +63,7 @@ const TransitContent = ({ itinerary, searchParams, date }) => {
 
 	const nextConnections = filterNextConnections(data.connections, date)
 
-	console.log('lightgreen ontrip', data.connections, nextConnections)
+	console.log('lightpurple transit', data.connections, nextConnections)
 	if (nextConnections.length < 1) return <NoMoreTransitToday date={date} />
 
 	const firstDate = connectionStart(nextConnections[0]) // We assume Motis orders them by start date, when you start to walk. Could also be intersting to query the first end date

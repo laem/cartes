@@ -6,7 +6,7 @@ import { DialogButton } from '../UI'
 import { useInterval } from 'usehooks-ts'
 import Link from 'next/link'
 import Image from 'next/image'
-import { nowStamp, stamp } from './transit/motisRequest'
+import { nowStamp, stamp } from './transit/utils'
 import calendarIcon from '@/public/calendar.svg'
 
 export const initialDate = (type = 'date') => {
