@@ -36,6 +36,7 @@ import useDrawItinerary from './itinerary/useDrawItinerary'
 import useDrawPanoramaxPosition, {
 	useAddPanoramaxLayer,
 } from './effects/useDrawPanoramaxPosition'
+import useDrawRightClickMarker from './effects/useDrawRightClickMarker'
 
 if (process.env.NEXT_PUBLIC_MAPTILER == null) {
 	throw new Error('You have to configure env NEXT_PUBLIC_MAPTILER, see README')
@@ -82,6 +83,7 @@ export default function Map({
 	quickSearchFeatures,
 	trackedSnap,
 	panoramaxPosition,
+	geocodedClickedPoint,
 }) {
 	const mapContainerRef = useRef(null)
 	const stepsLength = state.filter((step) => step?.key).length
@@ -324,6 +326,7 @@ export default function Map({
 		zoom
 	)
 	*/
+	useDrawRightClickMarker(map, geocodedClickedPoint)
 
 	/* Abandoned code that should be revived. Traveling with train + bike is an
 	 * essential objective of Cartes */
