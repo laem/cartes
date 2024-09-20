@@ -48,7 +48,8 @@ export default function TransitInstructions({ connection }) {
 						"Icône de l'approche vers le premier arrêt de transport en commun"
 					}
 				/>{' '}
-				{start.verb} <span>{humanDuration(transports[0].seconds).single}</span>{' '}
+				{start.verb}{' '}
+				<span>{humanDuration(transports[0].seconds).single.toLowerCase()}</span>{' '}
 				jusqu'à l'arrêt {firstTransitStop.station.name}
 			</section>
 			<section
@@ -167,7 +168,12 @@ export default function TransitInstructions({ connection }) {
 					height="10"
 					alt={'Icône de la fin du trajet'}
 				/>{' '}
-				{end.verb} <span>{humanDuration(transports[0].seconds).single}</span>{' '}
+				{end.verb}{' '}
+				<span>
+					{humanDuration(
+						transports[transports.length - 1].seconds
+					).single.toLowerCase()}
+				</span>{' '}
 				jusqu'à votre destination.
 			</section>
 		</div>

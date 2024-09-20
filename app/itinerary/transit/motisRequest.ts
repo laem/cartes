@@ -200,7 +200,9 @@ export const computeMotisTrip = async (start, destination, date, options) => {
 							}
 						}
 						const gtfsAttributes = await doFetch()
-						const { route_color, route_text_color } = gtfsAttributes
+						const { route_color, route_text_color, route_type } =
+								gtfsAttributes,
+							isTrain = route_type === 2
 
 						const isBretagneTGV = trip?.id.id.startsWith('bretagne_SNCF2')
 
@@ -211,6 +213,7 @@ export const computeMotisTrip = async (start, destination, date, options) => {
 							trip?.id.station_id.includes('TGV INOUI') ||
 							trip?.id.target_station_id.includes('TGV INOUI') // well, on fait avec ce qu'on a
 						const isTGV = isTGVStop || isBretagneTGV
+
 						//TODO this should be a configuration file that sets not only main
 						//colors, but gradients, icons (ouigo, inoui, tgv, ter, etc.)
 						const sourceGtfs = trip?.id.id.split('_')[0],
@@ -220,13 +223,24 @@ export const computeMotisTrip = async (start, destination, date, options) => {
 								: isTGV
 								? 'TGV'
 								: prefix
-								? prefix === 'ter'
+								? prefix === 'fr-x-sncf-ter'
 									? 'TER'
-									: prefix === 'tgv'
+									: prefix === 'fr-x-sncf-tgv'
 									? 'TGV'
+									: prefix === 'fr-x-sncf-intercites'
+									? 'INTERCITES'
+									: isTrain && !prefix.startsWith('fr-x-sncf')
+									? 'TER'
 									: null
 								: null
 
+						console.log(
+							'lightpurple train',
+							sourceGtfs,
+							prefix,
+							frenchTrainType,
+							route_type
+						)
 						const customAttributes = {
 							route_color: isTGV
 								? trainColors.TGV['color']
