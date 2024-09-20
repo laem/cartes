@@ -8,11 +8,13 @@ export default function TransitInstructions({ connection }) {
 	const setSearchParams = useSetSearchParams()
 	console.log('lightpurple', connection)
 	if (connection.transports.length < 3) return
+	const { transports, stops } = connection
 
-	const firstTransitStopIndex = connection.transports[1].trip.range.from,
-		firstTransitStop = connection.stops[firstTransitStopIndex]
+	const firstTransitStopIndex = transports[1].trip.range.from,
+		firstTransitStop = stops[firstTransitStopIndex]
 
-	const approach = moveTypeToFrench[connection.transports[0].move_type]
+	const start = moveTypeToFrench[transports[0].move_type]
+	const end = moveTypeToFrench[transports[transports.length - 1].move_type]
 	return (
 		<div
 			css={`
@@ -35,14 +37,14 @@ export default function TransitInstructions({ connection }) {
 				`}
 			>
 				<Image
-					src={'/' + approach.icon + '.svg'}
+					src={'/' + start.icon + '.svg'}
 					width="10"
 					height="10"
 					alt={
 						"Icône de l'approche vers le premier arrêt de transport en commun"
 					}
 				/>{' '}
-				{approach.verb} jusqu'à l'arrêt {firstTransitStop.station.name}
+				{start.verb} jusqu'à l'arrêt {firstTransitStop.station.name}
 			</section>
 			<section
 				css={`
@@ -143,6 +145,23 @@ export default function TransitInstructions({ connection }) {
 							)
 						})}
 				</ol>
+			</section>
+			<section
+				css={`
+					> img {
+						width: 1.4rem;
+						height: auto;
+						vertical-align: sub;
+					}
+				`}
+			>
+				<Image
+					src={'/' + end.icon + '.svg'}
+					width="10"
+					height="10"
+					alt={'Icône de la fin du trajet'}
+				/>{' '}
+				{end.verb} jusuq'à votre destination.
 			</section>
 		</div>
 	)
