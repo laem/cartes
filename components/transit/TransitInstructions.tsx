@@ -68,11 +68,12 @@ export default function TransitInstructions({ connection }) {
 									range: { from, to },
 								},
 							} = transport
-							const stops = connection.stops.slice(from, to)
+							const transportStops = stops.slice(from, to)
 
-							console.log('lightpurple', stops)
+							console.log('lightpurple', transportStops)
 
-							const halts = stops.length > 2 && stops.slice(1, -1)
+							const halts =
+								transportStops.length > 2 && transportStops.slice(1, -1)
 							return (
 								<li
 									key={transport.route_id}
@@ -88,7 +89,7 @@ export default function TransitInstructions({ connection }) {
 											}
 										}
 										margin-bottom: 1.6rem;
-										padding-bottom: 0.4rem;
+										padding-bottom: 1.2rem;
 										position: relative;
 									`}
 								>
@@ -96,7 +97,7 @@ export default function TransitInstructions({ connection }) {
 									<Station
 										{...{
 											transport,
-											stop: stops[0],
+											stop: transportStops[0],
 										}}
 									/>
 									{halts && (
@@ -114,15 +115,15 @@ export default function TransitInstructions({ connection }) {
 												<span>
 													{
 														humanDuration(
-															stops.slice(-1)[0].arrival.time -
-																stops[0].departure.time
+															transportStops.slice(-1)[0].arrival.time -
+																transportStops[0].departure.time
 														).single
 													}
 												</span>
 											</summary>
 											<ol
 												css={`
-													margin-bottom: 0.6rem;
+													margin-bottom: 1.6rem;
 												`}
 											>
 												{halts.map((stop, index) => (
@@ -131,7 +132,7 @@ export default function TransitInstructions({ connection }) {
 															{...{
 																transport,
 																stop,
-																firstStop: stops[0].departure.time,
+																firstStop: transportStops[0].departure.time,
 															}}
 														/>
 													</li>
@@ -142,7 +143,7 @@ export default function TransitInstructions({ connection }) {
 									<Station
 										{...{
 											transport,
-											stop: stops[stops.length - 1],
+											stop: transportStops[transportStops.length - 1],
 											last: true,
 										}}
 									/>
@@ -176,7 +177,7 @@ const Station = ({ transport, stop, baseTime = null, last = false }) => {
 	return (
 		<section
 			css={`
-				margin-left: -0.5rem;
+				margin: 0.6rem 0 0.6rem -0.5rem;
 				display: flex;
 				align-items: center;
 				svg {
@@ -186,11 +187,12 @@ const Station = ({ transport, stop, baseTime = null, last = false }) => {
 					display: flex;
 					align-items: center;
 					gap: 0.4rem;
+					line-height: 0.85rem;
 				}
 				> small {
 					color: gray;
 				}
-				width: 12rem;
+				width: 16rem;
 				justify-content: space-between;
 				${last && `position: absolute; bottom: -.8rem; left: 0`}
 			`}
