@@ -1,5 +1,5 @@
 import { omit } from '@/components/utils/utils'
-import { goodIconSize } from '@/components/mapUtils'
+import { goodIconSize, mapLibreBboxToOverpass } from '@/components/mapUtils'
 import maplibregl from 'maplibre-gl'
 import { useEffect, useMemo, useState } from 'react'
 
@@ -53,6 +53,16 @@ export const handleWikimediaGeosearchImages = (json) =>
 // factors, but were unable to find documentation on this complex API
 export const getWikimediaGeosearchUrl = (bboxString: string) =>
 	`https://commons.wikimedia.org/w/api.php?action=query&prop=imageinfo&iiprop=extmetadata&generator=geosearch&ggsbbox=${bboxString}&ggsnamespace=6&ggslimit=30&format=json&origin=*`
+//commons.wikimedia.org/w/api.php?action=query&cmlimit=500&format=json&origin=*&generator=geosearch&ggsbbox=48.12234761048555|-1.6960791053322168|48.10077270045613|-1.6628225211423455&prop=imageinfo&iiprop=extmetadata
+
+// Another strategy would be to query only Wikipedia page header images,
+// considering that they would be high quality images
+// TODO but we need lat lon info
+// Also, some images would be maps of cities for instance. Useless. Filter
+// .svg.png ?
+// Source : https://stackoverflow.com/a/32916451
+https: const getWikimediaPageimageGeosearchUrl = (bboxString: string) =>
+	`https://fr.wikipedia.org/w/api.php?action=query&prop=images|pageimages&pilimit=max&piprop=thumbnail&iwurl=&imlimit=max&generator=geosearch&ggsbbox=${bboxString}&format=json&origin=*`
 
 export default function useImageSearch(
 	map,
@@ -89,7 +99,8 @@ export default function useImageSearch(
 		if (!active) return
 		if (!bboxString) return
 		const makeRequest = async () => {
-			const url = getWikimediaGeosearchUrl(bboxString)
+			//			const url = getWikimediaGeosearchUrl(bboxString)
+			const url = getWikimediaPageimageGeosearchUrl(bboxString)
 
 			const request = await fetch(url)
 
