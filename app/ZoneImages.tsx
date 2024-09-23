@@ -110,7 +110,7 @@ export function ZoneImages({ zoneImages, panoramaxImages, focusImage }) {
 		zoneImages &&
 		zoneImages.map((json) => {
 			const title = json.title,
-				url = getThumb(title, 400)
+				url = json.thumbnailUrl || getThumb(title, 400)
 			return {
 				...json,
 				url,

@@ -12,6 +12,7 @@ import { useEffect, useMemo, useState } from 'react'
  * - solution ? Use the coord instead of bbox, and expect the user to drag to view more images
  * - when you do a search somewhere, then drag the map, the new search should be done only in the added surface
  * - it would be cool to use the "featured" or "quality" image tags from commons, but it does not look possible in one request https://stackoverflow.com/questions/24529853/how-to-get-more-info-within-only-one-geosearch-call-via-wikipedia-api
+ * - this request for featured, but cannot generator geosearch https://commons.wikimedia.org/w/api.php?action=query&list=categorymembers&cmtitle=Category:Featured_pictures_on_Wikimedia_Commons&cmlimit=100&cmtype=file&format=json
  * - etc
  *
  *
@@ -47,6 +48,34 @@ export const handleWikimediaGeosearchImages = (json) =>
 				}
 		  })
 		: []
+export const handleWikimediaPageimageGeosearchImages = (json) =>
+	json?.query
+		? Object.values(json.query.pages)
+				.map((page) => {
+					if (!page.thumbnail) return
+					const {
+						coordinates: [{ lon, lat }],
+						title,
+						thumbnail: { source: thumbnailUrl },
+						original: { source: originalUrl },
+						pageimage,
+					} = page
+
+					if (pageimage.toLowerCase().includes('.svg')) return
+
+					return {
+						pageid: page.pageid,
+						lat,
+						lon,
+						description: title,
+						title,
+						thumbnailUrl,
+						originalUrl,
+						pageUrl: `https://commons.wikimedia.org/wiki/File:${pageimage}`,
+					}
+				})
+				.filter(Boolean)
+		: []
 
 // Thanks https://stackoverflow.com/questions/24529853/how-to-get-more-info-within-only-one-geosearch-call-via-wikipedia-api
 // We'd also like to sort query results by good `assessment` or by other
@@ -61,8 +90,9 @@ export const getWikimediaGeosearchUrl = (bboxString: string) =>
 // Also, some images would be maps of cities for instance. Useless. Filter
 // .svg.png ?
 // Source : https://stackoverflow.com/a/32916451
-https: const getWikimediaPageimageGeosearchUrl = (bboxString: string) =>
-	`https://fr.wikipedia.org/w/api.php?action=query&prop=images|pageimages&pilimit=max&piprop=thumbnail&iwurl=&imlimit=max&generator=geosearch&ggsbbox=${bboxString}&format=json&origin=*`
+const getWikimediaPageimageGeosearchUrl = (bboxString: string) =>
+	//	`https://fr.wikipedia.org/w/api.php?action=query&prop=images|pageimages&pilimit=max&piprop=thumbnail&iwurl=&imlimit=max&generator=geosearch&ggsbbox=${bboxString}&format=json&origin=*`
+	`https://fr.wikipedia.org/w/api.php?action=query&prop=coordinates|pageimages&piprop=original|thumbnail|name&iwurl=&pithumbsize=250&pilimit=6&generator=geosearch&ggsbbox=${bboxString}&format=json&origin=*`
 
 export default function useImageSearch(
 	map,
@@ -73,6 +103,7 @@ export default function useImageSearch(
 	focusImage
 ) {
 	const [imageCache, setImageCache] = useState([])
+	console.log('lightred', imageCache)
 
 	const bboxString = serializeBbox(bbox)
 
@@ -105,37 +136,57 @@ export default function useImageSearch(
 			const request = await fetch(url)
 
 			const json = await request.json()
-			const newImages = handleWikimediaGeosearchImages(json)
+			const newImages = handleWikimediaPageimageGeosearchImages(json)
 
 			console.log('green', newImages)
-			const trulyNewImages = newImages.filter(
-				(newImage) =>
-					!imageCache.find((image) => image.pageid === newImage.pageid)
-			)
+
+			const imageMap = new Map(newImages.map((image) => [image.pageUrl, image]))
+
+			// in "summary" mode, this
+			return setImageCache([...imageMap.values()])
+
+			const trulyNewImages = newImages.filter((newImage) => {
+				const alreadyThere = newImage.pageUrl
+					? imageCache.find((image) => image.pageUrl === newImage.pageUrl)
+					: imageCache.find((image) => image.pageid === newImage.pageid)
+				return !alreadyThere
+			})
 
 			if (trulyNewImages.length)
 				setImageCache((old) => [...old, ...trulyNewImages])
 		}
 		makeRequest()
-	}, [setImageCache, bboxString, imageCache, active])
+	}, [
+		setImageCache,
+		bboxString,
+		imageCache.map((image) => image.pageUrl).join('-||-'),
+		active,
+	])
 
 	useEffect(() => {
 		if (!map) return
 		if (!active) return
+		if (zoom < 11) return
 
 		if (!bboxImages.length) return
 		const markers = bboxImages.map((image) => {
 			const size = goodIconSize(zoom, 1.3) + 'px'
 
 			const img = document.createElement('img')
-			img.src = `https://commons.wikimedia.org/w/index.php?title=Special:Redirect/file/${encodeURIComponent(
-				image.title
-			)}&width=150`
+			img.src =
+				image.thumbnailUrl ||
+				`https://commons.wikimedia.org/w/index.php?title=Special:Redirect/file/${encodeURIComponent(
+					image.title
+				)}&width=150`
 			img.style.cssText = `
-			width: ${size};height: ${size};border-radius: ${size};
-			object-fit: cover
+			width: ${size};height: ${size};
+			border-radius: ${size};
+			object-fit: cover;
+			border: 3px solid white;
 			`
-			img.alt = image.title
+			img.onload = function () {
+				img.setAttribute('alt', image.title)
+			} // This because title overflows and is unreadable on the small disc on the map
 
 			img.addEventListener('click', () => {
 				focusImage(image)
@@ -144,6 +195,7 @@ export default function useImageSearch(
 			const marker = new maplibregl.Marker({ element: img })
 				.setLngLat({ lng: image.lon, lat: image.lat })
 				.addTo(map)
+
 			return marker
 		})
 		return () => {
