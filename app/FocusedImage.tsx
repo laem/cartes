@@ -1,6 +1,7 @@
 import Image from 'next/image'
 import { useMediaQuery } from 'usehooks-ts'
 import { ModalCloseButton } from './UI'
+import { useEffect } from 'react'
 
 export default function FocusedImage({ focusedImage, focusImage }) {
 	const src =
@@ -12,6 +13,20 @@ export default function FocusedImage({ focusedImage, focusImage }) {
 	const fullUrl =
 		focusedImage.pageUrl ||
 		`https://commons.wikimedia.org/wiki/${focusedImage.title.replace(' ', '_')}`
+
+	useEffect(() => {
+		const listener = (e) => {
+			console.log('lightred', e)
+			if (e.key === 'Escape') {
+				focusImage(null)
+			}
+		}
+		document.addEventListener('keyup', listener)
+		return () => {
+			document.removeEventListener('keyup', listener)
+		}
+	}, [focusImage])
+
 	return (
 		<FocusedWrapper>
 			<ModalCloseButton onClick={() => focusImage(null)} />
