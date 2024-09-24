@@ -131,7 +131,7 @@ export default function QuickFeatureSearch({
 								<li
 									key="photos"
 									css={`
-										${quickSearchButtonStyle(searchParams.photos === 'oui')}
+										${quickSearchButtonStyle(searchParams.photos != null)}
 									`}
 								>
 									<Link

@@ -310,12 +310,13 @@ export default function Content({
 						)}
 						<ZoneImages
 							zoneImages={
-								searchParams.photos === 'oui' && bboxImages?.length > 0
+								searchParams.photos != null && bboxImages?.length > 0
 									? bboxImages
 									: zoneImages
 							} // bbox includes zone, usually
 							panoramaxImages={panoramaxImages}
 							focusImage={focusImage}
+							allPhotos={searchParams.photos === 'toutes'}
 						/>
 						{(hasDestination || bookmarkable) && (
 							<PlaceButtonList>

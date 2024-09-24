@@ -131,7 +131,7 @@ export default function Map({
 		setBboxImages,
 		zoom,
 		bbox,
-		searchParams.photos === 'oui',
+		searchParams.photos,
 		focusImage
 	)
 

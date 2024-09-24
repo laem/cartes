@@ -99,9 +99,10 @@ export default function useImageSearch(
 	setBboxImages,
 	zoom,
 	bbox,
-	active,
+	photos,
 	focusImage
 ) {
+	const active = photos != null
 	const [imageCache, setImageCache] = useState([])
 	console.log('lightred', imageCache)
 
@@ -130,30 +131,34 @@ export default function useImageSearch(
 		if (!active) return
 		if (!bboxString) return
 		const makeRequest = async () => {
-			//			const url = getWikimediaGeosearchUrl(bboxString)
-			const url = getWikimediaPageimageGeosearchUrl(bboxString)
+			const url =
+				photos === 'toutes'
+					? getWikimediaGeosearchUrl(bboxString)
+					: getWikimediaPageimageGeosearchUrl(bboxString)
 
 			const request = await fetch(url)
 
 			const json = await request.json()
-			const newImages = handleWikimediaPageimageGeosearchImages(json)
 
-			console.log('green', newImages)
+			if (photos === 'toutes') {
+				const newImages = handleWikimediaGeosearchImages(json)
+				console.log('green new', newImages)
+				const trulyNewImages = newImages.filter(
+					(newImage) =>
+						!imageCache.find((image) => image.pageid === newImage.pageid)
+				)
 
-			const imageMap = new Map(newImages.map((image) => [image.pageUrl, image]))
-
-			// in "summary" mode, this
-			return setImageCache([...imageMap.values()])
-
-			const trulyNewImages = newImages.filter((newImage) => {
-				const alreadyThere = newImage.pageUrl
-					? imageCache.find((image) => image.pageUrl === newImage.pageUrl)
-					: imageCache.find((image) => image.pageid === newImage.pageid)
-				return !alreadyThere
-			})
-
-			if (trulyNewImages.length)
-				setImageCache((old) => [...old, ...trulyNewImages])
+				if (trulyNewImages.length)
+					setImageCache((old) => [...old, ...trulyNewImages])
+			} else {
+				const newImages = handleWikimediaPageimageGeosearchImages(json)
+				console.log('green new', newImages)
+				const imageMap = new Map(
+					newImages.map((image) => [image.pageUrl, image])
+				)
+				// in "summary" mode, this
+				return setImageCache([...imageMap.values()])
+			}
 		}
 		makeRequest()
 	}, [
@@ -161,6 +166,7 @@ export default function useImageSearch(
 		bboxString,
 		imageCache.map((image) => image.pageUrl).join('-||-'),
 		active,
+		photos,
 	])
 
 	useEffect(() => {
@@ -182,10 +188,12 @@ export default function useImageSearch(
 			width: ${size};height: ${size};
 			border-radius: ${size};
 			object-fit: cover;
-			border: 3px solid white;
 			`
 			img.onload = function () {
 				img.setAttribute('alt', image.title)
+				img.style.cssText += `
+			border: 3px solid white;
+				`
 			} // This because title overflows and is unreadable on the small disc on the map
 
 			img.addEventListener('click', () => {
