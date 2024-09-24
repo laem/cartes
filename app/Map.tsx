@@ -5,11 +5,7 @@ import { useEffect, useMemo, useRef, useState } from 'react'
 import { sortGares } from './gares'
 
 import MapButtons from '@/components/MapButtons'
-import {
-	computeMapPadding,
-	goodIconSize,
-	useComputeMapPadding,
-} from '@/components/mapUtils'
+import { goodIconSize, useComputeMapPadding } from '@/components/mapUtils'
 import useSetSearchParams from '@/components/useSetSearchParams'
 import useAddMap from './effects/useAddMap'
 import useDrawQuickSearchFeatures from './effects/useDrawQuickSearchFeatures'
@@ -17,15 +13,16 @@ import { getStyle } from './styles/styles'
 import useHoverOnMapFeatures from './useHoverOnMapFeatures'
 import useTerrainControl from './useTerrainControl'
 
-import { useDimensions } from '@/components/react-modal-sheet/hooks'
 import getBbox from '@turf/bbox'
-import { useLocalStorage, useMediaQuery } from 'usehooks-ts'
+import { useLocalStorage } from 'usehooks-ts'
 import CenteredCross from './CenteredCross'
 import MapComponents from './MapComponents'
-import { snapPoints } from './ModalSheet'
 import MapCompassArrow from './boussole/MapCompassArrow'
 import { defaultState } from './defaultState'
 import useDrawElectionClusterResults from './effects/useDrawElectionCluserResults'
+import useDrawPanoramaxPosition, {
+	useAddPanoramaxLayer,
+} from './effects/useDrawPanoramaxPosition'
 import useDrawSearchResults from './effects/useDrawSearchResults'
 import useDrawTransport from './effects/useDrawTransport'
 import useImageSearch from './effects/useImageSearch'
@@ -33,9 +30,6 @@ import useMapClick from './effects/useMapClick'
 import useRightClick from './effects/useRightClick'
 import useSearchLocalTransit from './effects/useSearchLocalTransit'
 import useDrawItinerary from './itinerary/useDrawItinerary'
-import useDrawPanoramaxPosition, {
-	useAddPanoramaxLayer,
-} from './effects/useDrawPanoramaxPosition'
 
 if (process.env.NEXT_PUBLIC_MAPTILER == null) {
 	throw new Error('You have to configure env NEXT_PUBLIC_MAPTILER, see README')
@@ -82,6 +76,7 @@ export default function Map({
 	quickSearchFeatures,
 	trackedSnap,
 	panoramaxPosition,
+	wikidata,
 }) {
 	const mapContainerRef = useRef(null)
 	const stepsLength = state.filter((step) => step?.key).length
@@ -132,13 +127,25 @@ export default function Map({
 		map.flyTo({ padding })
 	}, [map, padding])
 
+	const wikidataPicture = wikidata?.pictureUrl
+	console.log('redou', wikidataPicture)
+	const wikidataPictureObject = wikidataPicture &&
+		osmFeature && {
+			thumbnailUrl: wikidataPicture,
+			title: wikidata.pictureName, //could be better
+			fromWikidata: true,
+			lat: osmFeature.lat,
+			lon: osmFeature.lon,
+		}
+
 	useImageSearch(
 		map,
 		setBboxImages,
 		zoom,
 		bbox,
-		searchParams.photos === 'oui',
-		focusImage
+		searchParams.photos,
+		focusImage,
+		wikidataPictureObject
 	)
 
 	// TODO reactivate

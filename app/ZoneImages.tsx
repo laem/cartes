@@ -16,6 +16,7 @@ export function useZoneImages({
 	setLatLngClicked,
 	panoramaxOsmTag,
 	panoramaxId,
+	wikidata,
 }) {
 	const setSearchParams = useSetSearchParams()
 	const [wikimedia, setWikimedia] = useState(null)
@@ -104,13 +105,18 @@ export function useZoneImages({
 	]
 }
 
-export function ZoneImages({ zoneImages, panoramaxImages, focusImage }) {
+export function ZoneImages({
+	zoneImages,
+	panoramaxImages,
+	focusImage,
+	allPhotos,
+}) {
 	const setSearchParams = useSetSearchParams()
 	const images =
 		zoneImages &&
 		zoneImages.map((json) => {
 			const title = json.title,
-				url = getThumb(title, 400)
+				url = json.thumbnailUrl || getThumb(title, 400)
 			return {
 				...json,
 				url,
@@ -198,6 +204,32 @@ export function ZoneImages({ zoneImages, panoramaxImages, focusImage }) {
 							)
 						})}
 				</ul>
+			)}
+			{zoneImages?.length > 0 && (
+				<div>
+					<small
+						css={`
+							color: #88aed4;
+							margin-bottom: 0.6rem;
+						`}
+					>
+						{!allPhotos ? (
+							<span>
+								Photos des articles Wikipedia du coin.{' '}
+								<Link href={setSearchParams({ photos: 'toutes' }, true)}>
+									Afficher toutes les photos
+								</Link>
+							</span>
+						) : (
+							<span>
+								Photos Wikimedia Commons du coin.{' '}
+								<Link href={setSearchParams({ photos: 'oui' }, true)}>
+									Afficher moins
+								</Link>
+							</span>
+						)}
+					</small>
+				</div>
 			)}
 		</div>
 	)
