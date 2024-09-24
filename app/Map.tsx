@@ -76,6 +76,7 @@ export default function Map({
 	quickSearchFeatures,
 	trackedSnap,
 	panoramaxPosition,
+	wikidata,
 }) {
 	const mapContainerRef = useRef(null)
 	const stepsLength = state.filter((step) => step?.key).length
@@ -126,13 +127,25 @@ export default function Map({
 		map.flyTo({ padding })
 	}, [map, padding])
 
+	const wikidataPicture = wikidata?.pictureUrl
+	console.log('redou', wikidataPicture)
+	const wikidataPictureObject = wikidataPicture &&
+		osmFeature && {
+			thumbnailUrl: wikidataPicture,
+			title: wikidata.pictureName, //could be better
+			fromWikidata: true,
+			lat: osmFeature.lat,
+			lon: osmFeature.lon,
+		}
+
 	useImageSearch(
 		map,
 		setBboxImages,
 		zoom,
 		bbox,
 		searchParams.photos,
-		focusImage
+		focusImage,
+		wikidataPictureObject
 	)
 
 	// TODO reactivate

@@ -16,6 +16,7 @@ export function useZoneImages({
 	setLatLngClicked,
 	panoramaxOsmTag,
 	panoramaxId,
+	wikidata,
 }) {
 	const setSearchParams = useSetSearchParams()
 	const [wikimedia, setWikimedia] = useState(null)

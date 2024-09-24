@@ -100,11 +100,11 @@ export default function useImageSearch(
 	zoom,
 	bbox,
 	photos,
-	focusImage
+	focusImage,
+	wikidataPictureObject
 ) {
 	const active = photos != null
 	const [imageCache, setImageCache] = useState([])
-	console.log('lightred', imageCache)
 
 	const bboxString = serializeBbox(bbox)
 
@@ -169,45 +169,50 @@ export default function useImageSearch(
 		photos,
 	])
 
+	console.log('redou2', wikidataPictureObject)
 	useEffect(() => {
 		if (!map) return
-		if (!active) return
+		if (!active && !wikidataPictureObject) return
 		if (zoom < 11) return
 
-		if (!bboxImages.length) return
-		const markers = bboxImages.map((image) => {
-			const size = goodIconSize(zoom, 1.3) + 'px'
+		if (!bboxImages.length && !wikidataPictureObject) return
 
-			const img = document.createElement('img')
-			img.src =
-				image.thumbnailUrl ||
-				`https://commons.wikimedia.org/w/index.php?title=Special:Redirect/file/${encodeURIComponent(
-					image.title
-				)}&width=150`
-			img.style.cssText = `
+		const markers = [wikidataPictureObject, ...(bboxImages || [])]
+			.filter(Boolean)
+			.map((image) => {
+				const size = goodIconSize(zoom, 1.3) + 'px'
+
+				const img = document.createElement('img')
+				img.src =
+					image.thumbnailUrl ||
+					`https://commons.wikimedia.org/w/index.php?title=Special:Redirect/file/${encodeURIComponent(
+						image.title
+					)}&width=150`
+				img.style.cssText = `
 			width: ${size};height: ${size};
 			border-radius: ${size};
 			object-fit: cover;
 			`
-			img.onload = function () {
-				img.setAttribute('alt', image.title)
-				img.style.cssText += `
+				img.onload = function () {
+					img.setAttribute('alt', image.title)
+					img.style.cssText += `
 			border: 3px solid white;
 				`
-			} // This because title overflows and is unreadable on the small disc on the map
+				} // This because title overflows and is unreadable on the small disc on the map
 
-			img.addEventListener('click', () => {
-				focusImage(image)
+				!image.fromWikidata &&
+					img.addEventListener('click', () => {
+						focusImage(image)
+					})
+
+				const marker = new maplibregl.Marker({ element: img })
+					.setLngLat({ lng: image.lon, lat: image.lat })
+					.addTo(map)
+
+				return marker
 			})
-
-			const marker = new maplibregl.Marker({ element: img })
-				.setLngLat({ lng: image.lon, lat: image.lat })
-				.addTo(map)
-
-			return marker
-		})
 		return () => {
 			markers.map((marker) => marker.remove())
 		}
-	}, [map, zoom, bboxImages, active])
+	}, [map, zoom, bboxImages, active, wikidataPictureObject])
 }

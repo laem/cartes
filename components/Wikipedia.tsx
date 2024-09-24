@@ -6,6 +6,8 @@ import wikipediaLogo from '@/public/wikipedia.svg'
 export default function Wikipedia({ name }) {
 	const [text, setText] = useState(null)
 	const [lang, title] = name.split(':')
+	// Note : adding prop=extract|pageimage lets us retrieve the page image, could
+	// be useful if we want to avoid the wiki image query in parallel
 	const ApiUrl = `https://${lang}.wikipedia.org/w/api.php?format=json&origin=*&action=query&prop=extracts&explaintext=false&exintro&titles=${encodeURIComponent(
 			title
 		)}&redirects=1`,

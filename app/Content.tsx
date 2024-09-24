@@ -25,7 +25,6 @@ import StyleChooser from './styles/StyleChooser'
 import { defaultTransitFilter } from './transport/TransitFilter'
 import TransportMap from './transport/TransportMap'
 import useOgImageFetcher from './useOgImageFetcher'
-import useWikidata from './useWikidata'
 
 const getMinimumQuickSearchZoom = (mobile) => (mobile ? 10.5 : 12) // On a small screen, 70 %  of the tiles are not visible, hence this rule
 
@@ -65,6 +64,7 @@ export default function Content({
 	osmFeature,
 	quickSearchFeaturesLoaded,
 	setDisableDrag,
+	wikidata,
 }) {
 	const tags = osmFeature?.tags
 	const url = tags && getUrl(tags)
@@ -77,9 +77,6 @@ export default function Content({
 	const [tutorials, setTutorials] = useLocalStorage('tutorials', {})
 	const introductionRead = tutorials.introduction,
 		clickTipRead = true || tutorials.clickTip
-	const lonLat = osmFeature && [osmFeature.lon, osmFeature.lat]
-	const wikidata = useWikidata(osmFeature, state, lonLat)
-	console.log('wikidata3', wikidata, osmFeature)
 
 	const setSearchParams = useSetSearchParams()
 
