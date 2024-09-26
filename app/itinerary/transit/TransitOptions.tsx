@@ -38,77 +38,153 @@ export default function TransitOptions({ searchParams }) {
 				</p>
 			)}
 			<ol>
-				<Button>
-					<Image
-						src={startIcon}
-						alt="Icône d'une flèche représentant le départ"
+				<Button
+					css={`
+						flex-direction: row !important;
+						width: 8rem;
+					`}
+				>
+					{false && (
+						<>
+							<Image
+								src={startIcon}
+								alt="Icône d'une flèche représentant le départ"
+							/>
+							<ModalCloseButton
+								css={`
+									img {
+										width: 0.8rem !important;
+									}
+								`}
+								onClick={() => setSearchParams({ debut: undefined })}
+							/>
+						</>
+					)}
+					<div
+						css={`
+							position: absolute;
+							top: calc(50% - 1px);
+							width: 8rem;
+							background: linear-gradient(
+								90deg,
+								var(--lighterColor) 0%,
+								transparent 20%,
+								transparent 80%,
+								var(--color) 100%
+							);
+							height: 2px;
+						`}
 					/>
-					<ModalCloseButton
-						onClick={() => setSearchParams({ debut: undefined })}
-					/>
-					<div>
-						<button
-							onClick={() =>
-								setSearchParams({
-									debut:
-										(debut
-											? debut.startsWith('marche')
-												? 'vélo'
-												: debut.startsWith('vélo')
-												? 'voiture'
-												: 'marche'
-											: 'marche') +
-										'-' +
-										(!debut ? '5min' : getTimePart(debut) + 'min'),
-								})
+
+					<button
+						css={`
+							img {
+								height: 2rem !important;
+								width: auto !important;
+								filter: invert(46%) sepia(13%) saturate(5002%)
+									hue-rotate(181deg) brightness(92%) contrast(88%);
 							}
-						>
-							{debut == null ? (
-								<Image
-									src={'/mode-auto.svg'}
-									alt="Icône de quelqu'un qui marche ou roule à vélo"
-									width="10"
-									height="10"
-								/>
-							) : debut.startsWith('marche') ? (
-								<Image
-									src={'/walking.svg'}
-									alt="Icône de quelqu'un qui marche"
-									width="10"
-									height="10"
-								/>
-							) : debut.startsWith('voiture') ? (
-								<Image src={carIcon} alt="Icône d'une voiture" />
-							) : debut.startsWith('vélo') ? (
-								<Image
-									src={'/cycling.svg'}
-									alt="Icône d'un vélo"
-									width="10"
-									height="10"
-								/>
+						`}
+						onClick={() =>
+							setSearchParams({
+								debut:
+									(debut
+										? debut.startsWith('marche')
+											? 'vélo'
+											: debut.startsWith('vélo')
+											? 'voiture'
+											: 'marche'
+										: 'marche') +
+									'-' +
+									(!debut ? '5min' : getTimePart(debut) + 'min'),
+							})
+						}
+					>
+						{debut == null ? (
+							<Image
+								src={'/mode-auto.svg'}
+								alt="Icône de quelqu'un qui marche ou roule à vélo"
+								width="10"
+								height="10"
+							/>
+						) : debut.startsWith('marche') ? (
+							<Image
+								src={'/walking.svg'}
+								alt="Icône de quelqu'un qui marche"
+								width="10"
+								height="10"
+							/>
+						) : debut.startsWith('voiture') ? (
+							<Image src={carIcon} alt="Icône d'une voiture" />
+						) : debut.startsWith('vélo') ? (
+							<Image
+								src={'/cycling.svg'}
+								alt="Icône d'un vélo"
+								width="10"
+								height="10"
+							/>
+						) : (
+							<span>quoi ?</span>
+						)}
+					</button>
+					<button
+						onClick={() =>
+							setSearchParams({
+								debut:
+									(debut ? debut.split('-')[0] : 'marche') +
+									'-' +
+									(!debutTime
+										? '5min'
+										: debutTime == 5
+										? '15min'
+										: debutTime == 15
+										? '30min'
+										: '5min'),
+							})
+						}
+						css={`
+							border: 2px solid var(--color);
+							color: var(--color);
+							border-radius: 3rem;
+							width: 2rem;
+							height: 2rem;
+							text-align: center;
+							font-size: 80%;
+							position: relative;
+							> div {
+								position: absolute;
+								top: 50%;
+								left: 50%;
+								transform: translate(-50%, -50%);
+								line-height: 1.1rem;
+								div,
+								small {
+									line-height: 0.65rem;
+								}
+							}
+						`}
+					>
+						<span
+							css={`
+								height: 5px;
+								width: 5px;
+								position: absolute;
+								top: -5px;
+								left: 43%;
+								background: var(--color);
+							`}
+						></span>
+						<div>
+							{debutTime == null ? (
+								'auto'
 							) : (
-								<span>quoi ?</span>
+								<div>
+									<div>{debutTime}</div>
+									<small>min</small>
+								</div>
 							)}
-						</button>
-						<button
-							onClick={() =>
-								setSearchParams({
-									debut:
-										(debut ? debut.split('-')[0] : 'marche') +
-										'-' +
-										(!debutTime
-											? '5min'
-											: debutTime == 5
-											? '15min'
-											: debutTime == 15
-											? '30min'
-											: '5min'),
-								})
-							}
-						>
-							{debutTime == null ? 'auto' : debutTime + ' min'}
-						</button>
-					</div>
+						</div>
+					</button>
 				</Button>
 				<Button
 					onClick={() =>
@@ -125,14 +201,28 @@ export default function TransitOptions({ searchParams }) {
 					<Image
 						src={correspondanceIcon}
 						alt="Icône de correspondance de transport en commun"
+						css={`
+							width: 1.6rem !important;
+						`}
 					/>
 					<button>
-						{correspondances == null ? (
-							'∞ corresp.'
-						) : correspondances == 0 ? (
+						{correspondances == 0 ? (
 							'direct'
 						) : (
-							<span>{correspondances} corresp.</span>
+							<div>
+								<div>
+									{correspondances == null ? (
+										<div css="font-size: 140%; max-height: .8rem; line-height: .6rem">
+											∞
+										</div>
+									) : (
+										<span css="font-size: 100%; line-height: .8rem">
+											{correspondances}
+										</span>
+									)}
+								</div>
+								{false && <small>corresp.</small>}
+							</div>
 						)}
 					</button>
 				</Button>
@@ -142,11 +232,16 @@ export default function TransitOptions({ searchParams }) {
 }
 
 export const Button = styled.div`
-	cursor: pointer;
 	display: flex;
 	flex-direction: column;
 	width: fit-content;
 	align-items: center;
 	justify-content: center;
 	position: relative;
+	margin: 0 0.4rem;
+	button {
+		padding: 0;
+		margin: 0 0.1rem;
+	}
+	color: var(--color);
 `

@@ -150,6 +150,7 @@ const UpdateDate = ({ date, updateDate }) => {
 					height: auto;
 					vertical-align: middle;
 					margin-left: 0.2rem;
+					margin-bottom: 0.2rem;
 				`}
 			/>
 		</Link>

@@ -16,7 +16,11 @@ import {
 
 // For onTrip, see https://github.com/motis-project/motis/issues/471#issuecomment-2247099832
 const buildRequestBody = (start, destination, date, searchParams) => {
-	const { correspondances } = searchParams
+	const { correspondances, planification } = searchParams
+
+	// TODO How to set planification ? How to trigger the appearance of the setter
+	// button ?
+	const forceOnTrip = planification === 'oui'
 
 	const now = nowStamp(),
 		dateStamp = stamp(date),
@@ -24,6 +28,7 @@ const buildRequestBody = (start, destination, date, searchParams) => {
 		threshold = 60 * 60 //... seconds = 1h
 
 	const onTrip =
+		forceOnTrip ||
 		//!debut && // not sure why debut
 		difference < threshold // I'm afraid the onTrip mode, though way quicker, could result in only one result in some cases. We should switch to preTrip in thoses cases, to search again more thoroughly
 
