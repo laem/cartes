@@ -18,6 +18,7 @@ export default function TransitOptions({ searchParams }) {
 	return (
 		<section
 			css={`
+				margin-bottom: 0.8rem;
 				img {
 					width: 1.4rem;
 					height: auto;
@@ -102,7 +103,7 @@ export default function TransitOptions({ searchParams }) {
 					>
 						{debut == null ? (
 							<Image
-								src={'/mode-auto.svg'}
+								src={'/walk-or-cycle.svg'}
 								alt="Icône de quelqu'un qui marche ou roule à vélo"
 								width="10"
 								height="10"
@@ -187,6 +188,9 @@ export default function TransitOptions({ searchParams }) {
 					</button>
 				</Button>
 				<Button
+					css={`
+						cursor: pointer;
+					`}
 					onClick={() =>
 						setSearchParams({
 							correspondances:
@@ -205,7 +209,7 @@ export default function TransitOptions({ searchParams }) {
 							width: 1.6rem !important;
 						`}
 					/>
-					<button>
+					<span>
 						{correspondances == 0 ? (
 							'direct'
 						) : (
@@ -224,7 +228,7 @@ export default function TransitOptions({ searchParams }) {
 								{false && <small>corresp.</small>}
 							</div>
 						)}
-					</button>
+					</span>
 				</Button>
 			</ol>
 		</section>
