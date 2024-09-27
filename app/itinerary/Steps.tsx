@@ -163,7 +163,7 @@ const Item = ({
 					}
 				`}
 			>
-				<Icon text={letterFromIndex(index)} />{' '}
+				<StepIcon text={letterFromIndex(index)} />{' '}
 				<span
 					onClick={() => {
 						console.log('lightgreen allezpart', 'coucou')
@@ -291,7 +291,7 @@ const RemoveStepLink = ({ setSearchParams, stepKey, state }) => {
 	)
 }
 
-const Icon = ({ text }) => (
+export const StepIcon = ({ text }) => (
 	<span
 		css={`
 			display: inline-block;

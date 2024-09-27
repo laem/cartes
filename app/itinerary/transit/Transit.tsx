@@ -15,7 +15,7 @@ import {
 	TransitScopeLimit,
 } from './NoTransitMessages'
 import TransitLoader from './TransitLoader'
-import TransitOptions from './TransitOptions'
+import TransitOptions from '@/components/transit/TransitOptions'
 import TransportMoveBlock from './TransportMoveBlock'
 import findBestConnection from './findBestConnection'
 import {
