@@ -190,6 +190,7 @@ export default function TransitOptions({ searchParams }) {
 				<Button
 					css={`
 						cursor: pointer;
+						position: relative;
 					`}
 					onClick={() =>
 						setSearchParams({
@@ -206,10 +207,20 @@ export default function TransitOptions({ searchParams }) {
 						src={correspondanceIcon}
 						alt="Icône de correspondance de transport en commun"
 						css={`
-							width: 1.6rem !important;
+							width: 2.6rem !important;
 						`}
 					/>
-					<span>
+					<span
+						css={`
+							position: absolute;
+							left: 50%;
+							top: 50%;
+							transform: translate(-50%, -50%);
+							color: white;
+							font-size: 70%;
+							font-weight: bold;
+						`}
+					>
 						{correspondances == 0 ? (
 							'direct'
 						) : (
@@ -220,8 +231,8 @@ export default function TransitOptions({ searchParams }) {
 											∞
 										</div>
 									) : (
-										<span css="font-size: 100%; line-height: .8rem">
-											{correspondances}
+										<span css="font-size: 100%; line-height: .8rem; white-space: nowrap">
+											{+correspondances + 1} max
 										</span>
 									)}
 								</div>
