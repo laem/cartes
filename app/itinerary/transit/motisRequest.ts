@@ -16,7 +16,7 @@ import {
 
 // For onTrip, see https://github.com/motis-project/motis/issues/471#issuecomment-2247099832
 const buildRequestBody = (start, destination, date, searchParams) => {
-	const { correspondances, planification } = searchParams
+	const { correspondances, planification, tortue } = searchParams
 
 	// TODO How to set planification ? How to trigger the appearance of the setter
 	// button ?
@@ -87,6 +87,11 @@ const buildRequestBody = (start, destination, date, searchParams) => {
 			search_dir: 'Forward',
 			router: '',
 			max_transfers: correspondances == null ? -1 : +correspondances,
+			...(tortue
+				? {
+						transfer_time_factor: tortue,
+				  }
+				: {}),
 		},
 	}
 	return body

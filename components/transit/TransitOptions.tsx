@@ -1,5 +1,6 @@
 import useSetSearchParams from '@/components/useSetSearchParams'
 import correspondanceIcon from '@/public/correspondance.svg'
+import tortoiseIcon from '@/public/tortoise.svg'
 import Image from 'next/image'
 
 import StartEndOptions from './StartEndOptions'
@@ -7,7 +8,7 @@ import { Button } from './UI'
 import { StepIcon } from '@/app/itinerary/Steps'
 
 export default function TransitOptions({ searchParams }) {
-	const { correspondances } = searchParams
+	const { correspondances, tortue } = searchParams
 	// marche-10min
 	// vélo-45min
 	const setSearchParams = useSetSearchParams()
@@ -24,6 +25,7 @@ export default function TransitOptions({ searchParams }) {
 					list-style-type: none;
 					display: flex;
 					align-items: center;
+					justify-content: center;
 				}
 			`}
 		>
@@ -85,6 +87,18 @@ export default function TransitOptions({ searchParams }) {
 						)}
 					</span>
 				</Button>
+				<Image
+					src={tortoiseIcon}
+					alt="Icône d'une tortue symbolisant une correspondance moins rapide"
+					onClick={() => setSearchParams({ tortue: tortue ? undefined : 3 })}
+					css={`
+						margin-right: 0.5rem;
+						width: 1rem;
+						cursor: pointer;
+						opacity: ${tortue ? 1 : 0.3};
+					`}
+					title="Multiplier par 3 le temps de correspondance"
+				/>
 				<StartEndOptions {...{ key: 'fin', searchParams, setSearchParams }} />
 				<StepIcon text={'B'} />
 			</ol>

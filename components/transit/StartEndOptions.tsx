@@ -15,18 +15,18 @@ export default function StartEndOptions({
 		<Button
 			css={`
 				flex-direction: row !important;
-				width: 8rem;
+				width: 6rem;
 			`}
 		>
 			<div
 				css={`
 					position: absolute;
 					top: calc(50% - 1px);
-					width: 8rem;
+					width: 6rem;
 					background: linear-gradient(
 						90deg,
 						var(--lighterColor) 0%,
-						transparent 20%,
+						transparent 30%,
 						transparent 80%,
 						var(--color) 100%
 					);
