@@ -24,15 +24,15 @@
      inkscape:deskcolor="#d1d1d1"
      inkscape:document-units="mm"
      showgrid="false"
-     inkscape:zoom="0.75901734"
-     inkscape:cx="190.37773"
-     inkscape:cy="332.00823"
+     inkscape:zoom="0.43401471"
+     inkscape:cx="312.2014"
+     inkscape:cy="465.42201"
      inkscape:window-width="1920"
      inkscape:window-height="1055"
      inkscape:window-x="0"
      inkscape:window-y="0"
      inkscape:window-maximized="1"
-     inkscape:current-layer="line" />
+     inkscape:current-layer="layer1" />
   <defs
      id="defs2" />
   <g
@@ -49,7 +49,8 @@
          style="fill:#000000;fill-opacity:1;stroke:#000000;stroke-opacity:1">
         <g
            id="g9426"
-           style="fill:#000000;fill-opacity:1;stroke:#000000;stroke-opacity:1">
+           style="fill:#000000;fill-opacity:1;stroke:#000000;stroke-opacity:1"
+           transform="matrix(0.89070796,0,0,0.89070796,5.433563,5.1761121)">
           <g
              id="g2"
              style="fill:#000000;fill-opacity:1;stroke:#000000;stroke-opacity:1">
@@ -73,7 +74,8 @@
         </g>
         <g
            id="g9440"
-           style="fill:#000000;fill-opacity:1;stroke:#000000;stroke-opacity:1">
+           style="fill:#000000;fill-opacity:1;stroke:#000000;stroke-opacity:1"
+           transform="matrix(0.89070796,0,0,0.89070796,5.433563,5.1761121)">
           <line
              x1="21.1"
              x2="22.799999"
@@ -127,7 +129,7 @@
       <g
          id="g10809"
          style="stroke:#000000;stroke-opacity:1"
-         transform="matrix(3.2565449,0,0,3.2565449,-11.856334,-14.05166)">
+         transform="matrix(2.9006305,0,0,2.9006305,5.8383077,2.8045815)">
         <g
            id="g10800"
            style="stroke:#000000;stroke-opacity:1">
@@ -172,7 +174,7 @@
     </g>
     <g
        id="g9357"
-       transform="matrix(0.41179569,0,0,0.41179569,-81.095292,-49.082154)"
+       transform="matrix(0.33912363,0,0,0.33912363,-55.001497,-15.136434)"
        style="stroke:#ffffff;stroke-width:7.28517;stroke-dasharray:none;stroke-opacity:1">
       <g
          id="g7695"

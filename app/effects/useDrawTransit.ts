@@ -52,7 +52,7 @@ export default function useDrawTransit(map, transit, selectedConnection, date) {
 					if (coordinates.length <= 2) return feature
 
 					var curved = bezierSpline(lineString(coordinates), {
-						sharpness: 0.8,
+						sharpness: 0.6,
 						resolution: 10000,
 					})
 

@@ -32,7 +32,9 @@ export default function TransitOptions({ searchParams }) {
 			<ol>
 				<StepIcon text={'A'} />
 
-				<StartEndOptions {...{ key: 'debut', searchParams, setSearchParams }} />
+				<StartEndOptions
+					{...{ partKey: 'debut', searchParams, setSearchParams }}
+				/>
 				<Button
 					css={`
 						cursor: pointer;
@@ -92,14 +94,16 @@ export default function TransitOptions({ searchParams }) {
 					alt="Icône d'une tortue symbolisant une correspondance moins rapide"
 					onClick={() => setSearchParams({ tortue: tortue ? undefined : 3 })}
 					css={`
-						margin-right: 0.5rem;
+						margin-right: 0.3rem;
 						width: 1rem;
 						cursor: pointer;
 						opacity: ${tortue ? 1 : 0.3};
 					`}
 					title="Multiplier par 3 le temps de correspondance"
 				/>
-				<StartEndOptions {...{ key: 'fin', searchParams, setSearchParams }} />
+				<StartEndOptions
+					{...{ partKey: 'fin', searchParams, setSearchParams }}
+				/>
 				<StepIcon text={'B'} />
 			</ol>
 		</section>

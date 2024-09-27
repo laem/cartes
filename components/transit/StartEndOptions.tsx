@@ -7,10 +7,11 @@ import { Button } from './UI'
 export default function StartEndOptions({
 	setSearchParams,
 	searchParams,
-	key = 'debut',
+	partKey,
 }) {
-	const which = searchParams[key]
+	const which = searchParams[partKey]
 	const time = which && getTimePart(which)
+
 	return (
 		<Button
 			css={`
@@ -45,13 +46,17 @@ export default function StartEndOptions({
 				`}
 				onClick={() =>
 					setSearchParams({
-						[key]:
+						[partKey]:
 							(which
-								? which.startsWith('marche')
+								? which.startsWith('marche-')
 									? 'vélo'
 									: which.startsWith('vélo')
 									? 'voiture'
-									: 'marche'
+									: /* TODO activate this when we can draw precise walk trips, else we can't easily check that wheelchair routing works.
+									: which.startsWith('voiture')
+									? 'marchereduite'
+									*/
+									  'marche'
 								: 'marche') +
 							'-' +
 							(!which ? '5min' : getTimePart(which) + 'min'),
@@ -62,6 +67,13 @@ export default function StartEndOptions({
 					<Image
 						src={'/walk-or-cycle.svg'}
 						alt="Icône de quelqu'un qui marche ou roule à vélo"
+						width="10"
+						height="10"
+					/>
+				) : which.startsWith('marchereduite') ? (
+					<Image
+						src={'/wheelchair.svg'}
+						alt="Icône d'une personne en fauteuil roulant"
 						width="10"
 						height="10"
 					/>
@@ -88,7 +100,7 @@ export default function StartEndOptions({
 			<button
 				onClick={() =>
 					setSearchParams({
-						[which]:
+						[partKey]:
 							(which ? which.split('-')[0] : 'marche') +
 							'-' +
 							(!time

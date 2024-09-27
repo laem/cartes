@@ -1,14 +1,13 @@
 'use client'
 
 import useMeasureDistance from '@/app/useMeasureDistance'
-import Link from 'next/link'
-import styled from 'styled-components'
+import Emoji from '@/components/Emoji'
 import css from '@/components/css/convertToJs'
 import useSetSearchParams from '@/components/useSetSearchParams'
 import { omit } from '@/components/utils/utils'
+import Link from 'next/link'
+import styled from 'styled-components'
 import ItineraryButton, { ResetIcon } from './itinerary/ItineraryButton'
-import Emoji from '@/components/Emoji'
-import { useEffect, useState } from 'react'
 
 export const MapButtonsWrapper = styled.div`
 	position: fixed;
