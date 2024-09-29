@@ -5,6 +5,7 @@ import ProfileChooser from './ProfileChooser'
 import ValhallaRésumé from './itinerary/ValhallaRésumé'
 import TransitLoader from './itinerary/transit/TransitLoader'
 import { nowStamp } from './itinerary/transit/motisRequest'
+import ElevationGraph from '@/components/itinerary/ElevationGraph'
 
 export default function RouteRésumé({
 	mode,
@@ -197,6 +198,7 @@ const BrouterModeContent = ({
 					latitude={feature.geometry.coordinates[0][1]}
 				/>
 			)}
+			<ElevationGraph feature={feature} />
 		</div>
 	)
 }
