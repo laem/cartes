@@ -76,6 +76,7 @@ export default function Map({
 	quickSearchFeatures,
 	trackedSnap,
 	panoramaxPosition,
+	setMapLoaded,
 	wikidata,
 }) {
 	const mapContainerRef = useRef(null)
@@ -94,7 +95,8 @@ export default function Map({
 		setZoom,
 		setBbox,
 		mapContainerRef,
-		setGeolocation
+		setGeolocation,
+		setMapLoaded
 	)
 	const setSearchParams = useSetSearchParams()
 

@@ -81,7 +81,6 @@ const Page = async ({ searchParams }) => {
 		<main
 			style={{
 				height: '100%',
-				background: '#dfecbe',
 				minHeight: '100vh',
 			}}
 		>

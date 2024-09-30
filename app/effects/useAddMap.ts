@@ -13,10 +13,37 @@ import { Protocol as CartesProtocol } from '@/components/map/CartesProtocol.ts'
  *
  * */
 
-const defaultSky = {
-	'sky-color': '#76508B',
-	'horizon-color': '#FCB4AB',
-	'fog-color': '#FD8E35',
+const morningDate = new Date('March 13, 08 07:20'),
+	dayDate = new Date('March 13, 08 14:20'),
+	eveningDate = new Date('March 13, 08 20:23')
+const date = new Date()
+
+const hoursOfDay = date.getHours()
+const defaultSky =
+	hoursOfDay < 8 || hoursOfDay > 18 //TODO see RouteRésumé, it has time of sunset. Make an aurora light too, different from the sunset, and handle the light below
+		? {
+				'sky-color': '#76508B',
+				'horizon-color': '#FCB4AB',
+				'fog-color': '#FD8E35',
+		  }
+		: {
+				'sky-color': '#199EF3',
+				'sky-horizon-blend': 0.5,
+				'horizon-color': '#ffffff',
+				'horizon-fog-blend': 0.5,
+				'fog-color': '#0000ff',
+				'fog-ground-blend': 0.5,
+				'atmosphere-blend': ['interpolate', ['linear'], ['zoom'], 0, 0.5, 7, 0],
+		  }
+
+const defaultProjection = {
+	type: 'globe',
+}
+// TODO I haven't yet understood how to handle this. With the globe mode, we
+// should let the light follow the real sun, and enable the user to tweak it
+const defaultLight = {
+	anchor: 'anchor',
+	position: [1.15, 210, 30],
 }
 
 const defaultCenter =
@@ -32,7 +59,8 @@ export default function useAddMap(
 	setZoom,
 	setBbox,
 	mapContainerRef,
-	setGeolocation
+	setGeolocation,
+	setMapLoaded
 ) {
 	const [map, setMap] = useState(null)
 	const [geolocate, setGeolocate] = useState(null)
@@ -130,11 +158,17 @@ export default function useAddMap(
 		})
 
 		newMap.on('load', () => {
+			setMapLoaded(true)
 			setMap(newMap)
-			newMap.setSky(defaultSky)
 
 			setZoom(Math.round(newMap.getZoom()))
 			setBbox(newMap.getBounds().toArray())
+		})
+
+		newMap.on('style.load', () => {
+			newMap.setSky(defaultSky)
+			newMap.setProjection(defaultProjection)
+			newMap.setLight(defaultLight)
 		})
 
 		newMap.on('moveend', (e) => {
@@ -145,14 +179,7 @@ export default function useAddMap(
 			setMap(null)
 			newMap?.remove()
 		}
-	}, [setMap, setZoom, setBbox, mapContainerRef, setGeolocate]) // styleUrl not listed on purpose
-
-	useEffect(() => {
-		if (!map) return
-		setTimeout(() => {
-			map.setSky(defaultSky)
-		}, 1000)
-	}, [map, styleUrl])
+	}, [setMap, setMapLoaded, setZoom, setBbox, mapContainerRef, setGeolocate]) // styleUrl not listed on purpose
 
 	const triggerGeolocation = useMemo(
 		() => (geolocate ? () => geolocate.trigger() : () => 'Not ready'),
