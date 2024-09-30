@@ -23,6 +23,14 @@ const defaultSky = {
 	'atmosphere-blend': ['interpolate', ['linear'], ['zoom'], 0, 0.5, 7, 0],
 }
 
+const defaultProjection = {
+	type: 'globe',
+}
+const defaultLight = {
+	anchor: 'map',
+	position: [1.5, 90, 80],
+}
+
 const defaultCenter =
 	// Saint Malo
 	// [-1.9890417068124002, 48.66284934737089]
@@ -137,10 +145,15 @@ export default function useAddMap(
 		newMap.on('load', () => {
 			setMapLoaded(true)
 			setMap(newMap)
-			newMap.setSky(defaultSky)
 
 			setZoom(Math.round(newMap.getZoom()))
 			setBbox(newMap.getBounds().toArray())
+		})
+
+		newMap.on('style.load', () => {
+			newMap.setSky(defaultSky)
+			newMap.setProjection(defaultProjection)
+			newMap.setLight(defaultLight)
 		})
 
 		newMap.on('moveend', (e) => {
@@ -152,13 +165,6 @@ export default function useAddMap(
 			newMap?.remove()
 		}
 	}, [setMap, setMapLoaded, setZoom, setBbox, mapContainerRef, setGeolocate]) // styleUrl not listed on purpose
-
-	useEffect(() => {
-		if (!map) return
-		setTimeout(() => {
-			map.setSky(defaultSky)
-		}, 1000)
-	}, [map, styleUrl])
 
 	const triggerGeolocation = useMemo(
 		() => (geolocate ? () => geolocate.trigger() : () => 'Not ready'),

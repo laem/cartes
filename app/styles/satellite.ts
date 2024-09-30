@@ -9,9 +9,6 @@ export default function natureStyle(
 		version: 8,
 		id: 'satellite',
 		name: 'Satellite',
-		projection: {
-			type: 'globe',
-		},
 		sources: {
 			maptiler_planet: {
 				url: `https://api.maptiler.com/tiles/v3/tiles.json?key=${key}`,
@@ -599,10 +596,6 @@ export default function natureStyle(
 				filter: ['all', ['==', 'class', 'continent']],
 			},
 		],
-		light: {
-			anchor: 'map',
-			position: [1.5, 90, 80],
-		},
 		glyphs: `https://api.maptiler.com/fonts/{fontstack}/{range}.pbf?key=${key}`,
 		sprite: 'https://api.maptiler.com/maps/satellite/sprite',
 		bearing: 0,

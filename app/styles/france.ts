@@ -16,13 +16,6 @@ export default function franceStyle(key) {
 		version: 8,
 		id: 'france',
 		name: 'France',
-		projection: {
-			type: 'globe',
-		},
-		light: {
-			anchor: 'map',
-			position: [1.5, 90, 80],
-		},
 		sources: {
 			openmaptiles: {
 				url: 'cartes://hybrid', // see the protocol CartesProtocol
