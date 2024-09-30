@@ -13,15 +13,28 @@ import { Protocol as CartesProtocol } from '@/components/map/CartesProtocol.ts'
  *
  * */
 
-const defaultSky = {
-	'sky-color': '#199EF3',
-	'sky-horizon-blend': 0.5,
-	'horizon-color': '#ffffff',
-	'horizon-fog-blend': 0.5,
-	'fog-color': '#0000ff',
-	'fog-ground-blend': 0.5,
-	'atmosphere-blend': ['interpolate', ['linear'], ['zoom'], 0, 0.5, 7, 0],
-}
+const morningDate = new Date('March 13, 08 07:20'),
+	dayDate = new Date('March 13, 08 14:20'),
+	eveningDate = new Date('March 13, 08 20:23')
+const date = new Date()
+
+const hoursOfDay = date.getHours()
+const defaultSky =
+	hoursOfDay < 8 || hoursOfDay > 18 //TODO see RouteRésumé, it has time of sunset. Make an aurora light too, different from the sunset, and handle the light below
+		? {
+				'sky-color': '#76508B',
+				'horizon-color': '#FCB4AB',
+				'fog-color': '#FD8E35',
+		  }
+		: {
+				'sky-color': '#199EF3',
+				'sky-horizon-blend': 0.5,
+				'horizon-color': '#ffffff',
+				'horizon-fog-blend': 0.5,
+				'fog-color': '#0000ff',
+				'fog-ground-blend': 0.5,
+				'atmosphere-blend': ['interpolate', ['linear'], ['zoom'], 0, 0.5, 7, 0],
+		  }
 
 const defaultProjection = {
 	type: 'globe',
