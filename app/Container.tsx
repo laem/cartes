@@ -49,6 +49,8 @@ import Meteo from './meteo/Meteo'
 import { getStyle } from './styles/styles'
 import useTransportStopData from './transport/useTransportStopData'
 import PanoramaxLoader from './PanoramaxLoader'
+import useWikidata from './useWikidata'
+
 // Map is forced as dynamic since it can't be rendered by nextjs server-side.
 // There is almost no interest to do that anyway, except image screenshots
 const Map = dynamic(() => import('./Map'), {
@@ -79,6 +81,7 @@ export default function Container({
 	const [geolocation, setGeolocation] = useState(null)
 
 	const [safeStyleKey, setSafeStyleKey] = useState(null)
+	console.log('lightpink ssk', safeStyleKey)
 	const [tempStyle, setTempStyle] = useState(null)
 	const [localStorageStyleKey] = useLocalStorage('style', null)
 	const styleKey =
@@ -144,6 +147,11 @@ export default function Container({
 
 	const osmFeature = vers?.osmFeature
 
+	const lonLat = osmFeature && [osmFeature.lon, osmFeature.lat]
+	const wikidata = useWikidata(osmFeature, state, lonLat)
+
+	console.log('wikidata3', wikidata, osmFeature)
+
 	const panoramaxOsmTag = osmFeature?.tags?.panoramax
 
 	const panoramaxId = searchParams.panoramax
@@ -152,6 +160,7 @@ export default function Container({
 		setLatLngClicked,
 		panoramaxOsmTag,
 		panoramaxId,
+		wikidata,
 	})
 
 	const transportStopData = useTransportStopData(osmFeature)
@@ -251,6 +260,7 @@ export default function Container({
 							containerRef,
 							trackedSnap,
 							setTrackedSnap,
+							wikidata,
 						}}
 					/>
 				</ContentWrapper>
@@ -301,6 +311,7 @@ export default function Container({
 						quickSearchFeatures,
 						panoramaxPosition,
 						setMapLoaded,
+						wikidata,
 					}}
 				/>
 			</MapContainer>

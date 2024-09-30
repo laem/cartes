@@ -1,16 +1,32 @@
 import Image from 'next/image'
 import { useMediaQuery } from 'usehooks-ts'
 import { ModalCloseButton } from './UI'
+import { useEffect } from 'react'
 
 export default function FocusedImage({ focusedImage, focusImage }) {
-	const src = `https://commons.wikimedia.org/w/index.php?title=Special:Redirect/file/${encodeURIComponent(
-		focusedImage.title
-	)}`
+	const src =
+		focusedImage.originalUrl ||
+		`https://commons.wikimedia.org/w/index.php?title=Special:Redirect/file/${encodeURIComponent(
+			focusedImage.title
+		)}`
 
-	const fullUrl = `https://commons.wikimedia.org/wiki/${focusedImage.title.replace(
-		' ',
-		'_'
-	)}`
+	const fullUrl =
+		focusedImage.pageUrl ||
+		`https://commons.wikimedia.org/wiki/${focusedImage.title.replace(' ', '_')}`
+
+	useEffect(() => {
+		const listener = (e) => {
+			console.log('lightred', e)
+			if (e.key === 'Escape') {
+				focusImage(null)
+			}
+		}
+		document.addEventListener('keyup', listener)
+		return () => {
+			document.removeEventListener('keyup', listener)
+		}
+	}, [focusImage])
+
 	return (
 		<FocusedWrapper>
 			<ModalCloseButton onClick={() => focusImage(null)} />
@@ -46,14 +62,24 @@ export default function FocusedImage({ focusedImage, focusImage }) {
 							alt="Logo de Wikimedia Commons"
 						/>
 					</a>{' '}
-					<small>par</small>{' '}
-					<small
-						dangerouslySetInnerHTML={{ __html: focusedImage.artistHtmlTag }}
-					></small>
-					{' - '}
-					<small title={focusedImage.date}>
-						{focusedImage.date.slice(0, 4)}
-					</small>
+					{focusedImage.artistHtmlTag ? (
+						<>
+							<small>par</small>{' '}
+							<small
+								dangerouslySetInnerHTML={{ __html: focusedImage.artistHtmlTag }}
+							></small>
+						</>
+					) : (
+						'Wikimedia Commons'
+					)}
+					{focusedImage.date && (
+						<span>
+							{' - '}
+							<small title={focusedImage.date}>
+								{focusedImage.date.slice(0, 4)}
+							</small>
+						</span>
+					)}
 				</figcaption>
 			</figure>
 		</FocusedWrapper>

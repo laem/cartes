@@ -14,6 +14,8 @@ export default function DrawTransportMaps({
 	searchParams,
 	hasItinerary,
 }) {
+	// TODO if base style when F5 before activating transport mode is light style,
+	// safeStyleKey won't be triggered, so nothing will be drawn
 	useEffect(() => {
 		setTempStyle('light')
 		return () => {
@@ -107,7 +109,11 @@ export default function DrawTransportMaps({
 }
 
 const DrawTransportMap = ({ map, agencyId, features, hasItinerary }) => {
-	console.log('transportmap draw or redraw ', agencyId, features.length)
+	console.log(
+		'lightpink transportmap draw or redraw ',
+		agencyId,
+		features.length
+	)
 	useDrawTransport(map, features, 'transitMap-agency-' + agencyId, hasItinerary)
 	return null
 }
