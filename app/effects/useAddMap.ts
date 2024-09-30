@@ -26,9 +26,11 @@ const defaultSky = {
 const defaultProjection = {
 	type: 'globe',
 }
+// TODO I haven't yet understood how to handle this. With the globe mode, we
+// should let the light follow the real sun, and enable the user to tweak it
 const defaultLight = {
-	anchor: 'map',
-	position: [1.5, 90, 80],
+	anchor: 'anchor',
+	position: [1.15, 210, 30],
 }
 
 const defaultCenter =
