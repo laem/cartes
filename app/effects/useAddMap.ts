@@ -36,7 +36,8 @@ export default function useAddMap(
 	setZoom,
 	setBbox,
 	mapContainerRef,
-	setGeolocation
+	setGeolocation,
+	setMapLoaded
 ) {
 	const [map, setMap] = useState(null)
 	const [geolocate, setGeolocate] = useState(null)
@@ -134,6 +135,7 @@ export default function useAddMap(
 		})
 
 		newMap.on('load', () => {
+			setMapLoaded(true)
 			setMap(newMap)
 			newMap.setSky(defaultSky)
 
@@ -149,7 +151,7 @@ export default function useAddMap(
 			setMap(null)
 			newMap?.remove()
 		}
-	}, [setMap, setZoom, setBbox, mapContainerRef, setGeolocate]) // styleUrl not listed on purpose
+	}, [setMap, setMapLoaded, setZoom, setBbox, mapContainerRef, setGeolocate]) // styleUrl not listed on purpose
 
 	useEffect(() => {
 		if (!map) return

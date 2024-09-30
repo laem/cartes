@@ -65,7 +65,7 @@ export const nameExpression = [
 
 export const name = 'name:latin'
 
-const oceanColor = '#71a0e9'
+export const oceanColor = '#71a0e9'
 //'#6688dd' past color, darker. Could be cool to vary in the day, dawn color ?
 
 const layers = [

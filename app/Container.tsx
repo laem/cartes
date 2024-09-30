@@ -62,6 +62,7 @@ export default function Container({
 }) {
 	const setSearchParams = useSetSearchParams()
 	const [focusedImage, focusImage] = useState(null)
+	const [isMapLoaded, setMapLoaded] = useState(false)
 	const [bbox, setBbox] = useState(null)
 	const [zoom, setZoom] = useState(defaultZoom)
 	const [bboxImages, setBboxImages] = useState([])
@@ -213,7 +214,7 @@ export default function Container({
 	const containerRef = useRef()
 	return (
 		<div ref={containerRef}>
-			<MapContainer>
+			<MapContainer $isMapLoaded={isMapLoaded}>
 				<ContentWrapper>
 					<ModalSwitch
 						{...{
@@ -299,6 +300,7 @@ export default function Container({
 						setSafeStyleKey,
 						quickSearchFeatures,
 						panoramaxPosition,
+						setMapLoaded,
 					}}
 				/>
 			</MapContainer>

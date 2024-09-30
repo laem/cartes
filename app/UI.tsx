@@ -3,9 +3,11 @@
 import closeIcon from '@/public/close-circle-stroke.svg'
 import Image from 'next/image'
 import styled from 'styled-components'
+import { oceanColor } from './styles/france'
 
 export const MapContainer = styled.div`
-	background: black;
+	${(p) =>
+		!p.$isMapLoaded ? `background: ${oceanColor}` : 'background: black'};
 	position: absolute;
 	top: 0;
 	left: 0;

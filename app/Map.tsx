@@ -82,6 +82,7 @@ export default function Map({
 	quickSearchFeatures,
 	trackedSnap,
 	panoramaxPosition,
+	setMapLoaded,
 }) {
 	const mapContainerRef = useRef(null)
 	const stepsLength = state.filter((step) => step?.key).length
@@ -99,7 +100,8 @@ export default function Map({
 		setZoom,
 		setBbox,
 		mapContainerRef,
-		setGeolocation
+		setGeolocation,
+		setMapLoaded
 	)
 	const setSearchParams = useSetSearchParams()
 
