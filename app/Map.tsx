@@ -301,6 +301,7 @@ export default function Map({
 			if (!autoPitchPreferenceIsNo)
 				setAutoPitchPreference(Math.round(new Date().getTime() / 1000))
 			const auto3d = !autoPitchPreferenceIsNo
+
 			map.flyTo({
 				center: [vers.longitude, vers.latitude],
 				zoom: tailoredZoom,

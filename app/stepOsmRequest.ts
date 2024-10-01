@@ -101,5 +101,13 @@ export const stepOsmRequest = async (point, state = []) => {
 			*/
 	}
 	const osmFeature = await request()
-	return { osmCode, longitude, latitude, name, osmFeature, key: point }
+
+	return {
+		osmCode,
+		longitude: longitude || osmFeature.lon,
+		latitude: latitude || osmFeature.lat,
+		name,
+		osmFeature,
+		key: point,
+	}
 }
