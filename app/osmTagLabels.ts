@@ -31,11 +31,11 @@ const translateBasics = (value: string) => {
 	return found || value
 }
 
-// This is only a complement to the above imported set of translations. 
-// This list could someday be backported by whoever is motivated to make the contribution :) 
+// This is only a complement to the above imported set of translations.
+// This list could someday be backported by whoever is motivated to make the contribution :)
 export const tagNameCorrespondance = (key: string) => {
 	const found = {
-		alt_name:'Autre nom',
+		alt_name: 'Autre nom',
 		books: 'Livres',
 		'brand:website': 'Site de la marque',
 		'building:architecture': 'Style architectural',
@@ -83,6 +83,7 @@ export const tagNameCorrespondance = (key: string) => {
 		'ref:FR:FINESS': 'Code FINESS',
 		passenger_information_display: "écran d'information voyageur",
 		'survey:date': 'Dernière date de vérification',
+		'species:fr': 'Espèce (fr)',
 	}[key]
 	return found || key
 }
