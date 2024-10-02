@@ -10,6 +10,7 @@ import useSetSearchParams from './useSetSearchParams'
 import { capitalise0, sortBy } from './utils/utils'
 import { OpenIndicator, getOh } from '@/app/osm/OpeningHours'
 import { categoryIconUrl } from '@/app/QuickFeatureSearch'
+import { bearing } from '@turf/bearing'
 
 // This is very scientific haha
 const latDifferenceOfRennes = 0.07,
@@ -70,7 +71,11 @@ export default function SimilarNodes({ node }) {
 			.filter((feature) => feature.id !== node.id && feature.tags.name)
 			.map((feature) => {
 				const { lon: lon2, lat: lat2 } = feature
-				return { ...feature, distance: turfDistance([lon2, lat2], reference) }
+				return {
+					...feature,
+					distance: turfDistance([lon2, lat2], reference),
+					bearing: bearing(reference, [lon2, lat2]),
+				}
 			})
 
 	const closestFeatures =
@@ -141,6 +146,8 @@ const NodeList = ({ nodes, setSearchParams, isOpenByDefault }) => (
 			const humanDistance = computeHumanDistance(f.distance * 1000)
 			const oh = f.tags.opening_hours
 			const { isOpen } = oh ? getOh(oh) : {}
+
+			const roseDirection = computeRoseDirection(f.bearing)
 			return (
 				<li key={f.id}>
 					{!isOpenByDefault &&
@@ -170,10 +177,19 @@ const NodeList = ({ nodes, setSearchParams, isOpenByDefault }) => (
 						{f.tags.name}
 					</Link>{' '}
 					<small>
-						à {humanDistance[0]} {humanDistance[1]}
+						à {humanDistance[0]} {humanDistance[1]} vers {roseDirection}
 					</small>
 				</li>
 			)
 		})}
 	</ul>
 )
+
+const computeRoseDirection = (bearing) =>
+	Math.abs(bearing) > 135
+		? 'le sud'
+		: Math.abs(bearing) < 45
+		? 'le nord'
+		: bearing < 0
+		? "l'ouest"
+		: "l'est"
