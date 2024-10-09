@@ -21,8 +21,7 @@ export default function TransportMap({
 	bbox,
 	setIsItineraryMode,
 }) {
-	//TODO data is now an array of [selectedAgencies, allAgencyAreas]
-	return 'plop'
+	const bboxAgencies = data[0]
 	const setSearchParams = useSetSearchParams()
 
 	const setTransitFilter = (filter) => setSearchParams({ filtre: filter })
@@ -55,7 +54,7 @@ export default function TransportMap({
 	console.time('routes' + rand)
 
 	const routes = sortBy((route) => -route.properties.perDay)(
-		data.reduce((memo, [agencyId, { features }]) => {
+		bboxAgencies.reduce((memo, [agencyId, { features }]) => {
 			if (selectedAgency != null && agencyId !== selectedAgency) return memo
 			const filteredFeatures = features.filter(transitFilterFunction)
 			const found = filteredFeatures.filter((feature, i) => {
@@ -87,8 +86,8 @@ export default function TransportMap({
 
 	const selectedAgencyData =
 		selectedAgency &&
-		data?.length > 0 &&
-		data.find(([id]) => id === selectedAgency)
+		bboxAgencies?.length > 0 &&
+		bboxAgencies.find(([id]) => id === selectedAgency)
 	return (
 		<section
 			css={`
@@ -130,7 +129,7 @@ export default function TransportMap({
 					</button>
 				</PlaceButton>
 				{false && <DateSelector type="day" date={day} />}
-				{selectedAgency == null && data?.length > 0 && (
+				{selectedAgency == null && bboxAgencies?.length > 0 && (
 					<section>
 						<p>Dans cette zone : </p>
 						<ol
@@ -143,7 +142,7 @@ export default function TransportMap({
 								}
 							`}
 						>
-							{data.map(([agencyId, { agency }]) => (
+							{bboxAgencies.map(([agencyId, { agency }]) => (
 								<li key={agencyId}>
 									<Link href={setSearchParams({ agence: agencyId }, true)}>
 										{agency.agency_name}
@@ -168,7 +167,9 @@ export default function TransportMap({
 						}}
 					/>
 					<h2>{stop}</h2>
-					{data?.length > 0 && <StopByName stopName={stop} data={data} />}
+					{bboxAgencies?.length > 0 && (
+						<StopByName stopName={stop} data={bboxAgencies} />
+					)}
 				</section>
 			)}
 			{!routesDemanded && selectedAgencyData && (
@@ -179,11 +180,13 @@ export default function TransportMap({
 			)}
 			{!stop &&
 				(selectedAgency == '1187' ? (
-					<SncfSelect {...{ data, setTrainType, trainType }} />
+					<SncfSelect {...{ bboxAgencies, setTrainType, trainType }} />
 				) : (
-					<TransitFilter {...{ data, setTransitFilter, transitFilter }} />
+					<TransitFilter
+						{...{ bboxAgencies, setTransitFilter, transitFilter }}
+					/>
 				))}
-			{!stop && routes && (
+			{!stop && selectedAgency && routes && (
 				<Routes
 					routesParam={routesParam}
 					routes={routes}

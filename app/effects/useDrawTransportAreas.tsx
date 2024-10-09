@@ -24,7 +24,7 @@ export default function useDrawTransportAreas(map, areas) {
 			source: areasId,
 			type: 'fill',
 			id: areasId,
-			paint: { 'fill-color': '#57bff5', 'fill-opacity': 0.1 },
+			paint: { 'fill-color': '#57bff5', 'fill-opacity': 0.06 },
 		})
 		map.addLayer({
 			source: areasId,
