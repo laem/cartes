@@ -1,11 +1,19 @@
 import useSetSearchParams from '@/components/useSetSearchParams'
 import { useEffect } from 'react'
 import { safeRemove } from './utils'
+import { area, convex } from '@turf/turf'
+import bboxPolygon from '@turf/bbox-polygon'
 
 /***
  * This hook draws transit lines on the map.
  */
-export default function useDrawTransport(map, features, drawKey, hasItinerary) {
+export default function useDrawTransport(
+	map,
+	features,
+	drawKey,
+	hasItinerary,
+	bbox
+) {
 	const setSearchParams = useSetSearchParams()
 
 	const id = 'transport-routes-' + drawKey
@@ -99,9 +107,26 @@ export default function useDrawTransport(map, features, drawKey, hasItinerary) {
 				arret,
 			})
 		}
+		const areasId = id + 'areas'
+		const areasSource = map.getSource(areasId)
+		if (areasSource) return
+		const areaKm2 = area(bboxPolygon(bbox)) / 1000000
+		console.log('orange areas', drawKey, areaKm2)
+		if (areaKm2 > 3000) return
+
+		const areas = convex(featureCollection)
+		map.addSource(areasId, { type: 'geojson', data: areas })
+		map.addLayer({
+			source: areasId,
+			type: 'fill',
+			id: areasId,
+			paint: { 'fill-color': 'magenta' },
+		})
 		try {
+			return
 			const source = map.getSource(id)
 			if (source) return
+
 			map.addSource(id, { type: 'geojson', data: featureCollection })
 
 			map.addLayer({
@@ -194,5 +219,5 @@ export default function useDrawTransport(map, features, drawKey, hasItinerary) {
 			map.off('click', pointsId, onClickStop)
 			safeRemove(map)([linesId, pointsId], [id])
 		}
-	}, [map, features, drawKey])
+	}, [map, features, drawKey, bbox])
 }

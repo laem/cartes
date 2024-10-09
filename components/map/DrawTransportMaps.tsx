@@ -75,7 +75,9 @@ export default function DrawTransportMaps({
 	const dataToDraw = useMemo(() => {
 		console.log('memo transport dataToDraw', agencyIdsHash, transportsData)
 		return transportsData
-			.map(([agencyId, { features }]) => {
+			.map(([agencyId, data]) => {
+				const { bbox, features } = data
+				console.log('orange data', data)
 				if (selectedAgency != null && agencyId !== selectedAgency) return false
 				const filteredFeatures = filterTransportFeatures(features, {
 					routesParam,
@@ -83,7 +85,7 @@ export default function DrawTransportMaps({
 					trainType,
 					transitFilter,
 				})
-				return [agencyId, filteredFeatures]
+				return [agencyId, filteredFeatures, bbox]
 			})
 			.filter(Boolean)
 	}, [
@@ -97,23 +99,30 @@ export default function DrawTransportMaps({
 
 	if (safeStyleKey !== 'light') return null
 
-	return dataToDraw.map(([agencyId, features]) => (
+	return dataToDraw.map(([agencyId, features, bbox]) => (
 		<DrawTransportMap
 			key={agencyId}
 			agencyId={agencyId}
 			features={features}
 			map={map}
 			hasItinerary={hasItinerary}
+			bbox={bbox}
 		/>
 	))
 }
 
-const DrawTransportMap = ({ map, agencyId, features, hasItinerary }) => {
+const DrawTransportMap = ({ map, agencyId, features, hasItinerary, bbox }) => {
 	console.log(
 		'lightpink transportmap draw or redraw ',
 		agencyId,
 		features.length
 	)
-	useDrawTransport(map, features, 'transitMap-agency-' + agencyId, hasItinerary)
+	useDrawTransport(
+		map,
+		features,
+		'transitMap-agency-' + agencyId,
+		hasItinerary,
+		bbox
+	)
 	return null
 }
