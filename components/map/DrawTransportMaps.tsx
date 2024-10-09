@@ -4,7 +4,7 @@ import { gtfsServerUrl } from '@/app/serverUrls'
 import { defaultTransitFilter } from '@/app/transport/TransitFilter'
 import { filterTransportFeatures } from '@/app/transport/filterTransportFeatures'
 import { sortBy } from '@/components/utils/utils'
-import { useEffect, useMemo, useState } from 'react'
+import { memo, useEffect, useMemo, useState } from 'react'
 import { useMediaQuery } from 'usehooks-ts'
 
 export default function DrawTransportMaps({
@@ -107,7 +107,7 @@ export default function DrawTransportMaps({
 		<>
 			<DrawTransportAreas areas={transportsData[1]} map={map} />
 			{dataToDraw.map(([agencyId, features, bbox]) => (
-				<DrawTransportMap
+				<DrawTransportMapMemo
 					key={agencyId}
 					agencyId={agencyId}
 					features={features}
@@ -126,11 +126,7 @@ const DrawTransportAreas = ({ map, areas }) => {
 }
 
 const DrawTransportMap = ({ map, agencyId, features, hasItinerary, bbox }) => {
-	console.log(
-		'lightpink transportmap draw or redraw ',
-		agencyId,
-		features.length
-	)
+	console.log('orange transportmap draw or redraw ', agencyId, features.length)
 	useDrawTransport(
 		map,
 		features,
@@ -140,3 +136,7 @@ const DrawTransportMap = ({ map, agencyId, features, hasItinerary, bbox }) => {
 	)
 	return null
 }
+
+const DrawTransportMapMemo = memo(DrawTransportMap, (prevProps, nextProps) => {
+	return prevProps.agencyId === nextProps.agencyId
+})

@@ -137,6 +137,7 @@ export default function useFetchTransportMap(
 	const agencyIdsHash =
 		data && Array.isArray(data[0]) && data.map(([a]) => a).join('<|>')
 	const transportsData = useMemo(() => {
+		console.log('orange transport hash', agencyIdsHash)
 		return [data, agencyAreas]
 	}, [agencyIdsHash, agencyAreas])
 
