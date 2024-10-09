@@ -21,6 +21,8 @@ export default function TransportMap({
 	bbox,
 	setIsItineraryMode,
 }) {
+	//TODO data is now an array of [selectedAgencies, allAgencyAreas]
+	return 'plop'
 	const setSearchParams = useSetSearchParams()
 
 	const setTransitFilter = (filter) => setSearchParams({ filtre: filter })

@@ -107,23 +107,15 @@ export default function useDrawTransport(
 				arret,
 			})
 		}
+		/*
 		const areasId = id + 'areas'
 		const areasSource = map.getSource(areasId)
 		if (areasSource) return
-		const areaKm2 = area(bboxPolygon(bbox)) / 1000000
-		console.log('orange areas', drawKey, areaKm2)
 		if (areaKm2 > 3000) return
 
 		const areas = convex(featureCollection)
-		map.addSource(areasId, { type: 'geojson', data: areas })
-		map.addLayer({
-			source: areasId,
-			type: 'fill',
-			id: areasId,
-			paint: { 'fill-color': 'magenta' },
-		})
+		*/
 		try {
-			return
 			const source = map.getSource(id)
 			if (source) return
 

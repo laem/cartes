@@ -156,9 +156,12 @@ export default function Map({
 	const agencyId = searchParams.agence
 	const agency = useMemo(() => {
 		const agencyData =
-			transportsData && transportsData.find((el) => el[0] === agencyId)
+			transportsData &&
+			transportsData[0] &&
+			transportsData[0].find((el) => el[0] === agencyId)
 		return agencyData && { id: agencyData[0], ...agencyData[1] }
 	}, [agencyId]) // including transportsData provokes a loop : maplibre bbox updated -> transportsData recreated -> etc
+
 	useEffect(() => {
 		if (!map || !agency) return
 

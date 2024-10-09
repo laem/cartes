@@ -12,6 +12,7 @@ export default function useFetchTransportMap(
 	givenAgencyEntry
 ) {
 	const [data, setData] = useState(givenAgencyEntry ? [givenAgencyEntry] : [])
+	const [agencyAreas, setAgencyAreas] = useState()
 
 	useEffect(() => {
 		if (!active || agence == null) return
@@ -31,10 +32,24 @@ export default function useFetchTransportMap(
 	}, [agence, data, active, setData])
 
 	useEffect(() => {
-		if (!active || !fetchAll) return
+		if (!active) return
 
 		const doFetch = async () => {
 			const url = `${gtfsServerUrl}/agencyAreas`
+
+			const request = await fetch(url)
+			const json = await request.json()
+
+			setAgencyAreas(json)
+		}
+		doFetch()
+	}, [active, setAgencyAreas])
+
+	useEffect(() => {
+		if (!active || !fetchAll) return
+
+		const doFetch = async () => {
+			const url = `${gtfsServerUrl}/agencies`
 
 			const request = await fetch(url)
 			const json = await request.json()
@@ -122,8 +137,8 @@ export default function useFetchTransportMap(
 	const agencyIdsHash =
 		data && Array.isArray(data[0]) && data.map(([a]) => a).join('<|>')
 	const transportsData = useMemo(() => {
-		return data
-	}, [agencyIdsHash])
+		return [data, agencyAreas]
+	}, [agencyIdsHash, agencyAreas])
 
 	return active ? transportsData : null
 }

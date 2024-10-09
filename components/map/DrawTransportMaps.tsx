@@ -1,4 +1,5 @@
 import useDrawTransport from '@/app/effects/useDrawTransport'
+import useDrawTransportAreas from '@/app/effects/useDrawTransportAreas'
 import { gtfsServerUrl } from '@/app/serverUrls'
 import { defaultTransitFilter } from '@/app/transport/TransitFilter'
 import { filterTransportFeatures } from '@/app/transport/filterTransportFeatures'
@@ -51,7 +52,10 @@ export default function DrawTransportMaps({
 		if (!selectedAgency) return
 
 		if (selectedAgencyBbox) return
-		if (transportsData?.find(([agencyId]) => agencyId === selectedAgency))
+		if (
+			transportsData &&
+			transportsData[0].find(([agencyId]) => agencyId === selectedAgency)
+		)
 			return
 
 		const doFetch = async () => {
@@ -69,12 +73,12 @@ export default function DrawTransportMaps({
 	}, [selectedAgency, transportsData, selectedAgencyBbox])
 
 	const agencyIdsHash = sortBy((id) => id)(
-		transportsData.map(([id]) => id)
+		transportsData[0].map(([id]) => id)
 	).join('')
 
 	const dataToDraw = useMemo(() => {
 		console.log('memo transport dataToDraw', agencyIdsHash, transportsData)
-		return transportsData
+		return transportsData[0]
 			.map(([agencyId, data]) => {
 				const { bbox, features } = data
 				console.log('orange data', data)
@@ -99,16 +103,26 @@ export default function DrawTransportMaps({
 
 	if (safeStyleKey !== 'light') return null
 
-	return dataToDraw.map(([agencyId, features, bbox]) => (
-		<DrawTransportMap
-			key={agencyId}
-			agencyId={agencyId}
-			features={features}
-			map={map}
-			hasItinerary={hasItinerary}
-			bbox={bbox}
-		/>
-	))
+	return (
+		<>
+			<DrawTransportAreas areas={transportsData[1]} map={map} />
+			{dataToDraw.map(([agencyId, features, bbox]) => (
+				<DrawTransportMap
+					key={agencyId}
+					agencyId={agencyId}
+					features={features}
+					map={map}
+					hasItinerary={hasItinerary}
+					bbox={bbox}
+				/>
+			))}
+		</>
+	)
+}
+
+const DrawTransportAreas = ({ map, areas }) => {
+	useDrawTransportAreas(map, areas)
+	return null
 }
 
 const DrawTransportMap = ({ map, agencyId, features, hasItinerary, bbox }) => {
