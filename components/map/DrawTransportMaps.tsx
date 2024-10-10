@@ -1,6 +1,10 @@
 import useDrawTransport from '@/app/effects/useDrawTransport'
 import useDrawTransportAreas from '@/app/effects/useDrawTransportAreas'
 import { gtfsServerUrl } from '@/app/serverUrls'
+import {
+	defaultAgencyFilter,
+	getAgencyFilter,
+} from '@/app/transport/AgencyFilter'
 import { defaultTransitFilter } from '@/app/transport/TransitFilter'
 import { filterTransportFeatures } from '@/app/transport/filterTransportFeatures'
 import { sortBy } from '@/components/utils/utils'
@@ -30,6 +34,7 @@ export default function DrawTransportMaps({
 		filtre: transitFilter = defaultTransitFilter,
 		arret: stop,
 		agence: selectedAgency,
+		gamme: agencyFilter = defaultAgencyFilter,
 	} = searchParams
 
 	const [selectedAgencyBbox, setSelectedAgencyBbox] = useState(null)
@@ -82,6 +87,11 @@ export default function DrawTransportMaps({
 			transportsData &&
 			transportsData[0]
 				.map(([agencyId, data]) => {
+					if (
+						agencyFilter &&
+						!getAgencyFilter((key) => key === agencyFilter).filter(data)
+					)
+						return false
 					const { bbox, features } = data
 					console.log('orange data', data)
 					if (selectedAgency != null && agencyId !== selectedAgency)
@@ -103,6 +113,7 @@ export default function DrawTransportMaps({
 		trainType,
 		transitFilter,
 		selectedAgency,
+		agencyFilter,
 	])
 
 	if (safeStyleKey !== 'light') return null
@@ -110,13 +121,18 @@ export default function DrawTransportMaps({
 	if (!transportsData) return null
 	return (
 		<>
-			<DrawTransportAreas areas={transportsData[1]} map={map} />
+			<DrawTransportAreas
+				areas={transportsData[1]}
+				map={map}
+				agencyFilter={agencyFilter}
+			/>
 			{dataToDraw.map(([agencyId, features, bbox]) => (
 				<DrawTransportMapMemo
 					key={agencyId}
 					agencyId={agencyId}
 					features={features}
 					map={map}
+					drawKey={'transitMap-agency-' + agencyId}
 					hasItinerary={hasItinerary}
 					bbox={bbox}
 				/>
@@ -125,23 +141,20 @@ export default function DrawTransportMaps({
 	)
 }
 
-const DrawTransportAreas = ({ map, areas }) => {
-	useDrawTransportAreas(map, areas)
+const DrawTransportAreas = ({ map, areas, agencyFilter }) => {
+	useDrawTransportAreas(map, areas, agencyFilter)
 	return null
 }
 
-const DrawTransportMap = ({ map, agencyId, features, hasItinerary, bbox }) => {
-	console.log('orange transportmap draw or redraw ', agencyId, features.length)
-	useDrawTransport(
-		map,
-		features,
-		'transitMap-agency-' + agencyId,
-		hasItinerary,
-		bbox
-	)
+const DrawTransportMap = ({ map, features, hasItinerary, bbox, drawKey }) => {
+	console.log('orange draw or redraw ', drawKey, features.length)
+	useDrawTransport(map, features, drawKey, hasItinerary, bbox)
 	return null
 }
 
-const DrawTransportMapMemo = memo(DrawTransportMap, (prevProps, nextProps) => {
-	return prevProps.agencyId === nextProps.agencyId
-})
+const DrawTransportMapMemo = memo(
+	DrawTransportMap,
+	({ drawKey }, { drawKey: key2 }) => {
+		return drawKey === key2
+	}
+)

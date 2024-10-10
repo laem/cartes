@@ -1,0 +1,83 @@
+import { capitalise0, sortBy } from '@/components/utils/utils'
+import { area, bboxPolygon } from '@turf/turf'
+
+export const defaultAgencyFilter = 'urbain'
+// these are filter functions that select lines depending on properties
+// then, another function will adapt to keep only the points where filtered
+// routes pass
+
+export const getAgencyFilter = (keyTest) =>
+	agencyFilters.find(([key]) => keyTest(key))[1]
+
+export const agencyFilters = [
+	[
+		'urbain',
+		{
+			filter: (agency) => {
+				const { routeTypeStats: stats, bbox } = agency
+				const areaKm2 = area(bboxPolygon(bbox)) / 1000000
+				// because flixbus has route type 3, this old attribute does not
+				// distinguish local buses and long range buses, what a bad decision
+				if (areaKm2 > 3000) return
+
+				return (stats[3] || 0) + (stats[1] || 0) > 0.8
+			},
+		},
+	],
+	[
+		'train',
+		{
+			filter: (agency) => agency.routeTypeStats[2] > 0.7, // SNCF has .79 train
+		},
+	],
+	[
+		'car',
+		{
+			filter: (agency) => {
+				const { routeTypeStats: stats, bbox } = agency
+				const areaKm2 = area(bboxPolygon(bbox)) / 1000000
+				// because flixbus has route type 3, this old attribute does not
+				// distinguish local buses and long range buses, what a bad decision
+				if (areaKm2 < 3000) return
+
+				return stats[3] > 0.7
+			},
+		},
+	],
+]
+export default function AgencyFilter({ agencyFilter, setAgencyFilter }) {
+	return (
+		<section
+			css={`
+				margin-top: 1rem;
+			`}
+		>
+			<form
+				css={`
+					width: 100%;
+					overflow: scroll;
+					height: 2.4rem;
+					label {
+						margin: 0.6rem;
+						white-space: nowrap;
+					}
+					input {
+						margin-right: 0.4rem;
+					}
+				`}
+			>
+				{agencyFilters.map(([key]) => (
+					<label>
+						<input
+							type="checkbox"
+							checked={agencyFilter === key}
+							key={key}
+							onClick={() => setAgencyFilter(key)}
+						/>
+						{key}
+					</label>
+				))}
+			</form>
+		</section>
+	)
+}

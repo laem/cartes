@@ -142,7 +142,10 @@ export default function useFetchTransportMap(
 		console.log('orange transport hash', agencyIdsHash, agencyAreas)
 		return [
 			data.filter(filterRejectPlaneAgency),
-			filterMapEntries(agencyAreas, (id) => filterRejectPlaneAgency([id])),
+			filterMapEntries(
+				agencyAreas,
+				(id, v) => console.log('orange tr', v) || filterRejectPlaneAgency([id])
+			),
 		]
 	}, [agencyIdsHash, agencyAreas])
 

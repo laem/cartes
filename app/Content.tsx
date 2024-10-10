@@ -23,6 +23,7 @@ import { getHasStepBeingSearched } from './itinerary/Steps'
 import getUrl from './osm/getUrl'
 import StyleChooser from './styles/StyleChooser'
 import { defaultTransitFilter } from './transport/TransitFilter'
+import { defaultAgencyFilter } from './transport/AgencyFilter'
 import TransportMap from './transport/TransportMap'
 import useOgImageFetcher from './useOgImageFetcher'
 
@@ -239,6 +240,7 @@ export default function Content({
 							stop: searchParams.arret,
 							trainType: searchParams['type de train'],
 							transitFilter: searchParams['filtre'] || defaultTransitFilter,
+							agencyFilter: searchParams['gamme'] || defaultAgencyFilter,
 							setIsItineraryMode: itinerary.setIsItineraryMode,
 						}}
 					/>
