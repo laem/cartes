@@ -35,6 +35,14 @@ export const agencyFilters = [
 		{
 			filter: (agency) => {
 				const { routeTypeStats: stats, bbox } = agency
+				// example taken from PENNARBED
+				console.log(
+					'orange agency car stats',
+					agency,
+					sumOfRouteTypes(['2xx'], stats)
+				)
+				if (sumOfRouteTypes(['2xx', 715], stats) > 0.7) return true
+
 				const areaKm2 = area(bboxPolygon(bbox)) / 1000000
 				// because flixbus has route type 3, this old attribute does not
 				// distinguish local buses and long range buses, what a bad decision
@@ -45,6 +53,17 @@ export const agencyFilters = [
 		},
 	],
 ]
+
+const sumOfRouteTypes = (types, stats) =>
+	types.reduce((memo, next) => {
+		if (typeof next === 'string' && next.match(/\dxx/)) {
+			const sum = Object.entries(stats)
+				.filter(([key, value]) => key >= 100 && ('' + key).startsWith(+next[0]))
+				.reduce((memo2, [_, next2]) => memo2 + next2, 0)
+			return sum + memo
+		}
+		return (stats[next] || 0) + memo
+	}, 0)
 export default function AgencyFilter({ agencyFilter, setAgencyFilter }) {
 	return (
 		<section

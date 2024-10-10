@@ -190,6 +190,7 @@ export default function TransportMap({
 			)}
 			{!stop &&
 				agencyFilter &&
+				routes &&
 				(selectedAgency == '1187' ? (
 					<SncfSelect {...{ bboxAgencies, setTrainType, trainType }} />
 				) : (
