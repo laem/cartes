@@ -1,11 +1,19 @@
 import useSetSearchParams from '@/components/useSetSearchParams'
 import { useEffect } from 'react'
 import { safeRemove } from './utils'
+import { area, convex } from '@turf/turf'
+import bboxPolygon from '@turf/bbox-polygon'
 
 /***
  * This hook draws transit lines on the map.
  */
-export default function useDrawTransport(map, features, drawKey, hasItinerary) {
+export default function useDrawTransport(
+	map,
+	features,
+	drawKey,
+	hasItinerary,
+	bbox
+) {
 	const setSearchParams = useSetSearchParams()
 
 	const id = 'transport-routes-' + drawKey
@@ -42,30 +50,6 @@ export default function useDrawTransport(map, features, drawKey, hasItinerary) {
 	useEffect(() => {
 		if (!map || !features?.length) return
 
-		/* Old idea : lower the opacity of all style layers.
-		 * Replaced by setting the "transit" style taken from MapTiler's dataviz
-		 * clean styl, but we're losing essential
-		 * things like POIs, might be interesting to consider this option, or
-		 * alternatively make the dataviz style better
-		 *
-		const layerIds = map.getLayersOrder()
-		layerIds.map((layerId) => {
-			if (layerId.startsWith('routes-stopId-')) return
-			const layer = map.getLayer(layerId)
-			const property =
-				layer.type === 'fill'
-					? ['fill-opacity']
-					: layer.type === 'background'
-					? ['background-opacity']
-					: layer.type === 'line'
-					? ['line-opacity']
-					: layer.type === 'symbol'
-					? ['text-opacity', 'icon-opacity']
-					: null
-			if (property) property.map((p) => map.setPaintProperty(layerId, p, 0.3))
-		})
-		*/
-		// TODO this is overly complicated
 		const featureCollection = {
 			type: 'FeatureCollection',
 			features,
@@ -99,9 +83,18 @@ export default function useDrawTransport(map, features, drawKey, hasItinerary) {
 				arret,
 			})
 		}
+		/*
+		const areasId = id + 'areas'
+		const areasSource = map.getSource(areasId)
+		if (areasSource) return
+		if (areaKm2 > 3000) return
+
+		const areas = convex(featureCollection)
+		*/
 		try {
 			const source = map.getSource(id)
 			if (source) return
+
 			map.addSource(id, { type: 'geojson', data: featureCollection })
 
 			map.addLayer({
@@ -130,7 +123,7 @@ export default function useDrawTransport(map, features, drawKey, hasItinerary) {
 						12,
 						['*', ['get', 'width'], 2.5],
 						18,
-						['*', ['get', 'width'], 4],
+						['*', ['get', 'width'], 20],
 					],
 				},
 			})
@@ -194,5 +187,5 @@ export default function useDrawTransport(map, features, drawKey, hasItinerary) {
 			map.off('click', pointsId, onClickStop)
 			safeRemove(map)([linesId, pointsId], [id])
 		}
-	}, [map, features, drawKey])
+	}, [map, features, drawKey, bbox])
 }

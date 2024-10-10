@@ -11,7 +11,7 @@ import { getFetchUrlBase, pmtilesServerUrl } from '../serverUrls'
 const highwayColor = '#cebcbc'
 const highwayOutlineColor = '#cebcbc'
 
-export default function franceStyle(key) {
+export default function franceStyle(transportMode) {
 	return {
 		version: 8,
 		id: 'france',
@@ -38,17 +38,66 @@ export default function franceStyle(key) {
 				url: 'pmtiles://' + pmtilesServerUrl + '/trees.pmtiles',
 			},
 		},
-		layers,
+		layers: transportMode ? lightenLayers(layers) : layers,
 		glyphs: getFetchUrlBase() + '/fonts/glyphs/{fontstack}/{range}.pbf',
 		sprite: getFetchUrlBase() + '/sprite/sprite',
-		//glyphs: `https://api.maptiler.com/fonts/{fontstack}/{range}.pbf?key=${key}`,
-		//sprite: 'https://api.maptiler.com/maps/2f80a9c4-e0dd-437d-ae35-2b6c212f830b/sprite',
 		bearing: 0,
 		pitch: 0,
 		center: [0, 0],
 		zoom: 1,
 	}
 }
+
+/* Old idea : lower the opacity of all style layers.
+		 * Replaced by setting the "transit" style taken from MapTiler's dataviz
+		 * clean style, but we're losing essential
+		 * things like POIs, might be interesting to consider this option, or
+		 * alternatively make the dataviz style better
+		 *
+		const layerIds = map.getLayersOrder()
+		layerIds.map((layerId) => {
+			if (layerId.startsWith('routes-stopId-')) return
+			const layer = map.getLayer(layerId)
+			const property =
+				layer.type === 'fill'
+					? ['fill-opacity']
+					: layer.type === 'background'
+					? ['background-opacity']
+					: layer.type === 'line'
+					? ['line-opacity']
+					: layer.type === 'symbol'
+					? ['text-opacity', 'icon-opacity']
+					: null
+			if (property) property.map((p) => map.setPaintProperty(layerId, p, 0.3))
+		})
+		*/
+// TODO this is overly complicated
+const lightenLayers = (layers) =>
+	layers.map((layer) => {
+		if (['Water', 'Background', ' labels'].find((el) => layer.id.endsWith(el)))
+			return layer
+		if (layer.id === 'Land')
+			return { ...layer, paint: { ...layer.paint, 'fill-color': 'white' } }
+
+		const property =
+			layer.type === 'fill'
+				? ['fill-opacity']
+				: layer.type === 'background'
+				? ['background-opacity']
+				: layer.type === 'line'
+				? ['line-opacity']
+				: layer.type === 'symbol'
+				? ['text-opacity', 'icon-opacity']
+				: null
+		if (!property) return layer
+		return {
+			...layer,
+			paint: {
+				...layer.paint,
+				...Object.fromEntries(property.map((p) => [p, 0.15])),
+			},
+		}
+	})
 
 // See laem/gtfs's process-openmaptiles.lua
 export const nameExpression = [

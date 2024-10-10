@@ -7,6 +7,7 @@ import Link from 'next/link'
 import { useLocalStorage } from 'usehooks-ts'
 import { ModalCloseButton } from '../UI'
 import { styles } from './styles'
+import { buildTransportButtonUrl } from '@/components/MapButtons'
 
 const styleList = Object.entries(styles)
 export default function StyleChooser({
@@ -18,6 +19,7 @@ export default function StyleChooser({
 	setZoom,
 }) {
 	const setSearchParams = useSetSearchParams()
+
 	return (
 		<section
 			css={`
@@ -98,13 +100,19 @@ export default function StyleChooser({
 					styleList={styleList.filter(([, el]) => el.secondary)}
 					setSearchParams={setSearchParams}
 					style={style}
+					searchParams={searchParams}
 				/>
 			</details>
 		</section>
 	)
 }
 
-const Styles = ({ style, styleList, setSearchParams }) => {
+const Styles = ({ style, styleList, setSearchParams, searchParams }) => {
+	const transportButtonUrl = buildTransportButtonUrl(
+		setSearchParams,
+		searchParams,
+		true
+	)
 	const [localStorageStyleKey, setLocalStorageStyleKey] = useLocalStorage(
 		'style',
 		null
@@ -132,7 +140,15 @@ const Styles = ({ style, styleList, setSearchParams }) => {
 							`}
 						>
 							<Link
-								href={setSearchParams({ style: k }, true, false)}
+								href={
+									k === 'light'
+										? transportButtonUrl
+										: setSearchParams(
+												{ style: k, 'choix du style': 'oui' },
+												true,
+												true
+										  )
+								}
 								onClick={() => setLocalStorageStyleKey(k)}
 								title={'Passer au style ' + (title || name)}
 								css={`
