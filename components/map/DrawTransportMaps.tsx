@@ -133,7 +133,7 @@ export default function DrawTransportMaps({
 					agencyId={agencyId}
 					features={features}
 					map={map}
-					drawKey={'transitMap-agency-' + agencyId}
+					drawKey={'transitMap-agency-' + agencyId + (trainType || '')}
 					hasItinerary={hasItinerary}
 					bbox={bbox}
 				/>

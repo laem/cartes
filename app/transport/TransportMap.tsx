@@ -120,6 +120,14 @@ export default function TransportMap({
 				{!stop && !selectedAgency && (
 					<AgencyFilter {...{ agencyFilter, setAgencyFilter }} />
 				)}
+				{!stop &&
+					(agencyFilter === 'train' || selectedAgency == '1187' ? (
+						<SncfSelect {...{ bboxAgencies, setTrainType, trainType }} />
+					) : (
+						<TransitFilter
+							{...{ data: bboxAgencies, setTransitFilter, transitFilter }}
+						/>
+					))}
 				<PlaceButton
 					as="div"
 					css={`
@@ -189,16 +197,6 @@ export default function TransportMap({
 					backUrl={setSearchParams({ agence: undefined }, true)}
 				/>
 			)}
-			{!stop &&
-				agencyFilter &&
-				routes &&
-				(selectedAgency == '1187' ? (
-					<SncfSelect {...{ bboxAgencies, setTrainType, trainType }} />
-				) : (
-					<TransitFilter
-						{...{ data: bboxAgencies, setTransitFilter, transitFilter }}
-					/>
-				))}
 
 			{routes && (
 				<Routes
