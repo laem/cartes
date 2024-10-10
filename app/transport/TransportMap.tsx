@@ -116,11 +116,16 @@ export default function TransportMap({
 					</header>
 				)}
 
+				{false && <DateSelector type="day" date={day} />}
+				{!stop && !selectedAgency && (
+					<AgencyFilter {...{ agencyFilter, setAgencyFilter }} />
+				)}
 				<PlaceButton
 					as="div"
 					css={`
 						margin-top: 0.8rem;
 						margin-bottom: 0.6rem;
+						text-align: right;
 					`}
 				>
 					<button onClick={() => setIsItineraryMode(true)}>
@@ -135,10 +140,6 @@ export default function TransportMap({
 						<div>Itinéraire</div>
 					</button>
 				</PlaceButton>
-				{false && <DateSelector type="day" date={day} />}
-				{!stop && !selectedAgency && (
-					<AgencyFilter {...{ agencyFilter, setAgencyFilter }} />
-				)}
 				{selectedAgency == null && bboxAgencies?.length > 0 && (
 					<section>
 						<p>Dans cette zone : </p>

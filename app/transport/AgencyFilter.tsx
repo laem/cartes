@@ -12,6 +12,7 @@ export const getAgencyFilter = (keyTest) =>
 export const agencyFilters = [
 	[
 		'urbain',
+
 		{
 			filter: (agency) => {
 				const { routeTypeStats: stats, bbox } = agency
@@ -75,25 +76,52 @@ export default function AgencyFilter({ agencyFilter, setAgencyFilter }) {
 				css={`
 					width: 100%;
 					overflow: scroll;
-					height: 2.4rem;
+					height: 3rem;
 					label {
 						margin: 0.6rem;
 						white-space: nowrap;
+						cursor: pointer;
+						background: var(--color);
+						color: white;
+						padding: 0 0.6rem;
+						line-height: 1.5rem;
+						border-radius: 0.3rem;
+						display: inline-flex;
+						align-items: center;
+						text-transform: uppercase;
+						font-weight: 300;
+						font-size: 90%;
 					}
 					input {
 						margin-right: 0.4rem;
+						border: 2px solid var(--darkColor);
+						background: white;
+						border-radius: 3px;
+						appearance: none;
+						width: 0.9rem;
+						height: 0.9rem;
+						margin-bottom: -0.05rem;
+						&:checked {
+							background: var(--darkColor);
+							border: 2px solid var(--lightestColor);
+						}
 					}
 				`}
 			>
 				{agencyFilters.map(([key]) => (
-					<label>
+					<label
+						css={`
+							border: 2px solid
+								${key === agencyFilter ? `var(--darkColor)` : `var(--color);`};
+						`}
+					>
 						<input
 							type="checkbox"
 							checked={agencyFilter === key}
 							key={key}
 							onClick={() => setAgencyFilter(key)}
 						/>
-						{key}
+						<span>{key}</span>
 					</label>
 				))}
 			</form>
