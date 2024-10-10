@@ -21,7 +21,7 @@ export const agencyFilters = [
 				// distinguish local buses and long range buses, what a bad decision
 				if (areaKm2 > 3000) return
 
-				return (stats[3] || 0) + (stats[1] || 0) > 0.8
+				return sumOfRouteTypes([3, 1, 0], stats) > 0.8
 			},
 		},
 	],
