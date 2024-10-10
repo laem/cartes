@@ -12,12 +12,13 @@ export default function SideSheet(props) {
 				border-radius: 0.6rem;
 				max-height: 90vh;
 				overflow: scroll;
-				--shadow-color: 47deg 23% 58%;
+				--shadow-color: 217deg 49% 38%;
 				--shadow-elevation-medium: 0.3px 0.5px 0.7px
-						hsl(var(--shadow-color) / 0.36),
-					0.8px 1.6px 2px -0.8px hsl(var(--shadow-color) / 0.36),
-					2.1px 4.1px 5.2px -1.7px hsl(var(--shadow-color) / 0.36),
-					5px 10px 12.6px -2.5px hsl(var(--shadow-color) / 0.36);
+						hsl(var(--shadow-color) / 0.29),
+					0.7px 1.3px 1.7px -0.6px hsl(var(--shadow-color) / 0.29),
+					1.3px 2.6px 3.3px -1.2px hsl(var(--shadow-color) / 0.29),
+					2.6px 5.2px 6.5px -1.9px hsl(var(--shadow-color) / 0.29),
+					5px 10px 12.6px -2.5px hsl(var(--shadow-color) / 0.29);
 				box-shadow: var(--shadow-elevation-medium);
 				overflow: auto;
 				&::-webkit-scrollbar {
