@@ -88,6 +88,7 @@ export default function DrawTransportMaps({
 			transportsData[0]
 				.map(([agencyId, data]) => {
 					if (
+						!selectedAgency &&
 						agencyFilter &&
 						!getAgencyFilter((key) => key === agencyFilter).filter(data)
 					)
