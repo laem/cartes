@@ -50,30 +50,6 @@ export default function useDrawTransport(
 	useEffect(() => {
 		if (!map || !features?.length) return
 
-		/* Old idea : lower the opacity of all style layers.
-		 * Replaced by setting the "transit" style taken from MapTiler's dataviz
-		 * clean styl, but we're losing essential
-		 * things like POIs, might be interesting to consider this option, or
-		 * alternatively make the dataviz style better
-		 *
-		const layerIds = map.getLayersOrder()
-		layerIds.map((layerId) => {
-			if (layerId.startsWith('routes-stopId-')) return
-			const layer = map.getLayer(layerId)
-			const property =
-				layer.type === 'fill'
-					? ['fill-opacity']
-					: layer.type === 'background'
-					? ['background-opacity']
-					: layer.type === 'line'
-					? ['line-opacity']
-					: layer.type === 'symbol'
-					? ['text-opacity', 'icon-opacity']
-					: null
-			if (property) property.map((p) => map.setPaintProperty(layerId, p, 0.3))
-		})
-		*/
-		// TODO this is overly complicated
 		const featureCollection = {
 			type: 'FeatureCollection',
 			features,
@@ -147,7 +123,7 @@ export default function useDrawTransport(
 						12,
 						['*', ['get', 'width'], 2.5],
 						18,
-						['*', ['get', 'width'], 4],
+						['*', ['get', 'width'], 20],
 					],
 				},
 			})

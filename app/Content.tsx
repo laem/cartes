@@ -223,46 +223,6 @@ export default function Content({
 				</section>
 			)}
 
-			{elections && (
-				<ElectionsContent searchParams={searchParams} setSnap={setSnap} />
-			)}
-			{searchParams.favoris === 'oui' && <Bookmarks />}
-			{searchParams.transports === 'oui' &&
-				!itinerary.isItineraryMode &&
-				transportsData && (
-					<TransportMap
-						{...{
-							bbox,
-							day: searchParams.day,
-							data: transportsData,
-							selectedAgency: searchParams.agence,
-							routesParam: searchParams.routes,
-							stop: searchParams.arret,
-							trainType: searchParams['type de train'],
-							transitFilter: searchParams['filtre'] || defaultTransitFilter,
-							agencyFilter: searchParams['gamme'] || defaultAgencyFilter,
-							setIsItineraryMode: itinerary.setIsItineraryMode,
-						}}
-					/>
-				)}
-
-			<Itinerary
-				{...{
-					itinerary,
-					bikeRouteProfile,
-					setBikeRouteProfile,
-					searchParams,
-					setSnap,
-					close: () => {
-						setSearchParams({ allez: undefined, mode: undefined })
-						itinerary.setIsItineraryMode(false)
-					},
-					state,
-					setState,
-					setDisableDrag,
-				}}
-			/>
-
 			{styleChooser ? (
 				<StyleChooser
 					{...{ setStyleChooser, style, setSnap, searchParams, zoom, setZoom }}
@@ -382,6 +342,45 @@ export default function Content({
 					</ContentSection>
 				)
 			)}
+			{elections && (
+				<ElectionsContent searchParams={searchParams} setSnap={setSnap} />
+			)}
+			{searchParams.favoris === 'oui' && <Bookmarks />}
+			{searchParams.transports === 'oui' &&
+				!itinerary.isItineraryMode &&
+				transportsData && (
+					<TransportMap
+						{...{
+							bbox,
+							day: searchParams.day,
+							data: transportsData,
+							selectedAgency: searchParams.agence,
+							routesParam: searchParams.routes,
+							stop: searchParams.arret,
+							trainType: searchParams['type de train'],
+							transitFilter: searchParams['filtre'] || defaultTransitFilter,
+							agencyFilter: searchParams['gamme'] || defaultAgencyFilter,
+							setIsItineraryMode: itinerary.setIsItineraryMode,
+						}}
+					/>
+				)}
+
+			<Itinerary
+				{...{
+					itinerary,
+					bikeRouteProfile,
+					setBikeRouteProfile,
+					searchParams,
+					setSnap,
+					close: () => {
+						setSearchParams({ allez: undefined, mode: undefined })
+						itinerary.setIsItineraryMode(false)
+					},
+					state,
+					setState,
+					setDisableDrag,
+				}}
+			/>
 		</ContentWrapper>
 	)
 }
