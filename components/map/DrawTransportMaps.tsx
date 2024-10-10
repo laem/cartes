@@ -72,26 +72,30 @@ export default function DrawTransportMaps({
 		doFetch()
 	}, [selectedAgency, transportsData, selectedAgencyBbox])
 
-	const agencyIdsHash = sortBy((id) => id)(
-		transportsData[0].map(([id]) => id)
-	).join('')
+	const agencyIdsHash =
+		transportsData &&
+		sortBy((id) => id)(transportsData[0].map(([id]) => id)).join('')
 
 	const dataToDraw = useMemo(() => {
 		console.log('memo transport dataToDraw', agencyIdsHash, transportsData)
-		return transportsData[0]
-			.map(([agencyId, data]) => {
-				const { bbox, features } = data
-				console.log('orange data', data)
-				if (selectedAgency != null && agencyId !== selectedAgency) return false
-				const filteredFeatures = filterTransportFeatures(features, {
-					routesParam,
-					stop,
-					trainType,
-					transitFilter,
+		return (
+			transportsData &&
+			transportsData[0]
+				.map(([agencyId, data]) => {
+					const { bbox, features } = data
+					console.log('orange data', data)
+					if (selectedAgency != null && agencyId !== selectedAgency)
+						return false
+					const filteredFeatures = filterTransportFeatures(features, {
+						routesParam,
+						stop,
+						trainType,
+						transitFilter,
+					})
+					return [agencyId, filteredFeatures, bbox]
 				})
-				return [agencyId, filteredFeatures, bbox]
-			})
-			.filter(Boolean)
+				.filter(Boolean)
+		)
 	}, [
 		agencyIdsHash,
 		routesParam,
@@ -103,6 +107,7 @@ export default function DrawTransportMaps({
 
 	if (safeStyleKey !== 'light') return null
 
+	if (!transportsData) return null
 	return (
 		<>
 			<DrawTransportAreas areas={transportsData[1]} map={map} />

@@ -226,21 +226,23 @@ export default function Content({
 				<ElectionsContent searchParams={searchParams} setSnap={setSnap} />
 			)}
 			{searchParams.favoris === 'oui' && <Bookmarks />}
-			{searchParams.transports === 'oui' && !itinerary.isItineraryMode && (
-				<TransportMap
-					{...{
-						bbox,
-						day: searchParams.day,
-						data: transportsData,
-						selectedAgency: searchParams.agence,
-						routesParam: searchParams.routes,
-						stop: searchParams.arret,
-						trainType: searchParams['type de train'],
-						transitFilter: searchParams['filtre'] || defaultTransitFilter,
-						setIsItineraryMode: itinerary.setIsItineraryMode,
-					}}
-				/>
-			)}
+			{searchParams.transports === 'oui' &&
+				!itinerary.isItineraryMode &&
+				transportsData && (
+					<TransportMap
+						{...{
+							bbox,
+							day: searchParams.day,
+							data: transportsData,
+							selectedAgency: searchParams.agence,
+							routesParam: searchParams.routes,
+							stop: searchParams.arret,
+							trainType: searchParams['type de train'],
+							transitFilter: searchParams['filtre'] || defaultTransitFilter,
+							setIsItineraryMode: itinerary.setIsItineraryMode,
+						}}
+					/>
+				)}
 
 			<Itinerary
 				{...{

@@ -18,7 +18,7 @@ export default function useDrawTransportAreas(map, areas) {
 				.filter(Boolean),
 		}
 
-		console.log('orange areas', areas, data)
+		console.log('orange transport areas', areas, data)
 		map.addSource(areasId, { type: 'geojson', data })
 		map.addLayer({
 			source: areasId,

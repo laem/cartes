@@ -1,6 +1,7 @@
 import { useEffect, useMemo, useState } from 'react'
 import { gtfsServerUrl } from '../serverUrls'
 import { decodeTransportsData } from '../transport/decodeTransportsData'
+import { filterMapEntries, objectMapEntries } from '@/components/utils/utils'
 
 export default function useFetchTransportMap(
 	active,
@@ -137,12 +138,17 @@ export default function useFetchTransportMap(
 	const agencyIdsHash =
 		data && Array.isArray(data[0]) && data.map(([a]) => a).join('<|>')
 	const transportsData = useMemo(() => {
-		console.log('orange transport hash', agencyIdsHash)
-		return [data, agencyAreas]
+		if (!agencyIdsHash || !agencyAreas) return
+		console.log('orange transport hash', agencyIdsHash, agencyAreas)
+		return [
+			data.filter(filterRejectPlaneAgency),
+			filterMapEntries(agencyAreas, (id) => filterRejectPlaneAgency([id])),
+		]
 	}, [agencyIdsHash, agencyAreas])
 
 	return active ? transportsData : null
 }
+const filterRejectPlaneAgency = ([id]) => id !== 'AEROPORT_NANTES:Operator:NTE'
 
 const rejectNationalAgencies = (data) =>
 	data.filter(
