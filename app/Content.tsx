@@ -27,6 +27,7 @@ import { defaultAgencyFilter } from './transport/AgencyFilter'
 import TransportMap from './transport/TransportMap'
 import useOgImageFetcher from './useOgImageFetcher'
 import Link from 'next/link'
+import { Loader } from '@/components/loader'
 
 const getMinimumQuickSearchZoom = (mobile) => (mobile ? 10.5 : 12) // On a small screen, 70 %  of the tiles are not visible, hence this rule
 
@@ -151,6 +152,11 @@ export default function Content({
 			setSnap(1, 'Content')
 		}
 	}, [geocodedClickedPoint, setSnap])
+
+	useEffect(() => {
+		if (!searchParams.chargement) return
+		if (snap > 1) setSnap(1)
+	}, [searchParams.chargement, setSnap])
 
 	useEffect(() => {
 		if (!showSearch) return
@@ -304,6 +310,23 @@ export default function Content({
 									<ShareButton {...{ geocodedClickedPoint, osmFeature }} />
 								)}
 							</PlaceButtonList>
+						)}
+						{searchParams.chargement && (
+							<div
+								css={`
+									margin: 1rem 0;
+									p {
+										text-align: center;
+										line-height: 1.3rem;
+									}
+								`}
+							>
+								<Loader flexDirection="column">
+									<p>
+										Chargement de <strong>{searchParams.chargement}</strong>
+									</p>
+								</Loader>
+							</div>
 						)}
 						{osmFeature ? (
 							<OsmFeature
