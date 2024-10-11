@@ -3,12 +3,22 @@ import { sortBy } from '@/components/utils/utils'
 import maplibregl from 'maplibre-gl'
 import { useEffect, useState } from 'react'
 import { gtfsServerUrl } from '../serverUrls'
-import { dateFromHHMMSS, humanDepartureTime } from '../transport/stop/Route'
+import {
+	addMinutes,
+	dateFromHHMMSS,
+	humanDepartureTime,
+	nowAsYYMMDD,
+} from '../transport/stop/Route'
 
 export default function useSearchLocalTransit(map, active, center, zoom) {
 	const [stops, setStops] = useState([])
 	const [stopTimes, setStopTimes] = useState({})
 	const notZoomEnough = zoom < 15
+
+	const d = new Date()
+	const day = nowAsYYMMDD()
+	const from = d.toLocaleTimeString()
+	const to = addMinutes(d, 60).toLocaleTimeString()
 
 	useEffect(() => {
 		if (!active || !center || notZoomEnough) return
@@ -32,7 +42,7 @@ export default function useSearchLocalTransit(map, active, center, zoom) {
 		const doFetch = () => {
 			stops.map(async (stop) => {
 				const id = stop.stop_id
-				const url = `${gtfsServerUrl}/immediateStopTimes/${id}`
+				const url = `${gtfsServerUrl}/immediateStopTimes/${id}/${day}/${from}/${to}`
 				const request = await fetch(url)
 				const json = await request.json()
 				setStopTimes((stopTimes) => ({ ...stopTimes, [id]: json }))

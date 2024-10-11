@@ -3,12 +3,14 @@ import { findContrastedTextColor } from '@/components/utils/colors'
 import { omit } from '@/components/utils/utils'
 import Image from 'next/image'
 import { useState } from 'react'
+import { handleColor } from '../../itinerary/transit/motisRequest'
+import { transportTypeIcon } from '../../itinerary/transit/transportIcon'
 import DayView from '../DayView'
 import Calendar from './Calendar'
-import { handleColor } from '../../itinerary/transit/motisRequest'
-import transportIcon, {
-	transportTypeIcon,
-} from '../../itinerary/transit/transportIcon'
+
+export function addMinutes(date, minutes) {
+	return new Date(date.getTime() + minutes * 60000)
+}
 
 export const nowAsYYMMDD = (delimiter = '') => {
 	var d = new Date(),
