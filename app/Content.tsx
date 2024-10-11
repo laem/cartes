@@ -26,6 +26,7 @@ import { defaultTransitFilter } from './transport/TransitFilter'
 import { defaultAgencyFilter } from './transport/AgencyFilter'
 import TransportMap from './transport/TransportMap'
 import useOgImageFetcher from './useOgImageFetcher'
+import Link from 'next/link'
 
 const getMinimumQuickSearchZoom = (mobile) => (mobile ? 10.5 : 12) // On a small screen, 70 %  of the tiles are not visible, hence this rule
 
@@ -159,16 +160,14 @@ export default function Content({
 			}
 	}, [showSearch, zoom, snap])
 
-	const showIntroduction =
-		!introductionRead &&
-		// if a new user comes with a place URL, or the election map, or if a search
-		// engine indexes a transport map, we don't want to hide the relevant content
-		// and bother her with the introduction
-		Object.keys(searchParams).length === 0
-	useEffect(() => {
-		if (showIntroduction) return
+	const showIntroductionLink = !introductionRead
 
-		setTimeout(() => setSnap(1), 1000)
+	const showIntroduction = searchParams.intro
+
+	useEffect(() => {
+		if (!showIntroduction) return
+
+		setTimeout(() => setSnap(1), 200)
 	}, [showIntroduction, setSnap])
 
 	if (showIntroduction)
@@ -178,6 +177,7 @@ export default function Content({
 				<DialogButton
 					onClick={() => {
 						setTutorials({ ...tutorials, introduction: true })
+						setSearchParams({ intro: undefined })
 						setSnap(2)
 					}}
 				>
@@ -221,6 +221,11 @@ export default function Content({
 							<QuickBookmarks oldAllez={searchParams.allez} />
 						)}
 				</section>
+			)}
+			{showIntroductionLink && (
+				<Link href={setSearchParams({ intro: true }, true)}>
+					À propos de Cartes
+				</Link>
 			)}
 
 			{styleChooser ? (
