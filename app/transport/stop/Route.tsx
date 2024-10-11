@@ -31,6 +31,19 @@ const toDate = ({ year, month, day }, time) => {
 	return new Date(+year, +month - 1, +day, ...time)
 }
 
+export const dateFromHHMMSS = (hhmmss) => {
+	var d = new Date(),
+		month = '' + (d.getMonth() + 1),
+		day = '' + d.getDate(),
+		year = d.getFullYear()
+
+	if (month.length < 2) month = '0' + month
+	if (day.length < 2) day = '0' + day
+
+	const date = toDate({ year, month, day }, timeFromHHMMSS(hhmmss))
+	return date
+}
+
 export default function Route({ route, stops = [] }) {
 	const [calendarOpen, setCalendarOpen] = useState(false)
 	const now = new Date()
