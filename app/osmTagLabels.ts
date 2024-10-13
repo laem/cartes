@@ -71,7 +71,7 @@ export const tagNameCorrespondance = (key: string) => {
 		'payment:credit_cards': 'Paiement par carte de crédit',
 	  'payment:debit_cards': 'Paiment par carte de débit',
 		'payment:mastercard': 'Paiement par Mastercard',
-		'payment:visa': 'Paiment par carte Visa',
+		'payment:visa': 'Paiement par Visa',
 		'service:bicycle:cleaning': 'Lavage de vélos',
 		'service:bicycle:diy': "Atelier d'autoréparation de vélos",
 		'service:bicycle:pump': 'Pompe à vélo en libre-service',
