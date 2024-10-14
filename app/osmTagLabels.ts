@@ -37,6 +37,7 @@ export const tagNameCorrespondance = (key: string) => {
 	const found = {
 		alt_name: 'Autre nom',
 		artist_name: "Nom de l'artiste",
+		'award:accueilvelo': "Label Accueil Vélo",
 		books: 'Livres',
 		'brand:website': 'Site de la marque',
 		'building:architecture': 'Style architectural',
