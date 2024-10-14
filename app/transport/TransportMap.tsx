@@ -59,7 +59,7 @@ export default function TransportMap({
 
 	const routes =
 		!stop &&
-		selectedAgency &&
+		(selectedAgency || routesDemanded) &&
 		sortBy((route) => -route.properties.perDay)(
 			bboxAgencies.reduce((memo, [agencyId, { features }]) => {
 				if (selectedAgency != null && agencyId !== selectedAgency) return memo
@@ -88,8 +88,8 @@ export default function TransportMap({
 			}, [])
 		)
 	console.timeLog('routes' + rand)
-	const routeIds = routes?.map((route) => route.properties.route_id)
-	console.log('routes', routeIds, unique(routeIds))
+	//const routeIds = routes && routes.map((route) => route.properties.route_id)
+	//	console.log('routes', routeIds, unique(routeIds))
 
 	const selectedAgencyData =
 		selectedAgency &&

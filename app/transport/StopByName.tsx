@@ -23,7 +23,7 @@ export default function StopByName({ stopName, data }) {
 
 	console.log('purple data', data, stopIds)
 
-	const entries = useTransportStopData(null, stopIds)
+	const entries = useTransportStopData(null, stopIds.length ? stopIds : null)
 	console.log('purple trips', entries)
 	const sorted = sortBy(([, { trips }]) => -trips.length)(entries)
 

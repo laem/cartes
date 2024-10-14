@@ -4,8 +4,9 @@ import { findStopId, isNotTransportStop } from './stop/Stop'
 
 export default function useTransportStopData(osmFeature, gtfsStopIds) {
 	const [data, setData] = useState([])
+	console.log('pplop', gtfsStopIds)
 	useEffect(() => {
-		if (!gtfsStopIds && (!osmFeature || !osmFeature.tags)) return
+		if (!gtfsStopIds && !(osmFeature && !osmFeature.tags)) return
 		if (!gtfsStopIds && isNotTransportStop(osmFeature.tags)) return
 		const stopIds = gtfsStopIds?.join('|') || findStopId(osmFeature.tags)
 
