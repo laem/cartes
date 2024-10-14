@@ -41,15 +41,19 @@ export default function useCompass(where) {
 
 	const startCompass = () => {
 		if (isIOS) {
-			DeviceOrientationEvent.requestPermission()
-				.then((response) => {
-					if (response === 'granted') {
-						window.addEventListener('deviceorientation', handler, true)
-					} else {
-						console.error('Device orientation was not allowed!')
-					}
-				})
-				.catch(() => console.error('Device orientation not supported'))
+			try {
+				DeviceOrientationEvent.requestPermission()
+					.then((response) => {
+						if (response === 'granted') {
+							window.addEventListener('deviceorientation', handler, true)
+						} else {
+							console.error('Device orientation was not allowed!')
+						}
+					})
+					.catch(() => console.error('Device orientation not supported'))
+			} catch (e) {
+				console.error('Device orientation not supported', e)
+			}
 		}
 	}
 

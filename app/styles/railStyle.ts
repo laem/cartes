@@ -1,7 +1,7 @@
 const style = (key) => ({
 	version: 8,
 	id: 'basic-v2',
-	name: 'Basic',
+	name: 'Rails',
 	sources: {
 		maptiler_planet: {
 			url: 'https://api.maptiler.com/tiles/v3/tiles.json?key=' + key,

@@ -14,8 +14,8 @@ const highwayOutlineColor = '#cebcbc'
 export default function franceStyle(transportMode) {
 	return {
 		version: 8,
-		id: 'france',
-		name: 'France',
+		id: transportMode ? 'transports' : 'france',
+		name: transportMode ? 'Transports' : 'France',
 		sources: {
 			openmaptiles: {
 				url: 'cartes://hybrid', // see the protocol CartesProtocol

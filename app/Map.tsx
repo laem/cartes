@@ -7,7 +7,7 @@ import { sortGares } from './gares'
 import MapButtons from '@/components/MapButtons'
 import { goodIconSize, useComputeMapPadding } from '@/components/mapUtils'
 import useSetSearchParams from '@/components/useSetSearchParams'
-import useAddMap from './effects/useAddMap'
+import useAddMap, { defaultSky } from './effects/useAddMap'
 import useDrawQuickSearchFeatures from './effects/useDrawQuickSearchFeatures'
 import { getStyle } from './styles/styles'
 import useHoverOnMapFeatures from './useHoverOnMapFeatures'
@@ -219,15 +219,8 @@ export default function Map({
 		})
 	}, [zoom, setZoom, map, setBbox])
 
-	const prevStyleKeyRef = useRef()
-	useEffect(() => {
-		prevStyleKeyRef.current = styleKey
-	}, [styleKey])
-
-	const prevStyleKey = prevStyleKeyRef.current
 	useEffect(() => {
 		if (!map) return
-		if (styleKey === prevStyleKey) return
 
 		console.log('salut redraw')
 
@@ -236,14 +229,28 @@ export default function Map({
 		// hence this diff: false. We're not loosing much
 		// UPDATE 26 april 2024, maplibre 4.1.3, seems to be working now, hence
 		// diff: true :)
-		map.setStyle(styleUrl, { diff: false }) //setting styleKey!== 'base' doesn't work, probably because the error comes from switching from base to another ?
-		//TODO the Oneway style in voyage style gets corrupted after switching to
-		//transit or another style, hence this temporary disable diff
-		setTimeout(() => {
-			// Hack : I haven't found a way to know when this style change is done, hence this setTimeout, absolutely not a UI problem but could be too quick ?
+		const previousStyle = map.getStyle()
+		console.log('previous', previousStyle)
+		const shouldSetStyle =
+			previousStyle && previousStyle.name !== (style.originalName || style.name)
+
+		const onStyleLoad = () => {
 			setSafeStyleKey(styleKey)
-		}, 300)
-	}, [styleUrl, map, styleKey, prevStyleKey, setSafeStyleKey])
+		}
+		if (shouldSetStyle) {
+			map.on('style.load', onStyleLoad)
+			map.setSky() // Don't really know why, this saves use from having an ugly opaque layer on style change
+			map.setStyle(styleUrl, { diff: false }) //setting styleKey!== 'base' doesn't work, probably because the error comes from switching from base to another ?
+			//TODO the Oneway style in voyage style gets corrupted after switching to
+			//transit or another style, hence this temporary disable diff
+		} else {
+			setSafeStyleKey(styleKey)
+		}
+
+		return () => {
+			map.off('style.load', onStyleLoad)
+		}
+	}, [styleUrl, map, styleKey, setSafeStyleKey])
 
 	useRightClick(map)
 

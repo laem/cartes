@@ -19,7 +19,7 @@ const morningDate = new Date('March 13, 08 07:20'),
 const date = new Date()
 
 const hoursOfDay = date.getHours()
-const defaultSky =
+export const defaultSky =
 	hoursOfDay < 8 || hoursOfDay > 18 //TODO see RouteRésumé, it has time of sunset. Make an aurora light too, different from the sunset, and handle the light below
 		? {
 				'sky-color': '#76508B',
@@ -36,14 +36,16 @@ const defaultSky =
 				'atmosphere-blend': ['interpolate', ['linear'], ['zoom'], 0, 0.5, 7, 0],
 		  }
 
-const defaultProjection = {
+export const defaultProjection = {
 	type: 'globe',
 }
 // TODO I haven't yet understood how to handle this. With the globe mode, we
 // should let the light follow the real sun, and enable the user to tweak it
 const defaultLight = {
-	anchor: 'anchor',
-	position: [1.15, 210, 30],
+	anchor: 'viewport',
+	color: 'white',
+	intensity: 0.9,
+	position: [1.55, 180, 180],
 }
 
 const defaultCenter =
