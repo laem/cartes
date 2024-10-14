@@ -69,7 +69,6 @@ export default function Map({
 	setStyleChooser,
 	setZoom,
 	setGeolocation,
-	setTempStyle,
 	center,
 	setState,
 	setLatLngClicked,
@@ -110,17 +109,6 @@ export default function Map({
 
 	const [distanceMode, setDistanceMode] = useState(false)
 
-	useEffect(() => {
-		if (!transportStopData.length) return
-
-		setTempStyle('light')
-
-		return () => {
-			console.log('will unset')
-			setTempStyle(null)
-		}
-	}, [setTempStyle, transportStopData])
-
 	const padding = useComputeMapPadding(trackedSnap, searchParams)
 
 	useEffect(() => {
@@ -130,7 +118,7 @@ export default function Map({
 	}, [map, padding])
 
 	const wikidataPicture = wikidata?.pictureUrl
-	console.log('redou', wikidataPicture)
+
 	const wikidataPictureObject = wikidataPicture &&
 		osmFeature && {
 			thumbnailUrl: wikidataPicture,
@@ -406,7 +394,6 @@ export default function Map({
 						map,
 						vers,
 						transportsData,
-						setTempStyle,
 						isTransportsMode,
 						safeStyleKey,
 						searchParams,

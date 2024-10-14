@@ -14,20 +14,10 @@ import { useMediaQuery } from 'usehooks-ts'
 export default function DrawTransportMaps({
 	map,
 	transportsData,
-	setTempStyle,
 	safeStyleKey,
 	searchParams,
 	hasItinerary,
 }) {
-	// TODO if base style when F5 before activating transport mode is light style,
-	// safeStyleKey won't be triggered, so nothing will be drawn
-	useEffect(() => {
-		setTempStyle('light')
-		return () => {
-			setTempStyle(null)
-		}
-	}, [setTempStyle])
-
 	const {
 		routes: routesParam,
 		'type de train': trainType,
@@ -117,7 +107,7 @@ export default function DrawTransportMaps({
 		agencyFilter,
 	])
 
-	if (safeStyleKey !== 'light') return null
+	if (safeStyleKey !== 'transports') return null
 
 	if (!transportsData) return null
 	return (

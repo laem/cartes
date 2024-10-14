@@ -187,7 +187,7 @@ const DatasetItem = ({ dataset, agencies }) => {
 				<Ul>
 					{dataset.agencyIds.map((id) => (
 						<li key={id}>
-							<Link prefetch={false} href={`/?transports=oui&agence=${id}`}>
+							<Link prefetch={false} href={`/?style=transports&agence=${id}`}>
 								{agencies.find((agency) => agency.agency_id === id).agency_name}
 							</Link>
 						</li>

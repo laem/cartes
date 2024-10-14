@@ -9,7 +9,6 @@ function MapComponents({
 	vers,
 	transportsData,
 	isTransportsMode,
-	setTempStyle,
 	safeStyleKey,
 	searchParams,
 	hasItinerary,
@@ -23,7 +22,6 @@ function MapComponents({
 					{...{
 						map,
 						transportsData,
-						setTempStyle,
 						safeStyleKey,
 						searchParams,
 						hasItinerary,

@@ -23,7 +23,7 @@ export const styles = {
 		attribution:
 			'<a href="https://www.openstreetmap.org/copyright" target="_blank">&copy; OpenStreetMap contributors</a>',
 	},
-	light: {
+	transports: {
 		url: franceStyle(true),
 		name: 'Transport',
 		description: `Un style de carte dédié au transport pour afficher les plans urbains des réseaux de bus/tram/métro, mais aussi des cars et des trains nationaux.`,

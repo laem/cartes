@@ -61,25 +61,6 @@ height: 4rem;
 	}
 `
 
-export const buildTransportButtonUrl = (
-	setSearchParams,
-	searchParams = {},
-	keepStyleChooser = false
-) =>
-	setSearchParams(
-		{
-			...(searchParams.transports
-				? {
-						transports: undefined,
-						agence: undefined,
-						routes: undefined,
-				  }
-				: { transports: 'oui', 'choix du style': 'oui' }),
-		},
-		true,
-		true
-	)
-
 export default function MapButtons({
 	styleChooser,
 	setStyleChooser,
@@ -95,11 +76,11 @@ export default function MapButtons({
 
 	return (
 		<MapButtonsWrapper>
-			{false && (
+			{false && ( // keeping this, not sure we won't introduce this button back. For now, it's in the style chooser
 				<MapButton $active={searchParams.transports === 'oui'}>
 					<Link
 						title={'Voir la carte des transports en commun'}
-						href={buildTransportButtonUrl(setSearchParams, searchParams)}
+						href={'#coderemoved'}
 					>
 						<img
 							src={'/transports.svg'}

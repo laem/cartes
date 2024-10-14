@@ -23,7 +23,7 @@
  * bbox
  **/
 
-import { useMemo, useRef, useState } from 'react'
+import { useEffect, useMemo, useRef, useState } from 'react'
 
 import { getCategory } from '@/components/categories'
 import ModalSwitch from './ModalSwitch'
@@ -82,10 +82,8 @@ export default function Container({
 
 	const [safeStyleKey, setSafeStyleKey] = useState(null)
 	console.log('lightpink ssk', safeStyleKey)
-	const [tempStyle, setTempStyle] = useState(null)
 	const [localStorageStyleKey] = useLocalStorage('style', null)
-	const styleKey =
-		tempStyle || searchParams.style || localStorageStyleKey || 'france'
+	const styleKey = searchParams.style || localStorageStyleKey || 'france'
 	const style = getStyle(styleKey)
 
 	const styleChooser = searchParams['choix du style'] === 'oui',
@@ -166,7 +164,7 @@ export default function Container({
 	const transportStopData = useTransportStopData(osmFeature)
 	const clickedStopData = transportStopData[0] || []
 
-	const isTransportsMode = searchParams.transports === 'oui'
+	const isTransportsMode = styleKey === 'transports'
 
 	const fetchAll = searchParams.tout
 	const transportsData = useFetchTransportMap(
@@ -303,7 +301,6 @@ export default function Container({
 						geocodedClickedPoint,
 						setGeolocation,
 						setZoom,
-						setTempStyle,
 						center,
 						setState,
 						setLatLngClicked,
