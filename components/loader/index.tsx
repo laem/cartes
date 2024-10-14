@@ -1,10 +1,11 @@
-export const Loader = ({ children }) => (
+export const Loader = ({ children, flexDirection = 'row' }) => (
 	<div
 		css={`
 			display: flex;
 			align-items: center;
 			justify-content: center;
 			gap: 0.4rem;
+			flex-direction: ${flexDirection};
 
 			.loader {
 				color: var(--lightColor);

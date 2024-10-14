@@ -29,6 +29,7 @@ import {
 export default function Transit({ itinerary, searchParams }) {
 	const data = itinerary.routes.transit,
 		date = itinerary.date
+	if (!data) return
 	if (data.state === 'loading') return <TransitLoader />
 	if (data.state === 'error') return <NoTransit reason={data.reason} />
 

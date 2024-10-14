@@ -1,13 +1,12 @@
-import { description } from '../layout'
 import cyclOsm from './cyclOsmStyle'
 import elections from './elections'
 import franceStyle from './france'
 import natureStyle from './nature'
 import railStyle from './railStyle'
+import satellite from './satellite'
 import testStreetComplete from './test-street-complete'
 import transit from './transit'
 import voyageStyle from './voyage'
-import satellite from './satellite'
 
 const key = process.env.NEXT_PUBLIC_MAPTILER
 
@@ -18,9 +17,16 @@ export const styles = {
 	 * purposes (50 to 100 €/month in june !)
 	 */
 	france: {
-		url: franceStyle(key),
+		url: franceStyle(false),
 		name: 'France',
 		description: `Notre style maison, avec des bonus inédits : rail visible à haut niveau, arbres, et plein de futures nouveautés. Hébergé sur nos serveurs, contrairement aux autres il ne nous coûte rien. C'est le futur.`,
+		attribution:
+			'<a href="https://www.openstreetmap.org/copyright" target="_blank">&copy; OpenStreetMap contributors</a>',
+	},
+	light: {
+		url: franceStyle(true),
+		name: 'Transport',
+		description: `Un style de carte dédié au transport pour afficher les plans urbains des réseaux de bus/tram/métro, mais aussi des cars et des trains nationaux.`,
 		attribution:
 			'<a href="https://www.openstreetmap.org/copyright" target="_blank">&copy; OpenStreetMap contributors</a>',
 	},
@@ -71,12 +77,6 @@ export const styles = {
 		url: railStyle(key),
 		name: 'Rails',
 		emoji: '🛤️',
-	},
-	light: {
-		// Taken from MapTiler's dataviz style
-		url: transit(key),
-		name: 'Fond léger',
-		emoji: '⬜️',
 	},
 	winter: {
 		url: maptilerUrl('winter-v2'),

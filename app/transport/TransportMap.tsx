@@ -9,6 +9,7 @@ import StopByName from './StopByName'
 import { ModalCloseButton } from '../UI'
 import Routes from './TransportMapRoutes'
 import { PlaceButton } from '../PlaceButtonsUI'
+import AgencyFilter from './AgencyFilter'
 
 export default function TransportMap({
 	day,
@@ -17,13 +18,17 @@ export default function TransportMap({
 	routesParam,
 	trainType,
 	transitFilter,
+	agencyFilter,
 	stop,
 	bbox,
 	setIsItineraryMode,
 }) {
+	const bboxAgencies = data[0]
+
 	const setSearchParams = useSetSearchParams()
 
 	const setTransitFilter = (filter) => setSearchParams({ filtre: filter })
+	const setAgencyFilter = (filter) => setSearchParams({ gamme: filter })
 
 	const setTrainType = (trainType) =>
 		setSearchParams({ 'type de train': trainType })
@@ -52,41 +57,44 @@ export default function TransportMap({
 	const rand = Math.random()
 	console.time('routes' + rand)
 
-	const routes = sortBy((route) => -route.properties.perDay)(
-		data.reduce((memo, [agencyId, { features }]) => {
-			if (selectedAgency != null && agencyId !== selectedAgency) return memo
-			const filteredFeatures = features.filter(transitFilterFunction)
-			const found = filteredFeatures.filter((feature, i) => {
-				if (routesDemanded)
-					return routesDemanded.includes(feature.properties.route_id)
-				else {
-					if (feature.geometry.type !== 'LineString') return
+	const routes =
+		!stop &&
+		selectedAgency &&
+		sortBy((route) => -route.properties.perDay)(
+			bboxAgencies.reduce((memo, [agencyId, { features }]) => {
+				if (selectedAgency != null && agencyId !== selectedAgency) return memo
+				const filteredFeatures = features.filter(transitFilterFunction)
+				const found = filteredFeatures.filter((feature, i) => {
+					if (routesDemanded)
+						return routesDemanded.includes(feature.properties.route_id)
+					else {
+						if (feature.geometry.type !== 'LineString') return
 
-					if (i === 0) console.log('transportmap feature', feature)
+						if (i === 0) console.log('transportmap feature', feature)
 
-					const hasCoordinateInBbox = !bbox
-						? true
-						: feature.geometry.coordinates.some(
-								([lon, lat]) =>
-									lon > bbox[0][0] &&
-									lon < bbox[1][0] &&
-									lat > bbox[0][1] &&
-									lat < bbox[1][1]
-						  )
-					return hasCoordinateInBbox
-				}
-			})
-			return [...memo, ...found]
-		}, [])
-	)
+						const hasCoordinateInBbox = !bbox
+							? true
+							: feature.geometry.coordinates.some(
+									([lon, lat]) =>
+										lon > bbox[0][0] &&
+										lon < bbox[1][0] &&
+										lat > bbox[0][1] &&
+										lat < bbox[1][1]
+							  )
+						return hasCoordinateInBbox
+					}
+				})
+				return [...memo, ...found]
+			}, [])
+		)
 	console.timeLog('routes' + rand)
-	const routeIds = routes.map((route) => route.properties.route_id)
+	const routeIds = routes?.map((route) => route.properties.route_id)
 	console.log('routes', routeIds, unique(routeIds))
 
 	const selectedAgencyData =
 		selectedAgency &&
-		data?.length > 0 &&
-		data.find(([id]) => id === selectedAgency)
+		bboxAgencies?.length > 0 &&
+		bboxAgencies.find(([id]) => id === selectedAgency)
 	return (
 		<section
 			css={`
@@ -108,11 +116,24 @@ export default function TransportMap({
 					</header>
 				)}
 
+				{false && <DateSelector type="day" date={day} />}
+				{!stop && !selectedAgency && (
+					<AgencyFilter {...{ agencyFilter, setAgencyFilter }} />
+				)}
+				{!stop &&
+					(agencyFilter === 'train' || selectedAgency == '1187' ? (
+						<SncfSelect {...{ bboxAgencies, setTrainType, trainType }} />
+					) : (
+						<TransitFilter
+							{...{ data: bboxAgencies, setTransitFilter, transitFilter }}
+						/>
+					))}
 				<PlaceButton
 					as="div"
 					css={`
 						margin-top: 0.8rem;
 						margin-bottom: 0.6rem;
+						text-align: right;
 					`}
 				>
 					<button onClick={() => setIsItineraryMode(true)}>
@@ -127,8 +148,7 @@ export default function TransportMap({
 						<div>Itinéraire</div>
 					</button>
 				</PlaceButton>
-				{false && <DateSelector type="day" date={day} />}
-				{selectedAgency == null && data?.length > 0 && (
+				{selectedAgency == null && bboxAgencies?.length > 0 && (
 					<section>
 						<p>Dans cette zone : </p>
 						<ol
@@ -141,7 +161,7 @@ export default function TransportMap({
 								}
 							`}
 						>
-							{data.map(([agencyId, { agency }]) => (
+							{bboxAgencies.map(([agencyId, { agency }]) => (
 								<li key={agencyId}>
 									<Link href={setSearchParams({ agence: agencyId }, true)}>
 										{agency.agency_name}
@@ -166,7 +186,9 @@ export default function TransportMap({
 						}}
 					/>
 					<h2>{stop}</h2>
-					{data?.length > 0 && <StopByName stopName={stop} data={data} />}
+					{bboxAgencies?.length > 0 && (
+						<StopByName stopName={stop} data={bboxAgencies} />
+					)}
 				</section>
 			)}
 			{!routesDemanded && selectedAgencyData && (
@@ -175,13 +197,8 @@ export default function TransportMap({
 					backUrl={setSearchParams({ agence: undefined }, true)}
 				/>
 			)}
-			{!stop &&
-				(selectedAgency == '1187' ? (
-					<SncfSelect {...{ data, setTrainType, trainType }} />
-				) : (
-					<TransitFilter {...{ data, setTransitFilter, transitFilter }} />
-				))}
-			{!stop && routes && (
+
+			{routes && (
 				<Routes
 					routesParam={routesParam}
 					routes={routes}

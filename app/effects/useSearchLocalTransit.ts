@@ -1,15 +1,25 @@
-import css from '@/components/css/convertToJs'
 import { goodIconSize } from '@/components/mapUtils'
+import { sortBy } from '@/components/utils/utils'
 import maplibregl from 'maplibre-gl'
 import { useEffect, useState } from 'react'
 import { gtfsServerUrl } from '../serverUrls'
+import {
+	addMinutes,
+	dateFromHHMMSS,
+	humanDepartureTime,
+	nowAsYYMMDD,
+} from '../transport/stop/Route'
 
-// TODO reactivate
 export default function useSearchLocalTransit(map, active, center, zoom) {
-	return null
 	const [stops, setStops] = useState([])
 	const [stopTimes, setStopTimes] = useState({})
 	const notZoomEnough = zoom < 15
+
+	const d = new Date()
+	const day = nowAsYYMMDD()
+	const from = d.toLocaleTimeString()
+	const to = addMinutes(d, 60).toLocaleTimeString()
+
 	useEffect(() => {
 		if (!active || !center || notZoomEnough) return
 		const [longitude, latitude] = center,
@@ -32,7 +42,7 @@ export default function useSearchLocalTransit(map, active, center, zoom) {
 		const doFetch = () => {
 			stops.map(async (stop) => {
 				const id = stop.stop_id
-				const url = `${gtfsServerUrl}/stopTimes/${id}`
+				const url = `${gtfsServerUrl}/immediateStopTimes/${id}/${day}/${from}/${to}`
 				const request = await fetch(url)
 				const json = await request.json()
 				setStopTimes((stopTimes) => ({ ...stopTimes, [id]: json }))
@@ -43,22 +53,44 @@ export default function useSearchLocalTransit(map, active, center, zoom) {
 
 	useEffect(() => {
 		if (!map || !stops.length || !active || notZoomEnough) return
-		const markers = stops.map((stop) => {
-			const routes = stopTimes[stop.stop_id]?.routes
 
-			const jsx = `<div><div style="padding: 0 .2rem">${stop.stop_name}</div>
+		const markers = stops.map((stop) => {
+			const times = stopTimes[stop.stop_id]
+
+			if (!times || !times.length) return null
+			const routes = Object.entries(
+				times.reduce((memo, next) => {
+					return {
+						...memo,
+						[next.route_id]: [...(memo[next.route_id] || []), next],
+					}
+				}, {})
+			)
+			console.log('red stopTimes', routes)
+
+			const jsx = `<div><div style="padding: 0 .2rem; ">${stop.stop_name}</div>
 ${
-	routes
+	routes.length
 		? `
 				<ul style="list-style-type: none">${routes
-					.map(
-						(route) =>
-							`<li style="${`
+					.map(([_, routeTimes]) => {
+						const route = routeTimes[0]
+						return `<li style="${`
 							padding: 0 .2rem;
-							font-weight: bold;
 							  background: #${route.route_color};
-								color: #${route.route_text_color}`}">${route.route_short_name}</li>`
-					)
+								color: #${route.route_text_color || 'white'}`}">
+
+<strong>
+						${route.route_short_name}
+						</strong>
+						<small>${sortBy((time) => time.arrival_time)(routeTimes)
+							.slice(0, 1)
+							.map((time) =>
+								humanDepartureTime(dateFromHHMMSS(time.arrival_time))
+							)}</small>
+
+						</li>`
+					})
 					.join('')}</ul>`
 		: ''
 }</div>`
@@ -68,8 +100,13 @@ ${
 
 			element.style.cssText = `
 			display: block;
-			background: var(--lightestColor);
+			background: var(--lightestColor2);
 			width: ${size}; height: auto;
+border-radius: .4rem; overflow: hidden; border: 2px solid var(--darkerColor);   --shadow-color: 46deg 14% 62%;
+  --shadow-elevation-low:
+    0.3px 0.5px 0.7px hsl(var(--shadow-color) / 0.34),
+    0.4px 0.8px 1px -1.2px hsl(var(--shadow-color) / 0.34),
+    1px 2px 2.5px -2.5px hsl(var(--shadow-color) / 0.34); box-shadow: var(--shadow-elevation-low)
 			`
 			element.innerHTML = jsx
 
@@ -84,7 +121,7 @@ ${
 			return marker
 		})
 		return () => {
-			markers.map((marker) => marker.remove())
+			markers.map((marker) => marker?.remove())
 		}
-	}, [map, stops, stopTimes, zoom, notZoomEnough])
+	}, [map, stops, stopTimes, zoom, notZoomEnough, active])
 }

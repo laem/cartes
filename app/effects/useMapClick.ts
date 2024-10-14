@@ -6,6 +6,7 @@ import { encodePlace } from '@/app/utils'
 import { replaceArrayIndex } from '@/components/utils/utils'
 import { useEffect } from 'react'
 import handleCirconscriptionsLegislativesClick from './handleCirconscriptionsLegislativesClick'
+import { name, nameExpression } from '../styles/france'
 
 export default function useMapClick(
 	map,
@@ -116,6 +117,17 @@ export default function useMapClick(
 				return setSearchParams({ allez: undefined })
 			}
 
+			const nameFound =
+					feature.properties &&
+					[...nameExpression, ['get', 'name']].find(
+						([_, k]) => feature.properties[k]
+					),
+				name = nameFound && feature.properties[nameFound[1]]
+
+			console.log('clicked name ', name)
+
+			setSearchParams({ chargement: name })
+
 			const noDisambiguation = hasNwr
 			const [element, realFeatureType] = await disambiguateWayRelation(
 				featureType,
@@ -151,6 +163,7 @@ export default function useMapClick(
 						longitude,
 						latitude
 					),
+					chargement: undefined,
 				})
 				console.log('sill set OSMFeature', element)
 				// wait for the searchParam update to proceed

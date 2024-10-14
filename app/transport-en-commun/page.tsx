@@ -23,7 +23,8 @@ export const metadata: Metadata = {
 }
 export default async function () {
 	const onlineAgenciesRequest = await fetch(gtfsServerUrl + '/agencies')
-	const { agencies } = await onlineAgenciesRequest.json()
+	const json = await onlineAgenciesRequest.json()
+	const agencies = Object.values(json).map((el) => el.agency)
 
 	const panRequest = await fetch('https://transport.data.gouv.fr/api/datasets/')
 	const datasets = await panRequest.json()

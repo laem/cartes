@@ -3,12 +3,14 @@ import { findContrastedTextColor } from '@/components/utils/colors'
 import { omit } from '@/components/utils/utils'
 import Image from 'next/image'
 import { useState } from 'react'
+import { handleColor } from '../../itinerary/transit/motisRequest'
+import { transportTypeIcon } from '../../itinerary/transit/transportIcon'
 import DayView from '../DayView'
 import Calendar from './Calendar'
-import { handleColor } from '../../itinerary/transit/motisRequest'
-import transportIcon, {
-	transportTypeIcon,
-} from '../../itinerary/transit/transportIcon'
+
+export function addMinutes(date, minutes) {
+	return new Date(date.getTime() + minutes * 60000)
+}
 
 export const nowAsYYMMDD = (delimiter = '') => {
 	var d = new Date(),
@@ -29,6 +31,19 @@ const timeFromHHMMSS = (hhmmss) => {
 }
 const toDate = ({ year, month, day }, time) => {
 	return new Date(+year, +month - 1, +day, ...time)
+}
+
+export const dateFromHHMMSS = (hhmmss) => {
+	var d = new Date(),
+		month = '' + (d.getMonth() + 1),
+		day = '' + d.getDate(),
+		year = d.getFullYear()
+
+	if (month.length < 2) month = '0' + month
+	if (day.length < 2) day = '0' + day
+
+	const date = toDate({ year, month, day }, timeFromHHMMSS(hhmmss))
+	return date
 }
 
 export default function Route({ route, stops = [] }) {

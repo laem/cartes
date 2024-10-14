@@ -23,8 +23,11 @@ import { getHasStepBeingSearched } from './itinerary/Steps'
 import getUrl from './osm/getUrl'
 import StyleChooser from './styles/StyleChooser'
 import { defaultTransitFilter } from './transport/TransitFilter'
+import { defaultAgencyFilter } from './transport/AgencyFilter'
 import TransportMap from './transport/TransportMap'
 import useOgImageFetcher from './useOgImageFetcher'
+import Link from 'next/link'
+import { Loader } from '@/components/loader'
 
 const getMinimumQuickSearchZoom = (mobile) => (mobile ? 10.5 : 12) // On a small screen, 70 %  of the tiles are not visible, hence this rule
 
@@ -151,6 +154,11 @@ export default function Content({
 	}, [geocodedClickedPoint, setSnap])
 
 	useEffect(() => {
+		if (!searchParams.chargement) return
+		if (snap > 1) setSnap(1)
+	}, [searchParams.chargement, setSnap])
+
+	useEffect(() => {
 		if (!showSearch) return
 		if (snap === 3)
 			if (zoom > minimumQuickSearchZoom) {
@@ -158,16 +166,14 @@ export default function Content({
 			}
 	}, [showSearch, zoom, snap])
 
-	const showIntroduction =
-		!introductionRead &&
-		// if a new user comes with a place URL, or the election map, or if a search
-		// engine indexes a transport map, we don't want to hide the relevant content
-		// and bother her with the introduction
-		Object.keys(searchParams).length === 0
-	useEffect(() => {
-		if (showIntroduction) return
+	const showIntroductionLink = !introductionRead
 
-		setTimeout(() => setSnap(1), 1000)
+	const showIntroduction = searchParams.intro
+
+	useEffect(() => {
+		if (!showIntroduction) return
+
+		setTimeout(() => setSnap(1), 200)
 	}, [showIntroduction, setSnap])
 
 	if (showIntroduction)
@@ -177,6 +183,7 @@ export default function Content({
 				<DialogButton
 					onClick={() => {
 						setTutorials({ ...tutorials, introduction: true })
+						setSearchParams({ intro: undefined })
 						setSnap(2)
 					}}
 				>
@@ -221,43 +228,11 @@ export default function Content({
 						)}
 				</section>
 			)}
-
-			{elections && (
-				<ElectionsContent searchParams={searchParams} setSnap={setSnap} />
+			{showIntroductionLink && (
+				<Link href={setSearchParams({ intro: true }, true)}>
+					À propos de Cartes
+				</Link>
 			)}
-			{searchParams.favoris === 'oui' && <Bookmarks />}
-			{searchParams.transports === 'oui' && !itinerary.isItineraryMode && (
-				<TransportMap
-					{...{
-						bbox,
-						day: searchParams.day,
-						data: transportsData,
-						selectedAgency: searchParams.agence,
-						routesParam: searchParams.routes,
-						stop: searchParams.arret,
-						trainType: searchParams['type de train'],
-						transitFilter: searchParams['filtre'] || defaultTransitFilter,
-						setIsItineraryMode: itinerary.setIsItineraryMode,
-					}}
-				/>
-			)}
-
-			<Itinerary
-				{...{
-					itinerary,
-					bikeRouteProfile,
-					setBikeRouteProfile,
-					searchParams,
-					setSnap,
-					close: () => {
-						setSearchParams({ allez: undefined, mode: undefined })
-						itinerary.setIsItineraryMode(false)
-					},
-					state,
-					setState,
-					setDisableDrag,
-				}}
-			/>
 
 			{styleChooser ? (
 				<StyleChooser
@@ -336,6 +311,23 @@ export default function Content({
 								)}
 							</PlaceButtonList>
 						)}
+						{searchParams.chargement && (
+							<div
+								css={`
+									margin: 1rem 0;
+									p {
+										text-align: center;
+										line-height: 1.3rem;
+									}
+								`}
+							>
+								<Loader flexDirection="column">
+									<p>
+										Chargement de <strong>{searchParams.chargement}</strong>
+									</p>
+								</Loader>
+							</div>
+						)}
 						{osmFeature ? (
 							<OsmFeature
 								data={osmFeature}
@@ -378,6 +370,45 @@ export default function Content({
 					</ContentSection>
 				)
 			)}
+			{elections && (
+				<ElectionsContent searchParams={searchParams} setSnap={setSnap} />
+			)}
+			{searchParams.favoris === 'oui' && <Bookmarks />}
+			{searchParams.transports === 'oui' &&
+				!itinerary.isItineraryMode &&
+				transportsData && (
+					<TransportMap
+						{...{
+							bbox,
+							day: searchParams.day,
+							data: transportsData,
+							selectedAgency: searchParams.agence,
+							routesParam: searchParams.routes,
+							stop: searchParams.arret,
+							trainType: searchParams['type de train'],
+							transitFilter: searchParams['filtre'] || defaultTransitFilter,
+							agencyFilter: searchParams['gamme'] || defaultAgencyFilter,
+							setIsItineraryMode: itinerary.setIsItineraryMode,
+						}}
+					/>
+				)}
+
+			<Itinerary
+				{...{
+					itinerary,
+					bikeRouteProfile,
+					setBikeRouteProfile,
+					searchParams,
+					setSnap,
+					close: () => {
+						setSearchParams({ allez: undefined, mode: undefined })
+						itinerary.setIsItineraryMode(false)
+					},
+					state,
+					setState,
+					setDisableDrag,
+				}}
+			/>
 		</ContentWrapper>
 	)
 }
