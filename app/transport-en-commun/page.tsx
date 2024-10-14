@@ -22,7 +22,9 @@ export const metadata: Metadata = {
 	description,
 }
 export default async function () {
-	const onlineAgenciesRequest = await fetch(gtfsServerUrl + '/agencies')
+	const onlineAgenciesRequest = await fetch(gtfsServerUrl + '/agencies', {
+		cache: 'no-store',
+	})
 	const json = await onlineAgenciesRequest.json()
 	const agencies = Object.values(json).map((el) => el.agency)
 
