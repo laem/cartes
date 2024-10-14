@@ -55,6 +55,7 @@ export default function Content({
 	openSheet = () => null,
 	setStyleChooser,
 	style,
+	styleKey,
 	styleChooser,
 	itinerary,
 	transportStopData,
@@ -223,7 +224,7 @@ export default function Content({
 						/>
 					)}
 					{searchParams.favoris !== 'oui' &&
-						searchParams.transports !== 'oui' && (
+						searchParams.style !== 'transports' && (
 							<QuickBookmarks oldAllez={searchParams.allez} />
 						)}
 				</section>
@@ -374,7 +375,7 @@ export default function Content({
 				<ElectionsContent searchParams={searchParams} setSnap={setSnap} />
 			)}
 			{searchParams.favoris === 'oui' && <Bookmarks />}
-			{searchParams.transports === 'oui' &&
+			{styleKey === 'transports' &&
 				!itinerary.isItineraryMode &&
 				transportsData && (
 					<TransportMap

@@ -241,6 +241,7 @@ export default function Container({
 							setZoom,
 							searchParams,
 							style,
+							styleKey,
 							styleChooser,
 							setStyleChooser,
 							itinerary,

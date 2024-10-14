@@ -6,7 +6,7 @@ import {
 import { decodeTransportsData } from '@/app/transport/decodeTransportsData'
 
 export default async function fetchAgency(searchParams) {
-	if (searchParams.transports === 'oui' && searchParams.agence != null) {
+	if (searchParams.style === 'transports' && searchParams.agence != null) {
 		const url = `${gtfsServerUrl}/agencyArea/${searchParams.agence}`
 		console.log('Will fetch this URL for metadata', url)
 
