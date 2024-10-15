@@ -73,6 +73,7 @@ export const tagNameCorrespondance = (key: string) => {
 	  'payment:debit_cards': 'Paiment par carte de débit',
 		'payment:mastercard': 'Paiement par Mastercard',
 		'payment:visa': 'Paiement par Visa',
+		'phone:mobile': 'N° de mobile',
 		'service:bicycle:cleaning': 'Lavage de vélos',
 		'service:bicycle:diy': "Atelier d'autoréparation de vélos",
 		'service:bicycle:pump': 'Pompe à vélo en libre-service',
