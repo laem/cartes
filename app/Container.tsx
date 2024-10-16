@@ -40,7 +40,9 @@ import FocusedImage from './FocusedImage'
 import { initialSnap } from './ModalSheet'
 import SafeMap from './SafeMap'
 import { defaultZoom } from './effects/useAddMap'
-import useFetchTransportMap from './effects/useFetchTransportMap'
+import useFetchTransportMap, {
+	useFetchAgencyAreas,
+} from './effects/useFetchTransportMap'
 import useGeocodeRightClick from './effects/useGeocodeRightClick'
 import useOsmRequest from './effects/useOsmRequest'
 import useOverpassRequest from './effects/useOverpassRequest'
@@ -176,6 +178,7 @@ export default function Container({
 		fetchAll,
 		agencyEntry
 	)
+	const agencyAreas = useFetchAgencyAreas(isTransportsMode)
 
 	// TODO reintroduce gare display through the transport style option + the bike
 	// mode below
@@ -249,6 +252,7 @@ export default function Container({
 							geocodedClickedPoint,
 							resetClickedPoint,
 							transportsData,
+							agencyAreas,
 							geolocation,
 							bboxImages,
 							bbox,
@@ -283,6 +287,7 @@ export default function Container({
 						isTransportsMode,
 						transportStopData,
 						transportsData,
+						agencyAreas,
 						clickedStopData,
 						bikeRouteProfile,
 						showOpenOnly,

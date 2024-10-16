@@ -1,7 +1,7 @@
-import { useEffect } from 'react'
-import { safeRemove } from './utils'
 import { filterMapEntries } from '@/components/utils/utils'
-import { agencyFilters, getAgencyFilter } from '../transport/AgencyFilter'
+import { useEffect } from 'react'
+import { getAgencyFilter } from '../transport/AgencyFilter'
+import { safeRemove } from './utils'
 
 const id = 'transport-areas'
 const areasId = id + '-fill'

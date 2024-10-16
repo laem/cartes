@@ -50,6 +50,7 @@ export default function Map({
 	isTransportsMode,
 	transportStopData,
 	transportsData,
+	agencyAreas,
 	clickedStopData,
 	itinerary,
 	bikeRouteProfile,
@@ -144,9 +145,7 @@ export default function Map({
 	const agencyId = searchParams.agence
 	const agency = useMemo(() => {
 		const agencyData =
-			transportsData &&
-			transportsData[0] &&
-			transportsData[0].find((el) => el[0] === agencyId)
+			transportsData && transportsData.find((el) => el[0] === agencyId)
 		return agencyData && { id: agencyData[0], ...agencyData[1] }
 	}, [agencyId, transportsData]) // including transportsData provokes a loop : maplibre bbox updated -> transportsData recreated -> etc
 
@@ -401,6 +400,7 @@ export default function Map({
 						map,
 						vers,
 						transportsData,
+						agencyAreas,
 						isTransportsMode,
 						safeStyleKey,
 						searchParams,

@@ -1,5 +1,4 @@
 import useDrawTransport from '@/app/effects/useDrawTransport'
-import useDrawTransportAreas from '@/app/effects/useDrawTransportAreas'
 import { gtfsServerUrl } from '@/app/serverUrls'
 import {
 	defaultAgencyFilter,
@@ -14,6 +13,7 @@ import { useMediaQuery } from 'usehooks-ts'
 export default function DrawTransportMaps({
 	map,
 	transportsData,
+	agencyAreas,
 	safeStyleKey,
 	searchParams,
 	hasItinerary,
@@ -49,7 +49,7 @@ export default function DrawTransportMaps({
 		if (selectedAgencyBbox) return
 		if (
 			transportsData &&
-			transportsData[0].find(([agencyId]) => agencyId === selectedAgency)
+			transportsData.find(([agencyId]) => agencyId === selectedAgency)
 		)
 			return
 
@@ -69,13 +69,13 @@ export default function DrawTransportMaps({
 
 	const agencyIdsHash =
 		transportsData &&
-		sortBy((id) => id)(transportsData[0].map(([id]) => id)).join('')
+		sortBy((id) => id)(transportsData.map(([id]) => id)).join('')
 
 	const dataToDraw = useMemo(() => {
 		console.log('memo transport dataToDraw', agencyIdsHash, transportsData)
 		return (
 			transportsData &&
-			transportsData[0]
+			transportsData
 				.map(([agencyId, data]) => {
 					if (
 						!selectedAgency &&
@@ -110,31 +110,17 @@ export default function DrawTransportMaps({
 	if (safeStyleKey !== 'transports') return null
 
 	if (!transportsData) return null
-	return (
-		<>
-			<DrawTransportAreas
-				areas={transportsData[1]}
-				map={map}
-				agencyFilter={agencyFilter}
-			/>
-			{dataToDraw.map(([agencyId, features, bbox]) => (
-				<DrawTransportMapMemo
-					key={agencyId}
-					agencyId={agencyId}
-					features={features}
-					map={map}
-					drawKey={'transitMap-agency-' + agencyId + (trainType || '')}
-					hasItinerary={hasItinerary}
-					bbox={bbox}
-				/>
-			))}
-		</>
-	)
-}
-
-const DrawTransportAreas = ({ map, areas, agencyFilter }) => {
-	useDrawTransportAreas(map, areas, agencyFilter)
-	return null
+	return dataToDraw.map(([agencyId, features, bbox]) => (
+		<DrawTransportMapMemo
+			key={agencyId}
+			agencyId={agencyId}
+			features={features}
+			map={map}
+			drawKey={'transitMap-agency-' + agencyId + (trainType || '')}
+			hasItinerary={hasItinerary}
+			bbox={bbox}
+		/>
+	))
 }
 
 const DrawTransportMap = ({ map, features, hasItinerary, bbox, drawKey }) => {

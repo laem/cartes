@@ -23,7 +23,7 @@ export default function TransportMap({
 	bbox,
 	setIsItineraryMode,
 }) {
-	const bboxAgencies = data[0]
+	const bboxAgencies = data
 
 	const setSearchParams = useSetSearchParams()
 
