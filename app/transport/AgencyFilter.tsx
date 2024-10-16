@@ -17,9 +17,12 @@ export const agencyFilters = [
 			filter: (agency) => {
 				const { routeTypeStats: stats, bbox } = agency
 				const areaKm2 = area(bboxPolygon(bbox)) / 1000000
+				console.log('routeTypeStats', agency, areaKm2)
 				// because flixbus has route type 3, this old attribute does not
 				// distinguish local buses and long range buses, what a bad decision
-				if (areaKm2 > 3000) return
+				// Nice, id fr-nicelignes-d-azur is huge though, more than 3000, so we
+				// set this param just a bit higher
+				if (areaKm2 > 3300) return
 
 				return sumOfRouteTypes([3, 1, 0], stats) > 0.8
 			},
